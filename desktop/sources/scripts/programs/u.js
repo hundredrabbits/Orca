@@ -2,6 +2,7 @@ function program_U(x,y)
 {
   Program_Default.call(this,x,y);
 
+  this.name = "up"
   this.glyph = "u";
 
   this.operation = function()

@@ -8,6 +8,8 @@ function Grid()
     move: function(x,y){
       this.x += x;
       this.y -= y;
+      this.x = clamp(this.x,0,pico.program.w-1);
+      this.y = clamp(this.y,0,pico.program.h-1);
       pico.grid.update();
     },
     insert: function(key){
@@ -43,4 +45,6 @@ function Grid()
     }
     this.el.innerHTML = html;
   }
+
+  function clamp(v, min, max) { return v < min ? min : v > max ? max : v; }
 }

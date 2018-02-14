@@ -39,4 +39,38 @@ function Program_Default(x,y)
   {
     return pico.program.glyph_at(this.x+x,this.y+y) != "."
   }
+
+  this.neighboors = function()
+  {
+    var a = [];
+    if(pico.program.glyph_at(this.x+1,this.y) != "."){ a.push(pico.program.glyph_at(this.x+1,this.y)); }
+    if(pico.program.glyph_at(this.x-1,this.y) != "."){ a.push(pico.program.glyph_at(this.x-1,this.y)); }
+    if(pico.program.glyph_at(this.x,this.y+1) != "."){ a.push(pico.program.glyph_at(this.x,this.y+1)); }
+    if(pico.program.glyph_at(this.x,this.y-1) != "."){ a.push(pico.program.glyph_at(this.x,this.y-1)); }
+    return a;
+  }
+
+  this.left = function()
+  {
+    var g = pico.program.glyph_at(this.x-1,this.y);
+    return g != "." ? g : null;
+  }
+
+  this.right = function()
+  {
+    var g = pico.program.glyph_at(this.x+1,this.y);
+    return g != "." ? g : null;
+  }
+
+  this.up = function()
+  {
+    var g = pico.program.glyph_at(this.x,this.y+1);
+    return g != "." ? g : null;
+  }
+
+  this.down = function()
+  {
+    var g = pico.program.glyph_at(this.x,this.y-1);
+    return g != "." ? g : null;
+  }
 }
