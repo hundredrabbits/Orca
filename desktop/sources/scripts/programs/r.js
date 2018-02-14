@@ -1,13 +1,12 @@
-function program_R(x,y)
+function program_r(x,y)
 {
   Program_Default.call(this,x,y);
 
-  this.glyph = "R";
+  this.glyph = "r";
 
   this.operation = function()
   {
-    pico.program.lock(this.x+1,this.y);
-    pico.program.remove(this.x,this.y);
-    pico.program.add(this.x+1,this.y,"R"); 
+    if(this.is_free(1,0)){ return; }
+    this.move(1,0);
   }
 }

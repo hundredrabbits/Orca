@@ -9,6 +9,9 @@ function Grid()
       this.x += x;
       this.y -= y;
       pico.grid.update();
+    },
+    insert: function(key){
+      pico.program.add(this.x,this.y,key)
     }
   }
 

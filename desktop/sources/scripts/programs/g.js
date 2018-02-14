@@ -6,8 +6,8 @@ function program_G(x,y)
 
   this.operation = function()
   {
-    if(pico.f % 10 == 0){
-      pico.program.add(this.x+1,this.y,"R")
+    if(pico.f % 40 == 0){
+      pico.program.add(this.x+1,this.y,"r")
       pico.program.lock(this.x+1,this.y)  
     }
   }
