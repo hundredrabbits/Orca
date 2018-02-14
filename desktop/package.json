@@ -1,0 +1,20 @@
+{
+  "name": "Clock",
+  "version": "0.1.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "time":"node time.js",
+    "clean"        : "rm -r ~/Desktop/Clock-darwin-x64/ ; rm -r ~/Desktop/Clock-linux-x64/ ; rm -r ~/Desktop/Clock-win32-x64/ ; echo 'cleaned build location'",
+    "build_osx"    : "electron-packager . Clock --platform=darwin --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.icns ; echo 'Built for OSX'",
+    "build_linux"  : "electron-packager . Clock --platform=linux  --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.ico ; echo 'Built for LINUX'",
+    "build_win"    : "electron-packager . Clock --platform=win32  --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.ico ; echo 'Built for WIN'",
+    "build"        : "npm run clean ; npm run build_osx ; npm run build_linux ; npm run build_win"
+  },
+  "devDependencies": {
+    "electron": "^1.8.1"
+  },
+  "dependencies": {
+    "electron-packager": "^8.4.0"
+  }
+}
