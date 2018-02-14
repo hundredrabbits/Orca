@@ -28,6 +28,12 @@ function Program_Default(x,y)
     
   }
 
+  this.replace = function(g)
+  {
+    pico.program.lock(this.x,this.y);
+    pico.program.add(this.x,this.y,g)
+  }
+
   this.move = function(x,y,g)
   {
     pico.program.lock(this.x+x,this.y+y);
