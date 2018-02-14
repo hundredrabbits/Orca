@@ -21,7 +21,7 @@ function Program(w,h)
 
   this.add = function(x,y,glyph)
   {
-    if(x < 0 || x > pico.program.w-1 || y < 0 || y > pico.program.h-1){ return; }
+    if(x < 0 || x > pico.program.w-1 || y < 0 || y > pico.program.h-1 || !glyph){ return; }
     var index = this.index_at(x,y);
     this.s = this.s.substr(0, index)+glyph+this.s.substr(index+glyph.length);
     pico.grid.update();
