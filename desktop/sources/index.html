@@ -3,9 +3,11 @@
     <script type="text/javascript" src="scripts/pico.js"></script>
     <script type="text/javascript" src="scripts/program.js"></script>
     <script type="text/javascript" src="scripts/grid.js"></script>
+    <script type="text/javascript" src="scripts/keyboard.js"></script>
 
-    <script type="text/javascript" src="scripts/cells/cell.js"></script>
-    <script type="text/javascript" src="scripts/cells/generator.js"></script>
+    <script type="text/javascript" src="scripts/programs/_.js"></script>
+    <script type="text/javascript" src="scripts/programs/g.js"></script>
+    <script type="text/javascript" src="scripts/programs/r.js"></script>
     
     <link rel="stylesheet" type="text/css" href="links/reset.css"/>
     <link rel="stylesheet" type="text/css" href="links/fonts.css"/>
@@ -19,6 +21,11 @@
         var pico = new Pico();
         pico.install();
         pico.start();
+
+        var keyboard = new Keyboard();
+        document.onkeyup = function(event){ keyboard.listen_onkeyup(event); };
+        document.onkeydown = function(event){ keyboard.listen_onkeydown(event); };
+        document.addEventListener('mousedown', function(e){ oquonie.mousedown(e); }, false);
 
       </script>
   </body>

@@ -4,6 +4,8 @@ function Program(w,h)
   this.h = h;
   this.s = "";
 
+  this.locks = [];
+
   this.reset = function()
   {
     var y = 0;
@@ -24,11 +26,23 @@ function Program(w,h)
     pico.grid.update();
   }
 
+  this.remove = function(x,y)
+  {
+    this.add(x,y,".")
+  }
+
   this.run = function()
   {
-    for(id in this.cells){
-      var cell = this.cells[id];
-      cell.run();
+    this.unlock();
+
+    var y = 0;
+    while(y < this.h){
+      var x = 0;
+      while(x < this.w){
+        this.operate(x,y,this.glyph_at(x,y));
+        x += 1
+      }
+      y += 1;
     }
   }
 
@@ -40,5 +54,35 @@ function Program(w,h)
   this.index_at = function(x,y)
   {
     return x + (this.w * y);
+  }
+
+  // Locks
+
+  this.is_locked = function(x,y)
+  {
+    for(id in this.locks){
+      var lock = this.locks[id];
+      if(lock.x != x || lock.y != y){ continue; }
+      return true;
+    }
+    return false;
+  }
+
+  this.unlock = function()
+  {
+    this.locks = [];
+  }
+
+  this.lock = function(x,y)
+  {
+    this.locks.push({x:x,y:y});
+  }
+
+  this.operate = function(x,y,g)
+  {
+    if(g == "."){ return; }
+    if(!window[`program_${g}`]){ console.log(`unknown: program_${g}`); return; }
+    if(this.is_locked(x,y)){ return; }
+    new window[`program_${g}`](x,y).run();
   }
 }

@@ -18,9 +18,12 @@ function Pico()
     setInterval(() => { this.run(); }, 1000)
   }
 
+  this.f = 0;
+
   this.run = function()
   {
     this.program.run();
     this.grid.update();
+    this.f += 1;
   }
 }
