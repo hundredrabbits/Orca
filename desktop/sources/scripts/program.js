@@ -49,7 +49,7 @@ function Program(w,h)
 
   this.glyph_at = function(x,y)
   {
-    return this.s.substr(this.index_at(x,y),1);
+    return this.s.substr(this.index_at(x,y),1).toLowerCase();
   }
 
   this.index_at = function(x,y)

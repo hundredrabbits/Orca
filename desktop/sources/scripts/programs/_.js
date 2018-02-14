@@ -46,7 +46,15 @@ function Program_Default(x,y)
     return pico.program.glyph_at(this.x+x,this.y+y) != "."
   }
 
-  this.neighboors = function()
+  this.neighbor = function()
+  {
+    if(pico.program.glyph_at(this.x+1,this.y) != "."){ return {x:this.x+1,y:this.y,glyph:pico.program.glyph_at(this.x+1,this.y)}; }
+    if(pico.program.glyph_at(this.x-1,this.y) != "."){ return {x:this.x-1,y:this.y,glyph:pico.program.glyph_at(this.x-1,this.y)}; }
+    if(pico.program.glyph_at(this.x,this.y+1) != "."){ return {x:this.x,y:this.y+1,glyph:pico.program.glyph_at(this.x,this.y+1)}; }
+    if(pico.program.glyph_at(this.x,this.y-1) != "."){ return {x:this.x,y:this.y-1,glyph:pico.program.glyph_at(this.x,this.y-1)}; } 
+    return null;   
+  }
+  this.neighbors = function()
   {
     var a = [];
     if(pico.program.glyph_at(this.x+1,this.y) != "."){ a.push(pico.program.glyph_at(this.x+1,this.y)); }
