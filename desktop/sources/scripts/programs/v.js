@@ -2,7 +2,7 @@ function program_V(x,y)
 {
   Program_Default.call(this,x,y);
 
-  this.glyph = "V";
+  this.glyph = "v";
 
   this.operation = function()
   {

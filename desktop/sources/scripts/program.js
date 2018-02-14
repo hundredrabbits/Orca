@@ -21,6 +21,7 @@ function Program(w,h)
 
   this.add = function(x,y,glyph)
   {
+    if(x < 0 || x > pico.program.w-1 || y < 0 || y > pico.program.h-1){ return; }
     var index = this.index_at(x,y);
     this.s = this.s.substr(0, index)+glyph+this.s.substr(index+glyph.length);
     pico.grid.update();
@@ -81,8 +82,8 @@ function Program(w,h)
   this.operate = function(x,y,g)
   {
     if(g == "."){ return; }
-    if(!window[`program_${g}`]){ console.log(`unknown: program_${g}`); return; }
+    if(!window[`program_${g.toUpperCase()}`]){ console.log(`unknown: program_${g.toUpperCase()}`); return; }
     if(this.is_locked(x,y)){ return; }
-    new window[`program_${g}`](x,y).run();
+    new window[`program_${g.toUpperCase()}`](x,y).run();
   }
 }

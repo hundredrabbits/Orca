@@ -1,4 +1,4 @@
-function program_r(x,y)
+function program_R(x,y)
 {
   Program_Default.call(this,x,y);
 
