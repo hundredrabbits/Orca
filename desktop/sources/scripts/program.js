@@ -82,6 +82,7 @@ function Program(w,h)
   this.operate = function(x,y,g)
   {
     if(g == "."){ return; }
+    if(parseInt(g) > 0){ return; }
     if(!window[`program_${g.toUpperCase()}`]){ console.log(`unknown: program_${g.toUpperCase()}`); return; }
     if(this.is_locked(x,y)){ return; }
     new window[`program_${g.toUpperCase()}`](x,y).run();

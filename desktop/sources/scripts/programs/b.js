@@ -7,6 +7,6 @@ function program_B(x,y)
 
   this.operation = function()
   {
-    
+    this.remove(); 
   }
 }

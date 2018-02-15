@@ -10,7 +10,9 @@ function program_I(x,y)
   this.operation = function()
   {
     var n = this.neighbor();
-    pico.program.add(n.x,n.y,this.inc(n.glyph));
+    if(n){
+      pico.program.add(n.x,n.y,this.inc(n.glyph));  
+    }
   }
 
   this.inc = function(letter)

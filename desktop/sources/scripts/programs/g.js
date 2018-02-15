@@ -7,9 +7,13 @@ function program_G(x,y)
 
   this.operation = function()
   {
-    if(pico.f % 40 == 0){
-      pico.program.add(this.x+1,this.y,"r")
-      pico.program.lock(this.x+1,this.y)  
+    if(this.any_neighbor_is("b")){
+      this.fire();
     }
+  }
+  this.fire = function()
+  {
+    pico.program.add(this.x+1,this.y,"r")
+    pico.program.lock(this.x+1,this.y)  
   }
 }

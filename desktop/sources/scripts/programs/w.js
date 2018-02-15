@@ -8,22 +8,11 @@ function program_W(x,y)
   this.operation = function()
   {
     var warp = this.find_warp();
+    var n = this.neighbor();
 
-    if(warp && this.left()){
-      pico.program.add(warp.x+2,warp.y,this.left())
-      pico.program.remove(this.x-1,this.y)
-    }
-    if(warp && this.right()){
-      pico.program.add(warp.x-2,warp.y,this.right())
-      pico.program.remove(this.x+1,this.y)
-    }
-    if(warp && this.up()){
-      pico.program.add(warp.x,warp.y-2,this.up())
-      pico.program.remove(this.x,this.y+1)
-    }
-    if(warp && this.down()){
-      pico.program.add(warp.x,warp.y+2,this.down())
-      pico.program.remove(this.x,this.y-1)
+    if(warp && n){
+      pico.program.add(warp.x,warp.y-1,n.glyph)
+      pico.program.remove(n.x,n.y)
     }
   }
 

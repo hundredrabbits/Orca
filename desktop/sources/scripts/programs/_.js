@@ -28,6 +28,11 @@ function Program_Default(x,y)
     
   }
 
+  this.remove = function()
+  {
+    this.replace(".")
+  }
+
   this.replace = function(g)
   {
     pico.program.lock(this.x,this.y);
