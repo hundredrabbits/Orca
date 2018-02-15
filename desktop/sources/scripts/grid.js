@@ -56,18 +56,18 @@ function Grid()
 
   this.draw_sprite = function(x,y,g,is_cursor = false)
   {
-    var tile         = 20
+    var tile         = {w:15,h:20}
     var ctx          = this.context();
     if(is_cursor){
       ctx.fillStyle    = is_cursor ? 'white' : 'black';
-      ctx.fillRect((x+0.5)*tile,(y)*tile,tile,tile);  
+      ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
     }
     
-    ctx.font         = `${tile*0.75}px input_mono_regular`;
+    ctx.font         = `${tile.h*0.75}px input_mono_regular`;
     ctx.fillStyle    = is_cursor ? 'black' : 'white';
     ctx.textBaseline = 'bottom';
     ctx.textAlign    = "center"; 
-    ctx.fillText(is_cursor && g == "." ? "@" :g.toUpperCase(), (x+1) * tile, (y+1) * tile);
+    ctx.fillText(is_cursor && g == "." ? "@" :g.toUpperCase(), (x+1) * tile.w, (y+1) * tile.h);
   }
 
   function clamp(v, min, max) { return v < min ? min : v > max ? max : v; }

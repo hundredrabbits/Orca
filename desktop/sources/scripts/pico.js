@@ -2,7 +2,7 @@ function Pico()
 {
   this.el = document.createElement("app");
 
-  this.program = new Program(29,29);
+  this.program = new Program(39,29);
   this.grid = new Grid();
 
   this.install = function()
