@@ -7,9 +7,16 @@ function program_K(x,y)
 
   this.operation = function()
   {
-    pico.program.remove(this.x-1,this.y)
-    pico.program.remove(this.x+1,this.y)
-    pico.program.remove(this.x,this.y+1)
-    pico.program.remove(this.x,this.y-1)
+    if(this.bang()){
+      pico.program.remove(this.x-1,this.y)
+      pico.program.remove(this.x+1,this.y)
+      pico.program.remove(this.x,this.y+1)
+      pico.program.remove(this.x,this.y-1)
+
+      pico.program.lock(this.x,this.y+1);
+      pico.program.lock(this.x,this.y-1);
+      pico.program.lock(this.x+1,this.y);
+      pico.program.lock(this.x-1,this.y);
+    }
   }
 }

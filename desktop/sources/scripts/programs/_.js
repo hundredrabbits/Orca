@@ -114,6 +114,12 @@ function Program_Default(x,y)
         return n;
       }
     }
+    return null;
+  }
+
+  this.bang = function()
+  {
+    return this.any_neighbor_is("b");
   }
 
   this.left = function()
