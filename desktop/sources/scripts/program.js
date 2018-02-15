@@ -5,6 +5,7 @@ function Program(w,h)
   this.s = "";
 
   this.locks = [];
+  this.glyphs = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","1","2","3","4","5","6","7","8","9","0"];
 
   this.reset = function()
   {
@@ -47,9 +48,10 @@ function Program(w,h)
     }
   }
 
-  this.glyph_at = function(x,y)
+  this.glyph_at = function(x,y,req = null)
   {
-    return this.s.substr(this.index_at(x,y),1).toLowerCase();
+    var s = this.s.substr(this.index_at(x,y),1).toLowerCase();
+    return req && req == s || !req ? s : "."
   }
 
   this.index_at = function(x,y)

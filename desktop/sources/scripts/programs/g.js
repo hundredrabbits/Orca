@@ -7,7 +7,7 @@ function program_G(x,y)
 
   this.operation = function()
   {
-    if(this.neighbors_like("b").length > 0){
+    if(this.bang()){
       this.fire();
     }
   }

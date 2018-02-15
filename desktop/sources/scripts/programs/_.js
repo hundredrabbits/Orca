@@ -122,27 +122,27 @@ function Program_Default(x,y)
     return this.any_neighbor_is("b");
   }
 
-  this.left = function()
+  this.left = function(req = null)
   {
-    var g = pico.program.glyph_at(this.x-1,this.y);
+    var g = pico.program.glyph_at(this.x-1,this.y,req);
     return g != "." ? {x:this.x-1,y:this.y,glyph:g} : null;
   }
 
-  this.right = function()
+  this.right = function(req)
   {
-    var g = pico.program.glyph_at(this.x+1,this.y);
+    var g = pico.program.glyph_at(this.x+1,this.y,req);
     return g != "." ? {x:this.x+1,y:this.y,glyph:g} : null;
   }
 
-  this.up = function()
+  this.up = function(req)
   {
-    var g = pico.program.glyph_at(this.x,this.y+1);
+    var g = pico.program.glyph_at(this.x,this.y+1,req);
     return g != "." ? {x:this.x,y:this.y+1,glyph:g} : null;
   }
 
-  this.down = function()
+  this.down = function(req)
   {
-    var g = pico.program.glyph_at(this.x,this.y-1);
+    var g = pico.program.glyph_at(this.x,this.y-1,req);
     return g != "." ? {x:this.x,y:this.y-1,glyph:g} : null;
   }
 }

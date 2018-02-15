@@ -10,7 +10,8 @@ function program_N(x,y)
     var n = this.neighbor();
 
     if(n && !this.is_numeric(n.glyph)){
-      pico.program.add(n.x,n.y,"1");  
+      var val = parseInt(n.glyph) > 0 ? n.glyph : "1";
+      pico.program.add(n.x,n.y,val);  
     }
   }
 
