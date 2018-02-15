@@ -7,13 +7,13 @@ function program_G(x,y)
 
   this.operation = function()
   {
-    if(this.any_neighbor_is("b")){
+    if(this.neighbors_like("b").length > 0){
       this.fire();
     }
   }
   this.fire = function()
   {
-    pico.program.add(this.x+1,this.y,"r")
-    pico.program.lock(this.x+1,this.y)  
+    pico.program.add(this.x,this.y+1,"d")
+    pico.program.lock(this.x,this.y+1)  
   }
 }

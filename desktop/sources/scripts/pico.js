@@ -17,7 +17,7 @@ function Pico()
     this.program.add(4,2,"i");
     this.program.add(4,3,"1");
     this.program.add(4,4,"t");
-    // this.program.add(4,6,"g");
+    this.program.add(6,4,"g");
 
     this.program.add(8,2,"i");
     this.program.add(8,3,"1");
