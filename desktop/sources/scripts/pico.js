@@ -26,6 +26,7 @@ function Pico()
     this.program.add(6,11,"g");
     this.program.add(7,13,"s");
     this.program.add(3,13,"s");
+    this.program.add(11,8,"s");
 
     setInterval(() => { this.run(); }, 200)
   }
