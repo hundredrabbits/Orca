@@ -84,7 +84,7 @@ function Program(w,h)
     if(g == "."){ return; }
     if(parseInt(g) > 0){ return; }
     if(!window[`program_${g.toUpperCase()}`]){ console.log(`unknown: program_${g.toUpperCase()}`); return; }
-    if(this.is_locked(x,y)){ return; }
+    if(this.is_locked(x,y) == true){ return; }
     new window[`program_${g.toUpperCase()}`](x,y).run();
   }
 }

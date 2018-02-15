@@ -18,7 +18,7 @@ function Program_Default(x,y)
   this.post = function()
   {
     if(this.x < 0 || this.x > pico.program.w-1 || this.y < 0 || this.y > pico.program.h-1){ 
-      pico.program.lock(this.x,this.y);
+      this.lock();
       pico.program.remove(this.x,this.y);
     }    
   }
@@ -35,8 +35,13 @@ function Program_Default(x,y)
 
   this.replace = function(g)
   {
-    pico.program.lock(this.x,this.y);
+    this.lock();
     pico.program.add(this.x,this.y,g)
+  }
+
+  this.lock = function()
+  {
+    pico.program.lock(this.x,this.y);
   }
 
   this.move = function(x,y,g)
@@ -48,7 +53,7 @@ function Program_Default(x,y)
 
   this.is_free = function(x,y)
   {
-    return pico.program.glyph_at(this.x+x,this.y+y) != "."
+    return pico.program.glyph_at(this.x+x,this.y+y) != "." && pico.program.glyph_at(this.x+x,this.y+y)
   }
 
   this.neighbor = function()
@@ -77,6 +82,16 @@ function Program_Default(x,y)
     if(this.right() && this.right().glyph == g){ a.push({x:this.x+1,y:this.y,glyph:pico.program.glyph_at(this.x,this.y-1)}); } 
     if(this.down() && this.down().glyph == g){ a.push({x:this.x,y:this.y-1,glyph:pico.program.glyph_at(this.x-1,this.y)}); }
     if(this.left() && this.left().glyph == g){ a.push({x:this.x-1,y:this.y,glyph:pico.program.glyph_at(this.x,this.y+1)}); }
+    return a;
+  }
+
+  this.neighbors_unlike = function(g)
+  {
+    var a = [];
+    if(this.up() && this.up().glyph != g){ a.push({x:this.x,y:this.y+1,glyph:pico.program.glyph_at(this.x+1,this.y)}); }
+    if(this.right() && this.right().glyph != g){ a.push({x:this.x+1,y:this.y,glyph:pico.program.glyph_at(this.x,this.y-1)}); } 
+    if(this.down() && this.down().glyph != g){ a.push({x:this.x,y:this.y-1,glyph:pico.program.glyph_at(this.x-1,this.y)}); }
+    if(this.left() && this.left().glyph != g){ a.push({x:this.x-1,y:this.y,glyph:pico.program.glyph_at(this.x,this.y+1)}); }
     return a;
   }
 
