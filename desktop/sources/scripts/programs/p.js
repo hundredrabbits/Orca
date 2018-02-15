@@ -11,7 +11,7 @@ function program_P(x,y)
 
     if(n){
       pico.program.remove(n.x,n.y)
-      pico.program.add(this.x+1,this.y,n.glyph);  
+      pico.program.add(this.x,this.y+1,n.glyph);  
     }
   }
 }

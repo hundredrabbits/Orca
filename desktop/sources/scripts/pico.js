@@ -2,7 +2,7 @@ function Pico()
 {
   this.el = document.createElement("app");
 
-  this.program = new Program(64,48);
+  this.program = new Program(48,32);
   this.grid = new Grid();
 
   this.install = function()
@@ -15,13 +15,17 @@ function Pico()
   this.start = function()
   {
     this.program.add(4,2,"i");
+    this.program.add(3,3,"m");
+    this.program.add(2,3,"5");
     this.program.add(4,3,"1");
-    this.program.add(4,4,"t");
+    this.program.add(3,5,"t");
     this.program.add(4,6,"g");
-    this.program.add(3,11,"s");
-    this.program.add(4,12,"s");
-    this.program.add(8,12,"o");
-    this.program.add(8,14,"g");
+    this.program.add(3,8,"s");
+    this.program.add(4,9,"s");
+    this.program.add(6,9,"o");
+    this.program.add(6,11,"g");
+    this.program.add(7,13,"s");
+    this.program.add(3,13,"s");
 
     setInterval(() => { this.run(); }, 200)
   }
