@@ -2,9 +2,11 @@ function Grid()
 {
   this.el = document.createElement("canvas");
 
-  this.size = {width:600,height:600,ratio:1}
+  this.size = {width:600,height:600,ratio:0.75}
   this.el.width = this.size.width;
   this.el.height = this.size.height;
+  this.el.style.width = (this.size.width * this.size.ratio)+"px";
+  this.el.style.height = (this.size.height * this.size.ratio)+"px";
 
   this.cursor = {
     x:0,
@@ -33,7 +35,7 @@ function Grid()
     while(y < pico.program.h){
       var x = 0;
       while(x < pico.program.w){
-        this.draw_sprite(x,y,pico.program.glyph_at(x,y));
+        this.draw_sprite(x,y,pico.program.glyph_at(x,y),this.cursor.x == x && this.cursor.y == y);
         x += 1
       }
       y += 1;
@@ -49,20 +51,19 @@ function Grid()
   {
     var ctx = this.context();
 
-    ctx.clearRect(0, 0, this.size.width * this.size.ratio, this.size.height * this.size.ratio);
+    ctx.clearRect(0, 0, this.size.width, this.size.height);
   }
 
-  this.draw_sprite = function(x,y,g)
+  this.draw_sprite = function(x,y,g,is_cursor = false)
   {
-    var font_size    = 10;
+    var font_size    = 20;
     var ctx          = this.context();
-    ctx.font         = `${font_size}px`;
-    ctx.fillStyle    = 'white';
+    ctx.font         = `${font_size}px input_mono_regular`;
+    ctx.fillStyle    = is_cursor ? 'red' : 'white';
     ctx.textBaseline = 'top';
     ctx.textAlign    = "left"; 
-    ctx.fillText(g, x * 10, y * 10);
+    ctx.fillText(is_cursor && g == "." ? "@" :g.toUpperCase(), x * 20, y * 20);
   }
-
 
   function clamp(v, min, max) { return v < min ? min : v > max ? max : v; }
 }
