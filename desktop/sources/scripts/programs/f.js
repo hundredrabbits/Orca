@@ -10,7 +10,7 @@ function program_F(x,y)
   {
     if(!this.left() || !this.right()){ return; }
     
-    if(this.left().glyph == this.right().glyph){
+    if(this.left(this.right().glyph)){
       pico.program.add(this.x,this.y+1,"b");
       pico.program.lock(this.x,this.y+1);
     }

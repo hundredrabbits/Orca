@@ -95,10 +95,10 @@ function Program_Default(x,y)
   this.neighbors_unlike = function(g)
   {
     var a = [];
-    if(this.up() && this.up().glyph != g){ a.push({x:this.x,y:this.y+1,glyph:pico.program.glyph_at(this.x+1,this.y)}); }
-    if(this.right() && this.right().glyph != g){ a.push({x:this.x+1,y:this.y,glyph:pico.program.glyph_at(this.x,this.y-1)}); } 
-    if(this.down() && this.down().glyph != g){ a.push({x:this.x,y:this.y-1,glyph:pico.program.glyph_at(this.x-1,this.y)}); }
-    if(this.left() && this.left().glyph != g){ a.push({x:this.x-1,y:this.y,glyph:pico.program.glyph_at(this.x,this.y+1)}); }
+    if(this.up() && this.up().glyph != g){ a.push(this.up()); }
+    if(this.right() && this.right().glyph != g){ a.push(this.right()); } 
+    if(this.down() && this.down().glyph != g){ a.push(this.down()); }
+    if(this.left() && this.left().glyph != g){ a.push(this.left()); }
     return a;
   }
 
@@ -143,13 +143,13 @@ function Program_Default(x,y)
 
   this.up = function(req)
   {
-    var g = pico.program.glyph_at(this.x,this.y+1,req);
+    var g = pico.program.glyph_at(this.x,this.y-1,req);
     return g != "." ? {x:this.x,y:this.y+1,glyph:g} : null;
   }
 
   this.down = function(req)
   {
-    var g = pico.program.glyph_at(this.x,this.y-1,req);
+    var g = pico.program.glyph_at(this.x,this.y+1,req);
     return g != "." ? {x:this.x,y:this.y-1,glyph:g} : null;
   }
 

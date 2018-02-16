@@ -4,6 +4,7 @@ function program_O(x,y)
 
   this.name = "odd"
   this.glyph = "o";
+  this.ports = [{x:0,y:-1}];
 
   this.operation = function()
   {

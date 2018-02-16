@@ -4,6 +4,7 @@ function program_Q(x,y)
 
   this.name = "even"
   this.glyph = "q";
+  this.ports = [{x:0,y:-1},{x:0,y:1,output:true}];
 
   this.operation = function()
   {

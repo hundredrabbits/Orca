@@ -4,23 +4,18 @@ function program_T(x,y)
 
   this.name = "trigger"
   this.glyph = "t";
+  this.ports = [{x:0,y:-1},{x:0,y:1,output:true}];
 
   this.operation = function()
   {
-    var n = this.any_neighbor_is("0");
-    if(n){
+    if(this.up("1")){
       this.fire();
-      pico.program.add(n.x,n.y,"1");
     }
   }
 
   this.fire = function()
   {
-    var ns = this.free_neighbors();
-    for(id in ns){
-      var n = ns[id];
-      pico.program.add(n.x,n.y,"b");
-      pico.program.lock(n.x,n.y);
-    }
+    pico.program.add(this.x,this.y+1,"b");
+    pico.program.lock(this.x,this.y+1);
   }
 }
