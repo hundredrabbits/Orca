@@ -97,12 +97,12 @@ function Grid()
         ctx.fillStyle    = 'black';
       }
       else if(styles.is_port.bang){
-        ctx.fillStyle = '#ff0'
+        ctx.fillStyle = '#ffb545'
         ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
         ctx.fillStyle    = 'black';
       }
       else{
-        ctx.fillStyle = '#f00'
+        ctx.fillStyle = '#444'
         ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
         ctx.fillStyle    = 'white';
       }

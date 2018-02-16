@@ -47,7 +47,6 @@ function program_W(x,y)
         warp_id = id;
       }
     }
-
     return warps[(warp_id+1) % warps.length]
   }
 }
