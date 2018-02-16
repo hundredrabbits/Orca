@@ -4,6 +4,7 @@ function program_C(x,y)
 
   this.name = "chain"
   this.glyph = "c";
+  this.ports = [{x:0,y:0,bang:true}];
 
   this.operation = function()
   {

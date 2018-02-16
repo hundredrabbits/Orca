@@ -78,19 +78,37 @@ function Grid()
   {
     var tile         = {w:15,h:20}
     var ctx          = this.context();
+
+    ctx.textBaseline = 'bottom';
+    ctx.textAlign    = "center"; 
+    ctx.font         = `${tile.h*0.75}px input_mono_regular`;
+
     if(styles.is_cursor){
       ctx.fillStyle    = styles.is_cursor ? 'white' : 'black';
       ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
+      ctx.fillStyle    = 'black';
     }
-    if(styles.is_port){
-      ctx.fillStyle    = styles.is_port.output ? '#72dec2' : 'red';
-      ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
+    else if(styles.is_port){
+      if(styles.is_port.output){
+        ctx.fillStyle = '#72dec2'
+        ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
+        ctx.fillStyle    = 'black';
+      }
+      else if(styles.is_port.bang){
+        ctx.fillStyle = '#ff0'
+        ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
+        ctx.fillStyle    = 'black';
+      }
+      else{
+        ctx.fillStyle = '#f00'
+        ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
+        ctx.fillStyle    = 'white';
+      }
+    }
+    else{
+      ctx.fillStyle    = 'white';
     }
     
-    ctx.font         = `${tile.h*0.75}px input_mono_regular`;
-    ctx.fillStyle    = styles.is_cursor ? 'black' : 'white';
-    ctx.textBaseline = 'bottom';
-    ctx.textAlign    = "center"; 
     ctx.fillText(styles.is_cursor && g == "." ? "@" :g.toUpperCase(), (x+1) * tile.w, (y+1) * tile.h);
   }
 

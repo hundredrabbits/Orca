@@ -26,7 +26,7 @@ function Program_Default(x,y)
 
     for(id in this.ports){
       var port = this.ports[id];
-      pico.program.ports.push({x:this.x+port.x,y:this.y+port.y,output:port.output});  
+      pico.program.ports.push({x:this.x+port.x,y:this.y+port.y,output:port.output,bang:port.bang});  
     }
   }
 
