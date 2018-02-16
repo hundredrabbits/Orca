@@ -7,12 +7,14 @@ function program_X(x,y)
 
   this.operation = function()
   {
+    this.ports = [{x:-1,y:0},{x:0,y:1,output:true},{x:1,y:0,output:true}];
+
     if(this.left("0")){
-      pico.program.remove(this.x-1,this.y);
+      // pico.program.remove(this.x-1,this.y);
       this.fire(1,0)
     }
     if(this.left("1")){
-      pico.program.remove(this.x-1,this.y);
+      // pico.program.remove(this.x-1,this.y);
       this.fire(0,1)
     }
   }
