@@ -6,7 +6,7 @@ function Program(w,h)
 
   this.locks = [];
   this.ports = [];
-  this.glyphs = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","1","2","3","4","5","6","7","8","9","0"];
+  this.glyphs = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",".","1","2","3","4","5","6","7","8","9","0"];
 
   this.reset = function()
   {
@@ -87,6 +87,7 @@ function Program(w,h)
   {
     if(g == "."){ return; }
     if(parseInt(g) > 0){ return; }
+    if(g == "&"){ g = "output"; }
     if(!window[`program_${g.toUpperCase()}`]){ console.log(`unknown: program_${g.toUpperCase()}`); return; }
     if(this.is_locked(x,y) == true){ return; }
     new window[`program_${g.toUpperCase()}`](x,y).run();

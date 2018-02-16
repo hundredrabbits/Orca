@@ -14,7 +14,7 @@ function Pico()
 
   this.start = function()
   {
-    // this.program.add(4,2,"i");
+    this.program.add(this.program.w-1,this.program.h-1,"&");
     // this.program.add(3,3,"m");
     // this.program.add(2,3,"5");
     // this.program.add(4,3,"1");
