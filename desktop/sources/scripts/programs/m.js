@@ -4,6 +4,7 @@ function program_M(x,y)
 
   this.name = "modulo"
   this.glyph = "m";
+  this.ports = [{x:-1,y:0},{x:1,y:0},{x:0,y:1,output:true}];
 
   this.operation = function()
   {

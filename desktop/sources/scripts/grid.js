@@ -35,11 +35,31 @@ function Grid()
     while(y < pico.program.h){
       var x = 0;
       while(x < pico.program.w){
-        this.draw_sprite(x,y,pico.program.glyph_at(x,y),this.cursor.x == x && this.cursor.y == y);
+        var styles = {
+          is_cursor: pico.grid.is_cursor(x,y),
+          is_port: pico.grid.is_port(x,y)
+        }
+        this.draw_sprite(x,y,pico.program.glyph_at(x,y),styles);
         x += 1
       }
       y += 1;
     }
+  }
+
+  this.is_cursor = function(x,y)
+  {
+    return this.cursor.x == x && this.cursor.y == y;
+  }
+
+  this.is_port = function(x,y)
+  {
+    for(id in pico.program.ports){
+      var port = pico.program.ports[id];
+      if(port.x == x && port.y == y){
+        return port;
+      }
+    }
+    return false;
   }
 
   this.context = function()
@@ -54,20 +74,24 @@ function Grid()
     ctx.clearRect(0, 0, this.size.width, this.size.height);
   }
 
-  this.draw_sprite = function(x,y,g,is_cursor = false)
+  this.draw_sprite = function(x,y,g,styles)
   {
     var tile         = {w:15,h:20}
     var ctx          = this.context();
-    if(is_cursor){
-      ctx.fillStyle    = is_cursor ? 'white' : 'black';
+    if(styles.is_cursor){
+      ctx.fillStyle    = styles.is_cursor ? 'white' : 'black';
+      ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
+    }
+    if(styles.is_port){
+      ctx.fillStyle    = styles.is_port.output ? '#72dec2' : 'red';
       ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
     }
     
     ctx.font         = `${tile.h*0.75}px input_mono_regular`;
-    ctx.fillStyle    = is_cursor ? 'black' : 'white';
+    ctx.fillStyle    = styles.is_cursor ? 'black' : 'white';
     ctx.textBaseline = 'bottom';
     ctx.textAlign    = "center"; 
-    ctx.fillText(is_cursor && g == "." ? "@" :g.toUpperCase(), (x+1) * tile.w, (y+1) * tile.h);
+    ctx.fillText(styles.is_cursor && g == "." ? "@" :g.toUpperCase(), (x+1) * tile.w, (y+1) * tile.h);
   }
 
   function clamp(v, min, max) { return v < min ? min : v > max ? max : v; }

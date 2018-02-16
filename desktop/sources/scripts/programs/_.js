@@ -1,8 +1,10 @@
 function Program_Default(x,y)
 {
+  this.name = "<missing name>"
   this.x = x;
   this.y = y;
   this.glyph = "."
+  this.ports = []
 
   this.pre = function()
   {
@@ -20,7 +22,12 @@ function Program_Default(x,y)
     if(this.x < 0 || this.x > pico.program.w-1 || this.y < 0 || this.y > pico.program.h-1){ 
       this.lock();
       pico.program.remove(this.x,this.y);
-    }    
+    }
+
+    for(id in this.ports){
+      var port = this.ports[id];
+      pico.program.ports.push({x:this.x+port.x,y:this.y+port.y,output:port.output});  
+    }
   }
 
   this.operation = function()
@@ -144,5 +151,10 @@ function Program_Default(x,y)
   {
     var g = pico.program.glyph_at(this.x,this.y-1,req);
     return g != "." ? {x:this.x,y:this.y-1,glyph:g} : null;
+  }
+
+  this.docs = function()
+  {
+    return `${this.name}`
   }
 }

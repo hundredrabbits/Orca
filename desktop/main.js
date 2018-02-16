@@ -31,7 +31,7 @@ app.win = null;
 
 app.on('ready', () => 
 {
-  app.win = new BrowserWindow({width: 700, height: 700, minWidth:700, minHeight:700, frame:false, autoHideMenuBar: true,backgroundColor: '#000000', resizable:true, autoHideMenuBar: true,icon: __dirname + '/icon.ico'})
+  app.win = new BrowserWindow({width: 510, height: 510, minWidth:510, minHeight:510, frame:false, autoHideMenuBar: true,backgroundColor: '#000000', resizable:true, autoHideMenuBar: true,icon: __dirname + '/icon.ico'})
 
   app.win.loadURL(`file://${__dirname}/sources/index.html`)
 
