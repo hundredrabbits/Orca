@@ -10,6 +10,7 @@ function program_C(x,y)
   {
     if(this.bang()){
       this.fire()
+      this.lock()
     }
   }
 
