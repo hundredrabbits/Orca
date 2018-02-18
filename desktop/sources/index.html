@@ -44,6 +44,10 @@
   </head>
   <body>
     <script>
+      const {dialog,app} = require('electron').remote;
+      const fs = require('fs');
+      const app_path = app.getAppPath();
+      
       var pico = new Pico();
       pico.install();
       pico.start();

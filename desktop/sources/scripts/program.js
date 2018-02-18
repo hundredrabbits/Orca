@@ -10,6 +10,7 @@ function Program(w,h)
 
   this.reset = function()
   {
+    this.s = "";
     var y = 0;
     while(y < this.h){
       var x = 0;

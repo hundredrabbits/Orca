@@ -5,6 +5,9 @@ function Keyboard()
 
   this.listen_onkeydown = function(event)
   {
+    if(event.metaKey){ return; }
+    if(event.ctrlKey){ return; }
+    
     if(event.key == "`"){ pico.program.debug(); event.preventDefault(); return;}
     if(event.keyCode == 38){ keyboard.key_arrow_up(); return; }
     if(event.keyCode == 40){ keyboard.key_arrow_down(); return; }
