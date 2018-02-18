@@ -2,21 +2,12 @@ function program_N(x,y)
 {
   Program_Default.call(this,x,y);
 
-  this.name = "numeric"
+  this.name = "turn"
   this.glyph = "n";
+  this.ports = [{x:0,y:1,output:true}];
 
   this.operation = function()
   {
-    var n = this.neighbor();
-
-    if(n && !this.is_numeric(n.glyph)){
-      var val = parseInt(n.glyph) > 0 ? n.glyph : "1";
-      pico.program.add(n.x,n.y,val);  
-    }
-  }
-
-  this.is_numeric = function(n)
-  {
-    return !isNaN(parseFloat(n)) && isFinite(n);
+    pico.program.add(this.x,this.y+1,(pico.f % 9)+"");
   }
 }

@@ -48,6 +48,8 @@ function Program(w,h)
       }
       y += 1;
     }
+
+    this.s = this.s.substr(0,this.w*this.h)
   }
 
   this.glyph_at = function(x,y,req = null)
@@ -86,8 +88,8 @@ function Program(w,h)
   this.operate = function(x,y,g)
   {
     if(g == "."){ return; }
+    if(g == "0"){ return; }
     if(parseInt(g) > 0){ return; }
-    if(g == "&"){ g = "output"; }
     if(!window[`program_${g.toUpperCase()}`]){ console.log(`unknown: program_${g.toUpperCase()}`); return; }
     if(this.is_locked(x,y) == true){ return; }
     new window[`program_${g.toUpperCase()}`](x,y).run();

@@ -2,7 +2,7 @@ function program_Z(x,y)
 {
   Program_Default.call(this,x,y);
 
-  this.name = "random"
+  this.name = "creep"
   this.glyph = "z";
 
   this.operation = function()
