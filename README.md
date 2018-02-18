@@ -16,69 +16,69 @@ When a bang is nearby, it fires bangs in nearby available cells.
 ### Down `D`
 Moves southward.
 
-### explode `E`
+### Explode `E`
 When a cell is nearby, it creates 4 new cells of that type, and is destroyed.
 
-### if `F`
+### If `F`
 This function expects 2 functions, if the functions corresponds, F bangs southward.
 
-### generator `G`
+### Generator `G`
 Generates a `D` on bang.
 
-### halt `H`
+### Halt `H`
 Stops nearby functions from operating.
 
-### increment `I`
+### Increment `I`
 Increments a nearby numeric function on **bang**.
 
-### jump `J`
+### Jump `J`
 Moves the westward program to eastward, on **bang**.
 
-### kill `K`
+### Kill `K`
 Kills all nearby functions, on **bang**.
 
-### left `L`
+### Left `L`
 Moves westward.
 
-### modulo `M`
+### Modulo `M`
 No details.
 
-### turn `N`
+### Turn `N`
 Creates a numerical function southward, the value is a fraction of the current frame number.
 
-### odd `O`
+### Odd `O`
 Transforms into `Q` when a function is present northward.
 
-### push `P`
+### Push `P`
 Is moved away, on **bang**.
 
-### even `Q`
+### Even `Q`
 Transforms into `O`, and **bangs** southward, when a function is present northward.
 
-### right `R`
+### Right `R`
 Moves eastward.
 
-### shift `S`
+### Shift `S`
 Shifts the `U`, `R`, `D`, `L` functions.
 
-### trigger `T`
+### Trigger `T`
 Bangs southward in the presence of `1`, `U`, `R`, `D` or `L` functions northward.
 
-### up `U`
+### Up `U`
 Moves Northward.
 
-### value `V`
+### Value `V`
 Creates a numerical value between 0 and 5 based on the number of present functions westward.
 
-### warp `W`
+### Warp `W`
 Warps northward function to the next available warp.
 
-### split `X`
+### Split `X`
 Bangs eastward on a westward `0`, and bangs southward on `1`.
 
-### automata `Y`
+### Automata `Y`
 Game of life-like automation.
 
-### creep `Z`
+### Creep `Z`
 Moves to a random available cell.
 
