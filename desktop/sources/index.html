@@ -1,5 +1,8 @@
 <html>
   <head>
+    <script type="text/javascript" src="scripts/lib/logo.js"></script>
+    <script type="text/javascript" src="scripts/lib/controller.js"></script>
+
     <script type="text/javascript" src="scripts/pico.js"></script>
     <script type="text/javascript" src="scripts/program.js"></script>
     <script type="text/javascript" src="scripts/grid.js"></script>
@@ -41,16 +44,17 @@
   </head>
   <body>
     <script>
-        
-        var pico = new Pico();
-        pico.install();
-        pico.start();
+      var pico = new Pico();
+      pico.install();
+      pico.start();
 
-        var keyboard = new Keyboard();
-        // document.onkeyup = function(event){ keyboard.listen_onkeyup(event); };
-        document.onkeydown = function(event){ keyboard.listen_onkeydown(event); };
-        // document.addEventListener('mousedown', function(e){ oquonie.mousedown(e); }, false);
+      var logo = new Logo();
+      logo.install(120);
 
+      setTimeout(function(){ logo.remove(); }, 5500);
+
+      var keyboard = new Keyboard();
+      document.onkeydown = function(event){ keyboard.listen_onkeydown(event); };
       </script>
   </body>
 </html>
