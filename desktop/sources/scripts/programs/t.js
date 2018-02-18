@@ -8,7 +8,7 @@ function program_T(x,y)
 
   this.operation = function()
   {
-    if(this.up("1")){
+    if(this.up("1") || this.up("r") || this.up("l") || this.up("u") || this.up("d") || this.up("b")){
       this.fire();
     }
   }
