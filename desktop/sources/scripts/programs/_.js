@@ -60,7 +60,7 @@ function Program_Default(x,y)
 
   this.is_free = function(x,y)
   {
-    return pico.program.glyph_at(this.x+x,this.y+y) != "." && pico.program.glyph_at(this.x+x,this.y+y)
+    return pico.program.glyph_at(this.x+x,this.y+y) == "." ? true : pico.program.glyph_at(this.x+x,this.y+y)
   }
 
   this.neighbor = function()
@@ -85,10 +85,10 @@ function Program_Default(x,y)
   this.neighbors_like = function(g)
   {
     var a = [];
-    if(this.up() && this.up().glyph == g){ a.push({x:this.x,y:this.y+1,glyph:pico.program.glyph_at(this.x+1,this.y)}); }
-    if(this.right() && this.right().glyph == g){ a.push({x:this.x+1,y:this.y,glyph:pico.program.glyph_at(this.x,this.y-1)}); } 
-    if(this.down() && this.down().glyph == g){ a.push({x:this.x,y:this.y-1,glyph:pico.program.glyph_at(this.x-1,this.y)}); }
-    if(this.left() && this.left().glyph == g){ a.push({x:this.x-1,y:this.y,glyph:pico.program.glyph_at(this.x,this.y+1)}); }
+    if(this.up(g)){ a.push(this.up(g)); }
+    if(this.right(g)){ a.push(this.right(g)); } 
+    if(this.down(g)){ a.push(this.down(g)); }
+    if(this.left(g)){ a.push(this.left(g)); }
     return a;
   }
 

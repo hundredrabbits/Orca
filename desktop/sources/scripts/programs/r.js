@@ -7,7 +7,7 @@ function program_R(x,y)
 
   this.operation = function()
   {
-    if(this.is_free(1,0)){ this.replace("b"); this.lock(); return; }
+    if(!this.is_free(1,0)){ this.replace("b"); this.lock(); return; }
     this.move(1,0);
   }
 }

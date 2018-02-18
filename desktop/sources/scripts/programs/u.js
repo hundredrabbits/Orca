@@ -7,7 +7,7 @@ function program_U(x,y)
 
   this.operation = function()
   {
-    if(this.is_free(0,-1)){ this.replace("b"); this.lock(); return; }
+    if(!this.is_free(0,-1)){ this.replace("b"); this.lock(); return; }
     this.move(0,-1);
   }
 }
