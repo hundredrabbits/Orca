@@ -1,15 +1,20 @@
 {
-  "name": "Clock",
+  "name": "Pico",
   "version": "0.1.0",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "time":"node time.js",
-    "clean"        : "rm -r ~/Desktop/Clock-darwin-x64/ ; rm -r ~/Desktop/Clock-linux-x64/ ; rm -r ~/Desktop/Clock-win32-x64/ ; echo 'cleaned build location'",
-    "build_osx"    : "electron-packager . Clock --platform=darwin --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.icns ; echo 'Built for OSX'",
-    "build_linux"  : "electron-packager . Clock --platform=linux  --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.ico ; echo 'Built for LINUX'",
-    "build_win"    : "electron-packager . Clock --platform=win32  --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.ico ; echo 'Built for WIN'",
-    "build"        : "npm run clean ; npm run build_osx ; npm run build_linux ; npm run build_win"
+    "clean"        : "rm -r ~/Desktop/Pico-darwin-x64/ ; rm -r ~/Desktop/Pico-linux-x64/ ; rm -r ~/Desktop/Pico-win32-x64/ ; echo 'cleaned build location'",
+    "build_osx"    : "electron-packager . Pico --platform=darwin --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.icns ; echo 'Built for OSX'",
+    "build_linux"  : "electron-packager . Pico --platform=linux  --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.ico ; echo 'Built for LINUX'",
+    "build_win"    : "electron-packager . Pico --platform=win32  --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.ico ; echo 'Built for WIN'",
+    "build"        : "npm run clean ; npm run build_osx ; npm run build_linux ; npm run build_win",
+    "push_osx"     : "~/butler push ~/Desktop/Pico-darwin-x64/ hundredrabbits/pico:osx-64",
+    "push_linux"   : "~/butler push ~/Desktop/Pico-linux-x64/ hundredrabbits/pico:linux-64",
+    "push_win"     : "~/butler push ~/Desktop/Pico-win32-x64/ hundredrabbits/pico:windows-64",
+    "push_status"  : "~/butler status hundredrabbits/pico",
+    "push"         : "npm run build ; npm run push_osx ; npm run push_linux ; npm run push_win ; npm run clean ; npm run push_status"
   },
   "devDependencies": {
     "electron": "^1.8.1"
