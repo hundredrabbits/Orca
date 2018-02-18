@@ -7,11 +7,13 @@ function program_E(x,y)
 
   this.operation = function()
   {
-    if(!this.neighbor()){
+    var ns = this.neighbors_unlike(this.glyph);
+
+    if(ns.length < 1){
       return;
     }
 
-    var g = this.neighbor().glyph
+    var g = ns[0].glyph
 
     pico.program.add(this.x-1,this.y,g);
     pico.program.add(this.x+1,this.y,g);
