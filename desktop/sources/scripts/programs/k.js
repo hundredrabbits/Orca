@@ -4,6 +4,7 @@ function program_K(x,y)
 
   this.name = "kill"
   this.glyph = "k";
+  this.ports = [{x:0,y:0,bang:true}];
 
   this.operation = function()
   {
