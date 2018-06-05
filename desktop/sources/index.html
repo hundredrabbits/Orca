@@ -53,10 +53,10 @@
       pico.install();
       pico.start();
 
-      var logo = new Logo();
-      logo.install(120);
+      // var logo = new Logo();
+      // logo.install(120);
 
-      setTimeout(function(){ logo.remove(); }, 5500);
+      // setTimeout(function(){ logo.remove(); }, 5500);
 
       var keyboard = new Keyboard();
       document.onkeydown = function(event){ keyboard.listen_onkeydown(event); };

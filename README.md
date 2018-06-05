@@ -26,7 +26,7 @@ This function expects 2 functions, if the functions corresponds, F bangs southwa
 Generates a `D` on bang.
 
 ### Halt `H`
-Stops nearby functions from operating.
+Stops neighbor function from operating.
 
 ### Increment `I`
 Increments a nearby numeric function on **bang**.

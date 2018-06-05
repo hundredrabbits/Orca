@@ -5,12 +5,11 @@ function program_H(x,y)
   this.name = "halt"
   this.glyph = "h";
 
+
+  this.ports = [{x:0,y:1,output:true}]
+
   this.operation = function()
   {
-    var n = this.neighbor();
-
-    if(n){
-      pico.program.lock(n.x,n.y);
-    }
+    pico.program.lock(this.x,this.y+1);
   }
 }
