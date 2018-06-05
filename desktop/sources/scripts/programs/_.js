@@ -6,6 +6,11 @@ function Program_Default(x,y)
   this.glyph = "."
   this.ports = []
 
+  this.id = function()
+  {
+    return this.x + (this.y * pico.program.h)
+  }
+
   this.pre = function()
   {
   }

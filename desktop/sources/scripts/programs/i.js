@@ -4,15 +4,13 @@ function program_I(x,y)
 
   this.name = "increment"
   this.glyph = "i";
-  this.ports = [{x:0,y:0,bang:true}]
+  this.ports = [{x:0,y:0,bang:true},{x:0,y:1,output:true}]
 
   this.operation = function()
   {
-    if(this.bang()){
-      var n = this.neighbors_unlike("b")[0];
-      if(n){
-        pico.program.add(n.x,n.y,this.inc(n.glyph));  
-      }
+    if(this.bang() && this.down()){
+      var n = this.down();
+      pico.program.add(this.x,this.y+1,this.inc(n.glyph));
     }
   }
 

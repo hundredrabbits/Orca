@@ -4,11 +4,11 @@ function program_A(x,y)
 
   this.name = "add"
   this.glyph = "a";
-  this.ports = [{x:-1,y:0},{x:1,y:0},{x:0,y:2,output:true}];
+  this.ports = [{x:-1,y:0},{x:1,y:0},{x:0,y:2,output:true},{x:0,y:0,bang:true}];
 
   this.operation = function()
   {
-    if(this.left() && this.right()){
+    if(this.left() && this.right() && this.bang()){
       var sum = parseFloat(this.left().glyph) + parseFloat(this.right().glyph)
       var index = parseInt(sum) % pico.program.glyphs.length;
 
