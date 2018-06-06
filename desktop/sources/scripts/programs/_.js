@@ -65,7 +65,8 @@ function Program_Default(x,y)
     if(this.y+y >= pico.program.h){ return false; }
     if(this.y+y <= -1){ return false; }
 
-    return pico.program.glyph_at(this.x+x,this.y+y) == "." ? true : pico.program.glyph_at(this.x+x,this.y+y)
+    var target = pico.program.glyph_at(this.x+x,this.y+y)
+    return target == "." || target == "b" ? true : target
   }
 
   this.neighbor = function()
