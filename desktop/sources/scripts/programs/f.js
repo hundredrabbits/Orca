@@ -4,13 +4,14 @@ function program_F(x,y)
 
   this.name = "if"
   this.glyph = "f";
-  this.ports = [{x:-1,y:0},{x:1,y:0},{x:0,y:1,output:true}];
+  this.ports = [{x:-1,y:0},{x:1,y:0},{x:0,y:1,output:true},{x:0,y:0,bang:true}];
 
   this.operation = function()
   {
-    if(!this.left() || !this.right()){ return; }
+    if(!this.left() || !this.right() || !this.bang()){ return; }
     
     if(this.left(this.right().glyph)){
+      pico.program.remove(this.x-1,this.y)  
       pico.program.add(this.x,this.y+1,"b");
       pico.program.lock(this.x,this.y+1);
     }

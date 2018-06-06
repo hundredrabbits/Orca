@@ -21,7 +21,7 @@ function Grid()
     insert: function(key){
       var key = key.toLowerCase();
       if(pico.program.glyphs.indexOf(key) < 0){ console.log("Illegal rune"); return; }
-      pico.program.add(this.x,this.y,key)
+      pico.program.add(this.x,this.y,key);
     },
     inspect: function(){
       return pico.program.glyph_at(this.x,this.y)

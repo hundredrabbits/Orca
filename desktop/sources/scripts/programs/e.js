@@ -9,21 +9,19 @@ function program_E(x,y)
 
   this.operation = function()
   {
-    var ns = this.neighbors_unlike(this.glyph);
-
-    if(ns.length < 1 || !this.bang()){
-      return;
+    if(this.bang()){
+      this.fire()
+      this.lock()
     }
+  }
 
+  this.fire = function()
+  {
+    var ns = this.free_neighbors();
     for(id in ns){
-      var n = ns[id]
-      if(n.glyph == "e"){ continue; }
-      pico.program.add(this.x-1,this.y,n.glyph);
-      pico.program.add(this.x+1,this.y,n.glyph);
-      pico.program.add(this.x,this.y-1,n.glyph);
-      pico.program.add(this.x,this.y+1,n.glyph);
-      this.replace(".")
-
+      var n = ns[id];
+      pico.program.add(n.x,n.y,"b");
+      pico.program.lock(n.x,n.y);
     }
   }
 }

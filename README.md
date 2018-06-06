@@ -5,22 +5,22 @@ Not much is known about the machine, but it seems to be reacting to our presence
 ## Programs
 
 ### Add `A`
-This function expects 2 numerical values, adds them up to generate an index, and create the letter function corresponding to this index, on **bang**.
+This function expects 2 numerical values, adds them up to generate an index, and create the function corresponding to this index, on **bang**.
 
 ### Bang `B`
 The **bang** function is used to trigger various functions, only lasts one cycle.
 
-### Chain `C`
-Fires bangs in nearby available cells, on **bang**.
+### Clone `C`
+Clones the westward function, eastwardly, on **bang**.
 
 ### Down `D`
 Moves southward.
 
 ### Explode `E`
-When a cell is nearby, it creates 4 new cells of that type, and is destroyed, on **bang**.
+Fires bangs in nearby available cells, on **bang**.
 
 ### If `F`
-This function expects 2 functions, if the functions corresponds, F bangs southward.
+This function expects 2 functions, if the functions corresponds, F bangs southward, on **bang**. Erases function westward.
 
 ### Generator `G`
 Generates a `D` on **bang**.
@@ -44,7 +44,7 @@ Moves westward.
 Creates the result of the modulo operation of east and west values, soutward on **bang**.
 
 ### Turn `N`
-Creates a numerical function southward, the value is a fraction of the current frame number.
+Creates a numerical function southward, based on the *runtime frame*.
 
 ### Odd `O`
 Transforms into `Q` when a function is present northward.
@@ -80,5 +80,5 @@ Bangs eastward on a westward `0`, and bangs southward on `1`.
 Game of life-like automation.
 
 ### Creep `Z`
-Moves to a the next available location in a cycle of `U`,`D`,`L`,`R` based on the runtime frame.
+Moves to a the next available location in a cycle of `U`,`D`,`L`,`R` based on the *runtime frame*.
 

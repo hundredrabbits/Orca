@@ -87,7 +87,7 @@ function Synth()
   this.kick = function()
   {
     var synth = new Tone.MembraneSynth().toMaster();
-    synth.triggerAttackRelease("C2", "8n");
+    synth.triggerAttackRelease("C2", "16n");
   }
 
   this.clear = function()
