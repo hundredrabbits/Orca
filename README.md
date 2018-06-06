@@ -41,7 +41,7 @@ Kills all nearby functions, on **bang**.
 Moves westward.
 
 ### Modulo `M`
-Creates the result of the modulo operation of east and west values, soutward on **bang**.
+Creates the result of the modulo operation of east and west values southward.
 
 ### Turn `N`
 Creates a numerical function southward, based on the *runtime frame*.

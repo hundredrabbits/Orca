@@ -8,11 +8,25 @@ function program_A(x,y)
 
   this.operation = function()
   {
-    if(this.left() && this.right() && this.bang()){
-      var sum = parseFloat(this.left().glyph) + parseFloat(this.right().glyph)
-      var index = parseInt(sum) % pico.program.glyphs.length;
+    if(!this.bang()){ return; }
 
-      pico.program.add(this.x,this.y+2,pico.program.glyphs[index]);
-    }
+    var left = !this.left() ? "0" : this.left().glyph 
+    var right = !this.right() ? "0" : this.right().glyph
+
+    var index = (this.convert(left) + this.convert(right)) % pico.program.glyphs.length
+    var output = pico.program.glyphs[index]
+    console.log(output)
+
+    pico.program.add(this.x,this.y+2,output);
+  }
+
+  this.convert = function(glyph)
+  {
+    return pico.program.glyphs.indexOf(glyph)
+  }
+
+  function is_numeric(glyph)
+  {
+    return 
   }
 }
