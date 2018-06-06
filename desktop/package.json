@@ -20,7 +20,7 @@
     "electron": "^1.8.1"
   },
   "dependencies": {
-    "electron-packager": "^8.4.0",
+    "electron-packager": "^8.7.2",
     "tone": "^0.12.80"
   }
 }

@@ -1,0 +1,24 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'upgrade',
+1 verbose cli   '-save' ]
+2 info using npm@3.10.10
+3 info using node@v6.11.4
+4 verbose stack Error: ENOENT: no such file or directory, open '/Users/VillaMoirai/Github/HundredRabbits/Pico/package.json'
+4 verbose stack     at Error (native)
+5 verbose cwd /Users/VillaMoirai/Github/HundredRabbits/Pico
+6 error Darwin 16.7.0
+7 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "upgrade" "-save"
+8 error node v6.11.4
+9 error npm  v3.10.10
+10 error path /Users/VillaMoirai/Github/HundredRabbits/Pico/package.json
+11 error code ENOENT
+12 error errno -2
+13 error syscall open
+14 error enoent ENOENT: no such file or directory, open '/Users/VillaMoirai/Github/HundredRabbits/Pico/package.json'
+15 error enoent ENOENT: no such file or directory, open '/Users/VillaMoirai/Github/HundredRabbits/Pico/package.json'
+15 error enoent This is most likely not a problem with npm itself
+15 error enoent and is related to npm not being able to find a file.
+16 verbose exit [ -2, true ]
