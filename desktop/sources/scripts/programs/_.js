@@ -55,11 +55,16 @@ function Program_Default(x,y)
   {
     pico.program.lock(this.x+x,this.y+y);
     pico.program.remove(this.x,this.y);
-    pico.program.add(this.x+x,this.y+y,this.glyph); 
+    pico.program.add((this.x+x) % pico.program.w,(this.y+y) % pico.program.h,this.glyph); 
   }
 
   this.is_free = function(x,y)
   {
+    if(this.x+x >= pico.program.w){ return false; }
+    if(this.x+x <= -1){ return false; }
+    if(this.y+y >= pico.program.h){ return false; }
+    if(this.y+y <= -1){ return false; }
+
     return pico.program.glyph_at(this.x+x,this.y+y) == "." ? true : pico.program.glyph_at(this.x+x,this.y+y)
   }
 

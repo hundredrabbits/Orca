@@ -55,7 +55,7 @@ function Program(w,h)
 
   this.glyph_at = function(x,y,req = null)
   {
-    var s = this.s.substr(this.index_at(x,y),1).toLowerCase();
+    var s = this.s.substr(this.index_at(x % this.w,y % this.h),1).toLowerCase();
     return req && req == s || !req ? s : "."
   }
 
