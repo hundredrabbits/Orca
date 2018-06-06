@@ -1,4 +1,4 @@
-const Tone = require('Tone')
+// const Tone = require('Tone')
 
 function Synth()
 {
@@ -47,28 +47,28 @@ function Synth()
 
   this.install = function()
   {
-    this.synth = new Tone.AMSynth({
-      harmonicity  : 2 ,
-      detune  : 0 ,
-      oscillator  : {
-      type  : 'triangle'
-      }  ,
-        envelope  : {
-        attack  : 0.01 ,
-        decay  : 0.01 ,
-        sustain  : 0.5 ,
-        release  : 1.5
-      }  ,
-      modulation  : {
-        type  : 'sine'
-      }  ,
-      modulationEnvelope  : {
-        attack  : 0.25 ,
-        decay  : 0 ,
-        sustain  : 1 ,
-        release  : 1.5
-      }
-    }).toMaster()
+    // this.synth = new Tone.AMSynth({
+    //   harmonicity  : 2 ,
+    //   detune  : 0 ,
+    //   oscillator  : {
+    //   type  : 'triangle'
+    //   }  ,
+    //     envelope  : {
+    //     attack  : 0.01 ,
+    //     decay  : 0.01 ,
+    //     sustain  : 0.5 ,
+    //     release  : 1.5
+    //   }  ,
+    //   modulation  : {
+    //     type  : 'sine'
+    //   }  ,
+    //   modulationEnvelope  : {
+    //     attack  : 0.25 ,
+    //     decay  : 0 ,
+    //     sustain  : 1 ,
+    //     release  : 1.5
+    //   }
+    // }).toMaster()
   }
 
   this.play = function(glyph)
@@ -91,8 +91,8 @@ function Synth()
 
   this.kick = function()
   {
-    var synth = new Tone.MembraneSynth().toMaster();
-    synth.triggerAttackRelease("C2", "16n");
+    // var synth = new Tone.MembraneSynth().toMaster();
+    // synth.triggerAttackRelease("C2", "16n");
   }
 
   this.clear = function()
