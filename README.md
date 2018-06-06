@@ -59,7 +59,7 @@ Transforms into `O`, and **bangs** southward, when a function is present northwa
 Moves eastward.
 
 ### Shift `S`
-Shifts the `U`, `R`, `D`, `L` functions.
+Converts neighbooring functions to directions.
 
 ### Trigger `T`
 Bangs southward in the presence of `1`, `U`, `R`, `D` or `L` functions northward.

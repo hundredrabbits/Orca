@@ -12,9 +12,17 @@ function program_S(x,y)
     
     if(!n){ return; }
 
-    if(n.glyph == "r"){ pico.program.add(n.x,n.y,"d"); }
-    if(n.glyph == "d"){ pico.program.add(n.x,n.y,"l"); }
-    if(n.glyph == "l"){ pico.program.add(n.x,n.y,"u"); }
-    if(n.glyph == "u"){ pico.program.add(n.x,n.y,"r"); }
+    if(this.up()){
+      pico.program.add(this.x,this.y-1,"u");
+    }
+    if(this.down()){
+      pico.program.add(this.x,this.y+1,"d");
+    }
+    if(this.left()){
+      pico.program.add(this.x-1,this.y,"l");
+    }
+    if(this.right()){
+      pico.program.add(this.x+1,this.y,"r");
+    }
   }
 }
