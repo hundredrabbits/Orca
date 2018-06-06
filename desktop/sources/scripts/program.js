@@ -86,6 +86,11 @@ function Program(w,h)
     this.locks.push({x:x,y:y});
   }
 
+  this.output = function()
+  {
+    return this.s.substr(this.s.length-1,1)
+  }
+
   this.operate = function(x,y,g)
   {
     if(g == "."){ return; }

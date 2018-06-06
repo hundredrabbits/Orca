@@ -22,6 +22,9 @@ function Grid()
       var key = key.toLowerCase();
       if(pico.program.glyphs.indexOf(key) < 0){ console.log("Illegal rune"); return; }
       pico.program.add(this.x,this.y,key)
+    },
+    inspect: function(){
+      return pico.program.glyph_at(this.x,this.y)
     }
   }
 
@@ -33,6 +36,7 @@ function Grid()
   this.update = function()
   {
     this.clear();
+
     var y = 0;
     while(y < pico.program.h){
       var x = 0;
@@ -76,7 +80,7 @@ function Grid()
     ctx.clearRect(0, 0, this.size.width, this.size.height);
   }
 
-  this.draw_sprite = function(x,y,g,styles)
+  this.draw_sprite = function(x,y,g,styles = {is_cursor: false,is_port: false})
   {
     var tile         = {w:15,h:20}
     var ctx          = this.context();

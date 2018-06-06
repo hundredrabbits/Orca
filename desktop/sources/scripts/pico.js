@@ -5,9 +5,11 @@ function Pico()
   this.controller = new Controller();
   this.program = new Program(39,29);
   this.grid = new Grid();
+  this.synth = null;
 
   this.install = function()
   {
+    this.synth = new Synth();
     this.grid.install(this.el);
     this.program.reset();
     document.body.appendChild(this.el)
@@ -66,6 +68,7 @@ function Pico()
   {
     this.program.run();
     this.grid.update();
+    this.synth.play(this.program.output());
     this.f += 1;
   }
 }
