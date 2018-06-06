@@ -11,13 +11,8 @@ function Program_Default(x,y)
     return this.x + (this.y * pico.program.h)
   }
 
-  this.pre = function()
-  {
-  }
-
   this.run = function()
   {
-    this.pre();
     this.operation();
     this.post();
   }

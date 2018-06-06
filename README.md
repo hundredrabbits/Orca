@@ -80,5 +80,5 @@ Bangs eastward on a westward `0`, and bangs southward on `1`.
 Game of life-like automation.
 
 ### Creep `Z`
-Moves to a random available cell.
+Moves to a the next available location in a cycle of `U`,`D`,`L`,`R` based on the runtime frame.
 
