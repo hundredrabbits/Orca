@@ -78,6 +78,11 @@ function Program_Default(x,y)
     return null;   
   }
 
+  this.neighbor_by = function(x,y)
+  {
+    return pico.program.glyph_at(this.x+x,this.y+y) != "." ? {x:this.x+x,y:this.y+y,glyph:pico.program.glyph_at(this.x+x,this.y+y)} : null;   
+  }
+
   this.neighbors = function()
   {
     var a = [];
