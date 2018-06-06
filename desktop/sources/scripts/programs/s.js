@@ -9,18 +9,12 @@ function program_S(x,y)
   this.operation = function()
   {
     var n = this.neighbor();
+    
+    if(!n){ return; }
 
-    if(n && n.glyph == "r"){
-      pico.program.add(n.x,n.y,"d");
-    }
-    if(n && n.glyph == "d"){
-      pico.program.add(n.x,n.y,"l");
-    }
-    if(n && n.glyph == "l"){
-      pico.program.add(n.x,n.y,"u");
-    }
-    if(n && n.glyph == "u"){
-      pico.program.add(n.x,n.y,"r");
-    }
+    if(n.glyph == "r"){ pico.program.add(n.x,n.y,"d"); }
+    if(n.glyph == "d"){ pico.program.add(n.x,n.y,"l"); }
+    if(n.glyph == "l"){ pico.program.add(n.x,n.y,"u"); }
+    if(n.glyph == "u"){ pico.program.add(n.x,n.y,"r"); }
   }
 }

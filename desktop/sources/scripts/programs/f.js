@@ -8,7 +8,7 @@ function program_F(x,y)
 
   this.operation = function()
   {
-    if(!this.left() || !this.right() || !this.bang()){ return; }
+    if(!this.left() || !this.right()){ return; }
     
     if(this.left(this.right().glyph)){
       pico.program.remove(this.x-1,this.y)  

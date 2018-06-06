@@ -46,6 +46,8 @@ function Logo(is_looping = false)
 
   this.remove = function()
   {
+    if(this.canvas.style.opacity == 0){ return; }
+    
     this.canvas.style.opacity = 0;
     setTimeout(() => { this.el.style.opacity = 0; },500)
     setTimeout(() => { document.body.removeChild(this.el); },1500)

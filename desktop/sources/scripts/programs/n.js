@@ -8,6 +8,6 @@ function program_N(x,y)
 
   this.operation = function()
   {
-    pico.program.add(this.x,this.y+1,(pico.f % 9)+"");
+    pico.program.add(this.x,this.y+1,(pico.f % 10)+"");
   }
 }

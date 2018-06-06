@@ -20,7 +20,7 @@ Moves southward.
 Fires bangs in nearby available cells, on **bang**.
 
 ### If `F`
-This function expects 2 functions, if the functions corresponds, F bangs southward, on **bang**. Erases function westward.
+This function expects 2 functions, if the functions corresponds, F bangs southward. Erases function westward.
 
 ### Generator `G`
 Generates a `D` on **bang**.

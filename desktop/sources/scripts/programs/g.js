@@ -16,6 +16,6 @@ function program_G(x,y)
   this.fire = function()
   {
     pico.program.add(this.x,this.y+1,"d")
-    pico.program.lock(this.x,this.y+1)  
+    // pico.program.lock(this.x,this.y+1)  
   }
 }
