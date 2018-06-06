@@ -10,6 +10,7 @@ function Pico()
   this.install = function()
   {
     this.synth = new Synth();
+    this.synth.install();
     this.grid.install(this.el);
     this.program.reset();
     document.body.appendChild(this.el)

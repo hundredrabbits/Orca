@@ -2,28 +2,7 @@ const Tone = require('Tone')
 
 function Synth()
 {
-  this.synth = new Tone.AMSynth({
-    harmonicity  : 2 ,
-    detune  : 0 ,
-    oscillator  : {
-    type  : 'triangle'
-    }  ,
-      envelope  : {
-      attack  : 0.01 ,
-      decay  : 0.01 ,
-      sustain  : 0.5 ,
-      release  : 1.5
-    }  ,
-    modulation  : {
-      type  : 'sine'
-    }  ,
-    modulationEnvelope  : {
-      attack  : 0.25 ,
-      decay  : 0 ,
-      sustain  : 1 ,
-      release  : 1.5
-    }
-  }).toMaster();
+  this.synth = null;
 
   this.table = {
     A: "C3",
@@ -65,6 +44,32 @@ function Synth()
 
   this.last = null;
   this.tick = 0
+
+  this.install = function()
+  {
+    this.synth = new Tone.AMSynth({
+      harmonicity  : 2 ,
+      detune  : 0 ,
+      oscillator  : {
+      type  : 'triangle'
+      }  ,
+        envelope  : {
+        attack  : 0.01 ,
+        decay  : 0.01 ,
+        sustain  : 0.5 ,
+        release  : 1.5
+      }  ,
+      modulation  : {
+        type  : 'sine'
+      }  ,
+      modulationEnvelope  : {
+        attack  : 0.25 ,
+        decay  : 0 ,
+        sustain  : 1 ,
+        release  : 1.5
+      }
+    }).toMaster()
+  }
 
   this.play = function(glyph)
   {
