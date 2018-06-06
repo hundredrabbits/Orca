@@ -114,7 +114,6 @@ function Program(w,h)
       else{
         s += `${g}: Missing\n`;
       }
-      
     }
     console.log(s)
   }

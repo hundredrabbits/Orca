@@ -81,12 +81,18 @@ function Synth()
     }
     this.last = note;
     this.tick += 1;
+    this.clear();
   }
 
   this.kick = function()
   {
     var synth = new Tone.MembraneSynth().toMaster();
     synth.triggerAttackRelease("C2", "8n");
+  }
+
+  this.clear = function()
+  {
+    pico.program.remove(pico.program.w-1,pico.program.h-1)
   }
 
   this.convert = function(glyph)
