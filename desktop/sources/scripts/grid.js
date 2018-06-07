@@ -15,8 +15,8 @@ function Grid()
       pico.grid.update();
     },
     insert: function(key){
-      var key = key.toLowerCase();
-      if(pico.program.glyphs.indexOf(key) < 0){ console.log("Illegal rune"); return; }
+      var key = key.trim() == "" ? "." : key.toLowerCase();
+      if(pico.program.glyphs.indexOf(key) < 0){ console.log(`Illegal rune:${key}`); return; }
       pico.program.add(this.x,this.y,key);
     },
     inspect: function(){

@@ -15,7 +15,7 @@ function Keyboard()
     if(event.keyCode == 39){ keyboard.key_arrow_right(); return; }
 
     if(event.key == "Backspace"){ pico.grid.cursor.insert("."); return; }
-    if(event.key == "Space"){ pico.grid.cursor.insert("."); return; }
+    if(event.key == "Space"){ pico.grid.cursor.insert("."); event.preventDefault(); return; }
     if(event.key == "Escape"){ logo.remove(); return; }
 
     if(event.key.length == 1){
