@@ -8,10 +8,11 @@ function program_I(x,y)
 
   this.operation = function()
   {
-    if(this.bang() && this.down()){
-      var n = this.down();
-      pico.program.add(this.x,this.y+1,this.inc(n.glyph));
-    }
+    if(!this.bang()){ return; }
+    if(!this.down()){ return; }
+
+    var n = this.down();
+    pico.program.add(this.x,this.y+1,this.inc(n.glyph));
   }
 
   this.inc = function(letter)
@@ -21,6 +22,7 @@ function program_I(x,y)
     if(parseInt(letter) > 0){ return parseInt(letter)+1+""; }
 
     var index = pico.program.glyphs.indexOf(letter);
+    
     if(index < 0){ return; }
 
     return pico.program.glyphs[(index+1) % pico.program.glyphs.length];

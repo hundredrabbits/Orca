@@ -4,7 +4,7 @@ function program_F(x,y)
 
   this.name = "if"
   this.glyph = "f";
-  this.ports = [{x:-1,y:0},{x:1,y:0},{x:0,y:1,output:true},{x:0,y:1,bang:true}];
+  this.ports = [{x:-1,y:0},{x:1,y:0},{x:0,y:1,output:true},{x:0,y:0,bang:true}];
 
   this.operation = function()
   {

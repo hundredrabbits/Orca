@@ -23,9 +23,4 @@ function program_A(x,y)
   {
     return pico.program.glyphs.indexOf(glyph)
   }
-
-  function is_numeric(glyph)
-  {
-    return 
-  }
 }
