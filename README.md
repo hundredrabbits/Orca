@@ -71,7 +71,7 @@ Moves Northward.
 Creates a numerical value between 0 and 5 based on the number of present functions westward.
 
 ### Warp `W`
-Warps northward function to the next available warp, on **bang**.
+Warps northward function to the next available warp, and halts it, on **bang**.
 
 ### Split `X`
 Bangs eastward on a westward `0`, and bangs southward on `1`.

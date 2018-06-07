@@ -10,6 +10,8 @@ function program_W(x,y)
   {
     var input = this.up();
 
+    pico.program.lock(this.x,this.y+1);
+
     if(input && this.bang()){
       var warp = this.find_warp(this);
       if(warp){

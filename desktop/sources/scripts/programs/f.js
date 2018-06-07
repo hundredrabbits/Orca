@@ -12,7 +12,6 @@ function program_F(x,y)
     if(!this.left() || !this.right()){ return; }
     
     if(this.left(this.right().glyph)){
-      pico.program.remove(this.x-1,this.y)  
       pico.program.add(this.x,this.y+1,"b");
       pico.program.lock(this.x,this.y+1);
     }
