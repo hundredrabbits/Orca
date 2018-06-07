@@ -8,7 +8,7 @@ function program_Q(x,y)
 
   this.operation = function()
   {
-    if(this.neighbors_unlike("b").length > 0){
+    if(this.up()){
       this.replace("o");
       this.lock();
       this.fire();
