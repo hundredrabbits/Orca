@@ -8,6 +8,7 @@ function program_F(x,y)
 
   this.operation = function()
   {
+    if(!this.bang()){ return; }
     if(!this.left() || !this.right()){ return; }
     
     if(this.left(this.right().glyph)){
