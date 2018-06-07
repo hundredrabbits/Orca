@@ -13,6 +13,8 @@ function program_M(x,y)
     var val = pico.program.glyphs.indexOf(this.left().glyph)
     var mod = pico.program.glyphs.indexOf(this.right().glyph)
 
+    if(mod == 0){ return; }
+    
     pico.program.add(this.x,this.y+1,`${parseInt(val) % parseInt(mod)}`);
     this.lock();
   }
