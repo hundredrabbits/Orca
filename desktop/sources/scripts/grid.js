@@ -2,11 +2,7 @@ function Grid()
 {
   this.el = document.createElement("canvas");
 
-  this.size = {width:600,height:600,ratio:0.75}
-  this.el.width = this.size.width;
-  this.el.height = this.size.height;
-  this.el.style.width = (this.size.width * this.size.ratio)+"px";
-  this.el.style.height = (this.size.height * this.size.ratio)+"px";
+  this.tile = {w:15,h:20}
 
   this.cursor = {
     x:0,
@@ -30,12 +26,24 @@ function Grid()
 
   this.install = function(host)
   {
+    this.size = {width:this.tile.w*pico.program.size.h,height:this.tile.h*pico.program.size.v,ratio:0.75}
+    this.el.width = this.size.width;
+    this.el.height = this.size.height+this.tile.h;
+    this.el.style.width = (this.size.width * this.size.ratio)+"px";
+    this.el.style.height = (this.size.height * this.size.ratio)+"px";
+
     host.appendChild(this.el)
   }
 
   this.update = function()
   {
     this.clear();
+    this.draw_program();
+    this.draw_output();
+  }
+
+  this.draw_program = function()
+  {
     var ports = this.find_ports();
 
     var y = 0;
@@ -50,6 +58,18 @@ function Grid()
         x += 1
       }
       y += 1;
+    }
+  }
+
+  this.draw_output = function()
+  {
+    var x = 0;
+    var s = pico.program.r.replace(/\./g," ").trim()
+
+    while(x < s.length){
+      var c = s.substr(x,1)
+      this.draw_sprite(x,pico.program.size.v-1,c)
+      x += 1
     }
   }
 
@@ -88,32 +108,31 @@ function Grid()
 
   this.draw_sprite = function(x,y,g,styles = {is_cursor: false,is_port: false})
   {
-    var tile         = {w:15,h:20}
     var ctx          = this.context();
 
     ctx.textBaseline = 'bottom';
     ctx.textAlign    = "center"; 
-    ctx.font         = `${tile.h*0.75}px input_mono_regular`;
+    ctx.font         = `${this.tile.h*0.75}px input_mono_regular`;
 
     if(styles.is_cursor){
       ctx.fillStyle    = 'white';
-      ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
+      ctx.fillRect((x+0.5)*this.tile.w,(y)*this.tile.h,this.tile.w,this.tile.h);  
       ctx.fillStyle    = 'black';
     }
     else if(styles.is_port){
       if(styles.is_port == 2){
         ctx.fillStyle = '#72dec2'
-        ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
+        ctx.fillRect((x+0.5)*this.tile.w,(y)*this.tile.h,this.tile.w,this.tile.h);  
         ctx.fillStyle    = 'black';
       }
       else if(styles.is_port == 1){
         ctx.fillStyle = '#ffb545'
-        ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
+        ctx.fillRect((x+0.5)*this.tile.w,(y)*this.tile.h,this.tile.w,this.tile.h);  
         ctx.fillStyle    = 'black';
       }
       else if(styles.is_port == 3){
         ctx.fillStyle = '#444'
-        ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
+        ctx.fillRect((x+0.5)*this.tile.w,(y)*this.tile.h,this.tile.w,this.tile.h);  
         ctx.fillStyle    = 'white';
       }
     }
@@ -121,7 +140,7 @@ function Grid()
       ctx.fillStyle = 'white';
     }
     
-    ctx.fillText(styles.is_cursor && g == "." ? "@" :g.toUpperCase(), (x+1) * tile.w, (y+1) * tile.h);
+    ctx.fillText(styles.is_cursor && g == "." ? "@" :g.toUpperCase(), (x+1) * this.tile.w, (y+1) * this.tile.h);
   }
 
   function clamp(v, min, max) { return v < min ? min : v > max ? max : v; }

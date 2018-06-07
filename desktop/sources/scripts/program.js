@@ -1,12 +1,15 @@
 function Program(w,h)
 {
+  this.size = {h:40,v:30}
   this.w = w;
   this.h = h;
   this.s = "";
+  this.r = ""; // Record
 
   this.locks = [];
   this.progs = [];
   this.glyphs = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","."];
+
 
   this.reset = function()
   {
@@ -63,6 +66,8 @@ function Program(w,h)
       p.run()
     }
 
+    this.record();
+
     this.s = this.s.substr(0,this.w*this.h)
   }
 
@@ -103,6 +108,19 @@ function Program(w,h)
   this.output = function()
   {
     return this.s.substr(this.s.length-1,1)
+  }
+
+  this.record = function()
+  {
+    var g = this.s.substr(-1,1)
+    var last_g = this.r.substr(-1,1)
+    if(g == "." && last_g == "."){ return; }
+    this.r += g;
+
+    // Trim
+    if(this.r.length >= pico.program.size.h){
+      this.r = this.r.substr(-pico.program.size.h+1,pico.program.size.h)
+    }
   }
 
   this.debug = function()
