@@ -67,7 +67,7 @@ function Grid()
       if(pico.program.is_locked(g.x,g.y)){ continue; }
       for(id in g.ports){
         var port = g.ports[id]
-        h[`${g.x+port.x}:${g.y+port.y}`] = port.output ? 2 : port.bang ? 1 : 0
+        h[`${g.x+port.x}:${g.y+port.y}`] = port.output ? 2 : port.bang ? 1 : 3
       }
     }
   
@@ -111,7 +111,7 @@ function Grid()
         ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
         ctx.fillStyle    = 'black';
       }
-      else{
+      else if(styles.is_port == 3){
         ctx.fillStyle = '#444'
         ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
         ctx.fillStyle    = 'white';
