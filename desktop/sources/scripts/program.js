@@ -55,7 +55,7 @@ function Program(w,h)
 
   this.glyph_at = function(x,y,req = null)
   {
-    var s = this.s.substr(this.index_at(x % this.w,y % this.h),1).toLowerCase();
+    var s = this.s.substr(this.index_at(x,y),1).toLowerCase();
     return req && req == s || !req ? s : "."
   }
 
@@ -68,12 +68,7 @@ function Program(w,h)
 
   this.is_locked = function(x,y)
   {
-    for(id in this.locks){
-      var lock = this.locks[id];
-      if(lock.x != x || lock.y != y){ continue; }
-      return true;
-    }
-    return false;
+    return this.locks.indexOf(`${x}:${y}`) > -1;
   }
 
   this.unlock = function()
@@ -83,7 +78,7 @@ function Program(w,h)
 
   this.lock = function(x,y)
   {
-    this.locks.push({x:x,y:y});
+    this.locks.push(`${x}:${y}`);
   }
 
   this.output = function()
