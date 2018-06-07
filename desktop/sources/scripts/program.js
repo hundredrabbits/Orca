@@ -5,7 +5,7 @@ function Program(w,h)
   this.s = "";
 
   this.locks = [];
-  this.ports = [];
+  this.progs = [];
   this.glyphs = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","."];
 
   this.reset = function()
@@ -25,7 +25,9 @@ function Program(w,h)
   this.add = function(x,y,glyph)
   {
     if(x < 0 || x > pico.program.w-1 || y < 0 || y > pico.program.h-1 || !glyph){ return; }
+
     var index = this.index_at(x,y);
+
     this.s = this.s.substr(0, index)+glyph+this.s.substr(index+glyph.length);
     pico.grid.update();
   }
@@ -38,24 +40,41 @@ function Program(w,h)
   this.run = function()
   {
     this.unlock();
-    this.ports = [];
+    this.progs = [] 
 
+    // Find Programs
     var y = 0;
     while(y < this.h){
       var x = 0;
       while(x < this.w){
-        this.operate(x,y,this.glyph_at(x,y));
+        var g = this.glyph_at(x,y)
+        if(this.is_prog(g)){
+          this.progs.push(new window[`program_${g.toUpperCase()}`](x,y))
+        }
         x += 1
       }
       y += 1;
     }
 
+    // Operate
+    for(id in this.progs){
+      var p = this.progs[id]
+      if(this.is_locked(p.x,p.y)){ continue; }
+      p.run()
+    }
+
     this.s = this.s.substr(0,this.w*this.h)
+  }
+
+  this.is_prog = function(g)
+  {
+    return this.glyphs.indexOf(g) >= 9 && this.glyphs.indexOf(g) <= 35 && window[`program_${g.toUpperCase()}`]
   }
 
   this.glyph_at = function(x,y,req = null)
   {
     var s = this.s.substr(this.index_at(x,y),1).toLowerCase();
+
     return req && req == s || !req ? s : "."
   }
 
@@ -84,16 +103,6 @@ function Program(w,h)
   this.output = function()
   {
     return this.s.substr(this.s.length-1,1)
-  }
-
-  this.operate = function(x,y,g)
-  {
-    if(g == "."){ return; }
-    if(g == "0"){ return; }
-    if(parseInt(g) > 0){ return; }
-    if(!window[`program_${g.toUpperCase()}`]){ console.log(`unknown: program_${g.toUpperCase()}`); return; }
-    if(this.is_locked(x,y) == true){ return; }
-    new window[`program_${g.toUpperCase()}`](x,y).run();
   }
 
   this.debug = function()

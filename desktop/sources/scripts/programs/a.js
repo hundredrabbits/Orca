@@ -15,7 +15,6 @@ function program_A(x,y)
 
     var index = (this.convert(left) + this.convert(right)) % pico.program.glyphs.length
     var output = pico.program.glyphs[index]
-    console.log(output)
 
     pico.program.add(this.x,this.y+2,output);
   }

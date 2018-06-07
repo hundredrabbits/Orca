@@ -9,13 +9,8 @@ function program_G(x,y)
 
   this.operation = function()
   {
-    if(this.bang()){
-      this.fire();
-    }
-  }
-  this.fire = function()
-  {
+    if(!this.bang()){ return; }
+
     pico.program.add(this.x,this.y+1,"d")
-    // pico.program.lock(this.x,this.y+1)  
   }
 }

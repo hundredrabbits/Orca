@@ -14,20 +14,6 @@ function Program_Default(x,y)
   this.run = function()
   {
     this.operation();
-    this.post();
-  }
-
-  this.post = function()
-  {
-    if(this.x < 0 || this.x > pico.program.w-1 || this.y < 0 || this.y > pico.program.h-1){ 
-      this.lock();
-      pico.program.remove(this.x,this.y);
-    }
-
-    for(id in this.ports){
-      var port = this.ports[id];
-      pico.program.ports.push({x:this.x+port.x,y:this.y+port.y,output:port.output,bang:port.bang});  
-    }
   }
 
   this.operation = function()

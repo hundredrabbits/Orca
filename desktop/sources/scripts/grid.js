@@ -36,6 +36,7 @@ function Grid()
   this.update = function()
   {
     this.clear();
+    var ports = this.find_ports();
 
     var y = 0;
     while(y < pico.program.h){
@@ -43,7 +44,7 @@ function Grid()
       while(x < pico.program.w){
         var styles = {
           is_cursor: pico.grid.is_cursor(x,y),
-          is_port: pico.grid.is_port(x,y)
+          is_port: ports[`${x}:${y}`]
         }
         this.draw_sprite(x,y,pico.program.glyph_at(x,y),styles);
         x += 1
@@ -57,15 +58,20 @@ function Grid()
     return this.cursor.x == x && this.cursor.y == y;
   }
 
-  this.is_port = function(x,y)
+  this.find_ports = function()
   {
-    for(id in pico.program.ports){
-      var port = pico.program.ports[id];
-      if(port.x == x && port.y == y){
-        return port;
+    var h = {};
+
+    for(id in pico.program.progs){
+      var g = pico.program.progs[id]
+      if(pico.program.is_locked(g.x,g.y)){ continue; }
+      for(id in g.ports){
+        var port = g.ports[id]
+        h[`${g.x+port.x}:${g.y+port.y}`] = port.output ? 2 : port.bang ? 1 : 0
       }
     }
-    return false;
+  
+    return h;
   }
 
   this.context = function()
@@ -90,17 +96,17 @@ function Grid()
     ctx.font         = `${tile.h*0.75}px input_mono_regular`;
 
     if(styles.is_cursor){
-      ctx.fillStyle    = styles.is_cursor ? 'white' : 'black';
+      ctx.fillStyle    = 'white';
       ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
       ctx.fillStyle    = 'black';
     }
     else if(styles.is_port){
-      if(styles.is_port.output){
+      if(styles.is_port == 2){
         ctx.fillStyle = '#72dec2'
         ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
         ctx.fillStyle    = 'black';
       }
-      else if(styles.is_port.bang){
+      else if(styles.is_port == 1){
         ctx.fillStyle = '#ffb545'
         ctx.fillRect((x+0.5)*tile.w,(y)*tile.h,tile.w,tile.h);  
         ctx.fillStyle    = 'black';
@@ -112,7 +118,7 @@ function Grid()
       }
     }
     else{
-      ctx.fillStyle    = 'white';
+      ctx.fillStyle = 'white';
     }
     
     ctx.fillText(styles.is_cursor && g == "." ? "@" :g.toUpperCase(), (x+1) * tile.w, (y+1) * tile.h);
