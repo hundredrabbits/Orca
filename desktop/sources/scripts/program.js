@@ -10,7 +10,6 @@ function Program(w,h)
   this.progs = [];
   this.glyphs = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","."];
 
-
   this.reset = function()
   {
     this.s = "";
@@ -71,6 +70,11 @@ function Program(w,h)
     this.s = this.s.substr(0,this.w*this.h)
   }
 
+  this.clear = function()
+  {
+    this.r = "";
+  }
+
   this.is_prog = function(g)
   {
     return this.glyphs.indexOf(g) >= 9 && this.glyphs.indexOf(g) <= 35 && window[`program_${g.toUpperCase()}`]
@@ -104,6 +108,8 @@ function Program(w,h)
   {
     this.locks.push(`${x}:${y}`);
   }
+
+  // Tools
 
   this.output = function()
   {

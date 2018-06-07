@@ -16,7 +16,7 @@ function Keyboard()
 
     if(event.key == "Backspace"){ pico.grid.cursor.insert("."); return; }
     if(event.key == "Space"){ pico.grid.cursor.insert("."); event.preventDefault(); return; }
-    if(event.key == "Escape"){ logo.remove(); return; }
+    if(event.key == "Escape"){ logo.remove(); pico.program.clear(); return; }
 
     if(event.key.length == 1){
       pico.grid.cursor.insert(event.key);
