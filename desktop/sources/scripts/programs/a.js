@@ -4,12 +4,10 @@ function program_A(x,y)
 
   this.name = "add"
   this.glyph = "a";
-  this.ports = [{x:-1,y:0},{x:1,y:0},{x:0,y:2,output:true},{x:0,y:0,bang:true}];
+  this.ports = [{x:-1,y:0},{x:1,y:0},{x:0,y:2,output:true}];
 
   this.operation = function()
   {
-    if(!this.bang()){ return; }
-
     var left = !this.left() ? "0" : this.left().glyph 
     var right = !this.right() ? "0" : this.right().glyph
 

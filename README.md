@@ -5,7 +5,7 @@ Not much is known about the machine, but it seems to be reacting to our presence
 ## Programs
 
 ### Add `A`
-This function expects 2 numerical values, adds them up to generate an index, and create the function corresponding to this index, on **bang**.
+This function expects 2 numerical values, adds them up to generate an index, and create the function corresponding to this index.
 
 ### Bang `B`
 The **bang** function is used to trigger various functions, only lasts one cycle.
