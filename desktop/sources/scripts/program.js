@@ -113,7 +113,13 @@ function Program(w,h)
 
   this.output = function()
   {
-    return this.s.substr(this.s.length-1,1)
+    var origin = this.s.replace(/[^0-9a-z]/gi,".")
+    var lines = origin.match(/.{1,39}/g)
+    var s = ""
+    for(id in lines){
+      s += lines[id]+'\n'
+    }
+    return s
   }
 
   this.record = function()
@@ -132,7 +138,6 @@ function Program(w,h)
   this.debug = function()
   {
     var s = "";
-
     for(id in this.glyphs){
       var g = this.glyphs[id];
       if(window[`program_${g.toUpperCase()}`]){

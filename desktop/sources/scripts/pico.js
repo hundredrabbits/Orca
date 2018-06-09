@@ -45,20 +45,17 @@ function Pico()
     dialog.showSaveDialog((fileName) => {
       if (fileName === undefined){ return; }
       fileName = fileName.substr(-4,4) != ".pico" ? fileName+".pico" : fileName;
-      fs.writeFile(fileName,pico.program.s);
+      fs.writeFile(fileName,pico.program.output());
     }); 
   }
 
   this.load = function()
   {
     var filepath = dialog.showOpenDialog({filters: [{name: 'Pico Files', extensions: ['pico']}], properties: ['openFile']});
-
     if(!filepath){ console.log("Nothing to load"); return; }
-
     fs.readFile(filepath[0], 'utf-8', (err, data) => {
       if(err){ alert("An error ocurred reading the file :" + err.message); return; }
-
-      pico.program.s = data
+      pico.program.s = data.replace(/\n/g,'').replace(/[^0-9a-z]/gi,".");
     });
   }
 
