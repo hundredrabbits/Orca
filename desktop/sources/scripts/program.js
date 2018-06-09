@@ -82,9 +82,12 @@ function Program(w,h)
 
   this.glyph_at = function(x,y,req = null)
   {
-    var s = this.s.substr(this.index_at(x,y),1).toLowerCase();
+    return this.s.charAt(this.index_at(x,y))
+  }
 
-    return req && req == s || !req ? s : "."
+  this.glyph_like_at = function(x,y,target)
+  {
+    return this.s.charAt(this.index_at(x,y)) == target ? true : null
   }
 
   this.index_at = function(x,y)

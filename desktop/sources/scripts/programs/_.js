@@ -123,7 +123,14 @@ function Program_Default(x,y)
 
   this.bang = function()
   {
-    return this.any_neighbor_is("b");
+    var ns = this.neighbors_like("b");
+    for(id in ns){
+      var n = ns[id]
+      if(!pico.program.glyph_like_at(n.x,n.y-1,"h")){ 
+        return true // Special case, where H is found above B. 
+      }
+    }
+    return false;
   }
 
   this.left = function(req = null)
