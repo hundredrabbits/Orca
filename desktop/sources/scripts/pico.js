@@ -24,6 +24,8 @@ function Pico()
     this.controller.add("default","File","Save",() => { pico.save(); },"CmdOrCtrl+S");
     this.controller.add("default","File","Open",() => { pico.load(); },"CmdOrCtrl+O");
 
+    this.controller.add("default","Program","Play/Pause",() => { pico.pause(); },"CmdOrCtrl+P");
+
     this.controller.commit();
   }
 
@@ -61,11 +63,19 @@ function Pico()
   }
 
   this.f = 0;
+  this.is_paused = false
 
   this.run = function()
   {
+    if(this.is_paused){ return; }
+
     this.program.run();
     this.grid.update();
     this.f += 1;
+  }
+
+  this.pause = function()
+  {
+    this.is_paused = this.is_paused ? false : true
   }
 }
