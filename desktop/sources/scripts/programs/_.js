@@ -69,24 +69,9 @@ function Program_Default(x,y)
     return pico.program.glyph_at(this.x+x,this.y+y) != "." ? {x:this.x+x,y:this.y+y,glyph:pico.program.glyph_at(this.x+x,this.y+y)} : null;   
   }
 
-  this.neighbors = function()
+  this.neighbors = function(g)
   {
-    var a = [];
-    if(pico.program.glyph_at(this.x+1,this.y) != "."){ a.push({x:this.x+1,y:this.y,glyph:pico.program.glyph_at(this.x+1,this.y)}); }
-    if(pico.program.glyph_at(this.x-1,this.y) != "."){ a.push({x:this.x-1,y:this.y,glyph:pico.program.glyph_at(this.x-1,this.y)}); }
-    if(pico.program.glyph_at(this.x,this.y+1) != "."){ a.push({x:this.x,y:this.y+1,glyph:pico.program.glyph_at(this.x,this.y+1)}); }
-    if(pico.program.glyph_at(this.x,this.y-1) != "."){ a.push({x:this.x,y:this.y-1,glyph:pico.program.glyph_at(this.x,this.y-1)}); } 
-    return a;
-  }
-
-  this.neighbors_like = function(g)
-  {
-    var a = [];
-    if(this.up(g)){ a.push(this.up(g)); }
-    if(this.right(g)){ a.push(this.right(g)); } 
-    if(this.down(g)){ a.push(this.down(g)); }
-    if(this.left(g)){ a.push(this.left(g)); }
-    return a;
+    return [this.up(g),this.right(g),this.down(g),this.left(g)].filter(function(e){return e});
   }
 
   this.neighbors_unlike = function(g)
@@ -123,38 +108,38 @@ function Program_Default(x,y)
 
   this.bang = function()
   {
-    var ns = this.neighbors_like("b");
+    var ns = this.neighbors("b");
     for(id in ns){
       var n = ns[id]
-      if(!pico.program.glyph_like_at(n.x,n.y-1,"h")){ 
-        return true // Special case, where H is found above B. 
+      if(pico.program.glyph_at(n.x,n.y-1) != "h"){
+        return true;
       }
     }
     return false;
   }
 
-  this.left = function(req = null)
+  this.left = function(target = null)
   {
-    var g = pico.program.glyph_at(this.x-1,this.y,req);
-    return g != "." ? {x:this.x-1,y:this.y,glyph:g} : null;
+    var g = pico.program.glyph_at(this.x-1,this.y);
+    return g == target || !target ? {x:this.x-1,y:this.y,glyph:g} : null;
   }
 
-  this.right = function(req)
+  this.right = function(target)
   {
-    var g = pico.program.glyph_at(this.x+1,this.y,req);
-    return g != "." ? {x:this.x+1,y:this.y,glyph:g} : null;
+    var g = pico.program.glyph_at(this.x+1,this.y);
+    return g == target || !target ? {x:this.x+1,y:this.y,glyph:g} : null;
   }
 
-  this.up = function(req)
+  this.up = function(target)
   {
-    var g = pico.program.glyph_at(this.x,this.y-1,req);
-    return g != "." ? {x:this.x,y:this.y+1,glyph:g} : null;
+    var g = pico.program.glyph_at(this.x,this.y-1);
+    return g == target || !target ? {x:this.x,y:this.y-1,glyph:g} : null;
   }
 
-  this.down = function(req)
+  this.down = function(target)
   {
-    var g = pico.program.glyph_at(this.x,this.y+1,req);
-    return g != "." ? {x:this.x,y:this.y-1,glyph:g} : null;
+    var g = pico.program.glyph_at(this.x,this.y+1);
+    return g == target || !target ? {x:this.x,y:this.y+1,glyph:g} : null;
   }
 
   this.docs = function()

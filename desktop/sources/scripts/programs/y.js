@@ -7,7 +7,7 @@ function program_Y(x,y)
 
   this.operation = function()
   {
-    var ns = this.neighbors_like("y")
+    var ns = this.neighbors("y")
 
     // Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
     if(ns.length == 1){
