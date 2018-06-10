@@ -121,25 +121,26 @@ function Program_Default(x,y)
   this.left = function(target = null)
   {
     var g = pico.program.glyph_at(this.x-1,this.y);
-    return g == target || !target ? {x:this.x-1,y:this.y,glyph:g} : null;
+
+    return g != "." && (g == target || !target) ? {x:this.x-1,y:this.y,glyph:g} : null;
   }
 
   this.right = function(target)
   {
     var g = pico.program.glyph_at(this.x+1,this.y);
-    return g == target || !target ? {x:this.x+1,y:this.y,glyph:g} : null;
+    return g != "." && (g == target || !target) ? {x:this.x+1,y:this.y,glyph:g} : null;
   }
 
   this.up = function(target)
   {
     var g = pico.program.glyph_at(this.x,this.y-1);
-    return g == target || !target ? {x:this.x,y:this.y-1,glyph:g} : null;
+    return g != "." && (g == target || !target) ? {x:this.x,y:this.y-1,glyph:g} : null;
   }
 
   this.down = function(target)
   {
     var g = pico.program.glyph_at(this.x,this.y+1);
-    return g == target || !target ? {x:this.x,y:this.y+1,glyph:g} : null;
+    return g != "." && (g == target || !target) ? {x:this.x,y:this.y+1,glyph:g} : null;
   }
 
   this.docs = function()
