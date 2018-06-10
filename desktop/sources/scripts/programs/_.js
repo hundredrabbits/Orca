@@ -55,15 +55,6 @@ function Program_Default(x,y)
     return target == "." || target == "b" ? true : target
   }
 
-  this.neighbor = function()
-  {
-    if(pico.program.glyph_at(this.x+1,this.y) != "."){ return {x:this.x+1,y:this.y,glyph:pico.program.glyph_at(this.x+1,this.y)}; }
-    if(pico.program.glyph_at(this.x-1,this.y) != "."){ return {x:this.x-1,y:this.y,glyph:pico.program.glyph_at(this.x-1,this.y)}; }
-    if(pico.program.glyph_at(this.x,this.y+1) != "."){ return {x:this.x,y:this.y+1,glyph:pico.program.glyph_at(this.x,this.y+1)}; }
-    if(pico.program.glyph_at(this.x,this.y-1) != "."){ return {x:this.x,y:this.y-1,glyph:pico.program.glyph_at(this.x,this.y-1)}; } 
-    return null;   
-  }
-
   this.neighbor_by = function(x,y)
   {
     return pico.program.glyph_at(this.x+x,this.y+y) != "." ? {x:this.x+x,y:this.y+y,glyph:pico.program.glyph_at(this.x+x,this.y+y)} : null;   
@@ -72,16 +63,6 @@ function Program_Default(x,y)
   this.neighbors = function(g)
   {
     return [this.up(g),this.right(g),this.down(g),this.left(g)].filter(function(e){return e});
-  }
-
-  this.neighbors_unlike = function(g)
-  {
-    var a = [];
-    if(this.up() && this.up().glyph != g){ a.push(this.up()); }
-    if(this.right() && this.right().glyph != g){ a.push(this.right()); } 
-    if(this.down() && this.down().glyph != g){ a.push(this.down()); }
-    if(this.left() && this.left().glyph != g){ a.push(this.left()); }
-    return a;
   }
 
   this.free_neighbors = function()
@@ -94,25 +75,13 @@ function Program_Default(x,y)
     return a;
   }
 
-  this.any_neighbor_is = function(glyph)
-  {
-    var ns = this.neighbors();
-    for(id in ns){
-      var n = ns[id];
-      if(n.glyph == glyph){
-        return n;
-      }
-    }
-    return null;
-  }
-
   this.bang = function()
   {
     var ns = this.neighbors("b");
     for(id in ns){
       var n = ns[id]
       if(pico.program.glyph_at(n.x,n.y-1) != "h"){
-        return true;
+        return {x:n.x,y:n.y};
       }
     }
     return false;

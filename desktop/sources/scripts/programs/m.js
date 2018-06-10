@@ -16,6 +16,5 @@ function program_M(x,y)
     if(mod == 0){ return; }
     
     pico.program.add(this.x,this.y+1,`${parseInt(val) % parseInt(mod)}`);
-    this.lock();
   }
 }

@@ -4,14 +4,17 @@ function program_P(x,y)
 
   this.name = "push"
   this.glyph = "p";
-  this.ports = [{x:0,y:0,bang:true},];
+  this.ports = [{x:0,y:0,bang:true}];
 
   this.operation = function()
   {
-    if(!this.bang()){ return; }
-
     var origin = this.bang();
-    var direction = this.n_offset(origin);
+
+    if(!origin){ return; }
+
+    var direction = {x:this.x-origin.x,y:this.y-origin.y}
+
+    console.log(origin)
     var pushed = this.neighbor_by(direction.x,direction.y)
     this.move(direction.x,direction.y);
 
