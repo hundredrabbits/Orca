@@ -1,6 +1,8 @@
 # Pico
 
-Not much is known about the machine, but it seems to be reacting to our presence.
+[Not much is known](http://wiki.xxiivv.com/Pico) about the machine, but it seems to be reacting to our presence.
+
+<img src='https://raw.githubusercontent.com/hundredrabbits/Pico/master/PREVIEW.jpg' width="600"/>
 
 ## Programs
 
