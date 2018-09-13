@@ -6,6 +6,7 @@
     <script type="text/javascript" src="scripts/program.js"></script>
     <script type="text/javascript" src="scripts/grid.js"></script>
     <script type="text/javascript" src="scripts/keyboard.js"></script>
+    <script type="text/javascript" src="scripts/events.js"></script>
 
     <script type="text/javascript" src="scripts/programs/_.js"></script>
     <script type="text/javascript" src="scripts/programs/a.js"></script>
@@ -50,6 +51,22 @@
       let pico = new Pico();
       pico.install();
       pico.start();
+
+      pico.controller.add("default","*","About",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Donsol'); },"CmdOrCtrl+,");
+      pico.controller.add("default","*","Fullscreen",() => { app.toggle_fullscreen(); },"CmdOrCtrl+Enter");
+      pico.controller.add("default","*","Hide",() => { app.toggle_visible(); },"CmdOrCtrl+H");
+      pico.controller.add("default","*","Inspect",() => { app.inspect(); },"CmdOrCtrl+.");
+      pico.controller.add("default","*","Documentation",() => { pico.controller.docs(); },"CmdOrCtrl+Esc");
+      pico.controller.add("default","*","Reset",() => { pico.reset(); },"CmdOrCtrl+Backspace");
+      pico.controller.add("default","*","Quit",() => { app.exit(); },"CmdOrCtrl+Q");
+
+      pico.controller.add("default","File","New",() => { pico.reset(); },"CmdOrCtrl+N");
+      pico.controller.add("default","File","Save",() => { pico.save(); },"CmdOrCtrl+S");
+      pico.controller.add("default","File","Open",() => { pico.open(); },"CmdOrCtrl+O");
+
+      pico.controller.add("default","Program","Play/Pause",() => { pico.pause(); },"CmdOrCtrl+P");
+
+      pico.controller.commit();
 
       let keyboard = new Keyboard();
       document.onkeydown = function(event){ keyboard.listen_onkeydown(event); };

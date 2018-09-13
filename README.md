@@ -6,81 +6,81 @@
 
 ## Programs
 
-### Add `A` [passive]
+### `A` Add [passive]
 This function expects 2 numerical values, adds them up to generate an index, and create the function corresponding to this index.
 
-### Bang `B`
+### `B` Bang 
 The **bang** function is used to trigger various functions, only lasts one cycle.
 
-### Clone `C` [bang]
+### `C` Clone [bang]
 Clones the westward function, eastwardly, on **bang**.
 
-### Down `D` 
+### `D` Down  
 Moves southward.
 
-### Explode `E` [bang]
+### `E` Explode [bang]
 Fires bangs in nearby available cells, on **bang**.
 
-### If `F` [bang]
+### `F` If [bang]
 This function expects 2 functions, if the functions corresponds, F bangs southward. Erases function westward on **bang**..
 
-### Generator `G` [bang]
+### `G` Generator [bang]
 Generates a `D` on **bang**.
 
-### Halt `H` [passive]
+### `H` Halt [passive]
 Stops southward function from operating.
 
-### Increment `I` [bang]
+### `I` Increment [bang]
 Increments southward numeric function on **bang**.
 
-### Jump `J` [bang]
+### `J` Jump [bang]
 Moves the westward program to eastward, on **bang**.
 
-### Kill `K` [bang]
+### `K` Kill [bang]
 Kills all nearby functions, on **bang**.
 
-### Left `L`
+### `L` Left 
 Moves westward.
 
-### Modulo `M`
+### `M` Modulo 
 Creates the result of the modulo operation of east and west values southward.
 
-### Turn `N` [passive]
+### `N` Turn [passive]
 Creates a numerical function southward, based on the *runtime frame*.
 
-### Odd `O` [passive]
+### `O` Odd [passive]
 Transforms into `Q` when a function is present northward.
 
-### Push `P` [bang]
+### `P` Push [bang]
 Is moved away, on **bang**.
 
-### Even `Q` [passive]
+### `Q` Even  [passive]
 Transforms into `O`, and **bangs** southward, when a function is present northward.
 
-### Right `R` [passive]
+### `R` Right [passive]
 Moves eastward.
 
-### Shift `S` [passive]
+### `S` Shift [passive]
 Converts neighbooring functions to directions.
 
-### Trigger `T` [passive]
+### `T` Trigger [passive]
 Bangs southward in the presence of `1`, `U`, `R`, `D` or `L` functions northward.
 
-### Up `U` [passive]
+### `U` Up [passive]
 Moves Northward.
 
-### Value `V` [passive]
+### `V` Value [passive]
 Creates a numerical value between 0 and 5 based on the number of present functions westward.
 
-### Warp `W` [bang]
+### `W` Warp [bang]
 Warps northward function to the next available warp, and halts it, on **bang**.
 
-### Split `X` [passive]
+### `X` Split [passive]
 Bangs eastward on a westward `0`, and bangs southward on `1`.
 
-### Automata `Y` [passive]
+### `Y` Automata [passive]
 Game of life-like automation.
 
-### Creep `Z` [passive]
+### `Z` Creep [passive]
 Moves to a the next available location in a cycle of `U`,`D`,`L`,`R` based on the *runtime frame*.
 

@@ -14,6 +14,7 @@ function Program(w,h)
 
   this.reset = function()
   {
+    this.r = ""
     this.s = "";
     let y = 0;
     while(y < this.h){
