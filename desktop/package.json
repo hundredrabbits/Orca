@@ -17,9 +17,9 @@
     "push": "npm run build ; npm run push_osx ; npm run push_linux ; npm run push_win ; npm run clean ; npm run push_status"
   },
   "devDependencies": {
-    "electron": "^1.8.1"
+    "electron": "^1.8.8"
   },
   "dependencies": {
-    "electron-packager": "^8.7.2"
+    "electron-packager": "^12.1.1"
   }
 }
