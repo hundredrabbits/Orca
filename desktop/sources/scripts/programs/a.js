@@ -1,3 +1,5 @@
+"use strict";
+
 function program_A(x,y)
 {
   Program_Default.call(this,x,y);
@@ -8,11 +10,11 @@ function program_A(x,y)
 
   this.operation = function()
   {
-    var left = !this.left() ? "0" : this.left().glyph 
-    var right = !this.right() ? "0" : this.right().glyph
+    let left = !this.left() ? "0" : this.left().glyph 
+    let right = !this.right() ? "0" : this.right().glyph
 
-    var index = (this.convert(left) + this.convert(right)) % pico.program.glyphs.length
-    var output = pico.program.glyphs[index]
+    let index = (this.convert(left) + this.convert(right)) % pico.program.glyphs.length
+    let output = pico.program.glyphs[index]
 
     pico.program.add(this.x,this.y+2,output);
   }

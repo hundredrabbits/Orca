@@ -1,3 +1,5 @@
+"use strict";
+
 function Pico()
 {
   this.el = document.createElement("app");
@@ -51,7 +53,7 @@ function Pico()
 
   this.load = function()
   {
-    var filepath = dialog.showOpenDialog({filters: [{name: 'Pico Files', extensions: ['pico']}], properties: ['openFile']});
+    let filepath = dialog.showOpenDialog({filters: [{name: 'Pico Files', extensions: ['pico']}], properties: ['openFile']});
     if(!filepath){ console.log("Nothing to load"); return; }
     fs.readFile(filepath[0], 'utf-8', (err, data) => {
       if(err){ alert("An error ocurred reading the file :" + err.message); return; }

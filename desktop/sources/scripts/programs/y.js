@@ -1,3 +1,5 @@
+"use strict";
+
 function program_Y(x,y)
 {
   Program_Default.call(this,x,y);
@@ -7,7 +9,7 @@ function program_Y(x,y)
 
   this.operation = function()
   {
-    var ns = this.neighbors("y")
+    let ns = this.neighbors("y")
 
     // Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
     if(ns.length == 1){
@@ -19,7 +21,7 @@ function program_Y(x,y)
     }
     // Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
     else if(ns.length == 3){
-      var growth = this.free_neighbors()[0];
+      let growth = this.free_neighbors()[0];
       if(growth.length > 0){
         this.remove();
         this.lock();

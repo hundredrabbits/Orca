@@ -1,3 +1,5 @@
+"use strict";
+
 function program_M(x,y)
 {
   Program_Default.call(this,x,y);
@@ -10,8 +12,8 @@ function program_M(x,y)
   {
     if(!this.left() || !this.right()){ return; }
 
-    var val = pico.program.glyphs.indexOf(this.left().glyph)
-    var mod = pico.program.glyphs.indexOf(this.right().glyph)
+    let val = pico.program.glyphs.indexOf(this.left().glyph)
+    let mod = pico.program.glyphs.indexOf(this.right().glyph)
 
     if(mod == 0){ return; }
     

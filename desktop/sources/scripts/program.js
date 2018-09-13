@@ -1,3 +1,5 @@
+"use strict";
+
 function Program(w,h)
 {
   this.size = {h:40,v:30}
@@ -13,9 +15,9 @@ function Program(w,h)
   this.reset = function()
   {
     this.s = "";
-    var y = 0;
+    let y = 0;
     while(y < this.h){
-      var x = 0;
+      let x = 0;
       while(x < this.w){
         this.s += "."
         x += 1
@@ -28,7 +30,7 @@ function Program(w,h)
   {
     if(x < 0 || x > pico.program.w-1 || y < 0 || y > pico.program.h-1 || !glyph){ return; }
 
-    var index = this.index_at(x,y);
+    let index = this.index_at(x,y);
 
     this.s = this.s.substr(0, index)+glyph+this.s.substr(index+glyph.length);
     pico.grid.update();
@@ -45,11 +47,11 @@ function Program(w,h)
     this.progs = [] 
 
     // Find Programs
-    var y = 0;
+    let y = 0;
     while(y < this.h){
-      var x = 0;
+      let x = 0;
       while(x < this.w){
-        var g = this.glyph_at(x,y)
+        let g = this.glyph_at(x,y)
         if(this.is_prog(g)){
           this.progs.push(new window[`program_${g.toUpperCase()}`](x,y))
         }
@@ -59,8 +61,8 @@ function Program(w,h)
     }
 
     // Operate
-    for(id in this.progs){
-      var p = this.progs[id]
+    for(let id in this.progs){
+      let p = this.progs[id]
       if(this.is_locked(p.x,p.y)){ continue; }
       p.run()
     }
@@ -116,10 +118,10 @@ function Program(w,h)
 
   this.output = function()
   {
-    var origin = this.s.replace(/[^0-9a-z]/gi,".")
-    var lines = origin.match(/.{1,39}/g)
-    var s = ""
-    for(id in lines){
+    let origin = this.s.replace(/[^0-9a-z]/gi,".")
+    let lines = origin.match(/.{1,39}/g)
+    let s = ""
+    for(let id in lines){
       s += lines[id]+'\n'
     }
     return s
@@ -127,8 +129,8 @@ function Program(w,h)
 
   this.record = function()
   {
-    var g = this.s.substr(-1,1)
-    var last_g = this.r.substr(-1,1)
+    let g = this.s.substr(-1,1)
+    let last_g = this.r.substr(-1,1)
     if(g == "." && last_g == "."){ return; }
     this.r += g;
 
@@ -140,11 +142,11 @@ function Program(w,h)
 
   this.debug = function()
   {
-    var s = "";
-    for(id in this.glyphs){
-      var g = this.glyphs[id];
+    let s = "";
+    for(let id in this.glyphs){
+      let g = this.glyphs[id];
       if(window[`program_${g.toUpperCase()}`]){
-        var program = new window[`program_${g.toUpperCase()}`]();
+        let program = new window[`program_${g.toUpperCase()}`]();
         s += `${g}: ${program.docs()}\n`;
       }
       else{

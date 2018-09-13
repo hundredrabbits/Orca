@@ -1,3 +1,5 @@
+"use strict";
+
 function Grid()
 {
   this.el = document.createElement("canvas");
@@ -14,8 +16,8 @@ function Grid()
       this.y = clamp(this.y,0,pico.program.h-1);
       pico.grid.update();
     },
-    insert: function(key){
-      var key = key.trim() == "" ? "." : key.toLowerCase();
+    insert: function(k){
+      let key = k.trim() == "" ? "." : k.toLowerCase();
       if(pico.program.glyphs.indexOf(key) < 0){ console.log(`Illegal rune:${key}`); return; }
       pico.program.add(this.x,this.y,key);
     },
@@ -44,13 +46,13 @@ function Grid()
 
   this.draw_program = function()
   {
-    var ports = this.find_ports();
+    let ports = this.find_ports();
 
-    var y = 0;
+    let y = 0;
     while(y < pico.program.h){
-      var x = 0;
+      let x = 0;
       while(x < pico.program.w){
-        var styles = {
+        let styles = {
           is_cursor: pico.grid.is_cursor(x,y),
           is_port: ports[`${x}:${y}`]
         }
@@ -63,11 +65,11 @@ function Grid()
 
   this.draw_output = function()
   {
-    var x = 0;
-    var s = pico.program.r.replace(/\./g," ").trim()
+    let x = 0;
+    let s = pico.program.r.replace(/\./g," ").trim()
 
     while(x < s.length){
-      var c = s.substr(x,1)
+      let c = s.substr(x,1)
       this.draw_sprite(x,pico.program.size.v-1,c)
       x += 1
     }
@@ -80,13 +82,13 @@ function Grid()
 
   this.find_ports = function()
   {
-    var h = {};
+    let h = {};
 
-    for(id in pico.program.progs){
-      var g = pico.program.progs[id]
+    for(let id in pico.program.progs){
+      let g = pico.program.progs[id]
       if(pico.program.is_locked(g.x,g.y)){ continue; }
-      for(id in g.ports){
-        var port = g.ports[id]
+      for(let id in g.ports){
+        let port = g.ports[id]
         h[`${g.x+port.x}:${g.y+port.y}`] = port.output ? 2 : port.bang ? 1 : 3
       }
     }
@@ -101,14 +103,14 @@ function Grid()
 
   this.clear = function()
   {
-    var ctx = this.context();
+    let ctx = this.context();
 
     ctx.clearRect(0, 0, this.size.width, this.size.height);
   }
 
   this.draw_sprite = function(x,y,g,styles = {is_cursor: false,is_port: false})
   {
-    var ctx          = this.context();
+    let ctx          = this.context();
 
     ctx.textBaseline = 'bottom';
     ctx.textAlign    = "center"; 

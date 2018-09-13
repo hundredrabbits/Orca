@@ -1,3 +1,5 @@
+"use strict";
+
 function program_Z(x,y)
 {
   Program_Default.call(this,x,y);
@@ -7,8 +9,8 @@ function program_Z(x,y)
 
   this.operation = function()
   {
-    var positions = [{x:1,y:0},{x:0,y:1},{x:-1,y:0},{x:0,y:-1}];
-    var position = positions[pico.f % 4];
+    let positions = [{x:1,y:0},{x:0,y:1},{x:-1,y:0},{x:0,y:-1}];
+    let position = positions[pico.f % 4];
 
     if(this.is_free(position.x,position.y) == true){
       this.move(position.x,position.y)

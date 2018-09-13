@@ -1,3 +1,5 @@
+"use strict";
+
 function Controller()
 {
   this.menu = {default:{}};
@@ -32,12 +34,12 @@ function Controller()
 
   this.format = function()
   {
-    var f = [];
-    var m = this.menu[this.mode];
-    for(cat in m){
-      var submenu = [];
-      for(name in m[cat]){
-        var option = m[cat][name];
+    let f = [];
+    let m = this.menu[this.mode];
+    for(let cat in m){
+      let submenu = [];
+      for(let name in m[cat]){
+        let option = m[cat][name];
         if(option.role){
           submenu.push({role:option.role})
         }
@@ -58,8 +60,8 @@ function Controller()
   this.docs = function()
   {
     console.log("Generating docs..");
-    var svg = this.generate_svg(this.format())
-    var txt = this.documentation(this.format());
+    let svg = this.generate_svg(this.format())
+    let txt = this.documentation(this.format());
     dialog.showSaveDialog((fileName) => {
       if (fileName === undefined){ return; }
       fileName = fileName.substr(-4,4) != ".svg" ? fileName+".svg" : fileName;
@@ -70,11 +72,11 @@ function Controller()
 
   this.generate_svg = function(m)
   {
-    var svg_html = "";
+    let svg_html = "";
 
-    for(id in this.layout){
-      var key = this.layout[id];
-      var acc = this.accelerator_for_key(key.name,m);
+    for(let id in this.layout){
+      let key = this.layout[id];
+      let acc = this.accelerator_for_key(key.name,m);
       svg_html += `<rect x="${key.x + 1}" y="${key.y + 1}" width="${key.width - 2}" height="${key.height - 2}" rx="4" ry="4" title="${key.name}" stroke="#ccc" fill="none" stroke-width="1"/>`;
       svg_html += `<rect x="${key.x + 3}" y="${key.y + 3}" width="${key.width - 6}" height="${key.height - 12}" rx="3" ry="3" title="${key.name}" stroke="${acc.basic ? '#000' : acc.ctrl ? '#ccc' : '#fff'}" fill="${acc.basic ? '#000' : acc.ctrl ? '#ccc' : '#fff'}" stroke-width="1"/>`;
       svg_html += `<text x="${key.x + 10}" y="${key.y + 20}" font-size='11' font-family='Input Mono' stroke-width='0' fill='${acc.basic ? '#fff' : '#000'}'>${key.name.toUpperCase()}</text>`;
@@ -86,7 +88,7 @@ function Controller()
 
   this.documentation = function()
   {
-    var txt = "";
+    let txt = "";
 
     txt += this.documentation_for_mode("default",this.menu.default);
 
@@ -99,13 +101,13 @@ function Controller()
 
   this.documentation_for_mode = function(name,mode)
   {
-    var txt = `## ${name} Mode\n\n`;
+    let txt = `## ${name} Mode\n\n`;
 
-    for(id in mode){
+    for(let id in mode){
       if(id == "*" || id == "Edit"){ continue; }
       txt += `### ${id}\n`;
       for(name in mode[id]){
-        var option = mode[id][name];
+        let option = mode[id][name];
         txt += `- ${name}: \`${option.accelerator}\`\n`;
       }
       txt += "\n"
@@ -116,11 +118,11 @@ function Controller()
 
   this.accelerator_for_key = function(key,menu)
   {
-    var acc = {basic:null,ctrl:null}
+    let acc = {basic:null,ctrl:null}
     for(cat in menu){
-      var options = menu[cat];
-      for(id in options.submenu){
-        var option = options.submenu[id]; if(option.role){ continue; }
+      let options = menu[cat];
+      for(let id in options.submenu){
+        let option = options.submenu[id]; if(option.role){ continue; }
         acc.basic = (option.accelerator.toLowerCase() == key.toLowerCase()) ? option.label.toUpperCase().replace("TOGGLE ","").substr(0,8).trim() : acc.basic;
         acc.ctrl = (option.accelerator.toLowerCase() == ("CmdOrCtrl+"+key).toLowerCase()) ? option.label.toUpperCase().replace("TOGGLE ","").substr(0,8).trim() : acc.ctrl;
       }

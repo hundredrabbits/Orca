@@ -1,3 +1,5 @@
+"use strict";
+
 function program_E(x,y)
 {
   Program_Default.call(this,x,y);
@@ -9,16 +11,16 @@ function program_E(x,y)
 
   this.operation = function()
   {
-    var b = this.bang();
+    let b = this.bang();
 
     if(!b){ return; }
 
     this.remove();
     pico.program.lock(b.x,b.y);
     
-    var ns = this.free_neighbors();
-    for(id in ns){
-      var n = ns[id];
+    let ns = this.free_neighbors();
+    for(let id in ns){
+      let n = ns[id];
       pico.program.add(n.x,n.y,"b");
     }
   }

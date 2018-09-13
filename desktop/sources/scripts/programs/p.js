@@ -1,3 +1,5 @@
+"use strict";
+
 function program_P(x,y)
 {
   Program_Default.call(this,x,y);
@@ -8,14 +10,14 @@ function program_P(x,y)
 
   this.operation = function()
   {
-    var origin = this.bang();
+    let origin = this.bang();
 
     if(!origin){ return; }
 
-    var direction = {x:this.x-origin.x,y:this.y-origin.y}
+    let direction = {x:this.x-origin.x,y:this.y-origin.y}
 
     console.log(origin)
-    var pushed = this.neighbor_by(direction.x,direction.y)
+    let pushed = this.neighbor_by(direction.x,direction.y)
     this.move(direction.x,direction.y);
 
     if(pushed){

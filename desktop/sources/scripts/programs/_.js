@@ -1,3 +1,5 @@
+"use strict";
+
 function Program_Default(x,y)
 {
   this.name = "<missing name>"
@@ -51,7 +53,7 @@ function Program_Default(x,y)
     if(this.y+y >= pico.program.h){ return false; }
     if(this.y+y <= -1){ return false; }
 
-    var target = pico.program.glyph_at(this.x+x,this.y+y)
+    let target = pico.program.glyph_at(this.x+x,this.y+y)
     return target == "." || target == "b" ? true : target
   }
 
@@ -67,7 +69,7 @@ function Program_Default(x,y)
 
   this.free_neighbors = function()
   {
-    var a = [];
+    let a = [];
     if(pico.program.glyph_at(this.x+1,this.y) == "."){ a.push({x:this.x+1,y:this.y}); }
     if(pico.program.glyph_at(this.x-1,this.y) == "."){ a.push({x:this.x-1,y:this.y}); }
     if(pico.program.glyph_at(this.x,this.y+1) == "."){ a.push({x:this.x,y:this.y+1}); }
@@ -77,9 +79,9 @@ function Program_Default(x,y)
 
   this.bang = function()
   {
-    var ns = this.neighbors("b");
-    for(id in ns){
-      var n = ns[id]
+    let ns = this.neighbors("b");
+    for(let id in ns){
+      let n = ns[id]
       if(pico.program.glyph_at(n.x,n.y-1) != "h"){
         return {x:n.x,y:n.y};
       }
@@ -89,26 +91,26 @@ function Program_Default(x,y)
 
   this.left = function(target = null)
   {
-    var g = pico.program.glyph_at(this.x-1,this.y);
+    let g = pico.program.glyph_at(this.x-1,this.y);
 
     return g != "." && (g == target || !target) ? {x:this.x-1,y:this.y,glyph:g} : null;
   }
 
   this.right = function(target)
   {
-    var g = pico.program.glyph_at(this.x+1,this.y);
+    let g = pico.program.glyph_at(this.x+1,this.y);
     return g != "." && (g == target || !target) ? {x:this.x+1,y:this.y,glyph:g} : null;
   }
 
   this.up = function(target)
   {
-    var g = pico.program.glyph_at(this.x,this.y-1);
+    let g = pico.program.glyph_at(this.x,this.y-1);
     return g != "." && (g == target || !target) ? {x:this.x,y:this.y-1,glyph:g} : null;
   }
 
   this.down = function(target)
   {
-    var g = pico.program.glyph_at(this.x,this.y+1);
+    let g = pico.program.glyph_at(this.x,this.y+1);
     return g != "." && (g == target || !target) ? {x:this.x,y:this.y+1,glyph:g} : null;
   }
 

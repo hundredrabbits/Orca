@@ -1,3 +1,5 @@
+"use strict";
+
 function program_H(x,y)
 {
   Program_Default.call(this,x,y);

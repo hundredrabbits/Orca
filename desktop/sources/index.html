@@ -1,6 +1,5 @@
 <html>
   <head>
-    <script type="text/javascript" src="scripts/lib/logo.js"></script>
     <script type="text/javascript" src="scripts/lib/controller.js"></script>
 
     <script type="text/javascript" src="scripts/pico.js"></script>
@@ -9,7 +8,6 @@
     <script type="text/javascript" src="scripts/keyboard.js"></script>
 
     <script type="text/javascript" src="scripts/programs/_.js"></script>
-
     <script type="text/javascript" src="scripts/programs/a.js"></script>
     <script type="text/javascript" src="scripts/programs/b.js"></script>
     <script type="text/javascript" src="scripts/programs/c.js"></script>
@@ -49,13 +47,11 @@
       const fs = require('fs');
       const app_path = app.getAppPath();
       
-      var pico = new Pico();
+      let pico = new Pico();
       pico.install();
       pico.start();
 
-      var logo = new Logo(); logo.install(120); setTimeout(function(){ logo.remove(); }, 5500);
-
-      var keyboard = new Keyboard();
+      let keyboard = new Keyboard();
       document.onkeydown = function(event){ keyboard.listen_onkeydown(event); };
       </script>
   </body>

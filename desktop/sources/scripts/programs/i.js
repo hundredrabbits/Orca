@@ -1,3 +1,5 @@
+"use strict";
+
 function program_I(x,y)
 {
   Program_Default.call(this,x,y);
@@ -11,7 +13,7 @@ function program_I(x,y)
     if(!this.bang()){ return; }
     if(!this.down()){ return; }
 
-    var n = this.down();
+    let n = this.down();
     pico.program.add(this.x,this.y+1,this.inc(n.glyph));
   }
 
@@ -21,7 +23,7 @@ function program_I(x,y)
     if(parseInt(letter) == 0){ return "1"; }
     if(parseInt(letter) > 0){ return parseInt(letter)+1+""; }
 
-    var index = pico.program.glyphs.indexOf(letter);
+    let index = pico.program.glyphs.indexOf(letter);
     
     if(index < 0){ return; }
 

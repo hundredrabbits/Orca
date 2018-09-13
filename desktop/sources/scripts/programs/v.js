@@ -1,3 +1,5 @@
+"use strict";
+
 function program_V(x,y)
 {
   Program_Default.call(this,x,y);
@@ -8,7 +10,7 @@ function program_V(x,y)
 
   this.operation = function()
   {
-    var val = 0;
+    let val = 0;
 
     val += pico.program.glyph_at(this.x-1,this.y) != "." ? 1 : 0;
     val += pico.program.glyph_at(this.x-2,this.y) != "." ? 1 : 0;
