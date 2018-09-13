@@ -33,7 +33,6 @@ function Program(w,h)
     let index = this.index_at(x,y);
 
     this.s = this.s.substr(0, index)+glyph+this.s.substr(index+glyph.length);
-    pico.grid.update();
   }
 
   this.remove = function(x,y)
