@@ -11,8 +11,9 @@ window.addEventListener('drop', function(e)
   e.stopPropagation();
 
   let file = e.dataTransfer.files[0];
+  let name = file.path ? file.path : file.name;
 
-  if(!file.path || file.path.indexOf(".pico") < 0){ console.log("Pico","Not a pico file"); return; }
+  if(!name || name.indexOf(".pico") < 0){ console.log("Pico","Not a pico file"); return; }
 
   let reader = new FileReader();
   reader.onload = function(e){
