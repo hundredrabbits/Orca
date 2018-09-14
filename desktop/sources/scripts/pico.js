@@ -4,7 +4,18 @@ function Pico()
 {
   this.el = document.createElement("app");
 
-  this.theme = new Theme();
+  this.theme = new Theme({
+    background: "#111111",
+    f_high: "#ffffff",
+    f_med: "#333333",
+    f_low: "#000000",
+    f_inv: "#000000",
+    b_high: "#ffb545",
+    b_med: "#72dec2",
+    b_low: "#444444",
+    b_inv: "#ffffff"
+  });
+  
   this.controller = new Controller();
   this.program = new Program(39,29);
   this.grid = new Grid();
