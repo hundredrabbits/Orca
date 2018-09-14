@@ -63,7 +63,7 @@
       pico.controller.add("default","*","Reset",() => { pico.reset(); },"CmdOrCtrl+Backspace");
       pico.controller.add("default","*","Quit",() => { app.exit(); },"CmdOrCtrl+Q");
 
-      pico.controller.add("default","File","New",() => { pico.reset(); },"CmdOrCtrl+N");
+      pico.controller.add("default","File","New",() => { pico.new(); },"CmdOrCtrl+N");
       pico.controller.add("default","File","Save",() => { pico.save(); },"CmdOrCtrl+S");
       pico.controller.add("default","File","Open",() => { pico.open(); },"CmdOrCtrl+O");
 

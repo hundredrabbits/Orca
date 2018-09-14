@@ -7,6 +7,8 @@ function Keyboard()
 
   this.listen_onkeydown = function(event)
   {
+    if(event.metaKey && event.key == "Backspace"){ pico.reset(); event.preventDefault(); return; }
+
     if(event.metaKey){ return; }
     if(event.ctrlKey){ return; }
     

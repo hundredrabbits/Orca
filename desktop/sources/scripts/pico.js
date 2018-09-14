@@ -34,11 +34,17 @@ function Pico()
     setInterval(() => { this.run(); }, 200)
   }
 
+  this.new = function()
+  {
+    this.program.reset();
+    this.grid.update();
+
+  }
+
   this.reset = function()
   {
     this.theme.reset();
-    this.program.reset();
-    this.grid.update();
+    this.new()
   }
 
   this.save = function()
