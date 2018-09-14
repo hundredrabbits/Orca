@@ -117,25 +117,25 @@ function Grid()
     ctx.font         = `${this.tile.h*0.75}px input_mono_regular`;
 
     if(styles.is_cursor){
-      ctx.fillStyle    = 'white';
+      ctx.fillStyle    = pico.theme.active.b_inv;
       ctx.fillRect((x+0.5)*this.tile.w,(y)*this.tile.h,this.tile.w,this.tile.h);  
-      ctx.fillStyle    = 'black';
+      ctx.fillStyle    = pico.theme.active.f_inv;
     }
     else if(styles.is_port){
       if(styles.is_port == 2){
-        ctx.fillStyle = '#72dec2'
+        ctx.fillStyle = pico.theme.active.b_high
         ctx.fillRect((x+0.5)*this.tile.w,(y)*this.tile.h,this.tile.w,this.tile.h);  
-        ctx.fillStyle    = 'black';
+        ctx.fillStyle    = pico.theme.active.f_low;
       }
       else if(styles.is_port == 1){
-        ctx.fillStyle = '#ffb545'
+        ctx.fillStyle = pico.theme.active.b_med
         ctx.fillRect((x+0.5)*this.tile.w,(y)*this.tile.h,this.tile.w,this.tile.h);  
-        ctx.fillStyle    = 'black';
+        ctx.fillStyle    = pico.theme.active.f_low;
       }
       else if(styles.is_port == 3){
-        ctx.fillStyle = '#444'
+        ctx.fillStyle = pico.theme.active.b_low
         ctx.fillRect((x+0.5)*this.tile.w,(y)*this.tile.h,this.tile.w,this.tile.h);  
-        ctx.fillStyle    = 'white';
+        ctx.fillStyle    = pico.theme.active.f_high;
       }
     }
     else{

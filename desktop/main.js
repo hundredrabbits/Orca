@@ -25,7 +25,7 @@ app.on('ready', () =>
   })
 
   app.win.loadURL(`file://${__dirname}/sources/index.html`);
-  // app.win.toggleDevTools();
+  // app.inspect();
 
   app.win.on('closed', () => {
     win = null
@@ -64,15 +64,20 @@ app.toggle_fullscreen = function()
 
 app.toggle_visible = function()
 {
-  if(is_shown){ app.win.hide(); } else{ app.win.show(); }
+  if(process.platform == "win32"){
+    if(!app.win.isMinimized()){ app.win.minimize(); } else{ app.win.restore(); }
+  }
+  else{
+    if(is_shown && !app.win.isFullScreen()){ app.win.hide(); } else{ app.win.show(); }
+  }
 }
 
-app.inject_menu = function(m)
+app.inject_menu = function(menu)
 {
   try{
-    Menu.setApplicationMenu(Menu.buildFromTemplate(m));  
-  }  
-  catch(err){
-    console.warn("Cannot inject menu");
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
   }
+  catch(err){
+    console.warn("Cannot inject menu.")
+  }  
 }

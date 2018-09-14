@@ -1,6 +1,7 @@
 <html>
   <head>
     <script type="text/javascript" src="scripts/lib/controller.js"></script>
+    <script type="text/javascript" src="scripts/lib/theme.js"></script>
 
     <script type="text/javascript" src="scripts/pico.js"></script>
     <script type="text/javascript" src="scripts/program.js"></script>
@@ -39,6 +40,7 @@
     <link rel="stylesheet" type="text/css" href="links/reset.css"/>
     <link rel="stylesheet" type="text/css" href="links/fonts.css"/>
     <link rel="stylesheet" type="text/css" href="links/main.css"/>
+    <link rel="stylesheet" type="text/css" href="links/theme.css"/>
     
     <title>Pico</title>
   </head>
@@ -65,6 +67,11 @@
       pico.controller.add("default","File","Open",() => { pico.open(); },"CmdOrCtrl+O");
 
       pico.controller.add("default","Program","Play/Pause",() => { pico.pause(); },"CmdOrCtrl+P");
+
+      pico.controller.add("default","Theme","Noir",() => { pico.theme.noir(); },"CmdOrCtrl+Shift+1");
+      pico.controller.add("default","Theme","Pale",() => { pico.theme.pale(); },"CmdOrCtrl+Shift+2");
+      pico.controller.add("default","Theme","Invert",() => { pico.theme.invert(); },"CmdOrCtrl+Shift+I");
+      pico.controller.add("default","Theme","Install",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes'); });
 
       pico.controller.commit();
 

@@ -4,24 +4,28 @@ function Pico()
 {
   this.el = document.createElement("app");
 
+  this.theme = new Theme();
   this.controller = new Controller();
   this.program = new Program(39,29);
   this.grid = new Grid();
 
-  this.install = function()
+  this.install = function(host = document.body)
   {
+    this.theme.install(host);
     this.grid.install(this.el);
+    host.appendChild(this.el);
     this.program.reset();
-    document.body.appendChild(this.el)
   }
 
   this.start = function()
   {
+    this.theme.start();
     setInterval(() => { this.run(); }, 200)
   }
 
   this.reset = function()
   {
+    this.theme.reset();
     this.program.reset();
     this.grid.update();
   }

@@ -1,4 +1,2 @@
-body { background:black; color:white; font-family: 'input_mono_regular'; padding:30px; overflow: hidden; -webkit-app-region: drag; }
+body { font-family: 'input_mono_regular'; padding:30px; overflow: hidden; -webkit-app-region: drag; transition: background-color 500ms; }
 canvas { display: block;white-space: pre;font-size: 11px;line-height: 10px; text-transform: uppercase; width:300px; margin:calc(50vh - (450px/2) - 30px) auto; -webkit-app-region: drag;}
-grid c { background:#fff; color:#000; }
-grid l { background:#f00; color:#000; }
