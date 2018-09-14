@@ -51,6 +51,7 @@
       const app_path = app.getAppPath();
       
       let pico = new Pico();
+      pico.controller = new Controller();
       pico.install();
       pico.start();
 

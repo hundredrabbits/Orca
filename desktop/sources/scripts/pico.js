@@ -16,7 +16,7 @@ function Pico()
     b_inv: "#ffffff"
   });
   
-  this.controller = new Controller();
+  this.controller = null;
   this.program = new Program(39,29);
   this.grid = new Grid();
 

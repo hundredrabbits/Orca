@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <script type="text/javascript" src="desktop/sources/scripts/lib/theme.js"></script>
+
+    <script type="text/javascript" src="desktop/sources/scripts/pico.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/program.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/grid.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/keyboard.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/events.js"></script>
+
+    <script type="text/javascript" src="desktop/sources/scripts/programs/_.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/a.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/b.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/c.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/d.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/e.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/f.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/g.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/h.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/i.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/j.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/k.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/l.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/m.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/n.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/o.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/p.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/q.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/r.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/s.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/t.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/u.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/w.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/x.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/v.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/y.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/programs/z.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="desktop/sources/links/reset.css"/>
+    <link rel="stylesheet" type="text/css" href="desktop/sources/links/fonts.css"/>
+    <link rel="stylesheet" type="text/css" href="desktop/sources/links/main.css"/>
+    <link rel="stylesheet" type="text/css" href="desktop/sources/links/theme.css"/>
+    
+    <title>Pico</title>
+  </head>
+  <body>
+    <script>
+      
+      let pico = new Pico();
+      pico.install();
+      pico.start();
+
+      let keyboard = new Keyboard();
+      document.onkeydown = function(event){ keyboard.listen_onkeydown(event); };
+      </script>
+  </body>
+</html>
