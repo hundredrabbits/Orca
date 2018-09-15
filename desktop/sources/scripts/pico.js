@@ -52,7 +52,7 @@ function Pico()
     dialog.showSaveDialog({title:"Save to .pico",filters: [{name: "Pico Format", extensions: ["pico"]}]},(fileName) => {
       if(fileName === undefined){ return; }
       fileName = fileName.substr(-5,5) != ".pico" ? fileName+".pico" : fileName;
-      fs.writeFileSync(fileName, content);
+      fs.writeFileSync(fileName, pico.program.output());
     }); 
   }
 
@@ -76,9 +76,9 @@ function Pico()
   this.f = 0;
   this.is_paused = false
 
-  this.run = function()
+  this.run = function(force = false)
   {
-    if(this.is_paused){ return; }
+    if(this.is_paused && !force){ return; }
 
     this.program.run();
     this.grid.update();

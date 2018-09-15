@@ -11,17 +11,19 @@ function program_J(x,y)
 
   this.operation = function()
   {
-    // pico.program.lock(this.x+1,this.y)
-    pico.program.lock(this.x-1,this.y)
-    if(this.bang() && this.left()){
-      this.fire();
+    if(!this.bang()){ return; }
+
+    if(this.left()){
+      pico.program.add(this.x+1,this.y,this.left().glyph)
+      pico.program.remove(this.x-1,this.y)  
+      pico.program.lock(this.x-1,this.y)
+      pico.program.lock(this.x+1,this.y)
     }
-  }
-  this.fire = function()
-  {
-    pico.program.add(this.x+1,this.y,this.left().glyph)
-    pico.program.remove(this.x-1,this.y)  
-    pico.program.lock(this.x+1,this.y)
-    pico.program.lock(this.x-1,this.y)
+    else if(this.right()){
+      pico.program.add(this.x-1,this.y,this.right().glyph)
+      pico.program.remove(this.x+1,this.y)  
+      pico.program.lock(this.x-1,this.y)
+      pico.program.lock(this.x+1,this.y)
+    }
   }
 }

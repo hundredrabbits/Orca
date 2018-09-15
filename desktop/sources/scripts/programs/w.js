@@ -11,15 +11,16 @@ function program_W(x,y)
   this.operation = function()
   {
     let input = this.up();
+    let active = this.bang() || this.neighbors("1").length > 0
 
-    if(input && this.bang()){
+    if(input && active){
       let warp = this.find_warp(this);
-      if(warp){
-        pico.program.add(warp.x,warp.y+1,input.glyph)
-        pico.program.lock(warp.x,warp.y+1);
-        pico.program.remove(this.x,this.y-1)  
-      }
+      if(!warp){ return; }
+      pico.program.add(warp.x,warp.y+1,input.glyph)
+      pico.program.remove(this.x,this.y-1);
+      pico.program.lock(warp.x,warp.y+1);
     }
+    
   }
 
   this.find_warps = function(origin)

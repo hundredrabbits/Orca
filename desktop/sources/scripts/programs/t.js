@@ -6,11 +6,11 @@ function program_T(x,y)
 
   this.name = "trigger"
   this.glyph = "t";
-  this.ports = [{x:0,y:-1},{x:0,y:1,output:true}];
+  this.ports = [{x:-1,y:0},{x:0,y:1,output:true}];
 
   this.operation = function()
   {
-    if(this.up("1") || this.up("r") || this.up("l") || this.up("u") || this.up("d") || this.up("b") || this.up("z")){
+    if(this.left("1") || this.left("r") || this.left("l") || this.left("u") || this.left("d") || this.left("b") || this.left("z")){
       this.fire();
     }
   }
