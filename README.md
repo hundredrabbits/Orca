@@ -7,10 +7,10 @@
 ## Programs
 
 - `A` **Add**: Creates the result of the addition of east and west _fns_, southward.
-- `B` **Bang**: The **bang** _fn_ is used to trigger various _fns_, only lasts one cycle.
-- `C` **Clone**(bang): Clones the westward _fn__fn_, eastwardly, on **bang**.
+- `B` **Bang**: The **bang** is used to trigger various _fns_, only lasts one cycle.
+- `C` **Clone**(bang): Clones the westward _fn__, eastwardly, on **bang**.
 - `D` **Down**: Moves southward.
-- `E` **Explode**(bang): Fires bangs in nearby available cells, on **bang**.
+- `E` **Explode**(bang): Fires bangs in neighboring available cells, on **bang**.
 - `F` **If**: Bangs if east and west _fns_ are equal, southward.
 - `G` **Generator**(bang): Generates a `D` on **bang**.
 - `H` **Halt**: Stops southward _fn_ from operating.
@@ -21,16 +21,16 @@
 - `M` **Modulo**: Creates the result of the modulo operation of east and west _fns_, southward.
 - `N` **Turn**: Creates a numerical _fn_ southward, based on the *runtime frame*.
 - `O` **Odd**(bang): Transforms into `Q` when a _fn_ is present northward.
-- `P` **Push**(bang): Is moved away, on **bang**.
-- `Q` **Even**(bang): Transforms into `O`, and **bangs** southward, when a _fn_ is present northward.
+- `P` **Push**(bang): Moves away, on **bang**.
+- `Q` **Even**(bang): Transforms into `O`, when a _fn_ is present northward, and **bangs** southward.
 - `R` **Right**: Moves eastward.
-- `S` **Shift**: Converts neighboors into directions.
+- `S` **Shift**: Converts neighboors into directions _fns_.
 - `T` **Trigger**: Bangs southward in the presence of `1`, `U`, `R`, `D`, `L` or `Z` westward.
 - `U` **Up**: Moves Northward.
 - `V` **Value**: Creates a numerical value between 0 and 5 based on the number of present _fns_ westward.
 - `W` **Warp**(bang): Warps northward _fn_ to the next available warp, and halts it, on **bang**.
 - `X` **Split**: Bangs eastward when westward _fn_ is `0`, and southward when _fn_ is `1`.
-- `Y` **Automata**: Game of life-like automation.
+- `Y` **Automata**: Automates, following the rules of Game of life-like .
 - `Z` **Creep**: Moves to a the next available location in a cycle of `R`,`D`,`L`,`U` based on the *runtime frame*.
 
 ## Headless
