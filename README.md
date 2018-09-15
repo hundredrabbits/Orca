@@ -6,49 +6,32 @@
 
 ## Programs
 
-### Moves
-
-- `D` **Down**: Moves southward.
-- `L` **Left**: Moves westward.
-- `R` **Right**: Moves eastward.
-- `U` **Up**: Moves Northward.
-- `S` **Shift**: Converts neighboors into directions.
-
-### Logic
-
 - `A` **Add**: Creates the result of the addition of east and west _fns_, southward.
-- `F` **If**: Bangs if east and west _fns_ are equal, southward.
-- `M` **Modulo**: Creates the result of the modulo operation of east and west _fns_, southward.
-- `X` **Split**: Bangs eastward when westward _fn_ is `0`, and southward when _fn_ is `1`.
-- `T` **Trigger**: Bangs southward in the presence of `1`, `U`, `R`, `D`, `L` or `Z` westward.
-
-### Filters
-
-- `J` **Jump**(bang): Moves the westward _fn_ to eastward, or the eastward _fn_ westward, on **bang**.
-- `C` **Clone**(bang): Clones the westward _fn__fn_, eastwardly, on **bang**.
-
-### Directors
-
-- `G` **Generator**(bang): Generates a `D` on **bang**.
-- `I` **Increment**(bang): Increments southward numeric _fn_ on **bang**.
-- `K` **Kill**(bang): Kills southward _fns_, on **bang**.
-- `O` **Odd**(bang): Transforms into `Q` when a _fn_ is present northward.
-- `Q` **Even**(bang): Transforms into `O`, and **bangs** southward, when a _fn_ is present northward.
-
-### Automated
-
 - `B` **Bang**: The **bang** _fn_ is used to trigger various _fns_, only lasts one cycle.
-- `H` **Halt**: Stops southward _fn_ from operating.
-- `N` **Turn**(passive): Creates a numerical _fn_ southward, based on the *runtime frame*.
-- `Y` **Automata**(passive): Game of life-like automation.
-- `Z` **Creep**(passive): Moves to a the next available location in a cycle of `R`,`D`,`L`,`U` based on the *runtime frame*.
-
-### Special
-
+- `C` **Clone**(bang): Clones the westward _fn__fn_, eastwardly, on **bang**.
+- `D` **Down**: Moves southward.
 - `E` **Explode**(bang): Fires bangs in nearby available cells, on **bang**.
+- `F` **If**: Bangs if east and west _fns_ are equal, southward.
+- `G` **Generator**(bang): Generates a `D` on **bang**.
+- `H` **Halt**: Stops southward _fn_ from operating.
+- `I` **Increment**(bang): Increments southward numeric _fn_ on **bang**.
+- `J` **Jump**(bang): Moves the westward _fn_ to eastward, or the eastward _fn_ westward, on **bang**.
+- `K` **Kill**(bang): Kills southward _fns_, on **bang**.
+- `L` **Left**: Moves westward.
+- `M` **Modulo**: Creates the result of the modulo operation of east and west _fns_, southward.
+- `N` **Turn**(passive): Creates a numerical _fn_ southward, based on the *runtime frame*.
+- `O` **Odd**(bang): Transforms into `Q` when a _fn_ is present northward.
 - `P` **Push**(bang): Is moved away, on **bang**.
+- `Q` **Even**(bang): Transforms into `O`, and **bangs** southward, when a _fn_ is present northward.
+- `R` **Right**: Moves eastward.
+- `S` **Shift**: Converts neighboors into directions.
+- `T` **Trigger**: Bangs southward in the presence of `1`, `U`, `R`, `D`, `L` or `Z` westward.
+- `U` **Up**: Moves Northward.
 - `V` **Value**: Creates a numerical value between 0 and 5 based on the number of present _fns_ westward.
 - `W` **Warp**(bang): Warps northward _fn_ to the next available warp, and halts it, on **bang**.
+- `X` **Split**: Bangs eastward when westward _fn_ is `0`, and southward when _fn_ is `1`.
+- `Y` **Automata**(passive): Game of life-like automation.
+- `Z` **Creep**(passive): Moves to a the next available location in a cycle of `R`,`D`,`L`,`U` based on the *runtime frame*.
 
 ## Headless
 
