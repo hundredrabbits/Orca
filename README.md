@@ -19,7 +19,7 @@
 - `K` **Kill**(bang): Kills southward _fns_, on **bang**.
 - `L` **Left**: Moves westward.
 - `M` **Modulo**: Creates the result of the modulo operation of east and west _fns_, southward.
-- `N` **Turn**(passive): Creates a numerical _fn_ southward, based on the *runtime frame*.
+- `N` **Turn**: Creates a numerical _fn_ southward, based on the *runtime frame*.
 - `O` **Odd**(bang): Transforms into `Q` when a _fn_ is present northward.
 - `P` **Push**(bang): Is moved away, on **bang**.
 - `Q` **Even**(bang): Transforms into `O`, and **bangs** southward, when a _fn_ is present northward.
@@ -30,8 +30,8 @@
 - `V` **Value**: Creates a numerical value between 0 and 5 based on the number of present _fns_ westward.
 - `W` **Warp**(bang): Warps northward _fn_ to the next available warp, and halts it, on **bang**.
 - `X` **Split**: Bangs eastward when westward _fn_ is `0`, and southward when _fn_ is `1`.
-- `Y` **Automata**(passive): Game of life-like automation.
-- `Z` **Creep**(passive): Moves to a the next available location in a cycle of `R`,`D`,`L`,`U` based on the *runtime frame*.
+- `Y` **Automata**: Game of life-like automation.
+- `Z` **Creep**: Moves to a the next available location in a cycle of `R`,`D`,`L`,`U` based on the *runtime frame*.
 
 ## Headless
 
