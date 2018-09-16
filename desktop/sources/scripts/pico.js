@@ -20,6 +20,9 @@ function Pico()
   this.program = new Program(39,29);
   this.grid = new Grid();
 
+  this.f = 0;
+  this.is_paused = false
+
   this.install = function(host = document.body)
   {
     this.theme.install(host);
@@ -73,9 +76,6 @@ function Pico()
     pico.grid.update();
   }
 
-  this.f = 0;
-  this.is_paused = false
-
   this.run = function(force = false)
   {
     if(this.is_paused && !force){ return; }
@@ -87,6 +87,7 @@ function Pico()
 
   this.pause = function()
   {
-    this.is_paused = this.is_paused ? false : true
+    this.is_paused = this.is_paused ? false : true;
+    this.grid.update();    
   }
 }

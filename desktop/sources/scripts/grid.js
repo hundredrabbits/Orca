@@ -142,7 +142,7 @@ function Grid()
       ctx.fillStyle = 'white';
     }
     
-    ctx.fillText(styles.is_cursor && g == "." ? "@" :g.toUpperCase(), (x+1) * this.tile.w, (y+1) * this.tile.h);
+    ctx.fillText(styles.is_cursor && g == "." ? (!pico.is_paused ? "@" : "~") :g.toUpperCase(), (x+1) * this.tile.w, (y+1) * this.tile.h);
   }
 
   function clamp(v, min, max) { return v < min ? min : v > max ? max : v; }

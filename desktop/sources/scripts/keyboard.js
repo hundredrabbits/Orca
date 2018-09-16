@@ -14,7 +14,6 @@ function Keyboard()
       return; 
     }
 
-    //
     if(event.metaKey){ return; }
     if(event.ctrlKey){ return; }
     
@@ -33,6 +32,7 @@ function Keyboard()
       if(event.shiftKey){
         pico.grid.cursor.move(1,0)
       }
+      pico.grid.update();
     }
   }
 
