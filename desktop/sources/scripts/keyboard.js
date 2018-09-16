@@ -13,6 +13,12 @@ function Keyboard()
       event.preventDefault(); 
       return; 
     }
+    // Pause
+    if((event.metaKey || event.ctrlKey) && event.key == "p"){ 
+      pico.pause(); 
+      event.preventDefault(); 
+      return; 
+    }
 
     if(event.metaKey){ return; }
     if(event.ctrlKey){ return; }
