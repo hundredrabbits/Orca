@@ -10,7 +10,7 @@ function program_A(x,y)
 
   this.operation = function()
   {
-    if(!this.left() && !this.right()){
+    if(!this.left() || !this.right()){
       pico.program.remove(this.x,this.y+1);
       return;
     }

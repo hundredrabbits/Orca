@@ -30,7 +30,7 @@
 - `V` **Value**: Creates a numerical value between 0 and 5 based on the number of present _fns_ westward.
 - `W` **Warp**(bang): Warps northward _fn_ to the next available warp, and halts it, on **bang**.
 - `X` **Split**: Bangs eastward when westward _fn_ is `0`, and southward when _fn_ is `1`.
-- `Y` **Automata**: Automates, following the rules of Game of life-like .
+- `Y` **Type**: Compares the type(num/alpha) of westward and eastward _fns_, and return `1` or `0` southward.
 - `Z` **Creep**: Moves to a the next available location in a cycle of `R`,`D`,`L`,`U` based on the *runtime frame*.
 
 ## Headless
