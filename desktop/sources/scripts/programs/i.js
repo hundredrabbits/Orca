@@ -13,7 +13,7 @@ function program_I(x,y)
     if(!this.bang()){ return; }
     if(!this.down()){ return; }
 
-    let n = this.down();
+    const n = this.down();
     pico.program.add(this.x,this.y+1,this.inc(n.glyph));
   }
 
@@ -23,7 +23,7 @@ function program_I(x,y)
     if(parseInt(letter) == 0){ return "1"; }
     if(parseInt(letter) > 0){ return parseInt(letter)+1+""; }
 
-    let index = pico.program.glyphs.indexOf(letter);
+    const index = pico.program.glyphs.indexOf(letter);
     
     if(index < 0){ return; }
 

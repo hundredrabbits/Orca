@@ -33,6 +33,10 @@
 - `Y` **Type**: Compares the type(num/alpha) of westward and eastward _fns_, and return `1` or `0` southward.
 - `Z` **Creep**: Moves to a the next available location in a cycle of `R`,`D`,`L`,`U` based on the *runtime frame*.
 
+## Logic Functions
+
+The logic functions are passive, and they are `a`, `f`, `m`, `y`.
+
 ## Headless
 
 ```

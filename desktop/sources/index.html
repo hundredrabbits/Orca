@@ -50,7 +50,7 @@
       const fs = require('fs');
       const app_path = app.getAppPath();
       
-      let pico = new Pico();
+      const pico = new Pico();
       pico.controller = new Controller();
       pico.install();
       pico.start();
@@ -76,7 +76,7 @@
 
       pico.controller.commit();
 
-      let keyboard = new Keyboard();
+      const keyboard = new Keyboard();
       document.onkeydown = function(event){ keyboard.listen_onkeydown(event); };
       </script>
   </body>

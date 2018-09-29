@@ -15,11 +15,11 @@ function program_A(x,y)
       return;
     }
 
-    let left = !this.left() ? "0" : this.left().glyph 
-    let right = !this.right() ? "0" : this.right().glyph
+    const left = !this.left() ? "0" : this.left().glyph 
+    const right = !this.right() ? "0" : this.right().glyph
 
-    let index = (this.convert(left) + this.convert(right)) % pico.program.glyphs.length
-    let output = pico.program.glyphs[index]
+    const index = (this.convert(left) + this.convert(right)) % pico.program.glyphs.length
+    const output = pico.program.glyphs[index]
 
     pico.program.add(this.x,this.y+1,output);
   }

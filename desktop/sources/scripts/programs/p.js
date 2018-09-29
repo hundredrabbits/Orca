@@ -10,14 +10,13 @@ function program_P(x,y)
 
   this.operation = function()
   {
-    let origin = this.bang();
+    const origin = this.bang();
 
     if(!origin){ return; }
 
-    let direction = {x:this.x-origin.x,y:this.y-origin.y}
-
-    console.log(origin)
-    let pushed = this.neighbor_by(direction.x,direction.y)
+    const direction = {x:this.x-origin.x,y:this.y-origin.y}
+    const pushed = this.neighbor_by(direction.x,direction.y)
+    
     this.move(direction.x,direction.y);
 
     if(pushed){

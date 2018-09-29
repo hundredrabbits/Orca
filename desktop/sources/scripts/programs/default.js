@@ -53,7 +53,7 @@ function Program_Default(x,y)
     if(this.y+y >= pico.program.h){ return false; }
     if(this.y+y <= -1){ return false; }
 
-    let target = pico.program.glyph_at(this.x+x,this.y+y)
+    const target = pico.program.glyph_at(this.x+x,this.y+y)
     return target == "." || target == "b" ? true : target
   }
 
@@ -69,7 +69,7 @@ function Program_Default(x,y)
 
   this.free_neighbors = function()
   {
-    let a = [];
+    const a = [];
     if(pico.program.glyph_at(this.x+1,this.y) == "."){ a.push({x:this.x+1,y:this.y}); }
     if(pico.program.glyph_at(this.x-1,this.y) == "."){ a.push({x:this.x-1,y:this.y}); }
     if(pico.program.glyph_at(this.x,this.y+1) == "."){ a.push({x:this.x,y:this.y+1}); }
@@ -79,9 +79,9 @@ function Program_Default(x,y)
 
   this.bang = function()
   {
-    let ns = this.neighbors("b");
-    for(let id in ns){
-      let n = ns[id]
+    const ns = this.neighbors("b");
+    for(const id in ns){
+      const n = ns[id]
       if(pico.program.glyph_at(n.x,n.y-1) != "h"){
         return {x:n.x,y:n.y};
       }
@@ -91,26 +91,26 @@ function Program_Default(x,y)
 
   this.left = function(target = null)
   {
-    let g = pico.program.glyph_at(this.x-1,this.y);
+    const g = pico.program.glyph_at(this.x-1,this.y);
 
     return g != "." && (g == target || !target) ? {x:this.x-1,y:this.y,glyph:g} : null;
   }
 
   this.right = function(target)
   {
-    let g = pico.program.glyph_at(this.x+1,this.y);
+    const g = pico.program.glyph_at(this.x+1,this.y);
     return g != "." && (g == target || !target) ? {x:this.x+1,y:this.y,glyph:g} : null;
   }
 
   this.up = function(target)
   {
-    let g = pico.program.glyph_at(this.x,this.y-1);
+    const g = pico.program.glyph_at(this.x,this.y-1);
     return g != "." && (g == target || !target) ? {x:this.x,y:this.y-1,glyph:g} : null;
   }
 
   this.down = function(target)
   {
-    let g = pico.program.glyph_at(this.x,this.y+1);
+    const g = pico.program.glyph_at(this.x,this.y+1);
     return g != "." && (g == target || !target) ? {x:this.x,y:this.y+1,glyph:g} : null;
   }
 

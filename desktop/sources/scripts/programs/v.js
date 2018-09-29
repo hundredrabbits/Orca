@@ -10,13 +10,8 @@ function program_V(x,y)
 
   this.operation = function()
   {
-    let val = 0;
+    const val = (pico.program.glyph_at(this.x-1,this.y) != "." ? 1 : 0) + (pico.program.glyph_at(this.x-2,this.y) != "." ? 1 : 0) + (pico.program.glyph_at(this.x-3,this.y) != "." ? 1 : 0) + (pico.program.glyph_at(this.x-4,this.y) != "." ? 1 : 0) + (pico.program.glyph_at(this.x-5,this.y) != "." ? 1 : 0);
 
-    val += pico.program.glyph_at(this.x-1,this.y) != "." ? 1 : 0;
-    val += pico.program.glyph_at(this.x-2,this.y) != "." ? 1 : 0;
-    val += pico.program.glyph_at(this.x-3,this.y) != "." ? 1 : 0;
-    val += pico.program.glyph_at(this.x-4,this.y) != "." ? 1 : 0;
-    val += pico.program.glyph_at(this.x-5,this.y) != "." ? 1 : 0;
     pico.program.add(this.x+1,this.y,val+"");
     pico.program.lock(this.x+1,this.y);
   }

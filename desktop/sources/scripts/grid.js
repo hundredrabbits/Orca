@@ -17,7 +17,7 @@ function Grid()
       pico.grid.update();
     },
     insert: function(k){
-      let key = k.trim() == "" ? "." : k.toLowerCase();
+      const key = k.trim() == "" ? "." : k.toLowerCase();
       if(pico.program.glyphs.indexOf(key) < 0){ console.log(`Illegal rune:${key}`); return; }
       pico.program.add(this.x,this.y,key);
     },
@@ -46,13 +46,13 @@ function Grid()
 
   this.draw_program = function()
   {
-    let ports = this.find_ports();
+    const ports = this.find_ports();
 
     let y = 0;
     while(y < pico.program.h){
       let x = 0;
       while(x < pico.program.w){
-        let styles = {
+        const styles = {
           is_cursor: pico.grid.is_cursor(x,y),
           is_port: ports[`${x}:${y}`]
         }
@@ -65,11 +65,11 @@ function Grid()
 
   this.draw_output = function()
   {
-    let x = 0;
-    let s = pico.program.r.replace(/\./g," ").trim()
+    const x = 0;
+    const s = pico.program.r.replace(/\./g," ").trim()
 
     while(x < s.length){
-      let c = s.substr(x,1)
+      const c = s.substr(x,1)
       this.draw_sprite(x,pico.program.size.v-1,c)
       x += 1
     }
@@ -82,13 +82,13 @@ function Grid()
 
   this.find_ports = function()
   {
-    let h = {};
+    const h = {};
 
-    for(let id in pico.program.progs){
-      let g = pico.program.progs[id]
+    for(const id in pico.program.progs){
+      const g = pico.program.progs[id]
       if(pico.program.is_locked(g.x,g.y)){ continue; }
-      for(let id in g.ports){
-        let port = g.ports[id]
+      for(const id in g.ports){
+        const port = g.ports[id]
         h[`${g.x+port.x}:${g.y+port.y}`] = port.output ? 2 : port.bang ? 1 : 3
       }
     }
@@ -103,14 +103,14 @@ function Grid()
 
   this.clear = function()
   {
-    let ctx = this.context();
+    const ctx = this.context();
 
     ctx.clearRect(0, 0, this.size.width, this.size.height);
   }
 
   this.draw_sprite = function(x,y,g,styles = {is_cursor: false,is_port: false})
   {
-    let ctx          = this.context();
+    const ctx          = this.context();
 
     ctx.textBaseline = 'bottom';
     ctx.textAlign    = "center"; 

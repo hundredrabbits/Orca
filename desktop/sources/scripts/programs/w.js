@@ -10,11 +10,11 @@ function program_W(x,y)
 
   this.operation = function()
   {
-    let input = this.up();
-    let active = this.bang() || this.neighbors("1").length > 0
+    const input = this.up();
+    const active = this.bang() || this.neighbors("1").length > 0
 
     if(input && active){
-      let warp = this.find_warp(this);
+      const warp = this.find_warp(this);
       if(!warp){ return; }
       pico.program.add(warp.x,warp.y+1,input.glyph)
       pico.program.remove(this.x,this.y-1);
@@ -25,7 +25,7 @@ function program_W(x,y)
 
   this.find_warps = function(origin)
   {
-    let a = [];
+    const a = [];
     let y = 0;
     while(y < pico.program.h){
       let x = 0;
@@ -42,13 +42,13 @@ function program_W(x,y)
 
   this.find_warp = function(origin)
   {
-    let warps = this.find_warps(origin);
+    const warps = this.find_warps(origin);
 
     if(warps.length < 2){ return; }
 
     let warp_id = -1;
-    for(let id in warps){
-      let warp = warps[id];
+    for(const id in warps){
+      const warp = warps[id];
       if(warp.x == this.x && warp.y == this.y){
         warp_id = id;
       }

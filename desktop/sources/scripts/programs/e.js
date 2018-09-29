@@ -11,16 +11,16 @@ function program_E(x,y)
 
   this.operation = function()
   {
-    let b = this.bang();
+    const b = this.bang();
 
     if(!b){ return; }
 
     this.remove();
     pico.program.lock(b.x,b.y);
     
-    let ns = this.free_neighbors();
-    for(let id in ns){
-      let n = ns[id];
+    const ns = this.free_neighbors();
+    for(const id in ns){
+      const n = ns[id];
       pico.program.add(n.x,n.y,"b");
     }
   }

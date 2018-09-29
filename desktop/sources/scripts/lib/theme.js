@@ -2,7 +2,7 @@
 
 function Theme(default_theme = {background: "#222", f_high: "#fff", f_med: "#777", f_low: "#444", f_inv: "#fff", b_high: "#000", b_med: "#aaa", b_low: "#000", b_inv: "#000"})
 {
-  let themer = this;
+  const themer = this;
 
   this.el = document.createElement("style")
   this.el.type = 'text/css'
@@ -26,7 +26,7 @@ function Theme(default_theme = {background: "#222", f_high: "#fff", f_med: "#777
   this.start = function()
   {
     console.log("Theme","Starting..")
-    let storage = is_json(localStorage.theme) ? JSON.parse(localStorage.theme) : this.collection.default;
+    const storage = is_json(localStorage.theme) ? JSON.parse(localStorage.theme) : this.collection.default;
     this.load(!storage.background ? this.collection.default : storage)
   }
 
@@ -67,8 +67,6 @@ function Theme(default_theme = {background: "#222", f_high: "#fff", f_med: "#777
 
   this.parse = function(any)
   {
-    let theme;
-
     if(any && any.background){ return any; }
     else if(any && any.data){ return any.data; }
     else if(any && is_json(any)){ return JSON.parse(any); }
@@ -79,7 +77,7 @@ function Theme(default_theme = {background: "#222", f_high: "#fff", f_med: "#777
 
   this.extract = function(text)
   {
-    let svg = new DOMParser().parseFromString(text,"text/xml")
+    const svg = new DOMParser().parseFromString(text,"text/xml")
     
     try{
       return {
@@ -135,12 +133,12 @@ function Theme(default_theme = {background: "#222", f_high: "#fff", f_med: "#777
     e.preventDefault();
     e.stopPropagation();
 
-    let file = e.dataTransfer.files[0];
+    const file = e.dataTransfer.files[0];
 
     if(!file || !file.name){ console.warn("Theme","Unnamed file."); return; }
     if(file.name.indexOf(".thm") < 0 && file.name.indexOf(".svg") < 0){ console.warn("Theme","Skipped, not a theme"); return; }
 
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.onload = function(e){
       themer.load(themer.parse(e.target.result));
     };

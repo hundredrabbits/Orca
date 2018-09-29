@@ -12,8 +12,8 @@ function program_M(x,y)
   {
     if(!this.left() || !this.right()){ return; }
 
-    let val = pico.program.glyphs.indexOf(this.left().glyph)
-    let mod = pico.program.glyphs.indexOf(this.right().glyph)
+    const val = pico.program.glyphs.indexOf(this.left().glyph)
+    const mod = pico.program.glyphs.indexOf(this.right().glyph)
 
     if(mod == 0){ return; }
     

@@ -31,7 +31,7 @@ function Program(w,h)
   {
     if(x < 0 || x > pico.program.w-1 || y < 0 || y > pico.program.h-1 || !glyph){ return; }
 
-    let index = this.index_at(x,y);
+    const index = this.index_at(x,y);
 
     this.s = this.s.substr(0, index)+glyph+this.s.substr(index+glyph.length);
   }
@@ -51,7 +51,7 @@ function Program(w,h)
     while(y < this.h){
       let x = 0;
       while(x < this.w){
-        let g = this.glyph_at(x,y)
+        const g = this.glyph_at(x,y)
         if(this.is_prog(g)){
           this.progs.push(new window[`program_${g.toUpperCase()}`](x,y))
         }
@@ -61,8 +61,8 @@ function Program(w,h)
     }
 
     // Operate
-    for(let id in this.progs){
-      let p = this.progs[id]
+    for(const id in this.progs){
+      const p = this.progs[id]
       if(this.is_locked(p.x,p.y)){ continue; }
       p.run()
     }
@@ -118,10 +118,10 @@ function Program(w,h)
 
   this.output = function()
   {
-    let origin = this.s.replace(/[^0-9a-z]/gi,".")
-    let lines = origin.match(/.{1,39}/g)
-    let s = ""
-    for(let id in lines){
+    const origin = this.s.replace(/[^0-9a-z]/gi,".")
+    const lines = origin.match(/.{1,39}/g)
+    const s = ""
+    for(const id in lines){
       s += lines[id]+'\n'
     }
     return s
@@ -129,8 +129,8 @@ function Program(w,h)
 
   this.record = function()
   {
-    let g = this.s.substr(-1,1)
-    let last_g = this.r.substr(-1,1)
+    const g = this.s.substr(-1,1)
+    const last_g = this.r.substr(-1,1)
     if(g == "." && last_g == "."){ return; }
     this.r += g;
 
@@ -142,11 +142,11 @@ function Program(w,h)
 
   this.debug = function()
   {
-    let s = "";
-    for(let id in this.glyphs){
-      let g = this.glyphs[id];
+    const s = "";
+    for(const id in this.glyphs){
+      const g = this.glyphs[id];
       if(window[`program_${g.toUpperCase()}`]){
-        let program = new window[`program_${g.toUpperCase()}`]();
+        const program = new window[`program_${g.toUpperCase()}`]();
         s += `${g}: ${program.docs()}\n`;
       }
       else{
