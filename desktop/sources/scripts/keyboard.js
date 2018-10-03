@@ -1,63 +1,57 @@
-"use strict"
+'use strict'
 
-function Keyboard()
-{
+function Keyboard () {
   this.locks = []
-  this.history = ""
+  this.history = ''
 
-  this.listen_onkeydown = function(event)
-  {
+  this.listen_onkeydown = function (event) {
     // Reset
-    if((event.metaKey || event.ctrlKey) && event.key == "Backspace"){ 
-      pico.reset(); 
-      event.preventDefault(); 
-      return; 
+    if ((event.metaKey || event.ctrlKey) && event.key == 'Backspace') {
+      pico.reset()
+      event.preventDefault()
+      return
     }
     // Pause
-    if((event.metaKey || event.ctrlKey) && event.key == "p"){ 
-      pico.pause(); 
-      event.preventDefault(); 
-      return; 
+    if ((event.metaKey || event.ctrlKey) && event.key == 'p') {
+      pico.pause()
+      event.preventDefault()
+      return
     }
 
-    if(event.metaKey){ return; }
-    if(event.ctrlKey){ return; }
-    
-    if(event.keyCode == 38){ keyboard.key_arrow_up(); return; }
-    if(event.keyCode == 40){ keyboard.key_arrow_down(); return; }
-    if(event.keyCode == 37){ keyboard.key_arrow_left(); return; }
-    if(event.keyCode == 39){ keyboard.key_arrow_right(); return; }
+    if (event.metaKey) { return }
+    if (event.ctrlKey) { return }
 
-    if(event.key == "Backspace"){ pico.grid.cursor.insert("."); return; }
-    if(event.key == "Space"){ pico.grid.cursor.insert("."); event.preventDefault(); return; }
-    if(event.key == "Escape"){ logo.remove(); pico.program.clear(); return; }
+    if (event.keyCode == 38) { keyboard.key_arrow_up(); return }
+    if (event.keyCode == 40) { keyboard.key_arrow_down(); return }
+    if (event.keyCode == 37) { keyboard.key_arrow_left(); return }
+    if (event.keyCode == 39) { keyboard.key_arrow_right(); return }
 
-    if(event.key.length == 1){
+    if (event.key == 'Backspace') { pico.grid.cursor.insert('.'); return }
+    if (event.key == 'Space') { pico.grid.cursor.insert('.'); event.preventDefault(); return }
+    if (event.key == 'Escape') { logo.remove(); pico.program.clear(); return }
+
+    if (event.key.length == 1) {
       pico.grid.cursor.insert(event.key)
-      if(event.shiftKey){
-        pico.grid.cursor.move(1,0)
+      if (event.shiftKey) {
+        pico.grid.cursor.move(1, 0)
       }
       pico.grid.update()
     }
   }
 
-  this.key_arrow_up = function()
-  {
-    pico.grid.cursor.move(0,1)
+  this.key_arrow_up = function () {
+    pico.grid.cursor.move(0, 1)
   }
 
-  this.key_arrow_down = function()
-  {
-    pico.grid.cursor.move(0,-1)
+  this.key_arrow_down = function () {
+    pico.grid.cursor.move(0, -1)
   }
 
-  this.key_arrow_left = function()
-  {
-    pico.grid.cursor.move(-1,0)
+  this.key_arrow_left = function () {
+    pico.grid.cursor.move(-1, 0)
   }
 
-  this.key_arrow_right = function()
-  {
-    pico.grid.cursor.move(1,0)
+  this.key_arrow_right = function () {
+    pico.grid.cursor.move(1, 0)
   }
 }
