@@ -1,11 +1,11 @@
 const {app, BrowserWindow, webFrame, Menu} = require('electron')
 const path = require('path')
 const url = require('url')
-const shell = require('electron').shell;
+const shell = require('electron').shell
 
-let is_shown = true;
+let is_shown = true
 
-app.win = null;
+app.win = null
 
 app.on('ready', () => 
 {
@@ -22,8 +22,8 @@ app.on('ready', () =>
     icon: __dirname + '/icon.ico'
   })
 
-  app.win.loadURL(`file://${__dirname}/sources/index.html`);
-  // app.inspect();
+  app.win.loadURL(`file://${__dirname}/sources/index.html`)
+  // app.inspect()
 
   app.win.on('closed', () => {
     win = null
@@ -31,11 +31,11 @@ app.on('ready', () =>
   })
 
   app.win.on('hide',function() {
-    is_shown = false;
+    is_shown = false
   })
 
   app.win.on('show',function() {
-    is_shown = true;
+    is_shown = true
   })
 
   app.on('window-all-closed', () => 
@@ -52,12 +52,12 @@ app.on('ready', () =>
 
 app.inspect = function()
 {
-  app.win.toggleDevTools();
+  app.win.toggleDevTools()
 }
 
 app.toggle_fullscreen = function()
 {
-  app.win.setFullScreen(app.win.isFullScreen() ? false : true);
+  app.win.setFullScreen(app.win.isFullScreen() ? false : true)
 }
 
 app.toggle_visible = function()
@@ -73,7 +73,7 @@ app.toggle_visible = function()
 app.inject_menu = function(menu)
 {
   try{
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menu))
   }
   catch(err){
     console.warn("Cannot inject menu.")

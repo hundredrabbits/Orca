@@ -1,11 +1,11 @@
-"use strict";
+"use strict"
 
 function Controller()
 {
-  this.menu = {default:{}};
-  this.mode = "default";
+  this.menu = {default:{}}
+  this.mode = "default"
 
-  this.app = require('electron').remote.app;
+  this.app = require('electron').remote.app
 
   this.start = function()
   {
@@ -15,8 +15,8 @@ function Controller()
   {
     if(!this.menu[mode]){ this.menu[mode] = {}; }
     if(!this.menu[mode][cat]){ this.menu[mode][cat] = {}; }
-    this.menu[mode][cat][label] = {fn:fn,accelerator:accelerator};
-    console.log(`${mode}/${cat}/${label} <${accelerator}>`);
+    this.menu[mode][cat][label] = {fn:fn,accelerator:accelerator}
+    console.log(`${mode}/${cat}/${label} <${accelerator}>`)
   }
 
   this.add_role = function(mode,cat,label)
@@ -28,18 +28,18 @@ function Controller()
 
   this.set = function(mode = "default")
   {
-    this.mode = mode;
-    this.commit();
+    this.mode = mode
+    this.commit()
   }
 
   this.format = function()
   {
-    const f = [];
-    const m = this.menu[this.mode];
+    const f = []
+    const m = this.menu[this.mode]
     for(const cat in m){
-      const submenu = [];
+      const submenu = []
       for(const name in m[cat]){
-        const option = m[cat][name];
+        const option = m[cat][name]
         if(option.role){
           submenu.push({role:option.role})
         }
@@ -47,87 +47,87 @@ function Controller()
           submenu.push({label:name,accelerator:option.accelerator,click:option.fn})  
         }
       }
-      f.push({label:cat,submenu:submenu});
+      f.push({label:cat,submenu:submenu})
     }
-    return f;
+    return f
   }
 
   this.commit = function()
   {
-    this.app.inject_menu(this.format());
+    this.app.inject_menu(this.format())
   }
 
   this.docs = function()
   {
-    console.log("Generating docs..");
+    console.log("Generating docs..")
     const svg = this.generate_svg(this.format())
-    const txt = this.documentation(this.format());
+    const txt = this.documentation(this.format())
     dialog.showSaveDialog((fileName) => {
       if (fileName === undefined){ return; }
-      fileName = fileName.substr(-4,4) != ".svg" ? fileName+".svg" : fileName;
-      fs.writeFile(fileName,svg);
-      fs.writeFile(fileName.replace(".svg",".md"),txt);
+      fileName = fileName.substr(-4,4) != ".svg" ? fileName+".svg" : fileName
+      fs.writeFile(fileName,svg)
+      fs.writeFile(fileName.replace(".svg",".md"),txt)
     }); 
   }
 
   this.generate_svg = function(m)
   {
-    const svg_html = "";
+    const svg_html = ""
 
     for(const id in this.layout){
-      const key = this.layout[id];
-      const acc = this.accelerator_for_key(key.name,m);
-      svg_html += `<rect x="${key.x + 1}" y="${key.y + 1}" width="${key.width - 2}" height="${key.height - 2}" rx="4" ry="4" title="${key.name}" stroke="#ccc" fill="none" stroke-width="1"/>`;
-      svg_html += `<rect x="${key.x + 3}" y="${key.y + 3}" width="${key.width - 6}" height="${key.height - 12}" rx="3" ry="3" title="${key.name}" stroke="${acc.basic ? '#000' : acc.ctrl ? '#ccc' : '#fff'}" fill="${acc.basic ? '#000' : acc.ctrl ? '#ccc' : '#fff'}" stroke-width="1"/>`;
-      svg_html += `<text x="${key.x + 10}" y="${key.y + 20}" font-size='11' font-family='Input Mono' stroke-width='0' fill='${acc.basic ? '#fff' : '#000'}'>${key.name.toUpperCase()}</text>`;
-      svg_html += acc && acc.basic ? `<text x="${key.x + 10}" y="${key.y + 35}" font-size='7' font-family='Input Mono' stroke-width='0' fill='#fff'>${acc.basic}</text>` : '';
-      svg_html += acc && acc.ctrl ? `<text x="${key.x + 10}" y="${key.y + 45}" font-size='7' font-family='Input Mono' stroke-width='0' fill='#000'>${acc.ctrl}</text>` : '';
+      const key = this.layout[id]
+      const acc = this.accelerator_for_key(key.name,m)
+      svg_html += `<rect x="${key.x + 1}" y="${key.y + 1}" width="${key.width - 2}" height="${key.height - 2}" rx="4" ry="4" title="${key.name}" stroke="#ccc" fill="none" stroke-width="1"/>`
+      svg_html += `<rect x="${key.x + 3}" y="${key.y + 3}" width="${key.width - 6}" height="${key.height - 12}" rx="3" ry="3" title="${key.name}" stroke="${acc.basic ? '#000' : acc.ctrl ? '#ccc' : '#fff'}" fill="${acc.basic ? '#000' : acc.ctrl ? '#ccc' : '#fff'}" stroke-width="1"/>`
+      svg_html += `<text x="${key.x + 10}" y="${key.y + 20}" font-size='11' font-family='Input Mono' stroke-width='0' fill='${acc.basic ? '#fff' : '#000'}'>${key.name.toUpperCase()}</text>`
+      svg_html += acc && acc.basic ? `<text x="${key.x + 10}" y="${key.y + 35}" font-size='7' font-family='Input Mono' stroke-width='0' fill='#fff'>${acc.basic}</text>` : ''
+      svg_html += acc && acc.ctrl ? `<text x="${key.x + 10}" y="${key.y + 45}" font-size='7' font-family='Input Mono' stroke-width='0' fill='#000'>${acc.ctrl}</text>` : ''
     }
-    return `<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" width="900" height="300" version="1.0" style="fill:none;stroke:black;stroke-width:2px;">${svg_html}</svg>`;
+    return `<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" width="900" height="300" version="1.0" style="fill:none;stroke:black;stroke-width:2px;">${svg_html}</svg>`
   }
 
   this.documentation = function()
   {
-    const txt = "";
+    const txt = ""
 
-    txt += this.documentation_for_mode("default",this.menu.default);
+    txt += this.documentation_for_mode("default",this.menu.default)
 
     for(name in this.menu){
       if(name == "default"){ continue; }
-      txt += this.documentation_for_mode(name,this.menu[name]);
+      txt += this.documentation_for_mode(name,this.menu[name])
     }
-    return txt;
+    return txt
   }
 
   this.documentation_for_mode = function(name,mode)
   {
-    const txt = `## ${name} Mode\n\n`;
+    const txt = `## ${name} Mode\n\n`
 
     for(const id in mode){
       if(id == "*" || id == "Edit"){ continue; }
-      txt += `### ${id}\n`;
+      txt += `### ${id}\n`
       for(name in mode[id]){
-        const option = mode[id][name];
-        txt += `- ${name}: \`${option.accelerator}\`\n`;
+        const option = mode[id][name]
+        txt += `- ${name}: \`${option.accelerator}\`\n`
       }
       txt += "\n"
     }
 
-    return txt+"\n";
+    return txt+"\n"
   }
 
   this.accelerator_for_key = function(key,menu)
   {
     const acc = {basic:null,ctrl:null}
     for(cat in menu){
-      const options = menu[cat];
+      const options = menu[cat]
       for(const id in options.submenu){
         const option = options.submenu[id]; if(option.role){ continue; }
-        acc.basic = (option.accelerator.toLowerCase() == key.toLowerCase()) ? option.label.toUpperCase().replace("TOGGLE ","").substr(0,8).trim() : acc.basic;
-        acc.ctrl = (option.accelerator.toLowerCase() == ("CmdOrCtrl+"+key).toLowerCase()) ? option.label.toUpperCase().replace("TOGGLE ","").substr(0,8).trim() : acc.ctrl;
+        acc.basic = (option.accelerator.toLowerCase() == key.toLowerCase()) ? option.label.toUpperCase().replace("TOGGLE ","").substr(0,8).trim() : acc.basic
+        acc.ctrl = (option.accelerator.toLowerCase() == ("CmdOrCtrl+"+key).toLowerCase()) ? option.label.toUpperCase().replace("TOGGLE ","").substr(0,8).trim() : acc.ctrl
       }
     }
-    return acc;
+    return acc
   }
 
   this.layout = [
@@ -192,7 +192,7 @@ function Controller()
     {x:720, y:240, width:90,  height:60, name:"pn"},
     {x:630, y:240, width:90,  height:60, name:"fn"},
     {x:540, y:240, width:90,  height:60, name:"alt"}
-  ];
+  ]
 }
 
 module.exports = new Controller();

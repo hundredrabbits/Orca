@@ -46,38 +46,38 @@
   </head>
   <body>
     <script>
-      const {dialog,app} = require('electron').remote;
-      const fs = require('fs');
-      const app_path = app.getAppPath();
+      const {dialog,app} = require('electron').remote
+      const fs = require('fs')
+      const app_path = app.getAppPath()
       
-      const pico = new Pico();
-      pico.controller = new Controller();
-      pico.install();
-      pico.start();
+      const pico = new Pico()
+      pico.controller = new Controller()
+      pico.install()
+      pico.start()
 
-      pico.controller.add("default","*","About",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Donsol'); },"CmdOrCtrl+,");
-      pico.controller.add("default","*","Fullscreen",() => { app.toggle_fullscreen(); },"CmdOrCtrl+Enter");
-      pico.controller.add("default","*","Hide",() => { app.toggle_visible(); },"CmdOrCtrl+H");
-      pico.controller.add("default","*","Inspect",() => { app.inspect(); },"CmdOrCtrl+.");
-      pico.controller.add("default","*","Reset",() => { pico.reset(); },"CmdOrCtrl+Backspace");
-      pico.controller.add("default","*","Quit",() => { app.exit(); },"CmdOrCtrl+Q");
+      pico.controller.add("default","*","About",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Donsol'); },"CmdOrCtrl+,")
+      pico.controller.add("default","*","Fullscreen",() => { app.toggle_fullscreen(); },"CmdOrCtrl+Enter")
+      pico.controller.add("default","*","Hide",() => { app.toggle_visible(); },"CmdOrCtrl+H")
+      pico.controller.add("default","*","Inspect",() => { app.inspect(); },"CmdOrCtrl+.")
+      pico.controller.add("default","*","Reset",() => { pico.reset(); },"CmdOrCtrl+Backspace")
+      pico.controller.add("default","*","Quit",() => { app.exit(); },"CmdOrCtrl+Q")
 
-      pico.controller.add("default","File","New",() => { pico.new(); },"CmdOrCtrl+N");
-      pico.controller.add("default","File","Save",() => { pico.save(); },"CmdOrCtrl+S");
-      pico.controller.add("default","File","Open",() => { pico.open(); },"CmdOrCtrl+O");
+      pico.controller.add("default","File","New",() => { pico.new(); },"CmdOrCtrl+N")
+      pico.controller.add("default","File","Save",() => { pico.save(); },"CmdOrCtrl+S")
+      pico.controller.add("default","File","Open",() => { pico.open(); },"CmdOrCtrl+O")
 
-      pico.controller.add("default","Program","Play/Pause",() => { pico.pause(); },"CmdOrCtrl+P");
-      pico.controller.add("default","Program","Run",() => { pico.run(true); },"Enter");
+      pico.controller.add("default","Program","Play/Pause",() => { pico.pause(); },"CmdOrCtrl+P")
+      pico.controller.add("default","Program","Run",() => { pico.run(true); },"Enter")
 
-      pico.controller.add("default","Theme","Noir",() => { pico.theme.noir(); },"CmdOrCtrl+Shift+1");
-      pico.controller.add("default","Theme","Pale",() => { pico.theme.pale(); },"CmdOrCtrl+Shift+2");
-      pico.controller.add("default","Theme","Invert",() => { pico.theme.invert(); },"CmdOrCtrl+Shift+I");
-      pico.controller.add("default","Theme","Install",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes'); });
+      pico.controller.add("default","Theme","Noir",() => { pico.theme.noir(); },"CmdOrCtrl+Shift+1")
+      pico.controller.add("default","Theme","Pale",() => { pico.theme.pale(); },"CmdOrCtrl+Shift+2")
+      pico.controller.add("default","Theme","Invert",() => { pico.theme.invert(); },"CmdOrCtrl+Shift+I")
+      pico.controller.add("default","Theme","Install",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes'); })
 
-      pico.controller.commit();
+      pico.controller.commit()
 
-      const keyboard = new Keyboard();
-      document.onkeydown = function(event){ keyboard.listen_onkeydown(event); };
+      const keyboard = new Keyboard()
+      document.onkeydown = function(event){ keyboard.listen_onkeydown(event); }
       </script>
   </body>
 </html>

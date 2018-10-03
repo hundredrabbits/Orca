@@ -1,12 +1,12 @@
-"use strict";
+"use strict"
 
 function program_M(x,y)
 {
-  Program_Default.call(this,x,y);
+  Program_Default.call(this,x,y)
 
   this.name = "modulo"
-  this.glyph = "m";
-  this.ports = [{x:-1,y:0},{x:1,y:0},{x:0,y:1,output:true}];
+  this.glyph = "m"
+  this.ports = [{x:-1,y:0},{x:1,y:0},{x:0,y:1,output:true}]
 
   this.operation = function()
   {
@@ -17,6 +17,6 @@ function program_M(x,y)
 
     if(mod == 0){ return; }
     
-    pico.program.add(this.x,this.y+1,`${parseInt(val) % parseInt(mod)}`);
+    pico.program.add(this.x,this.y+1,`${parseInt(val) % parseInt(mod)}`)
   }
 }

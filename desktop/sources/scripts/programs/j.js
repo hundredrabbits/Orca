@@ -1,11 +1,11 @@
-"use strict";
+"use strict"
 
 function program_J(x,y)
 {
-  Program_Default.call(this,x,y);
+  Program_Default.call(this,x,y)
 
   this.name = "jump"
-  this.glyph = "j";
+  this.glyph = "j"
 
   this.ports = [{x:-1,y:0},{x:1,y:0,output:true},{x:0,y:0,bang:true}]
 

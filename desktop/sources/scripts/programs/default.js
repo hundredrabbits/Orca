@@ -1,10 +1,10 @@
-"use strict";
+"use strict"
 
 function Program_Default(x,y)
 {
   this.name = "<missing name>"
-  this.x = x;
-  this.y = y;
+  this.x = x
+  this.y = y
   this.glyph = "."
   this.ports = []
 
@@ -15,7 +15,7 @@ function Program_Default(x,y)
 
   this.run = function()
   {
-    this.operation();
+    this.operation()
   }
 
   this.operation = function()
@@ -30,19 +30,19 @@ function Program_Default(x,y)
 
   this.replace = function(g)
   {
-    this.lock();
+    this.lock()
     pico.program.add(this.x,this.y,g)
   }
 
   this.lock = function()
   {
-    pico.program.lock(this.x,this.y);
+    pico.program.lock(this.x,this.y)
   }
 
   this.move = function(x,y,g)
   {
-    pico.program.lock(this.x+x,this.y+y);
-    pico.program.remove(this.x,this.y);
+    pico.program.lock(this.x+x,this.y+y)
+    pico.program.remove(this.x,this.y)
     pico.program.add((this.x+x) % pico.program.w,(this.y+y) % pico.program.h,this.glyph); 
   }
 
@@ -64,54 +64,54 @@ function Program_Default(x,y)
 
   this.neighbors = function(g)
   {
-    return [this.up(g),this.right(g),this.down(g),this.left(g)].filter(function(e){return e});
+    return [this.up(g),this.right(g),this.down(g),this.left(g)].filter(function(e){return e})
   }
 
   this.free_neighbors = function()
   {
-    const a = [];
+    const a = []
     if(pico.program.glyph_at(this.x+1,this.y) == "."){ a.push({x:this.x+1,y:this.y}); }
     if(pico.program.glyph_at(this.x-1,this.y) == "."){ a.push({x:this.x-1,y:this.y}); }
     if(pico.program.glyph_at(this.x,this.y+1) == "."){ a.push({x:this.x,y:this.y+1}); }
     if(pico.program.glyph_at(this.x,this.y-1) == "."){ a.push({x:this.x,y:this.y-1}); } 
-    return a;
+    return a
   }
 
   this.bang = function()
   {
-    const ns = this.neighbors("b");
+    const ns = this.neighbors("b")
     for(const id in ns){
       const n = ns[id]
       if(pico.program.glyph_at(n.x,n.y-1) != "h"){
-        return {x:n.x,y:n.y};
+        return {x:n.x,y:n.y}
       }
     }
-    return false;
+    return false
   }
 
   this.left = function(target = null)
   {
-    const g = pico.program.glyph_at(this.x-1,this.y);
+    const g = pico.program.glyph_at(this.x-1,this.y)
 
-    return g != "." && (g == target || !target) ? {x:this.x-1,y:this.y,glyph:g} : null;
+    return g != "." && (g == target || !target) ? {x:this.x-1,y:this.y,glyph:g} : null
   }
 
   this.right = function(target)
   {
-    const g = pico.program.glyph_at(this.x+1,this.y);
-    return g != "." && (g == target || !target) ? {x:this.x+1,y:this.y,glyph:g} : null;
+    const g = pico.program.glyph_at(this.x+1,this.y)
+    return g != "." && (g == target || !target) ? {x:this.x+1,y:this.y,glyph:g} : null
   }
 
   this.up = function(target)
   {
-    const g = pico.program.glyph_at(this.x,this.y-1);
-    return g != "." && (g == target || !target) ? {x:this.x,y:this.y-1,glyph:g} : null;
+    const g = pico.program.glyph_at(this.x,this.y-1)
+    return g != "." && (g == target || !target) ? {x:this.x,y:this.y-1,glyph:g} : null
   }
 
   this.down = function(target)
   {
-    const g = pico.program.glyph_at(this.x,this.y+1);
-    return g != "." && (g == target || !target) ? {x:this.x,y:this.y+1,glyph:g} : null;
+    const g = pico.program.glyph_at(this.x,this.y+1)
+    return g != "." && (g == target || !target) ? {x:this.x,y:this.y+1,glyph:g} : null
   }
 
   this.docs = function()

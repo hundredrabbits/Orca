@@ -1,12 +1,12 @@
-"use strict";
+"use strict"
 
 function program_X(x,y)
 {
-  Program_Default.call(this,x,y);
+  Program_Default.call(this,x,y)
 
   this.name = "split"
-  this.glyph = "x";
-  this.ports = [{x:-1,y:0},{x:0,y:1,output:true},{x:1,y:0,output:true}];
+  this.glyph = "x"
+  this.ports = [{x:-1,y:0},{x:0,y:1,output:true},{x:1,y:0,output:true}]
 
   this.operation = function()
   {
@@ -20,7 +20,7 @@ function program_X(x,y)
 
   this.fire = function(x,y)
   {
-    pico.program.add(this.x+x,this.y+y,"b");
-    pico.program.lock(this.x+x,this.y+y);
+    pico.program.add(this.x+x,this.y+y,"b")
+    pico.program.lock(this.x+x,this.y+y)
   }
 }

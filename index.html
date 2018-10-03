@@ -46,12 +46,12 @@
   </head>
   <body>
     <script>
-      const pico = new Pico();
-      pico.install();
-      pico.start();
+      const pico = new Pico()
+      pico.install()
+      pico.start()
 
-      const keyboard = new Keyboard();
-      document.onkeydown = function(event){ keyboard.listen_onkeydown(event); };
+      const keyboard = new Keyboard()
+      document.onkeydown = function(event){ keyboard.listen_onkeydown(event); }
       </script>
   </body>
 </html>
