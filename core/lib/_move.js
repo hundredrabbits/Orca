@@ -48,26 +48,25 @@ function FnMove (pico, x, y) {
     const n = this.north()
     const s = this.south()
 
-    // Wiring
-    if(this.glyph == "e" && e && e.glyph == "-" && w && w.glyph == "-"){
-      return this.on_wire(e,w,n,s);
+    // East Signal
+    if(this.glyph == "e"){
+      if(e && e.glyph == "-"){
+        if(w && (w.glyph == "-" || w.glyph == "*")){
+          return this.on_wire(e,w,n,s);
+        }
+      }
+      else if(e && e.glyph == "*"){
+        if(w && w.glyph == "-"){
+          return this.on_exit(e,w,n,s);
+        }
+        else if(!w){
+          return this.on_enter(e,w,n,s);
+        }
+      }
     }
 
-    // Exiting
-    if(this.glyph == "e" && e && e.glyph == "*" && w && w.glyph == "-" || 
-      this.glyph == "w" && w && w.glyph == "*"   && e && e.glyph == "-"|| 
-      this.glyph == "n" && n && n.glyph == "*"   && s && s.glyph == "|"|| 
-      this.glyph == "s" && s && s.glyph == "*"  && n && n.glyph == "|"){
-      return this.on_exit(e,w,n,s)
-    }
-    // Entering
-    if(this.glyph == "e" && e && e.glyph == "-" && w && w.glyph == "*" || this.glyph == "w" && w && w.glyph == "-" && e && e.glyph == "*" || this.glyph == "n" && n && n.glyph == "|" && s && s.glyph == "*" || this.glyph == "s" && s && s.glyph == "|" && n && n.glyph == "*"){
-      return this.on_wire(e,w,n,s)
-    }
-    // Intersecting
-    if(this.glyph == "e" && e && e.glyph == "*" || this.glyph == "w" && w && w.glyph == "*" || this.glyph == "n" && n && n.glyph == "*" || this.glyph == "s" && s && s.glyph == "*"){
-      return this.on_enter(e,w,n,s)
-    }
+
+
   }
 }
 
