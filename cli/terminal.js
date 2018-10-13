@@ -41,7 +41,7 @@ function Terminal(pico)
   this.start = function(path)
   {
     this.pico.start()
-    this._screen.key(['escape', 'q', 'C-c'], (ch, key) => (process.exit(0)));    
+    this._screen.key(['escape', 'C-c'], (ch, key) => (process.exit(0)));    
     this._screen.key(['up'], (ch, key) => { this.cursor.move(0,1); this.update(); }); 
     this._screen.key(['down'], (ch, key) => { this.cursor.move(0,-1); this.update(); }); 
     this._screen.key(['right'], (ch, key) => { this.cursor.move(1,0); this.update(); }); 
