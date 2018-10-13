@@ -14,13 +14,13 @@ function FnJ (pico, x, y) {
   this.operation = function () {
     if (!this.bang()) { return }
 
-    if (this.left()) {
-      pico.add(this.x + 1, this.y, this.left().glyph)
+    if (this.west()) {
+      pico.add(this.x + 1, this.y, this.west().glyph)
       pico.remove(this.x - 1, this.y)
       pico.lock(this.x - 1, this.y)
       pico.lock(this.x + 1, this.y)
-    } else if (this.right()) {
-      pico.add(this.x - 1, this.y, this.right().glyph)
+    } else if (this.east()) {
+      pico.add(this.x - 1, this.y, this.east().glyph)
       pico.remove(this.x + 1, this.y)
       pico.lock(this.x - 1, this.y)
       pico.lock(this.x + 1, this.y)

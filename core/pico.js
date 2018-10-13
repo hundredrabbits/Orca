@@ -1,6 +1,7 @@
 'use strict'
 
 function Pico (w, h) {
+
   this.f = 0 // Frame
   this.w = w // Width
   this.h = h // Height
@@ -22,7 +23,7 @@ function Pico (w, h) {
     return h
   }
 
-  this.start = function () {
+  this.start = function (path) {
     this.lib = require('./lib')
     this.allowed = [].concat(Object.keys(this.lib.num)).concat(Object.keys(this.lib.alpha)).concat(Object.keys(this.lib.special))
     this.docs = make_docs(Object.values(this.lib.alpha))
@@ -87,6 +88,14 @@ function Pico (w, h) {
 
   this.clear = function () {
     this.r = ''
+  }
+
+  this.load = function(w,h,s)
+  {
+    this.w = w // Width
+    this.h = h // Height
+    this.reset()
+    this.s = s.replace(/\n/g,'').trim() // String
   }
 
   this.is_prog = function (g) {

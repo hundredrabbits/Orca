@@ -45,5 +45,6 @@ module.exports = {
     '.': require('./lib/_null'),
     ':': require('./lib/_port'),
     '-': require('./lib/_wireh'),
+    '|': require('./lib/_wirev'),
   }
 }

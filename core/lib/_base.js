@@ -55,7 +55,7 @@ function FnBase (pico, x, y) {
   }
 
   this.neighbors = function (g) {
-    return [this.up(g), this.right(g), this.down(g), this.left(g)].filter(function (e) { return e })
+    return [this.north(g), this.east(g), this.south(g), this.west(g)].filter(function (e) { return e })
   }
 
   this.free_neighbors = function () {
@@ -78,23 +78,23 @@ function FnBase (pico, x, y) {
     return false
   }
 
-  this.left = function (target = null) {
+  this.west = function (target = null) {
     const g = pico.glyph_at(this.x - 1, this.y)
 
     return g != '.' && (g == target || !target) ? { x: this.x - 1, y: this.y, glyph: g } : null
   }
 
-  this.right = function (target) {
+  this.east = function (target) {
     const g = pico.glyph_at(this.x + 1, this.y)
     return g != '.' && (g == target || !target) ? { x: this.x + 1, y: this.y, glyph: g } : null
   }
 
-  this.up = function (target) {
+  this.north = function (target) {
     const g = pico.glyph_at(this.x, this.y - 1)
     return g != '.' && (g == target || !target) ? { x: this.x, y: this.y - 1, glyph: g } : null
   }
 
-  this.down = function (target) {
+  this.south = function (target) {
     const g = pico.glyph_at(this.x, this.y + 1)
     return g != '.' && (g == target || !target) ? { x: this.x, y: this.y + 1, glyph: g } : null
   }

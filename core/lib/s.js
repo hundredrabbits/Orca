@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const FnMove = require('./_move')
 
 function FnS (pico, x, y) {
-  FnBase.call(this, pico, x, y)
+  FnMove.call(this, pico, x, y)
 
   this.name = 'south'
   this.glyph = 's'

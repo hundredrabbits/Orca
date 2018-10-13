@@ -11,10 +11,10 @@ function FnM (pico, x, y) {
   this.ports = [{ x: -1, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 1, output: true }]
 
   this.operation = function () {
-    if (!this.left() || !this.right()) { return }
+    if (!this.west() || !this.east()) { return }
 
-    const val = pico.glyphs.indexOf(this.left().glyph)
-    const mod = pico.glyphs.indexOf(this.right().glyph)
+    const val = pico.glyphs.indexOf(this.west().glyph)
+    const mod = pico.glyphs.indexOf(this.east().glyph)
 
     if (mod == 0) { return }
 

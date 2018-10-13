@@ -11,9 +11,9 @@ function FnF (pico, x, y) {
   this.ports = [{ x: -1, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 1, output: true }]
 
   this.operation = function () {
-    if (!this.left() || !this.right()) { return }
+    if (!this.west() || !this.east()) { return }
 
-    if (this.left(this.right().glyph)) {
+    if (this.west(this.east().glyph)) {
       pico.add(this.x, this.y + 1, '1')
     } else {
       pico.add(this.x, this.y + 1, '0')

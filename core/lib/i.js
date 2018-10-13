@@ -12,9 +12,9 @@ function FnI (pico, x, y) {
 
   this.operation = function () {
     if (!this.bang()) { return }
-    if (!this.down()) { return }
+    if (!this.south()) { return }
 
-    const n = this.down()
+    const n = this.south()
     pico.add(this.x, this.y + 1, this.inc(n.glyph))
   }
 

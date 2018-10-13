@@ -8,8 +8,9 @@ function Terminal(pico)
 
   this._screen = blessed.screen();
   this._grid = blessed.box({ top: 1, left: 2, height: '100%-3', width: pico.w, keys: true, mouse: true, style: { fg: '#efefef' } });
-  this._output = blessed.box({ bottom: 2, left: 2, height: 1, width: '100%-2', style: { fg: '#fff' } });
-  this._inspector = blessed.box({ bottom: 1, left: 2, height: 1, width: '100%-4', style: { fg: '#efefef' } });
+  this._output = blessed.box({ bottom: 4, left: 2, height: 1, width: '100%-2', style: { fg: '#fff' } });
+  this._inspector = blessed.box({ bottom: 2, left: 2, height: 1, width: '100%-4', style: { fg: '#efefef' } });
+  this._log = blessed.box({ bottom: 3, left: 2, height: 1, width: '100%-4', style: { fg: '#efefef' } });
 
   this.is_paused = false
 
@@ -34,9 +35,10 @@ function Terminal(pico)
     this._screen.append(this._grid);
     this._screen.append(this._output);
     this._screen.append(this._inspector);
+    this._screen.append(this._log);
   }
 
-  this.start = function()
+  this.start = function(path)
   {
     this.pico.start()
     this._screen.key(['escape', 'q', 'C-c'], (ch, key) => (process.exit(0)));    
@@ -52,8 +54,12 @@ function Terminal(pico)
       this.cursor.insert(g)
     });
 
+    if(path){
+      this.load(path)
+    }
+
     this.update()
-    setInterval(() => { this.run() }, 200)
+    setInterval(() => { this.run() }, 1200)
   }
 
   this.run = function()
@@ -67,6 +73,25 @@ function Terminal(pico)
 
   this.pause = function () {
     this.is_paused = !this.is_paused
+  }
+
+  this.load = function(path)
+  {
+    const terminal = this
+    var fs = require('fs')
+    fs.readFile(path, 'utf8', function(err, data) {
+      if (err) throw err;
+      const w = data.split("\n")[0].length
+      const h = data.split("\n").length
+      terminal.log(`Loaded: ${path} ${w}x${h}`)
+      pico.load(w,h,data)
+    });
+  }
+
+  this.log = function(msg)
+  {
+    this._log.setContent(msg)
+    this.update()
   }
 
   this.add_cursor = function(s)

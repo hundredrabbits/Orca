@@ -11,19 +11,19 @@ function FnD (pico, x, y) {
   this.ports = [{ x: 0, y: 1 }, { x: 0, y: -1 }, { x: 1, y: 0 }, { x: -1, y: 0 }]
 
   this.operation = function () {
-    if (this.up() && this.up().glyph != 'n') {
+    if (this.north() && this.north().glyph != 'n') {
       pico.add(this.x, this.y - 1, 'n')
       pico.lock(this.x, this.y - 1)
     }
-    if (this.down() && this.down().glyph != 'd') {
+    if (this.south() && this.south().glyph != 'd') {
       pico.add(this.x, this.y + 1, 'd')
       pico.lock(this.x, this.y + 1)
     }
-    if (this.left() && this.left().glyph != 'w') {
+    if (this.west() && this.west().glyph != 'w') {
       pico.add(this.x - 1, this.y, 'w')
       pico.lock(this.x - 1, this.y)
     }
-    if (this.right() && this.right().glyph != 'e') {
+    if (this.east() && this.east().glyph != 'e') {
       pico.add(this.x + 1, this.y, 'e')
       pico.lock(this.x + 1, this.y)
     }
