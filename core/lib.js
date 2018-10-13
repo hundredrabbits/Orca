@@ -43,6 +43,7 @@ module.exports = {
   },
   special: {
     '.': require('./lib/_null'),
-    ':': require('./lib/_port')
+    ':': require('./lib/_port'),
+    '-': require('./lib/_wireh'),
   }
 }

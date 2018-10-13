@@ -1,31 +1,28 @@
 'use strict'
 
 function Pico (w, h) {
-
-  this.f = 0  // Frame
-  this.w = w  // Width
-  this.h = h  // Height
+  this.f = 0 // Frame
+  this.w = w // Width
+  this.h = h // Height
   this.s = '' // String
   this.r = '' // Record
 
-  this.lib     = {}
-  this.docs    = {}
+  this.lib = {}
+  this.docs = {}
   this.allowed = []
-  this.locks   = []
-  this.progs   = []
-  
-  function make_docs(lib)
-  {
+  this.locks = []
+  this.progs = []
+
+  function make_docs (lib) {
     const h = {}
-    for(const id in lib){
+    for (const id in lib) {
       const P = new lib[id]()
       h[P.glyph] = P.docs()
     }
     return h
   }
 
-  this.start = function()
-  {
+  this.start = function () {
     this.lib = require('./lib')
     this.allowed = [].concat(Object.keys(this.lib.num)).concat(Object.keys(this.lib.alpha)).concat(Object.keys(this.lib.special))
     this.docs = make_docs(Object.values(this.lib.alpha))
@@ -47,7 +44,7 @@ function Pico (w, h) {
   }
 
   this.add = function (x, y, glyph) {
-    if (x < 0 || x > this.w - 1 || y < 0 || y > this.h - 1 || !glyph || !this.is_allowed(glyph)) { return }
+    if (x < 0 || x > this.w - 1 || y < 0 || y > this.h - 1 || !glyph || !this.is_allowed(glyph)) { console.log(`#${g} not allowed`); return }
 
     const index = this.index_at(x, y)
 
@@ -96,9 +93,8 @@ function Pico (w, h) {
     return this.lib.alpha[g]
   }
 
-  this.is_allowed = function(g)
-  {
-    return (this.lib.alpha[g] || this.lib.num[g] || this.lib.special[g]) ? true : false
+  this.is_allowed = function (g) {
+    return !!((this.lib.alpha[g] || this.lib.num[g] || this.lib.special[g]))
   }
 
   this.glyph_at = function (x, y, req = null) {

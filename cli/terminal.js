@@ -20,7 +20,7 @@ function Terminal(pico)
       this.y = clamp(this.y-y, 0, pico.h - 1)
     },
     insert: function (g) {
-      if(!pico.is_allowed(g)){ return; }
+      if(!pico.is_allowed(g)){ console.log(`#${g} not allowed`); return; }
       pico.add(this.x, this.y, g)
     },
     inspect: function () {
@@ -45,11 +45,11 @@ function Terminal(pico)
     this._screen.key(['right'], (ch, key) => { this.cursor.move(1,0); this.update(); }); 
     this._screen.key(['left'], (ch, key) => { this.cursor.move(-1,0); this.update(); }); 
 
-    this._screen.on('keypress', (ch)=>{ 
-      if(!ch){ return; }
-      const str = ch.substr(0,1).replace(/[^0-9a-z]/gi, '') 
-      if(str == ""){ return; }
-      this.cursor.insert(str)
+    this._screen.on('keypress', (key)=>{ 
+      if(!key){ return; }
+      const g = key.substr(0,1)
+      if(!this.pico.is_allowed(g)){ console.log(`#${g} not allowed`); return; }
+      this.cursor.insert(g)
     });
 
     this.update()

@@ -4,5 +4,5 @@ const Terminal = require('./cli/terminal')
 const pico = new Pico(40, 20)
 const terminal = new Terminal(pico)
 
-terminal.install();
-terminal.start();
+terminal.install()
+terminal.start()
