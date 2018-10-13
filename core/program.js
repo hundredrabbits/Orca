@@ -26,7 +26,7 @@ function Program (w, h) {
   }
 
   this.add = function (x, y, glyph) {
-    if (x < 0 || x > pico.program.w - 1 || y < 0 || y > pico.program.h - 1 || !glyph) { return }
+    if (x < 0 || x > this.w - 1 || y < 0 || y > this.h - 1 || !glyph) { return }
 
     const index = this.index_at(x, y)
 
@@ -118,8 +118,8 @@ function Program (w, h) {
     this.r += g
 
     // Trim
-    if (this.r.length >= pico.program.size.h) {
-      this.r = this.r.substr(-pico.program.size.h + 1, pico.program.size.h)
+    if (this.r.length >= this.size.h) {
+      this.r = this.r.substr(-this.size.h + 1, this.size.h)
     }
   }
 
