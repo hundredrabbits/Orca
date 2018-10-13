@@ -1,7 +1,9 @@
 'use strict'
 
-function program_K (x, y) {
-  Program_Default.call(this, x, y)
+const Program_Default = require('./default')
+
+function program_K (program,x, y) {
+  Program_Default.call(this,program, x, y)
 
   this.name = 'kill'
   this.glyph = 'k'
@@ -9,15 +11,17 @@ function program_K (x, y) {
 
   this.operation = function () {
     if (this.bang()) {
-      pico.program.remove(this.x - 1, this.y)
-      pico.program.remove(this.x + 1, this.y)
-      pico.program.remove(this.x, this.y + 1)
-      pico.program.remove(this.x, this.y - 1)
+      program.remove(this.x - 1, this.y)
+      program.remove(this.x + 1, this.y)
+      program.remove(this.x, this.y + 1)
+      program.remove(this.x, this.y - 1)
 
-      pico.program.lock(this.x, this.y + 1)
-      pico.program.lock(this.x, this.y - 1)
-      pico.program.lock(this.x + 1, this.y)
-      pico.program.lock(this.x - 1, this.y)
+      program.lock(this.x, this.y + 1)
+      program.lock(this.x, this.y - 1)
+      program.lock(this.x + 1, this.y)
+      program.lock(this.x - 1, this.y)
     }
   }
 }
+
+module.exports = program_K

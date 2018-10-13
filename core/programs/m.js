@@ -1,7 +1,9 @@
 'use strict'
 
-function program_M (x, y) {
-  Program_Default.call(this, x, y)
+const Program_Default = require('./default')
+
+function program_M (program,x, y) {
+  Program_Default.call(this,program, x, y)
 
   this.name = 'modulo'
   this.glyph = 'm'
@@ -10,11 +12,13 @@ function program_M (x, y) {
   this.operation = function () {
     if (!this.left() || !this.right()) { return }
 
-    const val = pico.program.glyphs.indexOf(this.left().glyph)
-    const mod = pico.program.glyphs.indexOf(this.right().glyph)
+    const val = program.glyphs.indexOf(this.left().glyph)
+    const mod = program.glyphs.indexOf(this.right().glyph)
 
     if (mod == 0) { return }
 
-    pico.program.add(this.x, this.y + 1, `${parseInt(val) % parseInt(mod)}`)
+    program.add(this.x, this.y + 1, `${parseInt(val) % parseInt(mod)}`)
   }
 }
+
+module.exports = program_M

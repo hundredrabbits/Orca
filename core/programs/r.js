@@ -1,7 +1,9 @@
 'use strict'
 
-function program_R (x, y) {
-  Program_Default.call(this, x, y)
+const Program_Default = require('./default')
+
+function program_R (program,x, y) {
+  Program_Default.call(this,program, x, y)
 
   this.name = 'right'
   this.glyph = 'r'
@@ -11,3 +13,5 @@ function program_R (x, y) {
     this.move(1, 0)
   }
 }
+
+module.exports = program_R

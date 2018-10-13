@@ -1,7 +1,9 @@
 'use strict'
 
-function program_F (x, y) {
-  Program_Default.call(this, x, y)
+const Program_Default = require('./default')
+
+function program_F (program,x, y) {
+  Program_Default.call(this,program, x, y)
 
   this.name = 'if'
   this.glyph = 'f'
@@ -11,9 +13,11 @@ function program_F (x, y) {
     if (!this.left() || !this.right()) { return }
 
     if (this.left(this.right().glyph)) {
-      pico.program.add(this.x, this.y + 1, '1')
+      program.add(this.x, this.y + 1, '1')
     } else {
-      pico.program.add(this.x, this.y + 1, '0')
+      program.add(this.x, this.y + 1, '0')
     }
   }
 }
+
+module.exports = program_F

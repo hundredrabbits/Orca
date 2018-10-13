@@ -1,6 +1,6 @@
 'use strict'
 
-function Program_Default (x, y) {
+function Program_Default (program,x, y) {
   this.name = '<missing name>'
   this.x = x
   this.y = y
@@ -8,7 +8,7 @@ function Program_Default (x, y) {
   this.ports = []
 
   this.id = function () {
-    return this.x + (this.y * pico.program.h)
+    return this.x + (this.y * program.h)
   }
 
   this.run = function () {
@@ -25,31 +25,31 @@ function Program_Default (x, y) {
 
   this.replace = function (g) {
     this.lock()
-    pico.program.add(this.x, this.y, g)
+    program.add(this.x, this.y, g)
   }
 
   this.lock = function () {
-    pico.program.lock(this.x, this.y)
+    program.lock(this.x, this.y)
   }
 
   this.move = function (x, y, g) {
-    pico.program.lock(this.x + x, this.y + y)
-    pico.program.remove(this.x, this.y)
-    pico.program.add((this.x + x) % pico.program.w, (this.y + y) % pico.program.h, this.glyph)
+    program.lock(this.x + x, this.y + y)
+    program.remove(this.x, this.y)
+    program.add((this.x + x) % program.w, (this.y + y) % program.h, this.glyph)
   }
 
   this.is_free = function (x, y) {
-    if (this.x + x >= pico.program.w) { return false }
+    if (this.x + x >= program.w) { return false }
     if (this.x + x <= -1) { return false }
-    if (this.y + y >= pico.program.h) { return false }
+    if (this.y + y >= program.h) { return false }
     if (this.y + y <= -1) { return false }
 
-    const target = pico.program.glyph_at(this.x + x, this.y + y)
+    const target = program.glyph_at(this.x + x, this.y + y)
     return target == '.' || target == 'b' ? true : target
   }
 
   this.neighbor_by = function (x, y) {
-    return pico.program.glyph_at(this.x + x, this.y + y) != '.' ? { x: this.x + x, y: this.y + y, glyph: pico.program.glyph_at(this.x + x, this.y + y) } : null
+    return program.glyph_at(this.x + x, this.y + y) != '.' ? { x: this.x + x, y: this.y + y, glyph: program.glyph_at(this.x + x, this.y + y) } : null
   }
 
   this.neighbors = function (g) {
@@ -58,10 +58,10 @@ function Program_Default (x, y) {
 
   this.free_neighbors = function () {
     const a = []
-    if (pico.program.glyph_at(this.x + 1, this.y) == '.') { a.push({ x: this.x + 1, y: this.y }) }
-    if (pico.program.glyph_at(this.x - 1, this.y) == '.') { a.push({ x: this.x - 1, y: this.y }) }
-    if (pico.program.glyph_at(this.x, this.y + 1) == '.') { a.push({ x: this.x, y: this.y + 1 }) }
-    if (pico.program.glyph_at(this.x, this.y - 1) == '.') { a.push({ x: this.x, y: this.y - 1 }) }
+    if (program.glyph_at(this.x + 1, this.y) == '.') { a.push({ x: this.x + 1, y: this.y }) }
+    if (program.glyph_at(this.x - 1, this.y) == '.') { a.push({ x: this.x - 1, y: this.y }) }
+    if (program.glyph_at(this.x, this.y + 1) == '.') { a.push({ x: this.x, y: this.y + 1 }) }
+    if (program.glyph_at(this.x, this.y - 1) == '.') { a.push({ x: this.x, y: this.y - 1 }) }
     return a
   }
 
@@ -69,7 +69,7 @@ function Program_Default (x, y) {
     const ns = this.neighbors('b')
     for (const id in ns) {
       const n = ns[id]
-      if (pico.program.glyph_at(n.x, n.y - 1) != 'h') {
+      if (program.glyph_at(n.x, n.y - 1) != 'h') {
         return { x: n.x, y: n.y }
       }
     }
@@ -77,23 +77,23 @@ function Program_Default (x, y) {
   }
 
   this.left = function (target = null) {
-    const g = pico.program.glyph_at(this.x - 1, this.y)
+    const g = program.glyph_at(this.x - 1, this.y)
 
     return g != '.' && (g == target || !target) ? { x: this.x - 1, y: this.y, glyph: g } : null
   }
 
   this.right = function (target) {
-    const g = pico.program.glyph_at(this.x + 1, this.y)
+    const g = program.glyph_at(this.x + 1, this.y)
     return g != '.' && (g == target || !target) ? { x: this.x + 1, y: this.y, glyph: g } : null
   }
 
   this.up = function (target) {
-    const g = pico.program.glyph_at(this.x, this.y - 1)
+    const g = program.glyph_at(this.x, this.y - 1)
     return g != '.' && (g == target || !target) ? { x: this.x, y: this.y - 1, glyph: g } : null
   }
 
   this.down = function (target) {
-    const g = pico.program.glyph_at(this.x, this.y + 1)
+    const g = program.glyph_at(this.x, this.y + 1)
     return g != '.' && (g == target || !target) ? { x: this.x, y: this.y + 1, glyph: g } : null
   }
 
@@ -101,3 +101,5 @@ function Program_Default (x, y) {
     return `${this.name}`
   }
 }
+
+module.exports = Program_Default

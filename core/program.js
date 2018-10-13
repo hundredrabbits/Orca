@@ -1,6 +1,36 @@
 'use strict'
 
 function Program (w, h) {
+
+  const lib = {
+    A: require('./programs/a'),
+    B: require('./programs/b'),
+    C: require('./programs/c'),
+    D: require('./programs/d'),
+    E: require('./programs/e'),
+    F: require('./programs/f'),
+    G: require('./programs/g'),
+    H: require('./programs/h'),
+    I: require('./programs/i'),
+    J: require('./programs/j'),
+    K: require('./programs/k'),
+    L: require('./programs/l'),
+    M: require('./programs/m'),
+    N: require('./programs/n'),
+    O: require('./programs/o'),
+    P: require('./programs/p'),
+    Q: require('./programs/q'),
+    R: require('./programs/r'),
+    S: require('./programs/s'),
+    T: require('./programs/t'),
+    U: require('./programs/u'),
+    V: require('./programs/v'),
+    W: require('./programs/w'),
+    X: require('./programs/x'),
+    Y: require('./programs/y'),
+    Z: require('./programs/z'),
+  }
+
   this.size = { h: 40, v: 30 }
   this.w = w
   this.h = h
@@ -48,7 +78,7 @@ function Program (w, h) {
       while (x < this.w) {
         const g = this.glyph_at(x, y)
         if (this.is_prog(g)) {
-          this.progs.push(new window[`program_${g.toUpperCase()}`](x, y))
+          this.progs.push(new lib[`${g.toUpperCase()}`](this,x, y))
         }
         x += 1
       }
@@ -72,7 +102,7 @@ function Program (w, h) {
   }
 
   this.is_prog = function (g) {
-    return this.glyphs.indexOf(g) >= 9 && this.glyphs.indexOf(g) <= 35 && window[`program_${g.toUpperCase()}`]
+    return this.glyphs.indexOf(g) >= 9 && this.glyphs.indexOf(g) <= 35 && lib[`${g.toUpperCase()}`]
   }
 
   this.glyph_at = function (x, y, req = null) {

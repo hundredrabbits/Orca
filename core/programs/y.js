@@ -1,7 +1,9 @@
 'use strict'
 
-function program_Y (x, y) {
-  Program_Default.call(this, x, y)
+const Program_Default = require('./default')
+
+function program_Y (program,x, y) {
+  Program_Default.call(this,program,x, y)
 
   this.name = 'automata'
   this.glyph = 'y'
@@ -9,19 +11,21 @@ function program_Y (x, y) {
 
   this.operation = function () {
     if (!this.left() && !this.right()) {
-      pico.program.add(this.x, this.y + 1, '1')
+      program.add(this.x, this.y + 1, '1')
     } else if ((this.left() && !this.right()) || (this.right() && !this.left())) {
-      pico.program.add(this.x, this.y + 1, '0')
+      program.add(this.x, this.y + 1, '0')
     } else if ((this.left() && !this.right()) || (this.right() && !this.left())) {
-      pico.program.add(this.x, this.y + 1, '0')
+      program.add(this.x, this.y + 1, '0')
     } else if (is_num(this.left().glyph) == is_num(this.right().glyph)) {
-      pico.program.add(this.x, this.y + 1, '1')
+      program.add(this.x, this.y + 1, '1')
     } else {
-      pico.program.add(this.x, this.y + 1, '0')
+      program.add(this.x, this.y + 1, '0')
     }
   }
 
   function is_num (c) {
-    return pico.program.glyphs.indexOf(c) < 10
+    return program.glyphs.indexOf(c) < 10
   }
 }
+
+module.exports = program_Y

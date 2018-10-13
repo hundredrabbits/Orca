@@ -1,7 +1,9 @@
 'use strict'
 
-function program_J (x, y) {
-  Program_Default.call(this, x, y)
+const Program_Default = require('./default')
+
+function program_J (program,x, y) {
+  Program_Default.call(this,program, x, y)
 
   this.name = 'jump'
   this.glyph = 'j'
@@ -12,15 +14,17 @@ function program_J (x, y) {
     if (!this.bang()) { return }
 
     if (this.left()) {
-      pico.program.add(this.x + 1, this.y, this.left().glyph)
-      pico.program.remove(this.x - 1, this.y)
-      pico.program.lock(this.x - 1, this.y)
-      pico.program.lock(this.x + 1, this.y)
+      program.add(this.x + 1, this.y, this.left().glyph)
+      program.remove(this.x - 1, this.y)
+      program.lock(this.x - 1, this.y)
+      program.lock(this.x + 1, this.y)
     } else if (this.right()) {
-      pico.program.add(this.x - 1, this.y, this.right().glyph)
-      pico.program.remove(this.x + 1, this.y)
-      pico.program.lock(this.x - 1, this.y)
-      pico.program.lock(this.x + 1, this.y)
+      program.add(this.x - 1, this.y, this.right().glyph)
+      program.remove(this.x + 1, this.y)
+      program.lock(this.x - 1, this.y)
+      program.lock(this.x + 1, this.y)
     }
   }
 }
+
+module.exports = program_J

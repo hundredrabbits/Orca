@@ -1,7 +1,9 @@
 'use strict'
 
-function program_X (x, y) {
-  Program_Default.call(this, x, y)
+const Program_Default = require('./default')
+
+function program_X (program,x, y) {
+  Program_Default.call(this,program, x, y)
 
   this.name = 'split'
   this.glyph = 'x'
@@ -17,7 +19,9 @@ function program_X (x, y) {
   }
 
   this.fire = function (x, y) {
-    pico.program.add(this.x + x, this.y + y, 'b')
-    pico.program.lock(this.x + x, this.y + y)
+    program.add(this.x + x, this.y + y, 'b')
+    program.lock(this.x + x, this.y + y)
   }
 }
+
+module.exports = program_X

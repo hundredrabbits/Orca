@@ -1,7 +1,9 @@
 'use strict'
 
-function program_I (x, y) {
-  Program_Default.call(this, x, y)
+const Program_Default = require('./default')
+
+function program_I (program,x, y) {
+  Program_Default.call(this,program, x, y)
 
   this.name = 'increment'
   this.glyph = 'i'
@@ -12,7 +14,7 @@ function program_I (x, y) {
     if (!this.down()) { return }
 
     const n = this.down()
-    pico.program.add(this.x, this.y + 1, this.inc(n.glyph))
+    program.add(this.x, this.y + 1, this.inc(n.glyph))
   }
 
   this.inc = function (letter) {
@@ -20,10 +22,12 @@ function program_I (x, y) {
     if (parseInt(letter) == 0) { return '1' }
     if (parseInt(letter) > 0) { return parseInt(letter) + 1 + '' }
 
-    const index = pico.program.glyphs.indexOf(letter)
+    const index = program.glyphs.indexOf(letter)
 
     if (index < 0) { return }
 
-    return pico.program.glyphs[(index + 1) % pico.program.glyphs.length]
+    return program.glyphs[(index + 1) % program.glyphs.length]
   }
 }
+
+module.exports = program_I

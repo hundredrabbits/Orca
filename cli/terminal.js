@@ -8,6 +8,9 @@ function Terminal(pico)
   this._grid = blessed.box({ top: 1, left: 2, height: '100%-3', width: 39, keys: true, mouse: true, style: { fg: '#efefef' } });
   this._output = blessed.box({ bottom: 0, left: 2, height: 1, width: 1, style: { fg: '#fff' } });
 
+  this.f = 0
+  this.is_paused = false
+
   this.cursor = {
     x: 0,
     y: 0,
@@ -50,6 +53,20 @@ function Terminal(pico)
     });
 
     this.update()
+    setInterval(() => { this.run() }, 200)
+  }
+
+  this.run = function()
+  {
+    if (this.is_paused && !force) { return }
+
+    pico.program.run()
+    this.f += 1
+  }
+
+
+  this.pause = function () {
+    this.is_paused = !this.is_paused
   }
 
   this.add_cursor = function(s)

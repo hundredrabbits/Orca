@@ -1,7 +1,9 @@
 'use strict'
 
-function program_P (x, y) {
-  Program_Default.call(this, x, y)
+const Program_Default = require('./default')
+
+function program_P (program,x, y) {
+  Program_Default.call(this,program, x, y)
 
   this.name = 'push'
   this.glyph = 'p'
@@ -18,7 +20,7 @@ function program_P (x, y) {
     this.move(direction.x, direction.y)
 
     if (pushed) {
-      pico.program.add(this.x + (direction.x * 2), this.y + (direction.y * 2), pushed.glyph)
+      program.add(this.x + (direction.x * 2), this.y + (direction.y * 2), pushed.glyph)
     }
   }
 
@@ -26,3 +28,5 @@ function program_P (x, y) {
     return { x: this.x - pos.x, y: this.y - pos.y }
   }
 }
+
+module.exports = program_P

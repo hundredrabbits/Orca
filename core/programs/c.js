@@ -1,7 +1,8 @@
 'use strict'
 
-function program_C (x, y) {
-  Program_Default.call(this, x, y)
+const Program_Default = require('./default')
+function program_C (program,x, y) {
+  Program_Default.call(this,program, x, y)
 
   this.name = 'clone'
   this.glyph = 'c'
@@ -9,7 +10,9 @@ function program_C (x, y) {
 
   this.operation = function () {
     if (this.bang() && this.left()) {
-      pico.program.add(this.x + 1, this.y, this.left().glyph)
+      program.add(this.x + 1, this.y, this.left().glyph)
     }
   }
 }
+
+module.exports = program_C

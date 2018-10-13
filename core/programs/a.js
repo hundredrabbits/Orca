@@ -1,7 +1,9 @@
 'use strict'
 
-function program_A (x, y) {
-  Program_Default.call(this, x, y)
+const Program_Default = require('./default')
+
+function program_A (program,x, y) {
+  Program_Default.call(this,program, x, y)
 
   this.name = 'add'
   this.glyph = 'a'
@@ -9,20 +11,22 @@ function program_A (x, y) {
 
   this.operation = function () {
     if (!this.left() || !this.right()) {
-      pico.program.remove(this.x, this.y + 1)
+      program.remove(this.x, this.y + 1)
       return
     }
 
     const left = !this.left() ? '0' : this.left().glyph
     const right = !this.right() ? '0' : this.right().glyph
 
-    const index = (this.convert(left) + this.convert(right)) % pico.program.glyphs.length
-    const output = pico.program.glyphs[index]
+    const index = (this.convert(left) + this.convert(right)) % program.glyphs.length
+    const output = program.glyphs[index]
 
-    pico.program.add(this.x, this.y + 1, output)
+    program.add(this.x, this.y + 1, output)
   }
 
   this.convert = function (glyph) {
-    return pico.program.glyphs.indexOf(glyph)
+    return program.glyphs.indexOf(glyph)
   }
 }
+
+module.exports = program_A

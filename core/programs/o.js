@@ -1,7 +1,9 @@
 'use strict'
 
-function program_O (x, y) {
-  Program_Default.call(this, x, y)
+const Program_Default = require('./default')
+
+function program_O (program,x, y) {
+  Program_Default.call(this,program, x, y)
 
   this.name = 'odd'
   this.glyph = 'o'
@@ -14,3 +16,5 @@ function program_O (x, y) {
     this.lock()
   }
 }
+
+module.exports = program_O

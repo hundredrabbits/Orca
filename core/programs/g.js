@@ -1,7 +1,9 @@
 'use strict'
 
-function program_G (x, y) {
-  Program_Default.call(this, x, y)
+const Program_Default = require('./default')
+
+function program_G (program,x, y) {
+  Program_Default.call(this,program, x, y)
 
   this.name = 'generator'
   this.glyph = 'g'
@@ -11,6 +13,8 @@ function program_G (x, y) {
   this.operation = function () {
     if (!this.bang()) { return }
 
-    pico.program.add(this.x, this.y + 1, 'd')
+    program.add(this.x, this.y + 1, 'd')
   }
 }
+
+module.exports = program_G
