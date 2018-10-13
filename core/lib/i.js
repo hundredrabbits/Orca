@@ -23,11 +23,11 @@ function FnI (pico, x, y) {
     if (parseInt(letter) == 0) { return '1' }
     if (parseInt(letter) > 0) { return parseInt(letter) + 1 + '' }
 
-    const index = pico.glyphs.indexOf(letter)
+    const index = pico.allowed.indexOf(letter)
 
     if (index < 0) { return }
 
-    return pico.glyphs[(index + 1) % pico.glyphs.length]
+    return pico.allowed[(index + 1) % pico.allowed.length]
   }
 }
 

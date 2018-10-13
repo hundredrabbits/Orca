@@ -7,7 +7,7 @@ function FnT (pico, x, y) {
 
   this.name = 'trigger'
   this.glyph = 't'
-  this.info = 'Bangs southward in the presence of `1`, `U`, `R`, `D`, `L` or `Z` westward.'
+  this.info = 'Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` westward.'
   this.ports = [{ x: -1, y: 0 }, { x: 0, y: 1, output: true }]
 
   this.operation = function () {

@@ -13,8 +13,8 @@ function FnM (pico, x, y) {
   this.operation = function () {
     if (!this.west() || !this.east()) { return }
 
-    const val = pico.glyphs.indexOf(this.west().glyph)
-    const mod = pico.glyphs.indexOf(this.east().glyph)
+    const val = pico.allowed.indexOf(this.west().glyph)
+    const mod = pico.allowed.indexOf(this.east().glyph)
 
     if (mod == 0) { return }
 
