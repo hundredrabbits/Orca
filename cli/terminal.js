@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 
 const blessed  = require('blessed');
 
@@ -7,7 +7,7 @@ function Terminal(program)
   this.program = program
 
   this._screen = blessed.screen();
-  this._grid = blessed.box({ top: 1, left: 2, height: '100%-3', width: 39, keys: true, mouse: true, style: { fg: '#efefef' } });
+  this._grid = blessed.box({ top: 1, left: 2, height: '100%-3', width: program.w, keys: true, mouse: true, style: { fg: '#efefef' } });
   this._output = blessed.box({ bottom: 0, left: 2, height: 1, width: 1, style: { fg: '#fff' } });
 
   this.f = 0

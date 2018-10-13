@@ -31,7 +31,6 @@ function Program (w, h) {
   }
 
   this.f = 0
-  this.size = { h: 40, v: 30 }
   this.w = w
   this.h = h
   this.s = ''
@@ -148,8 +147,8 @@ function Program (w, h) {
     this.r += g
 
     // Trim
-    if (this.r.length >= this.size.h) {
-      this.r = this.r.substr(-this.size.h + 1, this.size.h)
+    if (this.r.length >= this.h) {
+      this.r = this.r.substr(-this.h + 1, this.h)
     }
   }
 
