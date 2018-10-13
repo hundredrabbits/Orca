@@ -2,8 +2,8 @@
 
 const Program_Default = require('./default')
 
-function program_O (program,x, y) {
-  Program_Default.call(this,program, x, y)
+function program_O (program, x, y) {
+  Program_Default.call(this, program, x, y)
 
   this.name = 'odd'
   this.glyph = 'o'

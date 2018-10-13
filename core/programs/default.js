@@ -1,6 +1,6 @@
 'use strict'
 
-function Program_Default (program,x, y) {
+function Program_Default (program, x, y) {
   this.name = '<missing name>'
   this.x = x
   this.y = y

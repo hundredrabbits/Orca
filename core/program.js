@@ -1,7 +1,6 @@
 'use strict'
 
 function Program (w, h) {
-
   const lib = {
     A: require('./programs/a'),
     B: require('./programs/b'),
@@ -28,7 +27,7 @@ function Program (w, h) {
     W: require('./programs/w'),
     X: require('./programs/x'),
     Y: require('./programs/y'),
-    Z: require('./programs/z'),
+    Z: require('./programs/z')
   }
 
   this.f = 0
@@ -79,7 +78,7 @@ function Program (w, h) {
       while (x < this.w) {
         const g = this.glyph_at(x, y)
         if (this.is_prog(g)) {
-          this.progs.push(new lib[`${g.toUpperCase()}`](this,x, y))
+          this.progs.push(new lib[`${g.toUpperCase()}`](this, x, y))
         }
         x += 1
       }
@@ -154,8 +153,7 @@ function Program (w, h) {
     }
   }
 
-  this.toString = function()
-  {
+  this.toString = function () {
     return this.output()
   }
 }
