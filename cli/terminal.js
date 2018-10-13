@@ -85,6 +85,7 @@ function Terminal(pico)
       const h = data.split("\n").length
       terminal.log(`Loaded: ${path} ${w}x${h}`)
       pico.load(w,h,data)
+      terminal.update()
     });
   }
 
