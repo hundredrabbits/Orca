@@ -1,6 +1,6 @@
 'use strict'
 
-function Program_Default (program, x, y) {
+function ProgramDefault (program, x, y) {
   this.name = '<missing name>'
   this.x = x
   this.y = y
@@ -102,4 +102,4 @@ function Program_Default (program, x, y) {
   }
 }
 
-module.exports = Program_Default
+module.exports = ProgramDefault

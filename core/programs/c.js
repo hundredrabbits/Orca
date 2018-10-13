@@ -1,8 +1,8 @@
 'use strict'
 
-const Program_Default = require('./default')
-function program_C (program, x, y) {
-  Program_Default.call(this, program, x, y)
+const ProgramDefault = require('./default')
+function ProgramC (program, x, y) {
+  ProgramDefault.call(this, program, x, y)
 
   this.name = 'clone'
   this.glyph = 'c'
@@ -15,4 +15,4 @@ function program_C (program, x, y) {
   }
 }
 
-module.exports = program_C
+module.exports = ProgramC

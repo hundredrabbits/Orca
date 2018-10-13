@@ -1,9 +1,9 @@
 'use strict'
 
-const Program_Default = require('./default')
+const ProgramDefault = require('./default')
 
-function program_S (program, x, y) {
-  Program_Default.call(this, program, x, y)
+function ProgramS (program, x, y) {
+  ProgramDefault.call(this, program, x, y)
 
   this.name = 'shift'
   this.glyph = 's'
@@ -29,4 +29,4 @@ function program_S (program, x, y) {
   }
 }
 
-module.exports = program_S
+module.exports = ProgramS
