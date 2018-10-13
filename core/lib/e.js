@@ -11,7 +11,7 @@ function FnE (pico, x, y) {
 
   this.operation = function () {
     const wire = this.signal()
-    if(wire){ return; }
+    if (wire) { return }
     if (this.is_free(1, 0) != true) { this.replace('b'); this.lock(); return }
     this.move(1, 0)
   }

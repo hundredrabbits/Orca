@@ -1,7 +1,6 @@
 'use strict'
 
 function Pico (w, h) {
-
   this.f = 0 // Frame
   this.w = w // Width
   this.h = h // Height
@@ -90,12 +89,11 @@ function Pico (w, h) {
     this.r = ''
   }
 
-  this.load = function(w,h,s)
-  {
+  this.load = function (w, h, s) {
     this.w = w // Width
     this.h = h // Height
     this.reset()
-    this.s = s.replace(/\n/g,'').trim() // String
+    this.s = s.replace(/\n/g, '').trim() // String
   }
 
   this.is_prog = function (g) {
