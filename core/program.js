@@ -31,6 +31,7 @@ function Program (w, h) {
     Z: require('./programs/z'),
   }
 
+  this.f = 0
   this.size = { h: 40, v: 30 }
   this.w = w
   this.h = h

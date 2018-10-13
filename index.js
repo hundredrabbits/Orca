@@ -1,8 +1,8 @@
-const Pico = require('./core/pico')
+const Program = require('./core/program')
 const Terminal = require('./cli/terminal')
 
-const pico = new Pico()
-const terminal = new Terminal(pico)
+const program = new Program(39, 29)
+const terminal = new Terminal(program)
 
 terminal.install();
 terminal.start();
