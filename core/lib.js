@@ -46,5 +46,6 @@ module.exports = {
     ':': require('./lib/_port'),
     '-': require('./lib/_wireh'),
     '|': require('./lib/_wirev'),
+    '*': require('./lib/_wiren'),
   }
 }

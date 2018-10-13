@@ -45,7 +45,7 @@ function Pico (w, h) {
   }
 
   this.add = function (x, y, glyph) {
-    if (x < 0 || x > this.w - 1 || y < 0 || y > this.h - 1 || !glyph || !this.is_allowed(glyph)) { console.log(`#${g} not allowed`); return }
+    if (x < 0 || x > this.w - 1 || y < 0 || y > this.h - 1 || !glyph || !this.is_allowed(glyph)) { console.log(`#${glyph} not allowed`); return }
 
     const index = this.index_at(x, y)
 
