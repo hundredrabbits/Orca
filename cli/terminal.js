@@ -59,7 +59,7 @@ function Terminal(pico)
     }
 
     this.update()
-    setInterval(() => { this.run() }, 1200)
+    setInterval(() => { this.run() }, 200)
   }
 
   this.run = function()
