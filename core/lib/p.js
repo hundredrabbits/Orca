@@ -1,12 +1,13 @@
 'use strict'
 
-const ProgramDefault = require('./default')
+const FnBase = require('./_base')
 
-function ProgramP (program, x, y) {
-  ProgramDefault.call(this, program, x, y)
+function FnP (pico, x, y) {
+  FnBase.call(this, pico, x, y)
 
   this.name = 'push'
   this.glyph = 'p'
+  this.info = 'Moves away, on **bang**.'
   this.ports = [{ x: 0, y: 0, bang: true }]
 
   this.operation = function () {
@@ -20,7 +21,7 @@ function ProgramP (program, x, y) {
     this.move(direction.x, direction.y)
 
     if (pushed) {
-      program.add(this.x + (direction.x * 2), this.y + (direction.y * 2), pushed.glyph)
+      pico.add(this.x + (direction.x * 2), this.y + (direction.y * 2), pushed.glyph)
     }
   }
 
@@ -29,4 +30,4 @@ function ProgramP (program, x, y) {
   }
 }
 
-module.exports = ProgramP
+module.exports = FnP

@@ -1,12 +1,13 @@
 'use strict'
 
-const ProgramDefault = require('./default')
+const FnBase = require('./_base')
 
-function ProgramO (program, x, y) {
-  ProgramDefault.call(this, program, x, y)
+function FnO (pico, x, y) {
+  FnBase.call(this, pico, x, y)
 
   this.name = 'odd'
   this.glyph = 'o'
+  this.info = 'Transforms into `Q` when a _fn_ is present northward.'
   this.ports = [{ x: 0, y: 0, bang: true }, { x: 0, y: -1 }]
 
   this.operation = function () {
@@ -17,4 +18,4 @@ function ProgramO (program, x, y) {
   }
 }
 
-module.exports = ProgramO
+module.exports = FnO

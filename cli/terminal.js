@@ -2,33 +2,30 @@
 
 const blessed  = require('blessed');
 
-function Terminal(program)
+function Terminal(pico)
 {  
-  this.program = program
+  this.pico = pico
 
   this._screen = blessed.screen();
-  this._grid = blessed.box({ top: 1, left: 2, height: '100%-3', width: program.w, keys: true, mouse: true, style: { fg: '#efefef' } });
-  this._output = blessed.box({ bottom: 0, left: 2, height: 1, width: 1, style: { fg: '#fff' } });
+  this._grid = blessed.box({ top: 1, left: 2, height: '100%-3', width: pico.w, keys: true, mouse: true, style: { fg: '#efefef' } });
+  this._output = blessed.box({ bottom: 2, left: 2, height: 1, width: '100%-2', style: { fg: '#fff' } });
+  this._inspector = blessed.box({ bottom: 1, left: 2, height: 1, width: '100%-4', style: { fg: '#efefef' } });
 
-  this.f = 0
   this.is_paused = false
 
   this.cursor = {
-    x: 0,
-    y: 0,
+    x: 0, y: 0,
     move: function (x, y) {
-      this.x += x
-      this.y -= y
-      this.x = clamp(this.x, 0, program.w - 1)
-      this.y = clamp(this.y, 0, program.h - 1)
+      this.x = clamp(this.x+x, 0, pico.w - 1)
+      this.y = clamp(this.y-y, 0, pico.h - 1)
     },
-    insert: function (k) {
-      const key = k.trim() == '' ? '.' : k.toLowerCase()
-      if (program.glyphs.indexOf(key) < 0) { console.log(`Illegal rune:${key}`); return }
-      program.add(this.x, this.y, key)
+    insert: function (g) {
+      if(!pico.is_allowed(g)){ return; }
+      pico.add(this.x, this.y, g)
     },
     inspect: function () {
-      return program.glyph_at(this.x, this.y)
+      const g = pico.glyph_at(this.x, this.y)
+      return pico.docs[g] ? pico.docs[g] : '>' 
     }
   }
 
@@ -36,11 +33,12 @@ function Terminal(program)
   {
     this._screen.append(this._grid);
     this._screen.append(this._output);
+    this._screen.append(this._inspector);
   }
 
   this.start = function()
   {
-    this.program.reset()
+    this.pico.start()
     this._screen.key(['escape', 'q', 'C-c'], (ch, key) => (process.exit(0)));    
     this._screen.key(['up'], (ch, key) => { this.cursor.move(0,1); this.update(); }); 
     this._screen.key(['down'], (ch, key) => { this.cursor.move(0,-1); this.update(); }); 
@@ -62,7 +60,7 @@ function Terminal(program)
   {
     if (this.is_paused && !force) { return }
 
-    this.program.run()
+    this.pico.run()
     this.f += 1
     this.update()
   }
@@ -73,15 +71,16 @@ function Terminal(program)
 
   this.add_cursor = function(s)
   {
-    const index = this.program.index_at(this.cursor.x, this.cursor.y)
+    const index = this.pico.index_at(this.cursor.x, this.cursor.y)
     return s.substr(0, index) + "@" + s.substr(index + 1)
   }
 
   this.update = function(sight)
   {
-    const s = this.program.s
+    const s = this.pico.s
 
     this._grid.setContent(`${this.add_cursor(s)}`)
+    this._inspector.setContent(`${this.cursor.inspect()}`)
     this._screen.render();
   }
 

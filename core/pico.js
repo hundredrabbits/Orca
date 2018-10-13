@@ -1,44 +1,36 @@
 'use strict'
 
-function Program (w, h) {
-  const lib = {
-    A: require('./programs/a'),
-    B: require('./programs/b'),
-    C: require('./programs/c'),
-    D: require('./programs/d'),
-    E: require('./programs/e'),
-    F: require('./programs/f'),
-    G: require('./programs/g'),
-    H: require('./programs/h'),
-    I: require('./programs/i'),
-    J: require('./programs/j'),
-    K: require('./programs/k'),
-    L: require('./programs/l'),
-    M: require('./programs/m'),
-    N: require('./programs/n'),
-    O: require('./programs/o'),
-    P: require('./programs/p'),
-    Q: require('./programs/q'),
-    R: require('./programs/r'),
-    S: require('./programs/s'),
-    T: require('./programs/t'),
-    U: require('./programs/u'),
-    V: require('./programs/v'),
-    W: require('./programs/w'),
-    X: require('./programs/x'),
-    Y: require('./programs/y'),
-    Z: require('./programs/z')
-  }
+function Pico (w, h) {
 
-  this.f = 0
-  this.w = w
-  this.h = h
-  this.s = ''
+  this.f = 0  // Frame
+  this.w = w  // Width
+  this.h = h  // Height
+  this.s = '' // String
   this.r = '' // Record
 
-  this.locks = []
-  this.progs = []
-  this.glyphs = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '.']
+  this.lib     = {}
+  this.docs    = {}
+  this.allowed = []
+  this.locks   = []
+  this.progs   = []
+  
+  function make_docs(lib)
+  {
+    const h = {}
+    for(const id in lib){
+      const P = new lib[id]()
+      h[P.glyph] = P.docs()
+    }
+    return h
+  }
+
+  this.start = function()
+  {
+    this.lib = require('./lib')
+    this.allowed = [].concat(Object.keys(this.lib.num)).concat(Object.keys(this.lib.alpha)).concat(Object.keys(this.lib.special))
+    this.docs = make_docs(Object.values(this.lib.alpha))
+    this.reset()
+  }
 
   this.reset = function () {
     this.r = ''
@@ -55,7 +47,7 @@ function Program (w, h) {
   }
 
   this.add = function (x, y, glyph) {
-    if (x < 0 || x > this.w - 1 || y < 0 || y > this.h - 1 || !glyph) { return }
+    if (x < 0 || x > this.w - 1 || y < 0 || y > this.h - 1 || !glyph || !this.is_allowed(glyph)) { return }
 
     const index = this.index_at(x, y)
 
@@ -77,7 +69,7 @@ function Program (w, h) {
       while (x < this.w) {
         const g = this.glyph_at(x, y)
         if (this.is_prog(g)) {
-          this.progs.push(new lib[`${g.toUpperCase()}`](this, x, y))
+          this.progs.push(new this.lib.alpha[g](this, x, y))
         }
         x += 1
       }
@@ -101,7 +93,12 @@ function Program (w, h) {
   }
 
   this.is_prog = function (g) {
-    return this.glyphs.indexOf(g) >= 9 && this.glyphs.indexOf(g) <= 35 && lib[`${g.toUpperCase()}`]
+    return this.lib.alpha[g]
+  }
+
+  this.is_allowed = function(g)
+  {
+    return (this.lib.alpha[g] || this.lib.num[g] || this.lib.special[g]) ? true : false
   }
 
   this.glyph_at = function (x, y, req = null) {
@@ -157,4 +154,4 @@ function Program (w, h) {
   }
 }
 
-module.exports = Program
+module.exports = Pico

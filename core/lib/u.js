@@ -1,12 +1,13 @@
 'use strict'
 
-const ProgramDefault = require('./default')
+const FnBase = require('./_base')
 
-function ProgramU (program, x, y) {
-  ProgramDefault.call(this, program, x, y)
+function FnU (pico, x, y) {
+  FnBase.call(this, pico, x, y)
 
   this.name = 'up'
   this.glyph = 'u'
+  this.info = 'Moves Northward.'
 
   this.operation = function () {
     if (this.is_free(0, -1) != true) { this.replace('b'); this.lock(); return }
@@ -14,4 +15,4 @@ function ProgramU (program, x, y) {
   }
 }
 
-module.exports = ProgramU
+module.exports = FnU

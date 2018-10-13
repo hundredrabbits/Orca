@@ -1,12 +1,13 @@
 'use strict'
 
-const ProgramDefault = require('./default')
+const FnBase = require('./_base')
 
-function ProgramX (program, x, y) {
-  ProgramDefault.call(this, program, x, y)
+function FnX (pico, x, y) {
+  FnBase.call(this, pico, x, y)
 
   this.name = 'split'
   this.glyph = 'x'
+  this.info = 'Bangs eastward when westward _fn_ is `0`, and southward when _fn_ is `1`.'
   this.ports = [{ x: -1, y: 0 }, { x: 0, y: 1, output: true }, { x: 1, y: 0, output: true }]
 
   this.operation = function () {
@@ -19,9 +20,9 @@ function ProgramX (program, x, y) {
   }
 
   this.fire = function (x, y) {
-    program.add(this.x + x, this.y + y, 'b')
-    program.lock(this.x + x, this.y + y)
+    pico.add(this.x + x, this.y + y, 'b')
+    pico.lock(this.x + x, this.y + y)
   }
 }
 
-module.exports = ProgramX
+module.exports = FnX

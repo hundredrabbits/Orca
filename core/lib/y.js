@@ -1,31 +1,32 @@
 'use strict'
 
-const ProgramDefault = require('./default')
+const FnBase = require('./_base')
 
-function ProgramY (program, x, y) {
-  ProgramDefault.call(this, program, x, y)
+function FnY (pico, x, y) {
+  FnBase.call(this, pico, x, y)
 
   this.name = 'automata'
   this.glyph = 'y'
+  this.info = 'Compares the type(num/alpha) of westward and eastward _fns_, and return `1` or `0` southward.'
   this.ports = [{ x: -1, y: 0, input: true }, { x: 1, y: 0, input: true }, { x: 0, y: 1, output: true }]
 
   this.operation = function () {
     if (!this.left() && !this.right()) {
-      program.add(this.x, this.y + 1, '1')
+      pico.add(this.x, this.y + 1, '1')
     } else if ((this.left() && !this.right()) || (this.right() && !this.left())) {
-      program.add(this.x, this.y + 1, '0')
+      pico.add(this.x, this.y + 1, '0')
     } else if ((this.left() && !this.right()) || (this.right() && !this.left())) {
-      program.add(this.x, this.y + 1, '0')
+      pico.add(this.x, this.y + 1, '0')
     } else if (is_num(this.left().glyph) == is_num(this.right().glyph)) {
-      program.add(this.x, this.y + 1, '1')
+      pico.add(this.x, this.y + 1, '1')
     } else {
-      program.add(this.x, this.y + 1, '0')
+      pico.add(this.x, this.y + 1, '0')
     }
   }
 
   function is_num (c) {
-    return program.glyphs.indexOf(c) < 10
+    return pico.lib.num[c]
   }
 }
 
-module.exports = ProgramY
+module.exports = FnY
