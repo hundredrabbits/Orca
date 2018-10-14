@@ -54,6 +54,9 @@ function Pico (w, h) {
         if (this.lib.alpha[g]) {
           a.push(new this.lib.alpha[g](this, x, y))
         }
+        if (this.lib.special[g]) {
+          a.push(new this.lib.special[g](this, x, y))
+        }
         x += 1
       }
       y += 1
