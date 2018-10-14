@@ -70,7 +70,7 @@ function Pico (w, h) {
   }
 
   this.add = function (x, y, ch) {
-    const glyph = ch.substr(0,1).toLowerCase()
+    const glyph = ch.substr(0, 1).toLowerCase()
     if (!this.is_allowed(glyph)) { this.terminal.log(`[${glyph}] is not allowed`); return }
     if (x < 0 || x > this.w - 1 || y < 0 || y > this.h - 1) { this.terminal.log(`[${glyph}] is out of range`); return }
     const index = this.index_at(x, y)
