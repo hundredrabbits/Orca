@@ -10,18 +10,19 @@ function FnA (pico, x, y) {
   this.info = 'Creates the result of the addition of east and west fns, southward.'
   this.ports = [{ x: -1, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 1, output: true }]
 
+  this.haste = function () {
+    pico.lock(this.x, this.y + 1)
+    pico.lock(this.x + 1, this.y)
+    pico.lock(this.x - 1, this.y)
+  }
+
   this.operation = function () {
-    if (!this.west() || !this.east()) {
-      pico.remove(this.x, this.y + 1)
-      return
-    }
-
-    const left = !this.west() ? '0' : this.west().glyph
-    const right = !this.east() ? '0' : this.east().glyph
-
-    const index = (this.convert(left) + this.convert(right)) % pico.allowed.length
+    const w = this.west()
+    const e = this.east()
+    const west = !w ? '0' : w.glyph
+    const east = !e ? '0' : e.glyph
+    const index = (this.convert(west) + this.convert(east)) % pico.allowed.length
     const output = pico.allowed[index]
-
     pico.add(this.x, this.y + 1, output)
   }
 

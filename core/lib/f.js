@@ -10,10 +10,19 @@ function FnF (pico, x, y) {
   this.info = 'Bangs if east and west fns are equal, southward.'
   this.ports = [{ x: -1, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 1, output: true }]
 
-  this.operation = function () {
-    if (!this.west() || !this.east()) { return }
+  this.haste = function () {
+    pico.lock(this.x, this.y + 1)
+    pico.lock(this.x + 1, this.y)
+    pico.lock(this.x - 1, this.y)
+  }
 
-    if (this.west(this.east().glyph)) {
+  this.operation = function () {
+    const w = this.west()
+    const e = this.east()
+    const west = !w ? '.' : w.glyph
+    const east = !e ? '.' : e.glyph
+
+    if (west === east) {
       pico.add(this.x, this.y + 1, '1')
     } else {
       pico.add(this.x, this.y + 1, '0')

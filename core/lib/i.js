@@ -20,7 +20,7 @@ function FnI (pico, x, y) {
 
   this.inc = function (ch) {
     const index = pico.allowed.indexOf(ch)
-    const result = pico.allowed[(index+1) % 10]
+    const result = pico.allowed[(index + 1) % 10]
     return `${result}`
   }
 }

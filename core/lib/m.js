@@ -10,13 +10,20 @@ function FnM (pico, x, y) {
   this.info = 'Creates the result of the modulo operation of east and west fns, southward.'
   this.ports = [{ x: -1, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 1, output: true }]
 
+  this.haste = function () {
+    pico.lock(this.x, this.y + 1)
+    pico.lock(this.x + 1, this.y)
+    pico.lock(this.x - 1, this.y)
+  }
+
   this.operation = function () {
-    if (!this.west() || !this.east()) { return }
+    const w = this.west()
+    const e = this.east()
+    const west = !w ? '0' : w.glyph
+    const east = !e ? '0' : e.glyph
 
-    const val = pico.allowed.indexOf(this.west().glyph)
-    const mod = pico.allowed.indexOf(this.east().glyph)
-
-    if (mod === 0) { return }
+    const val = pico.allowed.indexOf(west)
+    const mod = pico.allowed.indexOf(east) !== 0 ? pico.allowed.indexOf(east) : '1'
 
     pico.add(this.x, this.y + 1, `${parseInt(val) % parseInt(mod)}`)
   }
