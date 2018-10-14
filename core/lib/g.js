@@ -7,14 +7,14 @@ function FnG (pico, x, y) {
 
   this.name = 'generator'
   this.glyph = 'g'
-  this.info = 'Generates a `D` on **bang**.'
+  this.info = 'Generates a s on bang.'
 
   this.ports = [{ x: 0, y: 1, output: true }, { x: 0, y: 0, bang: true }]
 
   this.operation = function () {
     if (!this.bang()) { return }
 
-    pico.add(this.x, this.y + 1, 'd')
+    pico.add(this.x, this.y + 1, 's')
   }
 }
 

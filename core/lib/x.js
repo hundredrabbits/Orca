@@ -7,7 +7,7 @@ function FnX (pico, x, y) {
 
   this.name = 'split'
   this.glyph = 'x'
-  this.info = 'Bangs eastward when westward _fn_ is `0`, and southward when _fn_ is `1`.'
+  this.info = 'Bangs eastward when westward fn is 0, and southward when fn is 1.'
   this.ports = [{ x: -1, y: 0 }, { x: 0, y: 1, output: true }, { x: 1, y: 0, output: true }]
 
   this.operation = function () {

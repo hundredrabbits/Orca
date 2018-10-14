@@ -7,14 +7,14 @@ function FnO (pico, x, y) {
 
   this.name = 'odd'
   this.glyph = 'o'
-  this.info = 'Transforms into `Q` when a _fn_ is present northward.'
+  this.info = 'Adds 0 southward, transforms into Q on bang.'
   this.ports = [{ x: 0, y: 0, bang: true }, { x: 0, y: -1 }]
 
   this.operation = function () {
-    if (!this.bang()) { return }
-
-    this.replace('q')
-    this.lock()
+    if (this.bang()) {
+      this.replace('q')
+    }
+    pico.add(this.x, this.y + 1, '0')
   }
 }
 

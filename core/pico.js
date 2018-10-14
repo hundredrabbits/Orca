@@ -86,6 +86,7 @@ function Pico (w, h) {
     this.run_fns(this.find_fns())
     this.record()
     this.s = this.s.substr(0, this.w * this.h)
+    this.f += 1
   }
 
   this.load = function (w, h, s) {

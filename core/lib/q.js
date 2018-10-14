@@ -7,16 +7,14 @@ function FnQ (pico, x, y) {
 
   this.name = 'even'
   this.glyph = 'q'
-  this.info = 'Transforms into `O`, when a _fn_ is present northward, and **bangs** southward.'
+  this.info = 'Adds 1 southward, transforms into O on bang.'
   this.ports = [{ x: 0, y: 0, bang: true }, { x: 0, y: 1, output: true }]
 
   this.operation = function () {
-    if (!this.bang()) { return }
-
-    this.replace('o')
-    this.lock()
-    pico.add(this.x, this.y + 1, 'b')
-    pico.lock(this.x, this.y + 1)
+    if (this.bang()) {
+      this.replace('o')
+    }
+    pico.add(this.x, this.y + 1, '1')
   }
 }
 

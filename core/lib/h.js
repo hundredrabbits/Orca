@@ -7,7 +7,7 @@ function FnH (pico, x, y) {
 
   this.name = 'halt'
   this.glyph = 'h'
-  this.info = 'Stops southward _fn_ from operating.'
+  this.info = 'Stops southward fn from operating.'
 
   this.ports = [{ x: 0, y: 1, output: true }]
 

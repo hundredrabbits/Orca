@@ -7,7 +7,7 @@ function FnK (pico, x, y) {
 
   this.name = 'kill'
   this.glyph = 'k'
-  this.info = 'Kills southward _fns_, on **bang**.'
+  this.info = '[TODO]Kills southward fns, on bang.'
   this.ports = [{ x: 0, y: 0, bang: true }, { x: 0, y: 1 }, { x: 0, y: -1 }, { x: 1, y: 0 }, { x: -1, y: 0 }]
 
   this.operation = function () {

@@ -11,7 +11,11 @@ function FnT (pico, x, y) {
   this.ports = [{ x: -1, y: 0 }, { x: 0, y: 1, output: true }]
 
   this.operation = function () {
-    if (this.west('1') || this.west('w') || this.west('s') || this.west('n') || this.west('e') || this.west('b')) {
+    const w = this.west()
+
+    if (!w) { return }
+
+    if (w.glyph == '1' || w.glyph == 'w' || w.glyph == 's' || w.glyph == 'n' || w.glyph == 'e' || w.glyph == 'b' || w.glyph == 'z') {
       this.fire()
     }
   }

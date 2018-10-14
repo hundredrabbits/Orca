@@ -70,7 +70,6 @@ function Terminal (pico) {
 
     this.pico.run()
     this.update()
-    this.f += 1
   }
 
   this.pause = function () {

@@ -7,51 +7,55 @@
 ## Programs
 
 ### num functions
-- `0`, **null**: Missing docs.
-- `1`, **null**: Missing docs.
-- `2`, **null**: Missing docs.
-- `3`, **null**: Missing docs.
-- `4`, **null**: Missing docs.
-- `5`, **null**: Missing docs.
-- `6`, **null**: Missing docs.
-- `7`, **null**: Missing docs.
-- `8`, **null**: Missing docs.
-- `9`, **null**: Missing docs.
+
+- `0`, **null**: void
+- `1`, **null**: void
+- `2`, **null**: void
+- `3`, **null**: void
+- `4`, **null**: void
+- `5`, **null**: void
+- `6`, **null**: void
+- `7`, **null**: void
+- `8`, **null**: void
+- `9`, **null**: void
 
 ### alpha functions
+
 - `A`, **add**: Creates the result of the addition of east and west fns, southward.
-- `B`, **bang**: The **bang** is used to trigger various _fns_, only lasts one cycle.
-- `C`, **clone**: Clones the westward _fn__, eastwardly, on **bang**.
-- `D`, **deflect**: Converts neighboors into direction functions.
+- `B`, **bang**: The bang is used to trigger various fns, only lasts one cycle.
+- `C`, **clone**: Clones the westward fn, eastwardly, on bang.
+- `D`, **deflect**: Converts neighboors into direction fns.
 - `E`, **east**: Moves eastward, or bangs.
-- `F`, **if**: Bangs if east and west _fns_ are equal, southward.
-- `G`, **generator**: Generates a `D` on **bang**.
-- `H`, **halt**: Stops southward _fn_ from operating.
-- `I`, **increment**: Increments southward numeric _fn_ on **bang**.
-- `J`, **jump**: Moves the westward _fn_ to eastward, or the eastward _fn_ westward, on **bang**.
-- `K`, **kill**: Kills southward _fns_, on **bang**.
-- `L`, **left**: Moves westward.
-- `M`, **modulo**: Creates the result of the modulo operation of east and west _fns_, southward.
+- `F`, **if**: Bangs if east and west fns are equal, southward.
+- `G`, **generator**: Generates a s on bang.
+- `H`, **halt**: Stops southward fn from operating.
+- `I`, **increment**: Increments southward numeric fn on bang.
+- `J`, **jump**: [TODO]Moves the westward fn to eastward, or the eastward fn westward, on bang.
+- `K`, **kill**: [TODO]Kills southward fns, on bang.
+- `L`, **idle**: [todo]Nothing.
+- `M`, **modulo**: Creates the result of the modulo operation of east and west fns, southward.
 - `N`, **north**: Moves Northward, or bangs.
-- `O`, **odd**: Transforms into `Q` when a _fn_ is present northward.
-- `P`, **push**: Moves away, on **bang**.
-- `Q`, **even**: Transforms into `O`, when a _fn_ is present northward, and **bangs** southward.
-- `R`, **right**: Moves eastward.
+- `O`, **odd**: Adds 0 southward, transforms into Q on bang.
+- `P`, **push**: Moves away, on bang.
+- `Q`, **even**: Adds 1 southward, transforms into O on bang.
+- `R`, **idle**: [TODO]Nothing..
 - `S`, **south**: Moves southward, or bangs.
 - `T`, **trigger**: Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` westward.
-- `U`, **up**: Moves Northward.
+- `U`, **idle**: [TODO]Nothing..
 - `V`, **value**: Creates a numerical value between 0 and 5 based on the number of present _fns_ westward.
 - `W`, **west**: Moves westward, or bangs.
-- `X`, **split**: Bangs eastward when westward _fn_ is `0`, and southward when _fn_ is `1`.
+- `X`, **split**: Bangs eastward when westward fn is 0, and southward when fn is 1.
 - `Y`, **automata**: Compares the type(num/alpha) of westward and eastward _fns_, and return `1` or `0` southward.
-- `Z`, **creep**: Moves to a the next available location in a cycle of `R`,`D`,`L`,`U` based on the *runtime frame*.
+- `Z`, **creep**: Moves to a the next available location in a cycle of E, S, W, N based on the runtime frame.
 
 ### special functions
-- `.`, **null**: Missing docs.
+
+- `.`, **null**: void
 - `:`, **null**: Missing docs.
-- `-`, **wire-h**: Missing docs.
-- `|`, **wire-v**: Missing docs.
-- `*`, **wire-n**: Missing docs.
+- `-`, **wire-h**: Send data along the wire, horizontally.
+- `|`, **wire-v**: Send data along the wire, vertically.
+- `*`, **wire-n**: Send data along the wire, entry or exit.
+- `+`, **wire-f**: Send data along the wire, across an intersection.
 
 ## Logic Functions
 
@@ -61,12 +65,6 @@ The logic functions are passive, and they are `a`, `f`, `m`, `y`.
 
 ```
 node cli examples/benchmark.pico
-```
-
-## Headless
-
-```
-node pico.js ~/Desktop/hello_world.pico
 ```
 
 ## Install

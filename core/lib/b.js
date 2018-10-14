@@ -7,7 +7,7 @@ function FnB (pico, x, y) {
 
   this.name = 'bang'
   this.glyph = 'b'
-  this.info = 'The **bang** is used to trigger various _fns_, only lasts one cycle.'
+  this.info = 'The bang is used to trigger various fns, only lasts one cycle.'
 
   this.operation = function () {
     this.remove()

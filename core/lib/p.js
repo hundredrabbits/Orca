@@ -7,7 +7,7 @@ function FnP (pico, x, y) {
 
   this.name = 'push'
   this.glyph = 'p'
-  this.info = 'Moves away, on **bang**.'
+  this.info = 'Moves away, on bang.'
   this.ports = [{ x: 0, y: 0, bang: true }]
 
   this.operation = function () {

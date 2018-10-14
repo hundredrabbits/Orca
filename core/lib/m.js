@@ -7,7 +7,7 @@ function FnM (pico, x, y) {
 
   this.name = 'modulo'
   this.glyph = 'm'
-  this.info = 'Creates the result of the modulo operation of east and west _fns_, southward.'
+  this.info = 'Creates the result of the modulo operation of east and west fns, southward.'
   this.ports = [{ x: -1, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 1, output: true }]
 
   this.operation = function () {

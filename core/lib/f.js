@@ -7,7 +7,7 @@ function FnF (pico, x, y) {
 
   this.name = 'if'
   this.glyph = 'f'
-  this.info = 'Bangs if east and west _fns_ are equal, southward.'
+  this.info = 'Bangs if east and west fns are equal, southward.'
   this.ports = [{ x: -1, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 1, output: true }]
 
   this.operation = function () {

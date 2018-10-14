@@ -7,7 +7,7 @@ function FnZ (pico, x, y) {
 
   this.name = 'creep'
   this.glyph = 'z'
-  this.info = 'Moves to a the next available location in a cycle of `R`,`D`,`L`,`U` based on the *runtime frame*.'
+  this.info = 'Moves to a the next available location in a cycle of E, S, W, N based on the runtime frame.'
 
   this.operation = function () {
     const positions = [{ x: 1, y: 0 }, { x: 0, y: 1 }, { x: -1, y: 0 }, { x: 0, y: -1 }]
