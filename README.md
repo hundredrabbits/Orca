@@ -81,6 +81,8 @@ npm start
 
 The idea is to build a synth/mini sequencer, here's some tasks I need to tackle before then.
 
+[ ] catch bangs/directions moving northward/westward
+[ ] "I wanna be able to 1000x fastforward my pico programs"
 [ ] custom synth functions, like `:SYN[ADSR](C)`
 [ ] sub programs scope
 
