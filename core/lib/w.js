@@ -11,7 +11,7 @@ function FnW (pico, x, y) {
 
   this.haste = function () {
     if (this.signal()) { return }
-    if (this.is_free(-1, 0) != true) { this.replace('b'); this.lock(); return }
+    if (this.is_free(-1, 0) !== true) { this.replace('b'); this.lock(); return }
     this.move(-1, 0)
   }
 }

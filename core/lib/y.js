@@ -17,14 +17,14 @@ function FnY (pico, x, y) {
       pico.add(this.x, this.y + 1, '0')
     } else if ((this.west() && !this.east()) || (this.east() && !this.west())) {
       pico.add(this.x, this.y + 1, '0')
-    } else if (is_num(this.west().glyph) == is_num(this.east().glyph)) {
+    } else if (isNum(this.west().glyph) === isNum(this.east().glyph)) {
       pico.add(this.x, this.y + 1, '1')
     } else {
       pico.add(this.x, this.y + 1, '0')
     }
   }
 
-  function is_num (c) {
+  function isNum (c) {
     return pico.lib.num[c]
   }
 }

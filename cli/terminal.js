@@ -27,7 +27,7 @@ function Terminal (pico) {
       pico.remove(this.x, this.y)
     },
     inspect: function () {
-      const g = pico.glyph_at(this.x, this.y)
+      const g = pico.glyphAt(this.x, this.y)
       return pico.docs[g] ? pico.docs[g] : '>'
     }
   }
@@ -97,7 +97,7 @@ function Terminal (pico) {
   }
 
   this.add_cursor = function (s) {
-    const index = this.pico.index_at(this.cursor.x, this.cursor.y)
+    const index = this.pico.indexAt(this.cursor.x, this.cursor.y)
     return s.substr(0, index) + '@' + s.substr(index + 1)
   }
 

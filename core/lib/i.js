@@ -19,7 +19,7 @@ function FnI (pico, x, y) {
   }
 
   this.inc = function (letter) {
-    if (parseInt(letter) == 9) { return '0' } else if (parseInt(letter) == 0) { return '1' } else if (parseInt(letter) > 0) { return parseInt(letter) + 1 + '' }
+    if (parseInt(letter) === 9) { return '0' } else if (parseInt(letter) === 0) { return '1' } else if (parseInt(letter) > 0) { return parseInt(letter) + 1 + '' }
 
     const index = pico.allowed.indexOf(letter)
 

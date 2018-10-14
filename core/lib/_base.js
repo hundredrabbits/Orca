@@ -50,12 +50,12 @@ function FnBase (pico, x, y) {
     if (this.y + y >= pico.h) { return false }
     if (this.y + y <= -1) { return false }
 
-    const target = pico.glyph_at(this.x + x, this.y + y)
-    return target == '.' || target == 'b' ? true : target
+    const target = pico.glyphAt(this.x + x, this.y + y)
+    return target === '.' || target === 'b' ? true : target
   }
 
   this.neighbor_by = function (x, y) {
-    return pico.glyph_at(this.x + x, this.y + y) != '.' ? { x: this.x + x, y: this.y + y, glyph: pico.glyph_at(this.x + x, this.y + y) } : null
+    return pico.glyphAt(this.x + x, this.y + y) !== '.' ? { x: this.x + x, y: this.y + y, glyph: pico.glyphAt(this.x + x, this.y + y) } : null
   }
 
   this.neighbors = function (g) {
@@ -64,10 +64,10 @@ function FnBase (pico, x, y) {
 
   this.free_neighbors = function () {
     const a = []
-    if (pico.glyph_at(this.x + 1, this.y) == '.') { a.push({ x: this.x + 1, y: this.y }) }
-    if (pico.glyph_at(this.x - 1, this.y) == '.') { a.push({ x: this.x - 1, y: this.y }) }
-    if (pico.glyph_at(this.x, this.y + 1) == '.') { a.push({ x: this.x, y: this.y + 1 }) }
-    if (pico.glyph_at(this.x, this.y - 1) == '.') { a.push({ x: this.x, y: this.y - 1 }) }
+    if (pico.glyphAt(this.x + 1, this.y) === '.') { a.push({ x: this.x + 1, y: this.y }) }
+    if (pico.glyphAt(this.x - 1, this.y) === '.') { a.push({ x: this.x - 1, y: this.y }) }
+    if (pico.glyphAt(this.x, this.y + 1) === '.') { a.push({ x: this.x, y: this.y + 1 }) }
+    if (pico.glyphAt(this.x, this.y - 1) === '.') { a.push({ x: this.x, y: this.y - 1 }) }
     return a
   }
 
@@ -75,7 +75,7 @@ function FnBase (pico, x, y) {
     const ns = this.neighbors('b')
     for (const id in ns) {
       const n = ns[id]
-      if (pico.glyph_at(n.x, n.y - 1) != 'h') {
+      if (pico.glyphAt(n.x, n.y - 1) !== 'h') {
         return { x: n.x, y: n.y }
       }
     }
@@ -83,24 +83,24 @@ function FnBase (pico, x, y) {
   }
 
   this.west = function (target = null) {
-    const g = pico.glyph_at(this.x - 1, this.y)
+    const g = pico.glyphAt(this.x - 1, this.y)
 
-    return g != '.' && (g == target || !target) ? { x: this.x - 1, y: this.y, glyph: g } : null
+    return g !== '.' && (g === target || !target) ? { x: this.x - 1, y: this.y, glyph: g } : null
   }
 
   this.east = function (target) {
-    const g = pico.glyph_at(this.x + 1, this.y)
-    return g != '.' && (g == target || !target) ? { x: this.x + 1, y: this.y, glyph: g } : null
+    const g = pico.glyphAt(this.x + 1, this.y)
+    return g !== '.' && (g === target || !target) ? { x: this.x + 1, y: this.y, glyph: g } : null
   }
 
   this.north = function (target) {
-    const g = pico.glyph_at(this.x, this.y - 1)
-    return g != '.' && (g == target || !target) ? { x: this.x, y: this.y - 1, glyph: g } : null
+    const g = pico.glyphAt(this.x, this.y - 1)
+    return g !== '.' && (g === target || !target) ? { x: this.x, y: this.y - 1, glyph: g } : null
   }
 
   this.south = function (target) {
-    const g = pico.glyph_at(this.x, this.y + 1)
-    return g != '.' && (g == target || !target) ? { x: this.x, y: this.y + 1, glyph: g } : null
+    const g = pico.glyphAt(this.x, this.y + 1)
+    return g !== '.' && (g === target || !target) ? { x: this.x, y: this.y + 1, glyph: g } : null
   }
 
   this.docs = function () {

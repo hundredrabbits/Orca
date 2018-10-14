@@ -16,7 +16,7 @@ function FnM (pico, x, y) {
     const val = pico.allowed.indexOf(this.west().glyph)
     const mod = pico.allowed.indexOf(this.east().glyph)
 
-    if (mod == 0) { return }
+    if (mod === 0) { return }
 
     pico.add(this.x, this.y + 1, `${parseInt(val) % parseInt(mod)}`)
   }

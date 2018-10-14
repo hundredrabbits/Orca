@@ -14,7 +14,7 @@ function Pico (w, h) {
 
   this.terminal = null // Set in terminal.start
 
-  function make_docs (lib) {
+  function makeDocs (lib) {
     const h = {}
     for (const id in lib) {
       const P = new lib[id]()
@@ -26,7 +26,7 @@ function Pico (w, h) {
   this.start = function (path) {
     this.lib = require('./lib')
     this.allowed = [].concat(Object.keys(this.lib.num)).concat(Object.keys(this.lib.alpha)).concat(Object.keys(this.lib.special))
-    this.docs = make_docs(Object.values(this.lib.alpha))
+    this.docs = makeDocs(Object.values(this.lib.alpha))
     this.clear()
   }
 
@@ -44,13 +44,13 @@ function Pico (w, h) {
     }
   }
 
-  this.find_fns = function () {
+  this.findFns = function () {
     const a = []
     let y = 0
     while (y < this.h) {
       let x = 0
       while (x < this.w) {
-        const g = this.glyph_at(x, y)
+        const g = this.glyphAt(x, y)
         if (this.lib.alpha[g]) {
           a.push(new this.lib.alpha[g](this, x, y))
         }
@@ -61,26 +61,26 @@ function Pico (w, h) {
     return a
   }
 
-  this.run_fns = function (fns) {
+  this.runFns = function (fns) {
     // Move
     for (const id in fns) {
       const p = fns[id]
-      if (p.is_move) { if (this.is_locked(p.x, p.y)) { continue } }
+      if (this.isLocked(p.x, p.y)) { continue }
       p.haste()
     }
     // Operate
     for (const id in fns) {
       const p = fns[id]
-      if (this.is_locked(p.x, p.y)) { continue }
+      if (this.isLocked(p.x, p.y)) { continue }
       p.run()
     }
   }
 
   this.add = function (x, y, ch) {
     const glyph = ch.substr(0, 1).toLowerCase()
-    if (!this.is_allowed(glyph)) { this.terminal.log(`[${glyph}] is not allowed`); return }
+    if (!this.isAllowed(glyph)) { this.terminal.log(`[${glyph}] is not allowed`); return }
     if (x < 0 || x > this.w - 1 || y < 0 || y > this.h - 1) { this.terminal.log(`[${glyph}] is out of range`); return }
-    const index = this.index_at(x, y)
+    const index = this.indexAt(x, y)
     this.s = this.s.substr(0, index) + glyph + this.s.substr(index + glyph.length)
   }
 
@@ -90,7 +90,7 @@ function Pico (w, h) {
 
   this.run = function () {
     this.unlock()
-    this.run_fns(this.find_fns())
+    this.runFns(this.findFns())
     this.record()
     this.s = this.s.substr(0, this.w * this.h)
     this.f += 1
@@ -103,21 +103,21 @@ function Pico (w, h) {
     this.s = s.replace(/\n/g, '').trim() // String
   }
 
-  this.is_allowed = function (g) {
+  this.isAllowed = function (g) {
     return this.lib.alpha[g] || this.lib.num[g] || this.lib.special[g]
   }
 
-  this.glyph_at = function (x, y, req = null) {
-    return this.s.charAt(this.index_at(x, y))
+  this.glyphAt = function (x, y, req = null) {
+    return this.s.charAt(this.indexAt(x, y))
   }
 
-  this.index_at = function (x, y) {
+  this.indexAt = function (x, y) {
     return x + (this.w * y)
   }
 
   // Locks
 
-  this.is_locked = function (x, y) {
+  this.isLocked = function (x, y) {
     return this.locks.indexOf(`${x}:${y}`) > -1
   }
 
@@ -141,8 +141,8 @@ function Pico (w, h) {
 
   this.record = function () {
     const g = this.s.substr(-1, 1)
-    const last_g = this.r.substr(-1, 1)
-    if (g == '.' && last_g == '.') { return }
+    const last = this.r.substr(-1, 1)
+    if (g === '.' && last === '.') { return }
     this.r += g
 
     // Trim

@@ -15,7 +15,7 @@ function FnT (pico, x, y) {
 
     if (!w) { return }
 
-    if (w.glyph == '1' || w.glyph == 'w' || w.glyph == 's' || w.glyph == 'n' || w.glyph == 'e' || w.glyph == 'b' || w.glyph == 'z') {
+    if (w.glyph === '1' || w.glyph === 'w' || w.glyph === 's' || w.glyph === 'n' || w.glyph === 'e' || w.glyph === 'b' || w.glyph === 'z') {
       this.fire()
     }
   }
