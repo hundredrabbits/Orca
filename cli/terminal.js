@@ -1,58 +1,63 @@
-"use strict"
+'use strict'
 
-const blessed  = require('blessed');
+const blessed = require('blessed')
 
-function Terminal(pico)
-{  
+function Terminal (pico) {
   this.pico = pico
 
-  this._screen = blessed.screen();
-  this._grid = blessed.box({ top: 1, left: 2, height: '100%-3', width: pico.w, keys: true, mouse: true, style: { fg: '#efefef' } });
-  this._output = blessed.box({ bottom: 4, left: 2, height: 1, width: '100%-2', style: { fg: '#fff' } });
-  this._inspector = blessed.box({ bottom: 2, left: 2, height: 1, width: '100%-4', style: { fg: '#efefef' } });
-  this._log = blessed.box({ bottom: 3, left: 2, height: 1, width: '100%-4', style: { fg: '#efefef' } });
+  this._screen = blessed.screen()
+  this._grid = blessed.box({ top: 1, left: 2, height: '100%-3', width: pico.w, keys: true, mouse: true, style: { fg: '#efefef' } })
+  this._output = blessed.box({ bottom: 4, left: 2, height: 1, width: '100%-2', style: { fg: '#fff' } })
+  this._inspector = blessed.box({ bottom: 2, left: 2, height: 1, width: '100%-4', style: { fg: '#efefef' } })
+  this._log = blessed.box({ bottom: 3, left: 2, height: 1, width: '100%-4', style: { fg: '#efefef' } })
 
   this.is_paused = false
 
   this.cursor = {
-    x: 0, y: 0,
+    x: 0,
+    y: 0,
     move: function (x, y) {
-      this.x = clamp(this.x+x, 0, pico.w - 1)
-      this.y = clamp(this.y-y, 0, pico.h - 1)
+      this.x = clamp(this.x + x, 0, pico.w - 1)
+      this.y = clamp(this.y - y, 0, pico.h - 1)
     },
     insert: function (g) {
       pico.add(this.x, this.y, g)
     },
+    erase: function (g) {
+      pico.remove(this.x, this.y)
+    },
     inspect: function () {
       const g = pico.glyph_at(this.x, this.y)
-      return pico.docs[g] ? pico.docs[g] : '>' 
+      return pico.docs[g] ? pico.docs[g] : '>'
     }
   }
 
-  this.install = function()
-  {
-    this._screen.append(this._grid);
-    this._screen.append(this._output);
-    this._screen.append(this._inspector);
-    this._screen.append(this._log);
+  this.install = function () {
+    this._screen.append(this._grid)
+    this._screen.append(this._output)
+    this._screen.append(this._inspector)
+    this._screen.append(this._log)
   }
 
-  this.start = function(path)
-  {
+  this.start = function (path) {
     this.pico.terminal = this
     this.pico.start()
-    this._screen.key(['escape', 'C-c'], (ch, key) => (process.exit(0)));    
-    this._screen.key(['up'], (ch, key) => { this.cursor.move(0,1); this.update(); }); 
-    this._screen.key(['down'], (ch, key) => { this.cursor.move(0,-1); this.update(); }); 
-    this._screen.key(['right'], (ch, key) => { this.cursor.move(1,0); this.update(); }); 
-    this._screen.key(['left'], (ch, key) => { this.cursor.move(-1,0); this.update(); }); 
+    this._screen.key(['escape', 'C-c'], (ch, key) => (process.exit(0)))
+    this._screen.key(['up'], (ch, key) => { this.cursor.move(0, 1); this.update() })
+    this._screen.key(['down'], (ch, key) => { this.cursor.move(0, -1); this.update() })
+    this._screen.key(['right'], (ch, key) => { this.cursor.move(1, 0); this.update() })
+    this._screen.key(['left'], (ch, key) => { this.cursor.move(-1, 0); this.update() })
+    this._screen.key(['space'], (ch, key) => { this.pause(); })
 
-    this._screen.on('keypress', (key)=>{ 
-      if(!key){ return; }
-      this.cursor.insert(key.substr(0,1))
-    });
+    this._screen.on('keypress', (ch) => {
+      if (!ch || ch.length > 1) { return }
+      this.cursor.insert(ch)
+      if(ch == ch.toUpperCase()){
+        this.cursor.move(1,0)        
+      }
+    })
 
-    if(path){
+    if (path) {
       this.load(path)
     }
 
@@ -60,65 +65,51 @@ function Terminal(pico)
     setInterval(() => { this.run() }, 200)
   }
 
-  this.run = function()
-  {
-    if (this.is_paused && !force) { return }
+  this.run = function () {
+    if (this.is_paused) { return }
 
     this.pico.run()
-    this.f += 1
     this.update()
+    this.f += 1
   }
 
   this.pause = function () {
     this.is_paused = !this.is_paused
+    this.log(this.is_paused ? "Paused" : "Unpaused")
   }
 
-  this.load = function(path)
-  {
+  this.load = function (path) {
     const terminal = this
     var fs = require('fs')
-    fs.readFile(path, 'utf8', function(err, data) {
-      if (err) throw err;
-      const w = data.split("\n")[0].length
-      const h = data.split("\n").length
+    fs.readFile(path, 'utf8', function (err, data) {
+      if (err) throw err
+      const w = data.split('\n')[0].length
+      const h = data.split('\n').length
       terminal.log(`Loaded: ${path} ${w}x${h}`)
-      pico.load(w,h,data)
+      pico.load(w, h, data)
       terminal._grid.width = w
       terminal.update()
-    });
+    })
   }
 
-  this.log = function(msg)
-  {
+  this.log = function (msg) {
     this._log.setContent(msg)
     this.update()
   }
 
-  this.add_cursor = function(s)
-  {
+  this.add_cursor = function (s) {
     const index = this.pico.index_at(this.cursor.x, this.cursor.y)
-    return s.substr(0, index) + "@" + s.substr(index + 1)
+    return s.substr(0, index) + '@' + s.substr(index + 1)
   }
 
-  this.update = function(sight)
-  {
-    const s = this.pico.s
-
-    this._grid.setContent(`${this.add_cursor(s)}`)
+  this.update = function (sight) {
+    this._grid.setContent(`${this.add_cursor(this.pico.s)}`)
     this._inspector.setContent(`${this.cursor.inspect()}`)
-    this._screen.render();
+    this._screen.render()
   }
 
   // Events
 
-  this.on_submit = function(text)
-  {
-    this.query(text);
-    this._icon.setContent(":");
-    this._input.clearValue();
-    this._input.focus();
-    this._screen.render();
-  }
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
