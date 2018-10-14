@@ -98,6 +98,8 @@ function Terminal (pico) {
   }
 
   this.add_cursor = function (s) {
+    const under = this.pico.glyphAt(this.cursor.x,this.cursor.y)
+    if(under !== "."){ return s }
     const index = this.pico.indexAt(this.cursor.x, this.cursor.y)
     return s.substr(0, index) + '@' + s.substr(index + 1)
   }

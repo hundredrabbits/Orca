@@ -64,7 +64,8 @@ The logic functions are passive, and they are `a`, `f`, `m`, `y`.
 ## CLI
 
 ```
-node cli examples/benchmark.pico
+node cli # New file
+node cli examples/benchmark.pico # Load example
 ```
 
 ## Install
@@ -79,9 +80,9 @@ npm start
 
 The idea is to build a synth/mini sequencer, here's some tasks I need to tackle before then.
 
-[ ] catch bangs/directions moving northward/westward
-[ ] "I wanna be able to 1000x fastforward my pico programs"
 [ ] custom synth functions, like `:SYN[ADSR](C)`
+[ ] "I wanna be able to 1000x fastforward my pico programs"
+[ ] fix issue with i, with letters
 [ ] sub programs scope
 
 ## Extras
