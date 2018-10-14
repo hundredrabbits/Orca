@@ -13,6 +13,10 @@ function FnBase (pico, x, y) {
     return this.x + (this.y * pico.h)
   }
 
+  this.haste = function () {
+
+  }
+
   this.run = function () {
     this.operation()
   }

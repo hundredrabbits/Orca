@@ -5,6 +5,8 @@ const FnBase = require('./_base')
 function FnMove (pico, x, y) {
   FnBase.call(this, pico, x, y)
 
+  this.direction = true
+
   this.proceed = function (ahead, behind, paral_g, perpe_g, pos_ahead, move_left, move_across, move_right) {
     const wire_ahead = ahead && ahead.glyph == paral_g
     const wire_behind = behind && (behind.glyph == paral_g || behind.glyph == '*' || behind.glyph == '+')

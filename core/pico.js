@@ -62,6 +62,13 @@ function Pico (w, h) {
   }
 
   this.run_fns = function (fns) {
+    // Move
+    for (const id in fns) {
+      const p = fns[id]
+      if (p.is_move) { if (this.is_locked(p.x, p.y)) { continue } }
+      p.haste()
+    }
+    // Operate
     for (const id in fns) {
       const p = fns[id]
       if (this.is_locked(p.x, p.y)) { continue }

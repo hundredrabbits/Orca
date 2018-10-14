@@ -9,7 +9,7 @@ function FnS (pico, x, y) {
   this.glyph = 's'
   this.info = 'Moves southward, or bangs.'
 
-  this.operation = function () {
+  this.haste = function () {
     if (this.signal()) { return }
     if (this.is_free(0, 1) != true) { this.replace('b'); this.lock(); return }
     this.move(0, 1)
