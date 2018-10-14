@@ -90,6 +90,8 @@ function Pico (w, h) {
   }
 
   this.load = function (w, h, s) {
+
+    console.log(w,h)
     this.w = w // Width
     this.h = h // Height
     this.reset()
