@@ -45,13 +45,13 @@
 - `V`, **value**: Creates a numerical value between 0 and 5 based on the number of present _fns_ westward.
 - `W`, **west**: Moves westward, or bangs.
 - `X`, **split**: Bangs eastward when westward fn is 0, and southward when fn is 1.
-- `Y`, **automata**: Compares the type(num/alpha) of westward and eastward _fns_, and return `1` or `0` southward.
+- `Y`, **type**: Compares the type(num/alpha/special) of westward and eastward fns, and return 1 or 0 southward.
 - `Z`, **creep**: Moves to a the next available location in a cycle of E, S, W, N based on the runtime frame.
 
 ### special functions
 
 - `.`, **null**: void
-- `:`, **null**: Missing docs.
+- `:`, **null**: Call a function by name, freeze 3 characters eastward.
 - `-`, **wire-h**: Send data along the wire, horizontally.
 - `|`, **wire-v**: Send data along the wire, vertically.
 - `*`, **wire-n**: Send data along the wire, entry or exit.
