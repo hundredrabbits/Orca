@@ -51,13 +51,15 @@ function FnMove (pico, x, y) {
         return true
       }
       // Or, turn clockwise
-      else if (pico.glyph_at(move_right.x, this.y) == perpe_g) {
+      else if (pico.glyph_at(move_right.x, move_right.y) == perpe_g) {
         pico.add(move_right.x, move_right.y, move_right.glyph)
+        this.replace(paral_g)
         return true
       }
       // Or, turn anti-clockwise
       else if (pico.glyph_at(move_left.x, move_left.y) == perpe_g) {
         pico.add(move_left.x, move_left.y, move_left.glyph)
+        this.replace(paral_g)
         return true
       }
     }
