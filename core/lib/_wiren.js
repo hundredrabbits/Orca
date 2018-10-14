@@ -7,6 +7,7 @@ function FnWireN (pico, x, y) {
 
   this.name = 'wire-n'
   this.glyph = '*'
+  this.info = 'Send data along the wire, entry or exit.'
 }
 
 module.exports = FnWireN

@@ -21,7 +21,6 @@ function Terminal(pico)
       this.y = clamp(this.y-y, 0, pico.h - 1)
     },
     insert: function (g) {
-      if(!pico.is_allowed(g)){ console.log(`#${g} not allowed`); return; }
       pico.add(this.x, this.y, g)
     },
     inspect: function () {
@@ -40,6 +39,7 @@ function Terminal(pico)
 
   this.start = function(path)
   {
+    this.pico.terminal = this
     this.pico.start()
     this._screen.key(['escape', 'C-c'], (ch, key) => (process.exit(0)));    
     this._screen.key(['up'], (ch, key) => { this.cursor.move(0,1); this.update(); }); 
@@ -49,9 +49,7 @@ function Terminal(pico)
 
     this._screen.on('keypress', (key)=>{ 
       if(!key){ return; }
-      const g = key.substr(0,1)
-      if(!this.pico.is_allowed(g)){ console.log(`#${g} not allowed`); return; }
-      this.cursor.insert(g)
+      this.cursor.insert(key.substr(0,1))
     });
 
     if(path){

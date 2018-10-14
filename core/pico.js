@@ -11,7 +11,8 @@ function Pico (w, h) {
   this.docs = {}
   this.allowed = []
   this.locks = []
-  this.progs = []
+
+  this.terminal = null // Set in terminal.start
 
   function make_docs (lib) {
     const h = {}
@@ -26,10 +27,10 @@ function Pico (w, h) {
     this.lib = require('./lib')
     this.allowed = [].concat(Object.keys(this.lib.num)).concat(Object.keys(this.lib.alpha)).concat(Object.keys(this.lib.special))
     this.docs = make_docs(Object.values(this.lib.alpha))
-    this.reset()
+    this.clear()
   }
 
-  this.reset = function () {
+  this.clear = function () {
     this.r = ''
     this.s = ''
     let y = 0
@@ -43,11 +44,35 @@ function Pico (w, h) {
     }
   }
 
+  this.find_fns = function () {
+    const a = []
+    let y = 0
+    while (y < this.h) {
+      let x = 0
+      while (x < this.w) {
+        const g = this.glyph_at(x, y)
+        if (this.lib.alpha[g]) {
+          a.push(new this.lib.alpha[g](this, x, y))
+        }
+        x += 1
+      }
+      y += 1
+    }
+    return a
+  }
+
+  this.run_fns = function (fns) {
+    for (const id in fns) {
+      const p = fns[id]
+      if (this.is_locked(p.x, p.y)) { continue }
+      p.run()
+    }
+  }
+
   this.add = function (x, y, glyph) {
-    if (x < 0 || x > this.w - 1 || y < 0 || y > this.h - 1 || !glyph || !this.is_allowed(glyph)) { console.log(`#${glyph} not allowed`); return }
-
+    if (!this.is_allowed(glyph)) { this.terminal.log(`[${glyph}] is not allowed`); return }
+    if (x < 0 || x > this.w - 1 || y < 0 || y > this.h - 1) { this.terminal.log(`[${glyph}] is out of range`); return }
     const index = this.index_at(x, y)
-
     this.s = this.s.substr(0, index) + glyph + this.s.substr(index + glyph.length)
   }
 
@@ -57,61 +82,24 @@ function Pico (w, h) {
 
   this.run = function () {
     this.unlock()
-    this.progs = []
-
-    // Find Programs
-    let y = 0
-    while (y < this.h) {
-      let x = 0
-      while (x < this.w) {
-        const g = this.glyph_at(x, y)
-        if (this.is_prog(g)) {
-          this.progs.push(new this.lib.alpha[g](this, x, y))
-        }
-        x += 1
-      }
-      y += 1
-    }
-
-    // Operate
-    for (const id in this.progs) {
-      const p = this.progs[id]
-      if (this.is_locked(p.x, p.y)) { continue }
-      p.run()
-    }
-
+    this.run_fns(this.find_fns())
     this.record()
-
     this.s = this.s.substr(0, this.w * this.h)
   }
 
-  this.clear = function () {
-    this.r = ''
-  }
-
   this.load = function (w, h, s) {
-
-    console.log(w,h)
     this.w = w // Width
     this.h = h // Height
-    this.reset()
+    this.clear()
     this.s = s.replace(/\n/g, '').trim() // String
   }
 
-  this.is_prog = function (g) {
-    return this.lib.alpha[g]
-  }
-
   this.is_allowed = function (g) {
-    return !!((this.lib.alpha[g] || this.lib.num[g] || this.lib.special[g]))
+    return this.lib.alpha[g] || this.lib.num[g] || this.lib.special[g]
   }
 
   this.glyph_at = function (x, y, req = null) {
     return this.s.charAt(this.index_at(x, y))
-  }
-
-  this.glyph_like_at = function (x, y, target) {
-    return this.s.charAt(this.index_at(x, y)) == target ? true : null
   }
 
   this.index_at = function (x, y) {

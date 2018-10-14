@@ -7,6 +7,7 @@ function FnNull (pico, x, y) {
 
   this.name = 'null'
   this.glyph = '.'
+  this.info = 'void'
 }
 
 module.exports = FnNull
