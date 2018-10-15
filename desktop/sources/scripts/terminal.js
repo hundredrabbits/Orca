@@ -6,7 +6,7 @@ function Terminal (pico) {
   this.controller = new Controller();
   this.theme = new Theme(this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#333333', f_low: '#000000', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff'}));
   this.is_paused = false
-  this.tile = { w: 10, h: 20 }
+  this.tile = { w: 12, h: 20 }
   this.debug = "hello."
 
   this.cursor = {
@@ -37,11 +37,16 @@ function Terminal (pico) {
 
   this.resize = function()
   {
-    this.size = { width: this.tile.w * pico.w + (this.tile.w/2), height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.75 }
+    this.size = { width: this.tile.w * pico.w, height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.75 }
     this.el.width = this.size.width
     this.el.height = this.size.height + this.tile.h
     this.el.style.width = (this.size.width * this.size.ratio) + 'px'
     this.el.style.height = (this.size.height * this.size.ratio) + 'px'
+
+    let { remote } = require('electron')
+    let win = remote.getCurrentWindow()
+
+    win.setSize((this.size.width * this.size.ratio)+60, (this.size.height * this.size.ratio)+30, true)
   }
 
   this.start = function()
@@ -171,26 +176,26 @@ function Terminal (pico) {
 
     if (styles.is_cursor) {
       ctx.fillStyle = this.theme.active.b_inv
-      ctx.fillRect((x + 0.5) * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+      ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
       ctx.fillStyle = this.theme.active.f_inv
     } else if (styles.is_port) {
       if (styles.is_port == 2) {
         ctx.fillStyle = this.theme.active.b_high
-        ctx.fillRect((x + 0.5) * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+        ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_low
       } else if (styles.is_port == 1) {
         ctx.fillStyle = this.theme.active.b_med
-        ctx.fillRect((x + 0.5) * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+        ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_low
       } else if (styles.is_port == 3) {
         ctx.fillStyle = this.theme.active.b_low
-        ctx.fillRect((x + 0.5) * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+        ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_high
       }
     } else {
       ctx.fillStyle = 'white'
     }
-    ctx.fillText(styles.is_cursor && g == '.' ? (!pico.is_paused ? '@' : '~') : g.toUpperCase(), (x + 1) * this.tile.w, (y + 1) * this.tile.h)
+    ctx.fillText(styles.is_cursor && g == '.' ? (!pico.is_paused ? '@' : '~') : g.toUpperCase(), (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

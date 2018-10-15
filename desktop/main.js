@@ -11,8 +11,8 @@ app.on('ready', () => {
   app.win = new BrowserWindow({
     width: 510,
     height: 510,
-    minWidth: 510,
-    minHeight: 510,
+    minWidth: 320,
+    minHeight: 320,
     frame: false,
     autoHideMenuBar: true,
     backgroundColor: '#000000',
