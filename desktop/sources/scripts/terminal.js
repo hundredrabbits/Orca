@@ -1,10 +1,9 @@
 'use strict'
 
 function Terminal (pico) {
-
   const Cursor = require('./cursor')
 
-  this.cursor = new Cursor(this);
+  this.cursor = new Cursor(this)
   this.controller = new Controller()
   this.theme = new Theme(this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#333333', f_low: '#000000', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' }))
 
@@ -142,11 +141,11 @@ function Terminal (pico) {
   }
 
   this.isCursor = function (x, y) {
-    return x === this.cursor.x && y ===this.cursor.y
+    return x === this.cursor.x && y === this.cursor.y
   }
 
   this.isSelection = function (x, y) {
-    if(x >= this.cursor.x && x < this.cursor.x + this.cursor.w && y >= this.cursor.y && y < this.cursor.y + this.cursor.h){
+    if (x >= this.cursor.x && x < this.cursor.x + this.cursor.w && y >= this.cursor.y && y < this.cursor.y + this.cursor.h) {
       return true
     }
     return false

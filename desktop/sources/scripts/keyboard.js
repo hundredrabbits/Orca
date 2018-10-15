@@ -20,6 +20,7 @@ function Keyboard () {
 
     if (event.key == 'c' && event.metaKey) { terminal.cursor.copy(); return }
     if (event.key == 'v' && event.metaKey) { terminal.cursor.paste(); return }
+    if (event.key == 'x' && event.metaKey) { terminal.cursor.cut(); return }
 
     if (event.keyCode == 38) { keyboard.key_arrow_up(event.shiftKey); return }
     if (event.keyCode == 40) { keyboard.key_arrow_down(event.shiftKey); return }
@@ -43,38 +44,34 @@ function Keyboard () {
   }
 
   this.key_arrow_up = function (mod = false) {
-    if(mod){
+    if (mod) {
       terminal.cursor.scale(0, 1)
-    }
-    else{
-      terminal.cursor.move(0, 1)  
+    } else {
+      terminal.cursor.move(0, 1)
     }
   }
 
   this.key_arrow_down = function (mod = false) {
-    if(mod){
-      terminal.cursor.scale(0, -1)  
-    }
-    else{
-      terminal.cursor.move(0, -1)  
+    if (mod) {
+      terminal.cursor.scale(0, -1)
+    } else {
+      terminal.cursor.move(0, -1)
     }
   }
 
   this.key_arrow_left = function (mod = false) {
-    if(mod){
-      terminal.cursor.scale(-1, 0)  
-    }
-    else{
-      terminal.cursor.move(-1, 0)  
+    if (mod) {
+      terminal.cursor.scale(-1, 0)
+    } else {
+      terminal.cursor.move(-1, 0)
     }
   }
 
   this.key_arrow_right = function (mod = false) {
-    if(mod){
-      terminal.cursor.scale(1, 0)  
-    }
-    else{
-      terminal.cursor.move(1, 0)  
+    if (mod) {
+      terminal.cursor.scale(1, 0)
+    } else {
+      terminal.cursor.move(1, 0)
     }
   }
 }
