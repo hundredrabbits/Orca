@@ -104,7 +104,7 @@ function FnBase (pico, x, y) {
   }
 
   this.docs = function () {
-    return `${this.name}[${this.glyph}]: ${this.info}`
+    return `${this.name}: ${this.info}`
   }
 }
 

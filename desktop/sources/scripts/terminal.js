@@ -25,7 +25,7 @@ function Terminal (pico) {
     },
     inspect: function () {
       const g = pico.glyphAt(this.x, this.y)
-      return pico.docs[g] ? pico.docs[g] : '>'
+      return pico.docs[g] ? pico.docs[g] : 'idle.'
     }
   }
 
@@ -94,8 +94,9 @@ function Terminal (pico) {
   this.update = function () {
     this.clear()
     this.draw_program()
-    this.draw_output()
-    this.draw_debug()
+    this.draw_output(2)
+    this.draw_debug(1)
+    this.draw_inspector(0)
   }
 
   this.draw_program = function () {
@@ -117,23 +118,33 @@ function Terminal (pico) {
     }
   }
 
-  this.draw_output = function () {
+  this.draw_output = function (offset) {
     const s = pico.r.replace(/\./g, ' ').trim()
 
     let x = 0
     while (x < s.length) {
       const c = s.substr(x, 1)
-      this.draw_sprite(x, pico.h - 1, c)
+      this.draw_sprite(x, pico.h+offset, c)
       x += 1
     }
   }
 
-  this.draw_debug = function () {
+  this.draw_debug = function (offset) {
     const s = this.debug.trim()
     let x = 0
     while (x < s.length) {
       const c = s.substr(x, 1)
-      this.draw_sprite(x, pico.h, c)
+      this.draw_sprite(x, pico.h + offset, c)
+      x += 1
+    }
+  }
+
+  this.draw_inspector = function (offset) {
+    const s = this.cursor.inspect()
+    let x = 0
+    while (x < s.length) {
+      const c = s.substr(x, 1)
+      this.draw_sprite(x, pico.h + offset, c)
       x += 1
     }
   }

@@ -43,10 +43,13 @@ module.exports = {
   },
   special: {
     '.': require('./lib/_null'),
-    ':': require('./lib/_port'),
+    ':': require('./lib/_query'),
     '-': require('./lib/_wireh'),
     '|': require('./lib/_wirev'),
     '*': require('./lib/_wiren'),
     '+': require('./lib/_wiref')
+  },
+  queries: {
+    'bpm': require('./lib/__bpm'),
   }
 }
