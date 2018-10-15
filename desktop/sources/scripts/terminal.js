@@ -3,20 +3,31 @@
 function Terminal (pico) {
   this.pico = pico
   this.el = document.createElement('canvas')
-  this.controller = new Controller();
-  this.theme = new Theme(this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#333333', f_low: '#000000', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff'}));
+  this.controller = new Controller()
+  this.theme = new Theme(this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#333333', f_low: '#000000', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' }))
   this.is_paused = false
   this.tile = { w: 12, h: 20 }
-  this.debug = "hello."
+  this.debug = 'hello.'
   this.timer = null
 
   this.cursor = {
     x: 0,
     y: 0,
+    w:1,
+    h:1,
     move: function (x, y) {
       this.x = clamp(this.x + x, 0, pico.w - 1)
       this.y = clamp(this.y - y, 0, pico.h - 1)
       terminal.update()
+    },
+    scale: function(x, y){
+      this.w = clamp(this.w + x, 1, 10)
+      this.h = clamp(this.h - y, 1, 10)
+      terminal.update()
+    },
+    reset: function(){
+      this.w = 1
+      this.h = 1
     },
     insert: function (g) {
       pico.add(this.x, this.y, g)
@@ -26,7 +37,7 @@ function Terminal (pico) {
     },
     inspect: function () {
       const g = pico.glyphAt(this.x, this.y)
-      return pico.docs[g] ? pico.docs[g] : `${this.x},${this.y}`
+      return pico.docs[g] ? pico.docs[g] : `${this.x},${this.y}[${this.w}x${this.h}]`
     }
   }
 
@@ -36,8 +47,7 @@ function Terminal (pico) {
     this.theme.install(host)
   }
 
-  this.resize = function()
-  {
+  this.resize = function () {
     this.size = { width: this.tile.w * pico.w, height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.75 }
     this.el.width = this.size.width
     this.el.height = this.size.height + this.tile.h
@@ -47,25 +57,23 @@ function Terminal (pico) {
     let { remote } = require('electron')
     let win = remote.getCurrentWindow()
 
-    win.setSize((this.size.width * this.size.ratio)+60, (this.size.height * this.size.ratio)+30, true)
+    win.setSize((this.size.width * this.size.ratio) + 60, (this.size.height * this.size.ratio) + 30, true)
   }
 
-  this.start = function()
-  {
+  this.start = function () {
     this.theme.start()
     this.pico.terminal = this
     this.pico.start()
-    this.log("Started.")
+    this.log('Started.')
 
     this.update()
     this.setSpeed(120)
   }
 
-  this.setSpeed = function(bpm)
-  {
+  this.setSpeed = function (bpm) {
     this.log(`Changed speed to ${bpm}.`)
-    const ms = (60000/bpm)/4
-    clearInterval(this.timer);
+    const ms = (60000 / bpm) / 4
+    clearInterval(this.timer)
     this.timer = setInterval(() => { this.run() }, ms)
   }
 
@@ -78,7 +86,7 @@ function Terminal (pico) {
 
   this.pause = function () {
     this.is_paused = !this.is_paused
-    this.log(this.is_paused ? "Paused" : "Unpaused")
+    this.log(this.is_paused ? 'Paused' : 'Unpaused')
   }
 
   this.load = function (path) {
@@ -117,7 +125,8 @@ function Terminal (pico) {
       let x = 0
       while (x < pico.w) {
         const styles = {
-          is_cursor: terminal.is_cursor(x, y),
+          isSelection: terminal.isSelection(x, y),
+          isCursor: terminal.isCursor(x, y),
           is_port: ports[`${x}:${y}`]
         }
         this.draw_sprite(x, y, pico.glyphAt(x, y), styles)
@@ -133,7 +142,7 @@ function Terminal (pico) {
     let x = 0
     while (x < s.length) {
       const c = s.substr(x, 1)
-      this.draw_sprite(x, pico.h+offset, c)
+      this.draw_sprite(x, pico.h + offset, c)
       x += 1
     }
   }
@@ -158,8 +167,15 @@ function Terminal (pico) {
     }
   }
 
-  this.is_cursor = function (x, y) {
-    return this.cursor.x == x && this.cursor.y == y
+  this.isCursor = function (x, y) {
+    return x === this.cursor.x && y ===this.cursor.y
+  }
+
+  this.isSelection = function (x, y) {
+    if(x >= this.cursor.x && x < this.cursor.x + this.cursor.w && y >= this.cursor.y && y < this.cursor.y + this.cursor.h){
+      return true
+    }
+    return false
   }
 
   this.find_ports = function () {
@@ -167,7 +183,7 @@ function Terminal (pico) {
     const fns = pico.findFns()
     for (const id in fns) {
       const g = fns[id]
-      if(pico.isLocked(g.x,g.y)){continue;}
+      if (pico.isLocked(g.x, g.y)) { continue }
       for (const id in g.ports) {
         const port = g.ports[id]
         h[`${g.x + port.x}:${g.y + port.y}`] = port.output ? 2 : port.bang ? 1 : 3
@@ -186,14 +202,14 @@ function Terminal (pico) {
     ctx.clearRect(0, 0, this.size.width, this.size.height)
   }
 
-  this.draw_sprite = function (x, y, g, styles = { is_cursor: false, is_port: false }) {
+  this.draw_sprite = function (x, y, g, styles = { isCursor: false, isSelection: false, is_port: false }) {
     const ctx = this.context()
 
     ctx.textBaseline = 'bottom'
     ctx.textAlign = 'center'
     ctx.font = `${this.tile.h * 0.75}px input_mono_regular`
 
-    if (styles.is_cursor) {
+    if (styles.isSelection) {
       ctx.fillStyle = this.theme.active.b_inv
       ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
       ctx.fillStyle = this.theme.active.f_inv
@@ -214,7 +230,7 @@ function Terminal (pico) {
     } else {
       ctx.fillStyle = 'white'
     }
-    ctx.fillText(styles.is_cursor && g == '.' ? (!pico.is_paused ? '@' : '~') : g.toUpperCase(), (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
+    ctx.fillText(styles.isCursor && g == '.' ? (!pico.is_paused ? '@' : '~') : g.toUpperCase(), (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

@@ -18,17 +18,17 @@ function Keyboard () {
       return
     }
 
+    if (event.keyCode == 38) { keyboard.key_arrow_up(event.shiftKey); return }
+    if (event.keyCode == 40) { keyboard.key_arrow_down(event.shiftKey); return }
+    if (event.keyCode == 37) { keyboard.key_arrow_left(event.shiftKey); return }
+    if (event.keyCode == 39) { keyboard.key_arrow_right(event.shiftKey); return }
+
     if (event.metaKey) { return }
     if (event.ctrlKey) { return }
 
-    if (event.keyCode == 38) { keyboard.key_arrow_up(); return }
-    if (event.keyCode == 40) { keyboard.key_arrow_down(); return }
-    if (event.keyCode == 37) { keyboard.key_arrow_left(); return }
-    if (event.keyCode == 39) { keyboard.key_arrow_right(); return }
-
     if (event.key == 'Backspace') { terminal.cursor.insert('.'); return }
     if (event.key == 'Space') { terminal.cursor.insert('.'); event.preventDefault(); return }
-    if (event.key == 'Escape') { logo.remove(); terminal.clear(); return }
+    if (event.key == 'Escape') { terminal.clear(); terminal.cursor.reset(); return }
 
     if (event.key.length == 1) {
       terminal.cursor.insert(event.key)
@@ -39,19 +39,39 @@ function Keyboard () {
     }
   }
 
-  this.key_arrow_up = function () {
-    terminal.cursor.move(0, 1)
+  this.key_arrow_up = function (mod = false) {
+    if(mod){
+      terminal.cursor.scale(0, 1)
+    }
+    else{
+      terminal.cursor.move(0, 1)  
+    }
   }
 
-  this.key_arrow_down = function () {
-    terminal.cursor.move(0, -1)
+  this.key_arrow_down = function (mod = false) {
+    if(mod){
+      terminal.cursor.scale(0, -1)  
+    }
+    else{
+      terminal.cursor.move(0, -1)  
+    }
   }
 
-  this.key_arrow_left = function () {
-    terminal.cursor.move(-1, 0)
+  this.key_arrow_left = function (mod = false) {
+    if(mod){
+      terminal.cursor.scale(-1, 0)  
+    }
+    else{
+      terminal.cursor.move(-1, 0)  
+    }
   }
 
-  this.key_arrow_right = function () {
-    terminal.cursor.move(1, 0)
+  this.key_arrow_right = function (mod = false) {
+    if(mod){
+      terminal.cursor.scale(1, 0)  
+    }
+    else{
+      terminal.cursor.move(1, 0)  
+    }
   }
 }
