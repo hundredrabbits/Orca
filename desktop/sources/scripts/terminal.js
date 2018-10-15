@@ -1,45 +1,19 @@
 'use strict'
 
 function Terminal (pico) {
-  this.pico = pico
-  this.el = document.createElement('canvas')
+
+  const Cursor = require('./cursor')
+
+  this.cursor = new Cursor(this);
   this.controller = new Controller()
   this.theme = new Theme(this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#333333', f_low: '#000000', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' }))
+
+  this.pico = pico
+  this.el = document.createElement('canvas')
   this.is_paused = false
   this.tile = { w: 12, h: 20 }
   this.debug = 'hello.'
   this.timer = null
-
-  this.cursor = {
-    x: 0,
-    y: 0,
-    w:1,
-    h:1,
-    move: function (x, y) {
-      this.x = clamp(this.x + x, 0, pico.w - 1)
-      this.y = clamp(this.y - y, 0, pico.h - 1)
-      terminal.update()
-    },
-    scale: function(x, y){
-      this.w = clamp(this.w + x, 1, 10)
-      this.h = clamp(this.h - y, 1, 10)
-      terminal.update()
-    },
-    reset: function(){
-      this.w = 1
-      this.h = 1
-    },
-    insert: function (g) {
-      pico.add(this.x, this.y, g)
-    },
-    erase: function (g) {
-      pico.remove(this.x, this.y)
-    },
-    inspect: function () {
-      const g = pico.glyphAt(this.x, this.y)
-      return pico.docs[g] ? pico.docs[g] : `${this.x},${this.y}[${this.w}x${this.h}]`
-    }
-  }
 
   this.install = function (host) {
     this.resize()
@@ -232,8 +206,6 @@ function Terminal (pico) {
     }
     ctx.fillText(styles.isCursor && g == '.' ? (!pico.is_paused ? '@' : '~') : g.toUpperCase(), (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
   }
-
-  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = Terminal
