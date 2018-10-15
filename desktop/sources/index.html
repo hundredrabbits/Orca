@@ -3,39 +3,8 @@
     <script type="text/javascript" src="scripts/lib/controller.js"></script>
     <script type="text/javascript" src="scripts/lib/theme.js"></script>
 
-    <script type="text/javascript" src="scripts/pico.js"></script>
-    <script type="text/javascript" src="scripts/program.js"></script>
-    <script type="text/javascript" src="scripts/grid.js"></script>
     <script type="text/javascript" src="scripts/keyboard.js"></script>
     <script type="text/javascript" src="scripts/events.js"></script>
-
-    <script type="text/javascript" src="scripts/programs/default.js"></script>
-    <script type="text/javascript" src="scripts/programs/a.js"></script>
-    <script type="text/javascript" src="scripts/programs/b.js"></script>
-    <script type="text/javascript" src="scripts/programs/c.js"></script>
-    <script type="text/javascript" src="scripts/programs/d.js"></script>
-    <script type="text/javascript" src="scripts/programs/e.js"></script>
-    <script type="text/javascript" src="scripts/programs/f.js"></script>
-    <script type="text/javascript" src="scripts/programs/g.js"></script>
-    <script type="text/javascript" src="scripts/programs/h.js"></script>
-    <script type="text/javascript" src="scripts/programs/i.js"></script>
-    <script type="text/javascript" src="scripts/programs/j.js"></script>
-    <script type="text/javascript" src="scripts/programs/k.js"></script>
-    <script type="text/javascript" src="scripts/programs/l.js"></script>
-    <script type="text/javascript" src="scripts/programs/m.js"></script>
-    <script type="text/javascript" src="scripts/programs/n.js"></script>
-    <script type="text/javascript" src="scripts/programs/o.js"></script>
-    <script type="text/javascript" src="scripts/programs/p.js"></script>
-    <script type="text/javascript" src="scripts/programs/q.js"></script>
-    <script type="text/javascript" src="scripts/programs/r.js"></script>
-    <script type="text/javascript" src="scripts/programs/s.js"></script>
-    <script type="text/javascript" src="scripts/programs/t.js"></script>
-    <script type="text/javascript" src="scripts/programs/u.js"></script>
-    <script type="text/javascript" src="scripts/programs/w.js"></script>
-    <script type="text/javascript" src="scripts/programs/x.js"></script>
-    <script type="text/javascript" src="scripts/programs/v.js"></script>
-    <script type="text/javascript" src="scripts/programs/y.js"></script>
-    <script type="text/javascript" src="scripts/programs/z.js"></script>
 
     <link rel="stylesheet" type="text/css" href="links/reset.css"/>
     <link rel="stylesheet" type="text/css" href="links/fonts.css"/>
@@ -50,31 +19,34 @@
       const fs = require('fs')
       const app_path = app.getAppPath()
       
-      const pico = new Pico()
-      pico.controller = new Controller()
-      pico.install()
-      pico.start()
+      const Pico = require('../core/pico')
+      const Terminal = require('./scripts/terminal')
+      const pico = new Pico(10, 10)
+      const terminal = new Terminal(pico)
 
-      pico.controller.add("default","*","About",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Donsol'); },"CmdOrCtrl+,")
-      pico.controller.add("default","*","Fullscreen",() => { app.toggle_fullscreen(); },"CmdOrCtrl+Enter")
-      pico.controller.add("default","*","Hide",() => { app.toggle_visible(); },"CmdOrCtrl+H")
-      pico.controller.add("default","*","Inspect",() => { app.inspect(); },"CmdOrCtrl+.")
-      pico.controller.add("default","*","Reset",() => { pico.reset(); },"CmdOrCtrl+Backspace")
-      pico.controller.add("default","*","Quit",() => { app.exit(); },"CmdOrCtrl+Q")
+      terminal.install(document.body)
 
-      pico.controller.add("default","File","New",() => { pico.new(); },"CmdOrCtrl+N")
-      pico.controller.add("default","File","Save",() => { pico.save(); },"CmdOrCtrl+S")
-      pico.controller.add("default","File","Open",() => { pico.open(); },"CmdOrCtrl+O")
+      terminal.controller.add("default","*","About",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Donsol'); },"CmdOrCtrl+,")
+      terminal.controller.add("default","*","Fullscreen",() => { app.toggle_fullscreen(); },"CmdOrCtrl+Enter")
+      terminal.controller.add("default","*","Hide",() => { app.toggle_visible(); },"CmdOrCtrl+H")
+      terminal.controller.add("default","*","Inspect",() => { app.inspect(); },"CmdOrCtrl+.")
+      terminal.controller.add("default","*","Reset",() => { pico.reset(); },"CmdOrCtrl+Backspace")
+      terminal.controller.add("default","*","Quit",() => { app.exit(); },"CmdOrCtrl+Q")
 
-      pico.controller.add("default","Program","Play/Pause",() => { pico.pause(); },"CmdOrCtrl+P")
-      pico.controller.add("default","Program","Run",() => { pico.run(true); },"Enter")
+      terminal.controller.add("default","File","New",() => { pico.new(); },"CmdOrCtrl+N")
+      terminal.controller.add("default","File","Save",() => { pico.save(); },"CmdOrCtrl+S")
+      terminal.controller.add("default","File","Open",() => { pico.open(); },"CmdOrCtrl+O")
 
-      pico.controller.add("default","Theme","Noir",() => { pico.theme.noir(); },"CmdOrCtrl+Shift+1")
-      pico.controller.add("default","Theme","Pale",() => { pico.theme.pale(); },"CmdOrCtrl+Shift+2")
-      pico.controller.add("default","Theme","Invert",() => { pico.theme.invert(); },"CmdOrCtrl+Shift+I")
-      pico.controller.add("default","Theme","Install",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes'); })
+      terminal.controller.add("default","Program","Play/Pause",() => { pico.pause(); },"CmdOrCtrl+P")
+      terminal.controller.add("default","Program","Run",() => { pico.run(true); },"Enter")
 
-      pico.controller.commit()
+      terminal.controller.add("default","Theme","Noir",() => { pico.theme.noir(); },"CmdOrCtrl+Shift+1")
+      terminal.controller.add("default","Theme","Pale",() => { pico.theme.pale(); },"CmdOrCtrl+Shift+2")
+      terminal.controller.add("default","Theme","Invert",() => { pico.theme.invert(); },"CmdOrCtrl+Shift+I")
+      terminal.controller.add("default","Theme","Install",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes'); })
+
+      terminal.controller.commit()
+      terminal.start()
 
       const keyboard = new Keyboard()
       document.onkeydown = function(event){ keyboard.listen_onkeydown(event); }

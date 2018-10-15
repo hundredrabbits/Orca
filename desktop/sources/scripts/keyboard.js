@@ -7,13 +7,13 @@ function Keyboard () {
   this.listen_onkeydown = function (event) {
     // Reset
     if ((event.metaKey || event.ctrlKey) && event.key == 'Backspace') {
-      pico.reset()
+      terminal.reset()
       event.preventDefault()
       return
     }
     // Pause
     if ((event.metaKey || event.ctrlKey) && event.key == 'p') {
-      pico.pause()
+      terminal.pause()
       event.preventDefault()
       return
     }
@@ -26,32 +26,32 @@ function Keyboard () {
     if (event.keyCode == 37) { keyboard.key_arrow_left(); return }
     if (event.keyCode == 39) { keyboard.key_arrow_right(); return }
 
-    if (event.key == 'Backspace') { pico.grid.cursor.insert('.'); return }
-    if (event.key == 'Space') { pico.grid.cursor.insert('.'); event.preventDefault(); return }
-    if (event.key == 'Escape') { logo.remove(); pico.program.clear(); return }
+    if (event.key == 'Backspace') { terminal.cursor.insert('.'); return }
+    if (event.key == 'Space') { terminal.cursor.insert('.'); event.preventDefault(); return }
+    if (event.key == 'Escape') { logo.remove(); terminal.clear(); return }
 
     if (event.key.length == 1) {
-      pico.grid.cursor.insert(event.key)
+      terminal.cursor.insert(event.key)
       if (event.shiftKey) {
-        pico.grid.cursor.move(1, 0)
+        terminal.cursor.move(1, 0)
       }
-      pico.grid.update()
+      terminal.update()
     }
   }
 
   this.key_arrow_up = function () {
-    pico.grid.cursor.move(0, 1)
+    terminal.cursor.move(0, 1)
   }
 
   this.key_arrow_down = function () {
-    pico.grid.cursor.move(0, -1)
+    terminal.cursor.move(0, -1)
   }
 
   this.key_arrow_left = function () {
-    pico.grid.cursor.move(-1, 0)
+    terminal.cursor.move(-1, 0)
   }
 
   this.key_arrow_right = function () {
-    pico.grid.cursor.move(1, 0)
+    terminal.cursor.move(1, 0)
   }
 }
