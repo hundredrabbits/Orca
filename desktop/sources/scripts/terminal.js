@@ -6,7 +6,7 @@ function Terminal (pico) {
   this.controller = new Controller();
   this.theme = new Theme(this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#333333', f_low: '#000000', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff'}));
   this.is_paused = false
-  this.tile = { w: 15, h: 20 }
+  this.tile = { w: 10, h: 20 }
   this.debug = "hello."
 
   this.cursor = {
@@ -142,6 +142,7 @@ function Terminal (pico) {
     const fns = pico.findFns()
     for (const id in fns) {
       const g = fns[id]
+      if(pico.isLocked(g.x,g.y)){continue;}
       for (const id in g.ports) {
         const port = g.ports[id]
         h[`${g.x + port.x}:${g.y + port.y}`] = port.output ? 2 : port.bang ? 1 : 3
