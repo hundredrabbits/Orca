@@ -1,4 +1,4 @@
-const lib = require('./core/lib')
+const lib = require('./desktop/core/lib')
 
 for(const type in lib){
   console.log(`\n### ${type} functions\n`)

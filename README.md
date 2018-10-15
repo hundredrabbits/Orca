@@ -27,7 +27,7 @@
 - `D`, **deflect**: Converts neighboors into direction fns.
 - `E`, **east**: Moves eastward, or bangs.
 - `F`, **if**: Bangs if east and west fns are equal, southward.
-- `G`, **generator**: Generates a s on bang.
+- `G`, **generator**: Generates a direction fn from bang.
 - `H`, **halt**: Stops southward fn from operating.
 - `I`, **increment**: Increments southward numeric fn on bang.
 - `J`, **jump**: [TODO]Moves the westward fn to eastward, or the eastward fn westward, on bang.
@@ -51,11 +51,15 @@
 ### special functions
 
 - `.`, **null**: void
-- `:`, **null**: Call a function by name, freeze 3 characters eastward.
+- `:`, **query**: Call a function by name, freezes 3 characters eastward.
 - `-`, **wire-h**: Send data along the wire, horizontally.
 - `|`, **wire-v**: Send data along the wire, vertically.
 - `*`, **wire-n**: Send data along the wire, entry or exit.
 - `+`, **wire-f**: Send data along the wire, across an intersection.
+
+### queries functions
+
+- `BPM`, **bpm**: Set the speed for the Pico terminal.
 
 ## Logic Functions
 
@@ -85,7 +89,6 @@ The idea is to build a synth/mini sequencer, here's some tasks I need to tackle 
 [ ] "I wanna be able to 1000x fastforward my pico programs"
 [ ] sub programs scope
 [ ] block copy-paste
-[ ] `BPM000` method
 
 ## Extras
 

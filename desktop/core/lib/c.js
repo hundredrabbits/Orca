@@ -11,7 +11,7 @@ function FnC (pico, x, y) {
 
   this.operation = function () {
     if (!this.bang() || !this.west()) { return }
-    
+
     pico.add(this.x + 1, this.y, this.west().glyph)
   }
 }

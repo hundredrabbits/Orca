@@ -7,7 +7,7 @@ function FnBpm (pico, x, y) {
 
   this.name = 'bpm'
   this.glyph = '?'
-  this.info = 'Changes the speed of Pico.'
+  this.info = 'Set the speed for the Pico terminal.'
 
   this.ports = [{ x: 1, y: 0, output: true }, { x: 2, y: 0, output: true }, { x: 3, y: 0, output: true }]
 
@@ -22,7 +22,7 @@ function FnBpm (pico, x, y) {
     if (val.indexOf('.') > -1) { return }
     pico.terminal.setSpeed(val)
   }
-  
+
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 

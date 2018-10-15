@@ -9,8 +9,10 @@ function FnQuery (pico, x, y) {
   this.glyph = ':'
   this.info = 'Call a function by name, freezes 3 characters eastward.'
 
-  const cmd = `${pico.glyphAt(this.x + 1, this.y)}${pico.glyphAt(this.x + 2, this.y)}${pico.glyphAt(this.x + 3, this.y)}`
-  this.query = pico.lib.queries[cmd] ? new pico.lib.queries[cmd](pico, x + 3, y) : null
+  if (pico) {
+    const cmd = `${pico.glyphAt(this.x + 1, this.y)}${pico.glyphAt(this.x + 2, this.y)}${pico.glyphAt(this.x + 3, this.y)}`
+    this.query = pico.lib.queries[cmd] ? new pico.lib.queries[cmd](pico, x + 3, y) : null
+  }
 
   this.ports = [{ x: 1, y: 0, bang: true }, { x: 2, y: 0, bang: true }, { x: 3, y: 0, bang: true }]
 
