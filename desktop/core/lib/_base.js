@@ -30,7 +30,6 @@ function FnBase (pico, x, y) {
   }
 
   this.replace = function (g) {
-    this.lock()
     pico.add(this.x, this.y, g)
   }
 
@@ -75,7 +74,7 @@ function FnBase (pico, x, y) {
     const ns = this.neighbors('b')
     for (const id in ns) {
       const n = ns[id]
-      if (pico.glyphAt(n.x, n.y - 1) !== 'h') {
+      if (!pico.isLocked(n.x, n.y)) {
         return { x: n.x, y: n.y }
       }
     }

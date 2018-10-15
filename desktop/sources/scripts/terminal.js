@@ -8,6 +8,7 @@ function Terminal (pico) {
   this.is_paused = false
   this.tile = { w: 12, h: 20 }
   this.debug = "hello."
+  this.timer = null
 
   this.cursor = {
     x: 0,
@@ -25,7 +26,7 @@ function Terminal (pico) {
     },
     inspect: function () {
       const g = pico.glyphAt(this.x, this.y)
-      return pico.docs[g] ? pico.docs[g] : 'idle.'
+      return pico.docs[g] ? pico.docs[g] : `${this.x},${this.y}`
     }
   }
 
@@ -57,7 +58,15 @@ function Terminal (pico) {
     this.log("Started.")
 
     this.update()
-    setInterval(() => { this.run() }, 200)
+    this.setSpeed(120)
+  }
+
+  this.setSpeed = function(bpm)
+  {
+    this.log(`Changed speed to ${bpm}.`)
+    const ms = (60000/bpm)/4
+    clearInterval(this.timer);
+    this.timer = setInterval(() => { this.run() }, ms)
   }
 
   this.run = function () {
@@ -174,7 +183,6 @@ function Terminal (pico) {
 
   this.clear = function () {
     const ctx = this.context()
-
     ctx.clearRect(0, 0, this.size.width, this.size.height)
   }
 
