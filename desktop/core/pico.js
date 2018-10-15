@@ -122,6 +122,40 @@ function Pico (w, h) {
     return x + (this.w * y)
   }
 
+  // Blocks
+
+  this.getBlock = function(x,y,w,h)
+  {
+    let _y = y
+    const block = []
+    while(_y < y+h){
+      let _x = x
+      const line = []
+      while(_x < x+w){
+        line.push(this.glyphAt(_x,_y))
+        _x++
+      }
+      block.push(line)
+      _y++
+    }
+    return block
+  }
+
+  this.addBlock = function(x,y,block)
+  {
+    if(!block || block.length == 0){ this.terminal.log('Nothing to paste'); return; }
+    
+    let _y = y
+    for(const lineId in block){
+      let _x = x
+      for(const glyphId in block[lineId]){
+        this.add(_x,_y,block[lineId][glyphId])
+        _x++
+      }
+      _y++
+    }
+  }
+
   // Locks
 
   this.isLocked = function (x, y) {

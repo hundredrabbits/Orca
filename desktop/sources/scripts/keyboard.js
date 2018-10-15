@@ -19,7 +19,7 @@ function Keyboard () {
     }
 
     if (event.key == 'c' && event.metaKey) { terminal.cursor.copy(); return }
-    if (event.key == 'v' && event.metaKey) { terminal.cursor.copy(); return }
+    if (event.key == 'v' && event.metaKey) { terminal.cursor.paste(); return }
 
     if (event.keyCode == 38) { keyboard.key_arrow_up(event.shiftKey); return }
     if (event.keyCode == 40) { keyboard.key_arrow_down(event.shiftKey); return }
