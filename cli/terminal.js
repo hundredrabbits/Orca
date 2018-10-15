@@ -40,6 +40,7 @@ function Terminal (pico) {
   }
 
   this.start = function (path) {
+    
     this.pico.terminal = this
     this.pico.start()
     this._screen.key(['escape', 'C-c'], (ch, key) => (process.exit(0)))
@@ -53,7 +54,10 @@ function Terminal (pico) {
     this._screen.on('keypress', (ch) => {
       if (!ch || ch.length != 1) { return }
       this.cursor.insert(ch)
-      if(ch == ch.toUpperCase()){
+      if(ch == "|"){
+        this.cursor.move(0,-1)        
+      }
+      else if(ch == ch.toUpperCase()){
         this.cursor.move(1,0)        
       }
     })

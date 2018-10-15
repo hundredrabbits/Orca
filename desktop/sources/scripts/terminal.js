@@ -30,17 +30,23 @@ function Terminal (pico) {
   }
 
   this.install = function (host) {
+    this.resize()
+    host.appendChild(this.el)
+    this.theme.install(host)
+  }
+
+  this.resize = function()
+  {
     this.size = { width: this.tile.w * pico.w + (this.tile.w/2), height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.75 }
     this.el.width = this.size.width
     this.el.height = this.size.height + this.tile.h
     this.el.style.width = (this.size.width * this.size.ratio) + 'px'
     this.el.style.height = (this.size.height * this.size.ratio) + 'px'
-
-    host.appendChild(this.el)
   }
 
   this.start = function()
   {
+    this.theme.start()
     this.pico.terminal = this
     this.pico.start()
     this.log("Started.")
@@ -70,7 +76,7 @@ function Terminal (pico) {
       const h = data.split('\n').length
       terminal.log(`Loaded: ${path} ${w}x${h}`)
       pico.load(w, h, data)
-      terminal._grid.width = w
+      terminal.resize()
       terminal.update()
     })
   }
@@ -133,15 +139,14 @@ function Terminal (pico) {
 
   this.find_ports = function () {
     const h = {}
-
-    // for (const id in pico.progs) {
-    //   const g = pico.progs[id]
-    //   if (pico.program.is_locked(g.x, g.y)) { continue }
-    //   for (const id in g.ports) {
-    //     const port = g.ports[id]
-    //     h[`${g.x + port.x}:${g.y + port.y}`] = port.output ? 2 : port.bang ? 1 : 3
-    //   }
-    // }
+    const fns = pico.findFns()
+    for (const id in fns) {
+      const g = fns[id]
+      for (const id in g.ports) {
+        const port = g.ports[id]
+        h[`${g.x + port.x}:${g.y + port.y}`] = port.output ? 2 : port.bang ? 1 : 3
+      }
+    }
 
     return h
   }
@@ -164,22 +169,22 @@ function Terminal (pico) {
     ctx.font = `${this.tile.h * 0.75}px input_mono_regular`
 
     if (styles.is_cursor) {
-      ctx.fillStyle = "#f00"
+      ctx.fillStyle = this.theme.active.b_inv
       ctx.fillRect((x + 0.5) * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
-      ctx.fillStyle = "#fff"
+      ctx.fillStyle = this.theme.active.f_inv
     } else if (styles.is_port) {
       if (styles.is_port == 2) {
-        ctx.fillStyle = "#0ff"
+        ctx.fillStyle = this.theme.active.b_high
         ctx.fillRect((x + 0.5) * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
-        ctx.fillStyle = "#0ff"
+        ctx.fillStyle = this.theme.active.f_low
       } else if (styles.is_port == 1) {
-        ctx.fillStyle = "#0ff"
+        ctx.fillStyle = this.theme.active.b_med
         ctx.fillRect((x + 0.5) * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
-        ctx.fillStyle = "#0ff"
+        ctx.fillStyle = this.theme.active.f_low
       } else if (styles.is_port == 3) {
-        ctx.fillStyle = "#0ff"
+        ctx.fillStyle = this.theme.active.b_low
         ctx.fillRect((x + 0.5) * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
-        ctx.fillStyle = "#0ff"
+        ctx.fillStyle = this.theme.active.f_high
       }
     } else {
       ctx.fillStyle = 'white'
