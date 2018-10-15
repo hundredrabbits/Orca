@@ -79,10 +79,14 @@ function Pico (w, h) {
     }
   }
 
+  this.inBounds = function (x, y) {
+    return x >= 0 && x < this.w && y >= 0 && y < this.h
+  }
+
   this.add = function (x, y, ch) {
     const glyph = ch.substr(0, 1).toLowerCase()
     if (!this.isAllowed(glyph)) { this.terminal.log(`[${glyph}] is not allowed`); return }
-    if (x < 0 || x > this.w - 1 || y < 0 || y > this.h - 1) { this.terminal.log(`[${glyph}] is out of range`); return }
+    if (!this.inBounds(x, y)) { this.terminal.log(`[${glyph}] is out of range`); return }
     const index = this.indexAt(x, y)
     this.s = this.s.substr(0, index) + glyph + this.s.substr(index + glyph.length)
   }

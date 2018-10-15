@@ -38,7 +38,7 @@
 - `O`, **odd**: Adds 0 southward, transforms into Q on bang.
 - `P`, **push**: Moves away, on bang.
 - `Q`, **even**: Adds 1 southward, transforms into O on bang.
-- `R`, **idle**: [TODO]Nothing..
+- `R`, **raycast**: Sends a bang to the nearest fn following the direction of the bang.
 - `S`, **south**: Moves southward, or bangs.
 - `T`, **trigger**: Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` westward.
 - `U`, **idle**: [TODO]Nothing..
