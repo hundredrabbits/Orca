@@ -156,6 +156,19 @@ function Pico (w, h) {
     }
   }
 
+  this.removeBlock = function(x,y,w,h)
+  {    
+    let _y = y
+    while(_y < y+h){
+      let _x = x
+      while(_x < x+w){
+        this.remove(_x,_y)
+        _x++
+      }
+      _y++
+    }
+  }
+
   // Locks
 
   this.isLocked = function (x, y) {

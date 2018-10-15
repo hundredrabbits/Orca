@@ -29,7 +29,7 @@ function Keyboard () {
     if (event.metaKey) { return }
     if (event.ctrlKey) { return }
 
-    if (event.key == 'Backspace') { terminal.cursor.insert('.'); return }
+    if (event.key == 'Backspace') { terminal.cursor.erase(); return }
     if (event.key == 'Space') { terminal.cursor.insert('.'); event.preventDefault(); return }
     if (event.key == 'Escape') { terminal.clear(); terminal.cursor.reset(); return }
 

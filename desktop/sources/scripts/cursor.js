@@ -43,7 +43,8 @@ function Cursor(terminal)
   }
 
   this.erase = function (g) {
-    pico.remove(this.x, this.y)
+    this.terminal.log(`Erase ${this.x},${this.y}[${this.w}x${this.h}]`)
+    this.terminal.pico.removeBlock(this.x,this.y,this.w,this.h)
   }
 
   this.inspect = function () {
