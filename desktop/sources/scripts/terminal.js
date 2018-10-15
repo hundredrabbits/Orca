@@ -7,6 +7,7 @@ function Terminal (pico) {
   this.theme = new Theme(this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#333333', f_low: '#000000', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff'}));
   this.is_paused = false
   this.tile = { w: 15, h: 20 }
+  this.debug = "hello."
 
   this.cursor = {
     x: 0,
@@ -29,7 +30,7 @@ function Terminal (pico) {
   }
 
   this.install = function (host) {
-    this.size = { width: this.tile.w * pico.w, height: this.tile.h * pico.h, ratio: 0.75 }
+    this.size = { width: this.tile.w * pico.w + (this.tile.w/2), height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.75 }
     this.el.width = this.size.width
     this.el.height = this.size.height + this.tile.h
     this.el.style.width = (this.size.width * this.size.ratio) + 'px'
@@ -42,6 +43,7 @@ function Terminal (pico) {
   {
     this.pico.terminal = this
     this.pico.start()
+    this.log("Started.")
 
     this.update()
     setInterval(() => { this.run() }, 200)
@@ -74,7 +76,7 @@ function Terminal (pico) {
   }
 
   this.log = function (msg) {
-    console.log(msg)
+    this.debug = msg
     this.update()
   }
 
@@ -82,6 +84,7 @@ function Terminal (pico) {
     this.clear()
     this.draw_program()
     this.draw_output()
+    this.draw_debug()
   }
 
   this.draw_program = function () {
@@ -109,7 +112,17 @@ function Terminal (pico) {
     let x = 0
     while (x < s.length) {
       const c = s.substr(x, 1)
-      this.draw_sprite(x, pico.size.v - 1, c)
+      this.draw_sprite(x, pico.h - 1, c)
+      x += 1
+    }
+  }
+
+  this.draw_debug = function () {
+    const s = this.debug.trim()
+    let x = 0
+    while (x < s.length) {
+      const c = s.substr(x, 1)
+      this.draw_sprite(x, pico.h, c)
       x += 1
     }
   }
@@ -121,8 +134,8 @@ function Terminal (pico) {
   this.find_ports = function () {
     const h = {}
 
-    // for (const id in pico.program.progs) {
-    //   const g = pico.program.progs[id]
+    // for (const id in pico.progs) {
+    //   const g = pico.progs[id]
     //   if (pico.program.is_locked(g.x, g.y)) { continue }
     //   for (const id in g.ports) {
     //     const port = g.ports[id]
