@@ -23,7 +23,7 @@
 
 - `A`, **add**: Creates the result of the addition of east and west fns, southward.
 - `B`, **bang**: The bang is used to trigger various fns, only lasts one cycle.
-- `C`, **clone**: Clones the westward fn, eastwardly, on bang.
+- `C`, **clamp**: Clamp the northern fn between the westward and eastward fn bang.
 - `D`, **deflect**: Converts neighboors into direction fns.
 - `E`, **east**: Moves eastward, or bangs.
 - `F`, **if**: Bangs if east and west fns are equal, southward.
@@ -32,7 +32,7 @@
 - `I`, **increment**: Increments southward numeric fn on bang.
 - `J`, **jump**: [TODO]Moves the westward fn to eastward, or the eastward fn westward, on bang.
 - `K`, **kill**: [TODO]Kills southward fns, on bang.
-- `L`, **idle**: [todo]Nothing.
+- `L`, **loop**: Loop a number of characters ahead.
 - `M`, **modulo**: Creates the result of the modulo operation of east and west fns, southward.
 - `N`, **north**: Moves Northward, or bangs.
 - `O`, **odd**: Adds 0 southward, transforms into Q on bang.
@@ -56,6 +56,11 @@
 - `|`, **wire-v**: Send data along the wire, vertically.
 - `*`, **wire-n**: Send data along the wire, entry or exit.
 - `+`, **wire-f**: Send data along the wire, across an intersection.
+
+### queries functions
+
+- `BPM`, **bpm**: Set the speed for the Pico terminal.
+- `VOL`, **volume**: Set the volume for the Pico terminal.
 
 ### queries functions
 

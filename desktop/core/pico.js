@@ -65,6 +65,7 @@ function Pico (w, h) {
   }
 
   this.runFns = function (fns) {
+    this.unlock()
     // Move
     for (const id in fns) {
       const p = fns[id]
@@ -96,7 +97,6 @@ function Pico (w, h) {
   }
 
   this.run = function () {
-    this.unlock()
     this.runFns(this.findFns())
     this.record()
     this.s = this.s.substr(0, this.w * this.h)
