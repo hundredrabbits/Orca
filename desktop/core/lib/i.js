@@ -8,20 +8,23 @@ function FnI (pico, x, y) {
   this.name = 'increment'
   this.glyph = 'i'
   this.info = 'Increments southward numeric fn on bang.'
-  this.ports = [{ x: 0, y: 0, bang: true }, { x: 0, y: 1, output: true }]
+  this.ports = [{ x: 0, y: 0, bang: true }, { x: 0, y: 1, output: true }, { x: 1, y: 0, input: true }, { x: -1, y: 0, input: true }]
 
   this.operation = function () {
     if (!this.bang()) { return }
-    if (!this.south()) { return }
 
-    const n = this.south()
-    pico.add(this.x, this.y + 1, this.inc(n.glyph))
-  }
+    const w = this.west()
+    const e = this.east()
+    const s = this.south()
 
-  this.inc = function (ch) {
-    const index = pico.allowed.indexOf(ch)
-    const result = pico.allowed[(index + 1) % 10]
-    return `${result}`
+    const min = w ? pico.allowed.indexOf(w.glyph) : 0
+    const max = e ? pico.allowed.indexOf(e.glyph) : 9
+    const val = s ? pico.allowed.indexOf(s.glyph) : 0
+
+    const result = val + 1 >= max ? min : val + 1
+
+    pico.add(this.x, this.y + 1, `${result}`)
+    pico.lock(this.x, this.y + 1)
   }
 }
 

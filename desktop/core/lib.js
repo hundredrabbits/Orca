@@ -50,6 +50,7 @@ module.exports = {
     '+': require('./lib/_wiref')
   },
   queries: {
-    'bpm': require('./lib/__bpm')
+    'bpm': require('./lib/__bpm'),
+    'vol': require('./lib/__vol')
   }
 }

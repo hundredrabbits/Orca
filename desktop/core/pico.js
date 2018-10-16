@@ -106,6 +106,7 @@ function Pico (w, h) {
   this.load = function (w, h, s) {
     this.w = w // Width
     this.h = h // Height
+    this.f = 0
     this.clear()
     this.s = s.replace(/\n/g, '').trim() // String
   }

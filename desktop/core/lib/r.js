@@ -19,6 +19,7 @@ function FnR (pico, x, y) {
       beam = { x: beam.x + vector.x, y: beam.y + vector.y }
       if (pico.glyphAt(beam.x, beam.y) !== '.' || !pico.inBounds(beam.x, beam.y)) {
         pico.add(prev.x, prev.y, 'b')
+        pico.lock(prev.x, prev.y)
         break
       }
       prev = beam

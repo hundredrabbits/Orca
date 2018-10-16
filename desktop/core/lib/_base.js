@@ -74,9 +74,7 @@ function FnBase (pico, x, y) {
     const ns = this.neighbors('b')
     for (const id in ns) {
       const n = ns[id]
-      if (!pico.isLocked(n.x, n.y)) {
-        return { x: n.x, y: n.y }
-      }
+      return { x: n.x, y: n.y }
     }
     return false
   }

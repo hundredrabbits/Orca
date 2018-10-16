@@ -2,7 +2,9 @@
 
 function Terminal (pico) {
   const Cursor = require('./cursor')
+  const QQQ = require('./qqq')
 
+  this.qqq = new QQQ(this)
   this.cursor = new Cursor(this)
   this.controller = new Controller()
   this.theme = new Theme(this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#333333', f_low: '#000000', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' }))
@@ -49,7 +51,7 @@ function Terminal (pico) {
   }
 
   this.setSpeed = function (bpm) {
-    bpm = clamp(bpm, 100, 300)
+    bpm = clamp(bpm, 60, 300)
     this.log(`Changed speed to ${bpm}.`)
     const ms = (60000 / bpm) / 4
     clearInterval(this.timer)

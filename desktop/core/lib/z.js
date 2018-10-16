@@ -9,7 +9,7 @@ function FnZ (pico, x, y) {
   this.glyph = 'z'
   this.info = 'Moves to a the next available location in a cycle of E, S, W, N based on the runtime frame.'
 
-  this.operation = function () {
+  this.haste = function () {
     const positions = [{ x: 1, y: 0 }, { x: 0, y: 1 }, { x: -1, y: 0 }, { x: 0, y: -1 }]
     const position = positions[pico.f % 4]
 
