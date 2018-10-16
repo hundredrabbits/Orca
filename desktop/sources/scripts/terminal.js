@@ -34,9 +34,9 @@ function Terminal (pico) {
   }
 
   window.onresize = (event) => {
-    const marginTop = (window.innerHeight - (this.size.height * this.size.ratio))/2
-    this.el.style.marginTop = (marginTop-20)+'px'
-  };
+    const marginTop = (window.innerHeight - (this.size.height * this.size.ratio)) / 2
+    this.el.style.marginTop = (marginTop - 20) + 'px'
+  }
 
   this.start = function () {
     this.theme.start()
@@ -49,7 +49,7 @@ function Terminal (pico) {
   }
 
   this.setSpeed = function (bpm) {
-    bpm = clamp(bpm,100,300)
+    bpm = clamp(bpm, 100, 300)
     this.log(`Changed speed to ${bpm}.`)
     const ms = (60000 / bpm) / 4
     clearInterval(this.timer)
