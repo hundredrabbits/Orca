@@ -26,23 +26,22 @@
 
       terminal.install(document.body)
 
-      terminal.controller.add("default","*","About",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Donsol'); },"CmdOrCtrl+,")
+      terminal.controller.add("default","*","About",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Pico'); },"CmdOrCtrl+,")
       terminal.controller.add("default","*","Fullscreen",() => { app.toggle_fullscreen(); },"CmdOrCtrl+Enter")
       terminal.controller.add("default","*","Hide",() => { app.toggle_visible(); },"CmdOrCtrl+H")
       terminal.controller.add("default","*","Inspect",() => { app.inspect(); },"CmdOrCtrl+.")
-      terminal.controller.add("default","*","Reset",() => { pico.reset(); },"CmdOrCtrl+Backspace")
+      terminal.controller.add("default","*","Reset",() => { terminal.reset(); },"CmdOrCtrl+Backspace")
       terminal.controller.add("default","*","Quit",() => { app.exit(); },"CmdOrCtrl+Q")
 
-      terminal.controller.add("default","File","New",() => { pico.new(); },"CmdOrCtrl+N")
-      terminal.controller.add("default","File","Save",() => { pico.save(); },"CmdOrCtrl+S")
-      terminal.controller.add("default","File","Open",() => { pico.open(); },"CmdOrCtrl+O")
+      terminal.controller.add("default","File","New",() => { terminal.new(); },"CmdOrCtrl+N")
+      terminal.controller.add("default","File","Save",() => { terminal.save(); },"CmdOrCtrl+S")
+      terminal.controller.add("default","File","Open",() => { terminal.open(); },"CmdOrCtrl+O")
 
-      terminal.controller.add("default","Program","Play/Pause",() => { pico.pause(); },"CmdOrCtrl+P")
-      terminal.controller.add("default","Program","Run",() => { pico.run(true); },"Enter")
+      terminal.controller.add("default","Program","Play/Pause",() => { terminal.pause(); },"Space")
 
-      terminal.controller.add("default","Theme","Noir",() => { pico.theme.noir(); },"CmdOrCtrl+Shift+1")
-      terminal.controller.add("default","Theme","Pale",() => { pico.theme.pale(); },"CmdOrCtrl+Shift+2")
-      terminal.controller.add("default","Theme","Invert",() => { pico.theme.invert(); },"CmdOrCtrl+Shift+I")
+      terminal.controller.add("default","Theme","Noir",() => { terminal.theme.noir(); },"CmdOrCtrl+Shift+1")
+      terminal.controller.add("default","Theme","Pale",() => { terminal.theme.pale(); },"CmdOrCtrl+Shift+2")
+      terminal.controller.add("default","Theme","Invert",() => { terminal.theme.invert(); },"CmdOrCtrl+Shift+I")
       terminal.controller.add("default","Theme","Install",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes'); })
 
       terminal.controller.commit()

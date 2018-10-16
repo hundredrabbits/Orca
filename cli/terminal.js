@@ -11,7 +11,7 @@ function Terminal (pico) {
   this._inspector = blessed.box({ bottom: 2, left: 2, height: 1, width: '100%-4', style: { fg: '#efefef' } })
   this._log = blessed.box({ bottom: 3, left: 2, height: 1, width: '100%-4', style: { fg: '#efefef' } })
 
-  this.is_paused = false
+  this.isPaused = false
 
   this.cursor = {
     x: 0,
@@ -71,15 +71,15 @@ function Terminal (pico) {
   }
 
   this.run = function () {
-    if (this.is_paused) { return }
+    if (this.isPaused) { return }
 
     this.pico.run()
     this.update()
   }
 
   this.pause = function () {
-    this.is_paused = !this.is_paused
-    this.log(this.is_paused ? "Paused" : "Unpaused")
+    this.isPaused = !this.isPaused
+    this.log(this.isPaused ? "Paused" : "Unpaused")
   }
 
   this.load = function (path) {

@@ -31,8 +31,8 @@ function Keyboard () {
     if (event.ctrlKey) { return }
 
     if (event.key == 'Backspace') { terminal.cursor.erase(); return }
-    if (event.key == 'Space') { terminal.cursor.insert('.'); event.preventDefault(); return }
-    if (event.key == 'Escape') { terminal.clear(); terminal.cursor.reset(); return }
+    if (event.key == ' ') { terminal.pause(); event.preventDefault(); return }
+    if (event.key == 'Escape') { terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
 
     if (event.key.length == 1) {
       terminal.cursor.insert(event.key)

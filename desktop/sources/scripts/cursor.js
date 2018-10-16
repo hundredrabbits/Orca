@@ -28,17 +28,17 @@ function Cursor (terminal) {
   }
 
   this.copy = function () {
-    this.terminal.log(`Copy ${this.x},${this.y}[${this.w}x${this.h}]`)
+    this.terminal.log(`Copy ${this._position()}`)
     this.block = this.terminal.pico.getBlock(this.x, this.y, this.w, this.h)
   }
 
   this.paste = function () {
-    this.terminal.log(`Paste ${this.x},${this.y}[${this.w}x${this.h}]`)
+    this.terminal.log(`Paste ${this._position()}`)
     this.terminal.pico.addBlock(this.x, this.y, this.block)
   }
 
   this.cut = function () {
-    this.terminal.log(`Cut ${this.x},${this.y}[${this.w}x${this.h}]`)
+    this.terminal.log(`Cut ${this._position()}`)
     this.copy()
     this.erase()
   }
@@ -48,13 +48,18 @@ function Cursor (terminal) {
   }
 
   this.erase = function (g) {
-    this.terminal.log(`Erase ${this.x},${this.y}[${this.w}x${this.h}]`)
+    this.terminal.log(`Erase ${this._position()}`)
     this.terminal.pico.removeBlock(this.x, this.y, this.w, this.h)
   }
 
   this.inspect = function () {
     const g = pico.glyphAt(this.x, this.y)
-    return pico.docs[g] ? pico.docs[g] : `${this.x},${this.y}[${this.w}x${this.h}]`
+    return pico.docs[g] ? pico.docs[g] : this._position()
+  }
+
+  this._position = function()
+  {
+    return `${this.x},${this.y}`+(this.w != 1 || this.h != 1 ? `[${this.w}x${this.h}]` : '')
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

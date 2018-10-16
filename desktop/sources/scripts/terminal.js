@@ -11,7 +11,7 @@ function Terminal (pico) {
 
   this.pico = pico
   this.el = document.createElement('canvas')
-  this.is_paused = false
+  this.isPaused = false
   this.tile = { w: 12, h: 20 }
   this.debug = 'hello.'
   this.timer = null
@@ -59,15 +59,15 @@ function Terminal (pico) {
   }
 
   this.run = function () {
-    if (this.is_paused) { return }
+    if (this.isPaused) { return }
 
     this.pico.run()
     this.update()
   }
 
   this.pause = function () {
-    this.is_paused = !this.is_paused
-    this.log(this.is_paused ? 'Paused' : 'Unpaused')
+    this.isPaused = !this.isPaused
+    this.log(this.isPaused ? 'Paused' : 'Unpaused')
   }
 
   this.load = function (path) {
@@ -211,7 +211,7 @@ function Terminal (pico) {
     } else {
       ctx.fillStyle = 'white'
     }
-    ctx.fillText(styles.isCursor && g == '.' ? (!pico.is_paused ? '@' : '~') : g.toUpperCase(), (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
+    ctx.fillText(styles.isCursor && g == '.' ? (!pico.isPaused ? '@' : '~') : g.toUpperCase(), (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
   }
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }

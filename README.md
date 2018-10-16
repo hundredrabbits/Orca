@@ -62,10 +62,6 @@
 - `BPM`, **bpm**: Set the speed for the Pico terminal.
 - `VOL`, **volume**: Set the volume for the Pico terminal.
 
-### queries functions
-
-- `BPM`, **bpm**: Set the speed for the Pico terminal.
-
 ## Logic Functions
 
 The logic functions are passive, and they are `a`, `f`, `m`, `y`.
@@ -89,11 +85,9 @@ npm start
 
 The idea is to build a synth/mini sequencer, here's some tasks I need to tackle before then.
 
-[ ] Migrate Electron build to new core.
 [ ] custom synth functions, like `:SYN[ADSR](C)`
 [ ] "I wanna be able to 1000x fastforward my pico programs"
 [ ] sub programs scope
-[ ] block add glyph
 
 ## Extras
 
