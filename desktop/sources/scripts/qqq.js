@@ -4,6 +4,7 @@ function QQQ (terminal) {
   this.terminal = terminal
   this.volume = 1
   this.midi = false
+  this.outputs = []
 
   this.start = function () {
     this.midiSetup()
@@ -16,43 +17,30 @@ function QQQ (terminal) {
   }
 
   this.midiActive = function (midiAccess) {
-    var outputs = midiAccess.outputs.values()
-    // loop over all available inputs and listen for any MIDI input
-    for (var output = outputs.next(); output && !output.done; output = outputs.next()) {
-      console.log(output)
-      // each time there is a midi message call the onMIDIMessage function
-      // output.value.onmidimessage = onMIDIMessage;
+
+    const iter = midiAccess.outputs.values();
+    for (let i = iter.next(); i && !i.done; i = iter.next()) {
+      console.log(terminal.qqq)
+      terminal.qqq.outputs.push(i.value);
     }
   }
 
   this.midiInactive = function (err) {
-
+    console.warn("No Midi")
   }
 
   this.play = function () {
+    let noteon, noteoff;
+    noteon = [0x92, 60, 127];
+    noteoff = [0x82, 60, 127];
 
-    // var noteon,
-    //     noteoff,
-    //     outputs = [];
-
-    // // Grab an array of all available devices
-    // var iter = interface.outputs.values();
-    // for (var i = iter.next(); i && !i.done; i = iter.next()) {
-    //   outputs.push(i.value);
-    // }
-
-    // // Craft 'note on' and 'note off' messages (channel 3, note number 60 [C3], max velocity)
-    // noteon = [0x92, 60, 127];
-    // noteoff = [0x82, 60, 127];
-
-    // // Send the 'note on' and schedule the 'note off' for 1 second later
-    // outputs[0].send(noteon);
-    // setTimeout(
-    //   function() {
-    //     outputs[0].send(noteoff);
-    //   },
-    //   1000
-    // );
+    terminal.qqq.outputs[0].send(noteon);
+    setTimeout(
+      function() {
+        // terminal.qqq.outputs[0].send(noteoff);
+      },
+      500
+    );
   }
 
   this.setVolume = function (value) {
