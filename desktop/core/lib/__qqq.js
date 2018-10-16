@@ -9,17 +9,26 @@ function FnQqq (pico, x, y) {
   this.glyph = '?'
   this.info = 'Play note.'
 
-  this.ports = [{ x: 0, y: -1, input: true }]
+  this.ports = [{ x: 0, y: -1, input: true }, { x: 1, y: 0, output: true }]
 
   this.haste = function () {
     pico.lock(this.x, this.y - 1)
+    pico.lock(this.x + 1, this.y)
   }
 
   this.run = function () {
     const n = this.north()
-    if (n) {
-      terminal.qqq.play()
-    }
+    if (!n) { return }
+    const e = this.east()
+
+    const octave = !e ? 3 : this.convert(e.glyph)
+    const note = this.convert(n.glyph)
+    const velocity = 127
+    terminal.qqq.send(octave, note, velocity)
+  }
+
+  this.convert = function (glyph) {
+    return pico.allowed.indexOf(glyph)
   }
 }
 

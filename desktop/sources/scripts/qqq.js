@@ -10,6 +10,10 @@ function QQQ (terminal) {
     this.midiSetup()
   }
 
+  this.run = function () {
+
+  }
+
   this.midiSetup = function () {
     if (!navigator.requestMIDIAccess) { return }
 
@@ -19,13 +23,17 @@ function QQQ (terminal) {
   this.midiActive = function (midiAccess) {
     const iter = midiAccess.outputs.values()
     for (let i = iter.next(); i && !i.done; i = iter.next()) {
-      console.log(terminal.qqq)
       terminal.qqq.outputs.push(i.value)
     }
+    terminal.log(`Midi is active, devices: ${terminal.qqq.outputs.length}`)
   }
 
   this.midiInactive = function (err) {
     console.warn('No Midi')
+  }
+
+  this.send = function (octave, note, velocity) {
+    console.log('Received ', octave, note, velocity)
   }
 
   this.play = function () {

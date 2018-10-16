@@ -44,6 +44,7 @@ function Terminal (pico) {
     if (this.isPaused) { return }
 
     this.pico.run()
+    this.qqq.run()
     this.update()
   }
 
@@ -78,6 +79,10 @@ function Terminal (pico) {
     this.draw_output(2)
     this.draw_debug(1)
     this.draw_inspector(0)
+  }
+
+  this.new = function () {
+    pico.clear()
   }
 
   this.draw_program = function () {
