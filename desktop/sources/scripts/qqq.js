@@ -17,30 +17,30 @@ function QQQ (terminal) {
   }
 
   this.midiActive = function (midiAccess) {
-
-    const iter = midiAccess.outputs.values();
+    const iter = midiAccess.outputs.values()
     for (let i = iter.next(); i && !i.done; i = iter.next()) {
       console.log(terminal.qqq)
-      terminal.qqq.outputs.push(i.value);
+      terminal.qqq.outputs.push(i.value)
     }
   }
 
   this.midiInactive = function (err) {
-    console.warn("No Midi")
+    console.warn('No Midi')
   }
 
   this.play = function () {
-    let noteon, noteoff;
-    noteon = [0x92, 60, 127];
-    noteoff = [0x82, 60, 127];
+    this.ch1()
+    this.ch3()
+  }
 
-    terminal.qqq.outputs[0].send(noteon);
-    setTimeout(
-      function() {
-        // terminal.qqq.outputs[0].send(noteoff);
-      },
-      500
-    );
+  this.ch1 = function () {
+    terminal.qqq.outputs[0].send([0x90, 60, 127])
+    terminal.qqq.outputs[0].send([0x80, 60, 127], window.performance.now() + 250.0)
+  }
+
+  this.ch3 = function () {
+    terminal.qqq.outputs[0].send([0x92, 60, 127])
+    terminal.qqq.outputs[0].send([0x82, 60, 127], window.performance.now() + 250.0)
   }
 
   this.setVolume = function (value) {

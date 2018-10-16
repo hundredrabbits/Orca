@@ -17,8 +17,8 @@ function FnQqq (pico, x, y) {
 
   this.run = function () {
     const n = this.north()
-    if(n){
-      terminal.qqq.play()  
+    if (n) {
+      terminal.qqq.play()
     }
   }
 }

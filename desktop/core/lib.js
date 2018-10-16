@@ -52,6 +52,6 @@ module.exports = {
   queries: {
     'bpm': require('./lib/__bpm'),
     'vol': require('./lib/__vol'),
-    'qqq': require('./lib/__qqq'),
+    'qqq': require('./lib/__qqq')
   }
 }
