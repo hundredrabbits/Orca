@@ -88,8 +88,6 @@ The idea is to build a synth/mini sequencer, here's some tasks I need to tackle 
 [ ] custom synth functions, like `:SYN[ADSR](C)`
 [ ] "I wanna be able to 1000x fastforward my pico programs"
 [ ] sub programs scope
-[ ] block cut
-[ ] block delete
 [ ] block add glyph
 
 ## Extras

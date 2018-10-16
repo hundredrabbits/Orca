@@ -33,6 +33,11 @@ function Terminal (pico) {
     win.setSize((this.size.width * this.size.ratio) + 60, (this.size.height * this.size.ratio) + 30, true)
   }
 
+  window.onresize = (event) => {
+    const marginTop = (window.innerHeight - (this.size.height * this.size.ratio))/2
+    this.el.style.marginTop = (marginTop-20)+'px'
+  };
+
   this.start = function () {
     this.theme.start()
     this.pico.terminal = this
@@ -44,6 +49,7 @@ function Terminal (pico) {
   }
 
   this.setSpeed = function (bpm) {
+    bpm = clamp(bpm,100,300)
     this.log(`Changed speed to ${bpm}.`)
     const ms = (60000 / bpm) / 4
     clearInterval(this.timer)
@@ -205,6 +211,7 @@ function Terminal (pico) {
     }
     ctx.fillText(styles.isCursor && g == '.' ? (!pico.is_paused ? '@' : '~') : g.toUpperCase(), (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
   }
+  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = Terminal
