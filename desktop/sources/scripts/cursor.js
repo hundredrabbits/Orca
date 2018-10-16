@@ -57,9 +57,8 @@ function Cursor (terminal) {
     return pico.docs[g] ? pico.docs[g] : this._position()
   }
 
-  this._position = function()
-  {
-    return `${this.x},${this.y}`+(this.w != 1 || this.h != 1 ? `[${this.w}x${this.h}]` : '')
+  this._position = function () {
+    return `${this.x},${this.y}` + (this.w != 1 || this.h != 1 ? `[${this.w}x${this.h}]` : '')
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

@@ -22,29 +22,11 @@ function Terminal (pico) {
     this.theme.install(host)
   }
 
-  this.resize = function () {
-    this.size = { width: this.tile.w * pico.w, height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.75 }
-    this.el.width = this.size.width
-    this.el.height = this.size.height + this.tile.h
-    this.el.style.width = (this.size.width * this.size.ratio) + 'px'
-    this.el.style.height = (this.size.height * this.size.ratio) + 'px'
-
-    let { remote } = require('electron')
-    let win = remote.getCurrentWindow()
-
-    win.setSize((this.size.width * this.size.ratio) + 60, (this.size.height * this.size.ratio) + 30, true)
-  }
-
-  window.onresize = (event) => {
-    const marginTop = (window.innerHeight - (this.size.height * this.size.ratio)) / 2
-    this.el.style.marginTop = (marginTop - 20) + 'px'
-  }
-
   this.start = function () {
-    this.theme.start()
     this.pico.terminal = this
     this.pico.start()
-    this.log('Started.')
+    this.theme.start()
+    this.qqq.start()
 
     this.update()
     this.setSpeed(120)
@@ -85,6 +67,7 @@ function Terminal (pico) {
   }
 
   this.log = function (msg) {
+    console.info(msg)
     this.debug = msg
     this.update()
   }
@@ -213,6 +196,25 @@ function Terminal (pico) {
     }
     ctx.fillText(styles.isCursor && g == '.' ? (!pico.isPaused ? '@' : '~') : g.toUpperCase(), (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
   }
+
+  this.resize = function () {
+    this.size = { width: this.tile.w * pico.w, height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.75 }
+    this.el.width = this.size.width
+    this.el.height = this.size.height + this.tile.h
+    this.el.style.width = (this.size.width * this.size.ratio) + 'px'
+    this.el.style.height = (this.size.height * this.size.ratio) + 'px'
+
+    let { remote } = require('electron')
+    let win = remote.getCurrentWindow()
+
+    win.setSize((this.size.width * this.size.ratio) + 60, (this.size.height * this.size.ratio) + 30, true)
+  }
+
+  window.onresize = (event) => {
+    const marginTop = (window.innerHeight - (this.size.height * this.size.ratio)) / 2
+    this.el.style.marginTop = (marginTop - 20) + 'px'
+  }
+
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
