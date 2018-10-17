@@ -10,11 +10,11 @@ function FnQuery (pico, x, y) {
   this.info = 'Call a function by name, freezes 3 characters eastward.'
 
   if (pico) {
-    const cmd = `${pico.glyphAt(this.x + 1, this.y)}${pico.glyphAt(this.x + 2, this.y)}${pico.glyphAt(this.x + 3, this.y)}`
-    this.query = pico.lib.queries[cmd] ? new pico.lib.queries[cmd](pico, x + 3, y) : null
+    this.cmd = `${pico.glyphAt(this.x + 1, this.y)}${pico.glyphAt(this.x + 2, this.y)}${pico.glyphAt(this.x + 3, this.y)}`
+    this.query = pico.lib.queries[this.cmd] ? new pico.lib.queries[this.cmd](pico, x + 3, y) : null
   }
 
-  this.ports = [{ x: 1, y: 0, bang: true }, { x: 2, y: 0, bang: true }, { x: 3, y: 0, bang: true }]
+  this.ports = [{ x: 0, y: 0, bang: true }, { x: 1, y: 0, input: true }, { x: 2, y: 0, input: true }, { x: 3, y: 0, input: true }]
 
   if (this.query) {
     for (const id in this.query.ports) {
@@ -33,10 +33,9 @@ function FnQuery (pico, x, y) {
   }
 
   this.run = function () {
-    if (!this.bang()) { return }
-
-    const cmd = `${pico.glyphAt(this.x + 1, this.y)}${pico.glyphAt(this.x + 2, this.y)}${pico.glyphAt(this.x + 3, this.y)}`
-    if (cmd.indexOf('.') > -1) { return }
+    if (!this.north('b') && !this.west('b') && !this.south('b')) { return }
+    if (!this.query) { pico.terminal.log(`Unknown query <${this.cmd}>`); return }
+    if (this.cmd.indexOf('.') > -1) { return }
     this.query.run()
   }
 }

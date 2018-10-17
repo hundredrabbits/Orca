@@ -14,7 +14,9 @@ function Terminal (pico) {
   this.isPaused = false
   this.tile = { w: 12, h: 20 }
   this.debug = 'hello.'
+
   this.timer = null
+  this.bpm = 120
 
   this.install = function (host) {
     this.resize()
@@ -33,8 +35,8 @@ function Terminal (pico) {
   }
 
   this.setSpeed = function (bpm) {
-    bpm = clamp(bpm, 60, 300)
-    this.log(`Changed speed to ${bpm}.`)
+    this.bpm = clamp(bpm, 60, 300)
+    this.log(`Changed speed to ${this.bpm}.`)
     const ms = (60000 / bpm) / 4
     clearInterval(this.timer)
     this.timer = setInterval(() => { this.run() }, ms)
@@ -190,7 +192,7 @@ function Terminal (pico) {
       } else if (styles.is_port == 1) {
         ctx.fillStyle = this.theme.active.b_med
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
-        ctx.fillStyle = this.theme.active.f_low
+        ctx.fillStyle = this.theme.active.f_med
       } else if (styles.is_port == 3) {
         ctx.fillStyle = this.theme.active.b_low
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
