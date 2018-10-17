@@ -21,10 +21,11 @@ function FnQqq (pico, x, y) {
     if (!n) { return }
     const e = this.east()
 
+    const channel = 3
     const octave = !e ? 3 : this.convert(e.glyph)
     const note = this.convert(n.glyph)
     const velocity = 127
-    terminal.qqq.send(octave, note, velocity)
+    terminal.qqq.send(channel, octave, note, velocity)
   }
 
   this.convert = function (glyph) {

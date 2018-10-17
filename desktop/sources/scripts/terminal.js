@@ -45,6 +45,8 @@ function Terminal (pico) {
   this.run = function () {
     if (this.isPaused) { return }
 
+    this.qqq.clear()
+
     this.pico.run()
     this.qqq.run()
     this.update()

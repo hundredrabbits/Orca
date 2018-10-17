@@ -5,13 +5,25 @@ function QQQ (terminal) {
   this.volume = 1
   this.midi = false
   this.outputs = []
+  this.stack = []
 
   this.start = function () {
     this.midiSetup()
   }
 
-  this.run = function () {
+  this.clear = function () {
+    this.stack = []
+  }
 
+  this.run = function () {
+    if (this.stack.length < 1) { return }
+
+    let html = ''
+    for (const id in this.stack) {
+      const note = this.stack[id]
+      html += `Ch${note[0]}:${note[1]}+${note[2]}(${note[3]}) `
+    }
+    terminal.log(`Playing: ${html}`)
   }
 
   this.midiSetup = function () {
@@ -32,8 +44,8 @@ function QQQ (terminal) {
     console.warn('No Midi')
   }
 
-  this.send = function (octave, note, velocity) {
-    console.log('Received ', octave, note, velocity)
+  this.send = function (channel, octave, note, velocity) {
+    this.stack.push([channel, octave, note, velocity])
   }
 
   this.play = function () {
