@@ -23,14 +23,14 @@
 
 - `A`, **add**: Creates the result of the addition of east and west fns, southward.
 - `B`, **bang**: The bang is used to trigger various fns, only lasts one cycle.
-- `C`, **clamp**: Clamp the northern fn between the westward and eastward fn bang.
-- `D`, **deflect**: Converts neighboors into direction fns.
+- `C`, **clamp**: [FIX]Clamp the northern fn between the westward and eastward fn bang.
+- `D`, **deflect**: [FIX]Converts neighboors into direction fns.
 - `E`, **east**: Moves eastward, or bangs.
 - `F`, **if**: Bangs if east and west fns are equal, southward.
-- `G`, **generator**: Generates a direction fn from bang.
+- `G`, **generator**: [FIX]Generates a direction fn from bang.
 - `H`, **halt**: Stops southward fn from operating.
 - `I`, **increment**: Increments southward numeric fn on bang.
-- `J`, **jump**: [TODO]Moves the westward fn to eastward, or the eastward fn westward, on bang.
+- `J`, **jump**: Copies the northward fn, southwardly.
 - `K`, **kill**: [TODO]Kills southward fns, on bang.
 - `L`, **loop**: Loop a number of characters ahead.
 - `M`, **modulo**: Creates the result of the modulo operation of east and west fns, southward.
@@ -44,7 +44,7 @@
 - `U`, **idle**: [TODO]Nothing..
 - `V`, **value**: Creates a numerical value between 0 and 5 based on the number of present _fns_ westward.
 - `W`, **west**: Moves westward, or bangs.
-- `X`, **split**: Bangs eastward when westward fn is 0, and southward when fn is 1.
+- `X`, **split**: [FIX]Bangs eastward when westward fn is 0, and southward when fn is 1.
 - `Y`, **type**: Compares the type(num/alpha/special) of westward and eastward fns, and return 1 or 0 southward.
 - `Z`, **creep**: Moves to a the next available location in a cycle of E, S, W, N based on the runtime frame.
 

@@ -8,10 +8,10 @@ function FnT (pico, x, y) {
   this.name = 'trigger'
   this.glyph = 't'
   this.info = 'Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` northward.'
-  this.ports = [{ x: 0, y: -1 }, { x: 0, y: 1, output: true }]
+  this.ports = [{ x: -1, y: 0, bang: true }, { x: 0, y: 1, output: true }]
 
   this.operation = function () {
-    const n = this.north()
+    const n = this.west()
 
     if (!n) { return }
 

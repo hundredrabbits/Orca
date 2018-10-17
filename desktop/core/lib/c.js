@@ -6,7 +6,7 @@ function FnC (pico, x, y) {
 
   this.name = 'clamp'
   this.glyph = 'c'
-  this.info = 'Clamp the northern fn between the westward and eastward fn bang.'
+  this.info = '[FIX]Clamp the northern fn between the westward and eastward fn bang.'
   this.ports = [{ x: 0, y: 0, bang: true }, { x: 1, y: 0, output: true }, { x: -1, y: 0 }]
 
   this.operation = function () {

@@ -7,7 +7,7 @@ function FnG (pico, x, y) {
 
   this.name = 'generator'
   this.glyph = 'g'
-  this.info = 'Generates a direction fn from bang.'
+  this.info = '[FIX]Generates a direction fn from bang.'
 
   this.ports = [{ x: 0, y: 1, output: true }, { x: 0, y: 0, bang: true }]
 

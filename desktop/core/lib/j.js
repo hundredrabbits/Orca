@@ -8,24 +8,16 @@ function FnJ (pico, x, y) {
   // TODO
   this.name = 'jump'
   this.glyph = 'j'
-  this.info = '[TODO]Moves the westward fn to eastward, or the eastward fn westward, on bang.'
+  this.info = 'Copies the northward fn, southwardly.'
 
-  this.ports = [{ x: -1, y: 0 }, { x: 1, y: 0, output: true }, { x: 0, y: 0, bang: true }]
+  this.ports = [{ x: 0, y: -1, input: true }, { x: 0, y: 1, output: true }]
 
   this.operation = function () {
-    if (!this.bang()) { return }
+    const n = this.north()
+    if (!n) { return }
 
-    if (this.west()) {
-      pico.add(this.x + 1, this.y, this.west().glyph)
-      pico.remove(this.x - 1, this.y)
-      pico.lock(this.x - 1, this.y)
-      pico.lock(this.x + 1, this.y)
-    } else if (this.east()) {
-      pico.add(this.x - 1, this.y, this.east().glyph)
-      pico.remove(this.x + 1, this.y)
-      pico.lock(this.x - 1, this.y)
-      pico.lock(this.x + 1, this.y)
-    }
+    pico.add(this.x, this.y + 1, n.glyph)
+    pico.lock(this.x, this.y + 1)
   }
 }
 
