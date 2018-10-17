@@ -7,7 +7,7 @@ function Terminal (pico) {
   this.qqq = new QQQ(this)
   this.cursor = new Cursor(this)
   this.controller = new Controller()
-  this.theme = new Theme(this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#333333', f_low: '#000000', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' }))
+  this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#333333', f_low: '#000000', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' })
 
   this.pico = pico
   this.el = document.createElement('canvas')
@@ -204,6 +204,11 @@ function Terminal (pico) {
       ctx.fillStyle = 'white'
     }
     ctx.fillText(styles.isCursor && g == '.' ? (!pico.isPaused ? '@' : '~') : g.toUpperCase(), (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
+  }
+
+  this.reset = function()
+  {
+    this.theme.reset()
   }
 
   this.resize = function () {
