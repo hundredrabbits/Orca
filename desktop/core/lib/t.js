@@ -7,15 +7,15 @@ function FnT (pico, x, y) {
 
   this.name = 'trigger'
   this.glyph = 't'
-  this.info = 'Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` westward.'
-  this.ports = [{ x: -1, y: 0 }, { x: 0, y: 1, output: true }]
+  this.info = 'Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` northward.'
+  this.ports = [{ x: 0, y: -1 }, { x: 0, y: 1, output: true }]
 
   this.operation = function () {
-    const w = this.west()
+    const n = this.north()
 
-    if (!w) { return }
+    if (!n) { return }
 
-    if (w.glyph === '1' || w.glyph === 'w' || w.glyph === 's' || w.glyph === 'n' || w.glyph === 'e' || w.glyph === 'b' || w.glyph === 'z') {
+    if (n.glyph === '1' || n.glyph === 'w' || n.glyph === 's' || n.glyph === 'n' || n.glyph === 'e' || n.glyph === 'b' || n.glyph === 'z') {
       this.fire()
     }
   }

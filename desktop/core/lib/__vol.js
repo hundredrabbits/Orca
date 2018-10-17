@@ -7,7 +7,7 @@ function FnVol (pico, x, y) {
 
   this.name = 'volume'
   this.glyph = '?'
-  this.info = 'Set the volume for the Pico terminal.'
+  this.info = 'Sets the volume for the Pico terminal.'
 
   this.ports = [{ x: 1, y: 0, output: true }, { x: 2, y: 0, output: true }, { x: 3, y: 0, output: true }]
 

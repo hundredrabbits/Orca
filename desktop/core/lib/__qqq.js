@@ -7,9 +7,9 @@ function FnQqq (pico, x, y) {
 
   this.name = 'qqq'
   this.glyph = '?'
-  this.info = 'Play note.'
+  this.info = 'Plays note, on channel, with octave.'
 
-  this.ports = [{ x: 0, y: -1, input: true }, { x: 1, y: 0, output: true }]
+  this.ports = [{ x: 0, y: -1, output: true }, { x: 1, y: 0, output: true }, { x: 2, y: 0, output: true }]
 
   this.haste = function () {
     pico.lock(this.x, this.y - 1)

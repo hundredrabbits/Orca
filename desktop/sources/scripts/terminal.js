@@ -45,7 +45,9 @@ function Terminal (pico) {
   this.run = function () {
     if (this.isPaused) { return }
 
+    this.debug = 'Idle.'
     this.qqq.clear()
+    this.clear()
 
     this.pico.run()
     this.qqq.run()
@@ -72,9 +74,7 @@ function Terminal (pico) {
   }
 
   this.log = function (msg) {
-    console.info(msg)
     this.debug = msg
-    this.update()
   }
 
   this.update = function () {
@@ -206,8 +206,7 @@ function Terminal (pico) {
     ctx.fillText(styles.isCursor && g == '.' ? (!pico.isPaused ? '@' : '~') : g.toUpperCase(), (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
   }
 
-  this.reset = function()
-  {
+  this.reset = function () {
     this.theme.reset()
   }
 

@@ -40,7 +40,7 @@
 - `Q`, **even**: Adds 1 southward, transforms into O on bang.
 - `R`, **raycast**: Sends a bang to the nearest fn following the direction of the bang.
 - `S`, **south**: Moves southward, or bangs.
-- `T`, **trigger**: Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` westward.
+- `T`, **trigger**: Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` northward.
 - `U`, **idle**: [TODO]Nothing..
 - `V`, **value**: Creates a numerical value between 0 and 5 based on the number of present _fns_ westward.
 - `W`, **west**: Moves westward, or bangs.
@@ -59,8 +59,9 @@
 
 ### queries functions
 
-- `BPM`, **bpm**: Set the speed for the Pico terminal.
-- `VOL`, **volume**: Set the volume for the Pico terminal.
+- `BPM`, **bpm**: Sets the speed for the Pico terminal.
+- `VOL`, **volume**: Sets the volume for the Pico terminal.
+- `QQQ`, **qqq**: Plays note, on channel, with octave.
 
 ## Logic Functions
 
@@ -88,23 +89,24 @@ npm start
 
 ```
 function frequencyFromNoteNumber(note) {
-    return 440 * Math.pow(2, (note - 69) / 12);
+  return 440 * Math.pow(2, (note - 69) / 12);
 }
 ```
 
 - Note values are on a range from 0–127, lowest to highest. For example, the lowest note on an 88-key piano has a value of 21, and the highest note is 108. A “middle C” is 60.
 - Velocity values are also given on a range from 0–127 (softest to loudest). The softest possible “note on” velocity is 1.
 
-
 ## TODO
 
 The idea is to build a synth/mini sequencer, here's some tasks I need to tackle before then.
 
-[ ] Add `:MID[CD]`
-[ ] custom synth functions, like `:SYN[ADSR](C)`
-[ ] "I wanna be able to 1000x fastforward my pico programs"
-[ ] sub programs scope
-[ ] Implement midi
+- [ ] Add `:MID[CD]`
+- [ ] custom synth functions, like `:SYN[ADSR](C)`
+- [ ] sub programs scope
+- [ ] Implement midi
+- [ ] Finish midi channel implementation
+- [ ] Convert notes to midi values
+
 
 ## Extras
 
