@@ -203,7 +203,7 @@ function Terminal (pico) {
     } else {
       ctx.fillStyle = 'white'
     }
-    ctx.fillText(styles.isCursor && g === '.' ? (!pico.isPaused ? '@' : '~') : g.toUpperCase(), (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
+    ctx.fillText(styles.isCursor && g === '.' ? (!pico.isPaused ? '@' : '~') : g, (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
   }
 
   this.reset = function () {

@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnD (pico, x, y) {
-  FnBase.call(this, pico, x, y)
+function FnD (pico, x, y, passive) {
+  FnBase.call(this, pico, x, y, passive)
 
   this.name = 'deflect'
   this.glyph = 'd'

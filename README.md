@@ -88,6 +88,8 @@ The idea is to build a synth/mini sequencer, here's some tasks I need to tackle 
 - [ ] Finish midi channel implementation
 - [ ] Convert notes to midi values
 - [ ] Implement a block comment syntax
+- [ ] Maybe caps should all be passive? 
+- [ ] Maybe lowercase trigger only on bang?
 
 ## Extras
 

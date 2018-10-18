@@ -2,8 +2,8 @@
 
 const FnMove = require('./_move')
 
-function FnW (pico, x, y) {
-  FnMove.call(this, pico, x, y)
+function FnW (pico, x, y, passive) {
+  FnMove.call(this, pico, x, y, passive)
 
   this.type = 'direction'
   this.name = 'west'

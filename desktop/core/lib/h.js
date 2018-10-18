@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnH (pico, x, y) {
-  FnBase.call(this, pico, x, y)
+function FnH (pico, x, y, passive) {
+  FnBase.call(this, pico, x, y, passive)
 
   this.type = 'stopper'
   this.name = 'halt'

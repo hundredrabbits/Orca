@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnQqq (pico, x, y) {
-  FnBase.call(this, pico, x, y)
+function FnQqq (pico, x, y, passive) {
+  FnBase.call(this, pico, x, y, passive)
 
   this.type = 'midi'
   this.name = 'qqq'

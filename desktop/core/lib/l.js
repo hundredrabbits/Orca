@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnL (pico, x, y) {
-  FnBase.call(this, pico, x, y)
+function FnL (pico, x, y, passive) {
+  FnBase.call(this, pico, x, y, passive)
 
   this.type = 'list'
   this.name = 'loop'

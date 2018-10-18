@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnQ (pico, x, y) {
-  FnBase.call(this, pico, x, y)
+function FnQ (pico, x, y, passive) {
+  FnBase.call(this, pico, x, y, passive)
 
   this.name = 'even'
   this.glyph = 'q'

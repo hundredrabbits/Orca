@@ -41,7 +41,7 @@ function QQQ (terminal) {
   }
 
   this.midiInactive = function (err) {
-    console.warn('No Midi',err)
+    console.warn('No Midi', err)
   }
 
   this.send = function (channel, octave, note, velocity) {

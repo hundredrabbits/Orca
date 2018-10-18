@@ -44,6 +44,19 @@ function Pico (w, h) {
     }
   }
 
+  this.findFn = function (g, x, y) {
+    if (g === '.') { return }
+
+    if (this.lib.special[g]) {
+      return new this.lib.special[g](this, x, y)
+    }
+
+    if (this.lib.alpha[g.toLowerCase()]) {
+      const passive = g === g.toUpperCase()
+      return new this.lib.alpha[g.toLowerCase()](this, x, y, passive)
+    }
+  }
+
   this.findFns = function () {
     const a = []
     let y = 0
@@ -51,11 +64,9 @@ function Pico (w, h) {
       let x = 0
       while (x < this.w) {
         const g = this.glyphAt(x, y)
-        if (this.lib.alpha[g]) {
-          a.push(new this.lib.alpha[g](this, x, y))
-        }
-        if (this.lib.special[g]) {
-          a.push(new this.lib.special[g](this, x, y))
+        const fn = this.findFn(g, x, y)
+        if (fn) {
+          a.push(fn)
         }
         x += 1
       }
@@ -68,15 +79,15 @@ function Pico (w, h) {
     this.unlock()
     // Move
     for (const id in fns) {
-      const p = fns[id]
-      if (this.isLocked(p.x, p.y)) { continue }
-      p.haste()
+      const fn = fns[id]
+      if (this.isLocked(fn.x, fn.y)) { continue }
+      fn.haste()
     }
     // Operate
     for (const id in fns) {
-      const p = fns[id]
-      if (this.isLocked(p.x, p.y)) { continue }
-      p.run()
+      const fn = fns[id]
+      if (this.isLocked(fn.x, fn.y)) { continue }
+      fn.run()
     }
   }
 
@@ -85,7 +96,7 @@ function Pico (w, h) {
   }
 
   this.add = function (x, y, ch) {
-    const glyph = ch.substr(0, 1).toLowerCase()
+    const glyph = ch.substr(0, 1)
     if (!this.isAllowed(glyph)) { this.terminal.log(`[${glyph}] is not allowed`); return }
     if (!this.inBounds(x, y)) { this.terminal.log(`[${glyph}] is out of range`); return }
     const index = this.indexAt(x, y)
@@ -112,7 +123,7 @@ function Pico (w, h) {
   }
 
   this.isAllowed = function (g) {
-    return this.lib.alpha[g] || this.lib.num[g] || this.lib.special[g]
+    return this.lib.alpha[g.toLowerCase()] || this.lib.num[g] || this.lib.special[g]
   }
 
   this.glyphAt = function (x, y, req = null) {

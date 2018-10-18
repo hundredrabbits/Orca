@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnA (pico, x, y) {
-  FnBase.call(this, pico, x, y)
+function FnA (pico, x, y, passive) {
+  FnBase.call(this, pico, x, y, passive)
 
   this.type = 'math'
   this.name = 'add'

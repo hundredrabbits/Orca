@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnR (pico, x, y) {
-  FnBase.call(this, pico, x, y)
+function FnR (pico, x, y, passive) {
+  FnBase.call(this, pico, x, y, passive)
 
   this.type = 'transport'
   this.name = 'raycast'

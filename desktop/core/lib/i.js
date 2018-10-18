@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnI (pico, x, y) {
-  FnBase.call(this, pico, x, y)
+function FnI (pico, x, y, passive) {
+  FnBase.call(this, pico, x, y, passive)
 
   this.type = 'trigger'
   this.name = 'increment'

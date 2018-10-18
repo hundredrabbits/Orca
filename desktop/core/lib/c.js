@@ -1,8 +1,8 @@
 'use strict'
 
 const FnBase = require('./_base')
-function FnC (pico, x, y) {
-  FnBase.call(this, pico, x, y)
+function FnC (pico, x, y, passive) {
+  FnBase.call(this, pico, x, y, passive)
 
   this.name = 'clamp'
   this.glyph = 'c'

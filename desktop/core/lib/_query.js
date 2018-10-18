@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnQuery (pico, x, y) {
-  FnBase.call(this, pico, x, y)
+function FnQuery (pico, x, y, passive) {
+  FnBase.call(this, pico, x, y, passive)
 
   this.name = 'query'
   this.glyph = ':'

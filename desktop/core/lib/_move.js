@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnMove (pico, x, y) {
-  FnBase.call(this, pico, x, y)
+function FnMove (pico, x, y, passive) {
+  FnBase.call(this, pico, x, y, passive)
 
   this.direction = true
 

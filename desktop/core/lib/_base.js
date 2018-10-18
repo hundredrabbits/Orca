@@ -1,6 +1,6 @@
 'use strict'
 
-function FnBase (pico, x, y) {
+function FnBase (pico, x, y, passive) {
   this.x = x
   this.y = y
   this.name = '<missing name>'

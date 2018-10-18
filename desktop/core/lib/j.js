@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnJ (pico, x, y) {
-  FnBase.call(this, pico, x, y)
+function FnJ (pico, x, y, passive) {
+  FnBase.call(this, pico, x, y, passive)
 
   // TODO
   this.name = 'jump'

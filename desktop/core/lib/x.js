@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnX (pico, x, y) {
-  FnBase.call(this, pico, x, y)
+function FnX (pico, x, y, passive) {
+  FnBase.call(this, pico, x, y, passive)
 
   this.name = 'split'
   this.glyph = 'x'
