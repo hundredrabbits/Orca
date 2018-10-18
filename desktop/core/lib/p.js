@@ -5,10 +5,11 @@ const FnBase = require('./_base')
 function FnP (pico, x, y, passive) {
   FnBase.call(this, pico, x, y, passive)
 
+  this.type = 'direction'
   this.name = 'push'
   this.glyph = 'p'
   this.info = 'Moves away, on bang.'
-  this.ports = [{ x: 0, y: 0, bang: true }]
+  this.ports.push({ x: 0, y: 0, bang: true })
 
   this.operation = function () {
     const origin = this.bang()

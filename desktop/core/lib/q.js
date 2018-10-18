@@ -5,16 +5,32 @@ const FnBase = require('./_base')
 function FnQ (pico, x, y, passive) {
   FnBase.call(this, pico, x, y, passive)
 
-  this.name = 'even'
-  this.glyph = 'q'
-  this.info = '[FIX]Adds 1 southward, transforms into O on bang.'
-  this.ports = [{ x: 0, y: 0, bang: true }, { x: 0, y: 1, output: true }]
+  this.name = 'query'
+  this.glyph = ':'
+  this.info = 'Call a function by name, freezes 3 characters eastward.'
 
-  this.operation = function () {
-    if (this.bang()) {
-      this.replace('o')
+  if (pico) {
+    this.cmd = `${pico.glyphAt(this.x + 1, this.y)}${pico.glyphAt(this.x + 2, this.y)}${pico.glyphAt(this.x + 3, this.y)}`.toLowerCase()
+    this.query = pico.lib.queries[this.cmd] ? new pico.lib.queries[this.cmd](pico, x + 3, y) : null
+  }
+
+  this.ports.push({ x: 1, y: 0, input: true })
+  this.ports.push({ x: 2, y: 0, input: true })
+  this.ports.push({ x: 3, y: 0, input: true })
+
+  this.haste = function () {
+    pico.lock(this.x + 1, this.y)
+    pico.lock(this.x + 2, this.y)
+    pico.lock(this.x + 3, this.y)
+    if (this.query) {
+      this.query.haste()
     }
-    pico.add(this.x, this.y + 1, '1')
+  }
+
+  this.run = function () {
+    if (!this.query) { pico.terminal.log(`Unknown query <${this.cmd}>`); return }
+    if (this.cmd.indexOf('.') > -1) { return }
+    this.query.run()
   }
 }
 

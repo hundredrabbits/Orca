@@ -9,10 +9,10 @@ function FnK (pico, x, y, passive) {
   this.name = 'kill'
   this.glyph = 'k'
   this.info = 'Kills southward fns, on bang.'
-  this.ports = [{ x: 0, y: 0, bang: true }, { x: 0, y: 1, output: true }]
+  this.ports.push({ x: 0, y: 0, bang: true })
+  this.ports.push({ x: 0, y: 1, output: true })
 
   this.operation = function () {
-    if (!this.bang()) { return }
     pico.remove(this.x, this.y + 1)
   }
 }

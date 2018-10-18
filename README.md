@@ -9,7 +9,6 @@
 ### alpha functions
 
 - `A`, **add**(math): Creates the result of the addition of east and west fns, southward.
-- `B`, **bang**(unique): The bang is used to trigger various fns, only lasts one cycle.
 - `E`, **east**(direction): Moves eastward, or bangs.
 - `F`, **if**(math): Bangs if east and west fns are equal, southward.
 - `G`, **generator**(transport): Generates a direction fn from bang.
@@ -19,6 +18,7 @@
 - `L`, **loop**(list): Loop a number of characters ahead.
 - `M`, **modulo**(math): Creates the result of the modulo operation of east and west fns, southward.
 - `N`, **north**(direction): Moves Northward, or bangs.
+- `P`, **push**(direction): Moves away, on bang.
 - `R`, **raycast**(transport): Sends a bang to the nearest fn following the direction of the bang.
 - `S`, **south**(direction): Moves southward, or bangs.
 - `W`, **west**(direction): Moves westward, or bangs.
@@ -28,7 +28,7 @@
 
 - `-`, **wire-h**(wire): Send data along the wire, horizontally.
 - `|`, **wire-v**(wire): Send data along the wire, vertically.
-- `*`, **wire-n**(wire): Send data along the wire, entry or exit.
+- `~`, **wire-n**(wire): Send data along the wire, entry or exit.
 - `+`, **wire-f**(wire): Send data along the wire, across an intersection.
 
 ### queries functions
@@ -40,8 +40,7 @@
 ### Functions(By Type)
 
 - **maths**: `a` `f` `m` `y`.
-- **uniques**: `b`.
-- **directions**: `e` `n` `s` `w`.
+- **directions**: `e` `n` `p` `s` `w`.
 - **transports**: `g` `r`.
 - **stoppers**: `h`.
 - **triggers**: `i` `k`.
@@ -81,7 +80,6 @@ function frequencyFromNoteNumber(note) {
 
 The idea is to build a synth/mini sequencer, here's some tasks I need to tackle before then.
 
-- [ ] Replace bang with `*`
 - [ ] Add `:MID[CD]`
 - [ ] custom synth functions, like `:SYN[ADSR](C)`
 - [ ] sub programs scope
@@ -89,8 +87,7 @@ The idea is to build a synth/mini sequencer, here's some tasks I need to tackle 
 - [ ] Finish midi channel implementation
 - [ ] Convert notes to midi values
 - [ ] Implement a block comment syntax
-- [ ] Maybe caps should all be passive? 
-- [ ] Maybe lowercase trigger only on bang?
+- [ ] Fix M
 
 ## Extras
 

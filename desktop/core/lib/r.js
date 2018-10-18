@@ -10,8 +10,6 @@ function FnR (pico, x, y, passive) {
   this.glyph = 'r'
   this.info = 'Sends a bang to the nearest fn following the direction of the bang.'
 
-  this.ports = [{ x: 0, y: 0, bang: true }]
-
   this.operation = function () {
     const origin = this.bang()
     if (!origin) { return }

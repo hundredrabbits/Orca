@@ -9,7 +9,10 @@ function FnI (pico, x, y, passive) {
   this.name = 'increment'
   this.glyph = 'i'
   this.info = 'Increments southward numeric fn on bang.'
-  this.ports = [{ x: 0, y: 0, bang: true }, { x: 0, y: 1, output: true }, { x: 1, y: 0, input: true }, { x: -1, y: 0, input: true }]
+  this.ports.push({ x: 0, y: 0, bang: true })
+  this.ports.push({ x: 0, y: 1, output: true })
+  this.ports.push({ x: 1, y: 0, input: true })
+  this.ports.push({ x: -1, y: 0, input: true })
 
   this.haste = function () {
     pico.lock(this.x, this.y + 1)
@@ -18,8 +21,6 @@ function FnI (pico, x, y, passive) {
   }
 
   this.operation = function () {
-    if (!this.bang()) { return }
-
     const w = this.west()
     const e = this.east()
     const s = this.south()

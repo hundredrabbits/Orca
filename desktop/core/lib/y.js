@@ -9,7 +9,9 @@ function FnY (pico, x, y, passive) {
   this.name = 'type'
   this.glyph = 'y'
   this.info = 'Compares the type(num/alpha/special) of westward and eastward fns, and return 1 or 0 southward.'
-  this.ports = [{ x: -1, y: 0, input: true }, { x: 1, y: 0, input: true }, { x: 0, y: 1, output: true }]
+  this.ports.push({ x: -1, y: 0, input: true })
+  this.ports.push({ x: 1, y: 0, input: true })
+  this.ports.push({ x: 0, y: 1, output: true })
 
   this.haste = function () {
     pico.lock(this.x, this.y + 1)

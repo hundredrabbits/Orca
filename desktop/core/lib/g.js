@@ -9,14 +9,17 @@ function FnG (pico, x, y, passive) {
   this.name = 'generator'
   this.glyph = 'g'
   this.info = 'Generates a direction fn from bang.'
-  this.ports = [{ x: 0, y: 0, bang: true }]
+  this.ports.push({ x: 0, y: 0, bang: true })
 
   this.operation = function () {
-    const origin = this.bang()
-    if (!origin) { return }
+    const bang = this.bang()
+    const origin = bang || { x: this.x, y: this.y - 1 }
+
+    if (this.south()) { return }
+    if (!bang && pico.f % 2 !== 0) { return }
+
     const vector = { x: this.x - origin.x, y: this.y - origin.y }
-    const beam = { x: this.x + vector.x, y: this.y + vector.y }
-    pico.add(beam.x, beam.y, vector.x === 1 ? 'e' : vector.x === -1 ? 'w' : vector.y === -1 ? 'n' : 's')
+    pico.add(this.x + vector.x, this.y + vector.y, vector.x === 1 ? 'E' : vector.x === -1 ? 'W' : vector.y === -1 ? 'N' : 'S')
   }
 }
 
