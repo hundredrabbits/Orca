@@ -43,10 +43,11 @@ module.exports = {
   },
   special: {
     '.': require('./lib/_null'),
+    '*': require('./lib/_bang'),
     ':': require('./lib/_query'),
     '-': require('./lib/_wireh'),
     '|': require('./lib/_wirev'),
-    '*': require('./lib/_wiren'),
+    '~': require('./lib/_wiren'),
     '+': require('./lib/_wiref')
   },
   queries: {

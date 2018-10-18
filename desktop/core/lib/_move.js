@@ -9,7 +9,7 @@ function FnMove (pico, x, y, passive) {
 
   this.proceed = function (ahead, behind, paralG, perpeG, posAhead, moveLeft, moveAcross, moveRight) {
     const wireAhead = ahead && ahead.glyph === paralG
-    const wireBehind = behind && (behind.glyph === paralG || behind.glyph === '*' || behind.glyph === '+')
+    const wireBehind = behind && (behind.glyph === paralG || behind.glyph === '~' || behind.glyph === '+')
 
     // Is On Wire
     if (wireAhead && wireBehind) {
@@ -18,13 +18,13 @@ function FnMove (pico, x, y, passive) {
       return true
     }
     // Entering Wire
-    else if (!wireBehind && ahead && (ahead.glyph === '*' || ahead.glyph === '+')) {
+    else if (!wireBehind && ahead && (ahead.glyph === '~' || ahead.glyph === '+')) {
       pico.add(moveAcross.x, moveAcross.y, moveAcross.glyph)
       this.remove()
       return true
     }
     // At Splitter
-    else if (ahead && ahead.glyph === '*') {
+    else if (ahead && ahead.glyph === '~') {
       let eject = true
       // Left Turn
       if (pico.glyphAt(moveLeft.x, moveLeft.y) === perpeG) {

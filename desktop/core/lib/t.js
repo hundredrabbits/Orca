@@ -15,13 +15,13 @@ function FnT (pico, x, y, passive) {
 
     if (!n) { return }
 
-    if (n.glyph === '1' || n.glyph === 'w' || n.glyph === 's' || n.glyph === 'n' || n.glyph === 'e' || n.glyph === 'b' || n.glyph === 'z') {
+    if (n.glyph === '1' || n.glyph === 'w' || n.glyph === 's' || n.glyph === 'n' || n.glyph === 'e' || n.glyph === '*' || n.glyph === 'z') {
       this.fire()
     }
   }
 
   this.fire = function () {
-    pico.add(this.x, this.y + 1, 'b')
+    pico.add(this.x, this.y + 1, '*')
     pico.lock(this.x, this.y + 1)
   }
 }

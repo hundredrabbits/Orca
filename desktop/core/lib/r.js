@@ -20,10 +20,10 @@ function FnR (pico, x, y, passive) {
     let prev = beam
     while (pico.inBounds(beam.x, beam.y)) {
       beam = { x: beam.x + vector.x, y: beam.y + vector.y }
-      const busy = pico.glyphAt(beam.x, beam.y) !== '.' && pico.glyphAt(beam.x, beam.y) !== 'b'
+      const busy = pico.glyphAt(beam.x, beam.y) !== '.' && pico.glyphAt(beam.x, beam.y) !== '*'
       const outside = !pico.inBounds(beam.x, beam.y)
       if (busy || outside) {
-        pico.add(prev.x, prev.y, 'b')
+        pico.add(prev.x, prev.y, '*')
         break
       }
       prev = beam

@@ -81,13 +81,17 @@ function Pico (w, h) {
     for (const id in fns) {
       const fn = fns[id]
       if (this.isLocked(fn.x, fn.y)) { continue }
-      fn.haste()
+      if (fn.passive || fn.bang()) {
+        fn.haste()
+      }
     }
     // Operate
     for (const id in fns) {
       const fn = fns[id]
       if (this.isLocked(fn.x, fn.y)) { continue }
-      fn.run()
+      if (fn.passive || fn.bang()) {
+        fn.run()
+      }
     }
   }
 

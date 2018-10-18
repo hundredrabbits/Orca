@@ -7,12 +7,12 @@ function FnS (pico, x, y, passive) {
 
   this.type = 'direction'
   this.name = 'south'
-  this.glyph = 's'
+  this.glyph = passive ? 'S' : 's'
   this.info = 'Moves southward, or bangs.'
 
   this.haste = function () {
-    if (this.signal()) { return }
-    if (this.is_free(0, 1) !== true) { this.replace('b'); return }
+    // if (this.signal()) { return }
+    if (this.is_free(0, 1) !== true) { this.replace('*'); return }
     this.move(0, 1)
   }
 }

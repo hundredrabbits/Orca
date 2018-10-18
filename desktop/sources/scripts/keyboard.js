@@ -36,9 +36,6 @@ function Keyboard () {
 
     if (event.key.length === 1) {
       terminal.cursor.insert(event.key)
-      if (event.shiftKey) {
-        terminal.cursor.move(1, 0)
-      }
       terminal.update()
     }
   }

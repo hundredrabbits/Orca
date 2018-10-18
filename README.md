@@ -81,6 +81,7 @@ function frequencyFromNoteNumber(note) {
 
 The idea is to build a synth/mini sequencer, here's some tasks I need to tackle before then.
 
+- [ ] Replace bang with `*`
 - [ ] Add `:MID[CD]`
 - [ ] custom synth functions, like `:SYN[ADSR](C)`
 - [ ] sub programs scope

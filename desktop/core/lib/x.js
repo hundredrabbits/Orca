@@ -20,7 +20,7 @@ function FnX (pico, x, y, passive) {
   }
 
   this.fire = function (x, y) {
-    pico.add(this.x + x, this.y + y, 'b')
+    pico.add(this.x + x, this.y + y, '*')
     pico.lock(this.x + x, this.y + y)
   }
 }

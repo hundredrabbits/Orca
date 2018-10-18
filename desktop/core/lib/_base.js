@@ -1,14 +1,19 @@
 'use strict'
 
-function FnBase (pico, x, y, passive) {
+function FnBase (pico, x, y, passive = false) {
   this.x = x
   this.y = y
+  this.passive = passive
   this.name = '<missing name>'
   this.glyph = '.'
   this.type = 'misc'
   this.info = 'Missing docs.'
   this.ports = []
   this.docs = 'Hello!'
+
+  if (!passive) {
+    this.ports.push({ x: 0, y: 0, bang: true })
+  }
 
   this.id = function () {
     return this.x + (this.y * pico.h)
@@ -51,7 +56,7 @@ function FnBase (pico, x, y, passive) {
     if (this.y + y <= -1) { return false }
 
     const target = pico.glyphAt(this.x + x, this.y + y)
-    return target === '.' || target === 'b' ? true : target
+    return target === '.' || target === '*' ? true : target
   }
 
   this.neighbor_by = function (x, y) {
@@ -72,7 +77,7 @@ function FnBase (pico, x, y, passive) {
   }
 
   this.bang = function () {
-    const ns = this.neighbors('b')
+    const ns = this.neighbors('*')
     for (const id in ns) {
       const n = ns[id]
       return { x: n.x, y: n.y }

@@ -9,7 +9,10 @@ function FnA (pico, x, y, passive) {
   this.name = 'add'
   this.glyph = 'a'
   this.info = 'Creates the result of the addition of east and west fns, southward.'
-  this.ports = [{ x: -1, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 1, output: true }]
+
+  this.ports.push({ x: -1, y: 0 })
+  this.ports.push({ x: 1, y: 0 })
+  this.ports.push({ x: 0, y: 1, output: true })
 
   this.haste = function () {
     pico.lock(this.x, this.y + 1)

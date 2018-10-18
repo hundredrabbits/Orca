@@ -33,7 +33,7 @@ function FnQuery (pico, x, y, passive) {
   }
 
   this.run = function () {
-    if (!this.north('b') && !this.west('b') && !this.south('b')) { return }
+    if (!this.north('*') && !this.west('*') && !this.south('*')) { return }
     if (!this.query) { pico.terminal.log(`Unknown query <${this.cmd}>`); return }
     if (this.cmd.indexOf('.') > -1) { return }
     this.query.run()
