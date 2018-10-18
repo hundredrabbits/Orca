@@ -1,9 +1,9 @@
 'use strict'
 
-const FnMove = require('./_move')
+const FnBase = require('./_base')
 
 function FnS (pico, x, y, passive) {
-  FnMove.call(this, pico, x, y, passive)
+  FnBase.call(this, pico, x, y, passive)
 
   this.type = 'direction'
   this.name = 'south'
@@ -11,7 +11,6 @@ function FnS (pico, x, y, passive) {
   this.info = 'Moves southward, or bangs.'
 
   this.haste = function () {
-    if (this.signal()) { return }
     if (this.is_free(0, 1) !== true) { this.replace('*'); return }
     this.move(0, 1)
   }

@@ -8,7 +8,6 @@ for(const type in lib){
   console.log(`\n### ${type} functions\n`)
   for(const id in lib[type]){
     const fn = new lib[type][id]()
-    if(fn.type === 'misc'){ continue; }
     if(type !== 'queries'){
       if(!types[fn.type]){types[fn.type] = []}
       types[fn.type].push(fn)  
@@ -19,7 +18,6 @@ for(const type in lib){
 
 console.log("\n### Functions(By Type)\n")
 for(const id in types){
-  if(id === 'misc'){ continue; }
   console.log(`- **${id}s**: ${types[id].reduce((acc,val) => { return `${acc}\`${val.glyph}\` `},"").trim()}.`)
 }
 console.log("\n")

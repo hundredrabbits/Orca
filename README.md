@@ -9,27 +9,36 @@
 ### alpha functions
 
 - `A`, **add**(math): Creates the result of the addition of east and west fns, southward.
+- `B`, **<missing name>**: Missing docs.
+- `C`, **<missing name>**: Missing docs.
+- `D`, **<missing name>**: Missing docs.
 - `E`, **east**(direction): Moves eastward, or bangs.
 - `F`, **if**(math): Bangs if east and west fns are equal, southward.
 - `G`, **generator**(transport): Generates a direction fn from bang.
 - `H`, **halt**(stopper): Stops southward fn from operating.
 - `I`, **increment**(trigger): Increments southward numeric fn on bang.
+- `J`, **jump**: Copies the northward fn, southwardly.
 - `K`, **kill**(trigger): Kills southward fns, on bang.
 - `L`, **loop**(list): Loop a number of characters ahead.
 - `M`, **modulo**(math): Creates the result of the modulo operation of east and west fns, southward.
 - `N`, **north**(direction): Moves Northward, or bangs.
+- `O`, **<missing name>**: Missing docs.
 - `P`, **push**(direction): Moves away, on bang.
+- `Q`, **query**: Call a function by name, freezes 3 characters eastward.
 - `R`, **raycast**(transport): Sends a bang to the nearest fn following the direction of the bang.
 - `S`, **south**(direction): Moves southward, or bangs.
+- `T`, **trigger**: Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` northward.
+- `U`, **<missing name>**: Missing docs.
+- `V`, **value**: Creates a numerical value between 0 and 5 based on the number of present _fns_ westward.
 - `W`, **west**(direction): Moves westward, or bangs.
+- `X`, **split**: [FIX]Bangs eastward when westward fn is 0, and southward when fn is 1.
 - `Y`, **type**(math): Compares the type(num/alpha/special) of westward and eastward fns, and return 1 or 0 southward.
+- `Z`, **creep**: Moves to a the next available location in a cycle of E, S, W, N based on the runtime frame.
 
 ### special functions
 
-- `-`, **wire-h**(wire): Send data along the wire, horizontally.
-- `|`, **wire-v**(wire): Send data along the wire, vertically.
-- `~`, **wire-n**(wire): Send data along the wire, entry or exit.
-- `+`, **wire-f**(wire): Send data along the wire, across an intersection.
+- `.`, **null**: void
+- `*`, **bang**: Bangs!
 
 ### queries functions
 
@@ -40,12 +49,12 @@
 ### Functions(By Type)
 
 - **maths**: `a` `f` `m` `y`.
+- **miscs**: `.` `.` `.` `j` `.` `:` `t` `.` `v` `x` `z` `.` `*`.
 - **directions**: `e` `n` `p` `s` `w`.
 - **transports**: `g` `r`.
 - **stoppers**: `h`.
 - **triggers**: `i` `k`.
 - **lists**: `l`.
-- **wires**: `-` `|` `*` `-`.
 
 ## CLI
 

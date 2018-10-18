@@ -9,7 +9,7 @@ function FnBang (pico, x, y, passive) {
   this.glyph = '*'
   this.info = 'Bangs!'
 
-  this.operation = function () {
+  this.haste = function () {
     this.remove()
   }
 }
