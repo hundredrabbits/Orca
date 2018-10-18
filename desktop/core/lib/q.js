@@ -7,7 +7,7 @@ function FnQ (pico, x, y) {
 
   this.name = 'even'
   this.glyph = 'q'
-  this.info = 'Adds 1 southward, transforms into O on bang.'
+  this.info = '[FIX]Adds 1 southward, transforms into O on bang.'
   this.ports = [{ x: 0, y: 0, bang: true }, { x: 0, y: 1, output: true }]
 
   this.operation = function () {

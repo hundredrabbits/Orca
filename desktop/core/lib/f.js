@@ -5,6 +5,7 @@ const FnBase = require('./_base')
 function FnF (pico, x, y) {
   FnBase.call(this, pico, x, y)
 
+  this.type = 'math'
   this.name = 'if'
   this.glyph = 'f'
   this.info = 'Bangs if east and west fns are equal, southward.'

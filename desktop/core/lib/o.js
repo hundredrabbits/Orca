@@ -7,7 +7,7 @@ function FnO (pico, x, y) {
 
   this.name = 'odd'
   this.glyph = 'o'
-  this.info = 'Adds 0 southward, transforms into Q on bang.'
+  this.info = '[FIX]Adds 0 southward, transforms into Q on bang.'
   this.ports = [{ x: 0, y: 0, bang: true }, { x: 0, y: -1 }]
 
   this.operation = function () {

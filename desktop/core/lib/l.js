@@ -5,6 +5,7 @@ const FnBase = require('./_base')
 function FnL (pico, x, y) {
   FnBase.call(this, pico, x, y)
 
+  this.type = 'list'
   this.name = 'loop'
   this.glyph = 'l'
   this.info = 'Loop a number of characters ahead.'

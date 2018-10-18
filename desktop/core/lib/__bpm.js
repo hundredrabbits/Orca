@@ -5,6 +5,7 @@ const FnBase = require('./_base')
 function FnBpm (pico, x, y) {
   FnBase.call(this, pico, x, y)
 
+  this.type = 'midi'
   this.name = 'bpm'
   this.glyph = '?'
   this.info = 'Sets the speed for the Pico terminal.'
@@ -20,7 +21,7 @@ function FnBpm (pico, x, y) {
   this.run = function () {
     const val = `${pico.glyphAt(this.x + 1, this.y)}${pico.glyphAt(this.x + 2, this.y)}${pico.glyphAt(this.x + 3, this.y)}`
 
-    if (parseInt(val) == pico.terminal.bpm) { return }
+    if (parseInt(val) === pico.terminal.bpm) { return }
 
     if (val.indexOf('.') > -1) {
       const bpm = pad(pico.terminal.bpm)

@@ -5,6 +5,7 @@ const FnBase = require('./_base')
 function FnQqq (pico, x, y) {
   FnBase.call(this, pico, x, y)
 
+  this.type = 'midi'
   this.name = 'qqq'
   this.glyph = '?'
   this.info = 'Plays note, on channel, with octave.'

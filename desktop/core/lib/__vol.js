@@ -5,6 +5,7 @@ const FnBase = require('./_base')
 function FnVol (pico, x, y) {
   FnBase.call(this, pico, x, y)
 
+  this.type = 'midi'
   this.name = 'volume'
   this.glyph = '?'
   this.info = 'Sets the volume for the Pico terminal.'

@@ -6,35 +6,35 @@ function Keyboard () {
 
   this.listen_onkeydown = function (event) {
     // Reset
-    if ((event.metaKey || event.ctrlKey) && event.key == 'Backspace') {
+    if ((event.metaKey || event.ctrlKey) && event.key === 'Backspace') {
       terminal.reset()
       event.preventDefault()
       return
     }
     // Pause
-    if ((event.metaKey || event.ctrlKey) && event.key == 'p') {
+    if ((event.metaKey || event.ctrlKey) && event.key === 'p') {
       terminal.pause()
       event.preventDefault()
       return
     }
 
-    if (event.key == 'c' && event.metaKey) { terminal.cursor.copy(); return }
-    if (event.key == 'v' && event.metaKey) { terminal.cursor.paste(); return }
-    if (event.key == 'x' && event.metaKey) { terminal.cursor.cut(); return }
+    if (event.key === 'c' && event.metaKey) { terminal.cursor.copy(); return }
+    if (event.key === 'v' && event.metaKey) { terminal.cursor.paste(); return }
+    if (event.key === 'x' && event.metaKey) { terminal.cursor.cut(); return }
 
-    if (event.keyCode == 38) { keyboard.key_arrow_up(event.shiftKey); return }
-    if (event.keyCode == 40) { keyboard.key_arrow_down(event.shiftKey); return }
-    if (event.keyCode == 37) { keyboard.key_arrow_left(event.shiftKey); return }
-    if (event.keyCode == 39) { keyboard.key_arrow_right(event.shiftKey); return }
+    if (event.keyCode === 38) { keyboard.key_arrow_up(event.shiftKey); return }
+    if (event.keyCode === 40) { keyboard.key_arrow_down(event.shiftKey); return }
+    if (event.keyCode === 37) { keyboard.key_arrow_left(event.shiftKey); return }
+    if (event.keyCode === 39) { keyboard.key_arrow_right(event.shiftKey); return }
 
     if (event.metaKey) { return }
     if (event.ctrlKey) { return }
 
-    if (event.key == 'Backspace') { terminal.cursor.erase(); return }
-    if (event.key == ' ') { terminal.pause(); event.preventDefault(); return }
-    if (event.key == 'Escape') { terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
+    if (event.key === 'Backspace') { terminal.cursor.erase(); return }
+    if (event.key === ' ') { terminal.pause(); event.preventDefault(); return }
+    if (event.key === 'Escape') { terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
 
-    if (event.key.length == 1) {
+    if (event.key.length === 1) {
       terminal.cursor.insert(event.key)
       if (event.shiftKey) {
         terminal.cursor.move(1, 0)

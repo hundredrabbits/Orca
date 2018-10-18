@@ -5,6 +5,7 @@ const FnBase = require('./_base')
 function FnWireH (pico, x, y) {
   FnBase.call(this, pico, x, y)
 
+  this.type = 'wire'
   this.name = 'wire-h'
   this.glyph = '-'
   this.info = 'Send data along the wire, horizontally.'

@@ -142,7 +142,7 @@ function Pico (w, h) {
   }
 
   this.addBlock = function (x, y, block) {
-    if (!block || block.length == 0) { this.terminal.log('Nothing to paste'); return }
+    if (!block || block.length === 0) { this.terminal.log('Nothing to paste'); return }
 
     let _y = y
     for (const lineId in block) {

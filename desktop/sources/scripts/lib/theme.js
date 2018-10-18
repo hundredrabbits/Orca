@@ -100,7 +100,7 @@ function Theme (default_theme = { background: '#222', f_high: '#fff', f_med: '#7
   }
 
   this.invert = function () {
-    this.load(this.active.background == this.collection.noir.background ? this.collection.pale : this.collection.noir)
+    this.load(this.active.background === this.collection.noir.background ? this.collection.pale : this.collection.noir)
   }
 
   // Drag

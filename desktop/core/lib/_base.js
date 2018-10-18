@@ -5,6 +5,7 @@ function FnBase (pico, x, y) {
   this.y = y
   this.name = '<missing name>'
   this.glyph = '.'
+  this.type = 'misc'
   this.info = 'Missing docs.'
   this.ports = []
   this.docs = 'Hello!'

@@ -5,6 +5,7 @@ const FnBase = require('./_base')
 function FnM (pico, x, y) {
   FnBase.call(this, pico, x, y)
 
+  this.type = 'math'
   this.name = 'modulo'
   this.glyph = 'm'
   this.info = 'Creates the result of the modulo operation of east and west fns, southward.'

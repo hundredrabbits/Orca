@@ -5,10 +5,17 @@ const FnBase = require('./_base')
 function FnI (pico, x, y) {
   FnBase.call(this, pico, x, y)
 
+  this.type = 'trigger'
   this.name = 'increment'
   this.glyph = 'i'
   this.info = 'Increments southward numeric fn on bang.'
   this.ports = [{ x: 0, y: 0, bang: true }, { x: 0, y: 1, output: true }, { x: 1, y: 0, input: true }, { x: -1, y: 0, input: true }]
+
+  this.haste = function () {
+    pico.lock(this.x, this.y + 1)
+    pico.lock(this.x + 1, this.y)
+    pico.lock(this.x - 1, this.y)
+  }
 
   this.operation = function () {
     if (!this.bang()) { return }
@@ -23,8 +30,7 @@ function FnI (pico, x, y) {
 
     const result = val + 1 >= max ? min : val + 1
 
-    pico.add(this.x, this.y + 1, `${result}`)
-    pico.lock(this.x, this.y + 1)
+    pico.add(this.x, this.y + 1, `${pico.allowed[result]}`)
   }
 }
 

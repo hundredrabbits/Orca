@@ -55,7 +55,7 @@ function Controller () {
     const txt = this.documentation(this.format())
     dialog.showSaveDialog((fileName) => {
       if (fileName === undefined) { return }
-      fileName = fileName.substr(-4, 4) != '.svg' ? fileName + '.svg' : fileName
+      fileName = fileName.substr(-4, 4) !== '.svg' ? fileName + '.svg' : fileName
       fs.writeFile(fileName, svg)
       fs.writeFile(fileName.replace('.svg', '.md'), txt)
     })
@@ -82,7 +82,7 @@ function Controller () {
     txt += this.documentation_for_mode('default', this.menu.default)
 
     for (name in this.menu) {
-      if (name == 'default') { continue }
+      if (name === 'default') { continue }
       txt += this.documentation_for_mode(name, this.menu[name])
     }
     return txt
@@ -92,7 +92,7 @@ function Controller () {
     const txt = `## ${name} Mode\n\n`
 
     for (const id in mode) {
-      if (id == '*' || id == 'Edit') { continue }
+      if (id === '*' || id === 'Edit') { continue }
       txt += `### ${id}\n`
       for (name in mode[id]) {
         const option = mode[id][name]
@@ -110,8 +110,8 @@ function Controller () {
       const options = menu[cat]
       for (const id in options.submenu) {
         const option = options.submenu[id]; if (option.role) { continue }
-        acc.basic = (option.accelerator.toLowerCase() == key.toLowerCase()) ? option.label.toUpperCase().replace('TOGGLE ', '').substr(0, 8).trim() : acc.basic
-        acc.ctrl = (option.accelerator.toLowerCase() == ('CmdOrCtrl+' + key).toLowerCase()) ? option.label.toUpperCase().replace('TOGGLE ', '').substr(0, 8).trim() : acc.ctrl
+        acc.basic = (option.accelerator.toLowerCase() === key.toLowerCase()) ? option.label.toUpperCase().replace('TOGGLE ', '').substr(0, 8).trim() : acc.basic
+        acc.ctrl = (option.accelerator.toLowerCase() === ('CmdOrCtrl+' + key).toLowerCase()) ? option.label.toUpperCase().replace('TOGGLE ', '').substr(0, 8).trim() : acc.ctrl
       }
     }
     return acc

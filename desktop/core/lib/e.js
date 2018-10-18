@@ -5,6 +5,7 @@ const FnMove = require('./_move')
 function FnE (pico, x, y) {
   FnMove.call(this, pico, x, y)
 
+  this.type = 'direction'
   this.name = 'east'
   this.glyph = 'e'
   this.info = 'Moves eastward, or bangs.'

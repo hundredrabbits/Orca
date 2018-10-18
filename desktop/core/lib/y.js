@@ -5,6 +5,7 @@ const FnBase = require('./_base')
 function FnY (pico, x, y) {
   FnBase.call(this, pico, x, y)
 
+  this.type = 'math'
   this.name = 'type'
   this.glyph = 'y'
   this.info = 'Compares the type(num/alpha/special) of westward and eastward fns, and return 1 or 0 southward.'

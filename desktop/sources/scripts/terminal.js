@@ -187,15 +187,15 @@ function Terminal (pico) {
       ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
       ctx.fillStyle = this.theme.active.f_inv
     } else if (styles.is_port) {
-      if (styles.is_port == 2) {
+      if (styles.is_port === 2) {
         ctx.fillStyle = this.theme.active.b_high
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_low
-      } else if (styles.is_port == 1) {
+      } else if (styles.is_port === 1) {
         ctx.fillStyle = this.theme.active.b_med
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_med
-      } else if (styles.is_port == 3) {
+      } else if (styles.is_port === 3) {
         ctx.fillStyle = this.theme.active.b_low
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_high
@@ -203,7 +203,7 @@ function Terminal (pico) {
     } else {
       ctx.fillStyle = 'white'
     }
-    ctx.fillText(styles.isCursor && g == '.' ? (!pico.isPaused ? '@' : '~') : g.toUpperCase(), (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
+    ctx.fillText(styles.isCursor && g === '.' ? (!pico.isPaused ? '@' : '~') : g.toUpperCase(), (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
   }
 
   this.reset = function () {

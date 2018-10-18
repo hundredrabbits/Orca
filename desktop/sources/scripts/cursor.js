@@ -58,7 +58,7 @@ function Cursor (terminal) {
   }
 
   this._position = function () {
-    return `${this.x},${this.y}` + (this.w != 1 || this.h != 1 ? `[${this.w}x${this.h}]` : '')
+    return `${this.x},${this.y}` + (this.w !== 1 || this.h !== 1 ? `[${this.w}x${this.h}]` : '')
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

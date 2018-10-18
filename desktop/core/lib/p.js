@@ -24,10 +24,6 @@ function FnP (pico, x, y) {
       pico.add(this.x + (direction.x * 2), this.y + (direction.y * 2), pushed.glyph)
     }
   }
-
-  this.n_offset = function (pos) {
-    return { x: this.x - pos.x, y: this.y - pos.y }
-  }
 }
 
 module.exports = FnP
