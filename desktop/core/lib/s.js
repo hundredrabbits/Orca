@@ -10,7 +10,7 @@ function FnS (pico, x, y, passive) {
   this.info = 'Moves southward, or bangs.'
 
   this.haste = function () {
-    if (this.is_free(0, 1) !== true) { this.replace('*'); return }
+    if (this.isFree(0, 1) !== true) { this.replace('*'); return }
     this.move(0, 1)
   }
 }

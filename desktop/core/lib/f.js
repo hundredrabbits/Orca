@@ -21,14 +21,10 @@ function FnF (pico, x, y, passive) {
   this.operation = function () {
     const w = this.west()
     const e = this.east()
-    const west = !w ? '.' : w.glyph
-    const east = !e ? '.' : e.glyph
+    const val1 = this.toValue(w ? w.glyph : null)
+    const val2 = this.toValue(e ? e.glyph : null)
 
-    if (west === east) {
-      pico.add(this.x, this.y + 1, '1')
-    } else {
-      pico.add(this.x, this.y + 1, '0')
-    }
+    pico.add(this.x, this.y + 1, val1 === val2 ? '1' : '0')
   }
 }
 

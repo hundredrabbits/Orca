@@ -22,15 +22,12 @@ function FnA (pico, x, y, passive) {
   this.operation = function () {
     const w = this.west()
     const e = this.east()
-    const west = !w ? '0' : w.glyph
-    const east = !e ? '0' : e.glyph
-    const index = (this.convert(west) + this.convert(east)) % pico.allowed.length
-    const output = pico.allowed[index]
-    pico.add(this.x, this.y + 1, output)
-  }
 
-  this.convert = function (glyph) {
-    return pico.allowed.indexOf(glyph)
+    const val1 = this.toValue(w ? w.glyph : null)
+    const val2 = this.toValue(e ? e.glyph : null)
+    const res = this.toChar(val1 + val2)
+
+    pico.add(this.x, this.y + 1, res)
   }
 }
 

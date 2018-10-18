@@ -21,6 +21,7 @@ function FnY (pico, x, y, passive) {
   this.operation = function () {
     const w = this.west()
     const e = this.east()
+
     if (!w && !this.east()) {
       pico.add(this.x, this.y + 1, '1')
     } else if ((w && !e) || (e && !w)) {

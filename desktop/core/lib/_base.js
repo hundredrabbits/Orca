@@ -49,7 +49,7 @@ function FnBase (pico, x, y, glyph = '.', passive = false) {
     pico.add((this.x + x) % pico.w, (this.y + y) % pico.h, this.glyph)
   }
 
-  this.is_free = function (x, y) {
+  this.isFree = function (x, y) {
     if (this.x + x >= pico.w) { return false }
     if (this.x + x <= -1) { return false }
     if (this.y + y >= pico.h) { return false }
@@ -57,6 +57,14 @@ function FnBase (pico, x, y, glyph = '.', passive = false) {
 
     const target = pico.glyphAt(this.x + x, this.y + y)
     return target === '.' || target === '*' ? true : target
+  }
+
+  this.toValue = function (g = '0') {
+    return g ? clamp(pico.allowed.indexOf(g.toLowerCase()), 0, pico.allowed.length) : 0
+  }
+
+  this.toChar = function (index = 0) {
+    return index && pico.allowed[index] ? pico.allowed[index] : '0'
   }
 
   this.neighbor_by = function (x, y) {
@@ -109,6 +117,8 @@ function FnBase (pico, x, y, glyph = '.', passive = false) {
   this.docs = function () {
     return `${this.name}: ${this.info}`
   }
+
+  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = FnBase

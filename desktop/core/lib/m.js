@@ -21,13 +21,12 @@ function FnM (pico, x, y, passive) {
   this.operation = function () {
     const w = this.west()
     const e = this.east()
-    const west = !w ? '0' : w.glyph
-    const east = !e ? '0' : e.glyph
 
-    const val = pico.allowed.indexOf(west)
-    const mod = pico.allowed.indexOf(east) !== 0 ? pico.allowed.indexOf(east) : '1'
+    const val = this.toValue(w ? w.glyph : null)
+    const mod = this.toValue(e ? e.glyph : null)
+    const res = this.toChar(val % (mod !== 0 ? mod : 1))
 
-    pico.add(this.x, this.y + 1, `${parseInt(val) % parseInt(mod)}`)
+    pico.add(this.x, this.y + 1, res)
   }
 }
 

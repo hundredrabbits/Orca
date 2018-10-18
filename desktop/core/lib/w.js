@@ -10,7 +10,7 @@ function FnW (pico, x, y, passive) {
   this.info = 'Moves westward, or bangs.'
 
   this.haste = function () {
-    if (this.is_free(-1, 0) !== true) { this.replace('*'); this.lock(); return }
+    if (this.isFree(-1, 0) !== true) { this.replace('*'); this.lock(); return }
     this.move(-1, 0)
   }
 }
