@@ -3,10 +3,9 @@
 const FnBase = require('./_base')
 
 function FnQ (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, true)
+  FnBase.call(this, pico, x, y, 'q', true)
 
   this.name = 'query'
-  this.glyph = ':'
   this.info = 'Call a function by name, freezes 3 characters eastward.'
 
   if (pico) {

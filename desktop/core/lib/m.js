@@ -3,11 +3,10 @@
 const FnBase = require('./_base')
 
 function FnM (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, passive)
+  FnBase.call(this, pico, x, y, 'm', passive)
 
   this.type = 'math'
   this.name = 'modulo'
-  this.glyph = 'm'
   this.info = 'Creates the result of the modulo operation of east and west fns, southward.'
   this.ports.push({ x: -1, y: 0 })
   this.ports.push({ x: 1, y: 0 })

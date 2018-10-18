@@ -3,11 +3,10 @@
 const FnBase = require('./_base')
 
 function FnL (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, passive)
+  FnBase.call(this, pico, x, y, 'l', passive)
 
   this.type = 'list'
   this.name = 'loop'
-  this.glyph = 'l'
   this.info = 'Loop a number of characters ahead.'
   this.ports.push({ x: -1, y: 0, input: true })
 

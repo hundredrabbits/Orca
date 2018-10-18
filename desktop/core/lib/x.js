@@ -3,12 +3,13 @@
 const FnBase = require('./_base')
 
 function FnX (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, passive)
+  FnBase.call(this, pico, x, y, 'x', passive)
 
   this.name = 'split'
-  this.glyph = 'x'
-  this.info = '[FIX]Bangs eastward when westward fn is 0, and southward when fn is 1.'
-  this.ports = [{ x: -1, y: 0 }, { x: 0, y: 1, output: true }, { x: 1, y: 0, output: true }]
+  this.info = 'Bangs eastward when westward fn is 0, and southward when fn is 1.'
+  this.ports.push({ x: -1, y: 0 })
+  this.ports.push({ x: 0, y: 1, output: true })
+  this.ports.push({ x: 1, y: 0, output: true })
 
   this.operation = function () {
     if (this.west('0')) {

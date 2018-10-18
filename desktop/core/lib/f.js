@@ -3,11 +3,10 @@
 const FnBase = require('./_base')
 
 function FnF (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, passive)
+  FnBase.call(this, pico, x, y, 'f', passive)
 
   this.type = 'math'
   this.name = 'if'
-  this.glyph = 'f'
   this.info = 'Bangs if east and west fns are equal, southward.'
   this.ports.push({ x: -1, y: 0 })
   this.ports.push({ x: 1, y: 0 })

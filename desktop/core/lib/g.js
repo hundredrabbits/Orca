@@ -3,11 +3,10 @@
 const FnBase = require('./_base')
 
 function FnG (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, passive)
+  FnBase.call(this, pico, x, y, 'g', passive)
 
   this.type = 'transport'
   this.name = 'generator'
-  this.glyph = 'g'
   this.info = 'Generates a direction fn from bang.'
 
   this.operation = function () {

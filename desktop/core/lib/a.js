@@ -3,11 +3,10 @@
 const FnBase = require('./_base')
 
 function FnA (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, passive)
+  FnBase.call(this, pico, x, y, 'a', passive)
 
   this.type = 'math'
   this.name = 'add'
-  this.glyph = 'a'
   this.info = 'Creates the result of the addition of east and west fns, southward.'
 
   this.ports.push({ x: -1, y: 0 })

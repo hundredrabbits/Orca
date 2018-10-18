@@ -10,7 +10,7 @@
 
 - `A`, **add**(math): Creates the result of the addition of east and west fns, southward.
 - `B`, **<missing name>**: Missing docs.
-- `C`, **<missing name>**: Missing docs.
+- `C`, **count**(list): Count the number of fns present eastwardly.
 - `D`, **<missing name>**: Missing docs.
 - `E`, **east**(direction): Moves eastward, or bangs.
 - `F`, **if**(math): Bangs if east and west fns are equal, southward.
@@ -23,15 +23,15 @@
 - `M`, **modulo**(math): Creates the result of the modulo operation of east and west fns, southward.
 - `N`, **north**(direction): Moves Northward, or bangs.
 - `O`, **<missing name>**: Missing docs.
-- `P`, **push**(direction): Moves away, on bang.
+- `P`, **<missing name>**: Missing docs.
 - `Q`, **query**: Call a function by name, freezes 3 characters eastward.
 - `R`, **raycast**(transport): Sends a bang to the nearest fn following the direction of the bang.
 - `S`, **south**(direction): Moves southward, or bangs.
 - `T`, **trigger**: Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` northward.
 - `U`, **<missing name>**: Missing docs.
-- `V`, **value**: Creates a numerical value between 0 and 5 based on the number of present _fns_ westward.
+- `V`, **<missing name>**: Missing docs.
 - `W`, **west**(direction): Moves westward, or bangs.
-- `X`, **split**: [FIX]Bangs eastward when westward fn is 0, and southward when fn is 1.
+- `X`, **split**: Bangs eastward when westward fn is 0, and southward when fn is 1.
 - `Y`, **type**(math): Compares the type(num/alpha/special) of westward and eastward fns, and return 1 or 0 southward.
 - `Z`, **creep**: Moves to a the next available location in a cycle of E, S, W, N based on the runtime frame.
 
@@ -49,12 +49,13 @@
 ### Functions(By Type)
 
 - **maths**: `a` `f` `m` `y`.
-- **miscs**: `.` `.` `.` `j` `.` `:` `t` `.` `v` `x` `z` `.` `*`.
-- **directions**: `e` `n` `p` `s` `w`.
+- **miscs**: `.` `.` `j` `.` `.` `q` `t` `.` `v` `x` `z` `.` `*`.
+- **lists**: `c` `l`.
+- **directions**: `e` `n` `s` `w`.
 - **transports**: `g` `r`.
 - **stoppers**: `h`.
 - **triggers**: `i` `k`.
-- **lists**: `l`.
+
 
 ## CLI
 

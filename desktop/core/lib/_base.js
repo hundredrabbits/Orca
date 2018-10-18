@@ -1,11 +1,11 @@
 'use strict'
 
-function FnBase (pico, x, y, passive = false) {
+function FnBase (pico, x, y, glyph = '.', passive = false) {
   this.x = x
   this.y = y
   this.passive = passive
   this.name = '<missing name>'
-  this.glyph = '.'
+  this.glyph = passive ? glyph.toUpperCase() : glyph
   this.type = 'misc'
   this.info = 'Missing docs.'
   this.ports = []

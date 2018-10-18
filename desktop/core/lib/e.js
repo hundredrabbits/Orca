@@ -3,11 +3,10 @@
 const FnBase = require('./_base')
 
 function FnE (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, passive)
+  FnBase.call(this, pico, x, y, 'e', passive)
 
   this.type = 'direction'
   this.name = 'east'
-  this.glyph = passive ? 'E' : 'e'
   this.info = 'Moves eastward, or bangs.'
 
   this.haste = function () {

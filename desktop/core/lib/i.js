@@ -3,11 +3,10 @@
 const FnBase = require('./_base')
 
 function FnI (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, passive)
+  FnBase.call(this, pico, x, y, 'i', passive)
 
   this.type = 'trigger'
   this.name = 'increment'
-  this.glyph = 'i'
   this.info = 'Increments southward numeric fn on bang.'
   this.ports.push({ x: 0, y: 1, output: true })
   this.ports.push({ x: 1, y: 0, input: true })

@@ -3,11 +3,10 @@
 const FnBase = require('./_base')
 
 function FnQqq (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, passive)
+  FnBase.call(this, pico, x, y, '?', passive)
 
   this.type = 'midi'
   this.name = 'qqq'
-  this.glyph = '?'
   this.info = 'Plays note, on channel, with octave.'
 
   this.ports = [{ x: 0, y: -1, output: true }, { x: 1, y: 0, output: true }, { x: 2, y: 0, output: true }]
