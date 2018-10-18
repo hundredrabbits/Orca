@@ -13,9 +13,7 @@ function FnJ (pico, x, y, passive) {
 
   this.operation = function () {
     const n = this.north()
-    if (!n) { return }
-
-    pico.add(this.x, this.y + 1, n.glyph)
+    pico.add(this.x, this.y + 1, !n ? '.' : n.glyph)
     pico.lock(this.x, this.y + 1)
   }
 }

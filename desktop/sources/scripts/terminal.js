@@ -12,7 +12,7 @@ function Terminal (pico) {
   this.pico = pico
   this.el = document.createElement('canvas')
   this.isPaused = false
-  this.tile = { w: 12, h: 20 }
+  this.tile = { w: 20, h: 30 }
   this.debug = 'hello.'
 
   this.timer = null
@@ -45,7 +45,6 @@ function Terminal (pico) {
   this.run = function () {
     if (this.isPaused) { return }
 
-    this.debug = 'Idle.'
     this.qqq.clear()
     this.clear()
 
@@ -180,7 +179,7 @@ function Terminal (pico) {
 
     ctx.textBaseline = 'bottom'
     ctx.textAlign = 'center'
-    ctx.font = `${this.tile.h * 0.75}px input_mono_regular`
+    ctx.font = `${this.tile.h * 0.75}px input_mono_medium`
 
     if (styles.isSelection) {
       ctx.fillStyle = this.theme.active.b_inv
@@ -211,7 +210,7 @@ function Terminal (pico) {
   }
 
   this.resize = function () {
-    this.size = { width: this.tile.w * pico.w, height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.75 }
+    this.size = { width: this.tile.w * pico.w, height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.5 }
     this.el.width = this.size.width
     this.el.height = this.size.height + this.tile.h
     this.el.style.width = (this.size.width * this.size.ratio) + 'px'
@@ -220,7 +219,10 @@ function Terminal (pico) {
     let { remote } = require('electron')
     let win = remote.getCurrentWindow()
 
-    win.setSize((this.size.width * this.size.ratio) + 60, (this.size.height * this.size.ratio) + 30, true)
+    const width = parseInt((this.size.width * this.size.ratio) + 60)
+    const height = parseInt((this.size.height * this.size.ratio) + 30)
+
+    win.setSize(width, height, true)
   }
 
   window.onresize = (event) => {

@@ -9,7 +9,6 @@ function FnI (pico, x, y, passive) {
   this.name = 'increment'
   this.glyph = 'i'
   this.info = 'Increments southward numeric fn on bang.'
-  this.ports.push({ x: 0, y: 0, bang: true })
   this.ports.push({ x: 0, y: 1, output: true })
   this.ports.push({ x: 1, y: 0, input: true })
   this.ports.push({ x: -1, y: 0, input: true })

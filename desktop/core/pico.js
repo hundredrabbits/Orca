@@ -17,8 +17,9 @@ function Pico (w, h) {
   function makeDocs (lib) {
     const h = {}
     for (const id in lib) {
-      const P = new lib[id]()
-      h[P.glyph] = P.docs()
+      const fn = new lib[id]()
+      if (fn.type === 'misc') { continue }
+      h[fn.glyph] = fn.docs()
     }
     return h
   }

@@ -9,7 +9,7 @@ function FnL (pico, x, y, passive) {
   this.name = 'loop'
   this.glyph = 'l'
   this.info = 'Loop a number of characters ahead.'
-  this.ports = [{ x: 0, y: 0, bang: true }, { x: -1, y: 0, input: true }]
+  this.ports.push({ x: -1, y: 0, input: true })
 
   if (pico) {
     this.w = this.west()
@@ -26,7 +26,7 @@ function FnL (pico, x, y, passive) {
   }
 
   this.operation = function () {
-    if (!this.len || this.len < 1 || !this.bang()) { return }
+    if (!this.len || this.len < 1) { return }
 
     const a = []
     for (let x = 1; x <= this.len; x++) {

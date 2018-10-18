@@ -9,7 +9,6 @@ function FnG (pico, x, y, passive) {
   this.name = 'generator'
   this.glyph = 'g'
   this.info = 'Generates a direction fn from bang.'
-  this.ports.push({ x: 0, y: 0, bang: true })
 
   this.operation = function () {
     const bang = this.bang()

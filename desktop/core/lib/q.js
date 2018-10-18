@@ -3,7 +3,7 @@
 const FnBase = require('./_base')
 
 function FnQ (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, passive)
+  FnBase.call(this, pico, x, y, true)
 
   this.name = 'query'
   this.glyph = ':'
@@ -28,6 +28,7 @@ function FnQ (pico, x, y, passive) {
   }
 
   this.run = function () {
+    if (!this.bang()) { return }
     if (!this.query) { pico.terminal.log(`Unknown query <${this.cmd}>`); return }
     if (this.cmd.indexOf('.') > -1) { return }
     this.query.run()

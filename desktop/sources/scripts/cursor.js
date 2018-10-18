@@ -10,6 +10,8 @@ function Cursor (terminal) {
 
   this.block = []
 
+  this.mode = 0
+
   this.move = function (x, y) {
     this.x = clamp(this.x + x, 0, pico.w - 1)
     this.y = clamp(this.y - y, 0, pico.h - 1)
@@ -25,6 +27,7 @@ function Cursor (terminal) {
   this.reset = function () {
     this.w = 1
     this.h = 1
+    this.mode = 0
   }
 
   this.copy = function () {
@@ -45,6 +48,9 @@ function Cursor (terminal) {
 
   this.insert = function (g) {
     pico.add(this.x, this.y, g)
+    if (this.mode === 1) {
+      this.move(1, 0)
+    }
   }
 
   this.erase = function (g) {
@@ -54,11 +60,20 @@ function Cursor (terminal) {
 
   this.inspect = function () {
     const g = pico.glyphAt(this.x, this.y)
-    return pico.docs[g] ? pico.docs[g] : this._position()
+    return pico.docs[g] ? pico.docs[g] : this._position() + this._mode()
   }
 
   this._position = function () {
     return `${this.x},${this.y}` + (this.w !== 1 || this.h !== 1 ? `[${this.w}x${this.h}]` : '')
+  }
+
+  this._mode = function () {
+    return this.mode !== 0 ? `<${this.mode === 1 ? 'insert' : 'default'}>` : ''
+  }
+
+  this.toggleMode = function () {
+    this.mode = this.mode === 0 ? 1 : 0
+    this.terminal.log(`Changed Mode ${this.mode === 1 ? 'insert' : 'default'}`)
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
