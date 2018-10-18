@@ -49,13 +49,12 @@
 ### Functions(By Type)
 
 - **maths**: `a` `f` `m` `y`.
-- **miscs**: `.` `.` `j` `.` `.` `q` `t` `.` `v` `x` `z` `.` `*`.
+- **miscs**: `b` `d` `j` `o` `p` `Q` `t` `u` `v` `x` `z` `.` `*`.
 - **lists**: `c` `l`.
 - **directions**: `e` `n` `s` `w`.
 - **transports**: `g` `r`.
 - **stoppers**: `h`.
 - **triggers**: `i` `k`.
-
 
 ## CLI
 
