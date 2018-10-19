@@ -54,6 +54,10 @@ function Cursor (terminal) {
   }
 
   this.erase = function (g) {
+    if (this.w === 1 && this.h === 1 && pico.glyphAt(this.x, this.y) === '.') {
+      this.move(-1, 0)
+      return
+    }
     this.terminal.log(`Erase ${this._position()}`)
     this.terminal.pico.removeBlock(this.x, this.y, this.w, this.h)
   }

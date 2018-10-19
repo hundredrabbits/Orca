@@ -58,6 +58,21 @@ function Terminal (pico) {
     this.log(this.isPaused ? 'Paused' : 'Unpaused')
   }
 
+  this.open = function () {
+    console.log('Open[TODO]')
+    let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'] })
+    if (!paths) { console.log('Nothing to load') }
+  }
+
+  this.save = function () {
+    dialog.showSaveDialog((fileName) => {
+      if (fileName === undefined) { return }
+      fs.writeFile(fileName + '.pico', `${pico}`, (err) => {
+        if (err) { alert('An error ocurred updating the file' + err.message); console.log(err) }
+      })
+    })
+  }
+
   this.load = function (path) {
     const terminal = this
     var fs = require('fs')
@@ -71,6 +86,8 @@ function Terminal (pico) {
       terminal.update()
     })
   }
+
+  //
 
   this.log = function (msg) {
     this.debug = msg
@@ -99,7 +116,8 @@ function Terminal (pico) {
         const styles = {
           isSelection: terminal.isSelection(x, y),
           isCursor: terminal.isCursor(x, y),
-          is_port: ports[`${x}:${y}`]
+          isPort: ports[`${x}:${y}`],
+          isLocked: pico.isLocked(x, y)
         }
         this.draw_sprite(x, y, pico.glyphAt(x, y), styles)
         x += 1
@@ -174,7 +192,7 @@ function Terminal (pico) {
     ctx.clearRect(0, 0, this.size.width, this.size.height)
   }
 
-  this.draw_sprite = function (x, y, g, styles = { isCursor: false, isSelection: false, is_port: false }) {
+  this.draw_sprite = function (x, y, g, styles = { isCursor: false, isSelection: false, isPort: false }) {
     const ctx = this.context()
 
     ctx.textBaseline = 'bottom'
@@ -185,16 +203,20 @@ function Terminal (pico) {
       ctx.fillStyle = this.theme.active.b_inv
       ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
       ctx.fillStyle = this.theme.active.f_inv
-    } else if (styles.is_port) {
-      if (styles.is_port === 2) {
+    } else if (styles.isLocked) {
+      ctx.fillStyle = this.theme.active.background
+      ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+      ctx.fillStyle = this.theme.active.f_low
+    } else if (styles.isPort) {
+      if (styles.isPort === 2) {
         ctx.fillStyle = this.theme.active.b_high
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_low
-      } else if (styles.is_port === 1) {
+      } else if (styles.isPort === 1) {
         ctx.fillStyle = this.theme.active.b_med
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_med
-      } else if (styles.is_port === 3) {
+      } else if (styles.isPort === 3) {
         ctx.fillStyle = this.theme.active.b_low
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_high
@@ -202,7 +224,7 @@ function Terminal (pico) {
     } else {
       ctx.fillStyle = 'white'
     }
-    ctx.fillText(styles.isCursor && g === '.' ? (!pico.isPaused ? '@' : '~') : g, (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
+    ctx.fillText(styles.isCursor && g === '.' ? (!this.isPaused ? '@' : '~') : g, (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
   }
 
   this.reset = function () {
