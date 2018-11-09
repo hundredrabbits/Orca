@@ -28,7 +28,7 @@
 - `R`, **raycast**(transport): Sends a bang to the nearest fn following the direction of the bang.
 - `S`, **south**(direction): Moves southward, or bangs.
 - `T`, **trigger**: Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` northward.
-- `U`, **<missing name>**: Missing docs.
+- `U`, **until**(list): Read character at position.
 - `V`, **<missing name>**: Missing docs.
 - `W`, **west**(direction): Moves westward, or bangs.
 - `X`, **split**: Bangs eastward when westward fn is 0, and southward when fn is 1.
@@ -49,8 +49,8 @@
 ### Functions(By Type)
 
 - **maths**: `a` `f` `m` `y`.
-- **miscs**: `b` `d` `j` `o` `p` `Q` `t` `u` `v` `x` `z` `.` `*`.
-- **lists**: `c` `l`.
+- **miscs**: `b` `d` `j` `o` `p` `Q` `t` `v` `x` `z` `.` `*`.
+- **lists**: `c` `l` `u`.
 - **directions**: `e` `n` `s` `w`.
 - **transports**: `g` `r`.
 - **stoppers**: `h`.

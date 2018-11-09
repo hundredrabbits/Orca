@@ -7,7 +7,7 @@ function Terminal (pico) {
   this.qqq = new QQQ(this)
   this.cursor = new Cursor(this)
   this.controller = new Controller()
-  this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#333333', f_low: '#000000', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' })
+  this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#777777', f_low: '#333333', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' })
 
   this.pico = pico
   this.el = document.createElement('canvas')
@@ -203,24 +203,24 @@ function Terminal (pico) {
       ctx.fillStyle = this.theme.active.b_inv
       ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
       ctx.fillStyle = this.theme.active.f_inv
-    } else if (styles.isLocked) {
-      ctx.fillStyle = this.theme.active.background
-      ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
-      ctx.fillStyle = this.theme.active.f_low
     } else if (styles.isPort) {
-      if (styles.isPort === 2) {
-        ctx.fillStyle = this.theme.active.b_high
-        ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
-        ctx.fillStyle = this.theme.active.f_low
-      } else if (styles.isPort === 1) {
+      if (styles.isPort === 1) {
         ctx.fillStyle = this.theme.active.b_med
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_med
+      } else if (styles.isPort === 2) {
+        ctx.fillStyle = this.theme.active.b_high
+        ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+        ctx.fillStyle = this.theme.active.f_low
       } else if (styles.isPort === 3) {
         ctx.fillStyle = this.theme.active.b_low
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_high
       }
+    } else if (styles.isLocked) {
+      ctx.fillStyle = this.theme.active.background
+      ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+      ctx.fillStyle = this.theme.active.f_med
     } else {
       ctx.fillStyle = 'white'
     }
