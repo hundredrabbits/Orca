@@ -43,7 +43,9 @@ module.exports = {
   },
   special: {
     '.': require('./lib/_null'),
-    '*': require('./lib/_bang')
+    '*': require('./lib/_bang'),
+    ':': require('./lib/_midi'),
+    ';': require('./lib/_comment')
   },
   queries: {
     'bpm': require('./lib/__bpm'),
