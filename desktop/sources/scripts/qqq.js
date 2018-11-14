@@ -2,7 +2,6 @@
 
 function QQQ (terminal) {
   this.terminal = terminal
-  this.volume = 1
   this.midi = false
   this.outputs = []
   this.stack = []
@@ -23,7 +22,7 @@ function QQQ (terminal) {
       const note = this.stack[id]
       html += `Ch${note[0]}:${note[1]}+${note[2]}(${note[3]}) `
     }
-    terminal.log(`Playing: ${html}`)
+    terminal.log(`${html}`)
   }
 
   this.midiSetup = function () {
@@ -63,9 +62,14 @@ function QQQ (terminal) {
     terminal.qqq.outputs[0].send([0x82, 60, 127], window.performance.now() + 250.0)
   }
 
-  this.setVolume = function (value) {
-    this.terminal.log(`Changed volume to ${value}.`)
-    this.volume = parseInt(value) / 100.0
+  this.vu = function () {
+    if (this.stack.length === 0) { return '------' }
+    if (this.stack.length === 1) { return '|-----' }
+    if (this.stack.length === 2) { return '||----' }
+    if (this.stack.length === 3) { return '|||---' }
+    if (this.stack.length === 4) { return '||||--' }
+    if (this.stack.length === 5) { return '|||||-' }
+    if (this.stack.length > 4) { return '||||||' }
   }
 }
 

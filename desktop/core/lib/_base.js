@@ -115,7 +115,7 @@ function FnBase (pico, x, y, glyph = '.', passive = false) {
   }
 
   this.docs = function () {
-    return `${this.name}: ${this.info}`
+    return `${this.name}`
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

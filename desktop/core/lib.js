@@ -46,10 +46,5 @@ module.exports = {
     '*': require('./lib/_bang'),
     ':': require('./lib/_midi'),
     ';': require('./lib/_comment')
-  },
-  queries: {
-    'bpm': require('./lib/__bpm'),
-    'vol': require('./lib/__vol'),
-    'qqq': require('./lib/__qqq')
   }
 }

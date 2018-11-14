@@ -42,6 +42,10 @@ function Terminal (pico) {
     this.timer = setInterval(() => { this.run() }, ms)
   }
 
+  this.modSpeed = function (mod = 0) {
+    this.setSpeed(this.bpm + mod)
+  }
+
   this.run = function () {
     if (this.isPaused) { return }
 
@@ -95,18 +99,16 @@ function Terminal (pico) {
 
   this.update = function () {
     this.clear()
-    this.draw_program()
-    this.draw_output(2)
-    this.draw_debug(1)
-    this.draw_inspector(0)
+    this.drawProgram()
+    this.drawInterface()
   }
 
   this.new = function () {
     pico.clear()
   }
 
-  this.draw_program = function () {
-    const ports = this.find_ports()
+  this.drawProgram = function () {
+    const ports = this.findPorts()
     const terminal = this
 
     let y = 0
@@ -119,40 +121,33 @@ function Terminal (pico) {
           isPort: ports[`${x}:${y}`],
           isLocked: pico.isLocked(x, y)
         }
-        this.draw_sprite(x, y, pico.glyphAt(x, y), styles)
+        this.drawSprite(x, y, pico.glyphAt(x, y), styles)
         x += 1
       }
       y += 1
     }
   }
 
-  this.draw_output = function (offset) {
-    const s = pico.r.replace(/\./g, ' ').trim()
+  this.drawInterface = function () {
+    const col = 6
+    // Cursor
+    this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1)
+    this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1)
+    this.write(`${pico.w}x${pico.h}`, col * 2, 1)
+    this.write(this.debug, col * 3, 1)
 
-    let x = 0
-    while (x < s.length) {
-      const c = s.substr(x, 1)
-      this.draw_sprite(x, pico.h + offset, c)
-      x += 1
-    }
+    // Grid
+    this.write(`${this.cursor.inspect()}`.substr(0, col), col * 0, 0)
+    this.write(`${this.cursor._mode()}`, col * 1, 0)
+    this.write(`${this.bpm}`, col * 2, 0)
+    this.write(this.qqq.vu(), col * 3, 0)
   }
 
-  this.draw_debug = function (offset) {
-    const s = this.debug.trim()
+  this.write = function (text, offsetX, offsetY) {
     let x = 0
-    while (x < s.length) {
-      const c = s.substr(x, 1)
-      this.draw_sprite(x, pico.h + offset, c)
-      x += 1
-    }
-  }
-
-  this.draw_inspector = function (offset) {
-    const s = this.cursor.inspect()
-    let x = 0
-    while (x < s.length) {
-      const c = s.substr(x, 1)
-      this.draw_sprite(x, pico.h + offset, c)
+    while (x < text.length) {
+      const c = text.substr(x, 1)
+      this.drawSprite(offsetX + x, pico.h + offsetY, c)
       x += 1
     }
   }
@@ -168,7 +163,7 @@ function Terminal (pico) {
     return false
   }
 
-  this.find_ports = function () {
+  this.findPorts = function () {
     const h = {}
     const fns = pico.findFns()
     for (const id in fns) {
@@ -192,7 +187,7 @@ function Terminal (pico) {
     ctx.clearRect(0, 0, this.size.width, this.size.height)
   }
 
-  this.draw_sprite = function (x, y, g, styles = { isCursor: false, isSelection: false, isPort: false }) {
+  this.drawSprite = function (x, y, g, styles = { isCursor: false, isSelection: false, isPort: false }) {
     const ctx = this.context()
 
     ctx.textBaseline = 'bottom'

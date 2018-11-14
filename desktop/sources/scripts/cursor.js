@@ -64,7 +64,7 @@ function Cursor (terminal) {
 
   this.inspect = function () {
     const g = pico.glyphAt(this.x, this.y)
-    return pico.docs[g] ? pico.docs[g] : this._position() + this._mode()
+    return pico.docs[g] ? pico.docs[g] : 'empty'
   }
 
   this._position = function () {
@@ -72,12 +72,12 @@ function Cursor (terminal) {
   }
 
   this._mode = function () {
-    return this.mode !== 0 ? `<${this.mode === 1 ? 'insert' : 'default'}>` : ''
+    return this.mode === 1 ? 'inser' : 'write'
   }
 
   this.toggleMode = function () {
     this.mode = this.mode === 0 ? 1 : 0
-    this.terminal.log(`Changed Mode ${this.mode === 1 ? 'insert' : 'default'}`)
+    this.terminal.log(`Changed Mode ${this.mode === 1 ? 'inser' : 'write'}`)
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
