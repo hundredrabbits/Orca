@@ -75,15 +75,6 @@ function frequencyFromNoteNumber(note) {
 
 The idea is to build a synth/mini sequencer, here's some tasks I need to tackle before then.
 
-- [ ] Add `:MID[CD]`
-- [ ] custom synth functions, like `:SYN[ADSR](C)`
-- [ ] sub programs scope
-- [ ] Implement midi
-- [ ] Finish midi channel implementation
-- [ ] Convert notes to midi values
-- [ ] Implement a block comment syntax
-- [ ] Fix M
-
 ## Extras
 
 - This application supports the [Ecosystem Theme](https://github.com/hundredrabbits/Themes).

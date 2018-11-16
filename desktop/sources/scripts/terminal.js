@@ -160,7 +160,7 @@ function Terminal (pico) {
     this.write(`${this.cursor.inspect()}`.substr(0, col), col * 0, 0)
     this.write(`${this.cursor._mode()}`, col * 1, 0)
     this.write(`${this.bpm}`, col * 2, 0)
-    this.write(this.midi.vu(), col * 3, 0)
+    this.write(`${this.midi}`, col * 3, 0)
   }
 
   this.write = function (text, offsetX, offsetY) {

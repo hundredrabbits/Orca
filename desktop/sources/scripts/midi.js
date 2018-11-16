@@ -16,13 +16,59 @@ function Midi (terminal) {
   this.run = function () {
     if (this.stack.length < 1) { return }
 
-    let html = ''
+    let text = ''
     for (const id in this.stack) {
       const note = this.stack[id]
-      html += `Ch${note[0]}:${note[1]}+${note[2]}(${note[3]}) `
+      text += `${note[0]}+${note[1]}|${note[2]}.${note[3]} `
+      this.play(note)
     }
-    terminal.log(`${html}`)
+
+    terminal.log(text)
   }
+
+  this.send = function (channel, octave, note, velocity) {
+    this.stack.push([channel, octave, note, velocity])
+  }
+
+  this.play = function (note) {
+    const channel = this.makeChannel(note[0])
+    const value = this.makeValue(note[1], note[2])
+    const velocity = note[3]
+
+    this.playNote(channel, value, velocity)
+  }
+
+  this.playNote = function (channel, value, velocity) {
+    // TODO: Fix length to terminal bpm
+    const length = window.performance.now() + 100.0
+
+    terminal.midi.outputs[0].send([channel[0], value, velocity])
+    terminal.midi.outputs[0].send([channel[1], value, velocity], length)
+  }
+
+  //
+
+  this.makeChannel = function (id) {
+    if (id === 0) { return [0x90, 0x80] } // ch1
+    if (id === 1) { return [0x91, 0x81] } // ch2
+    if (id === 2) { return [0x92, 0x82] } // ch3
+    if (id === 3) { return [0x93, 0x83] } // ch4
+    if (id === 4) { return [0x94, 0x84] } // ch5
+    if (id === 5) { return [0x95, 0x85] } // ch6
+    if (id === 6) { return [0x96, 0x86] } // ch7
+    if (id === 7) { return [0x97, 0x87] } // ch8
+    if (id === 8) { return [0x98, 0x88] } // ch9
+    if (id === 9) { return [0x99, 0x89] } // ch10
+  }
+
+  this.makeValue = function (octave, note) {
+    const offset = 24
+    const value = offset + (octave * 12) + note
+    console.log(octave, note, value)
+    return value // 60 = C3
+  }
+
+  // Setup
 
   this.midiSetup = function () {
     if (!navigator.requestMIDIAccess) { return }
@@ -42,26 +88,7 @@ function Midi (terminal) {
     console.warn('No Midi', err)
   }
 
-  this.send = function (channel, octave, note, velocity) {
-    this.stack.push([channel, octave, note, velocity])
-  }
-
-  this.play = function () {
-    this.ch1()
-    this.ch3()
-  }
-
-  this.ch1 = function () {
-    terminal.midi.outputs[0].send([0x90, 60, 127])
-    terminal.midi.outputs[0].send([0x80, 60, 127], window.performance.now() + 250.0)
-  }
-
-  this.ch3 = function () {
-    terminal.midi.outputs[0].send([0x92, 60, 127])
-    terminal.midi.outputs[0].send([0x82, 60, 127], window.performance.now() + 250.0)
-  }
-
-  this.vu = function () {
+  this.toString = function () {
     if (this.stack.length === 0) { return '------' }
     if (this.stack.length === 1) { return '|-----' }
     if (this.stack.length === 2) { return '||----' }
