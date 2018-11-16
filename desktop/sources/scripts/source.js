@@ -27,7 +27,7 @@ function Source (pico, terminal) {
     } else {
       dialog.showSaveDialog((path) => {
         if (path === undefined) { return }
-        if (path.indexOf('.') < 0) { path += '.pico' }
+        if (path.indexOf('.pico') < 0) { path += '.pico' }
         terminal.source.write(path)
         terminal.source.path = path
       })
@@ -58,6 +58,15 @@ function Source (pico, terminal) {
 
   this.validate = function (data) {
     return true
+  }
+
+  this.name = function () {
+    const parts = this.path.split('/')
+    return parts[parts.length - 1].replace('.pico', '').trim()
+  }
+
+  this.toString = function () {
+    return this.path ? this.name() : 'unsaved'
   }
 }
 

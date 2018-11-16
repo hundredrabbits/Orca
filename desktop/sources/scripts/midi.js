@@ -89,13 +89,12 @@ function Midi (terminal) {
   }
 
   this.toString = function () {
-    if (this.stack.length === 0) { return '------' }
-    if (this.stack.length === 1) { return '|-----' }
-    if (this.stack.length === 2) { return '||----' }
-    if (this.stack.length === 3) { return '|||---' }
-    if (this.stack.length === 4) { return '||||--' }
-    if (this.stack.length === 5) { return '|||||-' }
-    if (this.stack.length > 4) { return '||||||' }
+    if (this.stack.length === 0) { return '-----' }
+    if (this.stack.length === 1) { return '|----' }
+    if (this.stack.length === 2) { return '||---' }
+    if (this.stack.length === 3) { return '|||--' }
+    if (this.stack.length === 4) { return '||||-' }
+    if (this.stack.length === 5) { return '|||||' }
   }
 }
 
