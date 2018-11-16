@@ -82,18 +82,13 @@ function Terminal (pico) {
     this.log(this.isPaused ? "Paused" : "Unpaused")
   }
 
-  this.load = function (path) {
-    const terminal = this
-    var fs = require('fs')
-    fs.readFile(path, 'utf8', function (err, data) {
-      if (err) throw err
-      const w = data.split('\n')[0].length
-      const h = data.split('\n').length
-      terminal.log(`Loaded: ${path} ${w}x${h}`)
-      pico.load(w, h, data)
-      terminal._grid.width = w
-      terminal.update()
-    })
+  this.load = function (data) {
+    const w = data.split('\n')[0].length
+    const h = data.split('\n').length
+    terminal.log(`Loaded: ${path} ${w}x${h}`)
+    pico.load(w, h, data)
+    terminal._grid.width = w
+    terminal.update()
   }
 
   this.log = function (msg) {

@@ -2,7 +2,6 @@
   <head>
     <script type="text/javascript" src="scripts/lib/controller.js"></script>
     <script type="text/javascript" src="scripts/lib/theme.js"></script>
-
     <script type="text/javascript" src="scripts/keyboard.js"></script>
     <script type="text/javascript" src="scripts/events.js"></script>
 
@@ -33,9 +32,10 @@
       terminal.controller.add("default","*","Reset",() => { terminal.reset(); },"CmdOrCtrl+Backspace")
       terminal.controller.add("default","*","Quit",() => { app.exit(); },"CmdOrCtrl+Q")
 
-      terminal.controller.add("default","File","New",() => { terminal.new(); },"CmdOrCtrl+N")
-      terminal.controller.add("default","File","Save",() => { terminal.save(); },"CmdOrCtrl+S")
-      terminal.controller.add("default","File","Open",() => { terminal.open(); },"CmdOrCtrl+O")
+      terminal.controller.add("default","File","New",() => { terminal.source.new(); },"CmdOrCtrl+N")
+      terminal.controller.add("default","File","Save",() => { terminal.source.save(); },"CmdOrCtrl+S")
+      terminal.controller.add("default","File","Open",() => { terminal.source.open(); },"CmdOrCtrl+O")
+      terminal.controller.add("default","File","Revert",() => { terminal.source.revert(); },"CmdOrCtrl+W")
 
       terminal.controller.add("default","Program","Play/Pause",() => { terminal.pause(); },"Space")
       terminal.controller.add("default","Program","Incr. Speed",() => { terminal.modSpeed(10); },">")

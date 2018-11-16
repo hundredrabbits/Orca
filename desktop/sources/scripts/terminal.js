@@ -2,10 +2,13 @@
 
 function Terminal (pico) {
   const Cursor = require('./cursor')
+  const Source = require('./source')
   const QQQ = require('./qqq')
 
   this.qqq = new QQQ(this)
   this.cursor = new Cursor(this)
+  this.source = new Source(pico, this)
+
   this.controller = new Controller()
   this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#777777', f_low: '#333333', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' })
 
@@ -13,6 +16,7 @@ function Terminal (pico) {
   this.el = document.createElement('canvas')
   this.isPaused = false
   this.tile = { w: 20, h: 30 }
+  this.size = { width: this.tile.w * pico.w, height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.5 }
   this.debug = 'hello.'
 
   this.timer = null
@@ -34,18 +38,6 @@ function Terminal (pico) {
     this.setSpeed(120)
   }
 
-  this.setSpeed = function (bpm) {
-    this.bpm = clamp(bpm, 60, 300)
-    this.log(`Changed speed to ${this.bpm}.`)
-    const ms = (60000 / bpm) / 4
-    clearInterval(this.timer)
-    this.timer = setInterval(() => { this.run() }, ms)
-  }
-
-  this.modSpeed = function (mod = 0) {
-    this.setSpeed(this.bpm + mod)
-  }
-
   this.run = function () {
     if (this.isPaused) { return }
 
@@ -62,33 +54,27 @@ function Terminal (pico) {
     this.log(this.isPaused ? 'Paused' : 'Unpaused')
   }
 
-  this.open = function () {
-    console.log('Open[TODO]')
-    let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'] })
-    if (!paths) { console.log('Nothing to load') }
+  this.load = function (data) {
+    const w = data.split('\n')[0].length
+    const h = data.split('\n').length
+    this.log(`Loading ${w}x${h}`)
+    pico.load(w, h, data)
+    this.resize()
+    this.update()
   }
 
-  this.save = function () {
-    dialog.showSaveDialog((fileName) => {
-      if (fileName === undefined) { return }
-      fs.writeFile(fileName + '.pico', `${pico}`, (err) => {
-        if (err) { alert('An error ocurred updating the file' + err.message); console.log(err) }
-      })
-    })
+  //
+
+  this.setSpeed = function (bpm) {
+    this.bpm = clamp(bpm, 60, 300)
+    this.log(`Changed speed to ${this.bpm}.`)
+    const ms = (60000 / bpm) / 4
+    clearInterval(this.timer)
+    this.timer = setInterval(() => { this.run() }, ms)
   }
 
-  this.load = function (path) {
-    const terminal = this
-    var fs = require('fs')
-    fs.readFile(path, 'utf8', function (err, data) {
-      if (err) throw err
-      const w = data.split('\n')[0].length
-      const h = data.split('\n').length
-      terminal.log(`Loaded: ${path} ${w}x${h}`)
-      pico.load(w, h, data)
-      terminal.resize()
-      terminal.update()
-    })
+  this.modSpeed = function (mod = 0) {
+    this.setSpeed(this.bpm + mod)
   }
 
   //
@@ -103,8 +89,42 @@ function Terminal (pico) {
     this.drawInterface()
   }
 
-  this.new = function () {
-    pico.clear()
+  this.reset = function () {
+    this.theme.reset()
+  }
+
+  //
+
+  this.isCursor = function (x, y) {
+    return x === this.cursor.x && y === this.cursor.y
+  }
+
+  this.isSelection = function (x, y) {
+    if (x >= this.cursor.x && x < this.cursor.x + this.cursor.w && y >= this.cursor.y && y < this.cursor.y + this.cursor.h) {
+      return true
+    }
+    return false
+  }
+
+  this.findPorts = function () {
+    const h = {}
+    const fns = pico.findFns()
+    for (const id in fns) {
+      const g = fns[id]
+      if (pico.isLocked(g.x, g.y)) { continue }
+      for (const id in g.ports) {
+        const port = g.ports[id]
+        h[`${g.x + port.x}:${g.y + port.y}`] = port.output ? 2 : port.bang ? 1 : 3
+      }
+    }
+
+    return h
+  }
+
+  //
+
+  this.context = function () {
+    return this.el.getContext('2d')
   }
 
   this.drawProgram = function () {
@@ -152,36 +172,6 @@ function Terminal (pico) {
     }
   }
 
-  this.isCursor = function (x, y) {
-    return x === this.cursor.x && y === this.cursor.y
-  }
-
-  this.isSelection = function (x, y) {
-    if (x >= this.cursor.x && x < this.cursor.x + this.cursor.w && y >= this.cursor.y && y < this.cursor.y + this.cursor.h) {
-      return true
-    }
-    return false
-  }
-
-  this.findPorts = function () {
-    const h = {}
-    const fns = pico.findFns()
-    for (const id in fns) {
-      const g = fns[id]
-      if (pico.isLocked(g.x, g.y)) { continue }
-      for (const id in g.ports) {
-        const port = g.ports[id]
-        h[`${g.x + port.x}:${g.y + port.y}`] = port.output ? 2 : port.bang ? 1 : 3
-      }
-    }
-
-    return h
-  }
-
-  this.context = function () {
-    return this.el.getContext('2d')
-  }
-
   this.clear = function () {
     const ctx = this.context()
     ctx.clearRect(0, 0, this.size.width, this.size.height)
@@ -222,12 +212,7 @@ function Terminal (pico) {
     ctx.fillText(styles.isCursor && g === '.' ? (!this.isPaused ? '@' : '~') : g, (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
   }
 
-  this.reset = function () {
-    this.theme.reset()
-  }
-
   this.resize = function () {
-    this.size = { width: this.tile.w * pico.w, height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.5 }
     this.el.width = this.size.width
     this.el.height = this.size.height + this.tile.h
     this.el.style.width = (this.size.width * this.size.ratio) + 'px'
@@ -240,11 +225,6 @@ function Terminal (pico) {
     const height = parseInt((this.size.height * this.size.ratio) + 30)
 
     win.setSize(width, height, true)
-  }
-
-  window.onresize = (event) => {
-    const marginTop = (window.innerHeight - (this.size.height * this.size.ratio)) / 2
-    this.el.style.marginTop = (marginTop - 20) + 'px'
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

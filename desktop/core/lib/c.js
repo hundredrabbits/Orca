@@ -6,7 +6,7 @@ function FnC (pico, x, y, passive) {
   FnBase.call(this, pico, x, y, 'c', passive)
 
   this.name = 'clock'
-  this.info = 'A sync value.'
+  this.info = 'Adds a constant value southward.'
   this.ports.push({ x: 0, y: 1, output: true })
   this.ports.push({ x: 1, y: 0, input: true })
   this.ports.push({ x: -1, y: 0, input: true })

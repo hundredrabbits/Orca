@@ -199,15 +199,15 @@ function Pico (w, h) {
   // Tools
 
   this.lines = function () {
-    const origin = this.s.replace(/[^0-9a-z]/gi, '.')
     const a = []
     for (let y = 0; y < this.h; y++) {
       const from = y * this.w
       const to = this.w
-      a.push(origin.substr(from, to))
+      a.push(this.s.substr(from, to))
     }
     return a
   }
+
   this.output = function () {
     return this.lines().reduce((acc, val) => {
       return `${acc}${val}\n`
