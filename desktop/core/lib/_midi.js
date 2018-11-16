@@ -34,7 +34,7 @@ function FnMidi (pico, x, y, passive) {
     const octave = clamp(octaveValue, 3, 8)
     const note = this.convert(noteValue)
 
-    terminal.qqq.send(channel, octave, note, 127)
+    terminal.midi.send(channel, octave, note, 127)
   }
 
   this.convert = function (ch) {

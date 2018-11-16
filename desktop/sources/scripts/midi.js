@@ -1,8 +1,7 @@
 'use strict'
 
-function QQQ (terminal) {
+function Midi (terminal) {
   this.terminal = terminal
-  this.midi = false
   this.outputs = []
   this.stack = []
 
@@ -34,9 +33,9 @@ function QQQ (terminal) {
   this.midiActive = function (midiAccess) {
     const iter = midiAccess.outputs.values()
     for (let i = iter.next(); i && !i.done; i = iter.next()) {
-      terminal.qqq.outputs.push(i.value)
+      terminal.midi.outputs.push(i.value)
     }
-    terminal.log(`Midi is active, devices: ${terminal.qqq.outputs.length}`)
+    terminal.log(`Midi is active, devices: ${terminal.midi.outputs.length}`)
   }
 
   this.midiInactive = function (err) {
@@ -53,13 +52,13 @@ function QQQ (terminal) {
   }
 
   this.ch1 = function () {
-    terminal.qqq.outputs[0].send([0x90, 60, 127])
-    terminal.qqq.outputs[0].send([0x80, 60, 127], window.performance.now() + 250.0)
+    terminal.midi.outputs[0].send([0x90, 60, 127])
+    terminal.midi.outputs[0].send([0x80, 60, 127], window.performance.now() + 250.0)
   }
 
   this.ch3 = function () {
-    terminal.qqq.outputs[0].send([0x92, 60, 127])
-    terminal.qqq.outputs[0].send([0x82, 60, 127], window.performance.now() + 250.0)
+    terminal.midi.outputs[0].send([0x92, 60, 127])
+    terminal.midi.outputs[0].send([0x82, 60, 127], window.performance.now() + 250.0)
   }
 
   this.vu = function () {
@@ -73,4 +72,4 @@ function QQQ (terminal) {
   }
 }
 
-module.exports = QQQ
+module.exports = Midi

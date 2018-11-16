@@ -3,9 +3,9 @@
 function Terminal (pico) {
   const Cursor = require('./cursor')
   const Source = require('./source')
-  const QQQ = require('./qqq')
+  const Midi = require('./midi')
 
-  this.qqq = new QQQ(this)
+  this.midi = new Midi(this)
   this.cursor = new Cursor(this)
   this.source = new Source(pico, this)
 
@@ -32,7 +32,7 @@ function Terminal (pico) {
     this.pico.terminal = this
     this.pico.start()
     this.theme.start()
-    this.qqq.start()
+    this.midi.start()
 
     this.update()
     this.setSpeed(120)
@@ -41,11 +41,11 @@ function Terminal (pico) {
   this.run = function () {
     if (this.isPaused) { return }
 
-    this.qqq.clear()
+    this.midi.clear()
     this.clear()
 
     this.pico.run()
-    this.qqq.run()
+    this.midi.run()
     this.update()
   }
 
@@ -160,7 +160,7 @@ function Terminal (pico) {
     this.write(`${this.cursor.inspect()}`.substr(0, col), col * 0, 0)
     this.write(`${this.cursor._mode()}`, col * 1, 0)
     this.write(`${this.bpm}`, col * 2, 0)
-    this.write(this.qqq.vu(), col * 3, 0)
+    this.write(this.midi.vu(), col * 3, 0)
   }
 
   this.write = function (text, offsetX, offsetY) {
