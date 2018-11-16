@@ -103,6 +103,7 @@ function Pico (w, h) {
     const glyph = ch.substr(0, 1)
     if (!this.isAllowed(glyph)) { this.terminal.log(`[${glyph},${ch}] is not allowed`); return }
     if (!this.inBounds(x, y)) { this.terminal.log(`[${glyph}] is out of range`); return }
+    if (this.glyphAt(x, y) === ch) { return }
     const index = this.indexAt(x, y)
     this.s = this.s.substr(0, index) + glyph + this.s.substr(index + glyph.length)
   }
@@ -128,6 +129,10 @@ function Pico (w, h) {
 
   this.isAllowed = function (g) {
     return this.lib.alpha[g.toLowerCase()] || this.lib.num[g] || this.lib.special[g]
+  }
+
+  this.valueOf = function (g) {
+    return this.isAllowed(`${g}`) ? pico.allowed.indexOf(`${g}`.toLowerCase()) : 0
   }
 
   this.glyphAt = function (x, y, req = null) {

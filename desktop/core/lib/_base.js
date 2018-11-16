@@ -4,7 +4,7 @@ function FnBase (pico, x, y, glyph = '.', passive = false) {
   this.x = x
   this.y = y
   this.passive = passive
-  this.name = '<missing name>'
+  this.name = 'unknown'
   this.glyph = passive ? glyph.toUpperCase() : glyph
   this.info = 'Missing docs.'
   this.ports = []
@@ -59,7 +59,7 @@ function FnBase (pico, x, y, glyph = '.', passive = false) {
   }
 
   this.toValue = function (g = '0') {
-    return g ? clamp(pico.allowed.indexOf(g.toLowerCase()), 0, pico.allowed.length) : 0
+    return g ? clamp(pico.valueOf(g), 0, pico.allowed.length) : 0
   }
 
   this.toChar = function (index = 0) {

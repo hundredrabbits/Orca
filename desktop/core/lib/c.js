@@ -22,8 +22,8 @@ function FnC (pico, x, y, passive) {
     const e = this.east()
     const s = this.south()
 
-    const min = w ? pico.allowed.indexOf(w.glyph) : 0
-    const max = e ? pico.allowed.indexOf(e.glyph) : 9
+    const min = w ? pico.valueOf(w.glyph) : 0
+    const max = e ? pico.valueOf(e.glyph) : 9
     const result = (pico.f % max) + min
 
     pico.add(this.x, this.y + 1, `${pico.allowed[result]}`)

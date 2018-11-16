@@ -13,7 +13,7 @@ function FnV (pico, x, y, passive) {
 
   if (pico) {
     this.w = this.west()
-    this.len = this.w ? pico.allowed.indexOf(this.w.glyph) : 0
+    this.len = this.w ? pico.valueOf(this.w.glyph) : 0
     for (let x = 1; x <= this.len; x++) {
       this.ports.push({ x: x, y: 0, input: true })
     }
@@ -33,7 +33,7 @@ function FnV (pico, x, y, passive) {
       const g = pico.glyphAt(this.x + x, this.y)
       if (g !== '.') { count++ }
     }
-    const ch = pico.allowed.indexOf(`${count}`)
+    const ch = pico.valueOf(`${count}`)
     pico.add(this.x, this.y + 1, `${pico.allowed[ch]}`)
   }
 }

@@ -22,9 +22,9 @@ function FnI (pico, x, y, passive) {
     const e = this.east()
     const s = this.south()
 
-    const min = w ? pico.allowed.indexOf(w.glyph) : 0
-    const max = e ? pico.allowed.indexOf(e.glyph) : 9
-    const val = s ? pico.allowed.indexOf(s.glyph) : 0
+    const min = w ? pico.valueOf(w.glyph) : 0
+    const max = e ? pico.valueOf(e.glyph) : 9
+    const val = s ? pico.valueOf(s.glyph) : 0
 
     const result = val + 1 >= max ? min : val + 1
 

@@ -28,9 +28,9 @@ function FnMidi (pico, x, y, passive) {
     if (channelGlyph === '.' || octaveGlyph === '.' || noteGlyph === '.') { return }
     if (notes.indexOf(noteGlyph) < 0) { return }
 
-    const channelValue = pico.allowed.indexOf(channelGlyph)
-    const octaveValue = pico.allowed.indexOf(octaveGlyph)
-    const noteValue = pico.allowed.indexOf(noteGlyph)
+    const channelValue = pico.valueOf(channelGlyph)
+    const octaveValue = pico.valueOf(octaveGlyph)
+    const noteValue = pico.valueOf(noteGlyph)
 
     const channel = clamp(channelValue, 0, 15)
     const octave = clamp(octaveValue, 2, 9)

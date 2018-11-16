@@ -11,7 +11,7 @@ function FnL (pico, x, y, passive) {
 
   if (pico) {
     this.w = this.west()
-    this.len = this.w ? pico.allowed.indexOf(this.w.glyph) : 0
+    this.len = this.w ? pico.valueOf(this.w.glyph) : 0
     for (let x = 1; x <= this.len; x++) {
       this.ports.push({ x: x, y: 0, output: true })
     }

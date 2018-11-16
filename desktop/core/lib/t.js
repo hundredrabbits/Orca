@@ -11,9 +11,9 @@ function FnT (pico, x, y, passive) {
 
   if (pico) {
     this.lenCh = pico.glyphAt(this.x - 1, this.y)
-    this.len = this.lenCh ? pico.allowed.indexOf(this.lenCh) : 0
+    this.len = this.lenCh ? pico.valueOf(this.lenCh) : 0
     this.valCh = pico.glyphAt(this.x - 2, this.y)
-    this.val = this.valCh ? pico.allowed.indexOf(this.valCh) : 0
+    this.val = this.valCh ? pico.valueOf(this.valCh) : 0
 
     if (this.lenCh === '.' || this.valCh === '.') { return }
 
