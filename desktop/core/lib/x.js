@@ -7,9 +7,9 @@ function FnX (pico, x, y, passive) {
 
   this.name = 'split'
   this.info = 'Bangs eastward when westward fn is 0, and southward when fn is 1.'
-  this.ports.push({ x: -1, y: 0 })
-  this.ports.push({ x: 0, y: 1, output: true })
-  this.ports.push({ x: 1, y: 0, output: true })
+  // this.ports.push({ x: -1, y: 0 })
+  // this.ports.push({ x: 0, y: 1, output: true })
+  // this.ports.push({ x: 1, y: 0, output: true })
 
   this.operation = function () {
     if (this.west('0')) {

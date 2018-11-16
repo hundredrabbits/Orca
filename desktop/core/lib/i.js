@@ -7,28 +7,18 @@ function FnI (pico, x, y, passive) {
 
   this.name = 'increment'
   this.info = 'Increments southward numeric fn on bang.'
-  this.ports.push({ x: 0, y: 1, output: true })
-  this.ports.push({ x: 1, y: 0, input: true })
-  this.ports.push({ x: -1, y: 0, input: true })
 
-  this.haste = function () {
-    pico.lock(this.x, this.y + 1)
-    pico.lock(this.x + 1, this.y)
-    pico.lock(this.x - 1, this.y)
-  }
+  this.ports.inputs.min = { x: 1, y: 0 }
+  this.ports.inputs.max = { x: 2, y: 0 }
+  this.ports.inputs.mod = { x: 0, y: 1 }
 
   this.operation = function () {
-    const w = this.west()
-    const e = this.east()
-    const s = this.south()
-
-    const min = w ? pico.valueOf(w.glyph) : 0
-    const max = e ? pico.valueOf(e.glyph) : 9
-    const val = s ? pico.valueOf(s.glyph) : 0
-
-    const result = val + 1 >= max ? min : val + 1
-
-    pico.add(this.x, this.y + 1, `${pico.allowed[result]}`)
+    const min = this.listen(this.ports.inputs.min, true)
+    const max = this.listen(this.ports.inputs.max, true)
+    const mod = this.listen(this.ports.inputs.mod, true)
+    const key = mod + 1 >= (max || 9) ? min : mod + 1
+    const res = pico.allowed[key] ? pico.allowed[key] : 0
+    this.output(`${res}`)
   }
 }
 

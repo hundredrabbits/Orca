@@ -131,8 +131,8 @@ function Pico (w, h) {
     return this.lib.alpha[g.toLowerCase()] || this.lib.num[g] || this.lib.special[g]
   }
 
-  this.valueOf = function (g) {
-    return this.isAllowed(`${g}`) ? pico.allowed.indexOf(`${g}`.toLowerCase()) : 0
+  this.toValue = function (g) {
+    return g !== '.' && this.isAllowed(`${g}`) ? pico.allowed.indexOf(`${g}`.toLowerCase()) : 0
   }
 
   this.glyphAt = function (x, y, req = null) {

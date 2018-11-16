@@ -7,15 +7,24 @@ function FnBase (pico, x, y, glyph = '.', passive = false) {
   this.name = 'unknown'
   this.glyph = passive ? glyph.toUpperCase() : glyph
   this.info = 'Missing docs.'
-  this.ports = []
+  this.ports = { inputs: {}, bang: null }
   this.docs = 'Hello!'
 
   if (!passive) {
-    this.ports.push({ x: 0, y: 0, bang: true })
+    this.ports.bang = true
   }
 
   this.id = function () {
     return this.x + (this.y * pico.h)
+  }
+
+  this.listen = function (port, toValue = false) {
+    const g = pico.glyphAt(this.x + port.x, this.y + port.y)
+    return toValue ? pico.toValue(g) : g
+  }
+
+  this.output = function (g) {
+    pico.add(this.x, this.y + 1, g)
   }
 
   this.haste = function () {

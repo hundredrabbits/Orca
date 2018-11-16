@@ -8,16 +8,16 @@ function FnV (pico, x, y, passive) {
   this.name = 'values'
   this.info = 'Count the number of fns present eastwardly.'
 
-  this.ports.push({ x: 0, y: 1, output: true })
-  this.ports.push({ x: -1, y: 0, input: true })
+  // this.ports.push({ x: 0, y: 1, output: true })
+  // this.ports.push({ x: -1, y: 0, input: true })
 
-  if (pico) {
-    this.w = this.west()
-    this.len = this.w ? pico.valueOf(this.w.glyph) : 0
-    for (let x = 1; x <= this.len; x++) {
-      this.ports.push({ x: x, y: 0, input: true })
-    }
-  }
+  // if (pico) {
+  //   this.w = this.west()
+  //   this.len = this.w ? pico.valueOf(this.w.glyph) : 0
+  //   for (let x = 1; x <= this.len; x++) {
+  //     this.ports.push({ x: x, y: 0, input: true })
+  //   }
+  // }
 
   this.haste = function () {
     for (let x = 1; x <= this.len; x++) {

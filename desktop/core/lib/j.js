@@ -7,8 +7,8 @@ function FnJ (pico, x, y, passive) {
 
   this.name = 'jump'
   this.info = 'Copies the northward fn, southwardly.'
-  this.ports.push({ x: 0, y: -1, input: true })
-  this.ports.push({ x: 0, y: 1, output: true })
+  // this.ports.push({ x: 0, y: -1, input: true })
+  // this.ports.push({ x: 0, y: 1, output: true })
 
   this.haste = function () {
     pico.lock(this.x, this.y + 1)

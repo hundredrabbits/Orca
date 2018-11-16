@@ -114,7 +114,7 @@ function Terminal (pico) {
       if (pico.isLocked(g.x, g.y)) { continue }
       for (const id in g.ports) {
         const port = g.ports[id]
-        h[`${g.x + port.x}:${g.y + port.y}`] = port.output ? 2 : port.bang ? 1 : 3
+        // h[`${g.x + port.x}:${g.y + port.y}`] = port.output ? 2 : port.bang ? 1 : 3
       }
     }
 
@@ -153,15 +153,15 @@ function Terminal (pico) {
     // Cursor
     this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1)
     this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1)
-    this.write(`${pico.w}x${pico.h}`, col * 2, 1)
-    this.write(this.debug, col * 3, 1)
+    this.write(`${this.cursor._mode()}`, col * 2, 1)
+    this.write(`${this.cursor.inspect()}`.substr(0, col - 1), col * 3, 1)
 
     // Grid
-    this.write(`${this.cursor.inspect()}`.substr(0, col), col * 0, 0)
-    this.write(`${this.cursor._mode()}`, col * 1, 0)
+    this.write(`${pico.w}x${pico.h}`, col * 0, 0)
+    this.write(`${this.source}`.substr(0, 5), col * 1, 0)
     this.write(`${this.bpm}`, col * 2, 0)
     this.write(`${this.midi}`, col * 3, 0)
-    this.write(`${this.source}`, col * 4, 0)
+    this.write(this.debug, col * 4, 0)
   }
 
   this.write = function (text, offsetX, offsetY) {
