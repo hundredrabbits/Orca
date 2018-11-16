@@ -8,28 +8,40 @@ function FnMidi (pico, x, y, passive) {
   this.name = 'midi'
   this.info = 'Sends Midi'
 
-  this.ports = [{ x: 0, y: -1, input: true }, { x: 1, y: 0, output: true }, { x: 2, y: 0, output: true }]
+  this.ports = [{ x: 1, y: 0, input: true }, { x: 2, y: 0, input: true }, { x: 3, y: 0, input: true }, { x: 0, y: 0, bang: true }]
 
   this.haste = function () {
     pico.lock(this.x, this.y - 1)
     pico.lock(this.x + 1, this.y)
+    pico.lock(this.x + 2, this.y)
+    pico.lock(this.x + 3, this.y)
   }
 
   this.run = function () {
-    const n = this.north()
-    if (!n || !this.bang()) { return }
-    const e = this.east()
+    if (!this.bang()) { return }
 
-    const channel = 3
-    const octave = !e ? 3 : this.convert(e.glyph)
-    const note = this.convert(n.glyph)
-    const velocity = 127
-    terminal.qqq.send(channel, octave, note, velocity)
+    const channelGlyph = pico.glyphAt(this.x + 1, this.y)
+    const octaveGlyph = pico.glyphAt(this.x + 2, this.y)
+    const noteGlyph = pico.glyphAt(this.x + 3, this.y)
+
+    if (channelGlyph === '.' || octaveGlyph === '.' || noteGlyph === '.') { return }
+
+    const channelValue = pico.allowed.indexOf(channelGlyph)
+    const octaveValue = pico.allowed.indexOf(octaveGlyph)
+    const noteValue = pico.allowed.indexOf(noteGlyph)
+
+    const channel = clamp(channelValue, 0, 15)
+    const octave = clamp(octaveValue, 3, 8)
+    const note = this.convert(noteValue)
+
+    terminal.qqq.send(channel, octave, note, 127)
   }
 
-  this.convert = function (glyph) {
-    return pico.allowed.indexOf(glyph)
+  this.convert = function (ch) {
+    return 64
   }
+
+  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = FnMidi

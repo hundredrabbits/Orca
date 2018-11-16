@@ -5,7 +5,6 @@ const FnBase = require('./_base')
 function FnY (pico, x, y, passive) {
   FnBase.call(this, pico, x, y, 'y', passive)
 
-  this.type = 'math'
   this.name = 'type'
   this.info = 'Compares the type(num/alpha/special) of westward and eastward fns, and return 1 or 0 southward.'
   this.ports.push({ x: -1, y: 0, input: true })

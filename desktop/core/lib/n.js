@@ -5,7 +5,6 @@ const FnBase = require('./_base')
 function FnN (pico, x, y, passive) {
   FnBase.call(this, pico, x, y, 'n', passive)
 
-  this.type = 'direction'
   this.name = 'north'
   this.info = 'Moves Northward, or bangs.'
 

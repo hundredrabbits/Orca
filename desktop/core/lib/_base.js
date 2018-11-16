@@ -6,7 +6,6 @@ function FnBase (pico, x, y, glyph = '.', passive = false) {
   this.passive = passive
   this.name = '<missing name>'
   this.glyph = passive ? glyph.toUpperCase() : glyph
-  this.type = 'misc'
   this.info = 'Missing docs.'
   this.ports = []
   this.docs = 'Hello!'

@@ -5,37 +5,28 @@ const FnBase = require('./_base')
 function FnC (pico, x, y, passive) {
   FnBase.call(this, pico, x, y, 'c', passive)
 
-  this.type = 'list'
-  this.name = 'count'
-  this.info = 'Count the number of fns present eastwardly.'
-
+  this.name = 'clock'
+  this.info = 'A sync value.'
   this.ports.push({ x: 0, y: 1, output: true })
+  this.ports.push({ x: 1, y: 0, input: true })
   this.ports.push({ x: -1, y: 0, input: true })
 
-  if (pico) {
-    this.w = this.west()
-    this.len = this.w ? pico.allowed.indexOf(this.w.glyph) : 0
-    for (let x = 1; x <= this.len; x++) {
-      this.ports.push({ x: x, y: 0, input: true })
-    }
-  }
-
   this.haste = function () {
-    for (let x = 1; x <= this.len; x++) {
-      pico.lock(this.x + x, this.y)
-    }
     pico.lock(this.x, this.y + 1)
+    pico.lock(this.x + 1, this.y)
+    pico.lock(this.x - 1, this.y)
   }
 
   this.operation = function () {
-    if (!this.len || this.len < 1) { return }
-    let count = 0
-    for (let x = 1; x <= this.len; x++) {
-      const g = pico.glyphAt(this.x + x, this.y)
-      if (g !== '.') { count++ }
-    }
-    const ch = pico.allowed.indexOf(`${count}`)
-    pico.add(this.x, this.y + 1, `${pico.allowed[ch]}`)
+    const w = this.west()
+    const e = this.east()
+    const s = this.south()
+
+    const min = w ? pico.allowed.indexOf(w.glyph) : 0
+    const max = e ? pico.allowed.indexOf(e.glyph) : 9
+    const result = (pico.f % max) + min
+
+    pico.add(this.x, this.y + 1, `${pico.allowed[result]}`)
   }
 }
 

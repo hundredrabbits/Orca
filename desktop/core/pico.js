@@ -18,7 +18,6 @@ function Pico (w, h) {
     const h = {}
     for (const id in lib) {
       const fn = new lib[id]()
-      if (fn.type === 'misc') { continue }
       h[fn.glyph] = fn.docs()
     }
     return h

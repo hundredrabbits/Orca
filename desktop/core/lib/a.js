@@ -5,7 +5,6 @@ const FnBase = require('./_base')
 function FnA (pico, x, y, passive) {
   FnBase.call(this, pico, x, y, 'a', passive)
 
-  this.type = 'math'
   this.name = 'add'
   this.info = 'Creates the result of the addition of east and west fns, southward.'
 

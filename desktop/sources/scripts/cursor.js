@@ -63,6 +63,8 @@ function Cursor (terminal) {
   }
 
   this.inspect = function () {
+    if (this.w > 1 || this.h > 1) { return 'multi' }
+
     const g = pico.glyphAt(this.x, this.y)
     return pico.docs[g] ? pico.docs[g] : 'empty'
   }

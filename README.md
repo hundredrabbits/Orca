@@ -8,53 +8,39 @@
 
 ### alpha functions
 
-- `A`, **add**(math): Creates the result of the addition of east and west fns, southward.
-- `B`, **<missing name>**: Missing docs.
-- `C`, **count**(list): Count the number of fns present eastwardly.
+- `A`, **add**: Creates the result of the addition of east and west fns, southward.
+- `B`, **Banger**: Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` northward.
+- `C`, **clock**: A sync value.
 - `D`, **<missing name>**: Missing docs.
-- `E`, **east**(direction): Moves eastward, or bangs.
-- `F`, **if**(math): Bangs if east and west fns are equal, southward.
-- `G`, **generator**(transport): Generates a direction fn from bang.
-- `H`, **halt**(stopper): Stops southward fn from operating.
-- `I`, **increment**(trigger): Increments southward numeric fn on bang.
+- `E`, **east**: Moves eastward, or bangs.
+- `F`, **if**: Bangs if east and west fns are equal, southward.
+- `G`, **generator**: Generates a direction fn from bang.
+- `H`, **halt**: Stops southward fn from operating.
+- `I`, **increment**: Increments southward numeric fn on bang.
 - `J`, **jump**: Copies the northward fn, southwardly.
-- `K`, **kill**(trigger): Kills southward fns, on bang.
-- `L`, **loop**(list): Loop a number of characters ahead.
-- `M`, **modulo**(math): Creates the result of the modulo operation of east and west fns, southward.
-- `N`, **north**(direction): Moves Northward, or bangs.
+- `K`, **kill**: Kills southward fns, on bang.
+- `L`, **loop**: Loop a number of characters ahead.
+- `M`, **modulo**: Creates the result of the modulo operation of east and west fns, southward.
+- `N`, **north**: Moves Northward, or bangs.
 - `O`, **<missing name>**: Missing docs.
 - `P`, **<missing name>**: Missing docs.
-- `Q`, **query**: Call a function by name, freezes 3 characters eastward.
-- `R`, **raycast**(transport): Sends a bang to the nearest fn following the direction of the bang.
-- `S`, **south**(direction): Moves southward, or bangs.
-- `T`, **trigger**: Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` northward.
-- `U`, **until**(list): Read character at position.
-- `V`, **<missing name>**: Missing docs.
-- `W`, **west**(direction): Moves westward, or bangs.
+- `Q`, **<missing name>**: Missing docs.
+- `R`, **raycast**: Sends a bang to the nearest fn following the direction of the bang.
+- `S`, **south**: Moves southward, or bangs.
+- `T`, **track**: Read character at position.
+- `U`, **<missing name>**: Missing docs.
+- `V`, **values**: Count the number of fns present eastwardly.
+- `W`, **west**: Moves westward, or bangs.
 - `X`, **split**: Bangs eastward when westward fn is 0, and southward when fn is 1.
-- `Y`, **type**(math): Compares the type(num/alpha/special) of westward and eastward fns, and return 1 or 0 southward.
+- `Y`, **type**: Compares the type(num/alpha/special) of westward and eastward fns, and return 1 or 0 southward.
 - `Z`, **creep**: Moves to a the next available location in a cycle of E, S, W, N based on the runtime frame.
 
 ### special functions
 
 - `.`, **null**: void
 - `*`, **bang**: Bangs!
-
-### queries functions
-
-- `BPM`, **bpm**(midi): Sets the speed for the Pico terminal.
-- `VOL`, **volume**(midi): Sets the volume for the Pico terminal.
-- `QQQ`, **qqq**(midi): Plays note, on channel, with octave.
-
-### Functions(By Type)
-
-- **maths**: `a` `f` `m` `y`.
-- **miscs**: `b` `d` `j` `o` `p` `Q` `t` `v` `x` `z` `.` `*`.
-- **lists**: `c` `l` `u`.
-- **directions**: `e` `n` `s` `w`.
-- **transports**: `g` `r`.
-- **stoppers**: `h`.
-- **triggers**: `i` `k`.
+- `:`, **midi**: Sends Midi
+- `;`, **comment**: Block Comment
 
 ## CLI
 
