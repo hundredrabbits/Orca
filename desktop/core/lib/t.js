@@ -14,7 +14,7 @@ function FnT (pico, x, y, isPassive) {
   this.ports.output = true
 
   this.haste = function () {
-    this.len = clamp(this.listen(this.ports.haste.len, true), 1, 24)
+    this.len = clamp(this.listen(this.ports.haste.len, true), 1, 16)
     this.key = this.listen(this.ports.haste.key, true)
     for (let x = 1; x <= this.len; x++) {
       pico.lock(this.x + x, this.y)
