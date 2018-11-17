@@ -10,8 +10,8 @@
 
 - `A`, **add**: Creates the result of the addition of east and west fns, southward.
 - `B`, **banger**: Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` northward.
-- `C`, **clock**: A sync value.
-- `D`, **<missing name>**: Missing docs.
+- `C`, **clock**: Adds a constant value southward.
+- `D`, **raycast**: Sends a bang to the nearest fn following the direction of the bang.
 - `E`, **east**: Moves eastward, or bangs.
 - `F`, **if**: Bangs if east and west fns are equal, southward.
 - `G`, **generator**: Generates a direction fn from bang.
@@ -22,13 +22,13 @@
 - `L`, **loop**: Loop a number of characters ahead.
 - `M`, **modulo**: Creates the result of the modulo operation of east and west fns, southward.
 - `N`, **north**: Moves Northward, or bangs.
-- `O`, **<missing name>**: Missing docs.
-- `P`, **<missing name>**: Missing docs.
-- `Q`, **<missing name>**: Missing docs.
-- `R`, **raycast**: Sends a bang to the nearest fn following the direction of the bang.
+- `O`, **unknown**: Missing docs.
+- `P`, **unknown**: Missing docs.
+- `Q`, **unknown**: Missing docs.
+- `R`, **random**: Adds a constant value southward.
 - `S`, **south**: Moves southward, or bangs.
 - `T`, **track**: Read character at position.
-- `U`, **<missing name>**: Missing docs.
+- `U`, **unknown**: Missing docs.
 - `V`, **values**: Count the number of fns present eastwardly.
 - `W`, **west**: Moves westward, or bangs.
 - `X`, **split**: Bangs eastward when westward fn is 0, and southward when fn is 1.
@@ -86,6 +86,8 @@ function frequencyFromNoteNumber(note) {
 ## TODO
 
 The idea is to build a synth/mini sequencer, here's some tasks I need to tackle before then.
+
+- Random value node.
 
 ## Extras
 

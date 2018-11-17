@@ -23,9 +23,9 @@ function FnT (pico, x, y, isPassive) {
 
   this.operation = function () {
     const pos = (this.key % this.len)
-    this.ports.input.val.x = pos + 1
     const res = this.listen(this.ports.input.val)
     this.output(`${res}`)
+    this.ports.input.val.x = pos + 1
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

@@ -1,29 +1,23 @@
 'use strict'
 
 const FnBase = require('./_base')
-
+// TODO
 function FnR (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, 'r', isPassive)
 
-  this.name = 'raycast'
-  this.info = 'Sends a bang to the nearest fn following the direction of the bang.'
+  this.name = 'random'
+  this.info = 'Outputs a random value southward.'
+
+  this.ports.input.min = { x: 1, y: 0 }
+  this.ports.input.max = { x: 2, y: 0 }
+  this.ports.output = true
 
   this.operation = function () {
-    const origin = this.bang()
-    if (!origin) { return }
-    const vector = { x: this.x - origin.x, y: this.y - origin.y }
-    let beam = { x: this.x, y: this.y }
-    let prev = beam
-    while (pico.inBounds(beam.x, beam.y)) {
-      beam = { x: beam.x + vector.x, y: beam.y + vector.y }
-      const busy = pico.glyphAt(beam.x, beam.y) !== '.' && pico.glyphAt(beam.x, beam.y) !== '*'
-      const outside = !pico.inBounds(beam.x, beam.y)
-      if (busy || outside) {
-        pico.add(prev.x, prev.y, '*')
-        break
-      }
-      prev = beam
-    }
+    const min = this.listen(this.ports.input.min, true)
+    const max = this.listen(this.ports.input.max, true)
+    const key = parseInt((Math.random() * (max - min)) + min)
+    const res = pico.allowed[key] ? pico.allowed[key] : 0
+    this.output(`${res}`)
   }
 }
 

@@ -14,10 +14,8 @@ function FnB (pico, x, y, isPassive) {
   this.operation = function () {
     const val = this.listen(this.ports.input.val)
     const chr = ['1', 'w', 's', 'n', 'e', '*']
-
-    if (chr.indexOf(val.toLowerCase()) > -1) {
-      this.output('*')
-    }
+    const res = chr.indexOf(val.toLowerCase()) > -1 ? '*' : '.'
+    this.output(`${res}`)
   }
 }
 

@@ -1,7 +1,7 @@
 'use strict'
 
 const FnBase = require('./_base')
-
+// TODO
 function FnG (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, 'g', isPassive)
 

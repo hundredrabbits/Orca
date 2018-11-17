@@ -7,13 +7,14 @@ function FnComment (pico, x, y, isPassive) {
 
   this.name = 'comment'
   this.info = 'Block Comment'
-  this.isPassive = false
 
   this.haste = function () {
     let count = 0
     for (let x = 0; x <= this.x - 1; x++) {
       if (pico.glyphAt(x, this.y) === ';') { count++ }
     }
+
+    this.isPassive = false
 
     if (count % 2 !== 0) { return }
 

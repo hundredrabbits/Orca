@@ -22,15 +22,11 @@ function FnY (pico, x, y, isPassive) {
       this.output('0')
     } else if ((a && !b) || (b && !a)) {
       this.output('0')
-    } else if (isNum(a) === isNum(b)) {
+    } else if (pico.lib.num[a] === pico.lib.num[b]) {
       this.output('1')
     } else {
       this.output('0')
     }
-  }
-
-  function isNum (c) {
-    return pico.lib.num[c]
   }
 }
 
