@@ -24,16 +24,16 @@
 - `N`, **north**: Moves Northward, or bangs.
 - `O`, **unknown**: Missing docs.
 - `P`, **push**: Pushes neighboring direction fns away.
-- `Q`, **values**: Count the number of fns present eastwardly.
+- `Q`, **count**: Count the number of fns present eastwardly.
 - `R`, **random**: Outputs a random value southward.
 - `S`, **south**: Moves southward, or bangs.
-- `T`, **track**: Read character at position.
+- `T`, **track**: Reads character at eastward position.
 - `U`, **unknown**: Missing docs.
 - `V`, **unknown**: Missing docs.
 - `W`, **west**: Moves westward, or bangs.
 - `X`, **split**: Bangs eastward when westward fn is 0, and southward when fn is 1.
 - `Y`, **type**: Compares the type(num/alpha/special) of westward and eastward fns, and return 1 or 0 southward.
-- `Z`, **creep**: Moves to a the next available location in a cycle of E, S, W, N based on the runtime frame.
+- `Z`, **unknown**: Missing docs.
 
 ### special functions
 
