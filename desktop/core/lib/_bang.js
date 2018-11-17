@@ -9,6 +9,7 @@ function FnBang (pico, x, y, isPassive) {
   this.info = 'Bangs!'
 
   this.haste = function () {
+    this.isPassive = true
     this.remove()
   }
 }

@@ -77,7 +77,7 @@ function Pico (w, h) {
   }
 
   this.runFns = function (fns) {
-    this.unlock()
+    this.release()
     // Move
     for (const id in fns) {
       const fn = fns[id]
@@ -196,8 +196,13 @@ function Pico (w, h) {
     return this.locks.indexOf(`${x}:${y}`) > -1
   }
 
-  this.unlock = function () {
+  this.release = function () {
     this.locks = []
+  }
+
+  this.unlock = function (x, y) {
+    const index = this.locks.indexOf(`${x}:${y}`)
+    this.locks.splice(index, 1)
   }
 
   this.lock = function (x, y) {

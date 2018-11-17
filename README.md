@@ -14,7 +14,7 @@
 - `D`, **raycast**: Sends a bang to the nearest fn following the direction of the bang.
 - `E`, **east**: Moves eastward, or bangs.
 - `F`, **if**: Bangs if east and west fns are equal, southward.
-- `G`, **generator**: Generates a direction fn from bang.
+- `G`, **generator**: Generates a S fn southward, on bang.
 - `H`, **halt**: Stops southward fn from operating.
 - `I`, **increment**: Increments southward numeric fn on bang.
 - `J`, **jump**: Copies the northward fn, southwardly.
@@ -23,9 +23,9 @@
 - `M`, **modulo**: Creates the result of the modulo operation of east and west fns, southward.
 - `N`, **north**: Moves Northward, or bangs.
 - `O`, **unknown**: Missing docs.
-- `P`, **unknown**: Missing docs.
+- `P`, **push**: Pushes neighboring direction fns away.
 - `Q`, **unknown**: Missing docs.
-- `R`, **random**: Adds a constant value southward.
+- `R`, **random**: Outputs a random value southward.
 - `S`, **south**: Moves southward, or bangs.
 - `T`, **track**: Read character at position.
 - `U`, **unknown**: Missing docs.
