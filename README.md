@@ -57,6 +57,18 @@ npm install
 npm start
 ```
 
+## Ports Specs
+
+```
+Haste < Function > Input(s)
+           v
+        Output
+```
+
+- **Haste port** values are collected before runtime.
+- **Inputs** are collected at normal runtime.
+- **Outputs**.
+
 ## Notes
 
 - `0x92 & 0xf0 = 144`, Ch3 noteOn

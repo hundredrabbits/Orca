@@ -8,14 +8,15 @@ function FnI (pico, x, y, passive) {
   this.name = 'increment'
   this.info = 'Increments southward numeric fn on bang.'
 
-  this.ports.inputs.min = { x: 1, y: 0 }
-  this.ports.inputs.max = { x: 2, y: 0 }
-  this.ports.inputs.mod = { x: 0, y: 1 }
+  this.ports.input.min = { x: 1, y: 0 }
+  this.ports.input.max = { x: 2, y: 0 }
+  this.ports.input.mod = { x: 0, y: 1 }
+  this.ports.output = true
 
   this.operation = function () {
-    const min = this.listen(this.ports.inputs.min, true)
-    const max = this.listen(this.ports.inputs.max, true)
-    const mod = this.listen(this.ports.inputs.mod, true)
+    const min = this.listen(this.ports.input.min, true)
+    const max = this.listen(this.ports.input.max, true)
+    const mod = this.listen(this.ports.input.mod, true)
     const key = mod + 1 >= (max || 9) ? min : mod + 1
     const res = pico.allowed[key] ? pico.allowed[key] : 0
     this.output(`${res}`)

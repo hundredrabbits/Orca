@@ -8,12 +8,13 @@ function FnC (pico, x, y, passive) {
   this.name = 'clock'
   this.info = 'Adds a constant value southward.'
 
-  this.ports.inputs.min = { x: 1, y: 0 }
-  this.ports.inputs.max = { x: 2, y: 0 }
+  this.ports.input.min = { x: 1, y: 0 }
+  this.ports.input.max = { x: 2, y: 0 }
+  this.ports.output = true
 
   this.operation = function () {
-    const min = this.listen(this.ports.inputs.min, true)
-    const max = this.listen(this.ports.inputs.max, true)
+    const min = this.listen(this.ports.input.min, true)
+    const max = this.listen(this.ports.input.max, true)
     const key = (pico.f % max) + min
     const res = pico.allowed[key] ? pico.allowed[key] : 0
     this.output(`${res}`)

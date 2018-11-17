@@ -7,17 +7,12 @@ function FnL (pico, x, y, passive) {
 
   this.name = 'loop'
   this.info = 'Loop a number of characters ahead.'
-  // this.ports.push({ x: -1, y: 0, input: true })
 
-  // if (pico) {
-  //   this.w = this.west()
-  //   this.len = this.w ? pico.valueOf(this.w.glyph) : 0
-  //   for (let x = 1; x <= this.len; x++) {
-  //     this.ports.push({ x: x, y: 0, output: true })
-  //   }
-  // }
+  this.ports.haste.len = { x: -1, y: 0 }
 
   this.haste = function () {
+    this.len = this.listen(this.ports.haste.len, true)
+
     for (let x = 1; x <= this.len; x++) {
       pico.lock(this.x + x, this.y)
     }

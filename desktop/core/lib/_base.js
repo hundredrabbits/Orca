@@ -7,7 +7,7 @@ function FnBase (pico, x, y, glyph = '.', passive = false) {
   this.name = 'unknown'
   this.glyph = passive ? glyph.toUpperCase() : glyph
   this.info = 'Missing docs.'
-  this.ports = { inputs: {}, bang: null }
+  this.ports = { input: {}, haste: {}, bang: null }
   this.docs = 'Hello!'
 
   if (!passive) {
@@ -25,6 +25,21 @@ function FnBase (pico, x, y, glyph = '.', passive = false) {
 
   this.output = function (g) {
     pico.add(this.x, this.y + 1, g)
+  }
+
+  // Lock Ports
+  this.locks = function () {
+    for (const id in this.ports.haste) {
+      const port = this.ports.haste[id]
+      pico.lock(this.x + port.x, this.y + port.y)
+    }
+    for (const id in this.ports.input) {
+      const port = this.ports.input[id]
+      pico.lock(this.x + port.x, this.y + port.y)
+    }
+    if (this.ports.output) {
+      pico.lock(this.x, this.y + 1)
+    }
   }
 
   this.haste = function () {

@@ -7,22 +7,12 @@ function FnX (pico, x, y, passive) {
 
   this.name = 'split'
   this.info = 'Bangs eastward when westward fn is 0, and southward when fn is 1.'
-  // this.ports.push({ x: -1, y: 0 })
-  // this.ports.push({ x: 0, y: 1, output: true })
-  // this.ports.push({ x: 1, y: 0, output: true })
+
+  this.ports.input.val = { x: 1, y: 0 }
 
   this.operation = function () {
-    if (this.west('0')) {
-      this.fire(1, 0)
-    }
-    if (this.west('1')) {
-      this.fire(0, 1)
-    }
-  }
-
-  this.fire = function (x, y) {
-    pico.add(this.x + x, this.y + y, '*')
-    pico.lock(this.x + x, this.y + y)
+    const val = this.listen(this.ports.input.val)
+    this.output(val === '1' ? '1' : '0')
   }
 }
 
