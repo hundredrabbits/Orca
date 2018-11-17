@@ -11,6 +11,7 @@ function FnN (pico, x, y, isPassive) {
   this.haste = function () {
     if (this.isFree(0, -1) !== true) { this.replace('*'); this.lock(); return }
     this.move(0, -1)
+    this.isPassive = false
   }
 }
 
