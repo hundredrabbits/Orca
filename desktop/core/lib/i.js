@@ -17,7 +17,7 @@ function FnI (pico, x, y, isPassive) {
     const min = this.listen(this.ports.input.min, true)
     const max = this.listen(this.ports.input.max, true)
     const mod = this.listen(this.ports.input.mod, true)
-    const key = mod + 1 >= (max || 9) ? min : mod + 1
+    const key = mod + 1 >= (max || 10) ? min : mod + 1
     const res = pico.allowed[key] ? pico.allowed[key] : 0
     this.output(`${res}`)
   }

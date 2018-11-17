@@ -8,25 +8,26 @@ function FnT (pico, x, y, isPassive) {
   this.name = 'track'
   this.info = 'Read character at position.'
 
+  this.ports.input.val = { x: 1, y: 0 }
   this.ports.haste.len = { x: -1, y: 0 }
   this.ports.haste.key = { x: -2, y: 0 }
   this.ports.output = true
 
   this.haste = function () {
-    this.len = this.listen(this.ports.haste.len, true)
-    this.key = this.listen(this.ports.haste.len, true)
-
+    this.len = clamp(this.listen(this.ports.haste.len, true), 1, 24)
+    this.key = this.listen(this.ports.haste.key, true)
     for (let x = 1; x <= this.len; x++) {
       pico.lock(this.x + x, this.y)
     }
   }
 
   this.operation = function () {
-    if (!this.len || this.len < 1 || this.key < 0) { return }
-    const x = (this.x + 1) + (this.key % this.len)
-    const index = pico.glyphAt(x, this.y)
-    pico.add(this.x, this.y + 1, index)
+    const pos = (this.key % this.len) + this.ports.input.val.x
+    const res = pico.glyphAt(this.x + pos, this.y)
+    this.output(`${res}`)
   }
+
+  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = FnT

@@ -15,7 +15,7 @@ function FnC (pico, x, y, isPassive) {
   this.operation = function () {
     const min = this.listen(this.ports.input.min, true)
     const max = this.listen(this.ports.input.max, true)
-    const key = (pico.f % max) + min
+    const key = (pico.f % (max || 10)) + min
     const res = pico.allowed[key] ? pico.allowed[key] : 0
     this.output(`${res}`)
   }
