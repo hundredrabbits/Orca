@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnR (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'r', passive)
+function FnR (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'r', isPassive)
 
   this.name = 'raycast'
   this.info = 'Sends a bang to the nearest fn following the direction of the bang.'

@@ -2,22 +2,22 @@
 
 const FnBase = require('./_base')
 
-function FnV (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'v', passive)
+function FnV (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'v', isPassive)
 
   this.name = 'values'
   this.info = 'Count the number of fns present eastwardly.'
 
-  this.ports.push({ x: 0, y: 1, output: true })
-  this.ports.push({ x: -1, y: 0, input: true })
+  // this.ports.push({ x: 0, y: 1, output: true })
+  // this.ports.push({ x: -1, y: 0, input: true })
 
-  if (pico) {
-    this.w = this.west()
-    this.len = this.w ? pico.valueOf(this.w.glyph) : 0
-    for (let x = 1; x <= this.len; x++) {
-      this.ports.push({ x: x, y: 0, input: true })
-    }
-  }
+  // if (pico) {
+  //   this.w = this.west()
+  //   this.len = this.w ? pico.valueOf(this.w.glyph) : 0
+  //   for (let x = 1; x <= this.len; x++) {
+  //     this.ports.push({ x: x, y: 0, input: true })
+  //   }
+  // }
 
   this.haste = function () {
     for (let x = 1; x <= this.len; x++) {

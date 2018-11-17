@@ -108,16 +108,21 @@ function Terminal (pico) {
 
   this.findPorts = function () {
     const h = {}
-    const fns = pico.findFns()
+    const fns = pico.runtime
     for (const id in fns) {
       const g = fns[id]
       if (pico.isLocked(g.x, g.y)) { continue }
-      for (const id in g.ports) {
-        const port = g.ports[id]
-        h[`${g.x + port.x}:${g.y + port.y}`] = port.output ? 2 : port.bang ? 1 : 3
+      if (g.isPassive) { h[`${g.x}:${g.y}`] = 4 }
+      if (g.ports.output) { h[`${g.x}:${g.y + 1}`] = 2 }
+      for (const id in g.ports.haste) {
+        const port = g.ports.haste[id]
+        h[`${g.x + port.x}:${g.y + port.y}`] = 5
+      }
+      for (const id in g.ports.input) {
+        const port = g.ports.input[id]
+        h[`${g.x + port.x}:${g.y + port.y}`] = 3
       }
     }
-
     return h
   }
 
@@ -153,15 +158,15 @@ function Terminal (pico) {
     // Cursor
     this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1)
     this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1)
-    this.write(`${pico.w}x${pico.h}`, col * 2, 1)
-    this.write(this.debug, col * 3, 1)
+    this.write(`${this.cursor._mode()}`, col * 2, 1)
+    this.write(`${this.cursor.inspect()}`.substr(0, col - 1), col * 3, 1)
 
     // Grid
-    this.write(`${this.cursor.inspect()}`.substr(0, col), col * 0, 0)
-    this.write(`${this.cursor._mode()}`, col * 1, 0)
+    this.write(`${pico.w}x${pico.h}`, col * 0, 0)
+    this.write(`${this.source}`.substr(0, 5), col * 1, 0)
     this.write(`${this.bpm}`, col * 2, 0)
     this.write(`${this.midi}`, col * 3, 0)
-    this.write(`${this.source}`, col * 4, 0)
+    this.write(this.debug, col * 4, 0)
   }
 
   this.write = function (text, offsetX, offsetY) {
@@ -198,10 +203,18 @@ function Terminal (pico) {
         ctx.fillStyle = this.theme.active.b_high
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_low
-      } else if (styles.isPort === 3) {
-        ctx.fillStyle = this.theme.active.b_low
+      } else if (styles.isPort === 3) { // Input
+        ctx.fillStyle = this.theme.active.background
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
-        ctx.fillStyle = this.theme.active.f_high
+        ctx.fillStyle = this.theme.active.b_high
+      } else if (styles.isPort === 4) { // Passive
+        ctx.fillStyle = this.theme.active.b_med
+        ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+        ctx.fillStyle = this.theme.active.f_low
+      } else if (styles.isPort === 5) { // Haste
+        ctx.fillStyle = this.theme.active.background
+        ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+        ctx.fillStyle = this.theme.active.b_med
       }
     } else if (styles.isLocked) {
       ctx.fillStyle = this.theme.active.background
@@ -214,6 +227,7 @@ function Terminal (pico) {
   }
 
   this.resize = function () {
+    this.size = { width: this.tile.w * pico.w, height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.5 }
     this.el.width = this.size.width
     this.el.height = this.size.height + this.tile.h
     this.el.style.width = (this.size.width * this.size.ratio) + 'px'

@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnZ (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'z', passive)
+function FnZ (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'z', isPassive)
 
   this.name = 'creep'
   this.info = 'Moves to a the next available location in a cycle of E, S, W, N based on the runtime frame.'

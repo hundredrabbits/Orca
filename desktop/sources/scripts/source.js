@@ -66,7 +66,7 @@ function Source (pico, terminal) {
   }
 
   this.toString = function () {
-    return this.path ? this.name() : 'unsaved'
+    return this.path ? this.name() : 'blank'
   }
 }
 

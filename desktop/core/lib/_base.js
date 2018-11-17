@@ -1,21 +1,45 @@
 'use strict'
 
-function FnBase (pico, x, y, glyph = '.', passive = false) {
+function FnBase (pico, x, y, glyph = '.', isPassive = false) {
   this.x = x
   this.y = y
-  this.passive = passive
+  this.isPassive = isPassive
   this.name = 'unknown'
-  this.glyph = passive ? glyph.toUpperCase() : glyph
+  this.glyph = isPassive ? glyph.toUpperCase() : glyph
   this.info = 'Missing docs.'
-  this.ports = []
+  this.ports = { input: {}, haste: {}, bang: null }
   this.docs = 'Hello!'
 
-  if (!passive) {
-    this.ports.push({ x: 0, y: 0, bang: true })
+  if (!isPassive) {
+    this.ports.bang = true
   }
 
   this.id = function () {
     return this.x + (this.y * pico.h)
+  }
+
+  this.listen = function (port, toValue = false) {
+    const g = pico.glyphAt(this.x + port.x, this.y + port.y)
+    return toValue ? pico.toValue(g) : g
+  }
+
+  this.output = function (g) {
+    pico.add(this.x, this.y + 1, g)
+  }
+
+  // Lock Ports
+  this.locks = function () {
+    for (const id in this.ports.haste) {
+      const port = this.ports.haste[id]
+      pico.lock(this.x + port.x, this.y + port.y)
+    }
+    for (const id in this.ports.input) {
+      const port = this.ports.input[id]
+      pico.lock(this.x + port.x, this.y + port.y)
+    }
+    if (this.ports.output) {
+      pico.lock(this.x, this.y + 1)
+    }
   }
 
   this.haste = function () {

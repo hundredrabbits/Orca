@@ -2,30 +2,22 @@
 
 const FnBase = require('./_base')
 
-function FnM (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'm', passive)
+function FnM (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'm', isPassive)
 
   this.name = 'modulo'
   this.info = 'Creates the result of the modulo operation of east and west fns, southward.'
-  this.ports.push({ x: -1, y: 0 })
-  this.ports.push({ x: 1, y: 0 })
-  this.ports.push({ x: 0, y: 1, output: true })
 
-  this.haste = function () {
-    pico.lock(this.x, this.y + 1)
-    pico.lock(this.x + 1, this.y)
-    pico.lock(this.x - 1, this.y)
-  }
+  this.ports.input.val = { x: 1, y: 0 }
+  this.ports.input.mod = { x: 2, y: 0 }
+  this.ports.output = true
 
   this.operation = function () {
-    const w = this.west()
-    const e = this.east()
-
-    const val = this.toValue(w ? w.glyph : null)
-    const mod = this.toValue(e ? e.glyph : null)
-    const res = this.toChar(val % (mod !== 0 ? mod : 1))
-
-    pico.add(this.x, this.y + 1, res)
+    const val = this.listen(this.ports.input.val, true)
+    const mod = this.listen(this.ports.input.mod, true)
+    const key = val % (mod !== 0 ? mod : 1)
+    const res = pico.allowed[key] ? pico.allowed[key] : 0
+    this.output(`${res}`)
   }
 }
 

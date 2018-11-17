@@ -11,6 +11,7 @@ function Pico (w, h) {
   this.docs = {}
   this.allowed = []
   this.locks = []
+  this.runtime = []
 
   this.terminal = null // Set in terminal.start
 
@@ -52,8 +53,8 @@ function Pico (w, h) {
     }
 
     if (this.lib.alpha[g.toLowerCase()]) {
-      const passive = g === g.toUpperCase()
-      return new this.lib.alpha[g.toLowerCase()](this, x, y, passive)
+      const isPassive = g === g.toUpperCase()
+      return new this.lib.alpha[g.toLowerCase()](this, x, y, isPassive)
     }
   }
 
@@ -81,7 +82,8 @@ function Pico (w, h) {
     for (const id in fns) {
       const fn = fns[id]
       if (this.isLocked(fn.x, fn.y)) { continue }
-      if (fn.passive || fn.bang()) {
+      if (fn.isPassive || fn.bang()) {
+        fn.locks()
         fn.haste()
       }
     }
@@ -89,7 +91,7 @@ function Pico (w, h) {
     for (const id in fns) {
       const fn = fns[id]
       if (this.isLocked(fn.x, fn.y)) { continue }
-      if (fn.passive || fn.bang()) {
+      if (fn.isPassive || fn.bang()) {
         fn.run()
       }
     }
@@ -113,7 +115,8 @@ function Pico (w, h) {
   }
 
   this.run = function () {
-    this.runFns(this.findFns())
+    this.runtime = this.findFns()
+    this.runFns(this.runtime)
     this.record()
     this.s = this.s.substr(0, this.w * this.h)
     this.f += 1
@@ -131,8 +134,8 @@ function Pico (w, h) {
     return this.lib.alpha[g.toLowerCase()] || this.lib.num[g] || this.lib.special[g]
   }
 
-  this.valueOf = function (g) {
-    return this.isAllowed(`${g}`) ? pico.allowed.indexOf(`${g}`.toLowerCase()) : 0
+  this.toValue = function (g) {
+    return g !== '.' && this.isAllowed(`${g}`) ? pico.allowed.indexOf(`${g}`.toLowerCase()) : 0
   }
 
   this.glyphAt = function (x, y, req = null) {

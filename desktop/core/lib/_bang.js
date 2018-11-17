@@ -2,7 +2,7 @@
 
 const FnBase = require('./_base')
 
-function FnBang (pico, x, y, passive) {
+function FnBang (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, '*', true)
 
   this.name = 'bang'

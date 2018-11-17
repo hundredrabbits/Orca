@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnN (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'n', passive)
+function FnN (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'n', isPassive)
 
   this.name = 'north'
   this.info = 'Moves Northward, or bangs.'
@@ -11,6 +11,7 @@ function FnN (pico, x, y, passive) {
   this.haste = function () {
     if (this.isFree(0, -1) !== true) { this.replace('*'); this.lock(); return }
     this.move(0, -1)
+    this.isPassive = false
   }
 }
 

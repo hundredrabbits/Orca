@@ -9,7 +9,7 @@
 ### alpha functions
 
 - `A`, **add**: Creates the result of the addition of east and west fns, southward.
-- `B`, **Banger**: Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` northward.
+- `B`, **banger**: Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` northward.
 - `C`, **clock**: A sync value.
 - `D`, **<missing name>**: Missing docs.
 - `E`, **east**: Moves eastward, or bangs.
@@ -56,6 +56,18 @@ cd desktop
 npm install
 npm start
 ```
+
+## Ports Specs
+
+```
+Haste < Function > Input(s)
+           v
+        Output
+```
+
+- **Haste port** values are collected before runtime.
+- **Inputs** are collected at normal runtime.
+- **Outputs**.
 
 ## Notes
 

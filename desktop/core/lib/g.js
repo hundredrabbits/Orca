@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnG (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'g', passive)
+function FnG (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'g', isPassive)
 
   this.name = 'generator'
   this.info = 'Generates a direction fn from bang.'
