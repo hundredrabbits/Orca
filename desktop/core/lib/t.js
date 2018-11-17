@@ -22,8 +22,9 @@ function FnT (pico, x, y, isPassive) {
   }
 
   this.operation = function () {
-    const pos = (this.key % this.len) + this.ports.input.val.x
-    const res = pico.glyphAt(this.x + pos, this.y)
+    const pos = (this.key % this.len)
+    this.ports.input.val.x = pos + 1
+    const res = this.listen(this.ports.input.val)
     this.output(`${res}`)
   }
 

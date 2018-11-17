@@ -108,16 +108,20 @@ function Terminal (pico) {
 
   this.findPorts = function () {
     const h = {}
-    const fns = pico.findFns()
+    const fns = pico.runtime
     for (const id in fns) {
       const g = fns[id]
       if (pico.isLocked(g.x, g.y)) { continue }
       if (g.isPassive) { h[`${g.x}:${g.y}`] = 4 }
       if (g.ports.output) { h[`${g.x}:${g.y + 1}`] = 2 }
-      // for (const id in g.ports) {
-      //   const port = g.ports[id]
-      //   // h[`${g.x + port.x}:${g.y + port.y}`] = port.output ? 2 : port.bang ? 1 : 3
-      // }
+      for (const id in g.ports.haste) {
+        const port = g.ports.haste[id]
+        h[`${g.x + port.x}:${g.y + port.y}`] = 5
+      }
+      for (const id in g.ports.input) {
+        const port = g.ports.input[id]
+        h[`${g.x + port.x}:${g.y + port.y}`] = 3
+      }
     }
     return h
   }
@@ -199,14 +203,18 @@ function Terminal (pico) {
         ctx.fillStyle = this.theme.active.b_high
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_low
-      } else if (styles.isPort === 3) {
-        ctx.fillStyle = this.theme.active.b_low
+      } else if (styles.isPort === 3) { // Input
+        ctx.fillStyle = this.theme.active.background
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
-        ctx.fillStyle = this.theme.active.f_high
+        ctx.fillStyle = this.theme.active.b_high
       } else if (styles.isPort === 4) { // Passive
         ctx.fillStyle = this.theme.active.b_med
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_low
+      } else if (styles.isPort === 5) { // Haste
+        ctx.fillStyle = this.theme.active.background
+        ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+        ctx.fillStyle = this.theme.active.b_med
       }
     } else if (styles.isLocked) {
       ctx.fillStyle = this.theme.active.background

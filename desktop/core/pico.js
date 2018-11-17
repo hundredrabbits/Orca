@@ -11,6 +11,7 @@ function Pico (w, h) {
   this.docs = {}
   this.allowed = []
   this.locks = []
+  this.runtime = []
 
   this.terminal = null // Set in terminal.start
 
@@ -114,7 +115,8 @@ function Pico (w, h) {
   }
 
   this.run = function () {
-    this.runFns(this.findFns())
+    this.runtime = this.findFns()
+    this.runFns(this.runtime)
     this.record()
     this.s = this.s.substr(0, this.w * this.h)
     this.f += 1
