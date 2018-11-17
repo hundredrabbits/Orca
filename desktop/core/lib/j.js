@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnJ (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'j', passive)
+function FnJ (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'j', isPassive)
 
   this.name = 'jump'
   this.info = 'Copies the northward fn, southwardly.'

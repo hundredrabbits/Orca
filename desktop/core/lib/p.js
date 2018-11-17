@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnP (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'p', passive)
+function FnP (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'p', isPassive)
 }
 
 module.exports = FnP

@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnL (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'l', passive)
+function FnL (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'l', isPassive)
 
   this.name = 'loop'
   this.info = 'Loop a number of characters ahead.'

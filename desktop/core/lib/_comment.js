@@ -2,11 +2,12 @@
 
 const FnBase = require('./_base')
 
-function FnComment (pico, x, y, passive) {
+function FnComment (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, ';', true)
 
   this.name = 'comment'
   this.info = 'Block Comment'
+  this.isPassive = false
 
   this.haste = function () {
     let count = 0

@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnC (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'c', passive)
+function FnC (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'c', isPassive)
 
   this.name = 'clock'
   this.info = 'Adds a constant value southward.'

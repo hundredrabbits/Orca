@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnI (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'i', passive)
+function FnI (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'i', isPassive)
 
   this.name = 'increment'
   this.info = 'Increments southward numeric fn on bang.'

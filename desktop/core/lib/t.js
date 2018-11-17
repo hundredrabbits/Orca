@@ -2,14 +2,15 @@
 
 const FnBase = require('./_base')
 
-function FnT (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'u', passive)
+function FnT (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'u', isPassive)
 
   this.name = 'track'
   this.info = 'Read character at position.'
 
   this.ports.haste.len = { x: -1, y: 0 }
   this.ports.haste.key = { x: -2, y: 0 }
+  this.ports.output = true
 
   this.haste = function () {
     this.len = this.listen(this.ports.haste.len, true)

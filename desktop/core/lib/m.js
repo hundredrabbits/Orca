@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnM (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'm', passive)
+function FnM (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'm', isPassive)
 
   this.name = 'modulo'
   this.info = 'Creates the result of the modulo operation of east and west fns, southward.'

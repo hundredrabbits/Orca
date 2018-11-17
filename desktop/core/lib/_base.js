@@ -1,16 +1,16 @@
 'use strict'
 
-function FnBase (pico, x, y, glyph = '.', passive = false) {
+function FnBase (pico, x, y, glyph = '.', isPassive = false) {
   this.x = x
   this.y = y
-  this.passive = passive
+  this.isPassive = isPassive
   this.name = 'unknown'
-  this.glyph = passive ? glyph.toUpperCase() : glyph
+  this.glyph = isPassive ? glyph.toUpperCase() : glyph
   this.info = 'Missing docs.'
   this.ports = { input: {}, haste: {}, bang: null }
   this.docs = 'Hello!'
 
-  if (!passive) {
+  if (!isPassive) {
     this.ports.bang = true
   }
 

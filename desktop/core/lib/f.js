@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnF (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'f', passive)
+function FnF (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'f', isPassive)
 
   this.name = 'if'
   this.info = 'Bangs if east and west fns are equal, southward.'

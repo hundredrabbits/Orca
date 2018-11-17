@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnY (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'y', passive)
+function FnY (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'y', isPassive)
 
   this.name = 'type'
   this.info = 'Compares the type(num/alpha/special) of westward and eastward fns, and return 1 or 0 southward.'

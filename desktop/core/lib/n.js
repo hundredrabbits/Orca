@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnN (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'n', passive)
+function FnN (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'n', isPassive)
 
   this.name = 'north'
   this.info = 'Moves Northward, or bangs.'

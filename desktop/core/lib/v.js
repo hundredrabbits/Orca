@@ -2,8 +2,8 @@
 
 const FnBase = require('./_base')
 
-function FnV (pico, x, y, passive) {
-  FnBase.call(this, pico, x, y, 'v', passive)
+function FnV (pico, x, y, isPassive) {
+  FnBase.call(this, pico, x, y, 'v', isPassive)
 
   this.name = 'values'
   this.info = 'Count the number of fns present eastwardly.'

@@ -52,8 +52,8 @@ function Pico (w, h) {
     }
 
     if (this.lib.alpha[g.toLowerCase()]) {
-      const passive = g === g.toUpperCase()
-      return new this.lib.alpha[g.toLowerCase()](this, x, y, passive)
+      const isPassive = g === g.toUpperCase()
+      return new this.lib.alpha[g.toLowerCase()](this, x, y, isPassive)
     }
   }
 
@@ -81,7 +81,7 @@ function Pico (w, h) {
     for (const id in fns) {
       const fn = fns[id]
       if (this.isLocked(fn.x, fn.y)) { continue }
-      if (fn.passive || fn.bang()) {
+      if (fn.isPassive || fn.bang()) {
         fn.locks()
         fn.haste()
       }
@@ -90,7 +90,7 @@ function Pico (w, h) {
     for (const id in fns) {
       const fn = fns[id]
       if (this.isLocked(fn.x, fn.y)) { continue }
-      if (fn.passive || fn.bang()) {
+      if (fn.isPassive || fn.bang()) {
         fn.run()
       }
     }
