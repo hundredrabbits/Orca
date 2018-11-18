@@ -4,6 +4,22 @@
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Pico/master/PREVIEW.jpg' width="600"/>
 
+## Guide
+
+Letters are functions(fns), lowercase fns operate on bang(`*`), uppercase fns operate on each frame.
+
+### Ports Specs
+
+```
+Haste < Function > Input(s)
+           v
+        Output
+```
+
+- **Haste port** values are collected before runtime.
+- **Inputs** are collected at normal runtime.
+- **Outputs**.
+
 ## Functions
 
 ### alpha functions
@@ -46,25 +62,13 @@
 
 The midi special function is `:000`, it requires 3 inputs(channel, octave, note). For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**.
 
-## Install
+## Install & Run
 
 ```
 cd desktop
 npm install
 npm start
 ```
-
-## Ports Specs
-
-```
-Haste < Function > Input(s)
-           v
-        Output
-```
-
-- **Haste port** values are collected before runtime.
-- **Inputs** are collected at normal runtime.
-- **Outputs**.
 
 ## Extras
 

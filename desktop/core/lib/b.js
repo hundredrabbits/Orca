@@ -9,12 +9,12 @@ function FnB (pico, x, y, isPassive) {
   this.info = 'Bangs if input is `1`, `N`, `S`, `W` or `E`.'
 
   this.ports.input.val = { x: 1, y: 0 }
-  this.ports.output = true
+  this.ports.output = { x: 0, y: 1 }
 
   this.operation = function () {
     const val = this.listen(this.ports.input.val)
-    const chr = ['1', 'w', 's', 'n', 'e', '*']
-    const res = chr.indexOf(val.toLowerCase()) > -1 ? '*' : '.'
+    const chr = ['1', 'W', 'S', 'N', 'E', '*']
+    const res = chr.indexOf(val.toUpperCase()) > -1 ? '*' : '.'
     this.output(`${res}`)
   }
 }
