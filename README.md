@@ -43,7 +43,7 @@ Haste < Function > Input(s)
 - `Q` **count**('len): Counts the number of fns present eastwardly.
 - `R` **random**(min, max): Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
-- `U` **track**('len, 'key, val): Outputs character at eastward position with offset.
+- `T` **track**('len, 'key, val): Outputs character at eastward position with offset.
 - `U` **unknown**: --
 - `V` **beam**: Bangs the nearest southward fn.
 - `W` **west**: Moves westward, or bangs.

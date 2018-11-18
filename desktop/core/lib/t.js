@@ -3,7 +3,7 @@
 const FnBase = require('./_base')
 
 function FnT (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'u', isPassive)
+  FnBase.call(this, pico, x, y, 't', isPassive)
 
   this.name = 'track'
   this.info = 'Outputs character at eastward position with offset.'
