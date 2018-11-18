@@ -18,7 +18,7 @@ function FnV (pico, x, y, isPassive) {
     this.ports.output.y -= 1
   }
 
-  this.operation = function () {
+  this.run = function () {
     this.output(`*`)
   }
 }

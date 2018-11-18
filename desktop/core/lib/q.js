@@ -19,7 +19,7 @@ function FnQ (pico, x, y, isPassive) {
     }
   }
 
-  this.operation = function () {
+  this.run = function () {
     let count = 0
     for (let x = 1; x <= this.len; x++) {
       if (pico.glyphAt(this.x + x, this.y) !== '.') { count++ }

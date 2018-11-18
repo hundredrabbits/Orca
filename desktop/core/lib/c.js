@@ -12,7 +12,7 @@ function FnC (pico, x, y, isPassive) {
   this.ports.input.max = { x: 2, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
-  this.operation = function () {
+  this.run = function () {
     const min = this.listen(this.ports.input.min, true)
     const max = this.listen(this.ports.input.max, true)
     const key = (pico.f % (max || 10)) + min

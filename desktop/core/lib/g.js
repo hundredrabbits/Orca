@@ -14,7 +14,7 @@ function FnG (pico, x, y, isPassive) {
     pico.unlock(this.x, this.y + 1)
   }
 
-  this.operation = function () {
+  this.run = function () {
     const bang = this.bang()
     if (!bang) { return }
     this.output('S')

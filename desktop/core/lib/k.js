@@ -8,7 +8,7 @@ function FnK (pico, x, y, isPassive) {
   this.name = 'kill'
   this.info = 'Kills southward fn.'
 
-  this.operation = function () {
+  this.run = function () {
     pico.remove(this.x, this.y + 1)
   }
 }

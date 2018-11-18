@@ -12,7 +12,7 @@ function FnY (pico, x, y, isPassive) {
   this.ports.input.b = { x: 2, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
-  this.operation = function () {
+  this.run = function () {
     const a = this.listen(this.ports.input.a)
     const b = this.listen(this.ports.input.b)
 

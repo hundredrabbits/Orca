@@ -62,10 +62,11 @@ function Cursor (terminal) {
     this.terminal.pico.removeBlock(this.x, this.y, this.w, this.h)
   }
 
-  this.inspect = function () {
+  this.inspect = function (name = true, ports = false) {
     if (this.w > 1 || this.h > 1) { return 'multi' }
     const g = pico.glyphAt(this.x, this.y).toLowerCase()
-    return pico.docs[g] ? pico.docs[g] : 'empty'
+    if (!pico.docs[g]) { return 'empty' }
+    return pico.docs[g]
   }
 
   this._position = function () {

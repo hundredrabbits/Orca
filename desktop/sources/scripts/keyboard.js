@@ -22,10 +22,10 @@ function Keyboard () {
     if (event.key === 'v' && event.metaKey) { terminal.cursor.paste(); return }
     if (event.key === 'x' && event.metaKey) { terminal.cursor.cut(); return }
 
-    if (event.keyCode === 38) { keyboard.key_arrow_up(event.shiftKey); return }
-    if (event.keyCode === 40) { keyboard.key_arrow_down(event.shiftKey); return }
-    if (event.keyCode === 37) { keyboard.key_arrow_left(event.shiftKey); return }
-    if (event.keyCode === 39) { keyboard.key_arrow_right(event.shiftKey); return }
+    if (event.keyCode === 38) { keyboard.key_arrow_up(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
+    if (event.keyCode === 40) { keyboard.key_arrow_down(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
+    if (event.keyCode === 37) { keyboard.key_arrow_left(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
+    if (event.keyCode === 39) { keyboard.key_arrow_right(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
 
     if (event.metaKey) { return }
     if (event.ctrlKey) { return }
@@ -46,35 +46,39 @@ function Keyboard () {
     }
   }
 
-  this.key_arrow_up = function (mod = false) {
+  this.key_arrow_up = function (mod = false, skip = false) {
+    const leap = skip ? terminal.grid.y : 1
     if (mod) {
-      terminal.cursor.scale(0, 1)
+      terminal.cursor.scale(0, leap)
     } else {
-      terminal.cursor.move(0, 1)
+      terminal.cursor.move(0, leap)
     }
   }
 
-  this.key_arrow_down = function (mod = false) {
+  this.key_arrow_down = function (mod = false, skip = false) {
+    const leap = skip ? terminal.grid.y : 1
     if (mod) {
-      terminal.cursor.scale(0, -1)
+      terminal.cursor.scale(0, -leap)
     } else {
-      terminal.cursor.move(0, -1)
+      terminal.cursor.move(0, -leap)
     }
   }
 
-  this.key_arrow_left = function (mod = false) {
+  this.key_arrow_left = function (mod = false, skip = false) {
+    const leap = skip ? terminal.grid.x : 1
     if (mod) {
-      terminal.cursor.scale(-1, 0)
+      terminal.cursor.scale(-leap, 0)
     } else {
-      terminal.cursor.move(-1, 0)
+      terminal.cursor.move(-leap, 0)
     }
   }
 
-  this.key_arrow_right = function (mod = false) {
+  this.key_arrow_right = function (mod = false, skip = false) {
+    const leap = skip ? terminal.grid.x : 1
     if (mod) {
-      terminal.cursor.scale(1, 0)
+      terminal.cursor.scale(leap, 0)
     } else {
-      terminal.cursor.move(1, 0)
+      terminal.cursor.move(leap, 0)
     }
   }
 }

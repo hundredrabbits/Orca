@@ -15,7 +15,7 @@ function FnJ (pico, x, y, isPassive) {
     pico.lock(this.x, this.y + 1)
   }
 
-  this.operation = function () {
+  this.run = function () {
     const val = this.listen(this.ports.input.val)
     this.output(val)
   }

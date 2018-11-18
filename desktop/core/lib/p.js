@@ -8,7 +8,7 @@ function FnP (pico, x, y, isPassive) {
   this.name = 'push'
   this.info = 'Pushes direction fns away.'
 
-  this.operation = function () {
+  this.run = function () {
     const ns = this.neighbors()
 
     if (ns.length < 1) { return }

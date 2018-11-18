@@ -22,7 +22,7 @@ function FnT (pico, x, y, isPassive) {
     this.ports.input.val = { x: (this.key % this.len) + 1, y: 0 }
   }
 
-  this.operation = function () {
+  this.run = function () {
     const res = this.listen(this.ports.input.val)
     this.output(`${res}`)
   }

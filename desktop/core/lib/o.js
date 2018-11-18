@@ -19,7 +19,7 @@ function FnO (pico, x, y, isPassive) {
     this.ports.input.val = { x: x, y: y }
   }
 
-  this.operation = function () {
+  this.run = function () {
     const res = this.listen(this.ports.input.val)
     this.output(`${res}`)
   }

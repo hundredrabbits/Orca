@@ -18,7 +18,7 @@ function FnL (pico, x, y, isPassive) {
     }
   }
 
-  this.operation = function () {
+  this.run = function () {
     if (!this.len || this.len < 1) { return }
 
     const a = []
