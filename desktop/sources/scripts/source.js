@@ -19,10 +19,10 @@ function Source (pico, terminal) {
     this.read(paths[0])
   }
 
-  this.save = function () {
+  this.save = function (as = false) {
     terminal.log('Save')
 
-    if (this.path) {
+    if (this.path && !as) {
       this.write(this.path)
     } else {
       dialog.showSaveDialog((path) => {
