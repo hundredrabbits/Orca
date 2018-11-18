@@ -6,7 +6,7 @@ function FnI (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, 'i', isPassive)
 
   this.name = 'increment'
-  this.info = 'Increments southward numeric fn on bang.'
+  this.info = 'Increments southward fn.'
 
   this.ports.input.min = { x: 1, y: 0 }
   this.ports.input.max = { x: 2, y: 0 }

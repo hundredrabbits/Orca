@@ -6,7 +6,7 @@ function FnJ (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, 'j', isPassive)
 
   this.name = 'jump'
-  this.info = 'Copies the northward fn, southwardly.'
+  this.info = 'Outputs the northward fn.'
 
   this.ports.input.val = { x: 0, y: -1 }
   this.ports.output = { x: 0, y: 1 }

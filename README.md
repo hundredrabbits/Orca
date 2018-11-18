@@ -8,31 +8,31 @@
 
 ### alpha functions
 
-- `A` **add**(a, b): Creates the result of the addition of east and west fns, southward.
-- `B` **unknown**: --
-- `C` **clock**(min, max): Adds a constant value southward.
+- `A` **add**(a, b): Outputs the values of inputs.
+- `B` **banger**(val): Bangs if input is `1`, `N`, `S`, `W` or `E`.
+- `C` **clock**(min, max): Outputs a constant value based on the runtime frame.
 - `D` **raycast**: Sends a bang to the nearest fn following the direction of the bang.
 - `E` **east**: Moves eastward, or bangs.
-- `F` **if**(a, b): Bangs if east and west fns are equal, southward.
-- `G` **generator**: Generates a S fn southward, on bang.
+- `F` **if**(a, b): Outputs 1 if inputs are equal, otherwise 0.
+- `G` **generator**: Outputs S on bang.
 - `H` **halt**: Stops southward fn from operating.
-- `I` **increment**(min, max, mod): Increments southward numeric fn on bang.
-- `J` **jump**(val): Copies the northward fn, southwardly.
-- `K` **kill**: Kills southward fns, on bang.
-- `L` **loop**(_len): Loop a number of characters ahead.
-- `M` **modulo**(val, mod): Creates the result of the modulo operation of east and west fns, southward.
+- `I` **increment**(min, max, mod): Increments southward fn.
+- `J` **jump**(val): Outputs the northward fn.
+- `K` **kill**: Kills southward fn.
+- `L` **loop**('len): Loop a number of eastward fns.
+- `M` **modulo**(val, mod): Outputs the modulo of inputs.
 - `N` **north**: Moves Northward, or bangs.
-- `O` **offset**(_x, _y, val): Reads a distant fn with offset.
-- `P` **push**: Pushes neighboring direction fns away.
-- `Q` **count**(_len): Count the number of fns present eastwardly.
-- `R` **random**(min, max): Outputs a random value southward.
+- `O` **offset**('x, 'y, val): Reads a distant fn with offset.
+- `P` **push**: Pushes direction fns away.
+- `Q` **count**('len): Count the number of fns present eastwardly.
+- `R` **random**(min, max): Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
-- `U` **track**(_len, _key, val): Reads character at eastward position.
+- `U` **track**('len, 'key, val): Reads character at eastward position.
 - `U` **unknown**: --
-- `V` **beam**: Bang the nearest southward fn.
+- `V` **beam**: Bangs the nearest southward fn.
 - `W` **west**: Moves westward, or bangs.
 - `X` **unknown**: --
-- `Y` **type**(a, b): Compares the type(num/alpha/special) of westward and eastward fns, and return 1 or 0 southward.
+- `Y` **type**(a, b): Compares the type(num/alpha/special) of inputs, and return 1 or 0.
 - `Z` **unknown**: --
 
 ### special functions

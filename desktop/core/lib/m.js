@@ -6,7 +6,7 @@ function FnM (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, 'm', isPassive)
 
   this.name = 'modulo'
-  this.info = 'Creates the result of the modulo operation of east and west fns, southward.'
+  this.info = 'Outputs the modulo of inputs.'
 
   this.ports.input.val = { x: 1, y: 0 }
   this.ports.input.mod = { x: 2, y: 0 }

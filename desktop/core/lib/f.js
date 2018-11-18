@@ -6,7 +6,7 @@ function FnF (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, 'f', isPassive)
 
   this.name = 'if'
-  this.info = 'Bangs if east and west fns are equal, southward.'
+  this.info = 'Outputs 1 if inputs are equal, otherwise 0.'
 
   this.ports.input.a = { x: 1, y: 0 }
   this.ports.input.b = { x: 2, y: 0 }

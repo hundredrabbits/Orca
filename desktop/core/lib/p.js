@@ -6,7 +6,7 @@ function FnP (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, 'p', isPassive)
 
   this.name = 'push'
-  this.info = 'Pushes neighboring direction fns away.'
+  this.info = 'Pushes direction fns away.'
 
   this.operation = function () {
     const ns = this.neighbors()

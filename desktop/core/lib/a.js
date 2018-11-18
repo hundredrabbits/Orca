@@ -6,7 +6,7 @@ function FnA (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, 'a', isPassive)
 
   this.name = 'add'
-  this.info = 'Creates the result of the addition of east and west fns, southward.'
+  this.info = 'Outputs the values of inputs.'
 
   this.ports.input.a = { x: 1, y: 0 }
   this.ports.input.b = { x: 2, y: 0 }

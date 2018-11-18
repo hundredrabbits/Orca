@@ -6,7 +6,7 @@ function FnY (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, 'y', isPassive)
 
   this.name = 'type'
-  this.info = 'Compares the type(num/alpha/special) of westward and eastward fns, and return 1 or 0 southward.'
+  this.info = 'Compares the type(num/alpha/special) of inputs, and return 1 or 0.'
 
   this.ports.input.a = { x: 1, y: 0 }
   this.ports.input.b = { x: 2, y: 0 }

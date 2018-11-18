@@ -6,7 +6,7 @@ function FnV (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, 'v', isPassive)
 
   this.name = 'beam'
-  this.info = 'Bang the nearest southward fn.'
+  this.info = 'Bangs the nearest southward fn.'
 
   this.ports.output = { x: 0, y: 1 }
 

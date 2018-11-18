@@ -6,7 +6,7 @@ function FnC (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, 'c', isPassive)
 
   this.name = 'clock'
-  this.info = 'Adds a constant value southward.'
+  this.info = 'Outputs a constant value based on the runtime frame.'
 
   this.ports.input.min = { x: 1, y: 0 }
   this.ports.input.max = { x: 2, y: 0 }

@@ -143,7 +143,7 @@ function FnBase (pico, x, y, glyph = '.', isPassive = false) {
 
     if (Object.keys(this.ports.haste).length > 0) {
       for (const name in this.ports.haste) {
-        ports += `_${name}, `
+        ports += `'${name}, `
       }
     }
 
