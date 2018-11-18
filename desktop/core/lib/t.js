@@ -19,13 +19,12 @@ function FnT (pico, x, y, isPassive) {
     for (let x = 1; x <= this.len; x++) {
       pico.lock(this.x + x, this.y)
     }
+    this.ports.input.val = { x: (this.key % this.len) + 1, y: 0 }
   }
 
   this.operation = function () {
-    const pos = (this.key % this.len)
     const res = this.listen(this.ports.input.val)
     this.output(`${res}`)
-    this.ports.input.val.x = pos + 1
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
