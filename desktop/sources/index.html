@@ -20,7 +20,7 @@
       
       const Pico = require('../core/pico')
       const Terminal = require('./scripts/terminal')
-      const pico = new Pico(59, 27)
+      const pico = new Pico(57, 25)
       const terminal = new Terminal(pico)
 
       terminal.install(document.body)
@@ -41,6 +41,10 @@
       terminal.controller.add("default","Program","Play/Pause",() => { terminal.pause(); },"Space")
       terminal.controller.add("default","Program","Incr. Speed",() => { terminal.modSpeed(10); },">")
       terminal.controller.add("default","Program","Decr. Speed",() => { terminal.modSpeed(-10); },"<")
+      terminal.controller.add("default","Program","Incr. Col",() => { terminal.modGrid(1,0); },"]")
+      terminal.controller.add("default","Program","Decr. Col",() => { terminal.modGrid(-1,0); },"[")
+      terminal.controller.add("default","Program","Incr. Row",() => { terminal.modGrid(0,1); },"}")
+      terminal.controller.add("default","Program","Decr. Row",() => { terminal.modGrid(0,-1); },"{")
 
       terminal.controller.add("default","Theme","Noir",() => { terminal.theme.noir(); },"CmdOrCtrl+Shift+1")
       terminal.controller.add("default","Theme","Pale",() => { terminal.theme.pale(); },"CmdOrCtrl+Shift+2")

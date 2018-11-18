@@ -35,6 +35,11 @@ function Keyboard () {
     if (event.key === ' ') { terminal.pause(); event.preventDefault(); return }
     if (event.key === 'Escape') { terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
 
+    if (event.key === ']') { terminal.modGrid(1,0); event.preventDefault(); return }
+    if (event.key === '[') { terminal.modGrid(-1,0); event.preventDefault(); return }
+    if (event.key === '}') { terminal.modGrid(0,1); event.preventDefault(); return }
+    if (event.key === '{') { terminal.modGrid(0,-1); event.preventDefault(); return }
+
     if (event.key.length === 1) {
       terminal.cursor.insert(event.key)
       terminal.update()
