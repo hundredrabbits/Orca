@@ -6,7 +6,7 @@ function FnL (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, 'l', isPassive)
 
   this.name = 'loop'
-  this.info = 'Loop a number of eastward fns.'
+  this.info = 'Loops a number of eastward fns.'
 
   this.ports.haste.len = { x: -1, y: 0 }
 

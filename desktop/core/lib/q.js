@@ -6,7 +6,7 @@ function FnQ (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, 'q', isPassive)
 
   this.name = 'count'
-  this.info = 'Count the number of fns present eastwardly.'
+  this.info = 'Counts the number of fns present eastwardly.'
 
   this.ports.haste.len = { x: -1, y: 0 }
   this.ports.output = { x: 0, y: 1 }

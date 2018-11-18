@@ -32,15 +32,15 @@ Haste < Function > Input(s)
 - `F` **if**(a, b): Outputs `1` if inputs are equal, otherwise `0`.
 - `G` **generator**: Outputs `S` on bang.
 - `H` **halt**: Stops southward fn from operating.
-- `I` **increment**(min, max, mod): Increments southward fn.
+- `I` **increment**(min, max): Increments southward fn.
 - `J` **jump**(val): Outputs the northward fn.
 - `K` **kill**: Kills southward fn.
-- `L` **loop**('len): Loop a number of eastward fns.
+- `L` **loop**('len): Loops a number of eastward fns.
 - `M` **modulo**(val, mod): Outputs the modulo of inputs.
 - `N` **north**: Moves Northward, or bangs.
 - `O` **offset**('x, 'y, val): Reads a distant fn with offset.
 - `P` **push**: Pushes direction fns away.
-- `Q` **count**('len): Count the number of fns present eastwardly.
+- `Q` **count**('len): Counts the number of fns present eastwardly.
 - `R` **random**(min, max): Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
 - `U` **track**('len, 'key, val): Outputs character at eastward position with offset.
