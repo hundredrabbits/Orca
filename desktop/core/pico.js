@@ -19,7 +19,7 @@ function Pico (w, h) {
     const h = {}
     for (const id in lib) {
       const fn = new lib[id]()
-      h[fn.glyph] = fn.docs()
+      h[fn.glyph] = fn.name
     }
     return h
   }

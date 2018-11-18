@@ -11,7 +11,7 @@ function FnT (pico, x, y, isPassive) {
   this.ports.input.val = { x: 1, y: 0 }
   this.ports.haste.len = { x: -1, y: 0 }
   this.ports.haste.key = { x: -2, y: 0 }
-  this.ports.output = true
+  this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
     this.len = clamp(this.listen(this.ports.haste.len, true), 1, 16)

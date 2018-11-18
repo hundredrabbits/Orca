@@ -9,7 +9,7 @@ function FnQ (pico, x, y, isPassive) {
   this.info = 'Count the number of fns present eastwardly.'
 
   this.ports.haste.len = { x: -1, y: 0 }
-  this.ports.output = true
+  this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
     this.len = clamp(this.listen(this.ports.haste.len, true), 1, 16)

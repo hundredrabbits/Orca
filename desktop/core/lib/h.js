@@ -8,7 +8,7 @@ function FnH (pico, x, y, isPassive) {
   this.name = 'halt'
   this.info = 'Stops southward fn from operating.'
 
-  this.ports.output = true
+  this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
     pico.lock(this.x, this.y + 1)

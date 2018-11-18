@@ -8,7 +8,7 @@ function FnG (pico, x, y, isPassive) {
   this.name = 'generator'
   this.info = 'Generates a S fn southward, on bang.'
 
-  this.ports.output = true
+  this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
     pico.unlock(this.x, this.y + 1)

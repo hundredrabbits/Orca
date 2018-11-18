@@ -11,7 +11,7 @@ function FnO (pico, x, y, isPassive) {
   this.ports.haste.x = { x: -2, y: 0 }
   this.ports.haste.y = { x: -1, y: 0 }
   this.ports.input.val = { x: 1, y: 0 }
-  this.ports.output = true
+  this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
     const x = clamp(this.listen(this.ports.haste.x, true), 1, 16)

@@ -24,7 +24,7 @@ function FnBase (pico, x, y, glyph = '.', isPassive = false) {
   }
 
   this.output = function (g) {
-    pico.add(this.x, this.y + 1, g)
+    pico.add(this.x + this.ports.output.x, this.y + this.ports.output.y, g)
   }
 
   // Lock Ports
@@ -138,7 +138,20 @@ function FnBase (pico, x, y, glyph = '.', isPassive = false) {
   }
 
   this.docs = function () {
-    return `${this.name}`
+    let html = ''
+    let ports = ''
+
+    if (Object.keys(this.ports.haste).length > 0) {
+      for (const name in this.ports.haste) {
+        ports += `_${name}, `
+      }
+    }
+
+    for (const name in this.ports.input) {
+      ports += `${name}, `
+    }
+
+    return `\`${this.glyph.toUpperCase()}\` **${this.name}**${ports !== '' ? '(' + ports.substr(0, ports.length - 2) + ')' : ''}: ${this.info}`
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

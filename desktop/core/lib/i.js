@@ -11,7 +11,7 @@ function FnI (pico, x, y, isPassive) {
   this.ports.input.min = { x: 1, y: 0 }
   this.ports.input.max = { x: 2, y: 0 }
   this.ports.input.mod = { x: 0, y: 1 }
-  this.ports.output = true
+  this.ports.output = { x: 0, y: 1 }
 
   this.operation = function () {
     const min = this.listen(this.ports.input.min, true)

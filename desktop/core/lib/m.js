@@ -10,7 +10,7 @@ function FnM (pico, x, y, isPassive) {
 
   this.ports.input.val = { x: 1, y: 0 }
   this.ports.input.mod = { x: 2, y: 0 }
-  this.ports.output = true
+  this.ports.output = { x: 0, y: 1 }
 
   this.operation = function () {
     const val = this.listen(this.ports.input.val, true)

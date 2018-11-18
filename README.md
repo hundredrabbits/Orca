@@ -8,39 +8,39 @@
 
 ### alpha functions
 
-- `A`, **add**: Creates the result of the addition of east and west fns, southward.
-- `B`, **banger**: Bangs southward in the presence of `1`, `N`, `S`, `W`, `E` or `Z` northward.
-- `C`, **clock**: Adds a constant value southward.
-- `D`, **raycast**: Sends a bang to the nearest fn following the direction of the bang.
-- `E`, **east**: Moves eastward, or bangs.
-- `F`, **if**: Bangs if east and west fns are equal, southward.
-- `G`, **generator**: Generates a S fn southward, on bang.
-- `H`, **halt**: Stops southward fn from operating.
-- `I`, **increment**: Increments southward numeric fn on bang.
-- `J`, **jump**: Copies the northward fn, southwardly.
-- `K`, **kill**: Kills southward fns, on bang.
-- `L`, **loop**: Loop a number of characters ahead.
-- `M`, **modulo**: Creates the result of the modulo operation of east and west fns, southward.
-- `N`, **north**: Moves Northward, or bangs.
-- `O`, **offset**: Reads a distant fn with offset.
-- `P`, **push**: Pushes neighboring direction fns away.
-- `Q`, **count**: Count the number of fns present eastwardly.
-- `R`, **random**: Outputs a random value southward.
-- `S`, **south**: Moves southward, or bangs.
-- `T`, **track**: Reads character at eastward position.
-- `U`, **unknown**: Missing docs.
-- `V`, **unknown**: Missing docs.
-- `W`, **west**: Moves westward, or bangs.
-- `X`, **split**: Bangs eastward when westward fn is 0, and southward when fn is 1.
-- `Y`, **type**: Compares the type(num/alpha/special) of westward and eastward fns, and return 1 or 0 southward.
-- `Z`, **unknown**: Missing docs.
+- `A` **add**(a, b): Creates the result of the addition of east and west fns, southward.
+- `B` **unknown**: --
+- `C` **clock**(min, max): Adds a constant value southward.
+- `D` **raycast**: Sends a bang to the nearest fn following the direction of the bang.
+- `E` **east**: Moves eastward, or bangs.
+- `F` **if**(a, b): Bangs if east and west fns are equal, southward.
+- `G` **generator**: Generates a S fn southward, on bang.
+- `H` **halt**: Stops southward fn from operating.
+- `I` **increment**(min, max, mod): Increments southward numeric fn on bang.
+- `J` **jump**(val): Copies the northward fn, southwardly.
+- `K` **kill**: Kills southward fns, on bang.
+- `L` **loop**(_len): Loop a number of characters ahead.
+- `M` **modulo**(val, mod): Creates the result of the modulo operation of east and west fns, southward.
+- `N` **north**: Moves Northward, or bangs.
+- `O` **offset**(_x, _y, val): Reads a distant fn with offset.
+- `P` **push**: Pushes neighboring direction fns away.
+- `Q` **count**(_len): Count the number of fns present eastwardly.
+- `R` **random**(min, max): Outputs a random value southward.
+- `S` **south**: Moves southward, or bangs.
+- `U` **track**(_len, _key, val): Reads character at eastward position.
+- `U` **unknown**: --
+- `V` **beam**: Bang the nearest southward fn.
+- `W` **west**: Moves westward, or bangs.
+- `X` **unknown**: --
+- `Y` **type**(a, b): Compares the type(num/alpha/special) of westward and eastward fns, and return 1 or 0 southward.
+- `Z` **unknown**: --
 
 ### special functions
 
-- `.`, **null**: void
-- `*`, **bang**: Bangs!
-- `:`, **midi**: Sends Midi
-- `;`, **comment**: Block Comment
+- `.` **null**: void
+- `*` **bang**: Bangs!
+- `:` **midi**(channel, octave, note): Sends Midi
+- `;` **comment**: Block Comment
 
 ## Midi Output
 

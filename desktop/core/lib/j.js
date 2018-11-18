@@ -9,7 +9,7 @@ function FnJ (pico, x, y, isPassive) {
   this.info = 'Copies the northward fn, southwardly.'
 
   this.ports.input.val = { x: 0, y: -1 }
-  this.ports.output = true
+  this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
     pico.lock(this.x, this.y + 1)
