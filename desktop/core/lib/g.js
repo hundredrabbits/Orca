@@ -6,7 +6,7 @@ function FnG (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, 'g', isPassive)
 
   this.name = 'generator'
-  this.info = 'Outputs S on bang.'
+  this.info = 'Outputs `S` on bang.'
 
   this.ports.output = { x: 0, y: 1 }
 

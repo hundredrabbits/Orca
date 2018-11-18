@@ -6,7 +6,7 @@ function FnT (pico, x, y, isPassive) {
   FnBase.call(this, pico, x, y, 'u', isPassive)
 
   this.name = 'track'
-  this.info = 'Reads character at eastward position.'
+  this.info = 'Outputs character at eastward position with offset.'
 
   this.ports.input.val = { x: 1, y: 0 }
   this.ports.haste.len = { x: -1, y: 0 }

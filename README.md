@@ -8,13 +8,13 @@
 
 ### alpha functions
 
-- `A` **add**(a, b): Outputs the values of inputs.
+- `A` **add**(a, b): Outputs the sum of inputs.
 - `B` **banger**(val): Bangs if input is `1`, `N`, `S`, `W` or `E`.
 - `C` **clock**(min, max): Outputs a constant value based on the runtime frame.
-- `D` **raycast**: Sends a bang to the nearest fn following the direction of the bang.
+- `D` **unknown**: --
 - `E` **east**: Moves eastward, or bangs.
-- `F` **if**(a, b): Outputs 1 if inputs are equal, otherwise 0.
-- `G` **generator**: Outputs S on bang.
+- `F` **if**(a, b): Outputs `1` if inputs are equal, otherwise `0`.
+- `G` **generator**: Outputs `S` on bang.
 - `H` **halt**: Stops southward fn from operating.
 - `I` **increment**(min, max, mod): Increments southward fn.
 - `J` **jump**(val): Outputs the northward fn.
@@ -27,12 +27,12 @@
 - `Q` **count**('len): Count the number of fns present eastwardly.
 - `R` **random**(min, max): Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
-- `U` **track**('len, 'key, val): Reads character at eastward position.
+- `U` **track**('len, 'key, val): Outputs character at eastward position with offset.
 - `U` **unknown**: --
 - `V` **beam**: Bangs the nearest southward fn.
 - `W` **west**: Moves westward, or bangs.
 - `X` **unknown**: --
-- `Y` **type**(a, b): Compares the type(num/alpha/special) of inputs, and return 1 or 0.
+- `Y` **type**(a, b): Compares the type(num/alpha/special) of inputs, and return `1` or `0`.
 - `Z` **unknown**: --
 
 ### special functions
