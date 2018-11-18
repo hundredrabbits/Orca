@@ -21,7 +21,7 @@ function Terminal (pico) {
 
   this.timer = null
   this.bpm = 120
-  this.grid = {x:8,y:8}
+  this.grid = { x: 8, y: 8 }
 
   this.install = function (host) {
     this.resize()
@@ -79,7 +79,7 @@ function Terminal (pico) {
   }
 
   this.modGrid = function (x = 0, y = 0) {
-    this.grid = {x:clamp(this.grid.x+x,4,16),y:clamp(this.grid.y+y,4,16)}
+    this.grid = { x: clamp(this.grid.x + x, 4, 16), y: clamp(this.grid.y + y, 4, 16) }
   }
 
   //
@@ -137,14 +137,13 @@ function Terminal (pico) {
     return this.el.getContext('2d')
   }
 
-  this.guide = function(x,y)
-  {
+  this.guide = function (x, y) {
     const g = pico.glyphAt(x, y)
 
-    if(g !== '.'){ return g }
-    if(this.cursor.w === 1 && this.cursor.h === 1){ return g }
+    if (g !== '.') { return g }
+    if (this.cursor.w === 1 && this.cursor.h === 1) { return g }
 
-    if(x % this.grid.x === 0 && y % this.grid.y === 0){
+    if (x % this.grid.x === 0 && y % this.grid.y === 0) {
       return '+'
     }
 
@@ -165,7 +164,7 @@ function Terminal (pico) {
           isPort: ports[`${x}:${y}`],
           isLocked: pico.isLocked(x, y)
         }
-        this.drawSprite(x, y, this.guide(x,y), styles)
+        this.drawSprite(x, y, this.guide(x, y), styles)
         x += 1
       }
       y += 1
@@ -175,18 +174,18 @@ function Terminal (pico) {
   this.drawInterface = function () {
     const col = this.grid.x
     // Cursor
-    this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1,this.grid.x)
-    this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1,this.grid.x)
-    this.write(`${this.cursor._mode()}`, col * 2, 1,this.grid.x)
-    this.write(`${this.cursor.inspect()}`, col * 3, 1,this.grid.x)
+    this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1, this.grid.x)
+    this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.grid.x)
+    this.write(`${this.cursor._mode()}`, col * 2, 1, this.grid.x)
+    this.write(`${this.cursor.inspect()}`, col * 3, 1, this.grid.x)
     this.write(this.debug, col * 4, 1)
 
     // Grid
-    this.write(`${pico.w}x${pico.h}`, col * 0, 0,this.grid.x)
-    this.write(`${this.grid.x}/${this.grid.y}`, col * 1, 0,this.grid.x)
-    this.write(`${this.source}`, col * 2, 0,this.grid.x)
-    this.write(`${this.bpm}`, col * 3, 0,this.grid.x)
-    this.write(`${this.midi}`, col * 4, 0,this.grid.x)
+    this.write(`${pico.w}x${pico.h}`, col * 0, 0, this.grid.x)
+    this.write(`${this.grid.x}/${this.grid.y}`, col * 1, 0, this.grid.x)
+    this.write(`${this.source}`, col * 2, 0, this.grid.x)
+    this.write(`${this.bpm}`, col * 3, 0, this.grid.x)
+    this.write(`${this.midi}`, col * 4, 0, this.grid.x)
   }
 
   this.write = function (text, offsetX, offsetY, limit) {
