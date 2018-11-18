@@ -22,7 +22,7 @@
 - `L`, **loop**: Loop a number of characters ahead.
 - `M`, **modulo**: Creates the result of the modulo operation of east and west fns, southward.
 - `N`, **north**: Moves Northward, or bangs.
-- `O`, **unknown**: Missing docs.
+- `O`, **offset**: Reads a distant fn with offset.
 - `P`, **push**: Pushes neighboring direction fns away.
 - `Q`, **count**: Count the number of fns present eastwardly.
 - `R`, **random**: Outputs a random value southward.
