@@ -42,12 +42,9 @@
 - `:`, **midi**: Sends Midi
 - `;`, **comment**: Block Comment
 
-## CLI
+## Midi Output
 
-```
-node cli # New file
-node cli examples/benchmark.pico # Load example
-```
+The midi special function is `:000`, it requires 3 inputs(channel, octave, note). For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**.
 
 ## Install
 
@@ -68,26 +65,6 @@ Haste < Function > Input(s)
 - **Haste port** values are collected before runtime.
 - **Inputs** are collected at normal runtime.
 - **Outputs**.
-
-## Notes
-
-- `0x92 & 0xf0 = 144`, Ch3 noteOn
-- `0x80 & 0xf0 = 128`, Ch1 noteOff
-
-```
-function frequencyFromNoteNumber(note) {
-  return 440 * Math.pow(2, (note - 69) / 12);
-}
-```
-
-- Note values are on a range from 0–127, lowest to highest. For example, the lowest note on an 88-key piano has a value of 21, and the highest note is 108. A “middle C” is 60.
-- Velocity values are also given on a range from 0–127 (softest to loudest). The softest possible “note on” velocity is 1.
-
-## TODO
-
-The idea is to build a synth/mini sequencer, here's some tasks I need to tackle before then.
-
-- Random value node.
 
 ## Extras
 
