@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnH (pico, x, y, isPassive) {
-  Fn.call(this, pico, x, y, 'h', isPassive)
+function FnH (pico, x, y, passive) {
+  Fn.call(this, pico, x, y, 'h', passive)
 
   this.name = 'halt'
   this.info = 'Stops southward fn from operating.'

@@ -2,7 +2,7 @@
 
 const Fn = require('../fn')
 
-function FnMidi (pico, x, y, isPassive) {
+function FnMidi (pico, x, y, passive) {
   Fn.call(this, pico, x, y, ':', true)
 
   this.name = 'midi'

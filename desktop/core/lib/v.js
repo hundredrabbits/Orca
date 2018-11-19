@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnV (pico, x, y, isPassive) {
-  Fn.call(this, pico, x, y, 'v', isPassive)
+function FnV (pico, x, y, passive) {
+  Fn.call(this, pico, x, y, 'v', passive)
 
   this.name = 'beam'
   this.info = 'Bangs the nearest southward fn.'

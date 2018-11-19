@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnR (pico, x, y, isPassive) {
-  Fn.call(this, pico, x, y, 'r', isPassive)
+function FnR (pico, x, y, passive) {
+  Fn.call(this, pico, x, y, 'r', passive)
 
   this.name = 'random'
   this.info = 'Outputs a random value.'

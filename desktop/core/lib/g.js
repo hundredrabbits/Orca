@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnG (pico, x, y, isPassive) {
-  Fn.call(this, pico, x, y, 'g', isPassive)
+function FnG (pico, x, y, passive) {
+  Fn.call(this, pico, x, y, 'g', passive)
 
   this.name = 'generator'
   this.info = 'Outputs `S` on bang.'
@@ -15,8 +15,7 @@ function FnG (pico, x, y, isPassive) {
   }
 
   this.run = function () {
-    const bang = this.bang()
-    if (!bang) { return }
+    if (!this.bang()) { return }
     this.output('S')
   }
 }

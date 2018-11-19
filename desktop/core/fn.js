@@ -1,13 +1,13 @@
 'use strict'
 
-function Fn (pico, x, y, glyph = '.', isPassive = false) {
+function Fn (pico, x, y, glyph = '.', passive = false) {
   this.name = 'unknown'
   this.x = x
   this.y = y
-  this.isPassive = isPassive
-  this.glyph = isPassive ? glyph.toUpperCase() : glyph
+  this.passive = passive
+  this.glyph = passive ? glyph.toUpperCase() : glyph
   this.info = '--'
-  this.ports = { input: {}, haste: {}, bang: !isPassive }
+  this.ports = { input: {}, haste: {}, bang: !passive }
 
   // Actions
 
@@ -20,9 +20,9 @@ function Fn (pico, x, y, glyph = '.', isPassive = false) {
     pico.add(this.x + this.ports.output.x, this.y + this.ports.output.y, g)
   }
 
-  // Lock Ports
+  // Phases
 
-  this.locks = function () {
+  this.init = function () {
     for (const id in this.ports.haste) {
       const port = this.ports.haste[id]
       pico.lock(this.x + port.x, this.y + port.y)
@@ -70,49 +70,11 @@ function Fn (pico, x, y, glyph = '.', isPassive = false) {
     this.replace(this.glyph)
   }
 
-  // TODO: To Clean
-
-  this.isFree = function (x, y) {
-    if (this.x + x >= pico.w) { return false }
-    if (this.x + x <= -1) { return false }
-    if (this.y + y >= pico.h) { return false }
-    if (this.y + y <= -1) { return false }
-
-    const target = pico.glyphAt(this.x + x, this.y + y)
-    return target === '.' || target === '*' ? true : target
-  }
-
-  this.neighbors = function (g) {
-    return [this.north(g), this.east(g), this.south(g), this.west(g)].filter(function (e) { return e })
-  }
-
-  this.west = function (target = null) {
-    const g = pico.glyphAt(this.x - 1, this.y)
-
-    return g !== '.' && (g === target || !target) ? { x: this.x - 1, y: this.y, glyph: g } : null
-  }
-
-  this.east = function (target) {
-    const g = pico.glyphAt(this.x + 1, this.y)
-    return g !== '.' && (g === target || !target) ? { x: this.x + 1, y: this.y, glyph: g } : null
-  }
-
-  this.north = function (target) {
-    const g = pico.glyphAt(this.x, this.y - 1)
-    return g !== '.' && (g === target || !target) ? { x: this.x, y: this.y - 1, glyph: g } : null
-  }
-
-  this.south = function (target) {
-    const g = pico.glyphAt(this.x, this.y + 1)
-    return g !== '.' && (g === target || !target) ? { x: this.x, y: this.y + 1, glyph: g } : null
-  }
-
   this.bang = function () {
-    const ns = this.neighbors('*')
-    for (const id in ns) {
-      const n = ns[id]
-      return { x: n.x, y: n.y }
-    }
+    if (pico.glyphAt(this.x + 1, this.y) === '*') { return true }
+    if (pico.glyphAt(this.x - 1, this.y) === '*') { return true }
+    if (pico.glyphAt(this.x, this.y + 1) === '*') { return true }
+    if (pico.glyphAt(this.x, this.y - 1) === '*') { return true }
     return false
   }
 

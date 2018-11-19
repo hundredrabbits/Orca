@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnA (pico, x, y, isPassive) {
-  Fn.call(this, pico, x, y, 'a', isPassive)
+function FnA (pico, x, y, passive) {
+  Fn.call(this, pico, x, y, 'a', passive)
 
   this.name = 'add'
   this.info = 'Outputs the sum of inputs.'

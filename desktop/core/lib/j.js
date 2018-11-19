@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnJ (pico, x, y, isPassive) {
-  Fn.call(this, pico, x, y, 'j', isPassive)
+function FnJ (pico, x, y, passive) {
+  Fn.call(this, pico, x, y, 'j', passive)
 
   this.name = 'jump'
   this.info = 'Outputs the northward fn.'

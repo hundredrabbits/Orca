@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnB (pico, x, y, isPassive) {
-  Fn.call(this, pico, x, y, 'b', isPassive)
+function FnB (pico, x, y, passive) {
+  Fn.call(this, pico, x, y, 'b', passive)
 
   this.name = 'banger'
   this.info = 'Bangs if input is `1`, `N`, `S`, `W` or `E`.'

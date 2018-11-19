@@ -2,14 +2,14 @@
 
 const Fn = require('../fn')
 
-function FnBang (pico, x, y, isPassive) {
+function FnBang (pico, x, y, passive) {
   Fn.call(this, pico, x, y, '*', true)
 
   this.name = 'bang'
   this.info = 'Bangs!'
 
   this.haste = function () {
-    this.isPassive = true
+    this.passive = true
     this.remove()
   }
 }

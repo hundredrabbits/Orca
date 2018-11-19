@@ -117,7 +117,7 @@ function Terminal (pico) {
     for (const id in fns) {
       const g = fns[id]
       if (pico.isLocked(g.x, g.y)) { continue }
-      if (g.isPassive) { h[`${g.x}:${g.y}`] = 4 }
+      if (g.passive) { h[`${g.x}:${g.y}`] = 4 }
       if (g.ports.output) { h[`${g.x + g.ports.output.x}:${g.y + g.ports.output.y}`] = 2 }
       for (const id in g.ports.haste) {
         const port = g.ports.haste[id]

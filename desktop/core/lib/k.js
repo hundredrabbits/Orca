@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnK (pico, x, y, isPassive) {
-  Fn.call(this, pico, x, y, 'k', isPassive)
+function FnK (pico, x, y, passive) {
+  Fn.call(this, pico, x, y, 'k', passive)
 
   this.name = 'kill'
   this.info = 'Kills southward fn.'

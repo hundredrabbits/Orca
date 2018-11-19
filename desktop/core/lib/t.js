@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnT (pico, x, y, isPassive) {
-  Fn.call(this, pico, x, y, 't', isPassive)
+function FnT (pico, x, y, passive) {
+  Fn.call(this, pico, x, y, 't', passive)
 
   this.name = 'track'
   this.info = 'Outputs character at eastward position with offset.'

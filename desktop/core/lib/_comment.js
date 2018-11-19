@@ -2,7 +2,7 @@
 
 const Fn = require('../fn')
 
-function FnComment (pico, x, y, isPassive) {
+function FnComment (pico, x, y, passive) {
   Fn.call(this, pico, x, y, ';', true)
 
   this.name = 'comment'
@@ -14,7 +14,7 @@ function FnComment (pico, x, y, isPassive) {
       if (pico.glyphAt(x, this.y) === ';') { count++ }
     }
 
-    this.isPassive = false
+    this.passive = false
 
     if (count % 2 !== 0) { return }
 

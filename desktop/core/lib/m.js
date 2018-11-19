@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnM (pico, x, y, isPassive) {
-  Fn.call(this, pico, x, y, 'm', isPassive)
+function FnM (pico, x, y, passive) {
+  Fn.call(this, pico, x, y, 'm', passive)
 
   this.name = 'modulo'
   this.info = 'Outputs the modulo of inputs.'

@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnL (pico, x, y, isPassive) {
-  Fn.call(this, pico, x, y, 'l', isPassive)
+function FnL (pico, x, y, passive) {
+  Fn.call(this, pico, x, y, 'l', passive)
 
   this.name = 'loop'
   this.info = 'Loops a number of eastward fns.'

@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnY (pico, x, y, isPassive) {
-  Fn.call(this, pico, x, y, 'y', isPassive)
+function FnY (pico, x, y, passive) {
+  Fn.call(this, pico, x, y, 'y', passive)
 
   this.name = 'type'
   this.info = 'Compares the type(num/alpha/special) of inputs, and return `1` or `0`.'
@@ -16,7 +16,7 @@ function FnY (pico, x, y, isPassive) {
     const a = this.listen(this.ports.input.a)
     const b = this.listen(this.ports.input.b)
 
-    if (!a && !this.east()) {
+    if (!a && !b) {
       this.output('1')
     } else if ((a && !b) || (b && !a)) {
       this.output('0')

@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnI (pico, x, y, isPassive) {
-  Fn.call(this, pico, x, y, 'i', isPassive)
+function FnI (pico, x, y, passive) {
+  Fn.call(this, pico, x, y, 'i', passive)
 
   this.name = 'increment'
   this.info = 'Increments southward fn.'
