@@ -7,6 +7,7 @@ function FnW (pico, x, y, passive) {
 
   this.name = 'west'
   this.info = 'Moves westward, or bangs.'
+  this.draw = false
 
   this.haste = function () {
     this.move(-1, 0)

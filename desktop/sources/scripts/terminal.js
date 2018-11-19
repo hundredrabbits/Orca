@@ -188,11 +188,7 @@ function Terminal (pico) {
       ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
       ctx.fillStyle = this.theme.active.f_inv
     } else if (styles.isPort) {
-      if (styles.isPort === 1) { // Bang
-        ctx.fillStyle = this.theme.active.b_med
-        ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
-        ctx.fillStyle = this.theme.active.f_low
-      } else if (styles.isPort === 'output') { // Output
+      if (styles.isPort === 'output') { // Output
         ctx.fillStyle = this.theme.active.b_high
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_low

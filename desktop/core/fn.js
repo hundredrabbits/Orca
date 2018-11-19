@@ -5,6 +5,7 @@ function Fn (pico, x, y, glyph = '.', passive = false) {
   this.x = x
   this.y = y
   this.passive = passive
+  this.draw = true
   this.glyph = passive ? glyph.toUpperCase() : glyph
   this.info = '--'
   this.ports = { input: {}, haste: {}, bang: !passive }

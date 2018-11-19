@@ -7,6 +7,7 @@ function FnE (pico, x, y, passive) {
 
   this.name = 'east'
   this.info = 'Moves eastward, or bangs.'
+  this.draw = false
 
   this.haste = function () {
     this.move(1, 0)

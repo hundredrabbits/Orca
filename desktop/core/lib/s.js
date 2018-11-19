@@ -7,6 +7,7 @@ function FnS (pico, x, y, passive) {
 
   this.name = 'south'
   this.info = 'Moves southward, or bangs.'
+  this.draw = false
 
   this.haste = function () {
     this.move(0, 1)

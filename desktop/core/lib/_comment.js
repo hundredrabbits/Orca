@@ -7,6 +7,7 @@ function FnComment (pico, x, y, passive) {
 
   this.name = 'comment'
   this.info = 'Block Comment'
+  this.draw = false
 
   this.haste = function () {
     let count = 0

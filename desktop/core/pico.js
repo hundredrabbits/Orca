@@ -129,7 +129,7 @@ function Pico (w, h) {
       const g = pico.runtime[id]
       if (this.lockAt(g.x, g.y)) { continue }
       // Default/Passive
-      h[`${g.x}:${g.y}`] = { type: g.passive ? 'passive' : 'none', name: `${g.name}` }
+      h[`${g.x}:${g.y}`] = { type: g.passive && g.draw ? 'passive' : 'none', name: `${g.name}` }
       // Output
       if (g.ports.output) { h[`${g.x + g.ports.output.x}:${g.y + g.ports.output.y}`] = { type: 'output', name: `${g.glyph}.out` } }
       // Haste
@@ -232,6 +232,7 @@ function Pico (w, h) {
   }
 
   this.lock = function (x, y) {
+    if (this.lockAt(x, y)) { return }
     this.locks.push(`${x}:${y}`)
   }
 
