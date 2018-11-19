@@ -67,7 +67,7 @@ function Cursor (pico, terminal) {
     if (port) { return `${port.name}` }
     // Lock
     if (pico.lockAt(this.x, this.y)) { return 'locked' }
-    return '--'
+    return 'empty'
   }
 
   this._position = function () {

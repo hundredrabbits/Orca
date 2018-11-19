@@ -46,17 +46,7 @@ function Theme (default_theme = { background: '#222', f_high: '#fff', f_med: '#7
 
   this.apply = function (theme) {
     this.el.innerHTML = `
-    :root {
-      --background: ${theme.background}
-      --f_high: ${theme.f_high}
-      --f_med: ${theme.f_med}
-      --f_low: ${theme.f_low}
-      --f_inv: ${theme.f_inv}
-      --b_high: ${theme.b_high}
-      --b_med: ${theme.b_med}
-      --b_low: ${theme.b_low}
-      --b_inv: ${theme.b_inv}
-    }`
+    :root { --background: ${theme.background}; --f_high: ${theme.f_high}; --f_med: ${theme.f_med}; --f_low: ${theme.f_low}; --f_inv: ${theme.f_inv}; --b_high: ${theme.b_high}; --b_med: ${theme.b_med}; --b_low: ${theme.b_low}; --b_inv: ${theme.b_inv}; }`
   }
 
   this.parse = function (any) {

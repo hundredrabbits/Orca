@@ -51,6 +51,7 @@ function Terminal (pico) {
   this.pause = function () {
     this.isPaused = !this.isPaused
     this.log(this.isPaused ? 'Paused' : 'Unpaused')
+    this.update()
   }
 
   this.load = function (data) {
@@ -210,7 +211,7 @@ function Terminal (pico) {
       ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
       ctx.fillStyle = this.theme.active.f_med
     } else {
-      ctx.fillStyle = 'white'
+      ctx.fillStyle = this.theme.active.f_high
     }
     ctx.fillText(styles.isCursor && g === '.' ? (!this.isPaused ? '@' : '~') : g, (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
   }

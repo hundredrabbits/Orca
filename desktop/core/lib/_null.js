@@ -6,7 +6,7 @@ function FnNull (pico, x, y, passive) {
   Fn.call(this, pico, x, y, '.', passive)
 
   this.name = 'null'
-  this.info = 'void'
+  this.info = 'empty'
 }
 
 module.exports = FnNull
