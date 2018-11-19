@@ -44,8 +44,8 @@ function Pico (w, h) {
 
   this.run = function () {
     this.runtime = this.findFns()
-    this.ports = this.findPorts()
     this.runFns(this.runtime)
+    this.ports = this.findPorts()
     this.s = this.s.substr(0, this.w * this.h)
     this.f += 1
   }
@@ -110,8 +110,8 @@ function Pico (w, h) {
       const fn = fns[id]
       if (this.lockAt(fn.x, fn.y)) { continue }
       if (fn.passive || fn.bang()) {
-        fn.init()
         fn.haste()
+        fn.permissions()
       }
     }
     for (const id in fns) {

@@ -7,6 +7,7 @@ function FnBang (pico, x, y, passive) {
 
   this.name = 'bang'
   this.info = 'Bangs!'
+  this.draw = false
 
   this.haste = function () {
     this.passive = true

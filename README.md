@@ -27,7 +27,7 @@ Haste < Function > Input(s)
 - `A` **add**(a, b): Outputs the sum of inputs.
 - `B` **banger**(val): Bangs if input is `1`, `N`, `S`, `W` or `E`.
 - `C` **clock**(min, max): Outputs a constant value based on the runtime frame.
-- `D` **unknown**: --
+- `D` **deflect**(west, east): Deflect position functions.
 - `E` **east**: Moves eastward, or bangs.
 - `F` **if**(a, b): Outputs `1` if inputs are equal, otherwise `0`.
 - `G` **generator**: Outputs `S` on bang.
@@ -39,13 +39,13 @@ Haste < Function > Input(s)
 - `M` **modulo**(val, mod): Outputs the modulo of inputs.
 - `N` **north**: Moves Northward, or bangs.
 - `O` **offset**('x, 'y, val): Reads a distant fn with offset.
-- `P` **unknown**: --
+- `P` **push**: Moves away on bang.
 - `Q` **count**('len): Counts the number of fns present eastwardly.
 - `R` **random**(min, max): Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
 - `T` **track**('len, 'key, val): Outputs character at eastward position with offset.
 - `U` **unknown**: --
-- `V` **beam**: Bangs the nearest southward fn.
+- `V` **beam**: Bangs the nearest southward fn, on bang.
 - `W` **west**: Moves westward, or bangs.
 - `X` **unknown**: --
 - `Y` **type**(a, b): Compares the type(num/alpha/special) of inputs, and return `1` or `0`.
@@ -53,7 +53,7 @@ Haste < Function > Input(s)
 
 ### special functions
 
-- `.` **null**: void
+- `.` **null**: empty
 - `*` **bang**: Bangs!
 - `:` **midi**(channel, octave, note): Sends Midi
 - `;` **comment**: Block Comment

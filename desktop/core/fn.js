@@ -23,7 +23,7 @@ function Fn (pico, x, y, glyph = '.', passive = false) {
 
   // Phases
 
-  this.init = function () {
+  this.permissions = function () {
     for (const id in this.ports.haste) {
       const port = this.ports.haste[id]
       pico.lock(this.x + port.x, this.y + port.y)
@@ -32,8 +32,8 @@ function Fn (pico, x, y, glyph = '.', passive = false) {
       const port = this.ports.input[id]
       pico.lock(this.x + port.x, this.y + port.y)
     }
-    if (this.ports.output) {
-      pico.lock(this.x, this.y + 1)
+    if (this.ports.output && !this.ports.output.unlock) {
+      pico.lock(this.x + this.ports.output.x, this.y + this.ports.output.y)
     }
   }
 
@@ -73,10 +73,10 @@ function Fn (pico, x, y, glyph = '.', passive = false) {
   }
 
   this.bang = function () {
-    if (pico.glyphAt(this.x + 1, this.y) === '*') { return true }
-    if (pico.glyphAt(this.x - 1, this.y) === '*') { return true }
-    if (pico.glyphAt(this.x, this.y + 1) === '*') { return true }
-    if (pico.glyphAt(this.x, this.y - 1) === '*') { return true }
+    if (pico.glyphAt(this.x + 1, this.y) === '*') { return { x: 1, y: 0 } }
+    if (pico.glyphAt(this.x - 1, this.y) === '*') { return { x: -1, y: 0 } }
+    if (pico.glyphAt(this.x, this.y + 1) === '*') { return { x: 0, y: 1 } }
+    if (pico.glyphAt(this.x, this.y - 1) === '*') { return { x: 0, y: -1 } }
     return false
   }
 

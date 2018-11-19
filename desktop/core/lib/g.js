@@ -6,17 +6,15 @@ function FnG (pico, x, y, passive) {
   Fn.call(this, pico, x, y, 'g', passive)
 
   this.name = 'generator'
-  this.info = 'Outputs `S` on bang.'
+  this.info = 'Outputs a value on bang.'
 
-  this.ports.output = { x: 0, y: 1 }
-
-  this.haste = function () {
-    pico.unlock(this.x, this.y + 1)
-  }
+  this.ports.input.val = { x: 1, y: 0 }
+  this.ports.output = { x: 0, y: 1, unlock: true }
 
   this.run = function () {
     if (!this.bang()) { return }
-    this.output('S')
+    const val = this.listen(this.ports.input.val)
+    this.output(val)
   }
 }
 
