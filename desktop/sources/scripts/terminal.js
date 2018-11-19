@@ -205,6 +205,10 @@ function Terminal (pico) {
         ctx.fillStyle = this.theme.active.background
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.b_med
+      } else {
+        ctx.fillStyle = this.theme.active.background
+        ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+        ctx.fillStyle = this.theme.active.b_low
       }
     } else if (styles.isLocked) {
       ctx.fillStyle = this.theme.active.background
