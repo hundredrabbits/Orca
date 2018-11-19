@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnL (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'l', isPassive)
+  Fn.call(this, pico, x, y, 'l', isPassive)
 
   this.name = 'loop'
   this.info = 'Loops a number of eastward fns.'

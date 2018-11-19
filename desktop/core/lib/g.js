@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnG (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'g', isPassive)
+  Fn.call(this, pico, x, y, 'g', isPassive)
 
   this.name = 'generator'
   this.info = 'Outputs `S` on bang.'

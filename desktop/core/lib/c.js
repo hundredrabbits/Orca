@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnC (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'c', isPassive)
+  Fn.call(this, pico, x, y, 'c', isPassive)
 
   this.name = 'clock'
   this.info = 'Outputs a constant value based on the runtime frame.'

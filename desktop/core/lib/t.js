@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnT (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 't', isPassive)
+  Fn.call(this, pico, x, y, 't', isPassive)
 
   this.name = 'track'
   this.info = 'Outputs character at eastward position with offset.'

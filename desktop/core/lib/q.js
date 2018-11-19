@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnQ (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'q', isPassive)
+  Fn.call(this, pico, x, y, 'q', isPassive)
 
   this.name = 'count'
   this.info = 'Counts the number of fns present eastwardly.'

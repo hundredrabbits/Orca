@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnR (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'r', isPassive)
+  Fn.call(this, pico, x, y, 'r', isPassive)
 
   this.name = 'random'
   this.info = 'Outputs a random value.'

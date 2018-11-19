@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnY (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'y', isPassive)
+  Fn.call(this, pico, x, y, 'y', isPassive)
 
   this.name = 'type'
   this.info = 'Compares the type(num/alpha/special) of inputs, and return `1` or `0`.'

@@ -1,6 +1,6 @@
 'use strict'
 
-function FnBase (pico, x, y, glyph = '.', isPassive = false) {
+function Fn (pico, x, y, glyph = '.', isPassive = false) {
   this.name = 'unknown'
   this.x = x
   this.y = y
@@ -8,6 +8,8 @@ function FnBase (pico, x, y, glyph = '.', isPassive = false) {
   this.glyph = isPassive ? glyph.toUpperCase() : glyph
   this.info = '--'
   this.ports = { input: {}, haste: {}, bang: !isPassive }
+
+  // Actions
 
   this.listen = function (port, toValue = false) {
     const g = pico.glyphAt(this.x + port.x, this.y + port.y)
@@ -44,22 +46,28 @@ function FnBase (pico, x, y, glyph = '.', isPassive = false) {
 
   // Helpers
 
-  this.remove = function () {
-    this.replace('.')
+  this.lock = function () {
+    pico.lock(this.x, this.y)
   }
 
   this.replace = function (g) {
     pico.add(this.x, this.y, g)
   }
 
-  this.lock = function () {
-    pico.lock(this.x, this.y)
+  this.remove = function () {
+    this.replace('.')
+  }
+
+  this.explode = function () {
+    this.replace('*')
+    this.lock()
   }
 
   this.move = function (x, y, g) {
-    pico.lock(this.x + x, this.y + y)
-    pico.remove(this.x, this.y)
-    pico.add((this.x + x) % pico.w, (this.y + y) % pico.h, this.glyph)
+    this.remove()
+    this.x += x
+    this.y += y
+    this.replace(this.glyph)
   }
 
   // TODO: To Clean
@@ -135,4 +143,4 @@ function FnBase (pico, x, y, glyph = '.', isPassive = false) {
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
-module.exports = FnBase
+module.exports = Fn

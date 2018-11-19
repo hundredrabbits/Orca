@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnF (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'f', isPassive)
+  Fn.call(this, pico, x, y, 'f', isPassive)
 
   this.name = 'if'
   this.info = 'Outputs `1` if inputs are equal, otherwise `0`.'

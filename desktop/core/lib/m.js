@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnM (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'm', isPassive)
+  Fn.call(this, pico, x, y, 'm', isPassive)
 
   this.name = 'modulo'
   this.info = 'Outputs the modulo of inputs.'

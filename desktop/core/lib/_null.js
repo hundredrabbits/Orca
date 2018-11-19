@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnNull (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, '.', isPassive)
+  Fn.call(this, pico, x, y, '.', isPassive)
 
   this.name = 'null'
   this.info = 'void'

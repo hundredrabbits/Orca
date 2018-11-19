@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnB (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'b', isPassive)
+  Fn.call(this, pico, x, y, 'b', isPassive)
 
   this.name = 'banger'
   this.info = 'Bangs if input is `1`, `N`, `S`, `W` or `E`.'

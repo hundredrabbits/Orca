@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnComment (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, ';', true)
+  Fn.call(this, pico, x, y, ';', true)
 
   this.name = 'comment'
   this.info = 'Block Comment'

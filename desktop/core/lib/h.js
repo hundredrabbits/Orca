@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnH (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'h', isPassive)
+  Fn.call(this, pico, x, y, 'h', isPassive)
 
   this.name = 'halt'
   this.info = 'Stops southward fn from operating.'

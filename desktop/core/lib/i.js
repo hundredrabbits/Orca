@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnI (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'i', isPassive)
+  Fn.call(this, pico, x, y, 'i', isPassive)
 
   this.name = 'increment'
   this.info = 'Increments southward fn.'

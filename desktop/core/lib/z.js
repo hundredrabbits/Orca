@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnZ (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'z', isPassive)
+  Fn.call(this, pico, x, y, 'z', isPassive)
 }
 
 module.exports = FnZ

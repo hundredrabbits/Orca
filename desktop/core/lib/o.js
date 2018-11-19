@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnO (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'o', isPassive)
+  Fn.call(this, pico, x, y, 'o', isPassive)
 
   this.name = 'offset'
   this.info = 'Reads a distant fn with offset.'

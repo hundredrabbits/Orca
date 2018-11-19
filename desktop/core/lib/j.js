@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnJ (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'j', isPassive)
+  Fn.call(this, pico, x, y, 'j', isPassive)
 
   this.name = 'jump'
   this.info = 'Outputs the northward fn.'

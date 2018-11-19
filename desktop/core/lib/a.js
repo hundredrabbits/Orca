@@ -1,9 +1,9 @@
 'use strict'
 
-const FnBase = require('./_base')
+const Fn = require('../fn')
 
 function FnA (pico, x, y, isPassive) {
-  FnBase.call(this, pico, x, y, 'a', isPassive)
+  Fn.call(this, pico, x, y, 'a', isPassive)
 
   this.name = 'add'
   this.info = 'Outputs the sum of inputs.'
