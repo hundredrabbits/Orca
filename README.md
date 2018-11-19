@@ -39,7 +39,7 @@ Haste < Function > Input(s)
 - `M` **modulo**(val, mod): Outputs the modulo of inputs.
 - `N` **north**: Moves Northward, or bangs.
 - `O` **offset**('x, 'y, val): Reads a distant fn with offset.
-- `P` **push**: Pushes direction fns away.
+- `P` **unknown**: --
 - `Q` **count**('len): Counts the number of fns present eastwardly.
 - `R` **random**(min, max): Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
@@ -57,6 +57,17 @@ Haste < Function > Input(s)
 - `*` **bang**: Bangs!
 - `:` **midi**(channel, octave, note): Sends Midi
 - `;` **comment**: Block Comment
+
+## Controls
+
+- `arrowKey`, move.
+- `ctrl+arrowKey`, leap move.
+- `shift+arrowKey`, resize cursor.
+- `enter`, toggle insert/write modes.
+- `space`, toggle play/pause modes.
+- `[`/`]`, resize horizontal grid.
+- `{`/`}`, resize vertical grid.
+- `<`/`>`, change BPM(speed).
 
 ## Midi Output
 
