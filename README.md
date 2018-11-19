@@ -27,10 +27,10 @@ Haste < Function > Input(s)
 - `A` **add**(a, b): Outputs the sum of inputs.
 - `B` **banger**(val): Bangs if input is `1`, `N`, `S`, `W` or `E`.
 - `C` **clock**(min, max): Outputs a constant value based on the runtime frame.
-- `D` **deflect**(west, east): Deflect position functions.
+- `D` **unknown**: --
 - `E` **east**: Moves eastward, or bangs.
 - `F` **if**(a, b): Outputs `1` if inputs are equal, otherwise `0`.
-- `G` **generator**: Outputs `S` on bang.
+- `G` **generator**(val): Outputs a value on bang.
 - `H` **halt**: Stops southward fn from operating.
 - `I` **increment**(min, max): Increments southward fn.
 - `J` **jump**(val): Outputs the northward fn.
@@ -45,9 +45,9 @@ Haste < Function > Input(s)
 - `S` **south**: Moves southward, or bangs.
 - `T` **track**('len, 'key, val): Outputs character at eastward position with offset.
 - `U` **unknown**: --
-- `V` **beam**: Bangs the nearest southward fn, on bang.
+- `V` **beam**: Bangs the nearest southward fn on bang.
 - `W` **west**: Moves westward, or bangs.
-- `X` **unknown**: --
+- `X` **teleport**('x, 'y, val): Outputs value at offset.
 - `Y` **type**(a, b): Compares the type(num/alpha/special) of inputs, and return `1` or `0`.
 - `Z` **unknown**: --
 

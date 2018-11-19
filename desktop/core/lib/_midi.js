@@ -15,6 +15,8 @@ function FnMidi (pico, x, y, passive) {
   this.run = function () {
     if (!this.bang()) { return }
 
+    this.draw = false
+
     const notes = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'b']
     const channel = clamp(this.listen(this.ports.input.channel, true), 0, 15)
     const octave = clamp(this.listen(this.ports.input.octave, true), 2, 9)

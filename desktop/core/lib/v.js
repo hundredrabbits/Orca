@@ -6,7 +6,7 @@ function FnV (pico, x, y, passive) {
   Fn.call(this, pico, x, y, 'v', passive)
 
   this.name = 'beam'
-  this.info = 'Bangs the nearest southward fn.'
+  this.info = 'Bangs the nearest southward fn on bang.'
 
   this.ports.output = { x: 0, y: 1, unlock: true }
 
@@ -20,6 +20,9 @@ function FnV (pico, x, y, passive) {
 
   this.run = function () {
     if (!this.bang()) { return }
+
+    this.draw = false
+
     this.output(`*`)
   }
 }
