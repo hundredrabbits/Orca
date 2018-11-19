@@ -13,7 +13,7 @@ function Fn (pico, x, y, glyph = '.', passive = false) {
 
   this.listen = function (port, toValue = false) {
     const g = pico.glyphAt(this.x + port.x, this.y + port.y)
-    return toValue ? pico.toValue(g) : g
+    return toValue ? pico.valueOf(g) : g
   }
 
   this.output = function (g) {
@@ -37,11 +37,9 @@ function Fn (pico, x, y, glyph = '.', passive = false) {
   }
 
   this.haste = function () {
-
   }
 
   this.run = function () {
-
   }
 
   // Helpers
@@ -90,7 +88,7 @@ function Fn (pico, x, y, glyph = '.', passive = false) {
         ports += `'${name}, `
       }
     }
-    if (Object.keys(this.ports.haste).length > 0) {
+    if (Object.keys(this.ports.input).length > 0) {
       for (const name in this.ports.input) {
         ports += `${name}, `
       }

@@ -1,7 +1,6 @@
 'use strict'
 
 function Midi (terminal) {
-  this.terminal = terminal
   this.outputs = []
   this.stack = []
 
@@ -89,16 +88,13 @@ function Midi (terminal) {
   }
 
   this.toString = function () {
-    const voices = this.stack.length
     let text = ''
-    for (let i = 0; i < voices; i++) {
+    for (let i = 0; i < this.stack.length; i++) {
       text += '|'
     }
-
-    for (let i = 0; i <= pico.terminal.grid.x; i++) {
+    while (text.length - 1 <= terminal.grid.x) {
       text += '-'
     }
-
     return text
   }
 }

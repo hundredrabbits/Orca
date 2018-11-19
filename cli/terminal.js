@@ -28,7 +28,7 @@ function Terminal (pico) {
     },
     inspect: function () {
       const g = pico.glyphAt(this.x, this.y)
-      return pico.docs[g] ? pico.docs[g] : '>'
+      return '>'
     }
   }
 
@@ -40,8 +40,6 @@ function Terminal (pico) {
   }
 
   this.start = function (path) {
-    
-    this.pico.terminal = this
     this.pico.start()
     this._screen.key(['escape', 'C-c'], (ch, key) => (process.exit(0)))
     this._screen.key(['up'], (ch, key) => { this.cursor.move(0, 1); this.update() })

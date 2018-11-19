@@ -6,18 +6,17 @@ function Terminal (pico) {
   const Midi = require('./midi')
 
   this.midi = new Midi(this)
-  this.cursor = new Cursor(this)
+  this.cursor = new Cursor(pico, this)
   this.source = new Source(pico, this)
-
   this.controller = new Controller()
   this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#777777', f_low: '#333333', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' })
 
-  this.pico = pico
   this.el = document.createElement('canvas')
   this.isPaused = false
   this.tile = { w: 20, h: 30 }
   this.size = { width: this.tile.w * pico.w, height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.5 }
-  this.debug = 'hello.'
+
+  this.debug = 'Idle.'
 
   this.timer = null
   this.bpm = 120
@@ -30,8 +29,7 @@ function Terminal (pico) {
   }
 
   this.start = function () {
-    this.pico.terminal = this
-    this.pico.start()
+    pico.start()
     this.theme.start()
     this.midi.start()
 
@@ -45,7 +43,7 @@ function Terminal (pico) {
     this.midi.clear()
     this.clear()
 
-    this.pico.run()
+    pico.run()
     this.midi.run()
     this.update()
   }
@@ -62,6 +60,16 @@ function Terminal (pico) {
     pico.load(w, h, data)
     this.resize()
     this.update()
+  }
+
+  this.update = function () {
+    this.clear()
+    this.drawProgram()
+    this.drawInterface()
+  }
+
+  this.reset = function () {
+    this.theme.reset()
   }
 
   //
@@ -88,16 +96,6 @@ function Terminal (pico) {
     this.debug = msg
   }
 
-  this.update = function () {
-    this.clear()
-    this.drawProgram()
-    this.drawInterface()
-  }
-
-  this.reset = function () {
-    this.theme.reset()
-  }
-
   //
 
   this.isCursor = function (x, y) {
@@ -116,7 +114,7 @@ function Terminal (pico) {
     const fns = pico.runtime
     for (const id in fns) {
       const g = fns[id]
-      if (pico.isLocked(g.x, g.y)) { continue }
+      if (pico.lockAt(g.x, g.y)) { continue }
       if (g.passive) { h[`${g.x}:${g.y}`] = 4 }
       if (g.ports.output) { h[`${g.x + g.ports.output.x}:${g.y + g.ports.output.y}`] = 2 }
       for (const id in g.ports.haste) {
@@ -131,38 +129,29 @@ function Terminal (pico) {
     return h
   }
 
-  //
+  // Canvas
 
   this.context = function () {
     return this.el.getContext('2d')
   }
 
-  this.guide = function (x, y) {
-    const g = pico.glyphAt(x, y)
-
-    if (g !== '.') { return g }
-    if (this.cursor.w === 1 && this.cursor.h === 1) { return g }
-
-    if (x % this.grid.x === 0 && y % this.grid.y === 0) {
-      return '+'
-    }
-
-    return g
+  this.clear = function () {
+    const ctx = this.context()
+    ctx.clearRect(0, 0, this.size.width, this.size.height)
   }
 
   this.drawProgram = function () {
-    const ports = this.findPorts()
     const terminal = this
-
     let y = 0
     while (y < pico.h) {
       let x = 0
       while (x < pico.w) {
+        const port = pico.ports[`${x}:${y}`]
         const styles = {
           isSelection: terminal.isSelection(x, y),
           isCursor: terminal.isCursor(x, y),
-          isPort: ports[`${x}:${y}`],
-          isLocked: pico.isLocked(x, y)
+          isPort: port ? pico.ports[`${x}:${y}`].type : false,
+          isLocked: pico.lockAt(x, y)
         }
         this.drawSprite(x, y, this.guide(x, y), styles)
         x += 1
@@ -179,27 +168,12 @@ function Terminal (pico) {
     this.write(`${this.cursor._mode()}`, col * 2, 1, this.grid.x)
     this.write(`${this.cursor.inspect()}`, col * 3, 1, this.grid.x)
     this.write(this.debug, col * 4, 1)
-
     // Grid
     this.write(`${pico.w}x${pico.h}`, col * 0, 0, this.grid.x)
     this.write(`${this.grid.x}/${this.grid.y}`, col * 1, 0, this.grid.x)
     this.write(`${this.source}`, col * 2, 0, this.grid.x)
     this.write(`${this.bpm}`, col * 3, 0, this.grid.x)
     this.write(`${this.midi}`, col * 4, 0, this.grid.x)
-  }
-
-  this.write = function (text, offsetX, offsetY, limit) {
-    let x = 0
-    while (x < text.length && x < limit - 1) {
-      const c = text.substr(x, 1)
-      this.drawSprite(offsetX + x, pico.h + offsetY, c)
-      x += 1
-    }
-  }
-
-  this.clear = function () {
-    const ctx = this.context()
-    ctx.clearRect(0, 0, this.size.width, this.size.height)
   }
 
   this.drawSprite = function (x, y, g, styles = { isCursor: false, isSelection: false, isPort: false }) {
@@ -218,19 +192,19 @@ function Terminal (pico) {
         ctx.fillStyle = this.theme.active.b_med
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_low
-      } else if (styles.isPort === 2) { // Output
+      } else if (styles.isPort === 'output') { // Output
         ctx.fillStyle = this.theme.active.b_high
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_low
-      } else if (styles.isPort === 3) { // Input
+      } else if (styles.isPort === 'input') { // Input
         ctx.fillStyle = this.theme.active.background
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.b_high
-      } else if (styles.isPort === 4) { // Passive
+      } else if (styles.isPort === 'passive') { // Passive
         ctx.fillStyle = this.theme.active.b_med
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.f_low
-      } else if (styles.isPort === 5) { // Haste
+      } else if (styles.isPort === 'haste') { // Haste
         ctx.fillStyle = this.theme.active.background
         ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
         ctx.fillStyle = this.theme.active.b_med
@@ -245,6 +219,23 @@ function Terminal (pico) {
     ctx.fillText(styles.isCursor && g === '.' ? (!this.isPaused ? '@' : '~') : g, (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
   }
 
+  this.guide = function (x, y) {
+    const g = pico.glyphAt(x, y)
+    if (g !== '.') { return g }
+    if (this.cursor.w === 1 && this.cursor.h === 1) { return g }
+    if (x % this.grid.x === 0 && y % this.grid.y === 0) { return '+' }
+    return g
+  }
+
+  this.write = function (text, offsetX, offsetY, limit) {
+    let x = 0
+    while (x < text.length && x < limit - 1) {
+      const c = text.substr(x, 1)
+      this.drawSprite(offsetX + x, pico.h + offsetY, c)
+      x += 1
+    }
+  }
+
   this.resize = function () {
     this.size = { width: this.tile.w * pico.w, height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.5 }
     this.el.width = this.size.width
@@ -252,9 +243,8 @@ function Terminal (pico) {
     this.el.style.width = (this.size.width * this.size.ratio) + 'px'
     this.el.style.height = (this.size.height * this.size.ratio) + 'px'
 
-    let { remote } = require('electron')
-    let win = remote.getCurrentWindow()
-
+    const { remote } = require('electron')
+    const win = remote.getCurrentWindow()
     const width = parseInt((this.size.width * this.size.ratio) + 60)
     const height = parseInt((this.size.height * this.size.ratio) + 30)
 
