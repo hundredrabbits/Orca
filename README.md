@@ -78,6 +78,10 @@ Haste < Function > Input(s)
 
 The midi special function is `:000`, it requires 3 inputs(channel, octave, note). For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**.
 
+## UDP Output
+
+The UDP special function is `3;MSG`, it has one haste input that gets a string length and locks the eastward ports. It sends the message on bang to the port `49160`. You can use the `listener.js` to test UDP messages.
+
 ## Install & Run
 
 ```
