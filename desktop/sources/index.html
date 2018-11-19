@@ -38,6 +38,10 @@
       terminal.controller.add("default","File","Open",() => { terminal.source.open(); },"CmdOrCtrl+O")
       terminal.controller.add("default","File","Revert",() => { terminal.source.revert(); },"CmdOrCtrl+W")
 
+      terminal.controller.add("default","Edit","Copy",() => { terminal.cursor.copy()(); },"CmdOrCtrl+C")
+      terminal.controller.add("default","Edit","Cut",() => { terminal.cursor.cut()(); },"CmdOrCtrl+X")
+      terminal.controller.add("default","Edit","Paste",() => { terminal.cursor.paste()(); },"CmdOrCtrl+V")
+
       terminal.controller.add("default","Program","Play/Pause",() => { terminal.pause(); },"Space")
       terminal.controller.add("default","Program","Incr. Speed",() => { terminal.modSpeed(10); },">")
       terminal.controller.add("default","Program","Decr. Speed",() => { terminal.modSpeed(-10); },"<")

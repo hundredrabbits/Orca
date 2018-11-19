@@ -19,8 +19,8 @@ function Keyboard () {
     }
 
     if (event.key === 'c' && (event.metaKey || event.ctrlKey)) { terminal.cursor.copy(); return }
-    if (event.key === 'v' && (event.metaKey || event.ctrlKey)) { terminal.cursor.paste(); return }
     if (event.key === 'x' && (event.metaKey || event.ctrlKey)) { terminal.cursor.cut(); return }
+    if (event.key === 'v' && (event.metaKey || event.ctrlKey)) { terminal.cursor.paste(); return }
 
     if (event.keyCode === 38) { keyboard.key_arrow_up(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
     if (event.keyCode === 40) { keyboard.key_arrow_down(event.shiftKey, (event.metaKey || event.ctrlKey)); return }

@@ -61,13 +61,17 @@ Haste < Function > Input(s)
 ## Controls
 
 - `arrowKey`, move.
-- `ctrl+arrowKey`, leap move.
+- `ctrl/cmd+arrowKey`, leap move.
 - `shift+arrowKey`, resize cursor.
 - `enter`, toggle insert/write modes.
 - `space`, toggle play/pause modes.
+- `escape`, reset cursor.
 - `[`/`]`, resize horizontal grid.
 - `{`/`}`, resize vertical grid.
 - `<`/`>`, change BPM(speed).
+- `ctrl/cmd + c`, copy block.
+- `ctrl/cmd + x`, cut block.
+- `ctrl/cmd + v`, paste block.
 
 ## Midi Output
 
