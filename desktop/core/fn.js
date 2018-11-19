@@ -64,6 +64,9 @@ function Fn (pico, x, y, glyph = '.', passive = false) {
   }
 
   this.move = function (x, y, g) {
+    const offset = { x: this.x + x, y: this.y + y }
+    if (!pico.inBounds(offset.x, offset.y)) { this.explode(); return }
+    if (pico.glyphAt(offset.x, offset.y) !== '.') { this.explode(); return }
     this.remove()
     this.x += x
     this.y += y

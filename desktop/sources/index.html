@@ -34,7 +34,7 @@
 
       terminal.controller.add("default","File","New",() => { terminal.source.new(); },"CmdOrCtrl+N")
       terminal.controller.add("default","File","Save",() => { terminal.source.save(); },"CmdOrCtrl+S")
-      terminal.controller.add("default","File","Save",() => { terminal.source.save(true); },"CmdOrCtrl+Shift+S")
+      terminal.controller.add("default","File","Save As",() => { terminal.source.save(true); },"CmdOrCtrl+Shift+S")
       terminal.controller.add("default","File","Open",() => { terminal.source.open(); },"CmdOrCtrl+O")
       terminal.controller.add("default","File","Revert",() => { terminal.source.revert(); },"CmdOrCtrl+W")
 

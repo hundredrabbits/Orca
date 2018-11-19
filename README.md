@@ -70,6 +70,11 @@ npm install
 npm start
 ```
 
+## TODOs
+
+- Implement OSC
+- Implement [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback)
+
 ## Extras
 
 - This application supports the [Ecosystem Theme](https://github.com/hundredrabbits/Themes).
