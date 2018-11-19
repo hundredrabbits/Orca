@@ -45,6 +45,7 @@ module.exports = {
     '.': require('./lib/_null'),
     '*': require('./lib/_bang'),
     ':': require('./lib/_midi'),
-    ';': require('./lib/_comment')
+    ';': require('./lib/_udp'),
+    '#': require('./lib/_comment')
   }
 }

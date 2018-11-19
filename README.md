@@ -56,7 +56,8 @@ Haste < Function > Input(s)
 - `.` **null**: empty
 - `*` **bang**: Bangs!
 - `:` **midi**(channel, octave, note): Sends Midi
-- `;` **comment**: Block Comment
+- `;` **udp**('len): Sends a string via UDP to localhost.
+- `#` **comment**: Block Comment
 
 ## Controls
 
