@@ -83,7 +83,7 @@ Haste < Function > Input(s)
 
 The midi special function is `:000`, it takes up to 4 inputs(channel, octave, note, velocity). For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. 
 
-Velocity is either from `0`(0) to `9`(127), or `A`(0) to `Z`(127). For example, `:34C8`, is a **C note, on the 4th octave, through the 4th MIDI channel with a velocity of 112/127**, `:34CT`, is a **C note, on the 4th octave, through the 4th MIDI channel with a velocity of 96/127**.
+Velocity is either from `0-9`(10 steps), or `A-Z`(26 steps). For example, `:34C8`, is a **C note, on the 4th octave, through the 4th MIDI channel with a velocity of 112/127(88%)**, `:34CT`, is a **C note, on the 4th octave, through the 4th MIDI channel with a velocity of 96/127(75%)**.
 
 ## UDP Output
 
