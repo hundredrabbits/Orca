@@ -58,6 +58,7 @@ function Cursor (pico, terminal) {
     }
     terminal.log(`Erase ${this._position()}`)
     pico.removeBlock(this.x, this.y, this.w, this.h)
+    this.reset()
   }
 
   this.inspect = function (name = true, ports = false) {
@@ -68,6 +69,13 @@ function Cursor (pico, terminal) {
     // Lock
     if (pico.lockAt(this.x, this.y)) { return 'locked' }
     return 'empty'
+  }
+
+  this.selectAll = function () {
+    this.x = 0
+    this.y = 0
+    this.w = pico.w
+    this.h = pico.h
   }
 
   this._position = function () {
