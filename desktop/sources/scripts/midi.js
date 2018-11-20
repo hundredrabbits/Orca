@@ -18,7 +18,7 @@ function Midi (terminal) {
     let text = ''
     for (const id in this.stack) {
       const note = this.stack[id]
-      text += `${note[0]}+${note[1]}|${note[2]}.${note[3]} `
+      text += `${note[0]}+${note[1]}|${note[2]}.${note[3]}-.${note[4]} `
       this.play(note)
     }
 
@@ -63,7 +63,6 @@ function Midi (terminal) {
   this.makeValue = function (octave, note) {
     const offset = 24
     const value = offset + (octave * 12) + note
-    console.log(octave, note, value)
     return value // 60 = C3
   }
 
