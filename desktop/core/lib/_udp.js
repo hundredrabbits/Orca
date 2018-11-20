@@ -23,7 +23,7 @@ function FnMidi (pico, x, y, passive) {
     this.draw = false
 
     let msg = ''
-    for (let x = 0; x <= this.len; x++) {
+    for (let x = 0; x < this.len; x++) {
       msg += pico.glyphAt(1 + this.x + x, this.y)
     }
 

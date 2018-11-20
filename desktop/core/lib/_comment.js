@@ -6,7 +6,7 @@ function FnComment (pico, x, y, passive) {
   Fn.call(this, pico, x, y, '#', true)
 
   this.name = 'comment'
-  this.info = 'Block Comment'
+  this.info = 'Comment a line.'
   this.draw = false
 
   this.haste = function () {

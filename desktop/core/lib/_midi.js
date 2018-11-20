@@ -6,7 +6,7 @@ function FnMidi (pico, x, y, passive) {
   Fn.call(this, pico, x, y, ':', true)
 
   this.name = 'midi'
-  this.info = 'Sends Midi'
+  this.info = 'Sends Midi a midi note.'
 
   this.ports.input.channel = { x: 1, y: 0 }
   this.ports.input.octave = { x: 2, y: 0 }

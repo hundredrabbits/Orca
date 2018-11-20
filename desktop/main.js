@@ -9,8 +9,8 @@ app.win = null
 
 app.on('ready', () => {
   app.win = new BrowserWindow({
-    width: 510,
-    height: 510,
+    width: 630,
+    height: 450,
     minWidth: 320,
     minHeight: 320,
     frame: false,
@@ -22,7 +22,7 @@ app.on('ready', () => {
   })
 
   app.win.loadURL(`file://${__dirname}/sources/index.html`)
-  app.inspect()
+  // app.inspect()
 
   app.win.on('closed', () => {
     win = null

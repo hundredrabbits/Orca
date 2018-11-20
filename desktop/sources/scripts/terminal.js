@@ -35,6 +35,7 @@ function Terminal (pico) {
 
     this.update()
     this.setSpeed(120)
+    this.el.className = 'ready'
   }
 
   this.run = function () {
