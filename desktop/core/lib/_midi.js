@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnMidi (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, ':', true)
+function FnMidi (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, ':', true)
 
   this.name = 'midi'
   this.info = 'Sends Midi a midi note.'

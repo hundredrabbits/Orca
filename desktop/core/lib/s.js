@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnS (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 's', passive)
+function FnS (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 's', passive)
 
   this.name = 'south'
   this.info = 'Moves southward, or bangs.'

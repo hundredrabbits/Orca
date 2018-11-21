@@ -1,20 +1,20 @@
 'use strict'
 
-function Terminal (pico) {
+function Terminal (orca) {
   const Cursor = require('./cursor')
   const Source = require('./source')
   const Midi = require('./midi')
 
   this.midi = new Midi(this)
-  this.cursor = new Cursor(pico, this)
-  this.source = new Source(pico, this)
+  this.cursor = new Cursor(orca, this)
+  this.source = new Source(orca, this)
   this.controller = new Controller()
   this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#777777', f_low: '#333333', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' })
 
   this.el = document.createElement('canvas')
   this.isPaused = false
   this.tile = { w: 20, h: 30 }
-  this.size = { width: this.tile.w * pico.w, height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.5 }
+  this.size = { width: this.tile.w * orca.w, height: this.tile.h * orca.h + (this.tile.h * 3), ratio: 0.5 }
 
   this.debug = 'Idle.'
 
@@ -29,7 +29,7 @@ function Terminal (pico) {
   }
 
   this.start = function () {
-    pico.start()
+    orca.start()
     this.theme.start()
     this.midi.start()
 
@@ -44,7 +44,7 @@ function Terminal (pico) {
     this.midi.clear()
     this.clear()
 
-    pico.run()
+    orca.run()
     this.midi.run()
     this.update()
   }
@@ -59,7 +59,7 @@ function Terminal (pico) {
     const w = data.split('\n')[0].length
     const h = data.split('\n').length
     this.log(`Loading ${w}x${h}`)
-    pico.load(w, h, data)
+    orca.load(w, h, data)
     this.resize()
     this.update()
   }
@@ -113,10 +113,10 @@ function Terminal (pico) {
 
   this.findPorts = function () {
     const h = {}
-    const fns = pico.runtime
+    const fns = orca.runtime
     for (const id in fns) {
       const g = fns[id]
-      if (pico.lockAt(g.x, g.y)) { continue }
+      if (orca.lockAt(g.x, g.y)) { continue }
       if (g.passive) { h[`${g.x}:${g.y}`] = 4 }
       if (g.ports.output) { h[`${g.x + g.ports.output.x}:${g.y + g.ports.output.y}`] = 2 }
       for (const id in g.ports.haste) {
@@ -145,15 +145,15 @@ function Terminal (pico) {
   this.drawProgram = function () {
     const terminal = this
     let y = 0
-    while (y < pico.h) {
+    while (y < orca.h) {
       let x = 0
-      while (x < pico.w) {
-        const port = pico.ports[`${x}:${y}`]
+      while (x < orca.w) {
+        const port = orca.ports[`${x}:${y}`]
         const styles = {
           isSelection: terminal.isSelection(x, y),
           isCursor: terminal.isCursor(x, y),
-          isPort: port ? pico.ports[`${x}:${y}`].type : false,
-          isLocked: pico.lockAt(x, y)
+          isPort: port ? orca.ports[`${x}:${y}`].type : false,
+          isLocked: orca.lockAt(x, y)
         }
         this.drawSprite(x, y, this.guide(x, y), styles)
         x += 1
@@ -171,7 +171,7 @@ function Terminal (pico) {
     this.write(`${this.cursor.inspect()}`, col * 3, 1, this.grid.x)
     this.write(this.debug, col * 4, 1)
     // Grid
-    this.write(`${pico.w}x${pico.h}`, col * 0, 0, this.grid.x)
+    this.write(`${orca.w}x${orca.h}`, col * 0, 0, this.grid.x)
     this.write(`${this.grid.x}/${this.grid.y}`, col * 1, 0, this.grid.x)
     this.write(`${this.source}`, col * 2, 0, this.grid.x)
     this.write(`${this.bpm}`, col * 3, 0, this.grid.x)
@@ -222,7 +222,7 @@ function Terminal (pico) {
   }
 
   this.guide = function (x, y) {
-    const g = pico.glyphAt(x, y)
+    const g = orca.glyphAt(x, y)
     if (g !== '.') { return g }
     if (this.cursor.w === 1 && this.cursor.h === 1) { return g }
     if (x % this.grid.x === 0 && y % this.grid.y === 0) { return '+' }
@@ -233,13 +233,13 @@ function Terminal (pico) {
     let x = 0
     while (x < text.length && x < limit - 1) {
       const c = text.substr(x, 1)
-      this.drawSprite(offsetX + x, pico.h + offsetY, c)
+      this.drawSprite(offsetX + x, orca.h + offsetY, c)
       x += 1
     }
   }
 
   this.resize = function () {
-    this.size = { width: this.tile.w * pico.w, height: this.tile.h * pico.h + (this.tile.h * 3), ratio: 0.5 }
+    this.size = { width: this.tile.w * orca.w, height: this.tile.h * orca.h + (this.tile.h * 3), ratio: 0.5 }
     this.el.width = this.size.width
     this.el.height = this.size.height + this.tile.h
     this.el.style.width = (this.size.width * this.size.ratio) + 'px'

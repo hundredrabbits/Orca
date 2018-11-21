@@ -2,11 +2,11 @@
 
 const blessed = require('blessed')
 
-function Terminal (pico) {
-  this.pico = pico
+function Terminal (orca) {
+  this.orca = orca
 
   this._screen = blessed.screen()
-  this._grid = blessed.box({ top: 1, left: 2, height: '100%-3', width: pico.w, keys: true, mouse: true, style: { fg: '#efefef' } })
+  this._grid = blessed.box({ top: 1, left: 2, height: '100%-3', width: orca.w, keys: true, mouse: true, style: { fg: '#efefef' } })
   this._output = blessed.box({ bottom: 4, left: 2, height: 1, width: '100%-2', style: { fg: '#fff' } })
   this._inspector = blessed.box({ bottom: 2, left: 2, height: 1, width: '100%-4', style: { fg: '#efefef' } })
   this._log = blessed.box({ bottom: 3, left: 2, height: 1, width: '100%-4', style: { fg: '#efefef' } })
@@ -17,17 +17,17 @@ function Terminal (pico) {
     x: 0,
     y: 0,
     move: function (x, y) {
-      this.x = clamp(this.x + x, 0, pico.w - 1)
-      this.y = clamp(this.y - y, 0, pico.h - 1)
+      this.x = clamp(this.x + x, 0, orca.w - 1)
+      this.y = clamp(this.y - y, 0, orca.h - 1)
     },
     insert: function (g) {
-      pico.add(this.x, this.y, g)
+      orca.add(this.x, this.y, g)
     },
     erase: function (g) {
-      pico.remove(this.x, this.y)
+      orca.remove(this.x, this.y)
     },
     inspect: function () {
-      const g = pico.glyphAt(this.x, this.y)
+      const g = orca.glyphAt(this.x, this.y)
       return '>'
     }
   }
@@ -40,7 +40,7 @@ function Terminal (pico) {
   }
 
   this.start = function (path) {
-    this.pico.start()
+    this.orca.start()
     this._screen.key(['escape', 'C-c'], (ch, key) => (process.exit(0)))
     this._screen.key(['up'], (ch, key) => { this.cursor.move(0, 1); this.update() })
     this._screen.key(['down'], (ch, key) => { this.cursor.move(0, -1); this.update() })
@@ -71,7 +71,7 @@ function Terminal (pico) {
   this.run = function () {
     if (this.isPaused) { return }
 
-    this.pico.run()
+    this.orca.run()
     this.update()
   }
 
@@ -84,7 +84,7 @@ function Terminal (pico) {
     const w = data.split('\n')[0].length
     const h = data.split('\n').length
     terminal.log(`Loaded: ${path} ${w}x${h}`)
-    pico.load(w, h, data)
+    orca.load(w, h, data)
     terminal._grid.width = w
     terminal.update()
   }
@@ -95,14 +95,14 @@ function Terminal (pico) {
   }
 
   this.add_cursor = function (s) {
-    const under = this.pico.glyphAt(this.cursor.x,this.cursor.y)
+    const under = this.orca.glyphAt(this.cursor.x,this.cursor.y)
     if(under !== "."){ return s }
-    const index = this.pico.indexAt(this.cursor.x, this.cursor.y)
+    const index = this.orca.indexAt(this.cursor.x, this.cursor.y)
     return s.substr(0, index) + '@' + s.substr(index + 1)
   }
 
   this.update = function (sight) {
-    this._grid.setContent(`${this.add_cursor(this.pico.s)}`)
+    this._grid.setContent(`${this.add_cursor(this.orca.s)}`)
     this._inspector.setContent(`${this.cursor.inspect()}`)
     this._screen.render()
   }

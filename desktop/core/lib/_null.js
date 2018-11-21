@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnNull (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, '.', passive)
+function FnNull (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, '.', passive)
 
   this.name = 'null'
   this.info = 'empty'

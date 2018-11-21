@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnY (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 'y', passive)
+function FnY (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 'y', passive)
 
   this.name = 'type'
   this.info = 'Compares the type(num/alpha/special) of inputs, and return `1` or `0`.'
@@ -22,7 +22,7 @@ function FnY (pico, x, y, passive) {
       this.output('0')
     } else if ((a && !b) || (b && !a)) {
       this.output('0')
-    } else if (pico.lib.num[a] === pico.lib.num[b]) {
+    } else if (orca.lib.num[a] === orca.lib.num[b]) {
       this.output('1')
     } else {
       this.output('0')

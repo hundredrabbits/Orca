@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnL (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 'l', passive)
+function FnL (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 'l', passive)
 
   this.name = 'loop'
   this.info = 'Loops a number of eastward fns.'
@@ -14,7 +14,7 @@ function FnL (pico, x, y, passive) {
     this.len = this.listen(this.ports.haste.len, true)
 
     for (let x = 1; x <= this.len; x++) {
-      pico.lock(this.x + x, this.y)
+      orca.lock(this.x + x, this.y)
     }
   }
 
@@ -23,13 +23,13 @@ function FnL (pico, x, y, passive) {
 
     const a = []
     for (let x = 1; x <= this.len; x++) {
-      a.push(pico.glyphAt(this.x + x, this.y))
+      a.push(orca.glyphAt(this.x + x, this.y))
     }
     a.push(a.shift())
 
     for (const id in a) {
       const x = parseInt(id) + 1
-      pico.add(this.x + x, this.y, a[id])
+      orca.add(this.x + x, this.y, a[id])
     }
   }
 }

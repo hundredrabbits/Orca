@@ -13,7 +13,7 @@ window.addEventListener('drop', function (e) {
   const file = e.dataTransfer.files[0]
   const path = file.path ? file.path : file.name
 
-  if (!path || path.indexOf('.pico') < 0) { console.log('Pico', 'Not a pico file'); return }
+  if (!path || path.indexOf('.orca') < 0) { console.log('Orca', 'Not a orca file'); return }
 
   terminal.source.path = path
   terminal.source.read(path)

@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnC (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 'c', passive)
+function FnC (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 'c', passive)
 
   this.name = 'clock'
   this.info = 'Outputs a constant value based on the runtime frame.'
@@ -15,8 +15,8 @@ function FnC (pico, x, y, passive) {
   this.run = function () {
     const min = this.listen(this.ports.input.min, true)
     const max = this.listen(this.ports.input.max, true)
-    const key = (pico.f % (max || 10)) + min
-    const res = pico.allowed[key] ? pico.allowed[key] : 0
+    const key = (orca.f % (max || 10)) + min
+    const res = orca.allowed[key] ? orca.allowed[key] : 0
     this.output(`${res}`)
   }
 }

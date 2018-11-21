@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnU (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 'u', passive)
+function FnU (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 'u', passive)
 }
 
 module.exports = FnU

@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnMidi (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, ';', true)
+function FnMidi (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, ';', true)
 
   this.name = 'udp'
   this.info = 'Sends a string via UDP to localhost.'
@@ -13,7 +13,7 @@ function FnMidi (pico, x, y, passive) {
   this.haste = function () {
     this.len = clamp(this.listen(this.ports.haste.len, true), 1, 16)
     for (let x = 1; x <= this.len; x++) {
-      pico.lock(this.x + x, this.y)
+      orca.lock(this.x + x, this.y)
     }
   }
 
@@ -24,7 +24,7 @@ function FnMidi (pico, x, y, passive) {
 
     let msg = ''
     for (let x = 0; x < this.len; x++) {
-      msg += pico.glyphAt(1 + this.x + x, this.y)
+      msg += orca.glyphAt(1 + this.x + x, this.y)
     }
 
     const dgram = require('dgram')

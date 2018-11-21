@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnI (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 'i', passive)
+function FnI (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 'i', passive)
 
   this.name = 'increment'
   this.info = 'Increments southward fn.'
@@ -17,7 +17,7 @@ function FnI (pico, x, y, passive) {
     const max = this.listen(this.ports.input.max, true)
     const mod = this.listen(this.ports.output, true)
     const key = mod + 1 >= (max || 10) ? min : mod + 1
-    const res = pico.allowed[key] ? pico.allowed[key] : 0
+    const res = orca.allowed[key] ? orca.allowed[key] : 0
     this.output(`${res}`)
   }
 }

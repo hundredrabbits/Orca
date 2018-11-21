@@ -1,5 +1,5 @@
 {
-  "name": "Pico",
+  "name": "Orca",
   "version": "0.1.0",
   "main": "main.js",
   "scripts": {
@@ -7,15 +7,15 @@
     "time": "node time.js",
     "docs": "node ../docs.js",
     "fix": "standard --fix",
-    "clean": "rm -r ~/Desktop/Pico-darwin-x64/ ; rm -r ~/Desktop/Pico-linux-x64/ ; rm -r ~/Desktop/Pico-win32-x64/ ; echo 'cleaned build location'",
-    "build_osx": "electron-packager . Pico --platform=darwin --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.icns ; echo 'Built for OSX'",
-    "build_linux": "electron-packager . Pico --platform=linux  --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.ico ; echo 'Built for LINUX'",
-    "build_win": "electron-packager . Pico --platform=win32  --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.ico ; echo 'Built for WIN'",
+    "clean": "rm -r ~/Desktop/Orca-darwin-x64/ ; rm -r ~/Desktop/Orca-linux-x64/ ; rm -r ~/Desktop/Orca-win32-x64/ ; echo 'cleaned build location'",
+    "build_osx": "electron-packager . Orca --platform=darwin --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.icns ; echo 'Built for OSX'",
+    "build_linux": "electron-packager . Orca --platform=linux  --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.ico ; echo 'Built for LINUX'",
+    "build_win": "electron-packager . Orca --platform=win32  --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.ico ; echo 'Built for WIN'",
     "build": "npm run clean ; npm run build_osx ; npm run build_linux ; npm run build_win",
-    "push_osx": "~/butler push ~/Desktop/Pico-darwin-x64/ hundredrabbits/pico:osx-64",
-    "push_linux": "~/butler push ~/Desktop/Pico-linux-x64/ hundredrabbits/pico:linux-64",
-    "push_win": "~/butler push ~/Desktop/Pico-win32-x64/ hundredrabbits/pico:windows-64",
-    "push_status": "~/butler status hundredrabbits/pico",
+    "push_osx": "~/butler push ~/Desktop/Orca-darwin-x64/ hundredrabbits/orca:osx-64",
+    "push_linux": "~/butler push ~/Desktop/Orca-linux-x64/ hundredrabbits/orca:linux-64",
+    "push_win": "~/butler push ~/Desktop/Orca-win32-x64/ hundredrabbits/orca:windows-64",
+    "push_status": "~/butler status hundredrabbits/orca",
     "push": "npm run build ; npm run push_osx ; npm run push_linux ; npm run push_win ; npm run clean ; npm run push_status"
   },
   "devDependencies": {

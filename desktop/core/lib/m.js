@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnM (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 'm', passive)
+function FnM (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 'm', passive)
 
   this.name = 'modulo'
   this.info = 'Outputs the modulo of inputs.'
@@ -16,7 +16,7 @@ function FnM (pico, x, y, passive) {
     const val = this.listen(this.ports.input.val, true)
     const mod = this.listen(this.ports.input.mod, true)
     const key = val % (mod !== 0 ? mod : 1)
-    const res = pico.allowed[key] ? pico.allowed[key] : 0
+    const res = orca.allowed[key] ? orca.allowed[key] : 0
     this.output(`${res}`)
   }
 }

@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnT (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 't', passive)
+function FnT (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 't', passive)
 
   this.name = 'track'
   this.info = 'Outputs character at eastward position with offset.'
@@ -17,7 +17,7 @@ function FnT (pico, x, y, passive) {
     this.len = clamp(this.listen(this.ports.haste.len, true), 1, 16)
     this.key = this.listen(this.ports.haste.key, true)
     for (let x = 1; x <= this.len; x++) {
-      pico.lock(this.x + x, this.y)
+      orca.lock(this.x + x, this.y)
     }
     this.ports.input.val = { x: (this.key % this.len) + 1, y: 0 }
   }

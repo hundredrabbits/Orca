@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnComment (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, '#', true)
+function FnComment (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, '#', true)
 
   this.name = 'comment'
   this.info = 'Comment a line.'
@@ -12,16 +12,16 @@ function FnComment (pico, x, y, passive) {
   this.haste = function () {
     let count = 0
     for (let x = 0; x <= this.x - 1; x++) {
-      if (pico.glyphAt(x, this.y) === this.glyph) { count++ }
+      if (orca.glyphAt(x, this.y) === this.glyph) { count++ }
     }
 
     this.passive = false
 
     if (count % 2 !== 0) { return }
 
-    for (let x = this.x + 1; x <= pico.w; x++) {
-      if (pico.glyphAt(x, this.y) === this.glyph) { break }
-      pico.lock(x, this.y)
+    for (let x = this.x + 1; x <= orca.w; x++) {
+      if (orca.glyphAt(x, this.y) === this.glyph) { break }
+      orca.lock(x, this.y)
     }
   }
 }

@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnR (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 'r', passive)
+function FnR (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 'r', passive)
 
   this.name = 'random'
   this.info = 'Outputs a random value.'
@@ -16,7 +16,7 @@ function FnR (pico, x, y, passive) {
     const min = this.listen(this.ports.input.min, true)
     const max = this.listen(this.ports.input.max, true)
     const key = parseInt((Math.random() * (max - min)) + min)
-    const res = pico.allowed[key] ? pico.allowed[key] : 0
+    const res = orca.allowed[key] ? orca.allowed[key] : 0
     this.output(`${res}`)
   }
 }

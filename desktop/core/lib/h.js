@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnH (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 'h', passive)
+function FnH (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 'h', passive)
 
   this.name = 'halt'
   this.info = 'Stops southward fn from operating.'
@@ -11,7 +11,7 @@ function FnH (pico, x, y, passive) {
   this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
-    pico.lock(this.x, this.y + 1)
+    orca.lock(this.x, this.y + 1)
   }
 }
 

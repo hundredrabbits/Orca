@@ -1,10 +1,10 @@
 'use strict'
 
-function Source (pico, terminal) {
+function Source (orca, terminal) {
   this.path = null
 
   this.new = function () {
-    pico.clear()
+    orca.clear()
     terminal.log('New')
     this.path = null
   }
@@ -27,7 +27,7 @@ function Source (pico, terminal) {
     } else {
       dialog.showSaveDialog((path) => {
         if (path === undefined) { return }
-        if (path.indexOf('.pico') < 0) { path += '.pico' }
+        if (path.indexOf('.orca') < 0) { path += '.orca' }
         terminal.source.write(path)
         terminal.source.path = path
       })
@@ -42,7 +42,7 @@ function Source (pico, terminal) {
   // I/O
 
   this.write = function (path) {
-    fs.writeFile(path, `${pico}`, (err) => {
+    fs.writeFile(path, `${orca}`, (err) => {
       if (err) { alert('An error ocurred updating the file' + err.message); console.log(err) }
     })
   }
@@ -62,7 +62,7 @@ function Source (pico, terminal) {
 
   this.name = function () {
     const parts = this.path.split('/')
-    return parts[parts.length - 1].replace('.pico', '').trim()
+    return parts[parts.length - 1].replace('.orca', '').trim()
   }
 
   this.toString = function () {

@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnQ (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 'q', passive)
+function FnQ (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 'q', passive)
 
   this.name = 'count'
   this.info = 'Counts the number of fns present eastwardly.'
@@ -15,16 +15,16 @@ function FnQ (pico, x, y, passive) {
     this.len = clamp(this.listen(this.ports.haste.len, true), 1, 16)
 
     for (let x = 1; x <= this.len; x++) {
-      pico.lock(this.x + x, this.y)
+      orca.lock(this.x + x, this.y)
     }
   }
 
   this.run = function () {
     let count = 0
     for (let x = 1; x <= this.len; x++) {
-      if (pico.glyphAt(this.x + x, this.y) !== '.') { count++ }
+      if (orca.glyphAt(this.x + x, this.y) !== '.') { count++ }
     }
-    this.output(`${pico.allowed[count]}`)
+    this.output(`${orca.allowed[count]}`)
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnJ (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 'j', passive)
+function FnJ (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 'j', passive)
 
   this.name = 'jump'
   this.info = 'Outputs the northward fn.'
@@ -12,7 +12,7 @@ function FnJ (pico, x, y, passive) {
   this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
-    pico.lock(this.x, this.y + 1)
+    orca.lock(this.x, this.y + 1)
   }
 
   this.run = function () {

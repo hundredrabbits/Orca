@@ -1,6 +1,6 @@
 'use strict'
 
-function Pico (w, h) {
+function Orca (w, h) {
   this.f = 0 // Frame
   this.w = w // Width
   this.h = h // Height
@@ -125,8 +125,8 @@ function Pico (w, h) {
 
   this.findPorts = function () {
     const h = {}
-    for (const id in pico.runtime) {
-      const g = pico.runtime[id]
+    for (const id in orca.runtime) {
+      const g = orca.runtime[id]
       if (this.lockAt(g.x, g.y)) { continue }
       // Default/Passive
       h[`${g.x}:${g.y}`] = { type: g.passive && g.draw ? 'passive' : 'none', name: `${g.name}` }
@@ -255,4 +255,4 @@ function Pico (w, h) {
   }
 }
 
-module.exports = Pico
+module.exports = Orca

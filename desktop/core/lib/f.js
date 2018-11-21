@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnF (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 'f', passive)
+function FnF (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 'f', passive)
 
   this.name = 'if'
   this.info = 'Outputs `1` if inputs are equal, otherwise `0`.'

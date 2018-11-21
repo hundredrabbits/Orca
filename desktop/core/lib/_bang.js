@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnBang (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, '*', true)
+function FnBang (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, '*', true)
 
   this.name = 'bang'
   this.info = 'Bangs!'

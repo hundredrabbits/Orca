@@ -1,6 +1,6 @@
 'use strict'
 
-function Fn (pico, x, y, glyph = '.', passive = false) {
+function Fn (orca, x, y, glyph = '.', passive = false) {
   this.name = 'unknown'
   this.x = x
   this.y = y
@@ -13,12 +13,12 @@ function Fn (pico, x, y, glyph = '.', passive = false) {
   // Actions
 
   this.listen = function (port, toValue = false) {
-    const g = pico.glyphAt(this.x + port.x, this.y + port.y)
-    return toValue ? pico.valueOf(g) : g
+    const g = orca.glyphAt(this.x + port.x, this.y + port.y)
+    return toValue ? orca.valueOf(g) : g
   }
 
   this.output = function (g) {
-    pico.add(this.x + this.ports.output.x, this.y + this.ports.output.y, g)
+    orca.add(this.x + this.ports.output.x, this.y + this.ports.output.y, g)
   }
 
   // Phases
@@ -26,14 +26,14 @@ function Fn (pico, x, y, glyph = '.', passive = false) {
   this.permissions = function () {
     for (const id in this.ports.haste) {
       const port = this.ports.haste[id]
-      pico.lock(this.x + port.x, this.y + port.y)
+      orca.lock(this.x + port.x, this.y + port.y)
     }
     for (const id in this.ports.input) {
       const port = this.ports.input[id]
-      pico.lock(this.x + port.x, this.y + port.y)
+      orca.lock(this.x + port.x, this.y + port.y)
     }
     if (this.ports.output && !this.ports.output.unlock) {
-      pico.lock(this.x + this.ports.output.x, this.y + this.ports.output.y)
+      orca.lock(this.x + this.ports.output.x, this.y + this.ports.output.y)
     }
   }
 
@@ -46,11 +46,11 @@ function Fn (pico, x, y, glyph = '.', passive = false) {
   // Helpers
 
   this.lock = function () {
-    pico.lock(this.x, this.y)
+    orca.lock(this.x, this.y)
   }
 
   this.replace = function (g) {
-    pico.add(this.x, this.y, g)
+    orca.add(this.x, this.y, g)
   }
 
   this.remove = function () {
@@ -64,8 +64,8 @@ function Fn (pico, x, y, glyph = '.', passive = false) {
 
   this.move = function (x, y, g) {
     const offset = { x: this.x + x, y: this.y + y }
-    if (!pico.inBounds(offset.x, offset.y)) { this.explode(); return }
-    if (pico.glyphAt(offset.x, offset.y) !== '.') { this.explode(); return }
+    if (!orca.inBounds(offset.x, offset.y)) { this.explode(); return }
+    if (orca.glyphAt(offset.x, offset.y) !== '.') { this.explode(); return }
     this.remove()
     this.x += x
     this.y += y
@@ -73,10 +73,10 @@ function Fn (pico, x, y, glyph = '.', passive = false) {
   }
 
   this.bang = function () {
-    if (pico.glyphAt(this.x + 1, this.y) === '*') { return { x: 1, y: 0 } }
-    if (pico.glyphAt(this.x - 1, this.y) === '*') { return { x: -1, y: 0 } }
-    if (pico.glyphAt(this.x, this.y + 1) === '*') { return { x: 0, y: 1 } }
-    if (pico.glyphAt(this.x, this.y - 1) === '*') { return { x: 0, y: -1 } }
+    if (orca.glyphAt(this.x + 1, this.y) === '*') { return { x: 1, y: 0 } }
+    if (orca.glyphAt(this.x - 1, this.y) === '*') { return { x: -1, y: 0 } }
+    if (orca.glyphAt(this.x, this.y + 1) === '*') { return { x: 0, y: 1 } }
+    if (orca.glyphAt(this.x, this.y - 1) === '*') { return { x: 0, y: -1 } }
     return false
   }
 

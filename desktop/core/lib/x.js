@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnX (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 'x', passive)
+function FnX (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 'x', passive)
 
   this.name = 'teleport'
   this.info = 'Outputs value at offset.'

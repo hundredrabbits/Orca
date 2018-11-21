@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="links/main.css"/>
     <link rel="stylesheet" type="text/css" href="links/theme.css"/>
     
-    <title>Pico</title>
+    <title>Orca</title>
   </head>
   <body>
     <script>
@@ -18,14 +18,14 @@
       const fs = require('fs')
       const app_path = app.getAppPath()
       
-      const Pico = require('../core/pico')
+      const Orca = require('../core/orca')
       const Terminal = require('./scripts/terminal')
-      const pico = new Pico(57, 25)
-      const terminal = new Terminal(pico)
+      const orca = new Orca(57, 25)
+      const terminal = new Terminal(orca)
 
       terminal.install(document.body)
 
-      terminal.controller.add("default","*","About",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Pico'); },"CmdOrCtrl+,")
+      terminal.controller.add("default","*","About",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Orca'); },"CmdOrCtrl+,")
       terminal.controller.add("default","*","Fullscreen",() => { app.toggle_fullscreen(); },"CmdOrCtrl+Enter")
       terminal.controller.add("default","*","Hide",() => { app.toggle_visible(); },"CmdOrCtrl+H")
       terminal.controller.add("default","*","Inspect",() => { app.inspect(); },"CmdOrCtrl+.")

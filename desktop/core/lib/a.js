@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnA (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 'a', passive)
+function FnA (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 'a', passive)
 
   this.name = 'add'
   this.info = 'Outputs the sum of inputs.'
@@ -16,7 +16,7 @@ function FnA (pico, x, y, passive) {
     const a = this.listen(this.ports.input.a, true)
     const b = this.listen(this.ports.input.b, true)
     const key = a + b
-    const res = pico.allowed[key] ? pico.allowed[key] : 0
+    const res = orca.allowed[key] ? orca.allowed[key] : 0
     this.output(`${res}`)
   }
 }

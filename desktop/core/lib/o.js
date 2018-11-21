@@ -2,8 +2,8 @@
 
 const Fn = require('../fn')
 
-function FnO (pico, x, y, passive) {
-  Fn.call(this, pico, x, y, 'o', passive)
+function FnO (orca, x, y, passive) {
+  Fn.call(this, orca, x, y, 'o', passive)
 
   this.name = 'offset'
   this.info = 'Reads a distant fn with offset.'
