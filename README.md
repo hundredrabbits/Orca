@@ -19,7 +19,7 @@ npm start
 ### alpha functions
 
 - `A` **add**(a, b): Outputs the sum of inputs.
-- `B` **banger**(val): Bangs if input is `1`, `N`, `S`, `W` or `E`.
+- `B` **banger**(val): Bangs if input is `1`, `N`, `S`, `W`, `Z` or `E`.
 - `C` **clock**(min, max): Outputs a constant value based on the runtime frame.
 - `D` **unknown**: --
 - `E` **east**: Moves eastward, or bangs.
@@ -38,12 +38,12 @@ npm start
 - `R` **random**(min, max): Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
 - `T` **track**('len, 'key, val): Outputs character at eastward position with offset.
-- `U` **unknown**: --
+- `U` **Uturn**: Reverses movements.
 - `V` **beam**: Bangs the nearest southward fn on bang.
 - `W` **west**: Moves westward, or bangs.
 - `X` **teleport**('x, 'y, val): Outputs value at offset.
 - `Y` **type**(a, b): Compares the type(num/alpha/special) of inputs, and return `1` or `0`.
-- `Z` **unknown**: --
+- `Z` **diagonal**: Moves diagonally.
 
 ### special functions
 
@@ -108,8 +108,7 @@ Haste < Function > Input(s)
 ## TODOs
 
 - Implement OSC `=`.
-- Implement `U`.
-- Implement `Z`.
+- Implement `D`.
 - Implement nested files `/`.
 - Implement note length.
 

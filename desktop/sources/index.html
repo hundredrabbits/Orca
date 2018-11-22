@@ -18,6 +18,7 @@
       const Terminal = require('./scripts/terminal')
       const orca = new Orca(57, 25)
       const terminal = new Terminal(orca)
+      const keyboard = new Keyboard()
       
       const { app } = require('electron').remote
 
@@ -57,7 +58,6 @@
       terminal.controller.commit()
       terminal.start()
 
-      const keyboard = new Keyboard()
       document.onkeydown = function(event){ keyboard.listen_onkeydown(event); }
       </script>
   </body>
