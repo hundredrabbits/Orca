@@ -6,23 +6,13 @@
 
 ## Install & Run
 
+There are no public builds available at the moment. 
+
 ```
 cd desktop
 npm install
 npm start
 ```
-
-### Ports Specs
-
-```
-Haste < Function > Input(s)
-           v
-        Output
-```
-
-- **Haste port** values are collected before runtime.
-- **Inputs** are collected at runtime.
-- **Output** is usually where the magic happens.
 
 ## Functions
 
@@ -83,7 +73,9 @@ Haste < Function > Input(s)
 - `ctrl/cmd + x`, cut block.
 - `ctrl/cmd + v`, paste block.
 
-## Midi Output
+## Output
+
+### Midi Output
 
 The midi special function is `:000`, it takes up to 4 inputs(channel, octave, note, velocity). For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. 
 
@@ -91,11 +83,25 @@ Velocity is either from `0-9`(10 steps), or `A-Z`(26 steps). For example, `:34C8
 
 To see it in action, see the [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/midi.orca) example.
 
-## UDP Output
+### UDP Output
 
 The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback) special function is `3;MSG`, it has one haste input that gets a string length and locks the eastward ports. It sends the message on bang to the port `49160`. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test UDP messages.
 
 To see it in action, see the [udp.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/udp.orca) example.
+
+## Specs
+
+### Ports
+
+```
+Haste < Function > Input(s)
+           v
+        Output
+```
+
+- **Haste port** values are collected before runtime.
+- **Inputs** are collected at runtime.
+- **Output** is usually where the magic happens.
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/PREVIEW.jpg' width="600"/>
 
