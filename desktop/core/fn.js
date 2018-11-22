@@ -26,11 +26,15 @@ function Fn (orca, x, y, glyph = '.', passive = false) {
   this.permissions = function () {
     for (const id in this.ports.haste) {
       const port = this.ports.haste[id]
-      orca.lock(this.x + port.x, this.y + port.y)
+      if(!port.unlock){
+        orca.lock(this.x + port.x, this.y + port.y)
+      }
     }
     for (const id in this.ports.input) {
       const port = this.ports.input[id]
-      orca.lock(this.x + port.x, this.y + port.y)
+      if(!port.unlock){
+        orca.lock(this.x + port.x, this.y + port.y)  
+      }
     }
     if (this.ports.output && !this.ports.output.unlock) {
       orca.lock(this.x + this.ports.output.x, this.y + this.ports.output.y)

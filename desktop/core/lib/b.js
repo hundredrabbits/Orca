@@ -8,7 +8,7 @@ function FnB (orca, x, y, passive) {
   this.name = 'banger'
   this.info = 'Bangs if input is `1`, `N`, `S`, `W`, `Z` or `E`.'
 
-  this.ports.input.val = { x: 1, y: 0 }
+  this.ports.input.val = { x: 1, y: 0, unlock: true }
   this.ports.output = { x: 0, y: 1 }
 
   this.run = function () {
