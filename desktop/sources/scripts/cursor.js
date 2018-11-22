@@ -42,7 +42,7 @@ function Cursor (orca, terminal) {
 
   this.paste = function () {
     terminal.log(`Paste ${this._position()}`)
-    this.insertBlock(this.x, this.y, this.block)
+    this.writeBlock(this.x, this.y, this.block)
   }
 
   this.cut = function () {
@@ -51,7 +51,7 @@ function Cursor (orca, terminal) {
     this.erase()
   }
 
-  this.insert = function (g) {
+  this.write = function (g) {
     orca.write(this.x, this.y, g)
     if (this.mode === 1) {
       this.move(1, 0)
@@ -116,7 +116,7 @@ function Cursor (orca, terminal) {
   this.eraseBlock = function (x, y, w, h) {
     for (let _y = y; _y < y + h; _y++) {
       for (let _x = x; _x < x + w; _x++) {
-        this.erase(_x, _y)
+        orca.erase(_x, _y)
       }
     }
   }
