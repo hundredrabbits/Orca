@@ -5,14 +5,17 @@ const Fn = require('../fn')
 function FnU (orca, x, y, passive) {
   Fn.call(this, orca, x, y, 'u', passive)
 
-  this.name = 'Uturn'
-  this.info = 'Reverses movements.'
+  this.name = 'uturn'
+  this.info = 'Reverses movement on inputs.'
 
-  const vectors = { n: { x: 0, y: -1 }, e: { x: 1, y: 0 }, s: { x: 0, y: 1 }, w: { x: -1, y: 0 } }
+  this.ports.input.n = { x: 0, y: -1, unlock: true }
+  this.ports.input.e = { x: 1, y: 0, unlock: true }
+  this.ports.input.s = { x: 0, y: 1, unlock: true }
+  this.ports.input.w = { x: -1, y: 0, unlock: true }
 
   this.run = function () {
-    for (const id in vectors) {
-      this.flip(id, vectors[id])
+    for (const id in this.ports.input) {
+      this.flip(id, this.ports.input[id])
     }
   }
 
@@ -21,7 +24,7 @@ function FnU (orca, x, y, passive) {
     const g = orca.glyphAt(pos.x, pos.y).toLowerCase()
 
     if (g === '.') { return }
-    if (!vectors[g]) { return }
+    if (!this.ports.input[g]) { return }
 
     orca.write(pos.x, pos.y, id.toUpperCase())
   }

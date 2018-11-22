@@ -38,7 +38,7 @@ npm start
 - `R` **random**(min, max): Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
 - `T` **track**('len, 'key, val): Outputs character at eastward position with offset.
-- `U` **Uturn**: Reverses movements.
+- `U` **uturn**(n, e, s, w): Reverses movement on inputs.
 - `V` **beam**: Bangs the nearest southward fn on bang.
 - `W` **west**: Moves westward, or bangs.
 - `X` **teleport**('x, 'y, val): Outputs value at offset.
@@ -52,26 +52,6 @@ npm start
 - `:` **midi**(channel, octave, note, velocity): Sends Midi a midi note.
 - `;` **udp**('len): Sends a string via UDP to localhost.
 - `#` **comment**: Comment a line.
-
-## Controls
-
-### Cursor
-
-- `arrowKey`, move.
-- `ctrl/cmd+arrowKey`, leap move.
-- `shift+arrowKey`, resize cursor.
-- `escape`, reset cursor.
-- `enter`, toggle insert/write modes.
-
-### Grid
-
-- `space`, toggle play/pause modes.
-- `<`/`>`, change BPM(speed).
-- `[`/`]`, resize horizontal grid.
-- `{`/`}`, resize vertical grid.
-- `ctrl/cmd + c`, copy block.
-- `ctrl/cmd + x`, cut block.
-- `ctrl/cmd + v`, paste block.
 
 ## Output
 
@@ -88,20 +68,6 @@ To see it in action, see the [midi.orca](https://github.com/hundredrabbits/Orca/
 The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback) special function is `3;MSG`, it has one haste input that gets a string length and locks the eastward ports. It sends the message on bang to the port `49160`. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test UDP messages.
 
 To see it in action, see the [udp.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/udp.orca) example.
-
-## Specs
-
-### Ports
-
-```
-Haste < Function > Input(s)
-           v
-        Output
-```
-
-- **Haste port** values are collected before runtime.
-- **Inputs** are collected at runtime.
-- **Output** is usually where the magic happens.
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/PREVIEW.jpg' width="600"/>
 
