@@ -28,14 +28,21 @@ function Cursor (orca, terminal) {
     this.mode = 0
   }
 
+  this.selectAll = function () {
+    this.x = 0
+    this.y = 0
+    this.w = orca.w
+    this.h = orca.h
+  }
+
   this.copy = function () {
     terminal.log(`Copy ${this._position()}`)
-    this.block = orca.getBlock(this.x, this.y, this.w, this.h)
+    this.block = this.getBlock(this.x, this.y, this.w, this.h)
   }
 
   this.paste = function () {
     terminal.log(`Paste ${this._position()}`)
-    orca.addBlock(this.x, this.y, this.block)
+    this.insertBlock(this.x, this.y, this.block)
   }
 
   this.cut = function () {
@@ -45,37 +52,30 @@ function Cursor (orca, terminal) {
   }
 
   this.insert = function (g) {
-    orca.add(this.x, this.y, g)
+    orca.write(this.x, this.y, g)
     if (this.mode === 1) {
       this.move(1, 0)
     }
   }
 
   this.erase = function (g) {
-    if (this.w === 1 && this.h === 1 && orca.glyphAt(this.x, this.y) === '.') {
-      this.move(-1, 0)
-      return
-    }
+    if (this.w === 1 && this.h === 1 && orca.glyphAt(this.x, this.y) === '.') { this.move(-1, 0); return } // Backspace
     terminal.log(`Erase ${this._position()}`)
-    orca.removeBlock(this.x, this.y, this.w, this.h)
+    this.eraseBlock(this.x, this.y, this.w, this.h)
     this.reset()
   }
 
-  this.inspect = function (name = true, ports = false) {
-    if (this.w > 1 || this.h > 1) { return 'multi' }
-    // Ports
-    const port = orca.portAt(this.x, this.y)
-    if (port) { return `${port.name}` }
-    // Lock
-    if (orca.lockAt(this.x, this.y)) { return 'locked' }
-    return 'empty'
+  this.toggleMode = function () {
+    this.mode = this.mode === 0 ? 1 : 0
+    terminal.log(`Changed Mode ${this.mode === 1 ? 'inser' : 'write'}`)
   }
 
-  this.selectAll = function () {
-    this.x = 0
-    this.y = 0
-    this.w = orca.w
-    this.h = orca.h
+  this._inspect = function (name = true, ports = false) {
+    if (this.w > 1 || this.h > 1) { return 'multi' }
+    const port = terminal.portAt(this.x, this.y)
+    if (port) { return `${port.name}` }
+    if (orca.lockAt(this.x, this.y)) { return 'locked' }
+    return 'empty'
   }
 
   this._position = function () {
@@ -86,9 +86,39 @@ function Cursor (orca, terminal) {
     return this.mode === 1 ? 'inser' : 'write'
   }
 
-  this.toggleMode = function () {
-    this.mode = this.mode === 0 ? 1 : 0
-    terminal.log(`Changed Mode ${this.mode === 1 ? 'inser' : 'write'}`)
+  // Block
+
+  this.getBlock = function (x, y, w, h) {
+    const block = []
+    for (let _y = y; _y < y + h; _y++) {
+      const line = []
+      for (let _x = x; _x < x + w; _x++) {
+        line.push(orca.glyphAt(_x, _y))
+      }
+      block.push(line)
+    }
+    return block
+  }
+
+  this.writeBlock = function (x, y, block) {
+    if (!block || block.length === 0) { return }
+    let _y = y
+    for (const lineId in block) {
+      let _x = x
+      for (const glyphId in block[lineId]) {
+        orca.write(_x, _y, block[lineId][glyphId])
+        _x++
+      }
+      _y++
+    }
+  }
+
+  this.eraseBlock = function (x, y, w, h) {
+    for (let _y = y; _y < y + h; _y++) {
+      for (let _x = x; _x < x + w; _x++) {
+        this.erase(_x, _y)
+      }
+    }
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

@@ -9,7 +9,7 @@ function FnK (orca, x, y, passive) {
   this.info = 'Kills southward fn.'
 
   this.run = function () {
-    orca.remove(this.x, this.y + 1)
+    orca.erase(this.x, this.y + 1)
   }
 }
 

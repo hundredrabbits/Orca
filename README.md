@@ -107,9 +107,10 @@ Haste < Function > Input(s)
 
 ## TODOs
 
-- Implement OSC
-- Implement U.
-- Implement Z.
+- Implement OSC `=`.
+- Implement `U`.
+- Implement `Z`.
+- Implement nested files `/`.
 
 ## Extras
 

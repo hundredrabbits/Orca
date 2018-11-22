@@ -18,7 +18,7 @@ function Fn (orca, x, y, glyph = '.', passive = false) {
   }
 
   this.output = function (g) {
-    orca.add(this.x + this.ports.output.x, this.y + this.ports.output.y, g)
+    orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, g)
   }
 
   // Phases
@@ -50,10 +50,10 @@ function Fn (orca, x, y, glyph = '.', passive = false) {
   }
 
   this.replace = function (g) {
-    orca.add(this.x, this.y, g)
+    orca.write(this.x, this.y, g)
   }
 
-  this.remove = function () {
+  this.erase = function () {
     this.replace('.')
   }
 
@@ -66,7 +66,7 @@ function Fn (orca, x, y, glyph = '.', passive = false) {
     const offset = { x: this.x + x, y: this.y + y }
     if (!orca.inBounds(offset.x, offset.y)) { this.explode(); return }
     if (orca.glyphAt(offset.x, offset.y) !== '.') { this.explode(); return }
-    this.remove()
+    this.erase()
     this.x += x
     this.y += y
     this.replace(this.glyph)

@@ -66,6 +66,7 @@ function Terminal (orca) {
 
   this.update = function () {
     this.clear()
+    this.ports = this.findPorts()
     this.drawProgram()
     this.drawInterface()
   }
@@ -142,17 +143,44 @@ function Terminal (orca) {
     ctx.clearRect(0, 0, this.size.width, this.size.height)
   }
 
+  this.portAt = function (x, y, req = null) {
+    return this.ports[`${x}:${y}`]
+  }
+
+  this.findPorts = function () {
+    const h = {}
+    for (const id in orca.runtime) {
+      const g = orca.runtime[id]
+      if (orca.lockAt(g.x, g.y)) { continue }
+      // Default/Passive
+      h[`${g.x}:${g.y}`] = { type: g.passive && g.draw ? 'passive' : 'none', name: `${g.name}` }
+      // Output
+      if (g.ports.output) { h[`${g.x + g.ports.output.x}:${g.y + g.ports.output.y}`] = { type: 'output', name: `${g.glyph}.out` } }
+      // Haste
+      for (const id in g.ports.haste) {
+        const port = g.ports.haste[id]
+        h[`${g.x + port.x}:${g.y + port.y}`] = { type: 'haste', name: `${g.glyph}'${id}` }
+      }
+      // Input
+      for (const id in g.ports.input) {
+        const port = g.ports.input[id]
+        h[`${g.x + port.x}:${g.y + port.y}`] = { type: 'input', name: `${g.glyph}:${id}` }
+      }
+    }
+    return h
+  }
+
   this.drawProgram = function () {
     const terminal = this
     let y = 0
     while (y < orca.h) {
       let x = 0
       while (x < orca.w) {
-        const port = orca.ports[`${x}:${y}`]
+        const port = this.ports[`${x}:${y}`]
         const styles = {
           isSelection: terminal.isSelection(x, y),
           isCursor: terminal.isCursor(x, y),
-          isPort: port ? orca.ports[`${x}:${y}`].type : false,
+          isPort: port ? this.ports[`${x}:${y}`].type : false,
           isLocked: orca.lockAt(x, y)
         }
         this.drawSprite(x, y, this.guide(x, y), styles)
@@ -168,7 +196,7 @@ function Terminal (orca) {
     this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1, this.grid.x)
     this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.grid.x)
     this.write(`${this.cursor._mode()}`, col * 2, 1, this.grid.x)
-    this.write(`${this.cursor.inspect()}`, col * 3, 1, this.grid.x)
+    this.write(`${this.cursor._inspect()}`, col * 3, 1, this.grid.x)
     this.write(this.debug, col * 4, 1)
     // Grid
     this.write(`${orca.w}x${orca.h}`, col * 0, 0, this.grid.x)

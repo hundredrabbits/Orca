@@ -29,7 +29,7 @@ function FnL (orca, x, y, passive) {
 
     for (const id in a) {
       const x = parseInt(id) + 1
-      orca.add(this.x + x, this.y, a[id])
+      orca.write(this.x + x, this.y, a[id])
     }
   }
 }

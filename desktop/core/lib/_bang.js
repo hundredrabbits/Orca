@@ -11,7 +11,7 @@ function FnBang (orca, x, y, passive) {
 
   this.haste = function () {
     this.passive = true
-    this.remove()
+    this.erase()
   }
 }
 
