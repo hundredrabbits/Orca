@@ -1,6 +1,6 @@
 'use strict'
 
-function Terminal (orca) {
+function Terminal (orca, tile = { w: 20, h: 30 }) {
   const Cursor = require('./cursor')
   const Source = require('./source')
   const Midi = require('./midi')
@@ -12,15 +12,11 @@ function Terminal (orca) {
   this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#777777', f_low: '#333333', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' })
 
   this.el = document.createElement('canvas')
+  this.size = { width: tile.w * orca.w, height: tile.h * orca.h + (tile.h * 3), ratio: 0.5, grid: { w: 8, h: 8 } }
   this.isPaused = false
-  this.tile = { w: 20, h: 30 }
-  this.size = { width: this.tile.w * orca.w, height: this.tile.h * orca.h + (this.tile.h * 3), ratio: 0.5 }
-
-  this.debug = 'Idle.'
-
   this.timer = null
   this.bpm = 120
-  this.grid = { x: 8, y: 8 }
+  this.debug = 'Idle.'
 
   this.install = function (host) {
     this.resize()
@@ -90,7 +86,7 @@ function Terminal (orca) {
   }
 
   this.modGrid = function (x = 0, y = 0) {
-    this.grid = { x: clamp(this.grid.x + x, 4, 16), y: clamp(this.grid.y + y, 4, 16) }
+    this.size.grid = { x: clamp(this.size.grid.w + x, 4, 16), y: clamp(this.size.grid.h + y, 4, 16) }
   }
 
   //
@@ -106,41 +102,7 @@ function Terminal (orca) {
   }
 
   this.isSelection = function (x, y) {
-    if (x >= this.cursor.x && x < this.cursor.x + this.cursor.w && y >= this.cursor.y && y < this.cursor.y + this.cursor.h) {
-      return true
-    }
-    return false
-  }
-
-  this.findPorts = function () {
-    const h = {}
-    const fns = orca.runtime
-    for (const id in fns) {
-      const g = fns[id]
-      if (orca.lockAt(g.x, g.y)) { continue }
-      if (g.passive) { h[`${g.x}:${g.y}`] = 4 }
-      if (g.ports.output) { h[`${g.x + g.ports.output.x}:${g.y + g.ports.output.y}`] = 2 }
-      for (const id in g.ports.haste) {
-        const port = g.ports.haste[id]
-        h[`${g.x + port.x}:${g.y + port.y}`] = 5
-      }
-      for (const id in g.ports.input) {
-        const port = g.ports.input[id]
-        h[`${g.x + port.x}:${g.y + port.y}`] = 3
-      }
-    }
-    return h
-  }
-
-  // Canvas
-
-  this.context = function () {
-    return this.el.getContext('2d')
-  }
-
-  this.clear = function () {
-    const ctx = this.context()
-    ctx.clearRect(0, 0, this.size.width, this.size.height)
+    return !!(x >= this.cursor.x && x < this.cursor.x + this.cursor.w && y >= this.cursor.y && y < this.cursor.y + this.cursor.h)
   }
 
   this.portAt = function (x, y, req = null) {
@@ -170,40 +132,48 @@ function Terminal (orca) {
     return h
   }
 
+  // Canvas
+
+  this.context = function () {
+    return this.el.getContext('2d')
+  }
+
+  this.clear = function () {
+    this.context().clearRect(0, 0, this.size.width, this.size.height)
+  }
+
+  this.guide = function (x, y) {
+    const g = orca.glyphAt(x, y)
+    if (g !== '.') { return g }
+    if (this.cursor.w === 1 && this.cursor.h === 1) { return g }
+    if (x % this.size.grid.w === 0 && y % this.size.grid.h === 0) { return '+' }
+    return g
+  }
+
   this.drawProgram = function () {
-    const terminal = this
-    let y = 0
-    while (y < orca.h) {
-      let x = 0
-      while (x < orca.w) {
+    for (let y = 0; y < orca.h; y++) {
+      for (let x = 0; x < orca.w; x++) {
         const port = this.ports[`${x}:${y}`]
-        const styles = {
-          isSelection: terminal.isSelection(x, y),
-          isCursor: terminal.isCursor(x, y),
-          isPort: port ? this.ports[`${x}:${y}`].type : false,
-          isLocked: orca.lockAt(x, y)
-        }
+        const styles = { isSelection: this.isSelection(x, y), isCursor: this.isCursor(x, y), isPort: port ? port.type : false, isLocked: orca.lockAt(x, y) }
         this.drawSprite(x, y, this.guide(x, y), styles)
-        x += 1
       }
-      y += 1
     }
   }
 
   this.drawInterface = function () {
-    const col = this.grid.x
+    const col = this.size.grid.w
     // Cursor
-    this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1, this.grid.x)
-    this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.grid.x)
-    this.write(`${this.cursor._mode()}`, col * 2, 1, this.grid.x)
-    this.write(`${this.cursor._inspect()}`, col * 3, 1, this.grid.x)
+    this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1, this.size.grid.w)
+    this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.size.grid.w)
+    this.write(`${this.cursor._mode()}`, col * 2, 1, this.size.grid.w)
+    this.write(`${this.cursor._inspect()}`, col * 3, 1, this.size.grid.w)
     this.write(this.debug, col * 4, 1)
     // Grid
-    this.write(`${orca.w}x${orca.h}`, col * 0, 0, this.grid.x)
-    this.write(`${this.grid.x}/${this.grid.y}`, col * 1, 0, this.grid.x)
-    this.write(`${this.source}`, col * 2, 0, this.grid.x)
-    this.write(`${this.bpm}`, col * 3, 0, this.grid.x)
-    this.write(`${this.midi}`, col * 4, 0, this.grid.x)
+    this.write(`${orca.w}x${orca.h}`, col * 0, 0, this.size.grid.w)
+    this.write(`${this.size.grid.w}/${this.size.grid.h}`, col * 1, 0, this.size.grid.w)
+    this.write(`${this.source}`, col * 2, 0, this.size.grid.w)
+    this.write(`${this.bpm}`, col * 3, 0, this.size.grid.w)
+    this.write(`${this.midi}`, col * 4, 0, this.size.grid.w)
   }
 
   this.drawSprite = function (x, y, g, styles = { isCursor: false, isSelection: false, isPort: false }) {
@@ -211,50 +181,42 @@ function Terminal (orca) {
 
     ctx.textBaseline = 'bottom'
     ctx.textAlign = 'center'
-    ctx.font = `${this.tile.h * 0.75}px input_mono_medium`
+    ctx.font = `${tile.h * 0.75}px input_mono_medium`
 
     if (styles.isSelection) {
       ctx.fillStyle = this.theme.active.b_inv
-      ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+      ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
       ctx.fillStyle = this.theme.active.f_inv
     } else if (styles.isPort) {
       if (styles.isPort === 'output') { // Output
         ctx.fillStyle = this.theme.active.b_high
-        ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+        ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
         ctx.fillStyle = this.theme.active.f_low
       } else if (styles.isPort === 'input') { // Input
         ctx.fillStyle = this.theme.active.background
-        ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+        ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
         ctx.fillStyle = this.theme.active.b_high
       } else if (styles.isPort === 'passive') { // Passive
         ctx.fillStyle = this.theme.active.b_med
-        ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+        ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
         ctx.fillStyle = this.theme.active.f_low
       } else if (styles.isPort === 'haste') { // Haste
         ctx.fillStyle = this.theme.active.background
-        ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+        ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
         ctx.fillStyle = this.theme.active.b_med
       } else {
         ctx.fillStyle = this.theme.active.background
-        ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+        ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
         ctx.fillStyle = this.theme.active.f_med
       }
     } else if (styles.isLocked) {
       ctx.fillStyle = this.theme.active.background
-      ctx.fillRect(x * this.tile.w, (y) * this.tile.h, this.tile.w, this.tile.h)
+      ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
       ctx.fillStyle = this.theme.active.f_med
     } else {
       ctx.fillStyle = this.theme.active.f_high
     }
-    ctx.fillText(styles.isCursor && g === '.' ? (!this.isPaused ? '@' : '~') : g, (x + 0.5) * this.tile.w, (y + 1) * this.tile.h)
-  }
-
-  this.guide = function (x, y) {
-    const g = orca.glyphAt(x, y)
-    if (g !== '.') { return g }
-    if (this.cursor.w === 1 && this.cursor.h === 1) { return g }
-    if (x % this.grid.x === 0 && y % this.grid.y === 0) { return '+' }
-    return g
+    ctx.fillText(styles.isCursor && g === '.' ? (!this.isPaused ? '@' : '~') : g, (x + 0.5) * tile.w, (y + 1) * tile.h)
   }
 
   this.write = function (text, offsetX, offsetY, limit) {
@@ -267,9 +229,10 @@ function Terminal (orca) {
   }
 
   this.resize = function () {
-    this.size = { width: this.tile.w * orca.w, height: this.tile.h * orca.h + (this.tile.h * 3), ratio: 0.5 }
+    this.size.width = tile.w * orca.w
+    this.size.height = tile.h * orca.h + (tile.h * 3)
     this.el.width = this.size.width
-    this.el.height = this.size.height + this.tile.h
+    this.el.height = this.size.height + tile.h
     this.el.style.width = (this.size.width * this.size.ratio) + 'px'
     this.el.style.height = (this.size.height * this.size.ratio) + 'px'
 

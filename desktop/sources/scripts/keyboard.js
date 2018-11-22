@@ -48,7 +48,7 @@ function Keyboard () {
   }
 
   this.key_arrow_up = function (mod = false, skip = false) {
-    const leap = skip ? terminal.grid.y : 1
+    const leap = skip ? terminal.size.grid.h : 1
     if (mod) {
       terminal.cursor.scale(0, leap)
     } else {
@@ -57,7 +57,7 @@ function Keyboard () {
   }
 
   this.key_arrow_down = function (mod = false, skip = false) {
-    const leap = skip ? terminal.grid.y : 1
+    const leap = skip ? terminal.size.grid.h : 1
     if (mod) {
       terminal.cursor.scale(0, -leap)
     } else {
@@ -66,7 +66,7 @@ function Keyboard () {
   }
 
   this.key_arrow_left = function (mod = false, skip = false) {
-    const leap = skip ? terminal.grid.x : 1
+    const leap = skip ? terminal.size.grid.w : 1
     if (mod) {
       terminal.cursor.scale(-leap, 0)
     } else {
@@ -75,7 +75,7 @@ function Keyboard () {
   }
 
   this.key_arrow_right = function (mod = false, skip = false) {
-    const leap = skip ? terminal.grid.x : 1
+    const leap = skip ? terminal.size.grid.w : 1
     if (mod) {
       terminal.cursor.scale(leap, 0)
     } else {

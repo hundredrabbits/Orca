@@ -111,6 +111,7 @@ Haste < Function > Input(s)
 - Implement `U`.
 - Implement `Z`.
 - Implement nested files `/`.
+- Implement note length.
 
 ## Extras
 

@@ -45,7 +45,7 @@ function Orca (w, h) {
 
   this.write = function (x, y, ch) {
     if (!this.inBounds(x, y)) { return }
-    if (ch.length != 1) { return }
+    if (ch.length !== 1) { return }
     if (!this.isAllowed(ch)) { return }
     if (this.glyphAt(x, y) === ch) { return }
     const index = this.indexAt(x, y)

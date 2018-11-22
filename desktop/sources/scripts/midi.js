@@ -91,7 +91,7 @@ function Midi (terminal) {
     for (let i = 0; i < this.stack.length; i++) {
       text += '|'
     }
-    while (text.length - 1 <= terminal.grid.x) {
+    while (text.length - 1 <= terminal.size.grid.w) {
       text += '-'
     }
     return text

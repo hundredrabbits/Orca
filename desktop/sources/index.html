@@ -13,15 +13,13 @@
     <title>Orca</title>
   </head>
   <body>
-    <script>
-      const {dialog,app} = require('electron').remote
-      const fs = require('fs')
-      const app_path = app.getAppPath()
-      
+    <script>     
       const Orca = require('../core/orca')
       const Terminal = require('./scripts/terminal')
       const orca = new Orca(57, 25)
       const terminal = new Terminal(orca)
+      
+      const { app } = require('electron').remote
 
       terminal.install(document.body)
 

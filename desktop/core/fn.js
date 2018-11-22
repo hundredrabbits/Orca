@@ -103,8 +103,6 @@ function Fn (orca, x, y, glyph = '.', passive = false) {
 
     return `\`${this.glyph.toUpperCase()}\` **${this.name}**${ports}: ${this.info}`
   }
-
-  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = Fn

@@ -1,6 +1,9 @@
 'use strict'
 
 function Controller () {
+  const fs = require('fs')
+  const { dialog, app } = require('electron').remote
+
   this.menu = { default: {} }
   this.mode = 'default'
 

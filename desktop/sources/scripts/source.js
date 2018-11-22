@@ -1,6 +1,9 @@
 'use strict'
 
 function Source (orca, terminal) {
+  const fs = require('fs')
+  const { dialog, app } = require('electron').remote
+
   this.path = null
 
   this.new = function () {
@@ -49,7 +52,6 @@ function Source (orca, terminal) {
 
   this.read = function (path) {
     fs.readFile(path, 'utf8', function (err, data) {
-      const fs = require('fs')
       if (err) throw err
       if (!terminal.source.validate(data)) { console.warn('Invalid File'); return }
       terminal.load(data.trim())
