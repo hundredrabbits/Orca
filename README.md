@@ -14,7 +14,7 @@ npm install
 npm start
 ```
 
-<img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.png' width="600"/>
+<img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.jpg' width="600"/>
 
 ## Functions
 
