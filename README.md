@@ -84,7 +84,6 @@ To see it in action, see the [udp.orca](https://github.com/hundredrabbits/Orca/b
 - Implement OSC `=`.
 - Implement `D`.
 - Implement nested files `/`.
-- Implement note length.
 - Show UDP bandwidth in UI.
 
 ## Extras
