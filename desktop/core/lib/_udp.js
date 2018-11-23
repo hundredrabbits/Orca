@@ -27,12 +27,7 @@ function FnMidi (orca, x, y, passive) {
       msg += orca.glyphAt(1 + this.x + x, this.y)
     }
 
-    const dgram = require('dgram')
-    const message = Buffer.from(`${msg}`)
-    const client = dgram.createSocket('udp4')
-    client.send(message, 49160, 'localhost', (err) => {
-      client.close()
-    })
+    terminal.io.sendUdp(msg)
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

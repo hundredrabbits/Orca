@@ -3,9 +3,9 @@
 function Terminal (orca, tile = { w: 20, h: 30 }) {
   const Cursor = require('./cursor')
   const Source = require('./source')
-  const Midi = require('./midi')
+  const IO = require('./io')
 
-  this.midi = new Midi(this)
+  this.io = new IO(this)
   this.cursor = new Cursor(orca, this)
   this.source = new Source(orca, this)
   this.controller = new Controller()
@@ -16,7 +16,6 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   this.isPaused = false
   this.timer = null
   this.bpm = 120
-  this.debug = 'Idle.'
 
   this.install = function (host) {
     this.resize()
@@ -27,7 +26,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   this.start = function () {
     orca.start()
     this.theme.start()
-    this.midi.start()
+    this.io.start()
 
     this.update()
     this.setSpeed(120)
@@ -37,24 +36,24 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   this.run = function () {
     if (this.isPaused) { return }
 
-    this.midi.clear()
+    this.io.clear()
     this.clear()
 
     orca.run()
-    this.midi.run()
+    this.io.run()
     this.update()
   }
 
   this.pause = function () {
     this.isPaused = !this.isPaused
-    this.log(this.isPaused ? 'Paused' : 'Unpaused')
+    console.log(this.isPaused ? 'Paused' : 'Unpaused')
     this.update()
   }
 
   this.load = function (data) {
     const w = data.split('\n')[0].length
     const h = data.split('\n').length
-    this.log(`Loading ${w}x${h}`)
+    console.log(`Loading ${w}x${h}`)
     orca.load(w, h, data)
     this.resize()
     this.update()
@@ -75,7 +74,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
 
   this.setSpeed = function (bpm) {
     this.bpm = clamp(bpm, 60, 300)
-    this.log(`Changed speed to ${this.bpm}.`)
+    console.log(`Changed speed to ${this.bpm}.`)
     const ms = (60000 / bpm) / 4
     clearInterval(this.timer)
     this.timer = setInterval(() => { this.run() }, ms)
@@ -88,12 +87,6 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   this.modGrid = function (x = 0, y = 0) {
     this.size.grid.w = clamp(this.size.grid.w + x, 4, 16)
     this.size.grid.h = clamp(this.size.grid.h + y, 4, 16)
-  }
-
-  //
-
-  this.log = function (msg) {
-    this.debug = msg
   }
 
   //
@@ -146,7 +139,6 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   this.guide = function (x, y) {
     const g = orca.glyphAt(x, y)
     if (g !== '.') { return g }
-    if (this.cursor.w === 1 && this.cursor.h === 1) { return g }
     if (x % this.size.grid.w === 0 && y % this.size.grid.h === 0) { return '+' }
     return g
   }
@@ -166,16 +158,14 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     // Cursor
     this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1, this.size.grid.w)
     this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.size.grid.w)
-    this.write(`${this.cursor._mode()}`, col * 2, 1, this.size.grid.w)
-    this.write(`${this.cursor._inspect()}`, col * 3, 1, this.size.grid.w)
-    this.write(this.debug, col * 4, 1)
+    this.write(`${this.cursor._inspect()}`, col * 2, 1, this.size.grid.w)
+    this.write(`${this.source}${this.cursor.mode === 1 ? '+' : ''}`, col * 3, 1, this.size.grid.w)
     // Grid
     this.write(`${orca.w}x${orca.h}`, col * 0, 0, this.size.grid.w)
     this.write(`${this.size.grid.w}/${this.size.grid.h}`, col * 1, 0, this.size.grid.w)
-    this.write(`f${orca.f}`, col * 2, 0, this.size.grid.w)
-    this.write(`${this.source}`, col * 3, 0, this.size.grid.w)
-    this.write(`${this.bpm}`, col * 4, 0, this.size.grid.w)
-    this.write(`${this.midi}`, col * 5, 0, this.size.grid.w)
+    this.write(`${orca.f}f${this.isPaused ? '*' : ''}`, col * 2, 0, this.size.grid.w)
+    this.write(`${this.bpm}${orca.f % 4 === 0 ? '*' : ''}`, col * 3, 0, this.size.grid.w)
+    this.write(`${this.io}`, col * 4, 0, this.size.grid.w)
   }
 
   this.drawSprite = function (x, y, g, styles = { isCursor: false, isSelection: false, isPort: false }) {

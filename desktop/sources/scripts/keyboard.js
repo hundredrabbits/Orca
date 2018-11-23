@@ -47,6 +47,10 @@ function Keyboard () {
     }
   }
 
+  this.listen_onkeyup = function (event) {
+    terminal.update()
+  }
+
   this.key_arrow_up = function (mod = false, skip = false) {
     const leap = skip ? terminal.size.grid.h : 1
     if (mod) {
@@ -83,3 +87,6 @@ function Keyboard () {
     }
   }
 }
+
+document.onkeydown = function (event) { keyboard.listen_onkeydown(event) }
+document.onkeyup = function (event) { keyboard.listen_onkeyup(event) }

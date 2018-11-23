@@ -8,12 +8,12 @@ function Source (orca, terminal) {
 
   this.new = function () {
     orca.clear()
-    terminal.log('New')
+    console.log('New')
     this.path = null
   }
 
   this.open = function () {
-    terminal.log('Open')
+    console.log('Open')
 
     let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'] })
     if (!paths) { console.log('Nothing to load') }
@@ -23,7 +23,7 @@ function Source (orca, terminal) {
   }
 
   this.save = function (as = false) {
-    terminal.log('Save')
+    console.log('Save')
 
     if (this.path && !as) {
       this.write(this.path)
@@ -38,7 +38,7 @@ function Source (orca, terminal) {
   }
 
   this.revert = function () {
-    terminal.log('Revert')
+    console.log('Revert')
     this.read(this.path)
   }
 

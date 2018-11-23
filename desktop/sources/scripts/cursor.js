@@ -36,17 +36,17 @@ function Cursor (orca, terminal) {
   }
 
   this.copy = function () {
-    terminal.log(`Copy ${this._position()}`)
+    console.log(`Copy ${this._position()}`)
     this.block = this.getBlock(this.x, this.y, this.w, this.h)
   }
 
   this.paste = function () {
-    terminal.log(`Paste ${this._position()}`)
+    console.log(`Paste ${this._position()}`)
     this.writeBlock(this.x, this.y, this.block)
   }
 
   this.cut = function () {
-    terminal.log(`Cut ${this._position()}`)
+    console.log(`Cut ${this._position()}`)
     this.copy()
     this.erase()
   }
@@ -60,14 +60,14 @@ function Cursor (orca, terminal) {
 
   this.erase = function (g) {
     if (this.w === 1 && this.h === 1 && orca.glyphAt(this.x, this.y) === '.') { this.move(-1, 0); return } // Backspace
-    terminal.log(`Erase ${this._position()}`)
+    console.log(`Erase ${this._position()}`)
     this.eraseBlock(this.x, this.y, this.w, this.h)
     this.reset()
   }
 
   this.toggleMode = function () {
     this.mode = this.mode === 0 ? 1 : 0
-    terminal.log(`Changed Mode ${this.mode === 1 ? 'inser' : 'write'}`)
+    console.log(`Changed Mode ${this.mode === 1 ? 'inser' : 'write'}`)
   }
 
   this._inspect = function (name = true, ports = false) {

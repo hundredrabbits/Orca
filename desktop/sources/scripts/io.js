@@ -1,38 +1,60 @@
 'use strict'
 
-function Midi (terminal) {
+function IO (terminal) {
+  const dgram = require('dgram')
+
   this.outputs = []
-  this.stack = []
+  this.stack = null
 
   this.start = function () {
+    this.clear()
     this.midiSetup()
   }
 
   this.clear = function () {
-    this.stack = []
+    this.stack = { udp: [], midi: [] }
   }
 
   this.run = function () {
-    if (this.stack.length < 1) { return }
-
-    for (const id in this.stack) {
-      this.play(this.stack[id])
+    if (this.length() < 1) { return }
+    // Run UDP first
+    for (const id in this.stack.udp) {
+      this.playUdp(this.stack.udp[id])
+    }
+    for (const id in this.stack.midi) {
+      this.playMidi(this.stack.midi[id])
     }
   }
 
-  this.send = function (channel, octave, note, velocity, length) {
-    this.stack.push([channel, octave, note, velocity, length])
+  // UDP
+
+  this.sendUdp = function (msg) {
+    this.stack.udp.push(msg)
   }
 
-  this.play = function (data) {
+  this.playUdp = function (data) {
+    const udp = dgram.createSocket('udp4')
+    udp.send(Buffer.from(`${data}`), 49160, 'localhost', (err) => {
+      udp.close()
+    })
+  }
+
+  // Midi
+
+  this.sendMidi = function (channel, octave, note, velocity, length) {
+    this.stack.midi.push([channel, octave, note, velocity, length])
+  }
+
+  this.playMidi = function (data) {
     const channel = convertChannel(data[0])
     const note = convertNote(data[1], data[2])
     const velocity = data[3]
     const length = window.performance.now() + convertLength(data[4], terminal.bpm)
 
-    terminal.midi.outputs[0].send([channel[0], note, velocity])
-    terminal.midi.outputs[0].send([channel[1], note, velocity], length)
+    this.outputs[0].send([channel[0], note, velocity])
+    this.outputs[0].send([channel[1], note, velocity], length)
   }
+
   //
 
   function convertChannel (id) {
@@ -67,18 +89,22 @@ function Midi (terminal) {
   this.midiActive = function (midiAccess) {
     const iter = midiAccess.outputs.values()
     for (let i = iter.next(); i && !i.done; i = iter.next()) {
-      terminal.midi.outputs.push(i.value)
+      terminal.io.outputs.push(i.value)
     }
-    terminal.log(`Midi is active, devices: ${terminal.midi.outputs.length}`)
+    console.log(`Midi is active, devices: ${terminal.io.outputs.length}`)
   }
 
   this.midiInactive = function (err) {
     console.warn('No Midi', err)
   }
 
+  this.length = function () {
+    return this.stack.udp.length + this.stack.midi.length
+  }
+
   this.toString = function () {
     let text = ''
-    for (let i = 0; i < this.stack.length; i++) {
+    for (let i = 0; i < this.length(); i++) {
       text += '|'
     }
     while (text.length - 1 <= terminal.size.grid.w) {
@@ -88,4 +114,4 @@ function Midi (terminal) {
   }
 }
 
-module.exports = Midi
+module.exports = IO

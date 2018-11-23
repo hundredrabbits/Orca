@@ -31,7 +31,7 @@ function FnMidi (orca, x, y, passive) {
     // 0 - 16
     const length = clamp(this.listen(this.ports.haste.length, true), 1, 16)
 
-    terminal.midi.send(channel, octave, note, velocity, length)
+    terminal.io.sendMidi(channel, octave, note, velocity, length)
   }
 
   function convertVelocity (val, max) {
