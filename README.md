@@ -59,9 +59,15 @@ npm start
 
 ### Midi Output
 
-The midi special function is `:000`, it takes up to 4 inputs(channel, octave, note, velocity). For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. 
+The midi special function is `:000`, it takes up to 4 inputs('channel, 'octave, 'note, velocity, length). For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. 
+
+#### Velocity
 
 Velocity is either from `0-9`(10 steps), or `A-Z`(26 steps). For example, `:34C8`, is a **C note, on the 4th octave, through the 4th MIDI channel with a velocity of 112/127(88%)**, `:34CT`, is a **C note, on the 4th octave, through the 4th MIDI channel with a velocity of 96/127(75%)**. 
+
+#### Note Length
+
+Note length is a value from `1-f`, which is a ratio of a full bar, *1* being `1/1`(a full bar), *2* being `1/2`(half), *3* being `1/3`(third).. and *f* being `1/16`. For example, `:27FZ4`, is a **F note, on the 7th octave, through the 3rd MIDI channel with a velocity of 100%, lasting for 1/4 of a bar**. 
 
 To see it in action, see the [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/midi.orca) example.
 
@@ -79,6 +85,7 @@ To see it in action, see the [udp.orca](https://github.com/hundredrabbits/Orca/b
 - Implement `D`.
 - Implement nested files `/`.
 - Implement note length.
+- Show UDP bandwidth in UI.
 
 ## Extras
 

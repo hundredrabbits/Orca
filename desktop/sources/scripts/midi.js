@@ -15,39 +15,27 @@ function Midi (terminal) {
   this.run = function () {
     if (this.stack.length < 1) { return }
 
-    let text = ''
     for (const id in this.stack) {
-      const note = this.stack[id]
-      text += `${note[0]}+${note[1]}|${note[2]}.${note[3]}-.${note[4]} `
-      this.play(note)
+      this.play(this.stack[id])
     }
-
-    terminal.log(text)
   }
 
-  this.send = function (channel, octave, note, velocity) {
-    this.stack.push([channel, octave, note, velocity])
+  this.send = function (channel, octave, note, velocity, length) {
+    this.stack.push([channel, octave, note, velocity, length])
   }
 
-  this.play = function (note) {
-    const channel = this.makeChannel(note[0])
-    const value = this.makeValue(note[1], note[2])
-    const velocity = note[3]
+  this.play = function (data) {
+    const channel = convertChannel(data[0])
+    const note = convertNote(data[1], data[2])
+    const velocity = data[3]
+    const length = window.performance.now() + convertLength(data[4], terminal.bpm)
 
-    this.playNote(channel, value, velocity)
+    terminal.midi.outputs[0].send([channel[0], note, velocity])
+    terminal.midi.outputs[0].send([channel[1], note, velocity], length)
   }
-
-  this.playNote = function (channel, value, velocity) {
-    // TODO: Fix length to terminal bpm
-    const length = window.performance.now() + 100.0
-
-    terminal.midi.outputs[0].send([channel[0], value, velocity])
-    terminal.midi.outputs[0].send([channel[1], value, velocity], length)
-  }
-
   //
 
-  this.makeChannel = function (id) {
+  function convertChannel (id) {
     if (id === 0) { return [0x90, 0x80] } // ch1
     if (id === 1) { return [0x91, 0x81] } // ch2
     if (id === 2) { return [0x92, 0x82] } // ch3
@@ -60,10 +48,12 @@ function Midi (terminal) {
     if (id === 9) { return [0x99, 0x89] } // ch10
   }
 
-  this.makeValue = function (octave, note) {
-    const offset = 24
-    const value = offset + (octave * 12) + note
-    return value // 60 = C3
+  function convertNote (octave, note) {
+    return 24 + (octave * 12) + note // 60 = C3
+  }
+
+  function convertLength (val, bpm) {
+    return (60000 / bpm) / val
   }
 
   // Setup
