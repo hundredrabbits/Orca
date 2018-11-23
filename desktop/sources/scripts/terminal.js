@@ -86,7 +86,8 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   }
 
   this.modGrid = function (x = 0, y = 0) {
-    this.size.grid = { x: clamp(this.size.grid.w + x, 4, 16), y: clamp(this.size.grid.h + y, 4, 16) }
+    this.size.grid.w = clamp(this.size.grid.w + x, 4, 16)
+    this.size.grid.h = clamp(this.size.grid.h + y, 4, 16)
   }
 
   //
@@ -171,9 +172,10 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     // Grid
     this.write(`${orca.w}x${orca.h}`, col * 0, 0, this.size.grid.w)
     this.write(`${this.size.grid.w}/${this.size.grid.h}`, col * 1, 0, this.size.grid.w)
-    this.write(`${this.source}`, col * 2, 0, this.size.grid.w)
-    this.write(`${this.bpm}`, col * 3, 0, this.size.grid.w)
-    this.write(`${this.midi}`, col * 4, 0, this.size.grid.w)
+    this.write(`f${orca.f}`, col * 2, 0, this.size.grid.w)
+    this.write(`${this.source}`, col * 3, 0, this.size.grid.w)
+    this.write(`${this.bpm}`, col * 4, 0, this.size.grid.w)
+    this.write(`${this.midi}`, col * 5, 0, this.size.grid.w)
   }
 
   this.drawSprite = function (x, y, g, styles = { isCursor: false, isSelection: false, isPort: false }) {
