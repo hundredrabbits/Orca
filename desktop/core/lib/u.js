@@ -8,14 +8,14 @@ function FnU (orca, x, y, passive) {
   this.name = 'uturn'
   this.info = 'Reverses movement on inputs.'
 
-  this.ports.input.n = { x: 0, y: -1, unlock: true }
-  this.ports.input.e = { x: 1, y: 0, unlock: true }
-  this.ports.input.s = { x: 0, y: 1, unlock: true }
-  this.ports.input.w = { x: -1, y: 0, unlock: true }
+  this.ports.haste.n = { x: 0, y: -1, unlock: true }
+  this.ports.haste.e = { x: 1, y: 0, unlock: true }
+  this.ports.haste.s = { x: 0, y: 1, unlock: true }
+  this.ports.haste.w = { x: -1, y: 0, unlock: true }
 
   this.run = function () {
-    for (const id in this.ports.input) {
-      this.flip(id, this.ports.input[id])
+    for (const id in this.ports.haste) {
+      this.flip(id, this.ports.haste[id])
     }
   }
 
@@ -24,7 +24,7 @@ function FnU (orca, x, y, passive) {
     const g = orca.glyphAt(pos.x, pos.y).toLowerCase()
 
     if (g === '.') { return }
-    if (!this.ports.input[g]) { return }
+    if (!this.ports.haste[g]) { return }
 
     orca.write(pos.x, pos.y, id.toUpperCase())
   }
