@@ -14,6 +14,8 @@ npm install
 npm start
 ```
 
+<img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.png' width="600"/>
+
 ## Functions
 
 ### alpha functions
@@ -69,7 +71,7 @@ The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_
 
 To see it in action, see the [udp.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/udp.orca) example.
 
-<img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/PREVIEW.jpg' width="600"/>
+<img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.hardware.jpg' width="600"/>
 
 ## TODOs
 
