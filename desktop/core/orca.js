@@ -29,8 +29,8 @@ function Orca (library = {}) {
   }
 
   this.write = function (x, y, ch) {
-    if (!this.inBounds(x, y)) { return }
     if (ch.length !== 1) { return }
+    if (!this.inBounds(x, y)) { return }
     if (!this.isAllowed(ch)) { return }
     if (this.glyphAt(x, y) === ch) { return }
     const index = this.indexAt(x, y)
@@ -55,7 +55,7 @@ function Orca (library = {}) {
     for (let y = 0; y < this.h; y++) {
       for (let x = 0; x < this.w; x++) {
         const g = this.glyphAt(x, y)
-        const fn = this.convert(g, x, y)
+        const fn = this.cast(g, x, y)
         if (fn) {
           a.push(fn)
         }
@@ -64,7 +64,7 @@ function Orca (library = {}) {
     return a
   }
 
-  this.convert = function (g, x, y) {
+  this.cast = function (g, x, y) {
     if (g === '.') { return }
     if (!library[g.toLowerCase()]) { return }
     const passive = g === g.toUpperCase()
@@ -106,7 +106,7 @@ function Orca (library = {}) {
     this.locks.push(`${x}:${y}`)
   }
 
-  // Checks
+  // Helpers
 
   this.inBounds = function (x, y) {
     return x >= 0 && x < this.w && y >= 0 && y < this.h
@@ -116,8 +116,8 @@ function Orca (library = {}) {
     return !!library[`${g}`.toLowerCase()]
   }
 
-  this.keyOf = function (g) {
-    return this.keys[g % this.keys.length]
+  this.keyOf = function (val) {
+    return this.keys[val % this.keys.length]
   }
 
   this.valueOf = function (g) {

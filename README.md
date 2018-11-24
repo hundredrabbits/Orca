@@ -18,11 +18,9 @@ npm start
 
 ## Functions
 
-### alpha functions
-
 - `A` **add**(a, b): Outputs the sum of inputs.
-- `B` **banger**(val): Bangs if input is `1`, `N`, `S`, `W`, `Z` or `E`.
-- `C` **clock**(min, max): Outputs a constant value based on the runtime frame.
+- `B` **banger**(val): Bangs if input is `1`, `N`, `S`, `W`, `E` or `Z`.
+- `C` **clock**(mod): Outputs a constant value based on the runtime frame.
 - `D` **unknown**: --
 - `E` **east**: Moves eastward, or bangs.
 - `F` **if**(a, b): Outputs `1` if inputs are equal, otherwise `0`.
@@ -40,18 +38,14 @@ npm start
 - `R` **random**(min, max): Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
 - `T` **track**('len, 'key, val): Outputs character at eastward position with offset.
-- `U` **uturn**(n, e, s, w): Reverses movement on inputs.
+- `U` **uturn**('n, 'e, 's, 'w): Reverses movement on inputs.
 - `V` **beam**: Bangs the nearest southward fn on bang.
 - `W` **west**: Moves westward, or bangs.
 - `X` **teleport**('x, 'y, val): Outputs value at offset.
-- `Y` **type**(a, b): Compares the type(num/alpha/special) of inputs, and return `1` or `0`.
+- `Y` **unknown**: --
 - `Z` **diagonal**: Moves diagonally.
-
-### special functions
-
-- `.` **null**: empty
 - `*` **bang**: Bangs!
-- `:` **midi**(channel, octave, note, velocity): Sends Midi a midi note.
+- `:` **midi**('velocity, 'length, channel, octave, note): Sends Midi a midi note.
 - `;` **udp**('len): Sends a string via UDP to localhost.
 - `#` **comment**: Comment a line.
 
