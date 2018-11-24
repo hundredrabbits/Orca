@@ -1,10 +1,10 @@
 'use strict'
 
-function Orca (w, h) {
-  this.f = 0 // Frame
+function Orca (w, h, s = '') {
   this.w = w // Width
   this.h = h // Height
   this.s = '' // String
+  this.f = 0 // Frame
 
   this.lib = {}
   this.allowed = []
@@ -13,7 +13,6 @@ function Orca (w, h) {
   this.runtime = []
 
   this.start = function () {
-    this.clear()
     this.lib = require('./lib')
     this.allowed = [].concat(Object.keys(this.lib.num)).concat(Object.keys(this.lib.alpha)).concat(Object.keys(this.lib.special))
     this.clear()
