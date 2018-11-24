@@ -13,8 +13,8 @@ function FnC (orca, x, y, passive) {
 
   this.run = function () {
     const mod = this.listen(this.ports.input.mod, true)
-    const key = (orca.f % (mod || 10))
-    const res = orca.allowed[key] ? orca.allowed[key] : 0
+    const val = (orca.f % (mod || 10))
+    const res = orca.keyOf(val)
     this.output(`${res}`)
   }
 }

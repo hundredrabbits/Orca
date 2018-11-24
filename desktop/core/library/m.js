@@ -16,7 +16,7 @@ function FnM (orca, x, y, passive) {
     const val = this.listen(this.ports.input.val, true)
     const mod = this.listen(this.ports.input.mod, true)
     const key = val % (mod !== 0 ? mod : 1)
-    const res = orca.allowed[key] ? orca.allowed[key] : 0
+    const res = orca.keyOf(key)
     this.output(`${res}`)
   }
 }

@@ -20,11 +20,11 @@ function FnQ (orca, x, y, passive) {
   }
 
   this.run = function () {
-    let count = 0
+    let val = 0
     for (let x = 1; x <= this.len; x++) {
-      if (orca.glyphAt(this.x + x, this.y) !== '.') { count++ }
+      if (orca.glyphAt(this.x + x, this.y) !== '.') { val++ }
     }
-    this.output(`${orca.allowed[count]}`)
+    this.output(`${orca.keyOf(val)}`)
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

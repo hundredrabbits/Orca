@@ -17,7 +17,7 @@ function FnI (orca, x, y, passive) {
     const max = this.listen(this.ports.input.max, true)
     const mod = this.listen(this.ports.output, true)
     const key = mod + 1 >= (max || 10) ? min : mod + 1
-    const res = orca.allowed[key] ? orca.allowed[key] : 0
+    const res = orca.keyOf(key)
     this.output(`${res}`)
   }
 }

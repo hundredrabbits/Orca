@@ -6,14 +6,9 @@ function Orca (library = {}) {
   this.s = '' // String
   this.f = 0 // Frame
 
-  this.allowed = [].concat(Object.keys(library.num)).concat(Object.keys(library.alpha)).concat(Object.keys(library.special))
   this.locks = []
   this.ports = {}
   this.runtime = []
-
-  this.start = function () {
-    this.clear()
-  }
 
   this.run = function () {
     this.runtime = this.parse()
@@ -70,13 +65,9 @@ function Orca (library = {}) {
 
   this.convert = function (g, x, y) {
     if (g === '.') { return }
-    if (library.special[g]) {
-      return new library.special[g](this, x, y)
-    }
-    if (library.alpha[g.toLowerCase()]) {
-      const passive = g === g.toUpperCase()
-      return new library.alpha[g.toLowerCase()](this, x, y, passive)
-    }
+    if (!library[g.toLowerCase()]) { return }
+    const passive = g === g.toUpperCase()
+    return new library[g.toLowerCase()](this, x, y, passive)
   }
 
   this.operate = function (fns) {
@@ -121,15 +112,15 @@ function Orca (library = {}) {
   }
 
   this.isAllowed = function (g) {
-    return library.alpha[g.toLowerCase()] || library.num[g] || library.special[g]
+    return !!library[g.toLowerCase()]
   }
 
   this.valueOf = function (g) {
-    return g !== '.' && this.isAllowed(g) ? this.allowed.indexOf(`${g}`.toLowerCase()) : 0
+    return g !== '.' && this.isAllowed(g) ? Object.keys(library).indexOf(`${g}`.toLowerCase()) : 0
   }
 
-  this.typeOf = function (g) {
-    return Object.keys(library.alpha).indexOf(g.toLowerCase()) > -1 ? 'alpha' : Object.keys(library.num).indexOf(g) > -1 ? 'num' : Object.keys(library.special).indexOf(g) > -1 ? 'special' : 'unknown'
+  this.keyOf = function (val) {
+    return library[val] ? Object.keys(library)[val] : 0
   }
 
   this.glyphAt = function (x, y, req = null) {

@@ -15,8 +15,8 @@ function FnR (orca, x, y, passive) {
   this.run = function () {
     const min = this.listen(this.ports.input.min, true)
     const max = this.listen(this.ports.input.max, true)
-    const key = parseInt((Math.random() * (max - min)) + min)
-    const res = orca.allowed[key] ? orca.allowed[key] : 0
+    const val = parseInt((Math.random() * (max - min)) + min)
+    const res = orca.keyOf(val)
     this.output(`${res}`)
   }
 }

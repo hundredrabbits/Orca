@@ -15,8 +15,7 @@ function FnA (orca, x, y, passive) {
   this.run = function () {
     const a = this.listen(this.ports.input.a, true)
     const b = this.listen(this.ports.input.b, true)
-    const key = a + b
-    const res = orca.allowed[key] ? orca.allowed[key] : 0
+    const res = orca.keyOf(a + b)
     this.output(`${res}`)
   }
 }
