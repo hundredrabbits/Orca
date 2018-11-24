@@ -17,7 +17,7 @@ function Orca (library = {}) {
     this.f += 1
   }
 
-  this.clear = function () {
+  this.reset = function () {
     this.s = new Array((this.h * this.w) + 1).join('.')
   }
 
@@ -35,10 +35,6 @@ function Orca (library = {}) {
     if (this.glyphAt(x, y) === ch) { return }
     const index = this.indexAt(x, y)
     this.s = this.s.substr(0, index) + ch + this.s.substr(index + ch.length)
-  }
-
-  this.erase = function (x, y) {
-    this.write(x, y, '.')
   }
 
   this.clean = function (str) {
@@ -152,7 +148,7 @@ function Orca (library = {}) {
     return this.format()
   }
 
-  this.clear()
+  this.reset()
 }
 
 module.exports = Orca

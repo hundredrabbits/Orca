@@ -5,10 +5,8 @@ function Cursor (orca, terminal) {
   this.y = 0
   this.w = 1
   this.h = 1
-
-  this.block = []
-
   this.mode = 0
+  this.block = []
 
   this.move = function (x, y) {
     this.x = clamp(this.x + x, 0, orca.w - 1)
@@ -33,22 +31,21 @@ function Cursor (orca, terminal) {
     this.y = 0
     this.w = orca.w
     this.h = orca.h
+    this.mode = 0
+    terminal.update()
   }
 
   this.copy = function () {
-    console.log(`Copy ${this._position()}`)
     this.block = this.getBlock(this.x, this.y, this.w, this.h)
   }
 
-  this.paste = function () {
-    console.log(`Paste ${this._position()}`)
-    this.writeBlock(this.x, this.y, this.block)
-  }
-
   this.cut = function () {
-    console.log(`Cut ${this._position()}`)
     this.copy()
     this.erase()
+  }
+
+  this.paste = function () {
+    this.writeBlock(this.x, this.y, this.block)
   }
 
   this.write = function (g) {
@@ -59,31 +56,21 @@ function Cursor (orca, terminal) {
   }
 
   this.erase = function (g) {
-    if (this.w === 1 && this.h === 1 && orca.glyphAt(this.x, this.y) === '.') { this.move(-1, 0); return } // Backspace
-    console.log(`Erase ${this._position()}`)
+    if (this.w === 1 && this.h === 1 && orca.glyphAt(this.x, this.y) === '.') { this.move(-1, 0); return } // Backspace Effect
     this.eraseBlock(this.x, this.y, this.w, this.h)
     this.reset()
   }
 
   this.toggleMode = function () {
     this.mode = this.mode === 0 ? 1 : 0
-    console.log(`Changed Mode ${this.mode === 1 ? 'inser' : 'write'}`)
   }
 
-  this._inspect = function (name = true, ports = false) {
+  this.inspect = function (name = true, ports = false) {
     if (this.w > 1 || this.h > 1) { return 'multi' }
     const port = terminal.portAt(this.x, this.y)
     if (port) { return `${port.name}` }
     if (orca.lockAt(this.x, this.y)) { return 'locked' }
     return 'empty'
-  }
-
-  this._position = function () {
-    return `${this.x},${this.y}` + (this.w !== 1 || this.h !== 1 ? `[${this.w}x${this.h}]` : '')
-  }
-
-  this._mode = function () {
-    return this.mode === 1 ? 'inser' : 'write'
   }
 
   // Block
@@ -116,7 +103,7 @@ function Cursor (orca, terminal) {
   this.eraseBlock = function (x, y, w, h) {
     for (let _y = y; _y < y + h; _y++) {
       for (let _x = x; _x < x + w; _x++) {
-        orca.erase(_x, _y)
+        orca.write(_x, _y, '.')
       }
     }
   }

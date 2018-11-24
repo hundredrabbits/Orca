@@ -10,7 +10,7 @@ function Source (orca, terminal) {
     console.log('New')
     orca.w = 57
     orca.h = 25
-    orca.clear()
+    orca.reset()
     this.path = null
     terminal.resize()
   }
@@ -45,7 +45,7 @@ function Source (orca, terminal) {
 
   this.close = function () {
     console.log('Close')
-    orca.clear()
+    orca.reset()
     this.path = null
   }
 
@@ -66,6 +66,7 @@ function Source (orca, terminal) {
   }
 
   this.validate = function (data) {
+    // TODO
     return true
   }
 

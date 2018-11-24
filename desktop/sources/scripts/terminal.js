@@ -152,7 +152,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     // Cursor
     this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1, this.size.grid.w)
     this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.size.grid.w)
-    this.write(`${this.cursor._inspect()}`, col * 2, 1, this.size.grid.w)
+    this.write(`${this.cursor.inspect()}`, col * 2, 1, this.size.grid.w)
     this.write(`${this.source}${this.cursor.mode === 1 ? '+' : ''}`, col * 3, 1, this.size.grid.w)
     // Grid
     this.write(`${orca.w}x${orca.h}`, col * 0, 0, this.size.grid.w)

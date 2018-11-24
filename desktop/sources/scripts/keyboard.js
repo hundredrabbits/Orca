@@ -4,16 +4,10 @@ function Keyboard () {
   this.locks = []
   this.history = ''
 
-  this.listen_onkeydown = function (event) {
+  this.onKeyDown = function (event) {
     // Reset
     if ((event.metaKey || event.ctrlKey) && event.key === 'Backspace') {
       terminal.reset()
-      event.preventDefault()
-      return
-    }
-    // Pause
-    if ((event.metaKey || event.ctrlKey) && event.key === 'p') {
-      terminal.pause()
       event.preventDefault()
       return
     }
@@ -23,10 +17,10 @@ function Keyboard () {
     if (event.key === 'v' && (event.metaKey || event.ctrlKey)) { terminal.cursor.paste(); event.preventDefault(); return }
     if (event.key === 'a' && (event.metaKey || event.ctrlKey)) { terminal.cursor.selectAll(); event.preventDefault(); return }
 
-    if (event.keyCode === 38) { keyboard.key_arrow_up(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
-    if (event.keyCode === 40) { keyboard.key_arrow_down(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
-    if (event.keyCode === 37) { keyboard.key_arrow_left(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
-    if (event.keyCode === 39) { keyboard.key_arrow_right(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
+    if (event.keyCode === 38) { keyboard.onArrowUp(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
+    if (event.keyCode === 40) { keyboard.onArrowDown(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
+    if (event.keyCode === 37) { keyboard.onArrowLeft(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
+    if (event.keyCode === 39) { keyboard.onArrowRight(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
 
     if (event.metaKey) { return }
     if (event.ctrlKey) { return }
@@ -47,11 +41,11 @@ function Keyboard () {
     }
   }
 
-  this.listen_onkeyup = function (event) {
+  this.onKeyUp = function (event) {
     terminal.update()
   }
 
-  this.key_arrow_up = function (mod = false, skip = false) {
+  this.onArrowUp = function (mod = false, skip = false) {
     const leap = skip ? terminal.size.grid.h : 1
     if (mod) {
       terminal.cursor.scale(0, leap)
@@ -60,7 +54,7 @@ function Keyboard () {
     }
   }
 
-  this.key_arrow_down = function (mod = false, skip = false) {
+  this.onArrowDown = function (mod = false, skip = false) {
     const leap = skip ? terminal.size.grid.h : 1
     if (mod) {
       terminal.cursor.scale(0, -leap)
@@ -69,7 +63,7 @@ function Keyboard () {
     }
   }
 
-  this.key_arrow_left = function (mod = false, skip = false) {
+  this.onArrowLeft = function (mod = false, skip = false) {
     const leap = skip ? terminal.size.grid.w : 1
     if (mod) {
       terminal.cursor.scale(-leap, 0)
@@ -78,7 +72,7 @@ function Keyboard () {
     }
   }
 
-  this.key_arrow_right = function (mod = false, skip = false) {
+  this.onArrowRight = function (mod = false, skip = false) {
     const leap = skip ? terminal.size.grid.w : 1
     if (mod) {
       terminal.cursor.scale(leap, 0)
@@ -88,5 +82,5 @@ function Keyboard () {
   }
 }
 
-document.onkeydown = function (event) { keyboard.listen_onkeydown(event) }
-document.onkeyup = function (event) { keyboard.listen_onkeyup(event) }
+document.onkeydown = function (event) { keyboard.onKeyDown(event) }
+document.onkeyup = function (event) { keyboard.onKeyUp(event) }
