@@ -24,7 +24,6 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   }
 
   this.start = function () {
-    orca.start()
     this.theme.start()
     this.io.start()
 

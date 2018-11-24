@@ -1,20 +1,17 @@
 'use strict'
 
-function Orca (w, h, s = '') {
-  this.w = w // Width
-  this.h = h // Height
-  this.s = s // String
+function Orca (library = {}) {
+  this.w = 57 // Default Width
+  this.h = 25 // Default Height
+  this.s = '' // String
   this.f = 0 // Frame
 
-  this.lib = {}
-  this.allowed = []
+  this.allowed = [].concat(Object.keys(library.num)).concat(Object.keys(library.alpha)).concat(Object.keys(library.special))
   this.locks = []
   this.ports = {}
   this.runtime = []
 
   this.start = function () {
-    this.lib = require('./lib')
-    this.allowed = [].concat(Object.keys(this.lib.num)).concat(Object.keys(this.lib.alpha)).concat(Object.keys(this.lib.special))
     this.clear()
   }
 
@@ -35,13 +32,6 @@ function Orca (w, h, s = '') {
     this.s = this.clean(s)
   }
 
-  this.clean = function (str) {
-    let s = `${str}`
-    s = s.replace(/\n/g, '').trim()
-    s = s.substr(0, this.w * this.h)
-    return s
-  }
-
   this.write = function (x, y, ch) {
     if (!this.inBounds(x, y)) { return }
     if (ch.length !== 1) { return }
@@ -53,6 +43,13 @@ function Orca (w, h, s = '') {
 
   this.erase = function (x, y) {
     this.write(x, y, '.')
+  }
+
+  this.clean = function (str) {
+    let s = `${str}`
+    s = s.replace(/\n/g, '').trim()
+    s = s.substr(0, this.w * this.h)
+    return s
   }
 
   // Fns
@@ -73,12 +70,12 @@ function Orca (w, h, s = '') {
 
   this.convert = function (g, x, y) {
     if (g === '.') { return }
-    if (this.lib.special[g]) {
-      return new this.lib.special[g](this, x, y)
+    if (library.special[g]) {
+      return new library.special[g](this, x, y)
     }
-    if (this.lib.alpha[g.toLowerCase()]) {
+    if (library.alpha[g.toLowerCase()]) {
       const passive = g === g.toUpperCase()
-      return new this.lib.alpha[g.toLowerCase()](this, x, y, passive)
+      return new library.alpha[g.toLowerCase()](this, x, y, passive)
     }
   }
 
@@ -124,11 +121,15 @@ function Orca (w, h, s = '') {
   }
 
   this.isAllowed = function (g) {
-    return this.lib.alpha[g.toLowerCase()] || this.lib.num[g] || this.lib.special[g]
+    return library.alpha[g.toLowerCase()] || library.num[g] || library.special[g]
   }
 
   this.valueOf = function (g) {
     return g !== '.' && this.isAllowed(g) ? this.allowed.indexOf(`${g}`.toLowerCase()) : 0
+  }
+
+  this.typeOf = function (g) {
+    return Object.keys(library.alpha).indexOf(g.toLowerCase()) > -1 ? 'alpha' : Object.keys(library.num).indexOf(g) > -1 ? 'num' : Object.keys(library.special).indexOf(g) > -1 ? 'special' : 'unknown'
   }
 
   this.glyphAt = function (x, y, req = null) {
@@ -158,6 +159,8 @@ function Orca (w, h, s = '') {
   this.toString = function () {
     return this.format()
   }
+
+  this.clear()
 }
 
 module.exports = Orca

@@ -16,17 +16,7 @@ function FnY (orca, x, y, passive) {
     const a = this.listen(this.ports.input.a)
     const b = this.listen(this.ports.input.b)
 
-    if (!a && !b) {
-      this.output('1')
-    } else if ((a && !b) || (b && !a)) {
-      this.output('0')
-    } else if ((a && !b) || (b && !a)) {
-      this.output('0')
-    } else if (orca.lib.num[a] === orca.lib.num[b]) {
-      this.output('1')
-    } else {
-      this.output('0')
-    }
+    this.output(orca.typeOf(a) === orca.typeOf(b) ? '1' : '0')
   }
 }
 
