@@ -102,10 +102,7 @@ function Fn (orca, x, y, glyph = '.', passive = false) {
   }
 
   this.docs = function () {
-    let html = ''
-    const ports = this._ports()
-
-    return `\`${this.glyph.toUpperCase()}\` **${this.name}**${ports}: ${this.info}`
+    return `\`${this.glyph.toUpperCase()}\` **${this.name}**${this._ports()}: ${this.info}`
   }
 }
 

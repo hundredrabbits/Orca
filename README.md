@@ -43,11 +43,11 @@ npm start
 - `W` **west**: Moves westward, or bangs.
 - `X` **teleport**('x, 'y, val): Outputs value at offset.
 - `Y` **unknown**: --
-- `Z` **diagonal**: Moves diagonally.
-- `*` **bang**: Bangs!
+- `Z` **diagonal**: Moves diagonally toward south-east.
+- `*` **bang**: Bangs neighboring fns.
 - `:` **midi**('velocity, 'length, channel, octave, note): Sends Midi a midi note.
 - `;` **udp**('len): Sends a string via UDP to localhost.
-- `#` **comment**: Comment a line.
+- `#` **comment**: Comments a line, or characters until the next hash.
 
 ## Output
 
@@ -78,7 +78,7 @@ To see it in action, see the [udp.orca](https://github.com/hundredrabbits/Orca/b
 - Implement OSC `=`.
 - Implement `D`.
 - Implement nested files `/`.
-- Show UDP bandwidth in UI.
+- Implement crop/resize.
 
 ## Extras
 

@@ -7,9 +7,10 @@ function FnK (orca, x, y, passive) {
 
   this.name = 'kill'
   this.info = 'Kills southward fn.'
+  this.ports.output = { x: 0, y: 1 }
 
-  this.run = function () {
-    orca.erase(this.x, this.y + 1)
+  this.haste = function () {
+    this.output('.')
   }
 }
 

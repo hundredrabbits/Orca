@@ -6,7 +6,7 @@ function FnComment (orca, x, y, passive) {
   Fn.call(this, orca, x, y, '#', true)
 
   this.name = 'comment'
-  this.info = 'Comment a line.'
+  this.info = 'Comments a line, or characters until the next hash.'
   this.draw = false
 
   this.haste = function () {

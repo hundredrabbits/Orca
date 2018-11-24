@@ -26,18 +26,14 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   this.start = function () {
     this.theme.start()
     this.io.start()
-
-    this.update()
     this.setSpeed(120)
+    this.update()
     this.el.className = 'ready'
   }
 
   this.run = function () {
     if (this.isPaused) { return }
-
     this.io.clear()
-    this.clear()
-
     orca.run()
     this.io.run()
     this.update()
@@ -74,9 +70,8 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   this.setSpeed = function (bpm) {
     this.bpm = clamp(bpm, 60, 300)
     console.log(`Changed speed to ${this.bpm}.`)
-    const ms = (60000 / bpm) / 4
     clearInterval(this.timer)
-    this.timer = setInterval(() => { this.run() }, ms)
+    this.timer = setInterval(() => { this.run() }, (60000 / bpm) / 4)
   }
 
   this.modSpeed = function (mod = 0) {

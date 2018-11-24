@@ -7,14 +7,16 @@ function Source (orca, terminal) {
   this.path = null
 
   this.new = function () {
-    orca.clear()
     console.log('New')
+    orca.w = 57
+    orca.h = 25
+    orca.clear()
     this.path = null
+    terminal.resize()
   }
 
   this.open = function () {
     console.log('Open')
-
     let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'] })
     if (!paths) { console.log('Nothing to load') }
     if (!terminal.source.validate(paths[0])) { console.log('Invalid file') }
@@ -24,7 +26,6 @@ function Source (orca, terminal) {
 
   this.save = function (as = false) {
     console.log('Save')
-
     if (this.path && !as) {
       this.write(this.path)
     } else {
@@ -40,6 +41,12 @@ function Source (orca, terminal) {
   this.revert = function () {
     console.log('Revert')
     this.read(this.path)
+  }
+
+  this.close = function () {
+    console.log('Close')
+    orca.clear()
+    this.path = null
   }
 
   // I/O

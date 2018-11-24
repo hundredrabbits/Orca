@@ -6,7 +6,7 @@ function FnBang (orca, x, y, passive) {
   Fn.call(this, orca, x, y, '*', true)
 
   this.name = 'bang'
-  this.info = 'Bangs!'
+  this.info = 'Bangs neighboring fns.'
   this.draw = false
 
   this.haste = function () {
