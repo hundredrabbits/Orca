@@ -11,7 +11,7 @@ function FnH (orca, x, y, passive) {
   this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
-    orca.lock(this.x, this.y + 1)
+    orca.lock(this.ports.output.x, this.ports.output.y)
   }
 }
 

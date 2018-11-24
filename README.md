@@ -21,7 +21,7 @@ npm start
 - `A` **add**(a, b): Outputs the sum of inputs.
 - `B` **banger**(val): Bangs if input is `1`, `N`, `S`, `W`, `E` or `Z`.
 - `C` **clock**(mod): Outputs a constant value based on the runtime frame.
-- `D` **unknown**: --
+- `D` **delay**('timer): Locks a tile with a timer.
 - `E` **east**: Moves eastward, or bangs.
 - `F` **if**(a, b): Outputs `1` if inputs are equal, otherwise `0`.
 - `G` **generator**(val): Outputs a value on bang.
