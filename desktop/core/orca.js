@@ -6,6 +6,7 @@ function Orca (library = {}) {
   this.s = '' // String
   this.f = 0 // Frame
 
+  this.keys = Object.keys(library)
   this.locks = []
   this.ports = {}
   this.runtime = []
@@ -112,15 +113,19 @@ function Orca (library = {}) {
   }
 
   this.isAllowed = function (g) {
-    return !!library[g.toLowerCase()]
+    return !!library[`${g}`.toLowerCase()]
+  }
+
+  this.keyOf = function (g) {
+    return this.keys[g % this.keys.length]
   }
 
   this.valueOf = function (g) {
-    return g !== '.' && this.isAllowed(g) ? Object.keys(library).indexOf(`${g}`.toLowerCase()) : 0
+    return g !== '.' && this.isAllowed(g) ? this.keys.indexOf(`${g}`.toLowerCase()) : 0
   }
 
-  this.keyOf = function (val) {
-    return library[val] ? Object.keys(library)[val] : 0
+  this.indexAt = function (x, y) {
+    return x + (this.w * y)
   }
 
   this.glyphAt = function (x, y, req = null) {
@@ -129,10 +134,6 @@ function Orca (library = {}) {
 
   this.lockAt = function (x, y) {
     return this.locks.indexOf(`${x}:${y}`) > -1
-  }
-
-  this.indexAt = function (x, y) {
-    return x + (this.w * y)
   }
 
   // Tools
