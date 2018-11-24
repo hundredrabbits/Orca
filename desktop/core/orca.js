@@ -3,7 +3,7 @@
 function Orca (w, h, s = '') {
   this.w = w // Width
   this.h = h // Height
-  this.s = '' // String
+  this.s = s // String
   this.f = 0 // Frame
 
   this.lib = {}
