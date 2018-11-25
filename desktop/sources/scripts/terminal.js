@@ -11,7 +11,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   this.controller = new Controller()
 
   // Themes
-  const noir = { background: '#111111', f_high: '#ffffff', f_med: '#777777', f_low: '#444444', f_inv: '#000000', b_high: '#eeeeee', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' }
+  const noir = { background: '#111111', f_high: '#ffffff', f_med: '#777777', f_low: '#444444', f_inv: '#000000', b_high: '#eeeeee', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffb545' }
   const pale = { background: '#eeeeee', f_high: '#222222', f_med: '#444444', f_low: '#cccccc', f_inv: '#000000', b_high: '#000000', b_med: '#333333', b_low: '#dddddd', b_inv: '#72dec2' }
 
   this.theme = new Theme(noir, pale)
