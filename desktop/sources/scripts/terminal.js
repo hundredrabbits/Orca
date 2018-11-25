@@ -11,8 +11,8 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   this.controller = new Controller()
 
   // Themes
-  const noir = { background: '#111111', f_high: '#ffffff', f_med: '#777777', f_low: '#333333', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' }
-  const pale = { background: '#efefef', f_high: '#aaaaaa', f_med: '#333333', f_low: '#ffffff', f_inv: '#000000', b_high: '#72dec2', b_med: '#000000', b_low: '#777777', b_inv: '#ffb545' }
+  const noir = { background: '#111111', f_high: '#ffffff', f_med: '#777777', f_low: '#444444', f_inv: '#000000', b_high: '#eeeeee', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' }
+  const pale = { background: '#eeeeee', f_high: '#222222', f_med: '#444444', f_low: '#cccccc', f_inv: '#000000', b_high: '#000000', b_med: '#333333', b_low: '#dddddd', b_inv: '#72dec2' }
 
   this.theme = new Theme(noir, pale)
 
@@ -167,14 +167,18 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     this.write(`${this.io}`, col * 4, 0, this.size.grid.w)
   }
 
-  this.drawSprite = function (x, y, g, styles = { isCursor: false, isSelection: false, isPort: false }) {
+  this.drawSprite = function (x, y, g, styles = { isCursor: false, isSelection: false, isPort: false, f: null, b: null }) {
     const ctx = this.context()
 
     ctx.textBaseline = 'bottom'
     ctx.textAlign = 'center'
     ctx.font = `${tile.h * 0.75}px input_mono_medium`
 
-    if (styles.isSelection) {
+    if (styles.f && styles.b && this.theme.active[styles.f] && this.theme.active[styles.b]) {
+      ctx.fillStyle = this.theme.active[styles.b]
+      ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
+      ctx.fillStyle = this.theme.active[styles.f]
+    } else if (styles.isSelection) {
       ctx.fillStyle = this.theme.active.b_inv
       ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
       ctx.fillStyle = this.theme.active.f_inv
@@ -198,14 +202,14 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
       } else {
         ctx.fillStyle = this.theme.active.background
         ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
-        ctx.fillStyle = this.theme.active.f_med
+        ctx.fillStyle = this.theme.active.f_high
       }
     } else if (styles.isLocked) {
       ctx.fillStyle = this.theme.active.background
       ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
       ctx.fillStyle = this.theme.active.f_med
     } else {
-      ctx.fillStyle = this.theme.active.f_high
+      ctx.fillStyle = this.theme.active.f_low
     }
     ctx.fillText(styles.isCursor && g === '.' ? (!this.isPaused ? '@' : '~') : g, (x + 0.5) * tile.w, (y + 1) * tile.h)
   }
@@ -214,7 +218,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     let x = 0
     while (x < text.length && x < limit - 1) {
       const c = text.substr(x, 1)
-      this.drawSprite(offsetX + x, orca.h + offsetY, c)
+      this.drawSprite(offsetX + x, orca.h + offsetY, c, { f: 'f_high', b: 'background' })
       x += 1
     }
   }
