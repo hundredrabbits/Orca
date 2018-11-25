@@ -9,7 +9,12 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   this.cursor = new Cursor(orca, this)
   this.source = new Source(orca, this)
   this.controller = new Controller()
-  this.theme = new Theme({ background: '#111111', f_high: '#ffffff', f_med: '#777777', f_low: '#333333', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' })
+
+  // Themes
+  const noir = { background: '#111111', f_high: '#ffffff', f_med: '#777777', f_low: '#333333', f_inv: '#000000', b_high: '#ffb545', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffffff' }
+  const pale = { background: '#efefef', f_high: '#aaaaaa', f_med: '#333333', f_low: '#ffffff', f_inv: '#000000', b_high: '#72dec2', b_med: '#000000', b_low: '#777777', b_inv: '#ffb545' }
+
+  this.theme = new Theme(noir, pale)
 
   this.el = document.createElement('canvas')
   this.size = { width: tile.w * orca.w, height: tile.h * orca.h + (tile.h * 3), ratio: 0.5, grid: { w: 8, h: 8 } }
