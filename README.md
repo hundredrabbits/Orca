@@ -65,6 +65,10 @@ Note length is a value from `1-f`, which is a ratio of a full bar, *1* being `1/
 
 To see it in action, see the [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/midi.orca) example.
 
+#### Set Device Id
+
+To set the Midi device, open the console with `ctrl+.`, and type `terminal.io.listMidiDevices()` to see the list of available devices, and type `terminal.io.setMidiDevice(2)` to select the 2nd available device.
+
 ### UDP Output
 
 The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback) special function is `3;MSG`, it has one haste input that gets a string length and locks the eastward ports. It sends the message on bang to the port `49160`. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test UDP messages.
@@ -84,9 +88,13 @@ node server.js examples/bang.orca
 ## TODOs
 
 - Implement OSC `=`.
-- Implement `D`.
 - Implement nested files `/`.
 - Implement crop/resize.
+- Improve Midi Device selection.
+- Remember Midi Device.
+- Add reset counter to `D`.
+- Add multiplier to `C`.
+- Create a `.orca` config file.
 
 ## Extras
 

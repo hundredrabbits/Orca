@@ -3,6 +3,7 @@
 function IO (terminal) {
   const dgram = require('dgram')
 
+  this.midi = { device: 0 }
   this.outputs = []
   this.stack = null
 
@@ -46,13 +47,24 @@ function IO (terminal) {
   }
 
   this.playMidi = function (data) {
+    const device = this.midi.device
     const channel = convertChannel(data[0])
     const note = convertNote(data[1], data[2])
     const velocity = data[3]
     const length = window.performance.now() + convertLength(data[4], terminal.bpm)
 
-    this.outputs[0].send([channel[0], note, velocity])
-    this.outputs[0].send([channel[1], note, velocity], length)
+    this.outputs[device].send([channel[0], note, velocity])
+    this.outputs[device].send([channel[1], note, velocity], length)
+  }
+
+  this.setMidiDevice = function (id = 0) {
+    this.midi.device = clamp(id, 0, this.outputs.length - 1)
+    console.log(this.outputs[this.midi.device] ? `Set device to #${this.midi.device} — ${this.outputs[this.midi.device].name}` : 'Missing midi device with id.')
+    return this.outputs[this.midi.device]
+  }
+
+  this.listMidiDevices = function () {
+    return this.outputs
   }
 
   //
@@ -98,7 +110,7 @@ function IO (terminal) {
     for (let i = iter.next(); i && !i.done; i = iter.next()) {
       terminal.io.outputs.push(i.value)
     }
-    console.log(`Midi is active, devices: ${terminal.io.outputs.length}`)
+    console.log(terminal.io.outputs[terminal.io.midi.device] ? `Midi is active, devices(${terminal.io.midi.device + 1}/${terminal.io.outputs.length}): ${terminal.io.outputs[terminal.io.midi.device].name}` : 'No Midi device')
   }
 
   this.midiInactive = function (err) {
@@ -119,6 +131,8 @@ function IO (terminal) {
     }
     return text
   }
+
+  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = IO
