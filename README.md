@@ -6,9 +6,10 @@
 
 ## Install & Run
 
-There are no public builds available at the moment. 
+There are no public builds available at the moment, you need [npm](http://npmjs.com) installed. 
 
 ```
+git clone https://github.com/hundredrabbits/Orca.git
 cd desktop
 npm install
 npm start
@@ -20,7 +21,7 @@ npm start
 
 - `A` **add**(a, b): Outputs the sum of inputs.
 - `B` **banger**(val): Bangs if input is `1`, `N`, `S`, `W`, `E` or `Z`.
-- `C` **clock**(mod): Outputs a constant value based on the runtime frame.
+- `C` **clock**('ratio, mod): Outputs a constant value based on the runtime frame.
 - `D` **delay**('tick, 'timer): Locks a tile with a timer.
 - `E` **east**: Moves eastward, or bangs.
 - `F` **if**(a, b): Outputs `1` if inputs are equal, otherwise `0`.
@@ -53,13 +54,13 @@ npm start
 
 ### Midi Output
 
-The midi special function is `:000`, it takes up to 4 inputs('channel, 'octave, 'note, velocity, length). For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. 
+The midi operator is `:`, it takes up to 5 inputs('channel, 'octave, 'note, velocity, length). For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. 
 
-#### Velocity
+#### Velocity*
 
 Velocity is either from `0-9`(10 steps), or `A-Z`(26 steps). For example, `:34C8`, is a **C note, on the 4th octave, through the 4th MIDI channel with a velocity of 112/127(88%)**, `:34CT`, is a **C note, on the 4th octave, through the 4th MIDI channel with a velocity of 96/127(75%)**. 
 
-#### Note Length
+#### Note Length*
 
 Note length is a value from `1-f`, which is a ratio of a full bar, *1* being `1/1`(a full bar), *2* being `1/2`(half), *3* being `1/3`(third).. and *f* being `1/16`. For example, `:27FZ4`, is a **F note, on the 7th octave, through the 3rd MIDI channel with a velocity of 100%, lasting for 1/4 of a bar**. 
 
