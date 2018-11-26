@@ -93,7 +93,6 @@ node server.js examples/bang.orca
 - Implement crop/resize.
 - Improve Midi Device selection.
 - Remember Midi Device.
-- Add multiplier to `C`.
 - Create a `.orca` config file.
 
 ## Extras
