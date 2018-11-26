@@ -73,6 +73,14 @@ To see it in action, see the [udp.orca](https://github.com/hundredrabbits/Orca/b
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.hardware.jpg' width="600"/>
 
+## Headless
+
+Orca can also run headlessly via:
+
+```
+node server.js examples/bang.orca
+```
+
 ## TODOs
 
 - Implement OSC `=`.
