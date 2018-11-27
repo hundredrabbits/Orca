@@ -50,6 +50,10 @@ npm start
 - `;` **udp**('len): Sends a string via UDP to localhost.
 - `#` **comment**: Comments a line, or characters until the next hash.
 
+### Design Notes
+
+The `D`, `L`, `Q` & `T` nodes are always passive(the lowercase operator works like their uppercase version). The passive `G`, `P`, `V`, `X`, `:` & `;` also require bang to operate.
+
 ## Output
 
 ### Midi Output

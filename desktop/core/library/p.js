@@ -11,6 +11,9 @@ function OperatorP (orca, x, y, passive) {
   this.run = function () {
     const bang = this.bang()
     if (!bang) { return }
+
+    this.draw = false
+
     this.move(-bang.x, -bang.y)
   }
 }

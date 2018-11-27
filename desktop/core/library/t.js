@@ -3,7 +3,7 @@
 const Operator = require('../operator')
 
 function OperatorT (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, 't', passive)
+  Operator.call(this, orca, x, y, 't', true)
 
   this.name = 'track'
   this.info = 'Outputs character at eastward position with offset.'

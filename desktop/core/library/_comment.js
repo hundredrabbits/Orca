@@ -16,6 +16,7 @@ function OperatorComment (orca, x, y, passive) {
     }
 
     this.passive = false
+    this.lock()
 
     if (count % 2 !== 0) { return }
 

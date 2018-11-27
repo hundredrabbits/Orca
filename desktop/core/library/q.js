@@ -3,7 +3,7 @@
 const Operator = require('../operator')
 
 function OperatorQ (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, 'q', passive)
+  Operator.call(this, orca, x, y, 'q', true)
 
   this.name = 'count'
   this.info = 'Counts the number of operators present eastwardly.'
