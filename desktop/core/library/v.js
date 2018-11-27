@@ -1,12 +1,12 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 // TODO
-function FnV (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, 'v', passive)
+function OperatorV (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, 'v', passive)
 
   this.name = 'beam'
-  this.info = 'Bangs the nearest southward fn on bang.'
+  this.info = 'Bangs the nearest southward operator on bang.'
 
   this.ports.output = { x: 0, y: 1, unlock: true }
 
@@ -27,4 +27,4 @@ function FnV (orca, x, y, passive) {
   }
 }
 
-module.exports = FnV
+module.exports = OperatorV

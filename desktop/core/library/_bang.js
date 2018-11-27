@@ -1,12 +1,12 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnBang (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, '*', true)
+function OperatorBang (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, '*', true)
 
   this.name = 'bang'
-  this.info = 'Bangs neighboring fns.'
+  this.info = 'Bangs neighboring operators.'
   this.draw = false
 
   this.haste = function () {
@@ -15,4 +15,4 @@ function FnBang (orca, x, y, passive) {
   }
 }
 
-module.exports = FnBang
+module.exports = OperatorBang

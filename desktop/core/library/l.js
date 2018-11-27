@@ -1,12 +1,12 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnL (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, 'l', passive)
+function OperatorL (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, 'l', passive)
 
   this.name = 'loop'
-  this.info = 'Loops a number of eastward fns.'
+  this.info = 'Loops a number of eastward operators.'
 
   this.ports.haste.len = { x: -1, y: 0 }
 
@@ -36,4 +36,4 @@ function FnL (orca, x, y, passive) {
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
-module.exports = FnL
+module.exports = OperatorL

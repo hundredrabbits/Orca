@@ -2,9 +2,9 @@ const lib = require('./desktop/core/library')
 
 console.log("## Functions\n")
 for(const id in lib){
-  const fn = new lib[id]()
-  if(fn.glyph === '.'){ continue; }
-  console.log(`- ${fn.docs()}`)
+  const operator = new lib[id]()
+  if(operator.glyph === '.'){ continue; }
+  console.log(`- ${operator.docs()}`)
 }
 
 console.log("\n")

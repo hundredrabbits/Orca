@@ -1,12 +1,12 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnNull (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, '.', passive)
+function OperatorNull (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, '.', passive)
 
   this.name = 'null'
   this.info = 'empty'
 }
 
-module.exports = FnNull
+module.exports = OperatorNull

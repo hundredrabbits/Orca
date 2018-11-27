@@ -1,12 +1,12 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnI (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, 'i', passive)
+function OperatorI (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, 'i', passive)
 
   this.name = 'increment'
-  this.info = 'Increments southward fn.'
+  this.info = 'Increments southward operator.'
 
   this.ports.input.min = { x: 1, y: 0 }
   this.ports.input.max = { x: 2, y: 0 }
@@ -22,4 +22,4 @@ function FnI (orca, x, y, passive) {
   }
 }
 
-module.exports = FnI
+module.exports = OperatorI

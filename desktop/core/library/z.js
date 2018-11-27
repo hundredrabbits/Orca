@@ -1,9 +1,9 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnZ (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, 'z', passive)
+function OperatorZ (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, 'z', passive)
 
   this.name = 'diagonal'
   this.info = 'Moves diagonally toward south-east.'
@@ -15,4 +15,4 @@ function FnZ (orca, x, y, passive) {
   }
 }
 
-module.exports = FnZ
+module.exports = OperatorZ

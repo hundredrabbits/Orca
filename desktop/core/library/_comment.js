@@ -1,9 +1,9 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnComment (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, '#', true)
+function OperatorComment (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, '#', true)
 
   this.name = 'comment'
   this.info = 'Comments a line, or characters until the next hash.'
@@ -26,4 +26,4 @@ function FnComment (orca, x, y, passive) {
   }
 }
 
-module.exports = FnComment
+module.exports = OperatorComment

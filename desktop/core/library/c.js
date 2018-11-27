@@ -1,9 +1,9 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnC (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, 'c', passive)
+function OperatorC (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, 'c', passive)
 
   this.name = 'clock'
   this.info = 'Outputs a constant value based on the runtime frame.'
@@ -23,4 +23,4 @@ function FnC (orca, x, y, passive) {
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
-module.exports = FnC
+module.exports = OperatorC

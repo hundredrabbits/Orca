@@ -28,13 +28,13 @@ function Orca (library = {}) {
     this.s = this.clean(s)
   }
 
-  this.write = function (x, y, ch) {
-    if (ch.length !== 1) { return }
+  this.write = function (x, y, g) {
+    if (g.length !== 1) { return }
     if (!this.inBounds(x, y)) { return }
-    if (!this.isAllowed(ch)) { return }
-    if (this.glyphAt(x, y) === ch) { return }
+    if (!this.isAllowed(g)) { return }
+    if (this.glyphAt(x, y) === g) { return }
     const index = this.indexAt(x, y)
-    this.s = this.s.substr(0, index) + ch + this.s.substr(index + ch.length)
+    this.s = this.s.substr(0, index) + g + this.s.substr(index + g.length)
   }
 
   this.clean = function (str) {
@@ -44,16 +44,16 @@ function Orca (library = {}) {
     return s
   }
 
-  // Fns
+  // Operators
 
   this.parse = function () {
     const a = []
     for (let y = 0; y < this.h; y++) {
       for (let x = 0; x < this.w; x++) {
         const g = this.glyphAt(x, y)
-        const fn = this.cast(g, x, y)
-        if (fn) {
-          a.push(fn)
+        const operator = this.cast(g, x, y)
+        if (operator) {
+          a.push(operator)
         }
       }
     }
@@ -67,21 +67,21 @@ function Orca (library = {}) {
     return new library[g.toLowerCase()](this, x, y, passive)
   }
 
-  this.operate = function (fns) {
+  this.operate = function (operators) {
     this.release()
-    for (const id in fns) {
-      const fn = fns[id]
-      if (this.lockAt(fn.x, fn.y)) { continue }
-      if (fn.passive || fn.bang()) {
-        fn.haste()
-        fn.permissions()
+    for (const id in operators) {
+      const operator = operators[id]
+      if (this.lockAt(operator.x, operator.y)) { continue }
+      if (operator.passive || operator.bang()) {
+        operator.haste()
+        operator.permissions()
       }
     }
-    for (const id in fns) {
-      const fn = fns[id]
-      if (this.lockAt(fn.x, fn.y)) { continue }
-      if (fn.passive || fn.bang()) {
-        fn.run()
+    for (const id in operators) {
+      const operator = operators[id]
+      if (this.lockAt(operator.x, operator.y)) { continue }
+      if (operator.passive || operator.bang()) {
+        operator.run()
       }
     }
   }

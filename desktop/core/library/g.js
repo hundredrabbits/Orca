@@ -1,9 +1,9 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnG (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, 'g', passive)
+function OperatorG (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, 'g', passive)
 
   this.name = 'generator'
   this.info = 'Outputs a value on bang.'
@@ -21,4 +21,4 @@ function FnG (orca, x, y, passive) {
   }
 }
 
-module.exports = FnG
+module.exports = OperatorG

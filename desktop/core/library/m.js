@@ -1,9 +1,9 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnM (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, 'm', passive)
+function OperatorM (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, 'm', passive)
 
   this.name = 'modulo'
   this.info = 'Outputs the modulo of inputs.'
@@ -21,4 +21,4 @@ function FnM (orca, x, y, passive) {
   }
 }
 
-module.exports = FnM
+module.exports = OperatorM

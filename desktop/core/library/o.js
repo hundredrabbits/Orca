@@ -1,12 +1,12 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnO (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, 'o', passive)
+function OperatorO (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, 'o', passive)
 
   this.name = 'offset'
-  this.info = 'Reads a distant fn with offset.'
+  this.info = 'Reads a distant operator with offset.'
 
   this.ports.haste.x = { x: -2, y: 0 }
   this.ports.haste.y = { x: -1, y: 0 }
@@ -27,4 +27,4 @@ function FnO (orca, x, y, passive) {
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
-module.exports = FnO
+module.exports = OperatorO

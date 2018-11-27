@@ -26,26 +26,26 @@ npm start
 - `E` **east**: Moves eastward, or bangs.
 - `F` **if**(a, b): Outputs `1` if inputs are equal, otherwise `0`.
 - `G` **generator**(val): Outputs a value on bang.
-- `H` **halt**: Stops southward fn from operating.
-- `I` **increment**(min, max): Increments southward fn.
-- `J` **jump**(val): Outputs the northward fn.
-- `K` **kill**: Kills southward fn.
-- `L` **loop**('len): Loops a number of eastward fns.
+- `H` **halt**: Stops southward operator from operating.
+- `I` **increment**(min, max): Increments southward operator.
+- `J` **jump**(val): Outputs the northward operator.
+- `K` **kill**: Kills southward operator.
+- `L` **loop**('len): Loops a number of eastward operators.
 - `M` **modulo**(val, mod): Outputs the modulo of inputs.
 - `N` **north**: Moves Northward, or bangs.
-- `O` **offset**('x, 'y, val): Reads a distant fn with offset.
+- `O` **offset**('x, 'y, val): Reads a distant operator with offset.
 - `P` **push**: Moves away on bang.
-- `Q` **count**('len): Counts the number of fns present eastwardly.
+- `Q` **count**('len): Counts the number of operators present eastwardly.
 - `R` **random**(min, max): Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
 - `T` **track**('len, 'key, val): Outputs character at eastward position with offset.
 - `U` **uturn**('n, 'e, 's, 'w): Reverses movement on inputs.
-- `V` **beam**: Bangs the nearest southward fn on bang.
+- `V` **beam**: Bangs the nearest southward operator on bang.
 - `W` **west**: Moves westward, or bangs.
 - `X` **teleport**('x, 'y, val): Outputs value at offset.
 - `Y` **unknown**: --
 - `Z` **diagonal**: Moves diagonally toward south-east.
-- `*` **bang**: Bangs neighboring fns.
+- `*` **bang**: Bangs neighboring operators.
 - `:` **midi**('velocity, 'length, channel, octave, note): Sends Midi a midi note.
 - `;` **udp**('len): Sends a string via UDP to localhost.
 - `#` **comment**: Comments a line, or characters until the next hash.

@@ -1,9 +1,9 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnMidi (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, ';', true)
+function OperatorMidi (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, ';', true)
 
   this.name = 'udp'
   this.info = 'Sends a string via UDP to localhost.'
@@ -33,4 +33,4 @@ function FnMidi (orca, x, y, passive) {
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
-module.exports = FnMidi
+module.exports = OperatorMidi

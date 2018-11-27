@@ -1,12 +1,12 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnJ (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, 'j', passive)
+function OperatorJ (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, 'j', passive)
 
   this.name = 'jump'
-  this.info = 'Outputs the northward fn.'
+  this.info = 'Outputs the northward operator.'
 
   this.ports.input.val = { x: 0, y: -1 }
   this.ports.output = { x: 0, y: 1 }
@@ -21,4 +21,4 @@ function FnJ (orca, x, y, passive) {
   }
 }
 
-module.exports = FnJ
+module.exports = OperatorJ

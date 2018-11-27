@@ -1,9 +1,9 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnX (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, 'x', passive)
+function OperatorX (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, 'x', passive)
 
   this.name = 'teleport'
   this.info = 'Outputs value at offset.'
@@ -31,4 +31,4 @@ function FnX (orca, x, y, passive) {
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
-module.exports = FnX
+module.exports = OperatorX

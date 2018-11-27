@@ -1,9 +1,9 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnR (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, 'r', passive)
+function OperatorR (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, 'r', passive)
 
   this.name = 'random'
   this.info = 'Outputs a random value.'
@@ -21,4 +21,4 @@ function FnR (orca, x, y, passive) {
   }
 }
 
-module.exports = FnR
+module.exports = OperatorR

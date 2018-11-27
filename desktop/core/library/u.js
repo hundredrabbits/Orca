@@ -1,9 +1,9 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnU (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, 'u', passive)
+function OperatorU (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, 'u', passive)
 
   this.name = 'uturn'
   this.info = 'Reverses movement on inputs.'
@@ -30,4 +30,4 @@ function FnU (orca, x, y, passive) {
   }
 }
 
-module.exports = FnU
+module.exports = OperatorU

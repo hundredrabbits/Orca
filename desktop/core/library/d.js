@@ -1,9 +1,9 @@
 'use strict'
 
-const Fn = require('../fn')
+const Operator = require('../operator')
 
-function FnD (orca, x, y, passive) {
-  Fn.call(this, orca, x, y, 'd', true)
+function OperatorD (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, 'd', true)
 
   this.name = 'delay'
   this.info = 'Locks a tile with a timer.'
@@ -26,4 +26,4 @@ function FnD (orca, x, y, passive) {
   }
 }
 
-module.exports = FnD
+module.exports = OperatorD
