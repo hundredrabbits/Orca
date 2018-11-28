@@ -81,11 +81,13 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
 
   this.modSpeed = function (mod = 0) {
     this.setSpeed(this.bpm + mod)
+    this.update()
   }
 
   this.modGrid = function (x = 0, y = 0) {
     this.size.grid.w = clamp(this.size.grid.w + x, 4, 16)
     this.size.grid.h = clamp(this.size.grid.h + y, 4, 16)
+    this.update()
   }
 
   //
