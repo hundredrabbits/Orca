@@ -52,16 +52,14 @@ npm start
 
 ### Design Notes
 
-The `D`, `L`, `Q` & `T` operators are always passive(the lowercase operator works like their uppercase version). The passive `G`, `O`, `P`, `V`, `X`, `:` & `;` also require bang to operate.
-
-#### Types
-
 There really are 4 types of operators:
 
 - Those that have passive locking, but still require bang to operate. (uppercase, needs bang)
 - Those that are always passive no matter the capitalization. (lowercase, no bang)
 - Those that do not need bang to operate, passive operator. (uppercase, no bang)
 - Those that needs bang to operate, default operator. (lowercase, needs bang) (edited)
+
+The `D`, `L`, `Q` & `T` operators are always passive(the lowercase operator works like their uppercase version). The passive `G`, `O`, `P`, `V`, `X`, `:` & `;` also require bang to operate.
 
 ## Output
 
@@ -107,7 +105,6 @@ node server.js examples/bang.orca
 - Improve Midi Device selection.
 - Remember Midi Device.
 - Create a `.orca` config file.
-- Change the `P` behaviour for a forking on `1/0`.
 
 ## Extras
 
