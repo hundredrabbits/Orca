@@ -6,7 +6,7 @@ function OperatorX (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'x', passive)
 
   this.name = 'teleport'
-  this.info = 'Outputs value at offset.'
+  this.info = 'Writes a distant operator with offset.'
 
   this.ports.haste.x = { x: -2, y: 0 }
   this.ports.haste.y = { x: -1, y: 0 }

@@ -34,15 +34,15 @@ npm start
 - `M` **modulo**(val, mod): Outputs the modulo of inputs.
 - `N` **north**: Moves Northward, or bangs.
 - `O` **offset**('x, 'y, val): Reads a distant operator with offset.
-- `P` **push**: Moves away on bang.
+- `P` **push**('len, 'key, val): Writes an eastward operator with offset.
 - `Q` **count**('len): Counts the number of operators present eastwardly.
 - `R` **random**(min, max): Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
-- `T` **track**('len, 'key, val): Outputs character at eastward position with offset.
+- `T` **track**('len, 'key, val): Reads an eastward operator with offset.
 - `U` **uturn**('n, 'e, 's, 'w): Reverses movement on inputs.
 - `V` **beam**: Bangs the nearest southward operator on bang.
 - `W` **west**: Moves westward, or bangs.
-- `X` **teleport**('x, 'y, val): Outputs value at offset.
+- `X` **teleport**('x, 'y, val): Writes a distant operator with offset.
 - `Y` **unknown**: --
 - `Z` **diagonal**: Moves diagonally toward south-east.
 - `*` **bang**: Bangs neighboring operators.
@@ -52,7 +52,16 @@ npm start
 
 ### Design Notes
 
-The `D`, `L`, `Q` & `T` nodes are always passive(the lowercase operator works like their uppercase version). The passive `G`, `P`, `V`, `X`, `:` & `;` also require bang to operate.
+The `D`, `L`, `Q` & `T` operators are always passive(the lowercase operator works like their uppercase version). The passive `G`, `O`, `P`, `V`, `X`, `:` & `;` also require bang to operate.
+
+#### Types
+
+There really are 4 types of operators:
+
+- Those that have passive locking, but still require bang to operate. (uppercase, needs bang)
+- Those that are always passive no matter the capitalization. (lowercase, no bang)
+- Those that do not need bang to operate, passive operator. (uppercase, no bang)
+- Those that needs bang to operate, default operator. (lowercase, needs bang) (edited)
 
 ## Output
 
@@ -98,6 +107,7 @@ node server.js examples/bang.orca
 - Improve Midi Device selection.
 - Remember Midi Device.
 - Create a `.orca` config file.
+- Change the `P` behaviour for a forking on `1/0`.
 
 ## Extras
 

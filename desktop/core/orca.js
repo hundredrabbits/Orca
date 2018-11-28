@@ -63,7 +63,7 @@ function Orca (library = {}) {
   this.cast = function (g, x, y) {
     if (g === '.') { return }
     if (!library[g.toLowerCase()]) { return }
-    const passive = g === g.toUpperCase()
+    const passive = g === g.toUpperCase() && this.valueOf(g) > 10
     return new library[g.toLowerCase()](this, x, y, passive)
   }
 

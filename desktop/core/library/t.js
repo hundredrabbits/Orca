@@ -6,7 +6,7 @@ function OperatorT (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 't', true)
 
   this.name = 'track'
-  this.info = 'Outputs character at eastward position with offset.'
+  this.info = 'Reads an eastward operator with offset.'
 
   this.ports.input.val = { x: 1, y: 0 }
   this.ports.haste.len = { x: -1, y: 0 }

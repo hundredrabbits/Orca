@@ -14,7 +14,7 @@ function OperatorO (orca, x, y, passive) {
   this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
-    const x = clamp(this.listen(this.ports.haste.x, true), 1, 16)
+    const x = clamp(this.listen(this.ports.haste.x, true) + 1, 1, 16)
     const y = clamp(this.listen(this.ports.haste.y, true), 0, 16)
     this.ports.input.val = { x: x, y: y }
   }

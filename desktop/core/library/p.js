@@ -6,16 +6,32 @@ function OperatorP (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'p', passive)
 
   this.name = 'push'
-  this.info = 'Moves away on bang.'
+  this.info = 'Writes an eastward operator with offset.'
+
+  this.ports.haste.len = { x: -1, y: 0 }
+  this.ports.haste.key = { x: -2, y: 0 }
+  this.ports.input.val = { x: 1, y: 0 }
+  this.ports.output = { x: 0, y: 1 }
+
+  this.haste = function () {
+    this.len = clamp(this.listen(this.ports.haste.len, true), 0, 16)
+    this.key = this.listen(this.ports.haste.key, true)
+    for (let x = 0; x < this.len; x++) {
+      orca.lock(this.x + x, this.y + 1)
+    }
+    this.ports.output = { x: (this.key % this.len), y: 1, unlock: true }
+  }
 
   this.run = function () {
-    const bang = this.bang()
-    if (!bang) { return }
+    if (!this.bang()) { return }
 
     this.draw = false
 
-    this.move(-bang.x, -bang.y)
+    const res = this.listen(this.ports.input.val)
+    this.output(`${res}`)
   }
+
+  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = OperatorP
