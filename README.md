@@ -21,8 +21,8 @@ npm start
 
 - `A` **add**(a, b): Outputs the sum of inputs.
 - `B` **banger**(val): Bangs if input is `1`, `N`, `S`, `W`, `E` or `Z`.
-- `C` **clock**('ratio, mod): Outputs a constant value based on the runtime frame.
-- `D` **delay**('tick, 'timer): Locks a tile with a timer.
+- `C` **clock**('rate, mod): Outputs a constant value based on the runtime frame.
+- `D` **delay**('rate, offset): Bangs on a fraction of the runtime frame.
 - `E` **east**: Moves eastward, or bangs.
 - `F` **if**(a, b): Outputs `1` if inputs are equal, otherwise `0`.
 - `G` **generator**(val): Outputs a value on bang.
@@ -35,7 +35,7 @@ npm start
 - `N` **north**: Moves Northward, or bangs.
 - `O` **offset**('x, 'y, val): Reads a distant operator with offset.
 - `P` **push**('len, 'key, val): Writes an eastward operator with offset.
-- `Q` **count**('len): Counts the number of operators present eastwardly.
+- `Q` **Query**('len): Counts the number of operators present eastwardly.
 - `R` **random**(min, max): Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
 - `T` **track**('len, 'key, val): Reads an eastward operator with offset.

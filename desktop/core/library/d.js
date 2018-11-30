@@ -6,24 +6,22 @@ function OperatorD (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'd', passive)
 
   this.name = 'delay'
-  this.info = 'Locks a tile with a timer.'
+  this.info = 'Bangs on a fraction of the runtime frame.'
 
-  this.ports.haste.tick = { x: -2, y: 0 }
-  this.ports.haste.timer = { x: -1, y: 0 }
+  this.ports.haste.rate = { x: -1, y: 0 }
+  this.ports.input.offset = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
-  this.haste = function () {
-    if (this.listen(this.ports.haste.tick, true) < 1) {
-      this.ports.output.unlock = true
-    }
+  this.run = function () {
+    const offset = this.listen(this.ports.input.offset, true)
+    const rate = clamp(this.listen(this.ports.haste.rate, true), 2, 16)
+
+    if (rate === 0) { return }
+
+    this.output((orca.f + offset) % rate === 0 ? '*' : '.')
   }
 
-  this.run = function () {
-    const tick = this.listen(this.ports.haste.tick, true)
-    const timer = this.listen(this.ports.haste.timer)
-    orca.write(this.x + this.ports.haste.tick.x, this.y + this.ports.haste.tick.y, tick === 0 ? `${timer}` : `${tick - 1}`)
-    this.ports.output.unlock = false
-  }
+  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = OperatorD

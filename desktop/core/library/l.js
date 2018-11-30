@@ -3,7 +3,7 @@
 const Operator = require('../operator')
 
 function OperatorL (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, 'l', true)
+  Operator.call(this, orca, x, y, 'l', passive)
 
   this.name = 'loop'
   this.info = 'Loops a number of eastward operators.'
