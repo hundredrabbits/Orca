@@ -3,7 +3,7 @@
 const Operator = require('../operator')
 
 function OperatorD (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, 'd', true)
+  Operator.call(this, orca, x, y, 'd', passive)
 
   this.name = 'delay'
   this.info = 'Locks a tile with a timer.'
