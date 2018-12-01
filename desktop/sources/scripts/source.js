@@ -13,6 +13,7 @@ function Source (orca, terminal) {
     orca.reset()
     this.path = null
     terminal.resize()
+    terminal.history.reset()
   }
 
   this.open = function () {
@@ -60,6 +61,7 @@ function Source (orca, terminal) {
     fs.readFile(path, 'utf8', function (err, data) {
       if (err) throw err
       terminal.load(data.trim())
+      terminal.history.record()
     })
   }
 

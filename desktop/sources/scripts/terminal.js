@@ -53,12 +53,12 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     this.update()
   }
 
-  this.load = function (data) {
-    if(!data){ return }
+  this.load = function (data, frame = 0) {
+    if (!data) { return }
     const w = data.split('\n')[0].length
     const h = data.split('\n').length
     console.log(`Loading ${w}x${h}`)
-    orca.load(w, h, data)
+    orca.load(w, h, data, frame)
     this.resize()
     this.update()
   }

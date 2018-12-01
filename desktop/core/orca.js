@@ -21,10 +21,10 @@ function Orca (library = {}) {
     this.s = new Array((this.h * this.w) + 1).join('.')
   }
 
-  this.load = function (w, h, s) {
+  this.load = function (w, h, s, f = 0) {
     this.w = w
     this.h = h
-    this.f = 0
+    this.f = f
     this.s = this.clean(s)
   }
 

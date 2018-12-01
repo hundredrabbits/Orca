@@ -17,6 +17,10 @@ function Keyboard () {
     if (event.key === 'v' && (event.metaKey || event.ctrlKey)) { terminal.cursor.paste(); event.preventDefault(); return }
     if (event.key === 'a' && (event.metaKey || event.ctrlKey)) { terminal.cursor.selectAll(); event.preventDefault(); return }
 
+    // Undo/Redo
+    if (event.key === 'z' && (event.metaKey || event.ctrlKey) && event.shiftKey) { terminal.history.redo(); event.preventDefault(); return }
+    if (event.key === 'z' && (event.metaKey || event.ctrlKey)) { terminal.history.undo(); event.preventDefault(); return }
+
     if (event.keyCode === 38) { keyboard.onArrowUp(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
     if (event.keyCode === 40) { keyboard.onArrowDown(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
     if (event.keyCode === 37) { keyboard.onArrowLeft(event.shiftKey, (event.metaKey || event.ctrlKey)); return }
