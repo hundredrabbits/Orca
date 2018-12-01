@@ -110,7 +110,7 @@ To see it in action, see the [midi.orca](https://github.com/hundredrabbits/Orca/
 
 #### Set Device Id
 
-To set the Midi device, open the console with `ctrl+.`, and type `terminal.io.listMidiDevices()` to see the list of available devices, and type `terminal.io.setMidiDevice(2)` to select the 2nd available device.
+To set the Midi device, open the console with `ctrl+.`, and type `terminal.io.listMidiDevices()` to see the list of available devices, and type `terminal.io.setMidiDevice(2)` to select the 2nd available device. This will be improved soon.
 
 ### UDP Output
 
@@ -130,9 +130,10 @@ node server.js examples/bang.orca
 
 ## TODOs
 
-- Implement OSC `=`.
-- Implement nested files `/`.
-- Implement crop/resize.
+- Implement `=` OSC.
+- Implement `Y` operator.
+- Implement `/` nested files.
+- Implement live reload.
 - Improve Midi Device selection.
 - Remember Midi Device.
 - Create a `.orca` config file.

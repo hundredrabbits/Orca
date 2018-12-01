@@ -101,10 +101,6 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     this.update()
   }
 
-  this.modSize = function (w = 0, h = 0) {
-
-  }
-
   //
 
   this.isCursor = function (x, y) {

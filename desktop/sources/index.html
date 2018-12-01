@@ -47,6 +47,7 @@
       terminal.controller.add("default","Edit","Paste Selection",() => { terminal.cursor.paste(); },"CmdOrCtrl+V")
       terminal.controller.add("default","Edit","Undo",() => { terminal.history.undo(); },"CmdOrCtrl+Z")
       terminal.controller.add("default","Edit","Redo",() => { terminal.history.redo(); },"CmdOrCtrl+Shift+Z")
+      terminal.controller.add("default","Edit","Crop Selection",() => { terminal.crop(); },"CmdOrCtrl+K")
 
       terminal.controller.add("default","Program","Play/Pause",() => { terminal.pause(); },"Space")
       terminal.controller.add("default","Program","Incr. Speed",() => { terminal.modSpeed(1); },">")
@@ -55,8 +56,6 @@
       terminal.controller.add("default","Program","Decr. Col",() => { terminal.modGrid(-1,0); },"[")
       terminal.controller.add("default","Program","Incr. Row",() => { terminal.modGrid(0,1); },"}")
       terminal.controller.add("default","Program","Decr. Row",() => { terminal.modGrid(0,-1); },"{")
-
-      terminal.controller.add("default","Tools","Crop to Selection",() => { terminal.crop(); },"CmdOrCtrl+K")
 
       terminal.controller.add("default","Theme","Default Theme",() => { terminal.theme.noir(); },"CmdOrCtrl+Shift+1")
       terminal.controller.add("default","Theme","Light Theme",() => { terminal.theme.pale(); },"CmdOrCtrl+Shift+2")
