@@ -145,7 +145,7 @@ function Orca (library = {}) {
   }
 
   this.toString = function () {
-    return this.format()
+    return this.format().trim()
   }
 
   this.reset()
