@@ -9,6 +9,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   this.io = new IO(this)
   this.cursor = new Cursor(orca, this)
   this.source = new Source(orca, this)
+  this.history = new History(orca, this)
   this.controller = new Controller()
 
   // Themes
@@ -32,6 +33,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   this.start = function () {
     this.theme.start()
     this.io.start()
+    this.history.record()
     this.setSpeed(120)
     this.update()
     this.el.className = 'ready'
@@ -52,6 +54,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   }
 
   this.load = function (data) {
+    if(!data){ return }
     const w = data.split('\n')[0].length
     const h = data.split('\n').length
     console.log(`Loading ${w}x${h}`)

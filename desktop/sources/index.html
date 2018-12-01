@@ -40,7 +40,7 @@
       terminal.controller.add("default","File","Revert",() => { terminal.source.revert(); },"CmdOrCtrl+Shift+R")
       terminal.controller.add("default","File","Close",() => { terminal.source.close(); },"CmdOrCtrl+W")
 
-      terminal.controller.add("default","Edit","Toggle Mode",() => { terminal.cursor.toggleMode(); },"Enter")
+      // terminal.controller.add("default","Edit","Toggle Mode",() => { terminal.cursor.toggleMode(); },"Enter")
       terminal.controller.add("default","Edit","Select All",() => { terminal.cursor.selectAll(); },"CmdOrCtrl+A")
       terminal.controller.add("default","Edit","Erase Selection",() => { terminal.cursor.erase(); },"Backspace")
       terminal.controller.add("default","Edit","Copy Selection",() => { terminal.cursor.copy(); },"CmdOrCtrl+C")

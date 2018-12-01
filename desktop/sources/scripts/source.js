@@ -19,7 +19,6 @@ function Source (orca, terminal) {
     console.log('Open')
     let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'] })
     if (!paths) { console.log('Nothing to load') }
-    if (!terminal.source.validate(paths[0])) { console.log('Invalid file') }
     this.path = paths[0]
     this.read(paths[0])
   }

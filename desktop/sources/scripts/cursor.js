@@ -53,12 +53,14 @@ function Cursor (orca, terminal) {
     if (this.mode === 1) {
       this.move(1, 0)
     }
+    terminal.history.record()
   }
 
   this.erase = function (g) {
     if (this.w === 1 && this.h === 1 && orca.glyphAt(this.x, this.y) === '.') { this.move(-1, 0); return } // Backspace Effect
     this.eraseBlock(this.x, this.y, this.w, this.h)
     this.reset()
+    terminal.history.record()
   }
 
   this.toggleMode = function () {
@@ -98,6 +100,7 @@ function Cursor (orca, terminal) {
       }
       _y++
     }
+    terminal.history.record()
   }
 
   this.eraseBlock = function (x, y, w, h) {
@@ -106,6 +109,7 @@ function Cursor (orca, terminal) {
         orca.write(_x, _y, '.')
       }
     }
+    terminal.history.record()
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
