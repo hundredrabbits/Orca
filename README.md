@@ -63,21 +63,34 @@ The `L`, `Q` & `T` operators are always passive(the lowercase operator works lik
 
 ## Controls
 
+### Terminal Controls
+
 - `enter` toggle insert/write.
 - `space` toggle play/pause.
 - `shift+arrow` resize cursor size.
 - `ctrl/meta+arrow` jump cursor position.
+- `>` increase BPM.
+- `<` decrease BPM.
+
+### Edit
+
 - `ctrl+c` copy selection.
 - `ctrl+x` cut selection.
 - `ctrl+v` paste selection.
 - `ctrl+z` undo.
 - `ctrl+shift+z` redo.
-- `>` increase BPM.
-- `<` decrease BPM.
+- `ctrl/meta+k` crop.
+
+### Grid Controls
+
 - `]` increase grid size vertically.
 - `[` decrease grid size vertically.
 - `}` increase grid size horizontally.
 - `{` decrease grid size horizontally.
+- `ctrl/meta+]` increase program size vertically.
+- `ctrl/meta+[` decrease program size vertically.
+- `ctrl/meta+}` increase program size horizontally.
+- `ctrl/meta+{` decrease program size horizontally.
 
 ## Output
 

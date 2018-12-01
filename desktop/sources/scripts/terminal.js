@@ -57,10 +57,17 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     if (!data) { return }
     const w = data.split('\n')[0].length
     const h = data.split('\n').length
+    if (w < 10 || h < 10) { console.warn('Too small'); return }
     console.log(`Loading ${w}x${h}`)
     orca.load(w, h, data, frame)
     this.resize()
     this.update()
+  }
+
+  this.crop = function () {
+    const block = this.cursor.getBlock()
+    const data = block.reduce((acc, val) => { acc.push(val.join('')); return acc }, []).join('\n')
+    this.load(data)
   }
 
   this.update = function () {
@@ -92,6 +99,10 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     this.size.grid.w = clamp(this.size.grid.w + x, 4, 16)
     this.size.grid.h = clamp(this.size.grid.h + y, 4, 16)
     this.update()
+  }
+
+  this.modSize = function (w = 0, h = 0) {
+
   }
 
   //

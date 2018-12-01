@@ -40,7 +40,6 @@
       terminal.controller.add("default","File","Revert",() => { terminal.source.revert(); },"CmdOrCtrl+Shift+R")
       terminal.controller.add("default","File","Close",() => { terminal.source.close(); },"CmdOrCtrl+W")
 
-      // terminal.controller.add("default","Edit","Toggle Mode",() => { terminal.cursor.toggleMode(); },"Enter")
       terminal.controller.add("default","Edit","Select All",() => { terminal.cursor.selectAll(); },"CmdOrCtrl+A")
       terminal.controller.add("default","Edit","Erase Selection",() => { terminal.cursor.erase(); },"Backspace")
       terminal.controller.add("default","Edit","Copy Selection",() => { terminal.cursor.copy(); },"CmdOrCtrl+C")
@@ -56,6 +55,8 @@
       terminal.controller.add("default","Program","Decr. Col",() => { terminal.modGrid(-1,0); },"[")
       terminal.controller.add("default","Program","Incr. Row",() => { terminal.modGrid(0,1); },"}")
       terminal.controller.add("default","Program","Decr. Row",() => { terminal.modGrid(0,-1); },"{")
+
+      terminal.controller.add("default","Tools","Crop to Selection",() => { terminal.crop(); },"CmdOrCtrl+K")
 
       terminal.controller.add("default","Theme","Default Theme",() => { terminal.theme.noir(); },"CmdOrCtrl+Shift+1")
       terminal.controller.add("default","Theme","Light Theme",() => { terminal.theme.pale(); },"CmdOrCtrl+Shift+2")

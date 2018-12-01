@@ -36,7 +36,7 @@ function Cursor (orca, terminal) {
   }
 
   this.copy = function () {
-    this.block = this.getBlock(this.x, this.y, this.w, this.h)
+    this.block = this.getBlock()
   }
 
   this.cut = function () {
@@ -45,7 +45,7 @@ function Cursor (orca, terminal) {
   }
 
   this.paste = function () {
-    this.writeBlock(this.x, this.y, this.block)
+    this.writeBlock(this.toRect(), this.block)
   }
 
   this.write = function (g) {
@@ -77,11 +77,11 @@ function Cursor (orca, terminal) {
 
   // Block
 
-  this.getBlock = function (x, y, w, h) {
+  this.getBlock = function (rect = this.toRect()) {
     const block = []
-    for (let _y = y; _y < y + h; _y++) {
+    for (let _y = rect.y; _y < rect.y + rect.h; _y++) {
       const line = []
-      for (let _x = x; _x < x + w; _x++) {
+      for (let _x = rect.x; _x < rect.x + rect.w; _x++) {
         line.push(orca.glyphAt(_x, _y))
       }
       block.push(line)
@@ -89,11 +89,11 @@ function Cursor (orca, terminal) {
     return block
   }
 
-  this.writeBlock = function (x, y, block) {
+  this.writeBlock = function (rect, block) {
     if (!block || block.length === 0) { return }
-    let _y = y
+    let _y = rect.y
     for (const lineId in block) {
-      let _x = x
+      let _x = rect.x
       for (const glyphId in block[lineId]) {
         orca.write(_x, _y, block[lineId][glyphId])
         _x++
@@ -110,6 +110,10 @@ function Cursor (orca, terminal) {
       }
     }
     terminal.history.record()
+  }
+
+  this.toRect = function () {
+    return { x: this.x, y: this.y, w: this.w, h: this.h }
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
