@@ -61,6 +61,24 @@ There really are 4 types of operators:
 
 The `L`, `Q` & `T` operators are always passive(the lowercase operator works like their uppercase version). The passive `G`, `O`, `P`, `V`, `X`, `:` & `;` also require bang to operate.
 
+## Controls
+
+- `enter` toggle insert/write.
+- `space` toggle play/pause.
+- `shift+arrow` resize cursor size.
+- `ctrl/meta+arrow` jump cursor position.
+- `ctrl+c` copy selection.
+- `ctrl+x` cut selection.
+- `ctrl+v` paste selection.
+- `ctrl+z` undo.
+- `ctrl+shift+z` redo.
+- `>` increase BPM.
+- `<` decrease BPM.
+- `]` increase grid size vertically.
+- `[` decrease grid size vertically.
+- `}` increase grid size horizontally.
+- `{` decrease grid size horizontally.
+
 ## Output
 
 ### Midi Output

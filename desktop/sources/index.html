@@ -40,10 +40,12 @@
       terminal.controller.add("default","File","Revert",() => { terminal.source.revert(); },"CmdOrCtrl+Shift+R")
       terminal.controller.add("default","File","Close",() => { terminal.source.close(); },"CmdOrCtrl+W")
 
-      terminal.controller.add("default","Edit","Select All",() => { terminal.cursor.paste(); },"CmdOrCtrl+A")
-      terminal.controller.add("default","Edit","Copy",() => { terminal.cursor.copy(); },"CmdOrCtrl+C")
-      terminal.controller.add("default","Edit","Cut",() => { terminal.cursor.cut(); },"CmdOrCtrl+X")
-      terminal.controller.add("default","Edit","Paste",() => { terminal.cursor.paste(); },"CmdOrCtrl+V")
+      terminal.controller.add("default","Edit","Toggle Mode",() => { terminal.cursor.toggleMode(); },"Enter")
+      terminal.controller.add("default","Edit","Select All",() => { terminal.cursor.selectAll(); },"CmdOrCtrl+A")
+      terminal.controller.add("default","Edit","Erase Selection",() => { terminal.cursor.erase(); },"Backspace")
+      terminal.controller.add("default","Edit","Copy Selection",() => { terminal.cursor.copy(); },"CmdOrCtrl+C")
+      terminal.controller.add("default","Edit","Cut Selection",() => { terminal.cursor.cut(); },"CmdOrCtrl+X")
+      terminal.controller.add("default","Edit","Paste Selection",() => { terminal.cursor.paste(); },"CmdOrCtrl+V")
       terminal.controller.add("default","Edit","Undo",() => { terminal.history.undo(); },"CmdOrCtrl+Z")
       terminal.controller.add("default","Edit","Redo",() => { terminal.history.redo(); },"CmdOrCtrl+Shift+Z")
 
