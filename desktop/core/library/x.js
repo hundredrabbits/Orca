@@ -3,7 +3,7 @@
 const Operator = require('../operator')
 
 function OperatorX (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, 'x', passive)
+  Operator.call(this, orca, x, y, 'x', true)
 
   this.name = 'teleport'
   this.info = 'Writes a distant operator with offset.'
@@ -20,7 +20,7 @@ function OperatorX (orca, x, y, passive) {
   }
 
   this.run = function () {
-    if (!this.bang()) { return }
+    if (!passive && !this.bang()) { return }
 
     this.draw = false
 

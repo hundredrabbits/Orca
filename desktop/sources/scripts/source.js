@@ -60,14 +60,8 @@ function Source (orca, terminal) {
   this.read = function (path) {
     fs.readFile(path, 'utf8', function (err, data) {
       if (err) throw err
-      if (!terminal.source.validate(data)) { console.warn('Invalid File'); return }
       terminal.load(data.trim())
     })
-  }
-
-  this.validate = function (data) {
-    // TODO
-    return true
   }
 
   this.name = function () {

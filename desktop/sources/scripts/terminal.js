@@ -3,6 +3,7 @@
 function Terminal (orca, tile = { w: 20, h: 30 }) {
   const Cursor = require('./cursor')
   const Source = require('./source')
+  const History = require('./history')
   const IO = require('./io')
 
   this.io = new IO(this)
