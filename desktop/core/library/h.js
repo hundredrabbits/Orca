@@ -12,7 +12,7 @@ function OperatorH (orca, x, y, passive) {
 
   this.haste = function () {
     this.len = clamp(this.listen(this.ports.haste.len, true), 0, 16)
-    for (let x = 0; x <= this.len; x++) {
+    for (let x = 0; x < this.len; x++) {
       orca.lock(this.x + x, this.y + 1)
     }
   }
