@@ -3,7 +3,7 @@
 const Operator = require('../operator')
 
 function OperatorQ (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, 'q', true)
+  Operator.call(this, orca, x, y, 'q', passive)
 
   this.name = 'query'
   this.info = 'Counts the number of operators present eastwardly.'
@@ -13,7 +13,6 @@ function OperatorQ (orca, x, y, passive) {
 
   this.haste = function () {
     this.len = clamp(this.listen(this.ports.haste.len, true), 1, 16)
-
     for (let x = 1; x <= this.len; x++) {
       orca.lock(this.x + x, this.y)
     }

@@ -25,10 +25,10 @@ npm start
 - `D` **delay**('rate, offset): Bangs on a fraction of the runtime frame.
 - `E` **east**: Moves eastward, or bangs.
 - `F` **if**(a, b): Outputs `1` if inputs are equal, otherwise `0`.
-- `G` **unknown**: --
+- `G` **generator**(val): Outputs the input southward.
 - `H` **halt**('len): Stops southward operators from operating.
 - `I` **increment**(min, max): Increments southward operator.
-- `J` **jump**(val): Outputs the northward operator.
+- `J` **jumper**(val): Outputs the northward operator.
 - `K` **kill**: Kills southward operator.
 - `L` **loop**('len): Loops a number of eastward operators.
 - `M` **modulo**(val, mod): Outputs the modulo of inputs.
@@ -43,25 +43,12 @@ npm start
 - `V` **beam**: Bangs the nearest southward operator on bang.
 - `W` **west**: Moves westward, or bangs.
 - `X` **teleport**('x, 'y, val): Writes a distant operator with offset.
-- `Y` **unknown**: --
+- `Y` **jymper**(val): Outputs the westward operator.
 - `Z` **diagonal**: Moves diagonally toward south-east.
 - `*` **bang**: Bangs neighboring operators.
 - `:` **midi**('velocity, 'length, channel, octave, note): Sends Midi a midi note.
 - `;` **udp**('len): Sends a string via UDP to localhost.
 - `#` **comment**: Comments a line, or characters until the next hash.
-
-### Design Notes
-
-There really are 4 types of operators:
-
-- Those that have passive locking, but still require bang to operate. (uppercase, needs bang)
-- Those that are always passive no matter the capitalization. (lowercase, no bang)
-- Those that do not need bang to operate, passive operator. (uppercase, no bang)
-- Those that needs bang to operate, default operator. (lowercase, needs bang) (edited)
-
-* Aberants `T`, `X`, `O`, `P`.
-
-The `L`, `Q` & `T` operators are always passive(the lowercase operator works like their uppercase version). The passive `G`, `O`, `P`, `V`, `X`, `:` & `;` also require bang to operate.
 
 ## Controls
 
