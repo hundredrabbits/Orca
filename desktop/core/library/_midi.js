@@ -23,6 +23,8 @@ function OperatorMidi (orca, x, y, passive) {
 
     if (rawOctave === 0 || rawNote === 0) { return }
 
+    this.draw = false
+  
     const notes = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B']
     // 0 - 16
     const channel = clamp(rawChannel, 0, 15)
