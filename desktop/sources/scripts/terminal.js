@@ -121,9 +121,9 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
       const g = orca.runtime[id]
       if (orca.lockAt(g.x, g.y)) { continue }
       // Default/Passive
-      h[`${g.x}:${g.y}`] = { type: g.passive && g.draw ? 'passive' : 'none', name: `${g.name}` }
-      // Output
-      if (g.ports.output) { h[`${g.x + g.ports.output.x}:${g.y + g.ports.output.y}`] = { type: 'output', name: `${g.glyph}.out` } }
+      if (!h[`${g.x}:${g.y}`]) {
+        h[`${g.x}:${g.y}`] = { type: g.passive && g.draw ? 'passive' : 'none', name: `${g.name}` }
+      }
       // Haste
       for (const id in g.ports.haste) {
         const port = g.ports.haste[id]
@@ -134,6 +134,8 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
         const port = g.ports.input[id]
         h[`${g.x + port.x}:${g.y + port.y}`] = { type: 'input', name: `${g.glyph}:${id}` }
       }
+      // Output
+      if (g.ports.output) { h[`${g.x + g.ports.output.x}:${g.y + g.ports.output.y}`] = { type: 'output', name: `${g.glyph}.out` } }
     }
     return h
   }

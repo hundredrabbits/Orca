@@ -25,8 +25,8 @@ npm start
 - `D` **delay**('rate, offset): Bangs on a fraction of the runtime frame.
 - `E` **east**: Moves eastward, or bangs.
 - `F` **if**(a, b): Outputs `1` if inputs are equal, otherwise `0`.
-- `G` **generator**(val): Outputs a value on bang.
-- `H` **halt**: Stops southward operator from operating.
+- `G` **unknown**: --
+- `H` **halt**('len): Stops southward operators from operating.
 - `I` **increment**(min, max): Increments southward operator.
 - `J` **jump**(val): Outputs the northward operator.
 - `K` **kill**: Kills southward operator.
@@ -35,7 +35,7 @@ npm start
 - `N` **north**: Moves Northward, or bangs.
 - `O` **offset**('x, 'y, val): Reads a distant operator with offset.
 - `P` **push**('len, 'key, val): Writes an eastward operator with offset.
-- `Q` **Query**('len): Counts the number of operators present eastwardly.
+- `Q` **query**('len): Counts the number of operators present eastwardly.
 - `R` **random**(min, max): Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
 - `T` **track**('len, 'key, val): Reads an eastward operator with offset.
