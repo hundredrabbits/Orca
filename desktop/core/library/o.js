@@ -3,7 +3,7 @@
 const Operator = require('../operator')
 
 function OperatorO (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, 'o', passive)
+  Operator.call(this, orca, x, y, 'o', true)
 
   this.name = 'offset'
   this.info = 'Reads a distant operator with offset.'
@@ -20,6 +20,8 @@ function OperatorO (orca, x, y, passive) {
   }
 
   this.run = function () {
+    if (!passive && !this.bang()) { return }
+
     const res = this.listen(this.ports.input.val)
     this.output(`${res}`)
   }

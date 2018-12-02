@@ -59,6 +59,8 @@ There really are 4 types of operators:
 - Those that do not need bang to operate, passive operator. (uppercase, no bang)
 - Those that needs bang to operate, default operator. (lowercase, needs bang) (edited)
 
+* Aberants `T`, `X`, `O`, `P`.
+
 The `L`, `Q` & `T` operators are always passive(the lowercase operator works like their uppercase version). The passive `G`, `O`, `P`, `V`, `X`, `:` & `;` also require bang to operate.
 
 ## Controls
