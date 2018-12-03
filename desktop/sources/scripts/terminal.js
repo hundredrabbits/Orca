@@ -226,7 +226,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     } else {
       ctx.fillStyle = this.theme.active.f_low
     }
-    ctx.fillText(styles.isCursor && g === '.' ? (!this.isPaused ? '@' : '~') : g, (x + 0.5) * tile.w, (y + 1) * tile.h)
+    ctx.fillText(styles.isCursor && (g === '.' || g === '+') ? (!this.isPaused ? '@' : '~') : g, (x + 0.5) * tile.w, (y + 1) * tile.h)
   }
 
   this.write = function (text, offsetX, offsetY, limit) {
