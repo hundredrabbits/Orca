@@ -40,7 +40,7 @@ npm start
 - `S` **south**: Moves southward, or bangs.
 - `T` **track**('len, 'key, val): Reads an eastward operator with offset.
 - `U` **uturn**('n, 'e, 's, 'w): Reverses movement on inputs.
-- `V` **beam**: Bangs the nearest southward operator on bang.
+- `V` **variable**('write, value): Reads and write globally available variables.
 - `W` **west**: Moves westward, or bangs.
 - `X` **teleport**('x, 'y, val): Writes a distant operator with offset.
 - `Y` **jymper**(val): Outputs the westward operator.
