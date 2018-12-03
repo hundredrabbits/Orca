@@ -15,8 +15,8 @@ function Cursor (orca, terminal) {
   }
 
   this.scale = function (x, y) {
-    this.w = clamp(this.w + x, 1, 30)
-    this.h = clamp(this.h - y, 1, 30)
+    this.w = clamp(this.w + x, 1, orca.w - this.x)
+    this.h = clamp(this.h - y, 1, orca.h - this.y)
     terminal.update()
   }
 

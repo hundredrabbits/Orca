@@ -68,6 +68,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     const block = this.cursor.getBlock()
     const data = block.reduce((acc, val) => { acc.push(val.join('')); return acc }, []).join('\n')
     this.load(data)
+    this.cursor.selectAll()
   }
 
   this.update = function () {
