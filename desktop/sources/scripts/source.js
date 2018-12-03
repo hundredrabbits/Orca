@@ -8,7 +8,7 @@ function Source (orca, terminal) {
 
   this.new = function () {
     console.log('New')
-    orca.w = 57
+    orca.w = 65
     orca.h = 25
     orca.reset()
     this.path = null
