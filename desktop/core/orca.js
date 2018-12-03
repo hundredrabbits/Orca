@@ -1,7 +1,7 @@
 'use strict'
 
 function Orca (library = {}) {
-  this.w = 57 // Default Width
+  this.w = 65 // Default Width
   this.h = 25 // Default Height
   this.s = '' // String
   this.f = 0 // Frame
