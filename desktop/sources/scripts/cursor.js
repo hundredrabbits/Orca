@@ -49,6 +49,10 @@ function Cursor (orca, terminal) {
   }
 
   this.write = function (g) {
+    if (this.node === 2) {
+      terminal.io.sendKey(event.key)
+      return
+    }
     orca.write(this.x, this.y, g)
     if (this.mode === 1) {
       this.move(1, 0)
@@ -63,8 +67,8 @@ function Cursor (orca, terminal) {
     terminal.history.record()
   }
 
-  this.toggleMode = function () {
-    this.mode = this.mode === 0 ? 1 : 0
+  this.toggleMode = function (val) {
+    this.mode = this.mode === 0 ? val : 0
   }
 
   this.inspect = function (name = true, ports = false) {

@@ -3,11 +3,6 @@
 function Keyboard (orca, terminal) {
   this.locks = []
   this.history = ''
-  this.mode = 0
-
-  this.toggleMode = function () {
-    this.mode = this.mode === 0 ? 1 : 0
-  }
 
   this.onKeyDown = function (event) {
     // Reset
@@ -34,7 +29,7 @@ function Keyboard (orca, terminal) {
     if (event.metaKey) { return }
     if (event.ctrlKey) { return }
 
-    if (event.key === 'Enter') { terminal.cursor.toggleMode(); return }
+    if (event.key === 'Enter') { terminal.cursor.toggleMode(1); return }
     if (event.key === 'Backspace') { terminal.cursor.erase(); return }
     if (event.key === ' ') { terminal.pause(); event.preventDefault(); return }
     if (event.key === 'Escape') { terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
@@ -47,14 +42,7 @@ function Keyboard (orca, terminal) {
     if (event.key === '<') { terminal.modSpeed(-1); event.preventDefault(); return }
 
     if (event.key.length === 1) {
-      // Send key
-      if (this.mode === 1 && event.key !== '/') {
-        terminal.io.sendKey(event.key)
-        event.preventDefault()
-        return
-      } else {
-        terminal.cursor.write(event.key)
-      }
+      terminal.cursor.write(event.key)
       terminal.update()
     }
   }

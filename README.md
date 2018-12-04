@@ -57,6 +57,7 @@ npm start
 
 - `enter` toggle insert/write.
 - `space` toggle play/pause.
+- `/` toggle insert/keys.
 - `shift+arrow` resize cursor size.
 - `ctrl/meta+arrow` jump cursor position.
 - `>` increase BPM.
@@ -82,11 +83,11 @@ npm start
 - `ctrl/meta+}` increase program size horizontally.
 - `ctrl/meta+{` decrease program size horizontally.
 
-## Output
+## Special Operators
 
 ### Midi Output
 
-The midi operator is `:`, it takes up to 5 inputs('channel, 'octave, 'note, velocity, length). For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. 
+The midi operator `:` takes up to 5 inputs('channel, 'octave, 'note, velocity, length). For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. See it in action with [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca).
 
 #### Velocity*
 
@@ -96,17 +97,17 @@ Velocity is either from `0-9`(10 steps), or `A-Z`(26 steps). For example, `:34C8
 
 Note length is a value from `1-f`, which is a ratio of a full bar, *1* being `1/1`(a full bar), *2* being `1/2`(half), *3* being `1/3`(third).. and *f* being `1/16`. For example, `:27FZ4`, is a **F note, on the 7th octave, through the 3rd MIDI channel with a velocity of 100%, lasting for 1/4 of a bar**. 
 
-To see it in action, see the [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/midi.orca) example.
-
 #### Set Device Id
 
 To set the Midi device, open the console with `ctrl+.`, and type `terminal.io.listMidiDevices()` to see the list of available devices, and type `terminal.io.setMidiDevice(2)` to select the 2nd available device. This will be improved soon.
 
 ### UDP Output
 
-The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback) special function is `3;MSG`, it has one haste input that gets a string length and locks the eastward ports. It sends the message on bang to the port `49160`. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test UDP messages.
+The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback) operator `;`, takes one haste input that is a string length and locks the eastwardly ports. It sends the message on bang to the port `49160`. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test UDP messages. See it in action with [udp.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_udp.orca).
 
-To see it in action, see the [udp.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/udp.orca) example.
+#### Keyboard Input
+
+The keys operator `!` will bang on a corresponding keyboard keypress when the cursor is in **keyboard mode**(toggle with `/`). For instance, `!a`, will output a bang when pressing the `a` key in **keyboard mode**. See it in action with the [keys.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_keys.orca).
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.hardware.jpg' width="600"/>
 

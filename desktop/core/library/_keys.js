@@ -8,11 +8,11 @@ function OperatorKeys (orca, x, y, passive) {
   this.name = 'keys'
   this.info = 'Bangs on keyboard input.'
 
-  this.ports.haste.key = { x: -1, y: 0 }
+  this.ports.input.key = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
   this.run = function () {
-    const key = this.listen(this.ports.haste.key)
+    const key = this.listen(this.ports.input.key)
 
     if (key === '.') { return }
 

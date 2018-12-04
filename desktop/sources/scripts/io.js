@@ -46,13 +46,9 @@ function IO (terminal) {
 
   this.playUdp = function (data) {
     const udp = dgram.createSocket('udp4')
-    try {
-      udp.send(Buffer.from(`${data}`), 49160, 'localhost', (err) => {
-        udp.close()
-      })
-    } catch (err) {
-      console.warn('Udp error?')
-    }
+    udp.send(Buffer.from(`${data}`), 49160, 'localhost', (err) => {
+      udp.close()
+    })
   }
 
   // Midi
