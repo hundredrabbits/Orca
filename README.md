@@ -105,28 +105,11 @@ To set the Midi device, open the console with `ctrl+.`, and type `terminal.io.li
 
 The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback) operator `;`, takes one haste input that is a string length and locks the eastwardly ports. It sends the message on bang to the port `49160`. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test UDP messages. See it in action with [udp.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_udp.orca).
 
-#### Keyboard Input
+### Keyboard Input
 
 The keys operator `!` will bang on a corresponding keyboard keypress when the cursor is in **keyboard mode**(toggle with `/`). For instance, `!a`, will output a bang when pressing the `a` key in **keyboard mode**. See it in action with the [keys.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_keys.orca).
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.hardware.jpg' width="600"/>
-
-## Headless
-
-Orca can also run headlessly via:
-
-```
-node server.js examples/bang.orca
-```
-
-## TODOs
-
-- Implement `=` OSC.
-- Implement `/` nested files.
-- Implement live reload.
-- Improve Midi Device selection.
-- Remember Midi Device.
-- Create a `.orca` config file.
 
 ## Extras
 
