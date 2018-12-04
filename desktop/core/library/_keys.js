@@ -13,10 +13,19 @@ function OperatorKeys (orca, x, y, passive) {
 
   this.run = function () {
     const key = this.listen(this.ports.haste.key)
-    console.log(orca.terminal.io.stack.keys)
-  }
 
-  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
+    if (key === '.') { return }
+
+    const index = orca.terminal.io.stack.keys.indexOf(key)
+
+    if (index > -1) {
+      this.draw = false
+      orca.terminal.io.stack.keys.splice(index, 1)
+      this.output('*')
+    } else {
+      this.output('.')
+    }
+  }
 }
 
 module.exports = OperatorKeys

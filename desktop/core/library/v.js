@@ -49,10 +49,9 @@ function OperatorV (orca, x, y, passive) {
       if (glyph !== 'v') { continue }
       const write = operator.listen(operator.ports.haste.write)
       if (write !== key) { continue }
-      const value = operator.listen(operator.ports.input.read)
-      return value
+      return operator.listen(operator.ports.input.read)
     }
-    return null
+    return '.'
   }
 }
 

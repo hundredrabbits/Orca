@@ -13,8 +13,8 @@ function IO (terminal) {
   }
 
   this.clear = function () {
-    this.stack.udp = {}
-    this.stack.midi = {}
+    this.stack.udp = []
+    this.stack.midi = []
   }
 
   this.run = function () {
@@ -31,7 +31,7 @@ function IO (terminal) {
   // Keyboard
 
   this.sendKey = function (key) {
-    this.stack.keys.push(key)
+    this.stack.keys = [key]
   }
 
   this.playKey = function (key) {
@@ -62,13 +62,13 @@ function IO (terminal) {
   }
 
   this.playMidi = function (data) {
-    if (!this.outputs[device]) { console.warn('No midi device!'); return }
-
     const device = this.midi.device
     const channel = convertChannel(data[0])
     const note = convertNote(data[1], data[2])
     const velocity = data[3]
     const length = window.performance.now() + convertLength(data[4], terminal.bpm)
+
+    if (!this.outputs[device]) { console.warn('No midi device!'); return }
 
     this.outputs[device].send([channel[0], note, velocity])
     this.outputs[device].send([channel[1], note, velocity], length)
