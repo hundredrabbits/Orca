@@ -4,12 +4,14 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   const Cursor = require('./cursor')
   const Source = require('./source')
   const History = require('./history')
+  const Keyboard = require('./keyboard')
   const IO = require('./io')
 
   this.io = new IO(this)
   this.cursor = new Cursor(orca, this)
   this.source = new Source(orca, this)
   this.history = new History(orca, this)
+  this.keyboard = new Keyboard(orca, this)
   this.controller = new Controller()
 
   // Themes

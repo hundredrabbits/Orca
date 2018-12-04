@@ -2,7 +2,6 @@
   <head>
     <script type="text/javascript" src="scripts/lib/controller.js"></script>
     <script type="text/javascript" src="scripts/lib/theme.js"></script>
-    <script type="text/javascript" src="scripts/keyboard.js"></script>
     <script type="text/javascript" src="scripts/events.js"></script>
 
     <link rel="stylesheet" type="text/css" href="links/reset.css"/>
@@ -20,7 +19,6 @@
 
       const orca = new Orca(library)
       const terminal = new Terminal(orca)
-      const keyboard = new Keyboard()
       
       const { app } = require('electron').remote
 
@@ -56,6 +54,8 @@
       terminal.controller.add("default","Program","Decr. Col",() => { terminal.modGrid(-1,0); },"[")
       terminal.controller.add("default","Program","Incr. Row",() => { terminal.modGrid(0,1); },"}")
       terminal.controller.add("default","Program","Decr. Row",() => { terminal.modGrid(0,-1); },"{")
+
+      terminal.controller.add("default","Keyboard","Toggle Play Mode",() => { terminal.keyboard.toggleMode(); },"/")
 
       terminal.controller.add("default","Theme","Default Theme",() => { terminal.theme.noir(); },"CmdOrCtrl+Shift+1")
       terminal.controller.add("default","Theme","Light Theme",() => { terminal.theme.pale(); },"CmdOrCtrl+Shift+2")

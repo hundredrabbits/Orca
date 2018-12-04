@@ -13,18 +13,31 @@ function IO (terminal) {
   }
 
   this.clear = function () {
-    this.stack = { udp: [], midi: [] }
+    this.stack = { udp: [], midi: [], keys: [] }
   }
 
   this.run = function () {
     if (this.length() < 1) { return }
-    // Run UDP first
+
     for (const id in this.stack.udp) {
       this.playUdp(this.stack.udp[id])
     }
     for (const id in this.stack.midi) {
       this.playMidi(this.stack.midi[id])
     }
+    for (const id in this.stack.keys) {
+      this.playKey(this.stack.keys[id])
+    }
+  }
+
+  // Keyboard
+
+  this.sendKey = function (key) {
+    this.stack.keys.push(key)
+  }
+
+  this.playKey = function (key) {
+    console.log(key)
   }
 
   // UDP
@@ -35,9 +48,13 @@ function IO (terminal) {
 
   this.playUdp = function (data) {
     const udp = dgram.createSocket('udp4')
-    udp.send(Buffer.from(`${data}`), 49160, 'localhost', (err) => {
-      udp.close()
-    })
+    try {
+      udp.send(Buffer.from(`${data}`), 49160, 'localhost', (err) => {
+        udp.close()
+      })
+    } catch (err) {
+      console.warn('Udp error?')
+    }
   }
 
   // Midi

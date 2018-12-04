@@ -39,7 +39,8 @@ module.exports = {
   'z': require('./library/z'),
   '.': require('./library/_null'),
   '*': require('./library/_bang'),
-  ':': require('./library/_midi'),
   ';': require('./library/_udp'),
+  ':': require('./library/_midi'),
+  '!': require('./library/_keys'),
   '#': require('./library/_comment')
 }
