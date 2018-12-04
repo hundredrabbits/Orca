@@ -6,7 +6,7 @@ function OperatorU (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'u', passive)
 
   this.name = 'uturn'
-  this.info = 'Reverses movement on inputs.'
+  this.info = 'Reverses movement of inputs.'
 
   this.ports.haste.n = { x: 0, y: -1, unlock: true }
   this.ports.haste.e = { x: 1, y: 0, unlock: true }

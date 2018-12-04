@@ -31,7 +31,7 @@ npm start
 - `J` **jumper**(val): Outputs the northward operator.
 - `K` **kill**: Kills southward operator.
 - `L` **loop**('len): Loops a number of eastward operators.
-- `M` **modulo**(val, mod): Outputs the modulo of inputs.
+- `M` **modulo**(val, mod): Outputs the modulo of input.
 - `N` **north**: Moves Northward, or bangs.
 - `O` **offset**('x, 'y, val): Reads a distant operator with offset.
 - `P` **push**('len, 'key, val): Writes an eastward operator with offset.
@@ -39,15 +39,16 @@ npm start
 - `R` **random**(min, max): Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
 - `T` **track**('len, 'key, val): Reads an eastward operator with offset.
-- `U` **uturn**('n, 'e, 's, 'w): Reverses movement on inputs.
-- `V` **variable**('write, value): Reads and write globally available variables.
+- `U` **uturn**('n, 'e, 's, 'w): Reverses movement of inputs.
+- `V` **variable**('write, read): Reads and write globally available variables.
 - `W` **west**: Moves westward, or bangs.
 - `X` **teleport**('x, 'y, val): Writes a distant operator with offset.
 - `Y` **jymper**(val): Outputs the westward operator.
 - `Z` **diagonal**: Moves diagonally toward south-east.
 - `*` **bang**: Bangs neighboring operators.
-- `:` **midi**('velocity, 'length, channel, octave, note): Sends Midi a midi note.
 - `;` **udp**('len): Sends a string via UDP to localhost.
+- `:` **midi**('velocity, 'length, channel, octave, note): Sends Midi a midi note.
+- `!` **keys**('key): Bangs on keyboard input.
 - `#` **comment**: Comments a line, or characters until the next hash.
 
 ## Controls
