@@ -5,7 +5,7 @@ function IO (terminal) {
 
   this.midi = { device: 0 }
   this.outputs = []
-  this.stack = null
+  this.stack = { keys: [] }
 
   this.start = function () {
     this.clear()
@@ -13,7 +13,8 @@ function IO (terminal) {
   }
 
   this.clear = function () {
-    this.stack = { udp: [], midi: [], keys: [] }
+    this.stack.udp = {}
+    this.stack.midi = {}
   }
 
   this.run = function () {
@@ -25,9 +26,6 @@ function IO (terminal) {
     for (const id in this.stack.midi) {
       this.playMidi(this.stack.midi[id])
     }
-    for (const id in this.stack.keys) {
-      this.playKey(this.stack.keys[id])
-    }
   }
 
   // Keyboard
@@ -37,7 +35,7 @@ function IO (terminal) {
   }
 
   this.playKey = function (key) {
-    console.log(key)
+    // Idle. Read by the ! operator.
   }
 
   // UDP
@@ -64,6 +62,8 @@ function IO (terminal) {
   }
 
   this.playMidi = function (data) {
+    if (!this.outputs[device]) { console.warn('No midi device!'); return }
+
     const device = this.midi.device
     const channel = convertChannel(data[0])
     const note = convertNote(data[1], data[2])
@@ -135,7 +135,7 @@ function IO (terminal) {
   }
 
   this.length = function () {
-    return this.stack.udp.length + this.stack.midi.length
+    return this.stack.udp.length + this.stack.midi.length + this.stack.keys.length
   }
 
   this.toString = function () {

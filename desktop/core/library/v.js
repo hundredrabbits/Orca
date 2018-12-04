@@ -9,26 +9,36 @@ function OperatorV (orca, x, y, passive) {
   this.info = 'Reads and write globally available variables.'
 
   this.ports.haste.write = { x: -1, y: 0 }
-  this.ports.input.value = { x: 1, y: 0 }
+  this.ports.input.read = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
-    const key = this.listen(this.ports.haste.write, true)
+    if (!this.isWritting()) { return }
 
-    if (key > 9) {
-      this.ports.output = null
-    }
+    this.ports.output = null
   }
 
   this.run = function () {
-    if (this.listen(this.ports.haste.write, true) > 9) { return }
+    if (!this.isReading()) { return }
 
-    const key = this.listen(this.ports.input.value)
+    const key = this.listen(this.ports.input.read)
     const res = this.read(key)
 
-    if (res !== '.') {
-      this.output(`${res}`)
-    }
+    this.output(`${res}`)
+  }
+
+  this.isWritting = function () {
+    const key = this.listen(this.ports.haste.write)
+    const val = this.listen(this.ports.input.read)
+
+    return key !== '.' && val !== '.'
+  }
+
+  this.isReading = function () {
+    const key = this.listen(this.ports.haste.write)
+    const val = this.listen(this.ports.input.read)
+
+    return key === '.' && val !== '.'
   }
 
   this.read = function (key) {
@@ -39,10 +49,9 @@ function OperatorV (orca, x, y, passive) {
       if (glyph !== 'v') { continue }
       const write = operator.listen(operator.ports.haste.write)
       if (write !== key) { continue }
-      const value = operator.listen(operator.ports.input.value)
+      const value = operator.listen(operator.ports.input.read)
       return value
     }
-
     return null
   }
 }

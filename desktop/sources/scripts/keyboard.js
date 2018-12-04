@@ -48,12 +48,13 @@ function Keyboard (orca, terminal) {
 
     if (event.key.length === 1) {
       // Send key
-      if ((event.metaKey || event.ctrlKey)) {
+      if (this.mode === 1 && event.key !== '/') {
         terminal.io.sendKey(event.key)
         event.preventDefault()
         return
+      } else {
+        terminal.cursor.write(event.key)
       }
-      terminal.cursor.write(event.key)
       terminal.update()
     }
   }

@@ -6,6 +6,7 @@ function Orca (library = {}) {
   this.s = '' // String
   this.f = 0 // Frame
 
+  this.terminal = null
   this.keys = Object.keys(library)
   this.locks = []
   this.ports = {}

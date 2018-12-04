@@ -13,6 +13,7 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   // Actions
 
   this.listen = function (port, toValue = false) {
+    if (!port) { return toValue ? 0 : '.' }
     const g = orca.glyphAt(this.x + port.x, this.y + port.y)
     return toValue ? orca.valueOf(g) : g
   }
