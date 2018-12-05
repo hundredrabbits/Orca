@@ -16,13 +16,15 @@ function run (data,frames) {
 
   orca.load(w, h, data)
 
+  console.time('Benchmark')
   console.log(`Running ${path}(${w}x${h}) for ${frames} frames.\n`)
 
   for(let f = 0; f < frames; f++){
     orca.run()
   }
   
-  console.log(`${orca}\nDone.\n`)
+  console.log(`${orca}\n`)
+  console.timeEnd('Benchmark')
 }
 
 function read (path,frames) {

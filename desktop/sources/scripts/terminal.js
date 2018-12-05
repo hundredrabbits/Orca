@@ -92,17 +92,45 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     console.log(`Changed speed to ${this.bpm}.`)
     clearInterval(this.timer)
     this.timer = setInterval(() => { this.run() }, (60000 / bpm) / 4)
+    this.update()
+  }
+
+  this.setGrid = function (w, h) {
+    this.size.grid.w = w
+    this.size.grid.h = h
+    this.update()
+  }
+
+  this.setSize = function (w, h) {
+    let block = `${orca}`
+    if (h > orca.h) {
+      block = `${block}${`\n${'.'.repeat(orca.w)}`.repeat((h - orca.h))}`
+    } else if (h < orca.h) {
+      block = `${block}`.split('\n').slice(0, (h - orca.h)).join('\n').trim()
+    }
+
+    if (w > orca.w) {
+      block = `${block}`.split('\n').map((val) => { return val + ('.').repeat((w - orca.w)) }).join('\n').trim()
+    } else if (w < orca.w) {
+      block = `${block}`.split('\n').map((val) => { return val.substr(0, val.length + (w - orca.w)) }).join('\n').trim()
+    }
+    this.load(block, orca.f)
   }
 
   this.modSpeed = function (mod = 0) {
     this.setSpeed(this.bpm + mod)
-    this.update()
   }
 
   this.modGrid = function (x = 0, y = 0) {
-    this.size.grid.w = clamp(this.size.grid.w + x, 4, 16)
-    this.size.grid.h = clamp(this.size.grid.h + y, 4, 16)
-    this.update()
+    const w = clamp(this.size.grid.w + x, 4, 16)
+    const h = clamp(this.size.grid.h + y, 4, 16)
+    this.setGrid(w, h)
+  }
+
+  this.modSize = function (x = 0, y = 0) {
+    const w = ((parseInt(orca.w / this.size.grid.w) + x) * this.size.grid.w) + 1
+    const h = ((parseInt(orca.h / this.size.grid.h) + y) * this.size.grid.h) + 1
+    this.setSize(w, h)
   }
 
   //
