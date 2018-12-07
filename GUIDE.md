@@ -6,9 +6,10 @@ Orca is **not a synth**, but a [livecoding environment](https://www.reddit.com/r
 
 ### Ableton Live
 
-To control instruments in [Ableton Live](https://www.ableton.com/en/), launch [Orca](README.md) and open [examples/midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca). Launch Ableton Live, and:
+To control instruments in [Ableton Live](https://www.ableton.com/en/), launch [Orca](README.md) and open [examples/midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca).
 
-- Create a new midi instrument, 
+- Launch Ableton Live.
+- Create a new midi instrument track.
 - Select `IAC Driver(Bus 1)` in the instrument's inputs dropdown. 
 - Activate the **In** toggle. 
 
