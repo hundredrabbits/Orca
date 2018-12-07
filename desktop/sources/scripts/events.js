@@ -20,6 +20,5 @@ window.addEventListener('drop', function (e) {
 })
 
 window.onresize = (event) => {
-  const marginTop = (window.innerHeight - (terminal.size.height * terminal.size.ratio)) / 2
-  terminal.el.style.marginTop = (marginTop - 20) + 'px'
+  terminal.align()
 }

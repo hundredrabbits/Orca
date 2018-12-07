@@ -61,6 +61,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     const w = data.split('\n')[0].length
     const h = data.split('\n').length
     if (w < 10 || h < 10) { console.warn('Too small'); return }
+    if (w > 121 || h > 49) { console.warn('Too large'); return }
     console.log(`Loading ${w}x${h}`)
     orca.load(w, h, data, frame)
     this.resize()
@@ -270,6 +271,10 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     }
   }
 
+  this.align = function () {
+    this.el.style.marginTop = (((window.innerHeight - (terminal.size.height * terminal.size.ratio)) / 2) - 20) + 'px'
+  }
+  
   this.resize = function () {
     this.size.width = tile.w * orca.w
     this.size.height = tile.h * orca.h + (tile.h * 3)
@@ -278,6 +283,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     this.el.style.width = (this.size.width * this.size.ratio) + 'px'
     this.el.style.height = (this.size.height * this.size.ratio) + 'px'
 
+    this.align()
     const { remote } = require('electron')
     const win = remote.getCurrentWindow()
     const width = parseInt((this.size.width * this.size.ratio) + 60)
