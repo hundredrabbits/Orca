@@ -8,13 +8,25 @@ Orca is not a synth, but a [livecoding environment](https://www.reddit.com/r/liv
 
 To control instruments in [Ableton Live](https://www.ableton.com/en/), launch [Orca](README.md) and open [examples/midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca). 
 
-In Ableton Live, create a new midi channel, in the input dropdown, select **IAC Driver(Bus 1)** and select the **In** button. This midi instrument should start receiving midi notes as long as the Orca window is in focus.
+In Ableton Live, create a new midi channel, in the input dropdown, select **IAC Driver(Bus 1)** and select the **In** button. This midi instrument should start receiving midi notes as soon as the Orca window is back into focus.
+
+### VCV Rack
+
+[TODO]
+
+### SuperCollider
+
+[TODO]
+
+## Windows
+
+### LoopMidi
+
+On Windows, use [loopMidi](http://www.tobias-erichsen.de/software/loopmidi.html) to help routing midi signal across applications.
 
 ## Ubuntu
 
 This a guide to help you produce your first sounds with ORCΛ, tested on `Ubuntu 18.04`.
-
-## Installations
 
 ### Install TiMidity++
 
@@ -118,13 +130,8 @@ Hit `ctrl+o` in ORCΛ to get a dialog for opening a `.orca` file.
 There is the `example` directory in your `Orca` folder.
 Choose the `_midi.orca` file in that directory and you should hear four notes playing in a loop!
 
-
 ## FAQs
 
 ### Set Device Id
 
 To set the Midi device, open the console with `ctrl+.`, and type `terminal.io.listMidiDevices()` to see the list of available devices, and type `terminal.io.setMidiDevice(2)` to select the 2nd available device. This will be improved soon.
-
-### No Midi Signal
-
-On Windows, use [loopMidi](http://www.tobias-erichsen.de/software/loopmidi.html) to help routing midi signal across applications. OSX has IAC Driver, and Linux ASLA, by default.

@@ -14,7 +14,7 @@ function OperatorC (orca, x, y, passive) {
 
   this.run = function () {
     const mod = this.listen(this.ports.input.mod, true)
-    const rate = clamp(this.listen(this.ports.haste.rate, true), 1, 16)
+    const rate = clamp(this.listen(this.ports.haste.rate, true), 1, 36)
     const val = (parseInt(orca.f / rate) % (mod || 10))
     const res = orca.keyOf(val)
     this.output(`${res}`)
