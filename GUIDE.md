@@ -1,20 +1,16 @@
 # Guide
 
-## Base36 Table
+Orca is not a synth, but a [livecoding environment](https://www.reddit.com/r/livecoding/) to write procedural sequencers. In other words, Orca is meant to control other applications such as a DAW(Ableton, Renoise, VCV Rack, etc.), or an audio server such as SuperCollider.
 
-Orca operates on a base of 36 increments. Operators using numeric values will typically also operate on letters and convert them into values as per the following table.
+## OSX
 
-| 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | A  | B  | 
-| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | 
-| 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | 10 | 11 |
-| C  | D  | E  | F  | G  | H  | I  | K  | L  | M  | N  | O  |
-| 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 
-| P  | Q  | R  | S  | T  | U  | V  | W  | X  | Y  | Z  | *  | 
-| 24 | 25 | 26 | 27 | 28 | 29 | 30 | 31 | 32 | 33 | 34 | 35 |
+### Ableton Live
 
-## Platforms 
+To control instruments in [Ableton Live](https://www.ableton.com/en/), launch [Orca](README.md) and open [examples/midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca). 
 
-### Ubuntu
+In Ableton Live, create a new midi channel, in the input dropdown, select **IAC Driver(Bus 1)** and select the **In** button. This midi instrument should start receiving midi notes as long as the Orca window is in focus.
+
+## Ubuntu
 
 This a guide to help you produce your first sounds with ORCΛ, tested on `Ubuntu 18.04`.
 
@@ -121,3 +117,14 @@ Now close the web console window.
 Hit `ctrl+o` in ORCΛ to get a dialog for opening a `.orca` file.
 There is the `example` directory in your `Orca` folder.
 Choose the `_midi.orca` file in that directory and you should hear four notes playing in a loop!
+
+
+## FAQs
+
+### Set Device Id
+
+To set the Midi device, open the console with `ctrl+.`, and type `terminal.io.listMidiDevices()` to see the list of available devices, and type `terminal.io.setMidiDevice(2)` to select the 2nd available device. This will be improved soon.
+
+### No Midi Signal
+
+On Windows, use [loopMidi](http://www.tobias-erichsen.de/software/loopmidi.html) to help routing midi signal across applications. OSX has IAC Driver, and Linux ASLA, by default.
