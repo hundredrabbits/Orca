@@ -113,12 +113,17 @@ The keys operator `!` will bang on a corresponding keyboard keypress when the cu
 
 Orca operates on a base of 36 increments. Operators using numeric values will typically also operate on letters and convert them into values as per the following table.
 
-| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | 
+
 | 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | A  | B  | 
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | 
 | 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | 10 | 11 |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | 
 | C  | D  | E  | F  | G  | H  | I  | K  | L  | M  | N  | O  |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | 
 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | 
 | P  | Q  | R  | S  | T  | U  | V  | W  | X  | Y  | Z  | *  | 
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | 
 | 24 | 25 | 26 | 27 | 28 | 29 | 30 | 31 | 32 | 33 | 34 | 35 |
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.hardware.jpg' width="600"/>
