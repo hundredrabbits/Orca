@@ -1,26 +1,45 @@
-# Beginners Guide for ORCΛ on Ubuntu
-This a guide to help you produce your first sounds with ORCΛ.
-The steps were tested on `Ubuntu 18.04`.
+# Guide
+
+## Base36 Table
+
+Orca operates on a base of 36 increments. Operators using numeric values will typically also operate on letters and convert them into values as per the following table.
+
+| 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | A  | B  | 
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | 
+| 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | 10 | 11 |
+| C  | D  | E  | F  | G  | H  | I  | K  | L  | M  | N  | O  |
+| 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 
+| P  | Q  | R  | S  | T  | U  | V  | W  | X  | Y  | Z  | *  | 
+| 24 | 25 | 26 | 27 | 28 | 29 | 30 | 31 | 32 | 33 | 34 | 35 |
+
+## Platforms 
+
+### Ubuntu
+
+This a guide to help you produce your first sounds with ORCΛ, tested on `Ubuntu 18.04`.
 
 ## Installations
+
 ### Install TiMidity++
-First you will need a software synthesizer.
-We choose TiMidity++ here.
-To install the synthesizer on Ubuntu we mainly followed the steps from this [Ubuntu guide on software synthesis](https://help.ubuntu.com/community/Midi/SoftwareSynthesisHowTo),
+
+First you will need a software synthesizer. We choose [TiMidity++](http://timidity.sourceforge.net) here. To install the synthesizer on Ubuntu we mainly followed the steps from this [Ubuntu guide on software synthesis](https://help.ubuntu.com/community/Midi/SoftwareSynthesisHowTo),
 which are reproduced here:
 
 If you don't have the universe repository activated yet run:
+
 ```
 sudo add-apt-repository universe
 sudo apt-get update
 ```
 
 Install TiMidity++ and the `freepats` samples:
+
 ```
 sudo apt-get install timidity freepats
 ```
 
 You might need to activate the following kernel modules:
+
 ```
 sudo modprobe snd-seq-device
 sudo modprobe snd-seq-midi
@@ -30,13 +49,17 @@ sudo modprobe snd-seq
 ```
 
 ### Install node
+
 If you don't have `node` installed yet, install it with:
+
 ```
 sudo apt-get install nodejs
 ```
 
 ### Install ORCΛ
+
 Next install ORCΛ as described in the [Readme](README.md):
+
 ```
 git clone https://github.com/hundredrabbits/Orca.git
 cd Orca/desktop/
