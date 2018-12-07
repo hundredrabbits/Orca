@@ -1,18 +1,18 @@
 # Guide
 
-Orca is not a synth, but a [livecoding environment](https://www.reddit.com/r/livecoding/) to write procedural sequencers. In other words, Orca is meant to control other applications such as a DAW(Ableton, Renoise, VCV Rack, etc.), or an audio server such as SuperCollider.
+Orca is **not a synth**, but a [livecoding environment](https://www.reddit.com/r/livecoding/) to write procedural sequencers. In other words, **Orca is meant to control other applications** such as a DAW(Ableton, Renoise, VCV Rack, etc.), or an audio server such as SuperCollider.
 
 ## OSX
 
 ### Ableton Live
 
-To control instruments in [Ableton Live](https://www.ableton.com/en/), launch [Orca](README.md) and open [examples/midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca). 
+To control instruments in [Ableton Live](https://www.ableton.com/en/), launch [Orca](README.md) and open [examples/midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca). Launch Ableton Live, and:
 
 - Create a new midi instrument, 
-- Select **IAC Driver(Bus 1)** in the instrument's inputs dropdown. 
+- Select `IAC Driver(Bus 1)` in the instrument's inputs dropdown. 
 - Activate the **In** toggle. 
 
-The midi instrument should begin receiving midi notes as soon as the Orca window is back into focus.
+The midi instrument should begin receiving midi notes as soon as the Orca window is **back into focus**.
 
 ### VCV Rack
 
