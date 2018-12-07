@@ -109,10 +109,11 @@ The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_
 
 The keys operator `!` will bang on a corresponding keyboard keypress when the cursor is in **keyboard mode**(toggle with `/`). For instance, `!a`, will output a bang when pressing the `a` key in **keyboard mode**. See it in action with the [keys.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_keys.orca).
 
+<img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.hardware.jpg' width="600"/>
+
 ## Base36 Table
 
 Orca operates on a base of 36 increments. Operators using numeric values will typically also operate on letters and convert them into values as per the following table.
-
 
 | 0   | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   | A   | B   | 
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | 
@@ -121,8 +122,6 @@ Orca operates on a base of 36 increments. Operators using numeric values will ty
 | 12  | 13  | 14  | 15  | 16  | 17  | 18  | 19  | 20  | 21  | 22  | 23  | 
 | **P** | **Q** | **R** | **S** | **T** | **U** | **V** | **W**   | **X**   | **Y**   | **Z**   | **\***   | 
 | 24  | 25  | 26  | 27  | 28  | 29  | 30  | 31  | 32  | 33  | 34  | 35  |
-
-<img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.hardware.jpg' width="600"/>
 
 ## Extras
 
