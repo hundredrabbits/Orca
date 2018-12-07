@@ -113,7 +113,7 @@ The keys operator `!` will bang on a corresponding keyboard keypress when the cu
 
 ## Base36 Table
 
-Orca operates on a base of 36 increments. Operators using numeric values will typically also operate on letters and convert them into values as per the following table.
+Orca operates on a base of 36 increments. Operators using numeric values will typically also operate on letters and convert them into values as per the following table. For instance `pD` will bang every *24th frame*.
 
 | 0     | 1     | 2     | 3     | 4     | 5     | 6     | 7     | 8     | 9     | A     | B      | 
 | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:    | 

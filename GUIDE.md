@@ -8,7 +8,11 @@ Orca is not a synth, but a [livecoding environment](https://www.reddit.com/r/liv
 
 To control instruments in [Ableton Live](https://www.ableton.com/en/), launch [Orca](README.md) and open [examples/midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca). 
 
-In Ableton Live, create a new midi channel, in the input dropdown, select **IAC Driver(Bus 1)** and select the **In** button. This midi instrument should start receiving midi notes as soon as the Orca window is back into focus.
+- Create a new midi instrument, 
+- Select **IAC Driver(Bus 1)** in the instrument's inputs dropdown. 
+- Activate the **In** toggle. 
+
+The midi instrument should begin receiving midi notes as soon as the Orca window is back into focus.
 
 ### VCV Rack
 
@@ -27,6 +31,12 @@ On Windows, use [loopMidi](http://www.tobias-erichsen.de/software/loopmidi.html)
 ## Ubuntu
 
 This a guide to help you produce your first sounds with ORCΛ, tested on `Ubuntu 18.04`.
+
+If you don't have `node` installed yet, install it with:
+
+```
+sudo apt-get install nodejs
+```
 
 ### Install TiMidity++
 
@@ -56,28 +66,12 @@ sudo modprobe snd-seq-midi-event
 sudo modprobe snd-seq
 ```
 
-### Install node
-
-If you don't have `node` installed yet, install it with:
-
-```
-sudo apt-get install nodejs
-```
-
-### Install ORCΛ
-
-Next install ORCΛ as described in the [Readme](README.md):
-
-```
-git clone https://github.com/hundredrabbits/Orca.git
-cd Orca/desktop/
-npm install
-```
-
 ## Make Some Noise!
 
 ### Run TiMidity++ as a ALSA sequencer client
+
 Open a terminal were you run the command
+
 ```
 timidity -iA
 ```
