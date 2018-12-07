@@ -17,6 +17,10 @@ npm start
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.jpg' width="600"/>
 
+## Beginners Guide for Ubuntu
+
+If you are a beginner you can follow this [guide](GUIDE.md) to play your first sounds.
+
 ## Functions
 
 - `A` **add**(a, b): Outputs the sum of inputs.
