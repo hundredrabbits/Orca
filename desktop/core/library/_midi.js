@@ -26,6 +26,7 @@ function OperatorMidi (orca, x, y, passive) {
     this.draw = false
 
     const notes = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B']
+
     // 0 - 16
     const channel = clamp(rawChannel, 0, 15)
     // 1 - 9
@@ -36,6 +37,8 @@ function OperatorMidi (orca, x, y, passive) {
     const velocity = convertVelocity(this.listen(this.ports.haste.velocity, true), 127)
     // 0 - 16
     const length = clamp(this.listen(this.ports.haste.length, true), 1, 16)
+
+    if (note < 0) { return }
 
     terminal.io.sendMidi(channel, octave, note, velocity, length)
   }

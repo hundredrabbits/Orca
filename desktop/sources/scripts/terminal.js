@@ -274,7 +274,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   this.align = function () {
     this.el.style.marginTop = (((window.innerHeight - (terminal.size.height * terminal.size.ratio)) / 2) - 20) + 'px'
   }
-  
+
   this.resize = function () {
     this.size.width = tile.w * orca.w
     this.size.height = tile.h * orca.h + (tile.h * 3)
