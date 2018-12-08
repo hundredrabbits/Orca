@@ -3,7 +3,7 @@
 const Operator = require('../operator')
 
 function OperatorP (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, 'p', passive)
+  Operator.call(this, orca, x, y, 'p', true)
 
   this.name = 'push'
   this.info = 'Writes an eastward operator with offset.'
@@ -23,6 +23,7 @@ function OperatorP (orca, x, y, passive) {
   }
 
   this.run = function () {
+    if (!this.bang() && !passive) { return }
     const res = this.listen(this.ports.input.val)
     this.output(`${res}`)
   }
