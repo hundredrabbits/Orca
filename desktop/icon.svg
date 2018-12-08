@@ -1,0 +1,12 @@
+<svg class="vector" width="300px" height="300px" xmlns="http://www.w3.org/2000/svg" baseProfile="full" version="1.1" style="width: 300px; height: 300px; stroke: rgb(0, 0, 0); stroke-width: 0; fill: none; stroke-linecap: round;">
+  <rect width="300" height="300" style="fill:rgb(0,0,0)" />
+  <circle cx="60"  cy="60"  r="7.5" fill="white"/>
+  <circle cx="150" cy="60"  r="7.5" fill="white"/>
+  <circle cx="240" cy="60"  r="7.5" fill="white"/>
+  <circle cx="60"  cy="150" r="7.5" fill="white"/>
+  <circle cx="150" cy="150" r="7.5" fill="white"/>
+  <circle cx="240" cy="150" r="7.5" fill="white"/>
+  <circle cx="60"  cy="240" r="7.5" fill="white"/>
+  <circle cx="150" cy="240" r="7.5" fill="white"/>
+  <circle cx="240" cy="240" r="7.5" fill="white"/>
+</svg>

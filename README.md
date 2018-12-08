@@ -6,7 +6,7 @@
 
 ## Install & Run
 
-There are no public builds available at the moment, all you need is [npm](http://npmjs.com) installed. 
+You can download builds for OSX, Windows and Linux [here](https://hundredrabbits.itch.io/orca). If you wish to build it yourself, follow these steps:
 
 ```
 git clone https://github.com/hundredrabbits/Orca.git
