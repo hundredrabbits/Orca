@@ -17,28 +17,26 @@ function OperatorMidi (orca, x, y, passive) {
   this.run = function () {
     if (!this.bang()) { return }
 
-    const rawChannel = this.listen(this.ports.input.channel, true)
-    const rawOctave = this.listen(this.ports.input.octave, true)
-    const rawNote = this.listen(this.ports.input.note, true)
+    let rawChannel = this.listen(this.ports.input.channel, true)
+    let rawOctave = this.listen(this.ports.input.octave, true)
+    let rawNote = this.listen(this.ports.input.note)
 
-    if (rawOctave === 0 || rawNote === 0) { return }
-
-    this.draw = false
-
-    const notes = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B']
+    if (rawOctave === 0 || rawNote === '.') { return }
 
     // 0 - 16
     const channel = clamp(rawChannel, 0, 15)
     // 1 - 9
-    const octave = clamp(rawOctave, 1, 9)
+    const octave = clamp(rawNote === 'b' ? rawOctave + 1 : rawOctave, 1, 9)
     // 0 - 11
-    const note = notes.indexOf(this.listen(this.ports.input.note))
+    const note = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'].indexOf(rawNote === 'e' ? 'F' : rawNote === 'b' ? 'C' : rawNote)
     // 0 - 127
     const velocity = convertVelocity(this.listen(this.ports.haste.velocity, true), 127)
     // 0 - 16
     const length = clamp(this.listen(this.ports.haste.length, true), 1, 16)
 
-    if (note < 0) { return }
+    if (note < 0) { console.warn(`Unknown note:${rawNote}`); return }
+
+    this.draw = false
 
     terminal.io.sendMidi(channel, octave, note, velocity, length)
   }
