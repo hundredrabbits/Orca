@@ -2,6 +2,8 @@
 
 function Theme (noir, pale) {
   const themer = this
+  const fs = require('fs')
+  const { dialog, app } = require('electron').remote
 
   this.collection = { noir: noir, pale: pale }
   this.active = this.collection.noir
@@ -78,6 +80,16 @@ function Theme (noir, pale) {
       themer.load(e.target.result)
     }
     reader.readAsText(file)
+  }
+
+  this.open = function () {
+    console.log('Open')
+    let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'] })
+    if (!paths) { console.log('Nothing to load') }
+    fs.readFile(paths[0], 'utf8', function (err, data) {
+      if (err) throw err
+      themer.load(data)
+    })
   }
 
   window.addEventListener('dragover', this.drag)
