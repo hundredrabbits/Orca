@@ -12,7 +12,12 @@ function OperatorV (orca, x, y, passive) {
   this.ports.input.read = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
+  this.storage = { write: null, read: null }
+
   this.haste = function () {
+    this.storage.write = this.listen(this.ports.haste.write)
+    this.storage.read = this.listen(this.ports.input.read)
+
     if (!this.isWritting()) { return }
 
     this.ports.output = null
@@ -21,22 +26,22 @@ function OperatorV (orca, x, y, passive) {
   this.run = function () {
     if (!this.isReading()) { return }
 
-    const key = this.listen(this.ports.input.read)
+    const key = this.storage.read
     const res = this.read(key)
 
     this.output(`${res}`)
   }
 
   this.isWritting = function () {
-    const key = this.listen(this.ports.haste.write)
-    const val = this.listen(this.ports.input.read)
+    const key = this.storage.write
+    const val = this.storage.read
 
     return key !== '.' && val !== '.'
   }
 
   this.isReading = function () {
-    const key = this.listen(this.ports.haste.write)
-    const val = this.listen(this.ports.input.read)
+    const key = this.storage.write
+    const val = this.storage.read
 
     return key === '.' && val !== '.'
   }
@@ -47,9 +52,9 @@ function OperatorV (orca, x, y, passive) {
       if (orca.lockAt(operator.x, operator.y)) { continue }
       const glyph = operator.glyph.toLowerCase()
       if (glyph !== 'v') { continue }
-      const write = operator.listen(operator.ports.haste.write)
+      const write = operator.storage.write
       if (write !== key) { continue }
-      return operator.listen(operator.ports.input.read)
+      return operator.storage.read
     }
     return '.'
   }

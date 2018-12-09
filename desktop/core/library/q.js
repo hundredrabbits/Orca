@@ -29,9 +29,7 @@ function OperatorQ (orca, x, y, passive) {
     // Read
     let str = ''
     for (const id in this.ports.input) {
-      const port = this.ports.input[id]
-      const val = this.listen(port)
-      str += val
+      str += this.listen(this.ports.input[id])
     }
     // Write
     for (let i = 0; i < str.length; i++) {

@@ -17,14 +17,14 @@ function OperatorMidi (orca, x, y, passive) {
   this.run = function () {
     if (!this.bang()) { return }
 
-    let rawChannel = this.listen(this.ports.input.channel, true)
+    let rawChannel = this.listen(this.ports.input.channel)
     let rawOctave = this.listen(this.ports.input.octave, true)
     let rawNote = this.listen(this.ports.input.note)
 
-    if (rawOctave === 0 || rawOctave > 8 || rawNote === '.' || rawChannel > 15) { return }
+    if (rawChannel === '.' || orca.valueOf(rawChannel) > 15 || rawOctave === 0 || rawOctave > 8 || rawNote === '.') { return }
 
     // 0 - 16
-    const channel = clamp(rawChannel, 0, 15)
+    const channel = clamp(orca.valueOf(rawChannel), 0, 15)
     // 1 - 9
     const octave = clamp(rawNote === 'b' ? rawOctave + 1 : rawOctave, 1, 9)
     // 0 - 11
