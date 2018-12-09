@@ -39,7 +39,7 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds.
 - `N` **north**: Moves Northward, or bangs.
 - `O` **offset**('x, 'y, val): Reads a distant operator with offset.
 - `P` **push**('len, 'key, val): Writes an eastward operator with offset.
-- `Q` **query**('len): Counts the number of operators present eastwardly.
+- `Q` **query**('x, 'y, 'len): Reads distant operators with offset.
 - `R` **random**(min, max): Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
 - `T` **track**('len, 'key, val): Reads an eastward operator with offset.
@@ -52,7 +52,7 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds.
 - `*` **bang**: Bangs neighboring operators.
 - `;` **udp**('len): Sends a string via UDP to localhost.
 - `:` **midi**('velocity, 'length, channel, octave, note): Sends Midi a midi note.
-- `!` **keys**('key): Bangs on keyboard input.
+- `!` **keys**(key): Bangs on keyboard input.
 - `#` **comment**: Comments a line, or characters until the next hash.
 
 ## Controls
