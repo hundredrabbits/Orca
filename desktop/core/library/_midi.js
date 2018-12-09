@@ -21,7 +21,7 @@ function OperatorMidi (orca, x, y, passive) {
     let rawOctave = this.listen(this.ports.input.octave, true)
     let rawNote = this.listen(this.ports.input.note)
 
-    if (rawOctave === 0 || rawNote === '.') { return }
+    if (rawOctave === 0 || rawOctave > 8 || rawNote === '.') { return }
 
     // 0 - 16
     const channel = clamp(rawChannel, 0, 15)
