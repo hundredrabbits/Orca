@@ -18,7 +18,7 @@ function Source (orca, terminal) {
 
   this.open = function () {
     console.log('Open')
-    let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'] })
+    let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'], filters: [{ name: 'Orca Machines', extensions: ['orca'] }] })
     if (!paths) { console.log('Nothing to load') }
     this.path = paths[0]
     this.read(paths[0])

@@ -83,8 +83,7 @@ function Theme (noir, pale) {
   }
 
   this.open = function () {
-    console.log('Open')
-    let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'] })
+    let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'], filters: [{ name: 'Themes', extensions: ['svg'] }] })
     if (!paths) { console.log('Nothing to load') }
     fs.readFile(paths[0], 'utf8', function (err, data) {
       if (err) throw err
