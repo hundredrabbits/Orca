@@ -11,7 +11,7 @@ function OperatorP (orca, x, y, passive) {
   this.ports.haste.len = { x: -1, y: 0 }
   this.ports.haste.key = { x: -2, y: 0 }
   this.ports.input.val = { x: 1, y: 0 }
-  this.ports.output = { x: 0, y: 1m unlock: true }
+  this.ports.output = { x: 0, y: 1, unlock: true }
 
   this.haste = function () {
     this.len = clamp(this.listen(this.ports.haste.len, true), 1, 24)
