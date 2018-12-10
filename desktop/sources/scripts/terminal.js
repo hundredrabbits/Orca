@@ -236,25 +236,17 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
         ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
         ctx.fillStyle = this.theme.active.f_low
       } else if (styles.isPort === 'input') { // Input
-        ctx.fillStyle = this.theme.active.background
-        ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
         ctx.fillStyle = this.theme.active.b_high
       } else if (styles.isPort === 'passive') { // Passive
         ctx.fillStyle = this.theme.active.b_med
         ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
         ctx.fillStyle = this.theme.active.f_low
       } else if (styles.isPort === 'haste') { // Haste
-        ctx.fillStyle = this.theme.active.background
-        ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
         ctx.fillStyle = this.theme.active.b_med
       } else {
-        ctx.fillStyle = this.theme.active.background
-        ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
         ctx.fillStyle = this.theme.active.f_high
       }
     } else if (styles.isLocked) {
-      ctx.fillStyle = this.theme.active.background
-      ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
       ctx.fillStyle = this.theme.active.f_med
     } else {
       ctx.fillStyle = this.theme.active.f_low
