@@ -29,7 +29,7 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds.
 - `D` **delay**('rate, offset): Bangs on a fraction of the runtime frame.
 - `E` **east**: Moves eastward, or bangs.
 - `F` **if**(a, b): Outputs `1` if inputs are equal, otherwise `0`.
-- `G` **generator**(val): Outputs the input southward.
+- `G` **generator**('x, 'y, 'len): Writes distant operators with offset.
 - `H` **halt**('len): Stops southward operators from operating.
 - `I` **increment**(min, max): Increments southward operator.
 - `J` **jumper**(val): Outputs the northward operator.

@@ -7,7 +7,6 @@ function OperatorQ (orca, x, y, passive) {
 
   this.name = 'query'
   this.info = 'Reads distant operators with offset.'
-  this.draw = false
 
   this.ports.haste.x = { x: -3, y: 0 }
   this.ports.haste.y = { x: -2, y: 0 }
@@ -17,10 +16,10 @@ function OperatorQ (orca, x, y, passive) {
   this.haste = function () {
     this.ports.input = []
     this.len = clamp(this.listen(this.ports.haste.len, true), 1, 16)
-    const _x = this.listen(this.ports.haste.x, true)
-    const _y = this.listen(this.ports.haste.y, true)
+    const x = this.listen(this.ports.haste.x, true)
+    const y = this.listen(this.ports.haste.y, true)
     for (let i = 1; i <= this.len; i++) {
-      this.ports.input.push({ x: i + _x, y: _y })
+      this.ports.input.push({ x: i + x, y: y })
       orca.lock(this.x + this.ports.output.x + i - this.len, this.y + 1)
     }
   }
