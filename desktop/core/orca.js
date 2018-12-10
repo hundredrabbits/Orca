@@ -118,7 +118,7 @@ function Orca (library = {}) {
   }
 
   this.valueOf = function (g) {
-    return g !== '.' && this.isAllowed(g) ? this.keys.indexOf(`${g}`.toLowerCase()) : 0
+    return g !== '.' && g !== '*' && this.isAllowed(g) ? this.keys.indexOf(`${g}`.toLowerCase()) : 0
   }
 
   this.indexAt = function (x, y) {
