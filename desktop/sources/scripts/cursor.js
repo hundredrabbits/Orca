@@ -49,7 +49,7 @@ function Cursor (orca, terminal) {
   }
 
   this.write = function (g) {
-    if (this.node === 2) {
+    if (this.mode === 2) {
       terminal.io.sendKey(event.key)
       return
     }
