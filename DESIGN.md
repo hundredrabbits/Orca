@@ -4,13 +4,13 @@
 | ---------- | ----------- 
 | Directions | N S E W Z
 | Math       | A I M R
-| Converters | B F
+| Logic      | F
 | Timers     | C D
 | Writers    | X G P
 | Readers    | O Q T
 | Jumpers    | J Y
 | ---------- | ----------- 
-| Misc       | H K L U V
+| Misc       | B H K L U V
 | Special    | * ; : ! #
 
 # Attributes
@@ -22,7 +22,7 @@
 | C*    | +++++  |               | Any
 | D*    | +++++  |               | *
 | E*    | +++++  |               | 
-| F     | ?      |               | ?    
+| F*    | +++++  |               | *   
 | G     | ++++   | X             | Any(multi)(unlocked)
 | H*    | +++++  |               | Any
 | I*    | +++++  |               | Any
