@@ -19,7 +19,7 @@ npm start
 
 ## Quickstart
 
-You can follow the [guide](GUIDE.md) to get started and play your first sounds.
+You can follow the [guide](GUIDE.md) to get started and play your first sounds. You can see the [design notes](DESIGN.md) for specs and upcoming features.
 
 ## Functions
 
@@ -122,11 +122,6 @@ Orca operates on a base of 36 increments. Operators using numeric values will ty
 | 12    | 13    | 14    | 15    | 16    | 17    | 18    | 19    | 20    | 21    | 22    | 23     | 
 | **P** | **Q** | **R** | **S** | **T** | **U** | **V** | **W** | **X** | **Y** | **Z** | **\*** | 
 | 24    | 25    | 26    | 27    | 28    | 29    | 30    | 31    | 32    | 33    | 34    | 35     |
-
-## TODOs
-
-- Implement MIDI CC.
-- Implement OSC.
 
 ## Extras
 
