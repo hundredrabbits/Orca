@@ -110,7 +110,7 @@ function Orca (library = {}) {
   }
 
   this.isAllowed = function (g) {
-    return !!library[`${g}`.toLowerCase()]
+    return g === '.' || !!library[`${g}`.toLowerCase()]
   }
 
   this.keyOf = function (val) {

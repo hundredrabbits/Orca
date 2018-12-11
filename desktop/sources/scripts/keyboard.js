@@ -30,7 +30,7 @@ function Keyboard (orca, terminal) {
     if (event.ctrlKey) { return }
 
     if (event.key === 'Enter') { terminal.cursor.toggleMode(1); return }
-    if (event.key === 'Backspace') { terminal.cursor.erase(); return }
+    if (event.key === 'Backspace' || event.key === '.') { terminal.cursor.erase(); return }
     if (event.key === ' ') { terminal.pause(); event.preventDefault(); return }
     if (event.key === 'Escape') { terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
 

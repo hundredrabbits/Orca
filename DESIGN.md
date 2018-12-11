@@ -49,16 +49,14 @@
 | 33  | X     | ++++   | X      | X       | Any - Unlocked
 | 34  | Y     | +++    | X      |         | Any
 | 35  | Z     | ?      |        |         | 
-| 36  | :     | +++++  | X      | X       | 
-| 37  | ;     | +++++  | X      | X       | 
-| 38  | #     | +++++  | X      | X       | 
-| 39  | !     | +++++  | X      | X       | *
+| 36  | *     | +++++  | X      | X       | 
+| 37  | #     | +++++  | X      | X       | 
+| 38  | ;     | +++++  | X      | X       | 
+| 39  | :     | +++++  | X      | X       | 
+| 40  | !     | +++++  | X      | X       | *
 
 ## Ideas
 
-- Replace V read/write by two special glyph.
 - Add a terminal control glyph for special cmds.
 - Open folder/switch file.
 - Add color special glyph.
-
-

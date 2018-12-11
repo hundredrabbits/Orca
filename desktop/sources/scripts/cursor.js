@@ -60,7 +60,7 @@ function Cursor (orca, terminal) {
     terminal.history.record()
   }
 
-  this.erase = function (g) {
+  this.erase = function () {
     if (this.w === 1 && this.h === 1 && orca.glyphAt(this.x, this.y) === '.') { this.move(-1, 0); return } // Backspace Effect
     this.eraseBlock(this.x, this.y, this.w, this.h)
     this.reset()
