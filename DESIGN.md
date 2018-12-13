@@ -6,7 +6,7 @@
 | Math       | A I M R
 | Logic      | F
 | Timers     | C D
-| Writers    | X G P
+| Writers    | G P X 
 | Readers    | O Q T
 | Jumpers    | J Y
 | Misc       | B H K L U V
@@ -21,7 +21,7 @@
 
 ## Attributes
 
-| ID# | Glyph | Rating | Stable | Passive | Outputs
+| ID# | Glyph | Rating | Stable | Idle    | Outputs
 | --- | ----- | ------ | ------ | ------- | -------
 | 10  | A     | +++++  | X      |         | Any
 | 11  | B     | ?      |        |         | *
@@ -49,11 +49,11 @@
 | 33  | X     | ++++   | X      | X       | Any - Unlocked
 | 34  | Y     | +++    | X      |         | Any
 | 35  | Z     | ?      |        |         | 
-| 36  | *     | +++++  | X      | X       | 
-| 37  | #     | +++++  | X      | X       | 
+| 36  | *     | +++++  | X      |         | 
+| 37  | #     | +++++  | X      |         | 
 | 38  | ;     | +++++  | X      | X       | 
 | 39  | :     | +++++  | X      | X       | 
-| 40  | !     | +++++  | X      | X       | *
+| 40  | !     | +++++  | X      |         | *
 
 ## Ideas
 

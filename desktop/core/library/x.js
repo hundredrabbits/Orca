@@ -20,7 +20,7 @@ function OperatorX (orca, x, y, passive) {
   }
 
   this.run = function () {
-    if (!this.bang() && !passive) { return }
+    if (!this.bang()) { return }
 
     this.draw = false
 
