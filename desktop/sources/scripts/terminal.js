@@ -21,6 +21,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   this.theme = new Theme(noir, pale)
 
   this.el = document.createElement('canvas')
+  this.context = this.el.getContext('2d')
   this.size = { width: tile.w * orca.w, height: tile.h * orca.h + (tile.h * 3), ratio: 0.5, grid: { w: 8, h: 8 } }
   this.isPaused = false
   this.timer = null
@@ -175,12 +176,8 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
 
   // Canvas
 
-  this.context = function () {
-    return this.el.getContext('2d')
-  }
-
   this.clear = function () {
-    this.context().clearRect(0, 0, this.size.width, this.size.height)
+    this.context.clearRect(0, 0, this.size.width, this.size.height)
   }
 
   this.guide = function (x, y) {
@@ -216,7 +213,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   }
 
   this.drawSprite = function (x, y, g, styles = { isCursor: false, isSelection: false, isPort: false, f: null, b: null }) {
-    const ctx = this.context()
+    const ctx = this.context
 
     ctx.textBaseline = 'bottom'
     ctx.textAlign = 'center'
