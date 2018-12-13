@@ -107,7 +107,7 @@ function IO (terminal) {
   }
 
   function convertLength (val, bpm) {
-    return (60000 / bpm) / val
+    return (60000 / bpm) * (val / 15)
   }
 
   // Setup

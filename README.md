@@ -95,11 +95,11 @@ The midi operator `:` takes up to 5 inputs('channel, 'octave, 'note, velocity, l
 
 #### Velocity*
 
-Velocity is either from `0-9`(10 steps), or `A-Z`(26 steps). For example, `:34C8`, is a **C note, on the 4th octave, through the 4th MIDI channel with a velocity of 112/127(88%)**, `:34CT`, is a **C note, on the 4th octave, through the 4th MIDI channel with a velocity of 96/127(75%)**. 
+Velocity is a value from `1`(8/127) to `g`(127/127). For example, `:34C8.`, is a **C note, on the 4th octave, through the 4th MIDI channel with a velocity of 63/127(50%)**, `:34CG.`, is a **C note, on the 4th octave, through the 4th MIDI channel with a velocity of 127/127(100%)**. 
 
 #### Note Length*
 
-Note length is a value from `1-f`, which is a ratio of a full bar, *1* being `1/1`(a full bar), *2* being `1/2`(half), *3* being `1/3`(third).. and *f* being `1/16`. For example, `:27FZ4`, is a **F note, on the 7th octave, through the 3rd MIDI channel with a velocity of 100%, lasting for 1/4 of a bar**. 
+Note length is a value from `1`(1/16) to `g`(16/16), which is a ratio of a full bar, *f* being `16/16`(a full bar), *8* being `1/2`(half), *4* being `1/4`(quarter).. and *1* being `1/16`. For example, `:27D.F`, is a **D note, on the 7th octave, through the 3rd MIDI channel lasting for a full bar**. 
 
 ### UDP Output
 

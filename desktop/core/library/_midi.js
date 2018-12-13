@@ -20,8 +20,10 @@ function OperatorMidi (orca, x, y, passive) {
     let rawChannel = this.listen(this.ports.input.channel)
     let rawOctave = this.listen(this.ports.input.octave, true)
     let rawNote = this.listen(this.ports.input.note)
+    let rawVelocity = this.listen(this.ports.haste.velocity)
+    let rawLength = this.listen(this.ports.haste.length)
 
-    if (rawChannel === '.' || orca.valueOf(rawChannel) > 15 || rawOctave === 0 || rawOctave > 8 || rawNote === '.') { return }
+    if (rawChannel === '.' || orca.valueOf(rawChannel) > 15 || rawOctave === 0 || rawOctave > 8 || rawNote === '.' || rawVelocity === '0' || rawLength === '0') { return }
 
     // 0 - 16
     const channel = clamp(orca.valueOf(rawChannel), 0, 15)
@@ -29,20 +31,16 @@ function OperatorMidi (orca, x, y, passive) {
     const octave = clamp(rawNote === 'b' ? rawOctave + 1 : rawOctave, 1, 9)
     // 0 - 11
     const note = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'].indexOf(rawNote === 'e' ? 'F' : rawNote === 'b' ? 'C' : rawNote)
-    // 0 - 127
-    const velocity = convertVelocity(this.listen(this.ports.haste.velocity, true), 127)
-    // 0 - 16
-    const length = clamp(this.listen(this.ports.haste.length, true), 1, 16)
+    // 0 - F(127)
+    const velocity = rawVelocity === '.' ? 127 : parseInt((clamp(orca.valueOf(rawVelocity), 1, 15) / 15) * 127)
+    // 0 - F(15)
+    const length = clamp(orca.valueOf(rawLength), 1, 15)
 
     if (note < 0) { console.warn(`Unknown note:${rawNote}`); return }
 
     this.draw = false
 
     terminal.io.sendMidi(channel, octave, note, velocity, length)
-  }
-
-  function convertVelocity (val, max) {
-    return parseInt((!val ? 1 : val < 10 ? (val / 9) : (val - 10) / 25) * max)
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

@@ -18,45 +18,26 @@ function OperatorV (orca, x, y, passive) {
     this.storage.write = this.listen(this.ports.haste.write)
     this.storage.read = this.listen(this.ports.input.read)
 
-    if (!this.isWritting()) { return }
-
-    this.ports.output = null
+    if (this.storage.write !== '.' && this.storage.read !== '.') {
+      this.ports.output = null
+    }
   }
 
   this.run = function () {
-    if (!this.isReading()) { return }
+    if (this.storage.write !== '.' || this.storage.read === '.') { return }
 
-    const key = this.storage.read
-    const res = this.read(key)
-
-    this.output(`${res}`)
-  }
-
-  this.isWritting = function () {
-    const key = this.storage.write
-    const val = this.storage.read
-
-    return key !== '.' && val !== '.'
-  }
-
-  this.isReading = function () {
-    const key = this.storage.write
-    const val = this.storage.read
-
-    return key === '.' && val !== '.'
-  }
-
-  this.read = function (key) {
     for (const id in orca.runtime) {
       const operator = orca.runtime[id]
       if (orca.lockAt(operator.x, operator.y)) { continue }
       const glyph = operator.glyph.toLowerCase()
       if (glyph !== 'v') { continue }
       const write = operator.storage.write
-      if (write !== key) { continue }
-      return operator.storage.read
+      if (write !== this.storage.read) { continue }
+      this.output(operator.storage.read)
+      return
     }
-    return '.'
+
+    this.output('.')
   }
 }
 
