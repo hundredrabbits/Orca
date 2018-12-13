@@ -18,7 +18,9 @@ function Orca (library = {}) {
     this.f += 1
   }
 
-  this.reset = function () {
+  this.reset = function (w = this.w, h = this.h) {
+    this.w = w
+    this.h = h
     this.s = new Array((this.h * this.w) + 1).join('.')
   }
 

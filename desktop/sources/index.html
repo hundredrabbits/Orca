@@ -13,11 +13,8 @@
   </head>
   <body>
     <script>     
-      const Orca = require('../core/orca')
-      const library = require('../core/library')
       const Terminal = require('./scripts/terminal')
 
-      const orca = new Orca(library)
       const terminal = new Terminal(orca)
       
       const { app } = require('electron').remote
@@ -58,8 +55,6 @@
       terminal.controller.add("default","Program","Decr. Col",() => { terminal.modGrid(-1,0); },"[")
       terminal.controller.add("default","Program","Incr. Row",() => { terminal.modGrid(0,1); },"}")
       terminal.controller.add("default","Program","Decr. Row",() => { terminal.modGrid(0,-1); },"{")
-
-      terminal.controller.add("default","Keyboard","Toggle Play Mode",() => { terminal.cursor.toggleMode(2); },"/")
 
       terminal.controller.add("default","Theme","Open Theme",() => { terminal.theme.open(); },"CmdOrCtrl+Shift+o")
       terminal.controller.add("default","Theme","Reset Theme",() => { terminal.theme.reset(); },"CmdOrCtrl+Shift+Backspace")

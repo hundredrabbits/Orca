@@ -24,6 +24,7 @@ function Cursor (orca, terminal) {
     this.w = 1
     this.h = 1
     this.mode = 0
+    terminal.enter()
   }
 
   this.selectAll = function () {
@@ -68,6 +69,10 @@ function Cursor (orca, terminal) {
   }
 
   this.toggleMode = function (val) {
+    if (orca.glyphAt(this.x, this.y) === '/') {
+      terminal.enter(orca.s.charAt(orca.indexAt(this.x, this.y) - 1))
+      return
+    }
     this.mode = this.mode === 0 ? val : 0
   }
 
