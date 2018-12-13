@@ -23,10 +23,6 @@ function OperatorP (orca, x, y, passive) {
   }
 
   this.run = function () {
-    if (!this.bang()) { return }
-
-    this.draw = false
-
     const res = this.listen(this.ports.input.val)
     this.output(`${res}`)
   }

@@ -25,10 +25,6 @@ function OperatorG (orca, x, y, passive) {
   }
 
   this.run = function () {
-    if (!this.bang()) { return }
-
-    this.draw = false
-
     // Read
     let str = ''
     for (const id in this.ports.input) {
