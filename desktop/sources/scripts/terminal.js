@@ -99,7 +99,7 @@ function Terminal (tile = { w: 20, h: 30 }) {
 
     this.room = this.rooms[id]
     this.room.id = id
-    this.resize(false)
+    this.resize(this.room.id === 'hall')
     this.update()
   }
 
