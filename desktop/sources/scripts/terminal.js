@@ -93,7 +93,7 @@ function Terminal (tile = { w: 20, h: 30 }) {
   }
 
   this.enter = function (id = 'hall') {
-    if (!this.rooms[id]) { this.rooms[id] = new Orca(library); this.rooms[id].reset(20, 13) }
+    if (!this.rooms[id]) { this.rooms[id] = new Orca(library); this.rooms[id].reset(33, 17) }
     console.log(`Enterting Room:${id}`)
     this.room = this.rooms[id]
     this.resize(false)

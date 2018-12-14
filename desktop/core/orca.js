@@ -105,6 +105,16 @@ function Orca (library = {}) {
     this.locks.push(`${x}:${y}`)
   }
 
+  // IO
+
+  this.input = function (g) {
+    this.write(0, 0, g)
+  }
+
+  this.output = function () {
+    return this.s.charAt(this.s.length - 1)
+  }
+
   // Helpers
 
   this.inBounds = function (x, y) {
