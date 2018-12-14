@@ -87,6 +87,12 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `ctrl/meta+}` increase program size horizontally.
 - `ctrl/meta+{` decrease program size horizontally.
 
+### Window
+
+- `ctrl+=` Zoom In.
+- `ctrl+-` Zoom Out.
+- `ctrl+0` Zoom Reset.
+
 ## Special Operators
 
 ### Midi Output
