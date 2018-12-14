@@ -1,6 +1,6 @@
 'use strict'
 
-function Cursor (orca, terminal) {
+function Cursor (terminal) {
   this.x = 0
   this.y = 0
   this.w = 1
@@ -9,18 +9,19 @@ function Cursor (orca, terminal) {
   this.block = []
 
   this.move = function (x, y) {
-    this.x = clamp(this.x + x, 0, orca.w - 1)
-    this.y = clamp(this.y - y, 0, orca.h - 1)
+    this.x = clamp(this.x + x, 0, terminal.room.w - 1)
+    this.y = clamp(this.y - y, 0, terminal.room.h - 1)
     terminal.update()
   }
 
   this.scale = function (x, y) {
-    this.w = clamp(this.w + x, 1, orca.w - this.x)
-    this.h = clamp(this.h - y, 1, orca.h - this.y)
+    this.w = clamp(this.w + x, 1, terminal.room.w - this.x)
+    this.h = clamp(this.h - y, 1, terminal.room.h - this.y)
     terminal.update()
   }
 
   this.reset = function () {
+    this.move(0, 0)
     this.w = 1
     this.h = 1
     this.mode = 0
@@ -30,8 +31,8 @@ function Cursor (orca, terminal) {
   this.selectAll = function () {
     this.x = 0
     this.y = 0
-    this.w = orca.w
-    this.h = orca.h
+    this.w = terminal.room.w
+    this.h = terminal.room.h
     this.mode = 0
     terminal.update()
   }
@@ -54,7 +55,7 @@ function Cursor (orca, terminal) {
       terminal.io.sendKey(event.key)
       return
     }
-    orca.write(this.x, this.y, g)
+    terminal.room.write(this.x, this.y, g)
     if (this.mode === 1) {
       this.move(1, 0)
     }
@@ -62,15 +63,14 @@ function Cursor (orca, terminal) {
   }
 
   this.erase = function () {
-    if (this.w === 1 && this.h === 1 && orca.glyphAt(this.x, this.y) === '.') { this.move(-1, 0); return } // Backspace Effect
+    if (this.w === 1 && this.h === 1 && terminal.room.glyphAt(this.x, this.y) === '.') { this.move(-1, 0); return } // Backspace Effect
     this.eraseBlock(this.x, this.y, this.w, this.h)
-    this.reset()
     terminal.history.record()
   }
 
   this.toggleMode = function (val) {
-    if (orca.glyphAt(this.x, this.y) === '/') {
-      terminal.enter(orca.s.charAt(orca.indexAt(this.x, this.y) - 1))
+    if (terminal.room.glyphAt(this.x, this.y) === '/') {
+      terminal.enter(terminal.room.s.charAt(terminal.room.indexAt(this.x, this.y) - 1))
       return
     }
     this.mode = this.mode === 0 ? val : 0
@@ -80,7 +80,7 @@ function Cursor (orca, terminal) {
     if (this.w > 1 || this.h > 1) { return 'multi' }
     const port = terminal.portAt(this.x, this.y)
     if (port) { return `${port.name}` }
-    if (orca.lockAt(this.x, this.y)) { return 'locked' }
+    if (terminal.room.lockAt(this.x, this.y)) { return 'locked' }
     return 'empty'
   }
 
@@ -91,7 +91,7 @@ function Cursor (orca, terminal) {
     for (let _y = rect.y; _y < rect.y + rect.h; _y++) {
       const line = []
       for (let _x = rect.x; _x < rect.x + rect.w; _x++) {
-        line.push(orca.glyphAt(_x, _y))
+        line.push(terminal.room.glyphAt(_x, _y))
       }
       block.push(line)
     }
@@ -104,7 +104,7 @@ function Cursor (orca, terminal) {
     for (const lineId in block) {
       let _x = rect.x
       for (const glyphId in block[lineId]) {
-        orca.write(_x, _y, block[lineId][glyphId])
+        terminal.room.write(_x, _y, block[lineId][glyphId])
         _x++
       }
       _y++
@@ -115,7 +115,7 @@ function Cursor (orca, terminal) {
   this.eraseBlock = function (x, y, w, h) {
     for (let _y = y; _y < y + h; _y++) {
       for (let _x = x; _x < x + w; _x++) {
-        orca.write(_x, _y, '.')
+        terminal.room.write(_x, _y, '.')
       }
     }
     terminal.history.record()

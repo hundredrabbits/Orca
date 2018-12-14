@@ -1,6 +1,6 @@
 'use strict'
 
-function Source (orca, terminal) {
+function Source (terminal, orca = terminal.room) {
   const fs = require('fs')
   const { dialog, app } = require('electron').remote
 

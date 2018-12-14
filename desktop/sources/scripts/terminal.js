@@ -1,23 +1,23 @@
 'use strict'
 
-function Terminal (orca, tile = { w: 20, h: 30 }) {
+function Terminal (tile = { w: 20, h: 30 }) {
   const library = require('../../core/library')
-  const Orca = require('../core/orca')
+  const Orca = require('../../core/orca')
   const Cursor = require('./cursor')
   const Source = require('./source')
   const History = require('./history')
   const Keyboard = require('./keyboard')
   const IO = require('./io')
 
-  this.io = new IO(this)
-  this.cursor = new Cursor(orca, this)
-  this.source = new Source(orca, this)
-  this.history = new History(orca, this)
-  this.keyboard = new Keyboard(orca, this)
-  this.controller = new Controller()
-
   this.rooms = { hall: new Orca(library) }
   this.room = this.rooms.hall
+
+  this.io = new IO(this)
+  this.cursor = new Cursor(this)
+  this.source = new Source(this)
+  this.history = new History(this)
+  this.keyboard = new Keyboard(this)
+  this.controller = new Controller()
 
   // Themes
   const noir = { background: '#111111', f_high: '#ffffff', f_med: '#777777', f_low: '#444444', f_inv: '#000000', b_high: '#eeeeee', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffb545' }

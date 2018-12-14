@@ -9,6 +9,7 @@ function OperatorRoom (orca, x, y, passive) {
   this.info = 'Hosts a nested Orca grid.'
 
   this.ports.haste.id = { x: -1, y: 0 }
+  this.ports.output = { x: 0, y: 1 }
 
   this.run = function () {
     const id = this.listen(this.ports.haste.id)

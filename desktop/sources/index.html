@@ -14,9 +14,7 @@
   <body>
     <script>     
       const Terminal = require('./scripts/terminal')
-
-      const terminal = new Terminal(orca)
-      
+      const terminal = new Terminal()
       const { app } = require('electron').remote
 
       terminal.install(document.body)
