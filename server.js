@@ -9,7 +9,7 @@ function run (data,frames) {
 
   const Orca = require('./desktop/core/orca')
   const library = require('./desktop/core/library')
-  const orca = new Orca(library)
+  const orca = new Orca(terminal)
 
   const w = data.split('\n')[0].length
   const h = data.split('\n').length

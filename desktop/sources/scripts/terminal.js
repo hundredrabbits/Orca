@@ -1,7 +1,6 @@
 'use strict'
 
 function Terminal (tile = { w: 20, h: 30 }) {
-  const library = require('../../core/library')
   const Orca = require('../../core/orca')
   const Cursor = require('./cursor')
   const Source = require('./source')
@@ -9,8 +8,7 @@ function Terminal (tile = { w: 20, h: 30 }) {
   const Keyboard = require('./keyboard')
   const IO = require('./io')
 
-  this.rooms = { hall: new Orca(library) }
-  this.room = this.rooms.hall
+  this.library = require('../../core/library')
 
   this.io = new IO(this)
   this.cursor = new Cursor(this)
@@ -27,23 +25,23 @@ function Terminal (tile = { w: 20, h: 30 }) {
 
   this.el = document.createElement('canvas')
   this.context = this.el.getContext('2d')
-  this.size = { width: tile.w * this.room.w, height: tile.h * this.room.h + (tile.h * 3), ratio: 0.5, grid: { w: 8, h: 8 } }
+  this.size = { width: 0, height: 0, ratio: 0.5, grid: { w: 8, h: 8 } }
   this.isPaused = false
   this.timer = null
   this.bpm = 120
 
   this.install = function (host) {
-    this.resize()
     host.appendChild(this.el)
     this.theme.install(host)
-    this.room.terminal = this
   }
 
   this.start = function () {
     this.theme.start()
     this.io.start()
+    this.source.new()
     this.history.record()
     this.setSpeed(120)
+    this.resize()
     this.update()
     this.el.className = 'ready'
   }
@@ -92,10 +90,21 @@ function Terminal (tile = { w: 20, h: 30 }) {
     this.theme.reset()
   }
 
+  this.create = function (id) {
+    console.log(`Creating Room:${id}`)
+    this.rooms[id] = new Orca(this)
+    this.rooms[id].reset(33, 17)
+  }
+
   this.enter = function (id = 'hall') {
-    if (!this.rooms[id]) { this.rooms[id] = new Orca(library); this.rooms[id].reset(33, 17) }
+    if (!this.rooms[id]) {
+      this.create(id)
+    }
+
     console.log(`Enterting Room:${id}`)
+
     this.room = this.rooms[id]
+    this.room.id = id
     this.resize(false)
     this.update()
   }
@@ -216,7 +225,7 @@ function Terminal (tile = { w: 20, h: 30 }) {
     this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1, this.size.grid.w)
     this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.size.grid.w)
     this.write(`${this.cursor.inspect()}`, col * 2, 1, this.size.grid.w)
-    this.write(`${this.source}${this.cursor.mode === 2 ? '^' : this.cursor.mode === 1 ? '+' : ''}`, col * 3, 1, this.size.grid.w)
+    this.write(`${this.source}${this.cursor.mode === 2 ? '^' : this.cursor.mode === 1 ? '+' : ''}${this.room.id && this.room.id !== 'hall' ? '/' + this.room.id : ''}`, col * 3, 1, this.size.grid.w)
     // Grid
     this.write(`${this.room.w}x${this.room.h}`, col * 0, 0, this.size.grid.w)
     this.write(`${this.size.grid.w}/${this.size.grid.h}`, col * 1, 0, this.size.grid.w)

@@ -2,10 +2,10 @@
 
 const Operator = require('../operator')
 
-function OperatorRoom (orca, x, y, passive) {
+function OperatorDoor (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '/', true)
 
-  this.name = 'room'
+  this.name = 'door'
   this.info = 'Hosts a nested Orca grid.'
 
   this.ports.input.val = { x: 1, y: 0 }
@@ -25,4 +25,4 @@ function OperatorRoom (orca, x, y, passive) {
   }
 }
 
-module.exports = OperatorRoom
+module.exports = OperatorDoor

@@ -1,6 +1,7 @@
 'use strict'
 
-function Source (terminal, orca = terminal.room) {
+function Source (terminal) {
+  const Orca = require('../../core/orca')
   const fs = require('fs')
   const { dialog, app } = require('electron').remote
 
@@ -8,10 +9,12 @@ function Source (terminal, orca = terminal.room) {
 
   this.new = function () {
     console.log('New')
-    orca.w = 65
-    orca.h = 25
-    orca.reset()
+
     this.path = null
+
+    terminal.rooms = { hall: new Orca(terminal) }
+    terminal.room = terminal.rooms.hall
+    terminal.enter()
     terminal.resize()
     terminal.history.reset()
   }
@@ -26,6 +29,8 @@ function Source (terminal, orca = terminal.room) {
 
   this.save = function (as = false) {
     console.log('Save')
+    this.generate()
+    return
     if (this.path && !as) {
       this.write(this.path)
     } else {
@@ -52,7 +57,7 @@ function Source (terminal, orca = terminal.room) {
   // I/O
 
   this.write = function (path) {
-    fs.writeFile(path, `${orca}`, (err) => {
+    fs.writeFile(path, this.generate(), (err) => {
       if (err) { alert('An error ocurred updating the file' + err.message); console.log(err) }
     })
   }
@@ -63,6 +68,23 @@ function Source (terminal, orca = terminal.room) {
       terminal.load(data.trim())
       terminal.history.record()
     })
+  }
+
+  // Converters
+
+  this.parse = function (text) {
+
+  }
+
+  this.generate = function (rooms = terminal.rooms) {
+    let html = `${rooms.hall}\n\n`
+    for (const id in rooms) {
+      if (id !== 'hall') {
+        const room = rooms[id]
+        html += `$${id}\n\n${room}\n\n`
+      }
+    }
+    return html.trim()
   }
 
   this.name = function () {

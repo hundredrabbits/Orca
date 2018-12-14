@@ -1,12 +1,14 @@
 'use strict'
 
-function Orca (library = {}) {
+const library = require('./library')
+
+function Orca (terminal) {
   this.w = 65 // Default Width
   this.h = 25 // Default Height
   this.s = '' // String
   this.f = 0 // Frame
 
-  this.terminal = null
+  this.terminal = terminal
   this.keys = Object.keys(library)
   this.locks = []
   this.ports = {}
