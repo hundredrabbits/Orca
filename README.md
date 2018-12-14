@@ -52,7 +52,6 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `*` **bang**: Bangs neighboring operators.
 - `;` **udp**('len): Sends a string via UDP to localhost.
 - `:` **midi**('velocity, 'length, channel, octave, note): Sends Midi a midi note.
-- `!` **keys**(key): Bangs on keyboard input.
 - `#` **comment**: Comments a line, or characters until the next hash.
 
 ## Controls
@@ -87,6 +86,12 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `ctrl/meta+}` increase program size horizontally.
 - `ctrl/meta+{` decrease program size horizontally.
 
+### Window
+
+- `ctrl+=` Zoom In.
+- `ctrl+-` Zoom Out.
+- `ctrl+0` Zoom Reset.
+
 ## Special Operators
 
 ### Midi Output
@@ -104,10 +109,6 @@ Note length is a value from `1`(1/16) to `g`(16/16), which is a ratio of a full 
 ### UDP Output
 
 The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback) operator `;`, takes one haste input that is a string length and locks the eastwardly ports. It sends the message on bang to the port `49160`. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test UDP messages. See it in action with [udp.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_udp.orca).
-
-### Keyboard Input
-
-The keys operator `!` will bang on a corresponding keyboard keypress when the cursor is in **keyboard mode**(toggle with `/`). For instance, `!a`, will output a bang when pressing the `a` key in **keyboard mode**. See it in action with the [keys.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_keys.orca).
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.hardware.jpg' width="600"/>
 

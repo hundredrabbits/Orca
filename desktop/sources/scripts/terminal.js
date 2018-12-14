@@ -151,6 +151,12 @@ function Terminal (tile = { w: 20, h: 30 }) {
     this.setSize(w, h)
   }
 
+  this.modZoom = function (mod = 0, set = false) {
+    const { webFrame } = require('electron')
+    const currentZoomFactor = webFrame.getZoomFactor()
+    webFrame.setZoomFactor(set ? mod : currentZoomFactor + mod)
+  }
+
   //
 
   this.isCursor = function (x, y) {

@@ -41,6 +41,5 @@ module.exports = {
   '#': require('./library/_comment'),
   ';': require('./library/_udp'),
   ':': require('./library/_midi'),
-  '!': require('./library/_keys'),
   '/': require('./library/_door')
 }
