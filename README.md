@@ -60,7 +60,6 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 
 - `enter` toggle insert/write.
 - `space` toggle play/pause.
-- `/` toggle insert/keys.
 - `shift+arrow` resize cursor size.
 - `ctrl/meta+arrow` jump cursor position.
 - `>` increase BPM.
