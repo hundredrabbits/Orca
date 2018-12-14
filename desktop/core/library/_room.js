@@ -13,8 +13,8 @@ function OperatorRoom (orca, x, y, passive) {
 
   this.run = function () {
     const id = this.listen(this.ports.haste.id)
-    // console.log(id,orca.terminal.rooms[id])
-    // orca.terminal.rooms[id].run()
+    if(!orca.terminal.rooms[id]){ return }
+    orca.terminal.rooms[id].run()
   }
 }
 
