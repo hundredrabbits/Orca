@@ -29,8 +29,6 @@ function Source (terminal) {
 
   this.save = function (as = false) {
     console.log('Save')
-    this.generate()
-    return
     if (this.path && !as) {
       this.write(this.path)
     } else {
@@ -48,12 +46,6 @@ function Source (terminal) {
     this.read(this.path)
   }
 
-  this.close = function () {
-    console.log('Close')
-    orca.reset()
-    this.path = null
-  }
-
   // I/O
 
   this.write = function (path) {
@@ -63,29 +55,53 @@ function Source (terminal) {
   }
 
   this.read = function (path) {
-    fs.readFile(path, 'utf8', function (err, data) {
+    fs.readFile(path, 'utf8', (err, data) => {
       if (err) throw err
-      terminal.load(data.trim())
+      const rooms = this.parse(data)
+      terminal.load(rooms)
       terminal.history.record()
     })
   }
 
   // Converters
 
-  this.parse = function (text) {
-
-  }
-
   this.generate = function (rooms = terminal.rooms) {
     let html = `${rooms.hall}\n\n`
     for (const id in rooms) {
       if (id !== 'hall') {
         const room = rooms[id]
-        html += `$${id}\n\n${room}\n\n`
+        html += `${id}\n\n${room}\n\n`
       }
     }
     return html.trim()
   }
+
+  this.parse = function (text) {
+    const lines = text.split('\n')
+    const blocks = { hall: [] }
+    const rooms = { hall: [] }
+    const room = []
+    let key = 'hall'
+    // Blocks
+    for (const id in lines) {
+      const line = lines[id].trim()
+      if (line.length === 0) { continue }
+      if (line.length === 1) { key = line; continue }
+      if (!blocks[key]) { blocks[key] = [] }
+      blocks[key].push(line)
+    }
+    // Rooms
+    for (const id in blocks) {
+      const block = blocks[id]
+      const w = block[0].length
+      const h = block.length
+      const s = block.join('\n').trim()
+      rooms[id] = new Orca(terminal).load(w, h, s)
+    }
+    return rooms
+  }
+
+  // Etc
 
   this.name = function () {
     const parts = this.path.split('/')

@@ -31,6 +31,7 @@ function Orca (terminal) {
     this.h = h
     this.f = f
     this.s = this.clean(s)
+    return this
   }
 
   this.write = function (x, y, g) {

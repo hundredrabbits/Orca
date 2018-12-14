@@ -60,16 +60,10 @@ function Terminal (tile = { w: 20, h: 30 }) {
     this.update()
   }
 
-  this.load = function (data, frame = 0) {
-    if (!data) { return }
-    const w = data.split('\n')[0].length
-    const h = data.split('\n').length
-    if (w < 10 || h < 10) { console.warn('Too small'); return }
-    if (w > 121 || h > 49) { console.warn('Too large'); return }
-    console.log(`Loading ${w}x${h}`)
-    this.room.load(w, h, data, frame)
-    this.resize()
-    this.update()
+  this.load = function (rooms, frame = 0) {
+    console.log(rooms)
+    this.rooms = rooms
+    this.enter()
   }
 
   this.crop = function () {
