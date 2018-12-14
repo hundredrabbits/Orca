@@ -5,7 +5,7 @@ function IO (terminal) {
 
   this.midi = { device: 0 }
   this.outputs = []
-  this.stack = { keys: [] }
+  this.stack = { }
 
   this.start = function () {
     this.clear()
@@ -26,16 +26,6 @@ function IO (terminal) {
     for (const id in this.stack.midi) {
       this.playMidi(this.stack.midi[id])
     }
-  }
-
-  // Keyboard
-
-  this.sendKey = function (key) {
-    this.stack.keys = [key]
-  }
-
-  this.playKey = function (key) {
-    // Idle. Read by the ! operator.
   }
 
   // UDP
@@ -131,7 +121,7 @@ function IO (terminal) {
   }
 
   this.length = function () {
-    return this.stack.udp.length + this.stack.midi.length + this.stack.keys.length
+    return this.stack.udp.length + this.stack.midi.length
   }
 
   this.toString = function () {
