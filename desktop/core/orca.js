@@ -142,6 +142,10 @@ function Orca (terminal, host = null) {
     return x + (this.w * y)
   }
 
+  this.posAt = function (index) {
+    return { x: index % this.w, y: parseInt(index / this.w) }
+  }
+
   this.glyphAt = function (x, y, req = null) {
     return this.s.charAt(this.indexAt(x, y))
   }

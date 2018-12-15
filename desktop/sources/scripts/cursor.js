@@ -20,12 +20,15 @@ function Cursor (terminal) {
     terminal.update()
   }
 
-  this.reset = function () {
+  this.reset = function (pos = false) {
+    if (pos) {
+      this.x = 0
+      this.y = 0
+    }
     this.move(0, 0)
     this.w = 1
     this.h = 1
     this.mode = 0
-    terminal.enter()
   }
 
   this.selectAll = function () {
@@ -66,6 +69,14 @@ function Cursor (terminal) {
     if (this.w === 1 && this.h === 1 && terminal.room.glyphAt(this.x, this.y) === '.') { this.move(-1, 0); return } // Backspace Effect
     this.eraseBlock(this.x, this.y, this.w, this.h)
     terminal.history.record()
+  }
+
+  this.goto = function (str, room = terminal.rooms.lobby) {
+    const i = room.s.indexOf(str)
+    if (i < 0) { return }
+    const pos = room.posAt(i)
+    this.x = pos.x+1
+    this.y = pos.y
   }
 
   this.toggleMode = function (val) {

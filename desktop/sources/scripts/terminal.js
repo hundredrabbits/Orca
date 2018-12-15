@@ -88,6 +88,12 @@ function Terminal (tile = { w: 20, h: 30 }) {
       this.create(id)
     }
 
+    if (id === 'lobby') {
+      this.cursor.goto(this.room.id + '/')
+    } else {
+      this.cursor.reset(true)
+    }
+
     console.log(`Enterting Room:${id}`)
 
     this.room = this.rooms[id]
