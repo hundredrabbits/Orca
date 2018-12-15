@@ -61,6 +61,7 @@ function Terminal (tile = { w: 20, h: 30 }) {
   }
 
   this.load = function (rooms, frame = 0) {
+    this.history.reset()
     this.rooms = rooms
     this.enter()
   }
