@@ -1,12 +1,16 @@
 'use strict'
 
-function Orca (library = {}) {
+const library = require('./library')
+
+function Orca (terminal, host = null) {
   this.w = 65 // Default Width
   this.h = 25 // Default Height
   this.s = '' // String
-  this.f = 0 // Frame
+  this.f = host ? host.f : 0 // Frame
 
-  this.terminal = null
+  this.host = host
+
+  this.terminal = terminal
   this.keys = Object.keys(library)
   this.locks = []
   this.ports = {}
@@ -18,7 +22,9 @@ function Orca (library = {}) {
     this.f += 1
   }
 
-  this.reset = function () {
+  this.reset = function (w = this.w, h = this.h) {
+    this.w = w
+    this.h = h
     this.s = new Array((this.h * this.w) + 1).join('.')
   }
 
@@ -27,6 +33,7 @@ function Orca (library = {}) {
     this.h = h
     this.f = f
     this.s = this.clean(s)
+    return this
   }
 
   this.write = function (x, y, g) {
@@ -101,6 +108,16 @@ function Orca (library = {}) {
   this.lock = function (x, y) {
     if (this.lockAt(x, y)) { return }
     this.locks.push(`${x}:${y}`)
+  }
+
+  // IO
+
+  this.input = function (g) {
+    this.write(0, 0, g)
+  }
+
+  this.output = function () {
+    return this.s.charAt(this.s.length - 1)
   }
 
   // Helpers

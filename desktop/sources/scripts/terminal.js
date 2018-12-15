@@ -1,17 +1,20 @@
 'use strict'
 
-function Terminal (orca, tile = { w: 20, h: 30 }) {
+function Terminal (tile = { w: 20, h: 30 }) {
+  const Orca = require('../../core/orca')
   const Cursor = require('./cursor')
   const Source = require('./source')
   const History = require('./history')
   const Keyboard = require('./keyboard')
   const IO = require('./io')
 
+  this.library = require('../../core/library')
+
   this.io = new IO(this)
-  this.cursor = new Cursor(orca, this)
-  this.source = new Source(orca, this)
-  this.history = new History(orca, this)
-  this.keyboard = new Keyboard(orca, this)
+  this.cursor = new Cursor(this)
+  this.source = new Source(this)
+  this.history = new History(this)
+  this.keyboard = new Keyboard(this)
   this.controller = new Controller()
 
   // Themes
@@ -22,23 +25,23 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
 
   this.el = document.createElement('canvas')
   this.context = this.el.getContext('2d')
-  this.size = { width: tile.w * orca.w, height: tile.h * orca.h + (tile.h * 3), ratio: 0.5, grid: { w: 8, h: 8 } }
+  this.size = { width: 0, height: 0, ratio: 0.5, grid: { w: 8, h: 8 } }
   this.isPaused = false
   this.timer = null
   this.bpm = 120
 
   this.install = function (host) {
-    this.resize()
     host.appendChild(this.el)
     this.theme.install(host)
-    orca.terminal = this
   }
 
   this.start = function () {
     this.theme.start()
     this.io.start()
+    this.source.new()
     this.history.record()
     this.setSpeed(120)
+    this.resize()
     this.update()
     this.el.className = 'ready'
   }
@@ -46,7 +49,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   this.run = function () {
     if (this.isPaused) { return }
     this.io.clear()
-    orca.run()
+    this.rooms.lobby.run()
     this.io.run()
     this.update()
   }
@@ -57,23 +60,10 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     this.update()
   }
 
-  this.load = function (data, frame = 0) {
-    if (!data) { return }
-    const w = data.split('\n')[0].length
-    const h = data.split('\n').length
-    if (w < 10 || h < 10) { console.warn('Too small'); return }
-    if (w > 121 || h > 49) { console.warn('Too large'); return }
-    console.log(`Loading ${w}x${h}`)
-    orca.load(w, h, data, frame)
-    this.resize()
-    this.update()
-  }
-
-  this.crop = function () {
-    const block = this.cursor.getBlock()
-    const data = block.reduce((acc, val) => { acc.push(val.join('')); return acc }, []).join('\n')
-    this.load(data)
-    this.cursor.selectAll()
+  this.load = function (rooms, frame = 0) {
+    this.history.reset()
+    this.rooms = rooms
+    this.enter()
   }
 
   this.update = function () {
@@ -85,6 +75,25 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
 
   this.reset = function () {
     this.theme.reset()
+  }
+
+  this.create = function (id) {
+    console.log(`Creating Room:${id}`)
+    this.rooms[id] = new Orca(this, this.rooms.lobby)
+    this.rooms[id].reset(33, 17)
+  }
+
+  this.enter = function (id = 'lobby') {
+    if (!this.rooms[id]) {
+      this.create(id)
+    }
+
+    console.log(`Enterting Room:${id}`)
+
+    this.room = this.rooms[id]
+    this.room.id = id
+    this.resize(this.room.id === 'lobby')
+    this.update()
   }
 
   //
@@ -105,18 +114,18 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
 
   this.setSize = function (w, h) {
     let block = `${orca}`
-    if (h > orca.h) {
-      block = `${block}${`\n${'.'.repeat(orca.w)}`.repeat((h - orca.h))}`
-    } else if (h < orca.h) {
-      block = `${block}`.split('\n').slice(0, (h - orca.h)).join('\n').trim()
+    if (h > this.room.h) {
+      block = `${block}${`\n${'.'.repeat(this.room.w)}`.repeat((h - this.room.h))}`
+    } else if (h < this.room.h) {
+      block = `${block}`.split('\n').slice(0, (h - this.room.h)).join('\n').trim()
     }
 
-    if (w > orca.w) {
-      block = `${block}`.split('\n').map((val) => { return val + ('.').repeat((w - orca.w)) }).join('\n').trim()
-    } else if (w < orca.w) {
-      block = `${block}`.split('\n').map((val) => { return val.substr(0, val.length + (w - orca.w)) }).join('\n').trim()
+    if (w > this.room.w) {
+      block = `${block}`.split('\n').map((val) => { return val + ('.').repeat((w - this.room.w)) }).join('\n').trim()
+    } else if (w < this.room.w) {
+      block = `${block}`.split('\n').map((val) => { return val.substr(0, val.length + (w - this.room.w)) }).join('\n').trim()
     }
-    this.load(block, orca.f)
+    this.load(block, this.room.f)
   }
 
   this.modSpeed = function (mod = 0) {
@@ -130,8 +139,8 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   }
 
   this.modSize = function (x = 0, y = 0) {
-    const w = ((parseInt(orca.w / this.size.grid.w) + x) * this.size.grid.w) + 1
-    const h = ((parseInt(orca.h / this.size.grid.h) + y) * this.size.grid.h) + 1
+    const w = ((parseInt(this.room.w / this.size.grid.w) + x) * this.size.grid.w) + 1
+    const h = ((parseInt(this.room.h / this.size.grid.h) + y) * this.size.grid.h) + 1
     this.setSize(w, h)
   }
 
@@ -157,9 +166,9 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
 
   this.findPorts = function () {
     const h = {}
-    for (const id in orca.runtime) {
-      const g = orca.runtime[id]
-      if (orca.lockAt(g.x, g.y)) { continue }
+    for (const id in this.room.runtime) {
+      const g = this.room.runtime[id]
+      if (this.room.lockAt(g.x, g.y)) { continue }
       // Default/Passive
       if (!h[`${g.x}:${g.y}`]) {
         h[`${g.x}:${g.y}`] = { type: g.passive && g.draw ? 'passive' : 'none', name: `${g.name}` }
@@ -187,17 +196,17 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
   }
 
   this.guide = function (x, y) {
-    const g = orca.glyphAt(x, y)
+    const g = this.room.glyphAt(x, y)
     if (g !== '.') { return g }
     if (x % this.size.grid.w === 0 && y % this.size.grid.h === 0) { return '+' }
     return g
   }
 
   this.drawProgram = function () {
-    for (let y = 0; y < orca.h; y++) {
-      for (let x = 0; x < orca.w; x++) {
+    for (let y = 0; y < this.room.h; y++) {
+      for (let x = 0; x < this.room.w; x++) {
         const port = this.ports[`${x}:${y}`]
-        const styles = { isSelection: this.isSelection(x, y), isCursor: this.isCursor(x, y), isPort: port ? port.type : false, isLocked: orca.lockAt(x, y) }
+        const styles = { isSelection: this.isSelection(x, y), isCursor: this.isCursor(x, y), isPort: port ? port.type : false, isLocked: this.room.lockAt(x, y) }
         this.drawSprite(x, y, this.guide(x, y), styles)
       }
     }
@@ -209,12 +218,12 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1, this.size.grid.w)
     this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.size.grid.w)
     this.write(`${this.cursor.inspect()}`, col * 2, 1, this.size.grid.w)
-    this.write(`${this.source}${this.cursor.mode === 2 ? '^' : this.cursor.mode === 1 ? '+' : ''}`, col * 3, 1, this.size.grid.w)
+    this.write(`${this.source}${this.cursor.mode === 2 ? '^' : this.cursor.mode === 1 ? '+' : ''}${this.room.id && this.room.id !== 'lobby' ? '/' + this.room.id : ''}`, col * 3, 1, this.size.grid.w)
     // Grid
-    this.write(`${orca.w}x${orca.h}`, col * 0, 0, this.size.grid.w)
+    this.write(`${this.room.w}x${this.room.h}`, col * 0, 0, this.size.grid.w)
     this.write(`${this.size.grid.w}/${this.size.grid.h}`, col * 1, 0, this.size.grid.w)
-    this.write(`${orca.f}f${this.isPaused ? '*' : ''}`, col * 2, 0, this.size.grid.w)
-    this.write(`${this.bpm}${orca.f % 4 === 0 ? '*' : ''}`, col * 3, 0, this.size.grid.w)
+    this.write(`${this.room.f}f${this.isPaused ? '*' : ''}`, col * 2, 0, this.size.grid.w)
+    this.write(`${this.bpm}${this.room.f % 4 === 0 ? '*' : ''}`, col * 3, 0, this.size.grid.w)
     this.write(`${this.io}`, col * 4, 0, this.size.grid.w)
   }
 
@@ -261,7 +270,7 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     let x = 0
     while (x < text.length && x < limit - 1) {
       const c = text.substr(x, 1)
-      this.drawSprite(offsetX + x, orca.h + offsetY, c, { f: 'f_high', b: 'background' })
+      this.drawSprite(offsetX + x, this.room.h + offsetY, c, { f: 'f_high', b: 'background' })
       x += 1
     }
   }
@@ -270,21 +279,23 @@ function Terminal (orca, tile = { w: 20, h: 30 }) {
     this.el.style.marginTop = (((window.innerHeight - (terminal.size.height * terminal.size.ratio)) / 2) - 20) + 'px'
   }
 
-  this.resize = function () {
-    this.size.width = tile.w * orca.w
-    this.size.height = tile.h * orca.h + (tile.h * 3)
+  this.resize = function (resizeWindow = true) {
+    this.size.width = tile.w * this.room.w
+    this.size.height = tile.h * this.room.h + (tile.h * 3)
     this.el.width = this.size.width
     this.el.height = this.size.height + tile.h
     this.el.style.width = (this.size.width * this.size.ratio) + 'px'
     this.el.style.height = (this.size.height * this.size.ratio) + 'px'
 
     this.align()
-    const { remote } = require('electron')
-    const win = remote.getCurrentWindow()
-    const width = parseInt((this.size.width * this.size.ratio) + 60)
-    const height = parseInt((this.size.height * this.size.ratio) + 30)
 
-    win.setSize(width, height, true)
+    if (resizeWindow === true) {
+      const { remote } = require('electron')
+      const win = remote.getCurrentWindow()
+      const width = parseInt((this.size.width * this.size.ratio) + 60)
+      const height = parseInt((this.size.height * this.size.ratio) + 30)
+      win.setSize(width, height, true)
+    }
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

@@ -1,6 +1,7 @@
 'use strict'
 
-function Source (orca, terminal) {
+function Source (terminal) {
+  const Orca = require('../../core/orca')
   const fs = require('fs')
   const { dialog, app } = require('electron').remote
 
@@ -8,10 +9,12 @@ function Source (orca, terminal) {
 
   this.new = function () {
     console.log('New')
-    orca.w = 65
-    orca.h = 25
-    orca.reset()
+
     this.path = null
+
+    terminal.rooms = { lobby: new Orca(terminal) }
+    terminal.room = terminal.rooms.lobby
+    terminal.enter()
     terminal.resize()
     terminal.history.reset()
   }
@@ -43,27 +46,62 @@ function Source (orca, terminal) {
     this.read(this.path)
   }
 
-  this.close = function () {
-    console.log('Close')
-    orca.reset()
-    this.path = null
-  }
-
   // I/O
 
   this.write = function (path) {
-    fs.writeFile(path, `${orca}`, (err) => {
+    fs.writeFile(path, this.generate(), (err) => {
       if (err) { alert('An error ocurred updating the file' + err.message); console.log(err) }
     })
   }
 
   this.read = function (path) {
-    fs.readFile(path, 'utf8', function (err, data) {
+    fs.readFile(path, 'utf8', (err, data) => {
       if (err) throw err
-      terminal.load(data.trim())
+      const rooms = this.parse(data)
+      terminal.load(rooms)
       terminal.history.record()
     })
   }
+
+  // Converters
+
+  this.generate = function (rooms = terminal.rooms) {
+    let html = `${rooms.lobby}\n\n`
+    for (const id in rooms) {
+      if (id !== 'lobby') {
+        const room = rooms[id]
+        html += `${id}\n\n${room}\n\n`
+      }
+    }
+    return html.trim()
+  }
+
+  this.parse = function (text) {
+    const lines = text.split('\n')
+    const blocks = { lobby: [] }
+    const rooms = { lobby: [] }
+    const room = []
+    let key = 'lobby'
+    // Blocks
+    for (const id in lines) {
+      const line = lines[id].trim()
+      if (line.length === 0) { continue }
+      if (line.length === 1) { key = line; continue }
+      if (!blocks[key]) { blocks[key] = [] }
+      blocks[key].push(line)
+    }
+    // Rooms
+    for (const id in blocks) {
+      const block = blocks[id]
+      const w = block[0].length
+      const h = block.length
+      const s = block.join('\n').trim()
+      rooms[id] = new Orca(terminal).load(w, h, s)
+    }
+    return rooms
+  }
+
+  // Etc
 
   this.name = function () {
     const parts = this.path.split('/')

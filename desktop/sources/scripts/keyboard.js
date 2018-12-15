@@ -1,6 +1,6 @@
 'use strict'
 
-function Keyboard (orca, terminal) {
+function Keyboard (terminal) {
   this.locks = []
   this.history = ''
 
