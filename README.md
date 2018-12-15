@@ -50,9 +50,10 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `Y` **jymper**(val): Outputs the westward operator.
 - `Z` **diagonal**: Moves diagonally toward south-east.
 - `*` **bang**: Bangs neighboring operators.
+- `#` **comment**: Comments a line, or characters until the next hash.
 - `;` **udp**('len): Sends a string via UDP to localhost.
 - `:` **midi**('velocity, 'length, channel, octave, note): Sends Midi a midi note.
-- `#` **comment**: Comments a line, or characters until the next hash.
+- `/` **door**('id, val): Hosts a nested Orca grid.
 
 ## Controls
 
