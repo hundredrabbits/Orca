@@ -135,7 +135,7 @@ function Orca (terminal, host = null) {
   }
 
   this.valueOf = function (g) {
-    return g !== '.' && g !== '*' && this.isAllowed(g) ? this.keys.indexOf(`${g}`.toLowerCase()) : 0
+    return g !== '.' && this.isAllowed(g) ? this.keys.indexOf(`${g}`.toLowerCase()) : 0
   }
 
   this.indexAt = function (x, y) {
