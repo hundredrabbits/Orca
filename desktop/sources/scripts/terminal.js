@@ -113,7 +113,7 @@ function Terminal (tile = { w: 20, h: 30 }) {
   }
 
   this.setSize = function (w, h) {
-    let block = `${orca}`
+    let block = `${this.room}`
     if (h > this.room.h) {
       block = `${block}${`\n${'.'.repeat(this.room.w)}`.repeat((h - this.room.h))}`
     } else if (h < this.room.h) {
