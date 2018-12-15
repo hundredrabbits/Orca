@@ -131,7 +131,7 @@ function Orca (terminal, host = null) {
   }
 
   this.keyOf = function (val) {
-    return this.keys[val % this.keys.length]
+    return this.keys[val % 37]
   }
 
   this.valueOf = function (g) {

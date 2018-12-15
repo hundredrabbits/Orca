@@ -75,7 +75,7 @@ function Cursor (terminal) {
     const i = room.s.indexOf(str)
     if (i < 0) { return }
     const pos = room.posAt(i)
-    this.x = pos.x+1
+    this.x = pos.x + 1
     this.y = pos.y
   }
 
