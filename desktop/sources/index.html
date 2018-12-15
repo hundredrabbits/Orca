@@ -20,8 +20,8 @@
       terminal.install(document.body)
 
       terminal.controller.add("default","*","About",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Orca'); },"CmdOrCtrl+,")
-      terminal.controller.add("default","*","Fullscreen",() => { app.toggle_fullscreen(); },"CmdOrCtrl+Enter")
-      terminal.controller.add("default","*","Hide",() => { app.toggle_visible(); },"CmdOrCtrl+H")
+      terminal.controller.add("default","*","Fullscreen",() => { app.toggleFullscreen(); },"CmdOrCtrl+Enter")
+      terminal.controller.add("default","*","Hide",() => { app.toggleVisible(); },"CmdOrCtrl+H")
       terminal.controller.add("default","*","Inspect",() => { app.inspect(); },"CmdOrCtrl+.")
       terminal.controller.add("default","*","Reset",() => { terminal.reset(); },"CmdOrCtrl+Backspace")
       terminal.controller.add("default","*","Quit",() => { app.exit(); },"CmdOrCtrl+Q")

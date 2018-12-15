@@ -179,22 +179,22 @@ function Terminal (tile = { w: 20, h: 30 }) {
     for (const id in this.room.runtime) {
       const g = this.room.runtime[id]
       if (this.room.lockAt(g.x, g.y)) { continue }
-      // Default/Passive
       if (!h[`${g.x}:${g.y}`]) {
         h[`${g.x}:${g.y}`] = { type: g.passive && g.draw ? 'passive' : 'none', name: `${g.name}` }
       }
-      // Haste
       for (const id in g.ports.haste) {
         const port = g.ports.haste[id]
         h[`${g.x + port.x}:${g.y + port.y}`] = { type: 'haste', name: `${g.glyph}'${id}` }
       }
-      // Input
       for (const id in g.ports.input) {
         const port = g.ports.input[id]
         h[`${g.x + port.x}:${g.y + port.y}`] = { type: 'input', name: `${g.glyph}:${id}` }
       }
-      // Output
       if (g.ports.output) { h[`${g.x + g.ports.output.x}:${g.y + g.ports.output.y}`] = { type: 'output', name: `${g.glyph}.out` } }
+    }
+    if (this.room.host) {
+      h[`0:0`] = { type: 'input', name: `${this.room.id}:input` }
+      h[`${this.room.w - 1}:${this.room.h - 1}`] = { type: 'output', name: `${this.room.id}.output` }
     }
     return h
   }
@@ -304,7 +304,10 @@ function Terminal (tile = { w: 20, h: 30 }) {
       const win = remote.getCurrentWindow()
       const width = parseInt((this.size.width * this.size.ratio) + 60)
       const height = parseInt((this.size.height * this.size.ratio) + 30)
-      win.setSize(width, height, true)
+      const size = win.getSize()
+      if (width > size[0]) {
+        win.setSize(width, height, true)
+      }
     }
   }
 

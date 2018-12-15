@@ -49,7 +49,7 @@ function Controller () {
   }
 
   this.commit = function () {
-    this.app.inject_menu(this.format())
+    this.app.injectMenu(this.format())
   }
 
   this.accelerator_for_key = function (key, menu) {
