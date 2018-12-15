@@ -113,6 +113,8 @@ function Terminal (tile = { w: 20, h: 30 }) {
   }
 
   this.setSize = function (w, h) {
+    if (w < 17 || h < 17) { return }
+
     let block = `${this.room}`
     if (h > this.room.h) {
       block = `${block}${`\n${'.'.repeat(this.room.w)}`.repeat((h - this.room.h))}`
@@ -125,7 +127,9 @@ function Terminal (tile = { w: 20, h: 30 }) {
     } else if (w < this.room.w) {
       block = `${block}`.split('\n').map((val) => { return val.substr(0, val.length + (w - this.room.w)) }).join('\n').trim()
     }
-    this.load(block, this.room.f)
+
+    this.room.load(w, h, block, this.room.f)
+    this.resize()
   }
 
   this.modSpeed = function (mod = 0) {
