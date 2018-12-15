@@ -16,13 +16,13 @@ function History (terminal, orca = terminal.room) {
   this.undo = function () {
     if (this.index === 0) { console.warn('History', 'Reached beginning'); return }
     this.index = clamp(this.index - 1, 0, this.frames.lengt - 1)
-    terminal.load(this.frames[this.index], terminal.rooms.hall.f)
+    // terminal.load(this.frames[this.index], terminal.rooms.lobby.f)
   }
 
   this.redo = function () {
     if (this.index > this.frames.length - 1) { console.warn('History', 'Reached end'); return }
     this.index = clamp(this.index + 1, 0, this.frames.lengt - 1)
-    terminal.load(this.frames[this.index], terminal.rooms.hall.f)
+    // terminal.load(this.frames[this.index], terminal.rooms.lobby.f)
   }
 
   this.reset = function () {

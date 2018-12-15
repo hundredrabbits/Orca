@@ -49,7 +49,7 @@ function Terminal (tile = { w: 20, h: 30 }) {
   this.run = function () {
     if (this.isPaused) { return }
     this.io.clear()
-    this.rooms.hall.run()
+    this.rooms.lobby.run()
     this.io.run()
     this.update()
   }
@@ -61,16 +61,8 @@ function Terminal (tile = { w: 20, h: 30 }) {
   }
 
   this.load = function (rooms, frame = 0) {
-    console.log(rooms)
     this.rooms = rooms
     this.enter()
-  }
-
-  this.crop = function () {
-    const block = this.cursor.getBlock()
-    const data = block.reduce((acc, val) => { acc.push(val.join('')); return acc }, []).join('\n')
-    this.load(data)
-    this.cursor.selectAll()
   }
 
   this.update = function () {
@@ -86,11 +78,11 @@ function Terminal (tile = { w: 20, h: 30 }) {
 
   this.create = function (id) {
     console.log(`Creating Room:${id}`)
-    this.rooms[id] = new Orca(this)
+    this.rooms[id] = new Orca(this, this.rooms.lobby)
     this.rooms[id].reset(33, 17)
   }
 
-  this.enter = function (id = 'hall') {
+  this.enter = function (id = 'lobby') {
     if (!this.rooms[id]) {
       this.create(id)
     }
@@ -99,7 +91,7 @@ function Terminal (tile = { w: 20, h: 30 }) {
 
     this.room = this.rooms[id]
     this.room.id = id
-    this.resize(this.room.id === 'hall')
+    this.resize(this.room.id === 'lobby')
     this.update()
   }
 
@@ -225,7 +217,7 @@ function Terminal (tile = { w: 20, h: 30 }) {
     this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1, this.size.grid.w)
     this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.size.grid.w)
     this.write(`${this.cursor.inspect()}`, col * 2, 1, this.size.grid.w)
-    this.write(`${this.source}${this.cursor.mode === 2 ? '^' : this.cursor.mode === 1 ? '+' : ''}${this.room.id && this.room.id !== 'hall' ? '/' + this.room.id : ''}`, col * 3, 1, this.size.grid.w)
+    this.write(`${this.source}${this.cursor.mode === 2 ? '^' : this.cursor.mode === 1 ? '+' : ''}${this.room.id && this.room.id !== 'lobby' ? '/' + this.room.id : ''}`, col * 3, 1, this.size.grid.w)
     // Grid
     this.write(`${this.room.w}x${this.room.h}`, col * 0, 0, this.size.grid.w)
     this.write(`${this.size.grid.w}/${this.size.grid.h}`, col * 1, 0, this.size.grid.w)

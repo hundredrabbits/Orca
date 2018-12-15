@@ -12,8 +12,8 @@ function Source (terminal) {
 
     this.path = null
 
-    terminal.rooms = { hall: new Orca(terminal) }
-    terminal.room = terminal.rooms.hall
+    terminal.rooms = { lobby: new Orca(terminal) }
+    terminal.room = terminal.rooms.lobby
     terminal.enter()
     terminal.resize()
     terminal.history.reset()
@@ -66,9 +66,9 @@ function Source (terminal) {
   // Converters
 
   this.generate = function (rooms = terminal.rooms) {
-    let html = `${rooms.hall}\n\n`
+    let html = `${rooms.lobby}\n\n`
     for (const id in rooms) {
-      if (id !== 'hall') {
+      if (id !== 'lobby') {
         const room = rooms[id]
         html += `${id}\n\n${room}\n\n`
       }
@@ -78,10 +78,10 @@ function Source (terminal) {
 
   this.parse = function (text) {
     const lines = text.split('\n')
-    const blocks = { hall: [] }
-    const rooms = { hall: [] }
+    const blocks = { lobby: [] }
+    const rooms = { lobby: [] }
     const room = []
-    let key = 'hall'
+    let key = 'lobby'
     // Blocks
     for (const id in lines) {
       const line = lines[id].trim()

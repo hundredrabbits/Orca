@@ -72,7 +72,6 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `ctrl+v` paste selection.
 - `ctrl+z` undo.
 - `ctrl+shift+z` redo.
-- `ctrl/meta+k` crop.
 
 ### Grid Controls
 

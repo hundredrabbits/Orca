@@ -14,10 +14,13 @@ function OperatorDoor (orca, x, y, passive) {
 
   this.run = function () {
     const id = this.listen(this.ports.haste.id)
+
     if (!orca.terminal.rooms[id]) { return }
+    if (orca.host) { return } // Recursive
 
     const val = this.listen(this.ports.input.val)
     const room = orca.terminal.rooms[id]
+
     room.input(val)
     room.run()
     const res = room.output()

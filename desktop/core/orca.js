@@ -2,11 +2,13 @@
 
 const library = require('./library')
 
-function Orca (terminal) {
+function Orca (terminal, host = null) {
   this.w = 65 // Default Width
   this.h = 25 // Default Height
   this.s = '' // String
-  this.f = 0 // Frame
+  this.f = host ? host.f : 0 // Frame
+
+  this.host = host
 
   this.terminal = terminal
   this.keys = Object.keys(library)
