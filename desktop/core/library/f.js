@@ -6,7 +6,7 @@ function OperatorF (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'f', passive)
 
   this.name = 'if'
-  this.info = 'Outputs `1` if inputs are equal, otherwise `0`.'
+  this.info = 'Bangs if both inputs are equal.'
 
   this.ports.input.a = { x: 1, y: 0 }
   this.ports.input.b = { x: 2, y: 0 }

@@ -28,7 +28,7 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `C` **clock**('rate, mod): Outputs a constant value based on the runtime frame.
 - `D` **delay**('rate, offset): Bangs on a fraction of the runtime frame.
 - `E` **east**: Moves eastward, or bangs.
-- `F` **if**(a, b): Outputs `1` if inputs are equal, otherwise `0`.
+- `F` **if**(a, b): Bangs if both inputs are equal.
 - `G` **generator**('x, 'y, 'len): Writes distant operators with offset.
 - `H` **halt**('len): Stops southward operators from operating.
 - `I` **increment**(min, max): Increments southward operator.
@@ -52,7 +52,7 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `*` **bang**: Bangs neighboring operators.
 - `#` **comment**: Comments a line, or characters until the next hash.
 - `;` **udp**('len): Sends a string via UDP to localhost.
-- `:` **midi**('velocity, 'length, channel, octave, note): Sends Midi a midi note.
+- `:` **midi**('channel, 'octave, 'note, velocity, length): Sends Midi a midi note.
 - `/` **door**('id, val): Hosts a nested Orca grid.
 
 ## Controls

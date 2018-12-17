@@ -8,20 +8,20 @@ function OperatorMidi (orca, x, y, passive) {
   this.name = 'midi'
   this.info = 'Sends Midi a midi note.'
 
-  this.ports.input.channel = { x: 1, y: 0 }
-  this.ports.input.octave = { x: 2, y: 0 }
-  this.ports.input.note = { x: 3, y: 0 }
-  this.ports.haste.velocity = { x: 4, y: 0 }
-  this.ports.haste.length = { x: 5, y: 0 }
+  this.ports.haste.channel = { x: 1, y: 0 }
+  this.ports.haste.octave = { x: 2, y: 0 }
+  this.ports.haste.note = { x: 3, y: 0 }
+  this.ports.input.velocity = { x: 4, y: 0 }
+  this.ports.input.length = { x: 5, y: 0 }
 
   this.run = function () {
     if (!this.bang()) { return }
 
-    let rawChannel = this.listen(this.ports.input.channel)
-    let rawOctave = this.listen(this.ports.input.octave, true)
-    let rawNote = this.listen(this.ports.input.note)
-    let rawVelocity = this.listen(this.ports.haste.velocity)
-    let rawLength = this.listen(this.ports.haste.length)
+    let rawChannel = this.listen(this.ports.haste.channel)
+    let rawOctave = this.listen(this.ports.haste.octave, true)
+    let rawNote = this.listen(this.ports.haste.note)
+    let rawVelocity = this.listen(this.ports.input.velocity)
+    let rawLength = this.listen(this.ports.input.length)
 
     if (rawChannel === '.' || orca.valueOf(rawChannel) > 15 || rawOctave === 0 || rawOctave > 8 || rawNote === '.' || rawVelocity === '0' || rawLength === '0') { return }
 
