@@ -15,9 +15,9 @@ function OperatorG (orca, x, y, passive) {
 
   this.haste = function () {
     this.ports.input = []
-    this.len = clamp(this.listen(this.ports.haste.len, true), 1, 16)
-    const x = clamp(this.listen(this.ports.haste.x, true), 0, 24)
-    const y = clamp(this.listen(this.ports.haste.y, true) + 1, 1, 24)
+    this.len = this.listen(this.ports.haste.len, true, 1)
+    const x = this.listen(this.ports.haste.x, true)
+    const y = this.listen(this.ports.haste.y, true) + 1
     for (let i = 0; i < this.len; i++) {
       this.ports.input.push({ x: i + 1, y: 0 })
     }
@@ -35,8 +35,6 @@ function OperatorG (orca, x, y, passive) {
       orca.write(this.x + this.ports.output.x + i, this.y + this.ports.output.y, str[i])
     }
   }
-
-  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = OperatorG

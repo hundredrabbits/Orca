@@ -11,7 +11,7 @@ function OperatorL (orca, x, y, passive) {
   this.ports.haste.len = { x: -1, y: 0 }
 
   this.haste = function () {
-    this.len = clamp(this.listen(this.ports.haste.len, true), 1, 24)
+    this.len = this.listen(this.ports.haste.len, true, 1)
 
     for (let x = 1; x <= this.len; x++) {
       orca.lock(this.x + x, this.y)
@@ -32,8 +32,6 @@ function OperatorL (orca, x, y, passive) {
       orca.write(this.x + x, this.y, a[id])
     }
   }
-
-  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = OperatorL

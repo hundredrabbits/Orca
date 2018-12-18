@@ -11,14 +11,12 @@ function OperatorH (orca, x, y, passive) {
   this.ports.haste.len = { x: -1, y: 0 }
 
   this.haste = function () {
-    this.len = clamp(this.listen(this.ports.haste.len, true), 1, 16)
+    this.len = this.listen(this.ports.haste.len, true, 1)
     this.len = this.len > 9 ? 1 : this.len
     for (let x = 0; x < this.len; x++) {
       orca.lock(this.x + x, this.y + 1)
     }
   }
-
-  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = OperatorH

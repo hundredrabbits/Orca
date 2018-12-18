@@ -11,7 +11,7 @@ function Orca (terminal, host = null) {
   this.host = host
 
   this.terminal = terminal
-  this.keys = Object.keys(library)
+  this.keys = Object.keys(library).slice(0, 36)
   this.locks = []
   this.ports = {}
   this.runtime = []
@@ -131,11 +131,11 @@ function Orca (terminal, host = null) {
   }
 
   this.keyOf = function (val) {
-    return this.keys[val % 37]
+    return this.keys[val % 36]
   }
 
   this.valueOf = function (g) {
-    return g !== '.' && this.isAllowed(g) ? this.keys.indexOf(`${g}`.toLowerCase()) : 0
+    return clamp(this.keys.indexOf(`${g}`.toLowerCase()), 0, 35)
   }
 
   this.indexAt = function (x, y) {
@@ -171,6 +171,8 @@ function Orca (terminal, host = null) {
   }
 
   this.reset()
+
+  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = Orca

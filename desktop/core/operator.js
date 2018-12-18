@@ -12,10 +12,10 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
 
   // Actions
 
-  this.listen = function (port, toValue = false) {
+  this.listen = function (port, toValue = false, min = 0, max = 36) {
     if (!port) { return toValue ? 0 : '.' }
     const g = orca.glyphAt(this.x + port.x, this.y + port.y)
-    return toValue ? orca.valueOf(g) : g
+    return toValue ? clamp(orca.valueOf(g), min, max) : g
   }
 
   this.output = function (g) {
@@ -105,6 +105,8 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   this.docs = function () {
     return `\`${this.glyph.toUpperCase()}\` **${this.name}**${this._ports()}: ${this.info}`
   }
+
+  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = Operator
