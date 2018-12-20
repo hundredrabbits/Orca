@@ -14,7 +14,6 @@ function History (terminal, orca = terminal.orca) {
   }
 
   this.undo = function () {
-    if (terminal.orca.id !== 'lobby') { console.warn('History', 'Outside Lobby'); return }
     if (this.index === 0) { console.warn('History', 'Reached beginning'); return }
 
     this.index = clamp(this.index - 1, 0, this.frames.lengt - 1)
@@ -22,7 +21,6 @@ function History (terminal, orca = terminal.orca) {
   }
 
   this.redo = function () {
-    if (terminal.orca.id !== 'lobby') { console.warn('History', 'Outside Lobby'); return }
     if (this.index > this.frames.length - 1) { console.warn('History', 'Reached end'); return }
 
     this.index = clamp(this.index + 1, 0, this.frames.lengt - 1)
