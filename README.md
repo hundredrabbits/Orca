@@ -53,7 +53,6 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `#` **comment**: Comments a line, or characters until the next hash.
 - `;` **udp**('len): Sends a string via UDP to localhost.
 - `:` **midi**('channel, 'octave, 'note, velocity, length): Sends Midi a midi note.
-- `/` **door**('id, val): Hosts a nested Orca grid.
 
 ## Controls
 

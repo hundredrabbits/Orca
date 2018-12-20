@@ -12,9 +12,7 @@ function Source (terminal) {
 
     this.path = null
 
-    terminal.rooms = { lobby: new Orca(terminal) }
-    terminal.room = terminal.rooms.lobby
-    terminal.enter()
+    terminal.orca = new Orca(terminal)
     terminal.resize()
     terminal.history.reset()
   }
@@ -57,48 +55,23 @@ function Source (terminal) {
   this.read = function (path) {
     fs.readFile(path, 'utf8', (err, data) => {
       if (err) throw err
-      const rooms = this.parse(data)
-      terminal.load(rooms)
+      terminal.load(this.parse(data))
       terminal.history.record()
     })
   }
 
   // Converters
 
-  this.generate = function (rooms = terminal.rooms) {
-    let html = `${rooms.lobby}\n\n`
-    for (const id in rooms) {
-      if (id !== 'lobby') {
-        const room = rooms[id]
-        html += `${id}\n\n${room}\n\n`
-      }
-    }
-    return html.trim()
+  this.generate = function (orca = terminal.orca) {
+    return `${orca}`
   }
 
   this.parse = function (text) {
     const lines = text.split('\n')
-    const blocks = { lobby: [] }
-    const rooms = { lobby: [] }
-    const room = []
-    let key = 'lobby'
-    // Blocks
-    for (const id in lines) {
-      const line = lines[id].trim()
-      if (line.length === 0) { continue }
-      if (line.length === 1) { key = line; continue }
-      if (!blocks[key]) { blocks[key] = [] }
-      blocks[key].push(line)
-    }
-    // Rooms
-    for (const id in blocks) {
-      const block = blocks[id]
-      const w = block[0].length
-      const h = block.length
-      const s = block.join('\n').trim()
-      rooms[id] = new Orca(terminal).load(w, h, s)
-    }
-    return rooms
+    const w = lines[0].length
+    const h = lines.length
+    const s = lines.join('\n').trim()
+    return new Orca(terminal).load(w, h, s)
   }
 
   // Etc
