@@ -6,12 +6,18 @@ function OperatorZ (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'z', passive)
 
   this.name = 'diagonal'
-  this.info = 'Moves diagonally toward south-east.'
+  this.info = 'Moves eastwardly, respawns west on collision.'
   this.draw = false
 
   this.haste = function () {
-    this.move(1, 1)
-    this.passive = false
+    if (orca.glyphAt(this.x + 1, this.y) === '.') { this.move(1, 0); return }
+    for (var x = this.x; x > 0; x--) {
+      const g = orca.glyphAt(x - 1, this.y)
+      if (g === '.') { continue }
+      orca.write(x + 1, this.y, 'Z')
+      this.erase()
+      break
+    }
   }
 }
 

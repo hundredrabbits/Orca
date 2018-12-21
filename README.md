@@ -48,7 +48,7 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `W` **west**: Moves westward, or bangs.
 - `X` **teleport**('x, 'y, val): Writes a distant operator with offset.
 - `Y` **jymper**(val): Outputs the westward operator.
-- `Z` **diagonal**: Moves diagonally toward south-east.
+- `Z` **diagonal**: Moves eastwardly, respawns west on collision.
 - `*` **bang**: Bangs neighboring operators.
 - `#` **comment**: Comments a line, or characters until the next hash.
 - `;` **udp**('len): Sends a string via UDP to localhost.
