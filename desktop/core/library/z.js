@@ -11,9 +11,9 @@ function OperatorZ (orca, x, y, passive) {
 
   this.haste = function () {
     if (orca.glyphAt(this.x + 1, this.y) === '.') { this.move(1, 0); return }
-    for (var x = this.x; x > 0; x--) {
+    for (var x = this.x; x >= 0; x--) {
       const g = orca.glyphAt(x - 1, this.y)
-      if (g === '.') { continue }
+      if (g === '.' && x !== 0) { continue }
       orca.write(x, this.y, 'Z')
       this.erase()
       break

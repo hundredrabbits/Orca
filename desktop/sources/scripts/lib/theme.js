@@ -1,12 +1,9 @@
 'use strict'
 
-function Theme (noir, pale) {
+function Theme (_default) {
   const themer = this
-  const fs = require('fs')
-  const { dialog, app } = require('electron').remote
 
-  this.collection = { noir: noir, pale: pale }
-  this.active = this.collection.noir
+  this.active = _default
 
   this.el = document.createElement('style')
   this.el.type = 'text/css'
@@ -27,7 +24,7 @@ function Theme (noir, pale) {
         return
       }
     }
-    this.load(this.collection.noir)
+    this.load(_default)
   }
 
   this.load = function (data) {
@@ -43,22 +40,12 @@ function Theme (noir, pale) {
   }
 
   this.reset = function () {
-    this.load(this.collection.noir)
+    this.load(_default)
   }
 
   function parse (any) {
     if (any && any.background) { return any } else if (any && any.data) { return any.data } else if (any && isJson(any)) { return JSON.parse(any) } else if (any && isHtml(any)) { return extract(any) }
     return null
-  }
-
-  // Defaults
-
-  this.noir = function () {
-    this.load(this.collection.noir)
-  }
-
-  this.pale = function () {
-    this.load(this.collection.pale)
   }
 
   // Drag
@@ -83,6 +70,8 @@ function Theme (noir, pale) {
   }
 
   this.open = function () {
+    const fs = require('fs')
+    const { dialog, app } = require('electron').remote
     let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'], filters: [{ name: 'Themes', extensions: ['svg'] }] })
     if (!paths) { console.log('Nothing to load') }
     fs.readFile(paths[0], 'utf8', function (err, data) {

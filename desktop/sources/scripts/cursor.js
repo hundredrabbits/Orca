@@ -80,10 +80,6 @@ function Cursor (terminal) {
   }
 
   this.toggleMode = function (val) {
-    if (terminal.orca.glyphAt(this.x, this.y) === '/') {
-      terminal.enter(terminal.orca.s.charAt(terminal.orca.indexAt(this.x, this.y) - 1))
-      return
-    }
     this.mode = this.mode === 0 ? val : 0
   }
 
