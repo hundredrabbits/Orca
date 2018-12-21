@@ -14,7 +14,7 @@ function OperatorZ (orca, x, y, passive) {
     for (var x = this.x; x > 0; x--) {
       const g = orca.glyphAt(x - 1, this.y)
       if (g === '.') { continue }
-      orca.write(x + 1, this.y, 'Z')
+      orca.write(x, this.y, 'Z')
       this.erase()
       break
     }
