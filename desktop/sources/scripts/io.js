@@ -125,6 +125,7 @@ function IO (terminal) {
   }
 
   this.toString = function () {
+    if (this.outputs.length < 1) { return 'No Midi' }
     let text = ''
     for (let i = 0; i < this.length(); i++) {
       text += '|'

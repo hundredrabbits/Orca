@@ -77,7 +77,7 @@ function Source (terminal) {
   // Etc
 
   this.name = function () {
-    const parts = this.path.split('/')
+    const parts = this.path.replace(/\\/g, '/').split('/')
     return parts[parts.length - 1].replace('.orca', '').trim()
   }
 
