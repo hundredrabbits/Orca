@@ -217,7 +217,12 @@ function Terminal (tile = { w: 20, h: 30 }) {
     ctx.textAlign = 'center'
     ctx.font = `${tile.h * 0.75}px input_mono_medium`
 
-    if (styles.f && styles.b && this.theme.active[styles.f] && this.theme.active[styles.b]) {
+    // Highlight Variables
+    if (g === 'V' && this.cursor.read() === 'V') {
+      ctx.fillStyle = this.theme.active.b_inv
+      ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
+      ctx.fillStyle = this.theme.active.background
+    } else if (styles.f && styles.b && this.theme.active[styles.f] && this.theme.active[styles.b]) {
       ctx.fillStyle = this.theme.active[styles.b]
       ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
       ctx.fillStyle = this.theme.active[styles.f]

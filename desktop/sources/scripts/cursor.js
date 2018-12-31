@@ -53,6 +53,10 @@ function Cursor (terminal) {
     this.writeBlock(this.toRect(), this.block)
   }
 
+  this.read = function () {
+    return terminal.orca.glyphAt(this.x, this.y)
+  }
+
   this.write = function (g) {
     if (this.mode === 2) {
       terminal.io.sendKey(event.key)
