@@ -15,7 +15,7 @@ function OperatorG (orca, x, y, passive) {
 
   this.haste = function () {
     this.ports.input = []
-    this.len = this.listen(this.ports.haste.len, true) + 1
+    this.len = this.listen(this.ports.haste.len, true)
     const x = this.listen(this.ports.haste.x, true)
     const y = this.listen(this.ports.haste.y, true) + 1
     for (let i = 0; i < this.len; i++) {
