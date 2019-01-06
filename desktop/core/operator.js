@@ -67,14 +67,16 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     this.lock()
   }
 
-  this.move = function (x, y, g) {
+  this.move = function (x, y) {
     const offset = { x: this.x + x, y: this.y + y }
     if (!orca.inBounds(offset.x, offset.y)) { this.explode(); return }
-    if (orca.glyphAt(offset.x, offset.y) !== '.') { this.explode(); return }
+    const collider = orca.glyphAt(offset.x, offset.y)
+    if (collider !== '*' && collider !== '.' && collider !== this.glyph) { this.explode(); return }
     this.erase()
     this.x += x
     this.y += y
     this.replace(this.glyph)
+    this.lock()
   }
 
   this.bang = function () {
