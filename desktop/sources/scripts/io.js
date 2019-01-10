@@ -63,6 +63,7 @@ function IO (terminal) {
   this.setMidiDevice = function (id = 0) {
     this.midi.device = clamp(id, 0, this.outputs.length - 1)
     console.log(this.outputs[this.midi.device] ? `Set device to #${this.midi.device} — ${this.outputs[this.midi.device].name}` : 'Missing midi device with id.')
+    terminal.io.setMidiMenu()
     return this.outputs[this.midi.device]
   }
 
@@ -113,7 +114,17 @@ function IO (terminal) {
     for (let i = iter.next(); i && !i.done; i = iter.next()) {
       terminal.io.outputs.push(i.value)
     }
+    terminal.io.setMidiMenu()
     console.log(terminal.io.outputs[terminal.io.midi.device] ? `Midi is active, devices(${terminal.io.midi.device + 1}/${terminal.io.outputs.length}): ${terminal.io.outputs[terminal.io.midi.device].name}` : 'No Midi device')
+  }
+
+  this.setMidiMenu = function () {
+    terminal.controller.clearCat("default", "Midi")
+    terminal.io.listMidiDevices().forEach((device,i) => {
+      const isActive = terminal.io.midi.device === i
+      terminal.controller.add("default","Midi",`${device.name} ${isActive? "[active]" : ""}`,() => { terminal.io.setMidiDevice(i + 1); },"")
+    })
+    terminal.controller.commit()
   }
 
   this.midiInactive = function (err) {

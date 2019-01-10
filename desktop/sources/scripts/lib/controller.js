@@ -25,6 +25,10 @@ function Controller () {
     this.menu[mode][cat][label] = { role: label }
   }
 
+  this.clearCat = function (mode, cat) {
+    if (this.menu[mode]) { this.menu[mode][cat] = {} }
+  }
+
   this.set = function (mode = 'default') {
     this.mode = mode
     this.commit()
