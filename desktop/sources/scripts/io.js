@@ -9,7 +9,7 @@ function IO (terminal) {
 
   this.start = function () {
     this.clear()
-    this.midiSetup()
+    return this.midiSetup()
   }
 
   this.clear = function () {
@@ -105,7 +105,7 @@ function IO (terminal) {
   this.midiSetup = function () {
     if (!navigator.requestMIDIAccess) { return }
 
-    navigator.requestMIDIAccess({ sysex: false }).then(this.midiActive, this.midiInactive)
+    return navigator.requestMIDIAccess({ sysex: false }).then(this.midiActive, this.midiInactive)
   }
 
   this.midiActive = function (midiAccess) {

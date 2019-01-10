@@ -32,9 +32,9 @@ function Terminal (tile = { w: 20, h: 30 }) {
     this.theme.install(host)
   }
 
-  this.start = function () {
+  this.start = async function () {
     this.theme.start()
-    this.io.start()
+    await this.io.start()
     this.source.new()
     this.history.record()
     this.setSpeed(120)

@@ -61,8 +61,14 @@
       terminal.controller.add("default","Theme","Download Themes..",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes'); })
 
       terminal.controller.commit()
-      terminal.start()
-
-      </script>
+      terminal.start().then(() => {
+        const devices = terminal.io.listMidiDevices();
+        devices.forEach((device,i) => {
+          const isActive = terminal.io.midi.device === i;
+          terminal.controller.add("default","Midi",`${device.name} ${isActive? "[active]" : ""}`,() => { terminal.io.setMidiDevice(i + 1); },"")
+        })
+        terminal.controller.commit()
+      })
+    </script>
   </body>
 </html>
