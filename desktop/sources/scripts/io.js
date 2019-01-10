@@ -116,7 +116,7 @@ function IO (terminal) {
     const devices = terminal.io.listMidiDevices();
         devices.forEach((device,i) => {
           const isActive = terminal.io.midi.device === i;
-          terminal.controller.add("default","Midi",`DODODO${device.name} ${isActive? "[active]" : ""}`,() => { terminal.io.setMidiDevice(i + 1); },"")
+          terminal.controller.add("default","Midi",`${device.name} ${isActive? "[active]" : ""}`,() => { terminal.io.setMidiDevice(i + 1); },"")
         })
         terminal.controller.commit()
     console.log(terminal.io.outputs[terminal.io.midi.device] ? `Midi is active, devices(${terminal.io.midi.device + 1}/${terminal.io.outputs.length}): ${terminal.io.outputs[terminal.io.midi.device].name}` : 'No Midi device')
