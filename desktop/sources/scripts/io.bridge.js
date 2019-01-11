@@ -1,9 +1,5 @@
 'use strict'
 
-const dgram = require('dgram')
-const server = dgram.createSocket('udp4')
-const osc = require('osc')
-
 function Bridge (terminal) {
   this.index = 0
   this.routes = []
@@ -38,15 +34,48 @@ function Bridge (terminal) {
 
   this.play = function (data, route) {
     console.log(`Sending ${data}, via ${route.name}`)
-    server.send(Buffer.from(`${data}`), 49160, 'localhost', (err) => {
-      server.close()
-    })
+
+    if(route.protocol === 'udp') {
+      this.port.send(Buffer.from(`${data}`), route.port, route.remoteAddress, (err) => {
+        if(err) { console.log(err) }
+      })
+    }
+    else if(route.protocol === 'osc') {
+      const split = data.split('.').filter(d => d !== '')
+      console.log( split )
+      if(split.length === 2) {
+        const key = split[0]
+        const definition = route[key]
+        const value = definition.type === 'f' ? parseInt(split[1]) / 10 : split[1]
+
+        console.log(`${definition.path} s${definition.type} ${definition.name} ${value} -> ${route.remoteAddress}:${route.port}`)
+
+        this.port.send(definition.path, definition.name, value, (err) => {
+          if(err) { console.log(err) }
+        })
+      }
+    }
+  }
+
+  this.createPort = function (route) {
+    if(route.protocol === 'udp') {
+      const dgram = require('dgram')
+      return dgram.createSocket('udp4')
+    }
+    
+    if(route.protocol === 'osc') {
+      const osc = require('node-osc')
+      return new osc.Client(route.remoteAddress, route.port)
+    }
   }
 
   this.select = function (id) {
     if (!this.routes[id]) { return }
     this.index = parseInt(id)
     console.info(`Bridge Route: ${this.route().name}`)
+
+    this.port = this.createPort(this.route())
+
     this.update()
   }
 
