@@ -6,6 +6,7 @@ function Midi (terminal) {
   this.stack = []
 
   this.start = function () {
+    console.info('Starting Midi..')
     this.setup()
   }
 
@@ -23,7 +24,7 @@ function Midi (terminal) {
     terminal.controller.clearCat('default', 'Midi')
     const devices = terminal.io.midi.list()
     for (const id in devices) {
-      terminal.controller.add('default', 'Midi', `${devices[id].name} ${terminal.io.midi.device().name === id ? ' — Active' : ''}`, () => { terminal.io.midi.select(id) }, '')
+      terminal.controller.add('default', 'Midi', `${devices[id].name} ${terminal.io.midi.index === parseInt(id) ? ' — Active' : ''}`, () => { terminal.io.midi.select(id) }, '')
     }
     if (devices.length < 1) {
       terminal.controller.add('default', 'Midi', `No Device Available`)
@@ -99,12 +100,10 @@ function Midi (terminal) {
 
   this.setup = function () {
     if (!navigator.requestMIDIAccess) { return }
-
     navigator.requestMIDIAccess({ sysex: false }).then(this.access, this.error)
   }
 
   this.access = function (midiAccess) {
-    console.log('Midi access..')
     const iter = midiAccess.outputs.values()
     for (let i = iter.next(); i && !i.done; i = iter.next()) {
       terminal.io.midi.devices.push(i.value)
