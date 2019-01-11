@@ -16,7 +16,7 @@ function Midi (terminal) {
 
   this.run = function () {
     for (const id in this.stack) {
-      this.play(this.stack[id])
+      this.play(this.stack[id], this.device())
     }
   }
 
@@ -38,8 +38,7 @@ function Midi (terminal) {
     this.stack.push([channel, octave, note, velocity, length])
   }
 
-  this.play = function (data = this.stack) {
-    const device = this.device()
+  this.play = function (data = this.stack, device) {
     const channel = convertChannel(data[0])
     const note = convertNote(data[1], data[2])
     const velocity = data[3]
@@ -113,21 +112,6 @@ function Midi (terminal) {
 
   this.error = function (err) {
     console.warn('No Midi', err)
-  }
-
-  this.length = function () {
-    return this.stack.length
-  }
-
-  this.toString = function () {
-    let text = ''
-    for (let i = 0; i < this.length(); i++) {
-      text += '|'
-    }
-    while (text.length - 1 <= terminal.size.grid.w) {
-      text += '-'
-    }
-    return text
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

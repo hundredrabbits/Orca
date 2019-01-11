@@ -1,13 +1,12 @@
 'use strict'
 
 const dgram = require('dgram')
+const server = dgram.createSocket('udp4')
 
 function Bridge (terminal) {
   this.index = 0
-  this.active = 'none'
-  this.stack = []
-
   this.routes = []
+  this.stack = []
 
   this.start = function () {
     console.info('Starting Bridge(UDP/OSC)..')
@@ -20,7 +19,7 @@ function Bridge (terminal) {
 
   this.run = function () {
     for (const id in this.stack) {
-      this.play(this.stack[id])
+      this.play(this.stack[id], this.route())
     }
   }
 
@@ -36,10 +35,10 @@ function Bridge (terminal) {
     this.stack.push(msg)
   }
 
-  this.play = function (data) {
-    const udp = dgram.createSocket('udp4')
-    udp.send(Buffer.from(`${data}`), 49160, 'localhost', (err) => {
-      udp.close()
+  this.play = function (data, route) {
+    console.log(`Sending ${data}, via ${route.name}`)
+    server.send(Buffer.from(`${data}`), 49160, 'localhost', (err) => {
+      server.close()
     })
   }
 
@@ -56,7 +55,7 @@ function Bridge (terminal) {
 
   this.setup = function () {
     this.routes = [
-      { name: 'None' },
+      require('../../core/bridge/default'),
       require('../../core/bridge/tidal'),
       require('../../core/bridge/sonicpi')
     ]

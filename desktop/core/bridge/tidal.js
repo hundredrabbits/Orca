@@ -2,5 +2,6 @@
 
 module.exports = {
   name: 'Tidal OSC',
-  port: 12345
+  port: 6010,
+  protocol: 'osc'
 }
