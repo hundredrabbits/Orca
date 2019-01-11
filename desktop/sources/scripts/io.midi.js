@@ -53,7 +53,7 @@ function Midi (terminal) {
 
   this.select = function (id) {
     if (!this.devices[id]) { return }
-    this.index = id
+    this.index = parseInt(id)
     console.info(`Midi Device: ${this.device().name}`)
     this.update()
   }

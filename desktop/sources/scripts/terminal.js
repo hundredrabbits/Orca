@@ -207,7 +207,7 @@ function Terminal (tile = { w: 20, h: 30 }) {
     this.write(`${this.size.grid.w}/${this.size.grid.h}`, col * 1, 0, this.size.grid.w)
     this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, col * 2, 0, this.size.grid.w)
     this.write(`${this.bpm}${this.orca.f % 4 === 0 ? '*' : ''}`, col * 3, 0, this.size.grid.w)
-    this.write(`${this.io.midi}`, col * 4, 0, this.size.grid.w)
+    this.write(`${this.io}`, col * 4, 0, this.size.grid.w)
   }
 
   this.drawSprite = function (x, y, g, styles = { isCursor: false, isSelection: false, isPort: false, f: null, b: null }) {

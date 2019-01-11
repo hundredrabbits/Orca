@@ -1,5 +1,7 @@
 'use strict'
 
+const dgram = require('dgram')
+
 function Bridge (terminal) {
   this.index = 0
   this.active = 'none'
@@ -30,12 +32,22 @@ function Bridge (terminal) {
     terminal.controller.commit()
   }
 
+  this.send = function (msg) {
+    this.stack.push(msg)
+  }
+
+  this.play = function (data) {
+    const udp = dgram.createSocket('udp4')
+    udp.send(Buffer.from(`${data}`), 49160, 'localhost', (err) => {
+      udp.close()
+    })
+  }
+
   this.select = function (id) {
-    console.log(id)
-    // if (!this.routes[id]) { console.warn(`Unknown bridge:${id}`); return }
-    // console.log('Select bridge: ', id)
-    // this.active = id
-    // terminal.io.update()
+    if (!this.routes[id]) { return }
+    this.index = parseInt(id)
+    console.info(`Bridge Route: ${this.route().name}`)
+    this.update()
   }
 
   this.route = function () {
@@ -48,7 +60,7 @@ function Bridge (terminal) {
       require('../../core/bridge/tidal'),
       require('../../core/bridge/sonicpi')
     ]
-    this.update()
+    terminal.io.bridge.select(0)
   }
 }
 
