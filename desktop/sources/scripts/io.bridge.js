@@ -2,7 +2,7 @@
 
 const dgram = require('dgram')
 const server = dgram.createSocket('udp4')
-// const osc = require('osc')
+const osc = require('osc')
 
 function Bridge (terminal) {
   this.index = 0

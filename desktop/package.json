@@ -20,7 +20,8 @@
   },
   "devDependencies": {
     "electron": "^3.0.13",
-    "electron-packager": "^12.2.0"
+    "electron-packager": "^12.2.0",
+    "electron-rebuild": "^1.8.2"
   },
   "dependencies": {
     "osc": "^2.2.4"
