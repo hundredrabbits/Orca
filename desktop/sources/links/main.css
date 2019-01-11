@@ -1,3 +1,4 @@
 body { font-family: 'input_mono_regular'; padding:30px; overflow: hidden; -webkit-app-region: drag; transition: background-color 500ms; }
+body.transparent { background:transparent !important; }
 canvas { display: block;white-space: pre;font-size: 11px;line-height: 10px; text-transform: uppercase; width:300px; margin:0px auto; -webkit-app-region: drag; opacity: 0; transition: opacity 1000ms}
 canvas.ready { opacity: 1 }

@@ -14,11 +14,11 @@ app.on('ready', () => {
     minWidth: 320,
     minHeight: 320,
     frame: false,
-    autoHideMenuBar: true,
-    backgroundColor: '#000000',
     resizable: true,
-    autoHideMenuBar: true,
-    icon: __dirname + '/icon.ico'
+    icon: __dirname + '/icon.ico',
+    transparent: true,
+    skipTaskbar: true,
+    autoHideMenuBar: true
   })
 
   app.win.loadURL(`file://${__dirname}/sources/index.html`)
