@@ -15,6 +15,17 @@ npm install
 npm start
 ```
 
+### Dyld Error
+
+To install [OSC.js](https://www.npmjs.com/package/osc), you need `electron-rebuild`.
+
+```
+npm install --save-dev electron-rebuild
+electron-rebuild -f -w osc
+$(npm bin)/electron-rebuild
+npm start
+```
+
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.jpg' width="600"/>
 
 ## Quickstart
