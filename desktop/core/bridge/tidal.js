@@ -7,304 +7,303 @@ module.exports = {
   remoteAddress: '127.0.0.1',
 
   '0': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: '0',
     type: 'f'
   },
   '1': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: '0',
     type: 'f'
   },
   '2': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: '2',
     type: 'f'
   },
   '3': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: '3',
     type: 'f'
   },
   '4': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: '4',
     type: 'f'
   },
   '5': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: '5',
     type: 'f'
   },
   '6': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: '6',
     type: 'f'
   },
   '7': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: '7',
     type: 'f'
   },
   '8': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: '8',
     type: 'f'
   },
   '9': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: '9',
     type: 'f'
   },
   'A': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'A',
     type: 'f'
   },
   'B': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'B',
     type: 'f'
   },
   'C': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'C',
     type: 'f'
   },
   'D': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'D',
     type: 'f'
   },
   'E': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'E',
     type: 'f'
   },
   'F': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'F',
     type: 'f'
   },
   'G': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'G',
     type: 'f'
   },
   'H': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'H',
     type: 'f'
   },
   'I': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'I',
     type: 'f'
   },
   'J': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'J',
     type: 'f'
   },
   'K': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'K',
     type: 'f'
   },
   'L': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'L',
     type: 'f'
   },
   'M': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'M',
     type: 'f'
   },
   'N': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'N',
     type: 'f'
   },
   'O': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'O',
     type: 'f'
   },
   'P': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'P',
     type: 'f'
   },
   'Q': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'Q',
     type: 'f'
   },
   'R': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'R',
     type: 'f'
   },
   'S': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'S',
     type: 'f'
   },
   'T': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'T',
     type: 'f'
   },
   'U': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'U',
     type: 'f'
   },
   'V': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'V',
     type: 'f'
   },
   'X': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'X',
     type: 'f'
   },
   'Y': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'Y',
     type: 'f'
   },
   'Z': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'Z',
     type: 'f'
   },
   'a': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'a',
     type: 'f'
   },
   'b': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'b',
     type: 'f'
   },
   'c': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'c',
     type: 'f'
   },
   'd': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'd',
     type: 'f'
   },
   'e': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'e',
     type: 'f'
   },
   'f': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'f',
     type: 'f'
   },
   'g': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'g',
     type: 'f'
   },
   'h': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'h',
     type: 'f'
   },
   'i': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'i',
     type: 'f'
   },
   'j': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'j',
     type: 'f'
   },
   'k': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'k',
     type: 'f'
   },
   'l': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'l',
     type: 'f'
   },
   'm': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'm',
     type: 'f'
   },
   'n': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'n',
     type: 'f'
   },
   'o': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'o',
     type: 'f'
   },
   'p': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'p',
     type: 'f'
   },
   'q': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'q',
     type: 'f'
   },
   'r': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'r',
     type: 'f'
   },
   's': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 's',
     type: 'f'
   },
   't': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 't',
     type: 'f'
   },
   'u': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'u',
     type: 'f'
   },
   'v': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'v',
     type: 'f'
   },
   'x': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'x',
     type: 'f'
   },
   'y': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'y',
     type: 'f'
   },
   'z': {
-    address: '/ctrl',
+    path: '/ctrl',
     name: 'z',
     type: 'f'
   }
 }
-
