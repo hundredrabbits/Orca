@@ -2,12 +2,16 @@
 
 function IO (terminal) {
   const dgram = require('dgram')
+  const Bridge = require('../../core/bridge')
+
+  this.bridge = new Bridge(this)
 
   this.midi = { device: 0 }
   this.outputs = []
   this.stack = { }
 
   this.start = function () {
+    this.bridge.start()
     this.clear()
     this.midiSetup()
   }
@@ -29,17 +33,23 @@ function IO (terminal) {
   }
 
   this.update = function () {
+    // Update Bridge Menu
+    terminal.controller.clearCat('default', 'UDP Bridge')
+    for (const id in this.bridge.routes) {
+      console.log(terminal.io.bridge.active, id)
+      terminal.controller.add('default', 'UDP Bridge', `${this.bridge.routes[id].name} ${terminal.io.bridge.active === id ? ' — Active' : ''}`, () => { terminal.io.bridge.select(id) }, '')
+    }
+
     // Update Midi Menu
     terminal.controller.clearCat('default', 'Midi')
     const devices = terminal.io.listMidiDevices()
-
     for (const id in devices) {
       terminal.controller.add('default', 'Midi', `${devices[id].name} ${terminal.io.midi.device === parseInt(id) ? ' — Active' : ''}`, () => { terminal.io.setMidiDevice(id + 1) }, '')
     }
-
     if (devices.length < 1) {
       terminal.controller.add('default', 'Midi', `No Device Available`)
     }
+    // Save
     terminal.controller.commit()
   }
 
