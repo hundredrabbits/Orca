@@ -45,12 +45,66 @@ function Bridge (terminal) {
       if (split.length === 2) {
         const key = split[0]
         const definition = route[key]
-        const value = definition.type === 'f' ? parseInt(split[1]) / 10 : split[1]
+        const address = definition.path
+        const type = definition.type
+        if (type !== 'f' && type !== 'i' && type !== 's') {
+          console.log(`Don't know how to send OSC argument with type '${type}'`)
+          return
+        }
+        const value =
+            type === 'f' ? parseInt(split[1]) / 10.0 :
+            type === 'i' ? parseInt(split[1]) :
+            /* type === 's' ?*/ split[1]
 
-        console.log(`${definition.path} s${definition.type} ${definition.name} ${value} -> ${route.remoteAddress}:${route.port}`)
+        function nextMultipleOf4(x) {
+          const rem = x % 4
+          return rem === 0 ? x : (x + 4 - rem)
+        }
 
-        this.port.send(definition.path, definition.name, value, (err) => {
-          if (err) { console.log(err) }
+        function writeOscString(val, buf, pos) {
+          for (var i = 0; i < val.length; i++) {
+            const ch = val.charAt(i)
+            buf.writeUint8(ch & 0xFF, pos)
+          }
+          // Add length, terminating 0 and pad to multiple of 4
+          return nextMultipleOf4(pos + val.length + 1)
+        }
+
+        var msglen = 0
+        { // Calculate message length
+          // Zero-terminated address string
+          msglen += nextMultipleOf4(address.length + 1)
+          // Type tag with two args arg: comma, letter (key), letter (value), terminating 0
+          msglen += 4
+          // Zero-terminated key string
+          msglen += nextMultipleOf4(key.length + 1)
+          if (type === 'f' || type === 'i') {
+            // 32-bit float or int
+            msglen += 4
+          } else if (type === 's') {
+            // Zero terminated value string
+            msglen += nextMultipleOf4(value.length + 1)
+          }
+        }
+
+        // Get buffer cleared to 0
+        const buf = Buffer.alloc(msglen)
+        var pos = 0
+
+        pos = writeOscString(address, buf, pos)
+        pos = writeOscString(`,s${type}`, buf, pos)
+        pos = writeOscString(key, buf, pos)
+        
+        if (type === 'f') {
+          pos = buf.writeFloatBE(value, pos)
+        } else if (type === 'i') {
+          pos = buf.writeInt32BE(value, pos)
+        } else if (type === 's') {
+          pos = writeOscString(value, buf, pos)
+        }
+
+        this.port.send(buf, route.port, route.remoteAddress, (err) => {
+          if(err) { console.log(err) }
         })
       }
     }
