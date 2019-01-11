@@ -29,6 +29,9 @@ function Midi (terminal) {
     if (devices.length < 1) {
       terminal.controller.add('default', 'Midi', `No Device Available`)
     }
+    if (devices.length > 1) {
+      terminal.controller.add('default', 'Midi', `Next Device`, () => { terminal.io.midi.next(id) }, 'CmdOrCtrl+Shift+M')
+    }
     terminal.controller.commit()
   }
 
@@ -65,7 +68,32 @@ function Midi (terminal) {
     return this.devices
   }
 
-  //
+  this.next = function () {
+    this.select((this.index + 1) % this.devices.length)
+  }
+
+  // Setup
+
+  this.setup = function () {
+    if (!navigator.requestMIDIAccess) { return }
+    navigator.requestMIDIAccess({ sysex: false }).then(this.access, this.error)
+  }
+
+  this.access = function (midiAccess) {
+    const iter = midiAccess.outputs.values()
+    for (let i = iter.next(); i && !i.done; i = iter.next()) {
+      terminal.io.midi.devices.push(i.value)
+    }
+    terminal.io.midi.select(0)
+  }
+
+  this.error = function (err) {
+    console.warn('No Midi', err)
+  }
+
+  this.toString = function () {
+    return this.devices.length > 0 ? `${this.devices[this.index].name}` : 'No Midi'
+  }
 
   function convertChannel (id) {
     // return [id + 144, id + 128].toString(16);
@@ -93,25 +121,6 @@ function Midi (terminal) {
 
   function convertLength (val, bpm) {
     return (60000 / bpm) * (val / 15)
-  }
-
-  // Setup
-
-  this.setup = function () {
-    if (!navigator.requestMIDIAccess) { return }
-    navigator.requestMIDIAccess({ sysex: false }).then(this.access, this.error)
-  }
-
-  this.access = function (midiAccess) {
-    const iter = midiAccess.outputs.values()
-    for (let i = iter.next(); i && !i.done; i = iter.next()) {
-      terminal.io.midi.devices.push(i.value)
-    }
-    terminal.io.midi.select(0)
-  }
-
-  this.error = function (err) {
-    console.warn('No Midi', err)
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

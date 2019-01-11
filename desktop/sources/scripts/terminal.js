@@ -24,6 +24,7 @@ function Terminal (tile = { w: 20, h: 30 }) {
   this.context = this.el.getContext('2d')
   this.size = { width: 0, height: 0, ratio: 0.5, grid: { w: 8, h: 8 } }
   this.isPaused = false
+  this.showInterface = true
   this.timer = null
   this.bpm = 120
 
@@ -133,6 +134,10 @@ function Terminal (tile = { w: 20, h: 30 }) {
     webFrame.setZoomFactor(set ? mod : currentZoomFactor + mod)
   }
 
+  this.toggleInterface = function () {
+    this.showInterface = this.showInterface !== true
+  }
+
   //
 
   this.isCursor = function (x, y) {
@@ -196,12 +201,16 @@ function Terminal (tile = { w: 20, h: 30 }) {
   }
 
   this.drawInterface = function () {
+    if (this.showInterface !== true) { return }
+
     const col = this.size.grid.w
     // Cursor
     this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1, this.size.grid.w)
     this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.size.grid.w)
     this.write(`${this.cursor.inspect()}`, col * 2, 1, this.size.grid.w)
     this.write(`${this.source}${this.cursor.mode === 2 ? '^' : this.cursor.mode === 1 ? '+' : ''}`, col * 3, 1, this.size.grid.w)
+    this.write(`${this.io.midi}`, col * 4, 1, this.size.grid.w * 2)
+
     // Grid
     this.write(`${this.orca.w}x${this.orca.h}`, col * 0, 0, this.size.grid.w)
     this.write(`${this.size.grid.w}/${this.size.grid.h}`, col * 1, 0, this.size.grid.w)

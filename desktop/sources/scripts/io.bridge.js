@@ -35,15 +35,14 @@ function Bridge (terminal) {
   this.play = function (data, route) {
     console.log(`Sending ${data}, via ${route.name}`)
 
-    if(route.protocol === 'udp') {
+    if (route.protocol === 'udp') {
       this.port.send(Buffer.from(`${data}`), route.port, route.remoteAddress, (err) => {
-        if(err) { console.log(err) }
+        if (err) { console.log(err) }
       })
-    }
-    else if(route.protocol === 'osc') {
+    } else if (route.protocol === 'osc') {
       const split = data.split('.').filter(d => d !== '')
-      console.log( split )
-      if(split.length === 2) {
+      console.log(split)
+      if (split.length === 2) {
         const key = split[0]
         const definition = route[key]
         const value = definition.type === 'f' ? parseInt(split[1]) / 10 : split[1]
@@ -51,19 +50,19 @@ function Bridge (terminal) {
         console.log(`${definition.path} s${definition.type} ${definition.name} ${value} -> ${route.remoteAddress}:${route.port}`)
 
         this.port.send(definition.path, definition.name, value, (err) => {
-          if(err) { console.log(err) }
+          if (err) { console.log(err) }
         })
       }
     }
   }
 
   this.createPort = function (route) {
-    if(route.protocol === 'udp') {
+    if (route.protocol === 'udp') {
       const dgram = require('dgram')
       return dgram.createSocket('udp4')
     }
-    
-    if(route.protocol === 'osc') {
+
+    if (route.protocol === 'osc') {
       const osc = require('node-osc')
       return new osc.Client(route.remoteAddress, route.port)
     }

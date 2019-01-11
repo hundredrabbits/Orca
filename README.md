@@ -89,6 +89,7 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `ctrl+=` Zoom In.
 - `ctrl+-` Zoom Out.
 - `ctrl+0` Zoom Reset.
+- `tab` Toggle interface.
 
 ## Special Operators
 
