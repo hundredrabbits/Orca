@@ -40,7 +40,7 @@ function OperatorMidi (orca, x, y, passive) {
 
     this.draw = false
 
-    terminal.io.sendMidi(channel, octave, note, velocity, length)
+    terminal.io.midi.send(channel, octave, note, velocity, length)
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

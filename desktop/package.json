@@ -21,5 +21,8 @@
   "devDependencies": {
     "electron": "^3.0.13",
     "electron-packager": "^12.2.0"
+  },
+  "dependencies": {
+    "osc": "^2.2.4"
   }
 }

@@ -14,7 +14,8 @@ function Bridge (io) {
   }
 
   this.select = function (id) {
-    console.log('select', id)
+    if (!this.routes[id]) { console.warn(`Unknown bridge:${id}`); return }
+    console.log('Select bridge: ', id)
     this.active = id
     io.update()
   }
