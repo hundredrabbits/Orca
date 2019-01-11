@@ -3,7 +3,7 @@
 module.exports = {
   name: 'SonicPi OSC',
   protocol: 'osc',
-  port: 12345,
+  port: 4559,
   remoteAddress: '127.0.0.1',
 
   '0': {
