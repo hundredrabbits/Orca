@@ -11,17 +11,17 @@ function OperatorG (orca, x, y, passive) {
   this.ports.haste.x = { x: -3, y: 0 }
   this.ports.haste.y = { x: -2, y: 0 }
   this.ports.haste.len = { x: -1, y: 0 }
-  this.ports.output = { x: 0, y: 1, unlock: true }
 
   this.haste = function () {
     this.ports.input = []
     this.len = this.listen(this.ports.haste.len, true)
+    if (this.len < 1) { return }
     const x = this.listen(this.ports.haste.x, true)
     const y = this.listen(this.ports.haste.y, true) + 1
+    this.ports.output = { x: x, y: y, unlock: true }
     for (let i = 0; i < this.len; i++) {
       this.ports.input.push({ x: i + 1, y: 0 })
     }
-    this.ports.output = { x: x, y: y, unlock: true }
   }
 
   this.run = function () {

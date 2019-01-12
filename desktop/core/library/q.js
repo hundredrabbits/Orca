@@ -11,13 +11,14 @@ function OperatorQ (orca, x, y, passive) {
   this.ports.haste.x = { x: -3, y: 0 }
   this.ports.haste.y = { x: -2, y: 0 }
   this.ports.haste.len = { x: -1, y: 0 }
-  this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
     this.ports.input = []
     this.len = this.listen(this.ports.haste.len, true)
+    if (this.len < 1) { return }
     const x = this.listen(this.ports.haste.x, true)
     const y = this.listen(this.ports.haste.y, true)
+    this.ports.output = { x: 0, y: 1 }
     for (let i = 1; i <= this.len; i++) {
       this.ports.input.push({ x: i + x, y: y })
       orca.lock(this.x + this.ports.output.x + i - this.len, this.y + 1)
