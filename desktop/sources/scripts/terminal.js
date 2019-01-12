@@ -198,8 +198,10 @@ function Terminal (tile = { w: 20, h: 30 }) {
     for (let y = 0; y < this.orca.h; y++) {
       for (let x = 0; x < this.orca.w; x++) {
         const port = this.ports[`${x}:${y}`]
+        const glyph = this.guide(x, y)
+        if (this.showInterface === false && glyph === '.') { continue }
         const styles = { isSelection: this.isSelection(x, y), isCursor: this.isCursor(x, y), isPort: port ? port.type : false, isLocked: this.orca.lockAt(x, y) }
-        this.drawSprite(x, y, this.guide(x, y), styles)
+        this.drawSprite(x, y, glyph, styles)
       }
     }
   }
