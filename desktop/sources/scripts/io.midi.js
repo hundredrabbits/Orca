@@ -76,7 +76,9 @@ function Midi (terminal) {
 
   this.setup = function () {
     if (!navigator.requestMIDIAccess) { return }
-    navigator.requestMIDIAccess({ sysex: false }).then(this.access, this.error)
+    navigator.requestMIDIAccess({ sysex: false }).then(this.access, (err) => {
+      console.warn('No Midi', err)
+    })
   }
 
   this.access = function (midiAccess) {
@@ -85,10 +87,6 @@ function Midi (terminal) {
       terminal.io.midi.devices.push(i.value)
     }
     terminal.io.midi.select(0)
-  }
-
-  this.error = function (err) {
-    console.warn('No Midi', err)
   }
 
   this.toString = function () {

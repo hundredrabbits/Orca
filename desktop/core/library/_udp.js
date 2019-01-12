@@ -27,7 +27,7 @@ function OperatorMidi (orca, x, y, passive) {
       msg += orca.glyphAt(1 + this.x + x, this.y)
     }
 
-    terminal.io.bridge.send(msg)
+    terminal.io.udp.send(msg)
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
