@@ -62,9 +62,10 @@ function Bridge (terminal) {
         }
 
         function writeOscString(val, buf, pos) {
+          var localPos = pos
           for (var i = 0; i < val.length; i++) {
-            const ch = val.charAt(i)
-            buf.writeUint8(ch & 0xFF, pos)
+            const ch = val.charCodeAt(i)
+            localPos = buf.writeUInt8(ch & 0xFF, localPos)
           }
           // Add length, terminating 0 and pad to multiple of 4
           return nextMultipleOf4(pos + val.length + 1)
