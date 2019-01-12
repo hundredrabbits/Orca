@@ -199,8 +199,9 @@ function Terminal (tile = { w: 20, h: 30 }) {
       for (let x = 0; x < this.orca.w; x++) {
         const port = this.ports[`${x}:${y}`]
         const glyph = this.guide(x, y)
-        if (this.showInterface === false && glyph === '.') { continue }
-        const styles = { isSelection: this.isSelection(x, y), isCursor: this.isCursor(x, y), isPort: port ? port.type : false, isLocked: this.orca.lockAt(x, y) }
+        const isCursor = this.isCursor(x, y)
+        if (this.showInterface === false && glyph === '.' && !isCursor) { continue }
+        const styles = { isSelection: this.isSelection(x, y), isCursor: isCursor, isPort: port ? port.type : false, isLocked: this.orca.lockAt(x, y) }
         this.drawSprite(x, y, glyph, styles)
       }
     }
