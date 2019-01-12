@@ -4,7 +4,6 @@ const dgram = require('dgram')
 
 function Udp (terminal) {
   this.index = 0
-  this.routes = []
   this.stack = []
   this.server = null
 

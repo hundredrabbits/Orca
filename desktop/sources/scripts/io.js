@@ -1,36 +1,35 @@
 'use strict'
 
-const Bridge = require('./io.bridge')
 const Midi = require('./io.midi')
 const Udp = require('./io.udp')
+const Osc = require('./io.osc')
 
 function IO (terminal) {
   this.midi = new Midi(terminal)
   this.udp = new Udp(terminal)
-  this.bridge = new Bridge(terminal)
+  this.osc = new Osc(terminal)
 
   this.start = function () {
     this.midi.start()
     this.udp.start()
-
-    this.bridge.start()
+    this.osc.start()
     this.clear()
   }
 
   this.clear = function () {
     this.midi.clear()
     this.udp.clear()
-    this.bridge.clear()
+    this.osc.clear()
   }
 
   this.run = function () {
     this.midi.run()
     this.udp.run()
-    this.bridge.run()
+    this.osc.run()
   }
 
   this.length = function () {
-    return this.midi.stack.length + this.udp.stack.length + this.bridge.stack.length
+    return this.midi.stack.length + this.udp.stack.length + this.osc.stack.length
   }
 
   this.toString = function () {

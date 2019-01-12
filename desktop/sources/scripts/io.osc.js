@@ -1,12 +1,12 @@
 'use strict'
 
-function Bridge (terminal) {
+function Osc (terminal) {
   this.index = 0
   this.routes = []
   this.stack = []
 
   this.start = function () {
-    console.info('Starting Bridge(UDP/OSC)..')
+    console.info('Starting OSC..')
     this.setup()
   }
 
@@ -20,16 +20,16 @@ function Bridge (terminal) {
     }
   }
 
-  this.update = function () {
-    terminal.controller.clearCat('default', 'UDP Bridge')
-    for (const id in terminal.io.bridge.routes) {
-      terminal.controller.add('default', 'UDP Bridge', `${this.routes[id].name} ${this.index === parseInt(id) ? ' — Active' : ''}`, () => { terminal.io.bridge.select(id) }, '')
-    }
-    terminal.controller.commit()
-  }
-
   this.send = function (msg) {
     this.stack.push(msg)
+  }
+
+  this.update = function () {
+    terminal.controller.clearCat('default', 'OSC Bridge')
+    for (const id in terminal.io.osc.routes) {
+      terminal.controller.add('default', 'OSC Bridge', `${this.routes[id].name} ${this.index === parseInt(id) ? ' — Active' : ''}`, () => { terminal.io.osc.select(id) }, '')
+    }
+    terminal.controller.commit()
   }
 
   this.play = function (data, route) {
@@ -52,16 +52,16 @@ function Bridge (terminal) {
           return
         }
         const value =
-            type === 'f' ? parseInt(split[1]) / 10.0 :
-            type === 'i' ? parseInt(split[1]) :
-            /* type === 's' ?*/ split[1]
+            type === 'f' ? parseInt(split[1]) / 10.0
+              : type === 'i' ? parseInt(split[1])
+              /* type === 's' ? */ : split[1]
 
-        function nextMultipleOf4(x) {
+        function nextMultipleOf4 (x) {
           const rem = x % 4
           return rem === 0 ? x : (x + 4 - rem)
         }
 
-        function writeOscString(val, buf, pos) {
+        function writeOscString (val, buf, pos) {
           var localPos = pos
           for (var i = 0; i < val.length; i++) {
             const ch = val.charCodeAt(i)
@@ -95,7 +95,7 @@ function Bridge (terminal) {
         pos = writeOscString(address, buf, pos)
         pos = writeOscString(`,s${type}`, buf, pos)
         pos = writeOscString(key, buf, pos)
-        
+
         if (type === 'f') {
           pos = buf.writeFloatBE(value, pos)
         } else if (type === 'i') {
@@ -105,7 +105,7 @@ function Bridge (terminal) {
         }
 
         this.port.send(buf, route.port, route.remoteAddress, (err) => {
-          if(err) { console.log(err) }
+          if (err) { console.log(err) }
         })
       }
     }
@@ -143,8 +143,8 @@ function Bridge (terminal) {
       require('../../core/bridge/tidal'),
       require('../../core/bridge/sonicpi')
     ]
-    terminal.io.bridge.select(0)
+    terminal.io.osc.select(0)
   }
 }
 
-module.exports = Bridge
+module.exports = Osc
