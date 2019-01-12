@@ -62,8 +62,8 @@ function Osc (terminal) {
         }
 
         function writeOscString (val, buf, pos) {
-          var localPos = pos
-          for (var i = 0; i < val.length; i++) {
+          let localPos = pos
+          for (let i = 0; i < val.length; i++) {
             const ch = val.charCodeAt(i)
             localPos = buf.writeUInt8(ch & 0xFF, localPos)
           }
@@ -71,7 +71,7 @@ function Osc (terminal) {
           return nextMultipleOf4(pos + val.length + 1)
         }
 
-        var msglen = 0
+        let msglen = 0
         { // Calculate message length
           // Zero-terminated address string
           msglen += nextMultipleOf4(address.length + 1)
@@ -90,7 +90,7 @@ function Osc (terminal) {
 
         // Get buffer cleared to 0
         const buf = Buffer.alloc(msglen)
-        var pos = 0
+        let pos = 0
 
         pos = writeOscString(address, buf, pos)
         pos = writeOscString(`,s${type}`, buf, pos)
