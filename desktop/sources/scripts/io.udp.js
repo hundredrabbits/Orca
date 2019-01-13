@@ -27,12 +27,13 @@ function Udp (terminal) {
   }
 
   this.play = function (data) {
-    this.server.send(Buffer.from(`${data}`), 49160, '127.0.0.1', (err) => {
+    this.server.send(Buffer.from(`${data}`), this.config.port, this.config.address, (err) => {
       if (err) { console.log(err) }
     })
   }
 
   this.setup = function () {
+    this.config = require('../../core/bridge/udpConfig')
     this.server = dgram.createSocket('udp4')
   }
 }

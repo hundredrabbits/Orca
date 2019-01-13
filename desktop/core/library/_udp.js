@@ -2,7 +2,7 @@
 
 const Operator = require('../operator')
 
-function OperatorMidi (orca, x, y, passive) {
+function OperatorUdp (orca, x, y, passive) {
   Operator.call(this, orca, x, y, ';', true)
 
   this.name = 'udp'
@@ -33,4 +33,4 @@ function OperatorMidi (orca, x, y, passive) {
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
-module.exports = OperatorMidi
+module.exports = OperatorUdp
