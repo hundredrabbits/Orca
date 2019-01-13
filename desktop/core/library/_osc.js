@@ -3,7 +3,7 @@
 const Operator = require('../operator')
 
 function OperatorOsc (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, ';', true)
+  Operator.call(this, orca, x, y, '=', true)
 
   this.name = 'osc'
   this.info = 'Sends a configured OSC message.'
