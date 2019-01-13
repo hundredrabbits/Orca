@@ -32,7 +32,7 @@ function Osc (terminal) {
       const pattern = def.pattern
 
       if(pattern.length !== args.length - 1) {
-        console.log(`Number of arguments provided does not match the pattern length of this def`)
+        console.warn(`Number of arguments provided does not match the pattern length of this def`)
         return
       }
 
@@ -50,7 +50,7 @@ function Osc (terminal) {
           case 's': msg.append(args[i + 1])
             break
           default:
-            console.log(`Don't know how to send OSC argument with type '${type}'`)
+            console.warn(`Don't know how to send OSC argument with type '${type}'`)
             return
         }
       }
