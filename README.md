@@ -26,11 +26,11 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `A` **add**(a, b): Outputs the sum of inputs.
 - `B` **banger**(val): Bangs if input is `1`, `N`, `S`, `W`, `E` or `Z`.
 - `C` **clock**('rate, mod): Outputs a constant value based on the runtime frame.
-- `D` **delay**('rate, offset): Bangs on a fraction of the runtime frame.
+- `D` **delay**('rate, mod): Bangs on a fraction of the runtime frame.
 - `E` **east**: Moves eastward, or bangs.
 - `F` **if**(a, b): Bangs if both inputs are equal.
 - `G` **generator**('x, 'y, 'len): Writes distant operators with offset.
-- `H` **halt**('len): Stops southward operators from operating.
+- `H` **halt**: Stops southward operators from operating.
 - `I` **increment**(min, max): Increments southward operator.
 - `J` **jumper**(val): Outputs the northward operator.
 - `K` **kill**: Kills southward operator.
@@ -51,8 +51,9 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `Z` **diagonal**: Moves eastwardly, respawns west on collision.
 - `*` **bang**: Bangs neighboring operators.
 - `#` **comment**: Comments a line, or characters until the next hash.
-- `;` **udp**('len): Sends a string via UDP to localhost.
 - `:` **midi**('channel, 'octave, 'note, velocity, length): Sends Midi a midi note.
+- `;` **udp**('len): Sends a string via UDP to localhost.
+- `=` **osc**('len): Sends a configured OSC message.
 
 ## Controls
 
