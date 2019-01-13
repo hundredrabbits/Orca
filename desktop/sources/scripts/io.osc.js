@@ -36,24 +36,28 @@ function Osc (terminal) {
         return
       }
 
-      const values = []
+      const msg = new osc.Message(def.path)
       for(let i = 0, l = pattern.length; i < l; i++) {
         const type = pattern[i]
-        if (type !== 'f' && type !== 'i' && type !== 's') {
-          console.log(`Don't know how to send OSC argument with type '${type}'`)
-          return
-        }
 
-        const value =
-          type === 'f' ? parseInt(args[i + 1]) / 10.0 :
-          type === 'i' ? parseInt(args[i + 1]) :
-          args[i + 1] /* type === 's' */
-        
-        values.push(value)
+        switch (type) {
+          case 'f':
+            msg.append({type, value: parseInt(args[i + 1]) / 10.0})
+            break
+          case 'i':
+            msg.append(parseInt(args[i + 1]))
+            break
+          case 's': msg.append(args[i + 1])
+            break
+          default:
+            console.log(`Don't know how to send OSC argument with type '${type}'`)
+            return
+        }
       }
       
-      console.log(`Sending ${values}, via ${def.address}:${def.port}`)
-      this.clients[`${def.address}:${def.port}`].send(def.path, ...values, (err) => {
+      console.log(`Sending ${data} as ${def.pattern} on ${def.path}, via ${def.address}:${def.port}`)
+
+      this.clients[`${def.address}:${def.port}`].send(msg, (err) => {
         if (err) { console.log(err) }
       })
     }
