@@ -8,8 +8,8 @@ module.exports = {
     'A': {
       address: '127.0.0.1',
       port: 12000,
-      path: '/ctrlA',
-      pattern: 'sf'
+      path: '/test',
+      pattern: 'ifs'
     },
     'a': {
       address: '127.0.0.1',
