@@ -98,25 +98,15 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 
 ### Midi Output
 
-The midi operator `:` takes up to 5 inputs('channel, 'octave, 'note, velocity, length). For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. See it in action with [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca).
-
-#### Velocity*
-
-Velocity is a value from `1`(8/127) to `g`(127/127). For example, `:34C8.`, is a **C note, on the 4th octave, through the 4th MIDI channel with a velocity of 63/127(50%)**, `:34CG.`, is a **C note, on the 4th octave, through the 4th MIDI channel with a velocity of 127/127(100%)**. 
-
-#### Note Length*
-
-Note length is a value from `1`(1/16) to `g`(16/16), which is a ratio of a full bar, *f* being `16/16`(a full bar), *8* being `1/2`(half), *4* being `1/4`(quarter).. and *1* being `1/16`. For example, `:27D.F`, is a **D note, on the 7th octave, through the 3rd MIDI channel lasting for a full bar**. 
+The [MIDI](https://en.wikipedia.org/wiki/MIDI) operator `:` takes up to 5 inputs('channel, 'octave, 'note, velocity, length). For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. Velocity is an optional value from `1`(8/127) to `f`(127/127). Note length is a value from `0`(0/16) to `f`(16/16), which is a ratio of a full bar, *f* being `16/16`(a full bar), *8* being `1/2`(half), *4* being `1/4`(quarter). See it in action with [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca).
 
 ### UDP Output
 
-The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback) operator `;`, takes one haste input that is a string length and locks the eastwardly ports. It sends the message on bang to the port `49160` on `localhost` by default, and can be configured in [udpConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/core/bridge/udpConfig.js).  
-You can use the [udpListener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/UDP/udpListener.js) to test UDP messages. See it in action with [udp.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/UDP/_udp.orca).
+The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback) operator `;` takes one haste input('length) and locks that number of eastwardly ports. It sends the message on bang to the port `49160` on `localhost`, which can be configured in [udpConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/core/bridge/udpConfig.js). You can use the [udpListener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/UDP/udpListener.js) to test UDP messages. See it in action with [udp.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/UDP/_udp.orca).
 
 ### OSC Output
 
-The [OSC](https://github.com/MylesBorins/node-osc) operator `=` takes one haste input that is a string length and locks the eastwardly ports. It sends the message on bang to the port `12000` on `localhost` by default and can be configured in [oscConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/core/bridge/oscConfig.js). The OSC operator supports integers, float, strings and combined patterns and can send to multiple servers. See [Orca's OSC Guide](https://github.com/hundredrabbits/Orca/blob/master/GUIDE.md#orca-s-osc-guide) 
-You can use the [oscListener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/OSC/oscListener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/OSC/_osc.orca).
+The [OSC](https://github.com/MylesBorins/node-osc) operator `=` takes one haste input('length) and locks that number of eastwardly ports. It sends the message on bang to the port `12000` on `localhost`, which can be configured in [oscConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/core/bridge/oscConfig.js). The operator supports *integers*, *float*, *strings*, combined patterns and can even send to multiple servers. See [Orca's OSC Guide](https://github.com/hundredrabbits/Orca/blob/master/GUIDE.md#orca-s-osc-guide). You can use the [oscListener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/OSC/oscListener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/OSC/_osc.orca).
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.hardware.jpg' width="600"/>
 
