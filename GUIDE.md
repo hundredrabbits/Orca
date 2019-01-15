@@ -166,7 +166,7 @@ The [oscConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/co
     }
     ```
     `9=D 3 12 yo` will send `/D` and the values `3`, `1.2`, `"yo"` to `127.0.0.1:12000`
-- `address` and `port` options can also be used on each definitions to configure alternate servers
+- `address` and `port`: used to configure alternate servers address or port
     ```js
     defs: {
         E: {
