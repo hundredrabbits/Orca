@@ -1,6 +1,7 @@
 'use strict'
 
 const osc = require('node-osc')
+const fs = require('fs')
 
 function Osc (terminal) {
   this.stack = []
@@ -28,15 +29,15 @@ function Osc (terminal) {
     const args = data.split('.').filter(d => d !== '')
     if (args.length !== 0) {
       const key = args[0]
-      const def = this.config.defs[key]
-      const pattern = def.pattern
+      const def = this.config.defs[key] || key
+      const pattern = def.pattern || ''
 
-      if(pattern.length !== args.length - 1) {
+      if (pattern.length !== args.length - 1) {
         console.warn(`Number of arguments provided does not match the pattern length of this def`)
         return
       }
 
-      const msg = new osc.Message(def.path)
+      const msg = new osc.Message(def.path || `/${key}`)
       for(let i = 0, l = pattern.length; i < l; i++) {
         const type = pattern[i]
 
@@ -55,26 +56,44 @@ function Osc (terminal) {
         }
       }
       
-      console.log(`Sending ${data} as ${def.pattern} on ${def.path}, via ${def.address}:${def.port}`)
+      const address = def.address || this.config.address
+      const port = def.port || this.config.port
+      console.log(`Sending ${data} as ${pattern} on ${def.path || `/${key}`}, via ${address}:${port}`)
 
-      this.clients[`${def.address}:${def.port}`].send(msg, (err) => {
+      this.clients[`${address}:${port}`].send(msg, (err) => {
         if (err) { console.log(err) }
+        console.log(`Sent ${data} as ${pattern} on ${def.path || `/${key}`}, via ${address}:${port}`)
       })
     }
   }
 
-  this.setup = function () {
-    this.config = require('../../core/bridge/oscConfig')
-    this.clients = {}
+  this.createClients = function () {
     for (const key in this.config.defs) {
       const def = this.config.defs[key]
-      const address = def.address
-      const port = def.port
+      const address = def.address || this.config.address
+      const port = def.port || this.config.port
       if (!this.clients[`${address}:${port}`]) {
         this.clients[`${address}:${port}`]  = new osc.Client(address, port)
         console.log(`OSC client ${address}:${port} created`)
       }
     }
+  }
+
+  this.setup = function () {
+    const configPath = '../../core/bridge/oscConfig'
+    this.config = require(configPath)
+    this.clients = {}
+    this.createClients()
+    
+    fs.watch('../../core/bridge/oscConfig', (event, filename) => {
+      if (filename) {
+        console.log(`${filename} file Changed`)
+        for (const client in this.clients) {
+          this.clients[client].kill()
+        }
+        this.createClients()
+      }
+    })
   }
 }
 

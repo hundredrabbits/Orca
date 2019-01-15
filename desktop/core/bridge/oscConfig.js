@@ -3,27 +3,32 @@
 module.exports = {
   name: 'Orca OSC',
   protocol: 'osc',
+  address: '127.0.0.1',
+  port: 12000,
 
   defs: {
-    'A': {
-      address: '127.0.0.1',
-      port: 12000,
-      path: '/test',
-      pattern: 'ifs'
+    myKey: {
+      path: '/Hello/Orca'
     },
-    'a': {
+    A: {
+      path: '/ctrlA',
+      pattern: 'i'
+    },
+    B: {
+      path: '/ctrlB',
+      pattern: 'f'
+    },
+    C: {
       address: '127.0.0.1',
-      port: 12001,
-      path: '/ctrla',
-      name: 'a',
+      port: 3333,
+      path: '/ctrlC',
       pattern: 's'
     },
-    '0': {
+    D: {
       address: '127.0.0.1',
-      port: 6010,
-      path: '/ctrl0',
-      name: '0',
-      pattern: 'i'
+      port: 3333,
+      path: '/ctrlD',
+      pattern: 'ifs'
     }
   }
 }
