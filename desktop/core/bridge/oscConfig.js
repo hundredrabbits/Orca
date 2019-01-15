@@ -19,13 +19,11 @@ module.exports = {
       pattern: 'f'
     },
     C: {
-      address: '127.0.0.1',
       port: 3333,
       path: '/ctrlC',
       pattern: 's'
     },
     D: {
-      address: '127.0.0.1',
       port: 3333,
       path: '/ctrlD',
       pattern: 'ifs'

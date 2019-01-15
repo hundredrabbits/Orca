@@ -125,6 +125,60 @@ Hit `ctrl+o` in ORCΛ to get a dialog for opening a `.orca` file.
 There is the `example` directory in your `Orca` folder.
 Choose the `_midi.orca` file in that directory and you should hear four notes playing in a loop!
 
+## Orca's OSC Guide
+The [OSC](https://github.com/MylesBorins/node-osc) operator `=` takes one haste input that is **a string length** and locks the eastwardly ports and sends an OSC message on bang to the port `12000` on `localhost` by default and can be configured in [oscConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/core/bridge/oscConfig.js).  
+The OSC operator `=` offers different usages, from its the most simple: `2=yo` will send `/yo` to `127.0.0.1:12000`.  
+The [oscConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/core/bridge/oscConfig.js) file can also be modified to add predefined messages in `defs`. Each definition can take different options:
+- `path`: path to use for the OSC message
+    ```js
+    defs: {
+        myKey: { 
+            path: '/Hello/Orca'
+        }
+    }
+    ```
+    `5=myKey` will send `/Hello/Orca` to `127.0.0.1:12000`
+
+- `pattern`: used to send values. Support integers, floats and strings values
+    ```js
+    defs: {
+        A: {
+            pattern: 'i' // send an integer
+        },
+        B: {
+            pattern: 'f' // send a float (divides input value by 10)
+        },
+        C: {
+            pattern: 's' // send a string
+        }
+    }
+    ```
+    `5=A 135` will send `/A` and the value `135` to `127.0.0.1:12000`  
+    `5=B 135` will send `/B` and the value `13.5` to `127.0.0.1:12000`  
+    `5=C 135` will send `/C` and the value `'135'` to `127.0.0.1:12000`
+
+    `pattern` can also be used to send mutliple values
+    ```js
+    defs: {
+        D: {
+            pattern: 'ifs' // integer, float, string
+        }
+    }
+    ```
+    `9=D 3 12 yo` will send `/D` and the values `3`, `1.2`, `"yo"` to `127.0.0.1:12000`
+- `address` and `port` options can also be used on each definitions to configure alternate servers
+    ```js
+    defs: {
+        E: {
+            address: '192.168.0.12',
+            port: '6010'
+        }
+    }
+    ```
+    `1=E` will send `/E` to `192.168.0.12:6010`
+
+You can use the [oscListener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/OSC/oscListener.js) to test OSC messages (needs [node-osc](https://github.com/MylesBorins/node-osc): `cd examples/OSC && npm i`). See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/OSC/_osc.orca) and [oscConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/core/bridge/oscConfig.js).
+
 ## FAQs
 
 ### Set Device Id
