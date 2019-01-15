@@ -93,6 +93,12 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `tab` Toggle interface.
 - `backquote` Toggle background.
 
+### Cursor
+
+- `shift+arrowKey` Expand cursor.
+- `ctrl/meta+arrowKey` Leap cursor.
+- `alt/arrowKey` Move selection.
+
 ## Special Operators
 
 ### Midi Output
