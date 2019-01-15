@@ -38,7 +38,7 @@ function Osc (terminal) {
       }
 
       const msg = new osc.Message(def.path || `/${key}`)
-      for(let i = 0, l = pattern.length; i < l; i++) {
+      for (let i = 0, l = pattern.length; i < l; i++) {
         const type = pattern[i]
 
         switch (type) {
