@@ -6,7 +6,7 @@ function OperatorOsc (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '=', true)
 
   this.name = 'osc'
-  this.info = 'Sends a configured OSC message.'
+  this.info = 'Sends a OSC message.'
 
   this.ports.haste.len = { x: -1, y: 0 }
 

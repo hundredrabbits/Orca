@@ -6,7 +6,7 @@ function OperatorMidi (orca, x, y, passive) {
   Operator.call(this, orca, x, y, ':', true)
 
   this.name = 'midi'
-  this.info = 'Sends Midi a midi note.'
+  this.info = 'Sends a MIDI note.'
 
   this.ports.haste.channel = { x: 1, y: 0 }
   this.ports.haste.octave = { x: 2, y: 0 }

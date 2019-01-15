@@ -6,7 +6,7 @@ function OperatorUdp (orca, x, y, passive) {
   Operator.call(this, orca, x, y, ';', true)
 
   this.name = 'udp'
-  this.info = 'Sends a string via UDP to localhost.'
+  this.info = 'Sends a UDP. message.'
 
   this.ports.haste.len = { x: -1, y: 0 }
 

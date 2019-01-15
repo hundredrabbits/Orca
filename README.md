@@ -6,7 +6,7 @@
 
 ## Install & Run
 
-You can download [builds for OSX, Windows and Linux](https://hundredrabbits.itch.io/orca), or if you wish to build it yourself, follow these steps:
+You can download [builds](https://hundredrabbits.itch.io/orca) for **OSX, Windows and Linux**, or if you wish to build it yourself, follow these steps:
 
 ```
 git clone https://github.com/hundredrabbits/Orca.git
@@ -51,9 +51,9 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `Z` **zoom**: Moves eastwardly, respawns west on collision.
 - `*` **bang**: Bangs neighboring operators.
 - `#` **comment**: Comments a line, or characters until the next hash.
-- `:` **midi**('channel, 'octave, 'note, velocity, length): Sends Midi a midi note.
-- `;` **udp**('len): Sends a string via UDP to localhost.
-- `=` **osc**('len): Sends a configured OSC message.
+- `:` **midi**('channel, 'octave, 'note, velocity, length): Sends a MIDI note.
+- `;` **udp**('len): Sends a UDP. message.
+- `=` **osc**('len): Sends a OSC message.
 
 ## Controls
 
