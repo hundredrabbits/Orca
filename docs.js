@@ -1,6 +1,6 @@
 const lib = require('./desktop/core/library')
 
-console.log("## Functions\n")
+console.log("## Operators\n")
 
 for(const id in lib){
   const operator = new lib[id]()

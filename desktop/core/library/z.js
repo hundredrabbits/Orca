@@ -5,7 +5,7 @@ const Operator = require('../operator')
 function OperatorZ (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'z', passive)
 
-  this.name = 'diagonal'
+  this.name = 'zoom'
   this.info = 'Moves eastwardly, respawns west on collision.'
   this.draw = false
 
