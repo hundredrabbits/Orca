@@ -31,18 +31,18 @@ function Osc (terminal) {
       const def = this.config.defs[key]
       const pattern = def.pattern
 
-      if(pattern.length !== args.length - 1) {
+      if (pattern.length !== args.length - 1) {
         console.warn(`Number of arguments provided does not match the pattern length of this def`)
         return
       }
 
       const msg = new osc.Message(def.path)
-      for(let i = 0, l = pattern.length; i < l; i++) {
+      for (let i = 0, l = pattern.length; i < l; i++) {
         const type = pattern[i]
 
         switch (type) {
           case 'f':
-            msg.append({type, value: parseInt(args[i + 1]) / 10.0})
+            msg.append({ type, value: parseInt(args[i + 1]) / 10.0 })
             break
           case 'i':
             msg.append(parseInt(args[i + 1]))
@@ -54,7 +54,7 @@ function Osc (terminal) {
             return
         }
       }
-      
+
       console.log(`Sending ${data} as ${def.pattern} on ${def.path}, via ${def.address}:${def.port}`)
 
       this.clients[`${def.address}:${def.port}`].send(msg, (err) => {
@@ -71,7 +71,7 @@ function Osc (terminal) {
       const address = def.address
       const port = def.port
       if (!this.clients[`${address}:${port}`]) {
-        this.clients[`${address}:${port}`]  = new osc.Client(address, port)
+        this.clients[`${address}:${port}`] = new osc.Client(address, port)
         console.log(`OSC client ${address}:${port} created`)
       }
     }
