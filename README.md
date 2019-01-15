@@ -115,7 +115,7 @@ You can use the [udpListener.js](https://github.com/hundredrabbits/Orca/blob/mas
 
 ### OSC Output
 
-The [OSC](https://github.com/MylesBorins/node-osc) operator `=` takes one haste input that is a string length and locks the eastwardly ports. It sends the message on bang to the port `12000` on `localhost` by default and can be configured in [oscConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/core/bridge/oscConfig.js). The OSC operator supports integers, float, strings and combined patterns and can send to multiple servers. See [Orca's OSC Guide](https://github.com/hundredrabbits/Orca/blob/master/GUIDE.md#orca-s-osc-guide) 
+The [OSC](https://github.com/MylesBorins/node-osc) operator `=` takes one haste input that is a string length and locks the eastwardly ports. It sends the message on bang to the port `12000` on `localhost` by default and can be configured in [oscConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/core/bridge/oscConfig.js). The OSC operator supports integers, float, strings and combined patterns and can send to multiple servers. See [Orca's OSC Guide](https://github.com/hundredrabbits/Orca/blob/master/GUIDE.md#orcas-osc-guide) 
 You can use the [oscListener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/OSC/oscListener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/OSC/_osc.orca).
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.hardware.jpg' width="600"/>
