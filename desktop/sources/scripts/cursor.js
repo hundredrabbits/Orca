@@ -20,6 +20,12 @@ function Cursor (terminal) {
     terminal.update()
   }
 
+  this.drag = function (x, y) {
+    this.cut()
+    this.move(x, y)
+    this.paste()
+  }
+
   this.reset = function (pos = false) {
     if (pos) {
       this.x = 0

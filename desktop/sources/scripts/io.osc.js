@@ -43,7 +43,7 @@ function Osc (terminal) {
 
         switch (type) {
           case 'f':
-            msg.append({type, value: parseInt(args[i + 1]) / 10.0})
+            msg.append({ type, value: parseInt(args[i + 1]) / 10.0 })
             break
           case 'i':
             msg.append(parseInt(args[i + 1]))
@@ -73,7 +73,7 @@ function Osc (terminal) {
       const address = def.address || this.config.address
       const port = def.port || this.config.port
       if (!this.clients[`${address}:${port}`]) {
-        this.clients[`${address}:${port}`]  = new osc.Client(address, port)
+        this.clients[`${address}:${port}`] = new osc.Client(address, port)
         console.log(`OSC client ${address}:${port} created`)
       }
     }

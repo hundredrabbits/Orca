@@ -26,7 +26,7 @@ function Osc (terminal) {
 
   this.play = function (data) {
     // see io.osc.js
-    
+
     // const args = data.split('.').filter(d => d !== '')
     // if (args.length !== 0) {
     //   const key = args[0]
@@ -113,7 +113,7 @@ function Osc (terminal) {
       const address = def.address
       const port = def.port
       if (!this.clients[`${address}:${port}`]) {
-        this.clients[`${address}:${port}`]  = new osc.Client(address, port)
+        this.clients[`${address}:${port}`] = new osc.Client(address, port)
         console.log(`OSC client ${address}:${port} created`)
       }
     }

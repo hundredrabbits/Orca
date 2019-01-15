@@ -13,8 +13,8 @@ function OperatorF (orca, x, y, passive) {
   this.ports.output = { x: 0, y: 1 }
 
   this.run = function () {
-    const a = this.listen(this.ports.input.a, true)
-    const b = this.listen(this.ports.input.b, true)
+    const a = this.listen(this.ports.input.a)
+    const b = this.listen(this.ports.input.b)
     const res = a === b ? '*' : '.'
     this.output(`${res}`)
   }
