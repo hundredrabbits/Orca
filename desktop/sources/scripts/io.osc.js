@@ -55,7 +55,7 @@ function Osc (terminal) {
             return
         }
       }
-      
+
       const address = def.address || this.config.address
       const port = def.port || this.config.port
       console.log(`Sending ${data} as ${pattern} on ${def.path || `/${key}`}, via ${address}:${port}`)
