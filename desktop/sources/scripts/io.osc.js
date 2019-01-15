@@ -58,11 +58,11 @@ function Osc (terminal) {
 
       const address = def.address || this.config.address
       const port = def.port || this.config.port
-      console.log(`Sending ${data} as ${pattern} on ${def.path || `/${key}`}, via ${address}:${port}`)
+      // console.log(`Sending ${data} as ${pattern} on ${def.path || `/${key}`}, via ${address}:${port}`)
 
       this.clients[`${address}:${port}`].send(msg, (err) => {
-        if (err) { console.log(err) }
-        console.log(`Sent ${data} as ${pattern} on ${def.path || `/${key}`}, via ${address}:${port}`)
+        if (err) { console.warn(err) }
+        // console.log(`Sent ${data} as ${pattern} on ${def.path || `/${key}`}, via ${address}:${port}`)
       })
     }
   }
@@ -80,7 +80,7 @@ function Osc (terminal) {
   }
 
   this.setup = function () {
-    const configPath = '../../core/bridge/oscConfig'
+    const configPath = '../../core/bridge/osc.conf'
     this.config = require(configPath)
     this.clients = {}
     this.createClients()

@@ -33,7 +33,7 @@ function Udp (terminal) {
   }
 
   this.setup = function () {
-    this.config = require('../../core/bridge/udpConfig')
+    this.config = require('../../core/bridge/udp.conf')
     this.server = dgram.createSocket('udp4')
   }
 }

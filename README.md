@@ -100,7 +100,7 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 
 The [MIDI](https://en.wikipedia.org/wiki/MIDI) operator `:` takes up to 5 inputs('channel, 'octave, 'note, velocity, length). 
 
-For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. Velocity is an optional value from `1`(8/127) to `f`(127/127). Note length is a value from `0`(0/16) to `f`(16/16), which is a ratio of a full bar, *f* being `16/16`(a full bar), *8* being `1/2`(half), *4* being `1/4`(quarter). See it in action with [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca).
+For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. Velocity is an optional value from `0`(0/127) to `f`(127/127). Note length is a value from `0`(1/16) to `f`(16/16), which is a ratio of a full bar, *f* being `16/16`(a full bar), *8* being `1/2`(half), *4* being `1/4`(quarter). See it in action with [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca).
 
 ### UDP Output
 
@@ -118,7 +118,7 @@ It sends the message on bang to the port `12000` on `localhost`, which can be co
 
 ## Base36 Table
 
-Orca operates on a base of 36 increments. Operators using numeric values will typically also operate on letters and convert them into values as per the following table. For instance `pD` will bang every *24th frame*.
+Orca operates on a base of 36 increments. Operators using numeric values will typically also operate on letters and convert them into values as per the following table. For instance `Dp` will bang every *24th frame*.
 
 | 0     | 1     | 2     | 3     | 4     | 5     | 6     | 7     | 8     | 9     | A     | B      | 
 | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:    | 
