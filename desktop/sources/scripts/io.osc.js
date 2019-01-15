@@ -85,15 +85,15 @@ function Osc (terminal) {
     this.clients = {}
     this.createClients()
     
-    fs.watch(configPath, (event, filename) => {
-      if (filename) {
-        console.log(`${filename} file Changed`)
-        for (const client in this.clients) {
-          this.clients[client].kill()
-        }
-        this.createClients()
-      }
-    })
+    // fs.watch('./core/bridge/oscConfig', (event, filename) => {
+    //   if (filename) {
+    //     console.log(`${filename} file Changed`)
+    //     for (const client in this.clients) {
+    //       this.clients[client].kill()
+    //     }
+    //     this.createClients()
+    //   }
+    // })
   }
 }
 
