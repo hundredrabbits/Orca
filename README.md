@@ -112,7 +112,7 @@ It sends the message on bang to the port `49160` on `localhost`, which can be co
 
 The [OSC](https://github.com/MylesBorins/node-osc) operator `=` takes one haste input('length) and locks that number of eastwardly ports. 
 
-It sends the message on bang to the port `12000` on `localhost`, which can be configured in [oscConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/core/bridge/oscConfig.js). The operator supports *integers*, *float*, *strings*, combined patterns and can even send to multiple servers. See [Orca's OSC Guide](https://github.com/hundredrabbits/Orca/blob/master/GUIDE.md#orca-s-osc-guide). You can use the [oscListener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/OSC/oscListener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/OSC/_osc.orca).
+It sends the message on bang to the port `12000` on `localhost`, which can be configured in [oscConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/core/bridge/oscConfig.js). The operator supports *integers*, *float*, *strings*, combined patterns and can even send to multiple servers. You can use the [oscListener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/OSC/oscListener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/OSC/_osc.orca), or [learn more](https://github.com/hundredrabbits/Orca/blob/master/GUIDE.md#orca-s-osc-guide).
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.hardware.jpg' width="600"/>
 
