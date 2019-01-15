@@ -4,10 +4,10 @@
 | ---------- | ----------- 
 | Directions | N S E W Z
 | Math       | A F I M R
-| Timers     | C D
 | Writers    | G P X 
 | Readers    | O Q T
 | Jumpers    | J Y
+| Timers     | C D
 | Misc       | B H K L U V
 | Special    | * ; : ! #
 
