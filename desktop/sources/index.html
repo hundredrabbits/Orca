@@ -58,6 +58,10 @@
       terminal.controller.add("default","View","Toggle Interface",() => { terminal.toggleInterface(); },"Tab")
       terminal.controller.add("default","View","Toggle Background",() => { terminal.toggleBackground(); },"`")
 
+      terminal.controller.add("default","OSC Port","Default",() => { terminal.io.osc.select(49162); })
+      terminal.controller.add("default","OSC Port","TidalCycles",() => { terminal.io.osc.select(6010); })
+      terminal.controller.add("default","OSC Port","SonicPi",() => { terminal.io.osc.select(4559); })
+
       terminal.controller.add("default","Theme","Open Theme",() => { terminal.theme.open(); },"CmdOrCtrl+Shift+o")
       terminal.controller.add("default","Theme","Reset Theme",() => { terminal.theme.reset(); },"CmdOrCtrl+Shift+Backspace")
       terminal.controller.add("default","Theme","Download Themes..",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes'); })

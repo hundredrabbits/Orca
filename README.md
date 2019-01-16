@@ -106,13 +106,13 @@ For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI chan
 
 The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback) operator `;` takes one haste input('length) and locks that number of eastwardly ports. 
 
-It sends the message on bang to the port `49160` on `localhost`, which can be configured in [udpConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/core/bridge/udpConfig.js). You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test UDP messages. See it in action with [udp.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_udp.orca).
+It sends the message on bang to the port `49160` on `localhost`. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test UDP messages. See it in action with [udp.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_udp.orca).
 
 ### OSC Output
 
-The [OSC](https://github.com/MylesBorins/node-osc) operator `=` takes one haste input('length) and locks that number of eastwardly ports. 
+The [OSC](https://github.com/MylesBorins/node-osc) operator `=` takes two haste inputs('pathlen, 'msglen) and lock that cumulative number of eastwardly ports. 
 
-It sends the message on bang to the port `12000` on `localhost`, which can be configured in [oscConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/core/bridge/oscConfig.js). The operator supports *integers*, *float*, *strings*, combined patterns and can even send to multiple servers. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/listener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_osc.orca), or [learn more](https://github.com/hundredrabbits/Orca/blob/master/GUIDE.md#orcas-osc-guide).
+For example, `c0=/hello/world` will send an empty message(bang) to the path `/hello/world`, to the port `49162` on `localhost`. Or, `44=/foo123f` will send the float `0.123`, to the path `/foo`. The operation `44=/bar1234` will send the int `1234`, to the path `/bar` The operator supports *integers*, *float*, *strings*. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/listener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_osc.orca), or [learn more](https://github.com/hundredrabbits/Orca/blob/master/GUIDE.md#orcas-osc-guide).
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.hardware.jpg' width="600"/>
 
