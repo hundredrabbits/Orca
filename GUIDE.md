@@ -4,13 +4,17 @@ Orca is **not a synth**, but a [livecoding environment](https://www.reddit.com/r
 
 ## FAQs
 
+### Display the console
+
+To open the console, press `ctrl+.`.
+
 ### List Midi Devices
 
-Open the console with `ctrl+.`, and type `terminal.io.midi.list()` to see the list of available devices.
+In console, type `terminal.io.midi.list()` to see the list of available devices.
 
 ### Select Midi Device
 
-Open the console with `ctrl+.`, and type `terminal.io.midi.select(0)` to select the 1st available device, `terminal.io.midi.select(1)` to select the 2nd available device, and so on. Alternatively, type `terminal.io.midi.next()`.
+In console, type `terminal.io.midi.next()` to select the next available device.
 
 ## OSX
 
