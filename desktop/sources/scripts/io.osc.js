@@ -85,11 +85,11 @@ function Osc (terminal) {
   this.setup = function () {
     this.configPath = `${__dirname.split('/sources')[0]}/core/bridge/osc.conf`
     this.clients = {}
-    
+
     fs.watch(this.configPath, (event, filename) => {
       this.createClients()
     })
-    
+
     this.createClients()
   }
 }

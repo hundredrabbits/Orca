@@ -6,9 +6,11 @@ function Udp (terminal) {
   this.index = 0
   this.stack = []
   this.server = null
+  this.port = 49160
+  this.ip = '127.0.0.1'
 
   this.start = function () {
-    console.info('Starting UDP..')
+    console.info('UDP Starting..')
     this.setup()
   }
 
@@ -27,13 +29,19 @@ function Udp (terminal) {
   }
 
   this.play = function (data) {
-    this.server.send(Buffer.from(`${data}`), this.config.port, this.config.address, (err) => {
+    this.server.send(Buffer.from(`${data}`), this.port, '127.0.0.1', (err) => {
       if (err) { console.log(err) }
     })
   }
 
+  this.select = function (port = 49160) {
+    if (port < 1000) { console.warn('Unavailable port'); return }
+    console.log('UDP Port: ', port)
+    this.port = port
+    return this
+  }
+
   this.setup = function () {
-    this.config = require('../../core/bridge/udp.conf')
     this.server = dgram.createSocket('udp4')
   }
 }
