@@ -22,12 +22,14 @@ function OperatorOsc (orca, x, y, passive) {
   this.run = function () {
     if (!this.bang()) { return }
 
-    this.draw = false
-
     let path = ''
     for (let x = 0; x < this.pathlen; x++) {
       path += orca.glyphAt(1 + this.x + x, this.y)
     }
+
+    if (path === '') { return }
+
+    this.draw = false
 
     let msg = ''
     for (let x = this.pathlen; x < this.pathlen + this.msglen; x++) {

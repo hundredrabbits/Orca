@@ -29,7 +29,7 @@ function Udp (terminal) {
   }
 
   this.play = function (data) {
-    this.server.send(Buffer.from(`${data}`), this.port, '127.0.0.1', (err) => {
+    this.server.send(Buffer.from(`${data}`), this.port, this.ip, (err) => {
       if (err) { console.log(err) }
     })
   }
