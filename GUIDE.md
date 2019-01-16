@@ -8,7 +8,7 @@ Orca is **not a synth**, but a [livecoding environment](https://www.reddit.com/r
 
 Open the console with `ctrl+.`, and type `terminal.io.midi.list()` to see the list of available devices.
 
-### Set Device Id
+### Select Midi Device
 
 Open the console with `ctrl+.`, and type `terminal.io.midi.select(0)` to select the 1st available device, `terminal.io.midi.select(1)` to select the 2nd available device, and so on. Alternatively, type `terminal.io.midi.next()`.
 
@@ -24,14 +24,6 @@ To control instruments in [Ableton Live](https://www.ableton.com/en/), launch [O
 - Activate the **In** toggle. 
 
 The midi instrument should begin receiving midi notes as soon as the Orca window is **back into focus**.
-
-### VCV Rack
-
-[TODO]
-
-### SuperCollider
-
-[TODO]
 
 ## Windows
 
@@ -99,41 +91,6 @@ ALSA pcm 'default' set buffer size 32768, period size 8192 bytes
 ```
 We can see, that the program opens some ports.
 In the next step will choose one of those to have ORCΛ send its MIDI output to.
-
-### Run ORCΛ and set the MIDI device
-Open another terminal and navigate to the `desktop` subdirectory of your `Orca` folder and type
-```
-npm start
-```
-
-Next we need to choose our MIDI devices as described in the FAQ's by pressing `ctrl+.`
-in ORCΛ to open a browser console (you might need to choose the correct `console` tab at the top).
-Type `terminal.io.listMidiDevices()` in the console to obtain an output similar to (expand the output in your console if needed):
-```
-terminal.io.listMidiDevices()
-(5) [MIDIOutput, MIDIOutput, MIDIOutput, MIDIOutput, MIDIOutput]
-0: MIDIOutput {connection: "closed", id: "6FF5590044F4859ED50C5167BCFE9700A1798E39AA55A628E86D39011FAECD5D", manufacturer: "", name: "Midi Through Port-0", state: "connected", …}
-1: MIDIOutput {connection: "closed", id: "574FB441DEDADDE2DB06598767A3088744994E3AEA26BA638F8C51D004D8D333", manufacturer: "", name: "TiMidity port 0", state: "connected", …}
-2: MIDIOutput {connection: "closed", id: "8C1A6E287845194CE38B5B5181F731AE63D54D00681076DF9905B3658DF86248", manufacturer: "", name: "TiMidity port 1", state: "connected", …}
-3: MIDIOutput {connection: "closed", id: "A32276E0B2B7CB991939F210D7542BA7A43CE9E97E78C9F5B8D85BA2AC033C5F", manufacturer: "", name: "TiMidity port 2", state: "connected", …}
-4: MIDIOutput {connection: "closed", id: "CBE9CBC37EE04BD5C4039207BE53A9C0E36ED85542FEF3FCF6AF4D0901370F08", manufacturer: "", name: "TiMidity port 3", state: "connected", …}
-length: 5
-__proto__: Array(0)
-```
-
-So we see that the TiMidity++ ports are devices 1 to 4.
-Set the MIDI Device e.g. to the first of those by typing `terminal.io.setMidiDevice(1)` in the console.
-This should come with a confirmation similar to:
-```
-/home/bernd/projects/Orca/desktop/sources/scripts/io.js:62 Set device to #1 — TiMidity port 0
-```
-
-Now close the web console window.
-
-### Open an example
-Hit `ctrl+o` in ORCΛ to get a dialog for opening a `.orca` file.
-There is the `example` directory in your `Orca` folder.
-Choose the `_midi.orca` file in that directory and you should hear four notes playing in a loop!
 
 ## Orca's OSC Guide
 The [OSC](https://github.com/MylesBorins/node-osc) operator `=` takes one haste input that is **a string length** and locks the eastwardly ports and sends an OSC message on bang to the port `12000` on `localhost` by default and can be configured in [oscConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/core/bridge/oscConfig.js).  
