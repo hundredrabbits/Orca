@@ -2,6 +2,16 @@
 
 Orca is **not a synth**, but a [livecoding environment](https://www.reddit.com/r/livecoding/) to write procedural sequencers. In other words, **Orca is meant to control other applications** such as a DAW(Ableton, Renoise, VCV Rack, etc.), or an audio server such as SuperCollider.
 
+## FAQs
+
+### List Midi Devices
+
+Open the console with `ctrl+.`, and type `terminal.io.midi.list()` to see the list of available devices.
+
+### Set Device Id
+
+Open the console with `ctrl+.`, and type `terminal.io.midi.select(0)` to select the 1st available device, `terminal.io.midi.select(1)` to select the 2nd available device, and so on. Alternatively, type `terminal.io.midi.next()`.
+
 ## OSX
 
 ### Ableton Live
@@ -178,9 +188,3 @@ The [oscConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/co
     `1=E` will send `/E` to `192.168.0.12:6010`
 
 You can use the [oscListener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/OSC/oscListener.js) to test OSC messages (needs [node-osc](https://github.com/MylesBorins/node-osc): `cd examples/OSC && npm i`). See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/OSC/_osc.orca) and [oscConfig.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/core/bridge/oscConfig.js).
-
-## FAQs
-
-### Set Device Id
-
-To set the Midi device, open the console with `ctrl+.`, and type `terminal.io.listMidiDevices()` to see the list of available devices, and type `terminal.io.setMidiDevice(2)` to select the 2nd available device. This will be improved soon.
