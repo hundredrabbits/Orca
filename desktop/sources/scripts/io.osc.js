@@ -68,8 +68,8 @@ function Osc (terminal) {
   }
 
   this.createClients = function () {
-    this.config = require(`../..${this.configPath}`)
-    delete require.cache[require.resolve(`../..${this.configPath}`)]
+    this.config = require(this.configPath)
+    delete require.cache[require.resolve(this.configPath)]
 
     for (const key in this.config.defs) {
       const def = this.config.defs[key]
@@ -83,12 +83,12 @@ function Osc (terminal) {
   }
 
   this.setup = function () {
-    this.configPath = '/core/bridge/osc.conf'
+    this.configPath = `${__dirname.split('/sources')[0]}/core/bridge/osc.conf`
     this.clients = {}
     
-    // fs.watch(`.${this.configPath}`, (event, filename) => {
-    //   this.createClients()
-    // })
+    fs.watch(this.configPath, (event, filename) => {
+      this.createClients()
+    })
     
     this.createClients()
   }
