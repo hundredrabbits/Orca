@@ -24,7 +24,7 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 ## Operators
 
 - `A` **add**(a, b): Outputs the sum of inputs.
-- `B` **bool**(val): Bangs if input is not null.
+- `B` **bool**(val): Bangs if input is not empty, or 0.
 - `C` **clock**('rate, mod): Outputs a constant value based on the runtime frame.
 - `D` **delay**('rate, mod): Bangs on a fraction of the runtime frame.
 - `E` **east**: Moves eastward, or bangs.
