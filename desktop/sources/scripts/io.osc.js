@@ -1,7 +1,6 @@
 'use strict'
 
 const osc = require('node-osc')
-const fs = require('fs')
 
 function Osc (terminal) {
   this.stack = []
@@ -21,76 +20,39 @@ function Osc (terminal) {
     }
   }
 
-  this.send = function (msg) {
-    this.stack.push(msg)
+  this.send = function (path, msg) {
+    this.stack.push({path, msg})
   }
 
-  this.play = function (data) {
-    const args = data.split('.').filter(d => d !== '')
-    if (args.length !== 0) {
-      const key = args[0]
-      const def = this.config.defs[key] || key
-      const pattern = def.pattern || ''
+  this.play = function ({path, msg}) {
+    const oscMsg = new osc.Message(path)
 
-      if (pattern.length !== args.length - 1) {
-        console.warn(`Number of arguments provided does not match the pattern length of this def`)
-        return
+    const args = msg.split('/')
+
+    for (let i = 0, l = args.length; i < l; i++) {
+      if (/\b\d+f\b/.test(args[i])) { // send as float
+        oscMsg.append({ type: 'f', value: parseInt(args[i]) / 10.0 })
       }
-
-      const msg = new osc.Message(def.path || `/${key}`)
-      for (let i = 0, l = pattern.length; i < l; i++) {
-        const type = pattern[i]
-
-        switch (type) {
-          case 'f':
-            msg.append({ type, value: parseInt(args[i + 1]) / 10.0 })
-            break
-          case 'i':
-            msg.append(parseInt(args[i + 1]))
-            break
-          case 's': msg.append(args[i + 1])
-            break
-          default:
-            console.warn(`Don't know how to send OSC argument with type '${type}'`)
-            return
-        }
+      else if (/\b\d+\b/.test(args[i])) { // send as int
+        oscMsg.append(parseInt(args[i]))
       }
-
-      const address = def.address || this.config.address
-      const port = def.port || this.config.port
-      // console.log(`Sending ${data} as ${pattern} on ${def.path || `/${key}`}, via ${address}:${port}`)
-
-      this.clients[`${address}:${port}`].send(msg, (err) => {
-        if (err) { console.warn(err) }
-        // console.log(`Sent ${data} as ${pattern} on ${def.path || `/${key}`}, via ${address}:${port}`)
-      })
-    }
-  }
-
-  this.createClients = function () {
-    this.config = require(this.configPath)
-    delete require.cache[require.resolve(this.configPath)]
-
-    for (const key in this.config.defs) {
-      const def = this.config.defs[key]
-      const address = def.address || this.config.address
-      const port = def.port || this.config.port
-      if (!this.clients[`${address}:${port}`]) {
-        this.clients[`${address}:${port}`] = new osc.Client(address, port)
-        console.log(`OSC client ${address}:${port} created`)
+      else { // send as string
+        oscMsg.append(args[i])
       }
     }
-  }
 
-  this.setup = function () {
-    this.configPath = `${__dirname.split('/sources')[0]}/core/bridge/osc.conf`
-    this.clients = {}
-
-    fs.watch(this.configPath, (event, filename) => {
-      this.createClients()
+    this.client.send(oscMsg, (err) => {
+      if (err) { console.warn(err) }
     })
+  }
 
-    this.createClients()
+  this.select = function (port) {
+    this.client.kill()
+    this.client = new osc.Client('127.0.0.1', port)
+  }
+  
+  this.setup = function () {
+    this.client = new osc.Client('127.0.0.1', 49162)
   }
 }
 
