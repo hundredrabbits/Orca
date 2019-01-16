@@ -68,29 +68,29 @@ function Osc (terminal) {
   }
 
   this.createClients = function () {
-    // this.config = require(`../..${this.configPath}`)
-    // delete require.cache[require.resolve(`../..${this.configPath}`)]
+    this.config = require(`../..${this.configPath}`)
+    delete require.cache[require.resolve(`../..${this.configPath}`)]
 
-    // for (const key in this.config.defs) {
-    //   const def = this.config.defs[key]
-    //   const address = def.address || this.config.address
-    //   const port = def.port || this.config.port
-    //   if (!this.clients[`${address}:${port}`]) {
-    //     this.clients[`${address}:${port}`] = new osc.Client(address, port)
-    //     console.log(`OSC client ${address}:${port} created`)
-    //   }
-    // }
+    for (const key in this.config.defs) {
+      const def = this.config.defs[key]
+      const address = def.address || this.config.address
+      const port = def.port || this.config.port
+      if (!this.clients[`${address}:${port}`]) {
+        this.clients[`${address}:${port}`] = new osc.Client(address, port)
+        console.log(`OSC client ${address}:${port} created`)
+      }
+    }
   }
 
   this.setup = function () {
-    // this.configPath = '../../core/bridge/osc.conf'
-    // this.clients = {}
+    this.configPath = '/core/bridge/osc.conf'
+    this.clients = {}
     
-    // // fs.watch(`.${this.configPath}`, (event, filename) => {
-    // //   this.createClients()
-    // // })
+    // fs.watch(`.${this.configPath}`, (event, filename) => {
+    //   this.createClients()
+    // })
     
-    // this.createClients()
+    this.createClients()
   }
 }
 
