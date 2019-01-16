@@ -23,7 +23,7 @@ function OperatorMidi (orca, x, y, passive) {
     let rawVelocity = this.listen(this.ports.input.velocity)
     let rawLength = this.listen(this.ports.input.length)
 
-    if (rawChannel === '.' || orca.valueOf(rawChannel) > 15 || rawOctave === 0 || rawOctave > 8 || rawNote === '.') { return }
+    if (rawChannel === '.' || orca.valueOf(rawChannel) > 15 || rawOctave === 0 || rawOctave > 8 || rawNote === '.' || rawVelocity === '0') { return }
 
     // 0 - 16
     const channel = clamp(orca.valueOf(rawChannel), 0, 15)
@@ -34,7 +34,7 @@ function OperatorMidi (orca, x, y, passive) {
     // 0 - F(127)
     const velocity = rawVelocity === '.' ? 127 : parseInt((clamp(orca.valueOf(rawVelocity), 0, 15) / 15) * 127)
     // 0 - F(15)
-    const length = clamp(orca.valueOf(rawLength), 0, 15)
+    const length = clamp(orca.valueOf(rawLength), 1, 15)
 
     if (note < 0) { console.warn(`Unknown note:${rawNote}`); return }
 
