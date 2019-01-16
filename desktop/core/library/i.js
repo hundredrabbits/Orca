@@ -16,9 +16,8 @@ function OperatorI (orca, x, y, passive) {
     const min = this.listen(this.ports.input.min, true)
     const max = this.listen(this.ports.input.max, true)
     const mod = this.listen(this.ports.output, true)
-    const key = mod + 1 >= (max || 10) ? min : mod + 1
-    const res = orca.keyOf(key)
-    this.output(`${res}`)
+    const res = min < max ? (mod + 1 >= (max || 10) ? min : mod + 1) : min > max ? (mod - 1 <= (max - 1 || 0) ? min - 1 : mod - 1) : mod
+    this.output(`${orca.keyOf(res)}`)
   }
 }
 
