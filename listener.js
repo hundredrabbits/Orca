@@ -1,5 +1,5 @@
 const UDP_PORT = 49160
-const OSC_PORT = 12000
+const OSC_PORT = 49162
 
 const dgram = require('dgram');
 const udpserver = dgram.createSocket('udp4');
