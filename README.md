@@ -122,9 +122,9 @@ In console, type `terminal.io.udp.select(49160)` to select the **49160** udp por
 
 ## OSC
 
-The [OSC](https://github.com/MylesBorins/node-osc) operator `=` takes two haste inputs('pathlen, 'msglen) and lock that cumulative number of eastwardly ports. 
+The [OSC](https://github.com/MylesBorins/node-osc) operator `=` takes two haste inputs('pathlen, 'msglen) and locks that cumulative number of eastwardly ports. 
 
-For example, `c0=/hello/world` will send an empty message(bang) to the path `/hello/world`, to the port `49162` on `localhost`. Or, `44=/foo123f` will send the float `12.3`, to the path `/foo`. The operation `44=/bar1234` will send the int `1234`, to the path `/bar`. The operator supports *integers*, *float*, *strings* and can send multiple values at once: `47=/foo4/5f/yo` will send `4`, `0.5` and `"yo"` to the path `/foo`. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/listener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_osc.orca) or try it with [SonicPi](https://github.com/hundredrabbits/Orca/blob/master/TUTORIAL.md#sonicpi).
+For example, `c0=/hello/world` will send an empty message(bang) to the path `/hello/world`, to the port `49162` on `localhost`. `44=/foo123f` will send the **float** `0.123`, to the path `/foo`. The operation `44=/bar1234` will send the **int** `1234`, to the path `/bar`. The operator supports *integers*, *float*, *strings* and can send multiple values at once: `47=/foo4/5f/yo` will send `4`, `0.5` and `"yo"` to the path `/foo`. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/listener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_osc.orca) or try it with [SonicPi](https://github.com/hundredrabbits/Orca/blob/master/TUTORIAL.md#sonicpi).
 
 #### Select OSC Port
 
