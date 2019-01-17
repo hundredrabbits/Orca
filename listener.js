@@ -28,7 +28,7 @@ udpserver.on('message', (msg, rinfo) => {
 })
 
 oscserver.on('message', (msg, rinfo) => {
-  console.log(`OSC server: ${msg} from ${rinfo.address}:${rinfo.port}`)
+  console.log(`OSC server: ${msg[1]} from ${rinfo.address}:${rinfo.port} at ${msg[0]}`)
 })
 
 udpserver.bind(UDP_PORT)
