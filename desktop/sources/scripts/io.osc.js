@@ -29,17 +29,9 @@ function Osc (terminal) {
   this.play = function ({ path, msg }) {
     const oscMsg = new osc.Message(path)
     const args = msg.split('/')
-
-    for (let i = 0, l = args.length; i < l; i++) {
-      if (/\b\d+f\b/.test(args[i])) { // send as float
-        oscMsg.append({ type: 'f', value: parseInt(args[i]) / 10.0 })
-      } else if (/\b\d+\b/.test(args[i])) { // send as int
-        oscMsg.append(parseInt(args[i]))
-      } else { // send as string
-        oscMsg.append(args[i])
-      }
+    for (const id in args) {
+      oscMsg.append(parse(args[id]))
     }
-
     this.client.send(oscMsg, (err) => {
       if (err) { console.warn(err) }
     })
@@ -54,6 +46,19 @@ function Osc (terminal) {
   this.setup = function () {
     if (this.client) { this.client.kill() }
     this.client = new osc.Client(this.ip, this.port)
+  }
+
+  function parse (arg) {
+    // Float
+    if (/\b\d+f\b/.test(arg)) {
+      return { type: 'f', value: parseInt(arg) / 10.0 }
+    }
+    // Integer
+    else if (/\b\d+\b/.test(args[i])) { // send as int
+      return parseInt(arg)
+    }
+    // String
+    return `${arg}`
   }
 }
 
