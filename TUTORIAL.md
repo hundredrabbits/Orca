@@ -4,12 +4,12 @@ If you don't understand what ORCA is, here's an [introduction video](https://www
 
 ## SonicPi
 
-Using Orca with [SonicPi](http://sonic-pi.net) is quite simple, all it really needs is to receive OSC via port `4559`. Learn how to [select the Orca OSC Port](https://github.com/hundredrabbits/Orca#osc). SonicPi listened to channels defined in `sync`, to send to this live loop, use the OSC node `=`, like `d0=/trigger/kick`.
+Using Orca with [SonicPi](http://sonic-pi.net) is quite simple, all it really needs is to receive OSC via port `4559`. Learn how to [select the Orca OSC Port](https://github.com/hundredrabbits/Orca#osc). SonicPi listened to channels defined in `sync`, to send to this live loop, use the OSC node `=`, like `=a`.
 
 ```
 live_loop :drum do
   use_real_time
-  sync "/osc/trigger/kick"
+  sync "/osc/a"
   sample :bd_haus, rate: 1
 end
 ```
