@@ -57,6 +57,10 @@ function Osc (terminal) {
     else if (/\b\d+\b/.test(arg)) {
       return parseInt(arg)
     }
+    // Base 36 Integer
+    else if (/\b\w\b/.test(arg)) {
+      return parseInt(arg, 36)
+    }
     // String
     return `${arg}`
   }
