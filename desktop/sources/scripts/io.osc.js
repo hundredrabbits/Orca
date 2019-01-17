@@ -54,7 +54,7 @@ function Osc (terminal) {
       return { type: 'f', value: parseInt(arg) / 10.0 }
     }
     // Integer
-    else if (/\b\d+\b/.test(arg)) { // send as int
+    else if (/\b\d+\b/.test(arg)) {
       return parseInt(arg)
     }
     // String
