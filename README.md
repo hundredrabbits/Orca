@@ -2,7 +2,7 @@
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/logo.png' width="600"/>
 
-**Each letter of the alphabet is an operation**, lowercase letters operate on bang(`*`), uppercase letters operate each frame. Have a look at some project created with [#ORCΛ](https://twitter.com/hashtag/ORCΛ), or some [example files](https://github.com/hundredrabbits/Orca/tree/master/examples).
+**Each letter of the alphabet is an operation**, lowercase letters operate on bang(`*`), uppercase letters operate each frame. Have a look at some project created with [#ORCΛ](https://twitter.com/hashtag/ORCΛ), or some [example files](https://github.com/hundredrabbits/Orca/tree/master/examples). Here's an [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE).
 
 ## Install & Run
 
@@ -94,25 +94,41 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `tab` Toggle interface.
 - `backquote` Toggle background.
 
-## Special Operators
+To open the console, press `ctrl+.`.
 
-### Midi Output
+## MIDI
 
 The [MIDI](https://en.wikipedia.org/wiki/MIDI) operator `:` takes up to 5 inputs('channel, 'octave, 'note, velocity, length). 
 
 For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. Velocity is an optional value from `0`(0/127) to `f`(127/127). Note length is a value from `0`(1/16) to `f`(16/16), which is a ratio of a full bar, *f* being `16/16`(a full bar), *8* being `1/2`(half), *4* being `1/4`(quarter). See it in action with [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca).
 
-### UDP Output
+#### List Midi Devices
+
+In console, type `terminal.io.midi.list()` to see the list of available midi devices.
+
+#### Select Midi Device
+
+In console, type `terminal.io.midi.select(1)` to select the second midi device.
+
+## UDP
 
 The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback) operator `;` takes one haste input('length) and locks that number of eastwardly ports. 
 
 It sends the message on bang to the port `49160` on `localhost`. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test UDP messages. See it in action with [udp.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_udp.orca).
 
-### OSC Output
+#### Select UDP Port
+
+In console, type `terminal.io.udp.select(49160)` to select the **49160** udp port.
+
+## OSC
 
 The [OSC](https://github.com/MylesBorins/node-osc) operator `=` takes two haste inputs('pathlen, 'msglen) and lock that cumulative number of eastwardly ports. 
 
 For example, `c0=/hello/world` will send an empty message(bang) to the path `/hello/world`, to the port `49162` on `localhost`. Or, `44=/foo123f` will send the float `0.123`, to the path `/foo`. The operation `44=/bar1234` will send the int `1234`, to the path `/bar` The operator supports *integers*, *float*, *strings*. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/listener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_osc.orca), or [learn more](https://github.com/hundredrabbits/Orca/blob/master/GUIDE.md#orcas-osc-guide).
+
+#### Select OSC Port
+
+In console, type `terminal.io.osc.select(49162)` to select the **49162** osc port.
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.hardware.jpg' width="600"/>
 

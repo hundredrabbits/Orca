@@ -1,18 +1,29 @@
+# Tutorial
 
-## OSX
+If you don't understand what ORCA is, here's an [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE).
 
-### Ableton Live
+## SonicPi
+
+Using Orca with [SonicPi](http://sonic-pi.net) is quite simple, all it really needs is to receive OSC via port `4559`. Learn how to [select the Orca OSC Port](https://github.com/hundredrabbits/Orca#osc). SonicPi listened to channels defined in `sync`, to send to this live loop, use the OSC node `=`, like `d0=/trigger/kick`.
+
+```
+live_loop :drum do
+  use_real_time
+  sync "/osc/trigger/kick"
+  sample :bd_haus, rate: 1
+end
+```
+
+## Ableton Live
 
 To control instruments in [Ableton Live](https://www.ableton.com/en/), launch [Orca](README.md) and open [examples/midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca).
 
 - Launch Ableton Live.
 - Create a new midi instrument track.
-- Select `IAC Driver(Bus 1)` in the instrument's inputs dropdown. 
+- Select `IAC Driver(Bus 1)`(OSX), or `LoopMidi`(Windows), in the instrument's inputs dropdown. 
 - Activate the **In** toggle. 
 
 The midi instrument should begin receiving midi notes as soon as the Orca window is **back into focus**.
-
-## Windows
 
 ### LoopMidi
 
