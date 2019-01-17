@@ -8,35 +8,23 @@ function OperatorOsc (orca, x, y, passive) {
   this.name = 'osc'
   this.info = 'Sends a OSC message.'
 
-  this.ports.haste.pathlen = { x: -2, y: 0 }
-  this.ports.haste.msglen = { x: -1, y: 0 }
+  this.ports.input.path = { x: 1, y: 0 }
 
   this.haste = function () {
-    this.pathlen = this.listen(this.ports.haste.pathlen, true)
-    this.msglen = this.listen(this.ports.haste.msglen, true)
-    for (let x = 1; x <= this.pathlen + this.msglen; x++) {
+    this.path = this.listen(this.ports.input.path)
+    this.msg = ''
+    for (let x = 2; x <= 36; x++) {
+      const g = orca.glyphAt(this.x + x, this.y)
+      if (g === '.') { break }
       orca.lock(this.x + x, this.y)
+      this.msg += g
     }
   }
 
   this.run = function () {
-    if (!this.bang()) { return }
-
-    let path = ''
-    for (let x = 0; x < this.pathlen; x++) {
-      path += orca.glyphAt(1 + this.x + x, this.y)
-    }
-
-    if (path === '') { return }
-
+    if (!this.path || this.path === '' || !this.msg || this.msg === '' || !this.bang()) { return }
     this.draw = false
-
-    let msg = ''
-    for (let x = this.pathlen; x < this.pathlen + this.msglen; x++) {
-      msg += orca.glyphAt(1 + this.x + x, this.y)
-    }
-
-    terminal.io.osc.send(path, msg)
+    terminal.io.osc.send(this.path, this.msg)
   }
 }
 

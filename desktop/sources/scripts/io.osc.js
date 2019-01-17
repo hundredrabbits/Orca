@@ -28,9 +28,8 @@ function Osc (terminal) {
 
   this.play = function ({ path, msg }) {
     const oscMsg = new osc.Message(path)
-    const args = msg.split('/')
-    for (const id in args) {
-      oscMsg.append(parse(args[id]))
+    for (var i = 0; i < msg.length; i++) {
+      oscMsg.append(terminal.orca.valueOf(msg.charAt(i)))
     }
     this.client.send(oscMsg, (err) => {
       if (err) { console.warn(err) }
@@ -46,23 +45,6 @@ function Osc (terminal) {
   this.setup = function () {
     if (this.client) { this.client.kill() }
     this.client = new osc.Client(this.ip, this.port)
-  }
-
-  function parse (arg) {
-    // Float
-    if (/\b\d+f\b/.test(arg)) {
-      return { type: 'f', value: parseInt(arg) / 10.0 }
-    }
-    // Integer
-    else if (/\b\d+\b/.test(arg)) {
-      return parseInt(arg)
-    }
-    // Base 36 Integer
-    else if (/\b\w\b/.test(arg)) {
-      return parseInt(arg, 36)
-    }
-    // String
-    return `${arg}`
   }
 }
 
