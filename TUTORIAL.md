@@ -4,7 +4,7 @@ If you don't understand what ORCA is, here's an [introduction video](https://www
 
 ## SonicPi
 
-Using Orca with [SonicPi](http://sonic-pi.net) is quite simple, all it really needs is to send OSC via port `4559`. Learn how to [select the Orca OSC Port](https://github.com/hundredrabbits/Orca#osc). SonicPi listened to channels defined in `sync`, to send to this live loop, use the OSC node `=`, like `=a`.
+Using Orca with [SonicPi](http://sonic-pi.net) is quite simple, all it really needs is to send OSC via port `4559`. Learn how to [select the OSC Port](https://github.com/hundredrabbits/Orca#osc). SonicPi listens to the address defined in `sync`, to send to the `live_loop`, bang the OSC node `=`, like `=a`.
 
 ```
 live_loop :drum do
@@ -16,20 +16,22 @@ end
 
 ## Ableton Live
 
-To control instruments in [Ableton Live](https://www.ableton.com/en/), launch [Orca](README.md) and open [examples/midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca).
+To send [Midi notes](https://github.com/hundredrabbits/Orca#midi) to [Ableton Live](https://www.ableton.com/en/) instruments, bang the midi node `:`, like `:03C` to send to _Channel 1, Octave 3, Note C_.
 
 - Launch Ableton Live.
 - Create a new midi instrument track.
 - Select `IAC Driver(Bus 1)`(OSX), or `LoopMidi`(Windows), in the instrument's inputs dropdown. 
 - Activate the **In** toggle. 
 
-The midi instrument should begin receiving midi notes as soon as the Orca window is **back into focus**.
+The midi instrument should begin receiving midi notes as soon as the Orca window is **in focus**.
 
 # Patterns
 
 Here's a collection of recurring patterns in the design of Orca machines.
 
 ## J Funnel
+
+Move two horizontal values next to each other.
 
 ```
 .1Y12.
@@ -39,6 +41,8 @@ Here's a collection of recurring patterns in the design of Orca machines.
 ```
 
 ## X Stack
+
+Move two vertical values next to each other.
 
 ```
 .21X1..
