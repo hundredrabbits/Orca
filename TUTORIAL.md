@@ -14,20 +14,9 @@ live_loop :drum do
 end
 ```
 
-## Ableton Live
-
-To send [Midi notes](https://github.com/hundredrabbits/Orca#midi) to [Ableton Live](https://www.ableton.com/en/) instruments, bang the Midi node `:`, like `:03C` to send to _Channel 1, Octave 3, Note C_.
-
-- Launch Ableton Live.
-- Create a new midi instrument track.
-- Select `IAC Driver(Bus 1)`(OSX), or `LoopMidi`(Windows), in the instrument's inputs dropdown. 
-- Activate the **In** toggle. 
-
-The midi instrument should begin receiving midi notes as soon as the Orca window is **in focus**.
-
 ## Dotgrid
 
-To send [UDP](https://github.com/hundredrabbits/Orca#udp) to [Dotgrid](http://github.com/hundredrabbits/Dotgrid), you need to bang the UDP node `;` with different [commands](https://github.com/hundredrabbits/Dotgrid/blob/master/desktop/sources/scripts/listener.js). Have a look at [dotgrid.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/projects/dotgrid.orca) to see it in action.
+To send [UDP messages](https://github.com/hundredrabbits/Orca#udp) to [Dotgrid](http://github.com/hundredrabbits/Dotgrid), [select the port](https://github.com/hundredrabbits/Orca#osc) `49160`. To draw lines on Dotgrid, you need to bang the UDP node `;` with different [commands](https://github.com/hundredrabbits/Dotgrid/blob/master/desktop/sources/scripts/listener.js). Have a look at [dotgrid.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/projects/dotgrid.orca) to see it in action.
 
 - `;0`, clear layer **#1**.
 - `;0l1234`, add a line from `1,2` to `3,4`.
@@ -42,6 +31,17 @@ Here's a list of supported operations.
 ;0r1234    // Draw Reverse Arc from 1,2 to 3,4
 ;*      // Draw
 ```
+
+## Ableton Live
+
+To send [Midi notes](https://github.com/hundredrabbits/Orca#midi) to [Ableton Live](https://www.ableton.com/en/) instruments, bang the Midi node `:`, like `:03C` to send to _Channel 1, Octave 3, Note C_.
+
+- Launch Ableton Live.
+- Create a new midi instrument track.
+- Select `IAC Driver(Bus 1)`(OSX), or `LoopMidi`(Windows), in the instrument's inputs dropdown. 
+- Activate the **In** toggle. 
+
+The midi instrument should begin receiving midi notes as soon as the Orca window is **in focus**.
 
 # Patterns
 
