@@ -20,16 +20,16 @@ To send [UDP messages](https://github.com/hundredrabbits/Orca#udp) to [Dotgrid](
 
 - `;0`, clear layer **#1**.
 - `;0l1234`, add a line from `1,2` to `3,4`.
-- `;*`, draw.
+- `;`, redraw.
 
 Here's a list of supported operations.
 
 ```
 ;0         // Clear Layer 1
-;0l1234    // Draw Line from 1,2 to 3,4
-;0c1234    // Draw Clockwise Arc from 1,2 to 3,4
-;0r1234    // Draw Reverse Arc from 1,2 to 3,4
-;*      // Draw
+;0l1234    // Add Line from 1,2 to 3,4
+;0c1234    // Add Clockwise Arc from 1,2 to 3,4
+;0r1234    // Add Reverse Arc from 1,2 to 3,4
+;          // Redraw
 ```
 
 ## Ableton Live
