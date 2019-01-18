@@ -37,6 +37,7 @@ function Orca (terminal, host = null) {
   }
 
   this.write = function (x, y, g) {
+    if (!g) { return }
     if (g.length !== 1) { return }
     if (!this.inBounds(x, y)) { return }
     if (!this.isAllowed(g)) { return }

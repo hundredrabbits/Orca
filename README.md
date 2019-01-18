@@ -33,7 +33,7 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `H` **halt**: Stops southward operators from operating.
 - `I` **increment**(min, max): Increments southward operator.
 - `J` **jumper**(val): Outputs the northward operator.
-- `K` **kill**: Kills southward operator.
+- `K` **kombine**('len): Reads multiple variables.
 - `L` **loop**('len): Loops a number of eastward operators.
 - `M` **modulo**(val, mod): Outputs the modulo of input.
 - `N` **north**: Moves Northward, or bangs.
@@ -52,8 +52,8 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `*` **bang**: Bangs neighboring operators.
 - `#` **comment**: Comments a line, or characters until the next hash.
 - `:` **midi**('channel, 'octave, 'note, velocity, length): Sends a MIDI note.
-- `;` **udp**('len): Sends a UDP. message.
-- `=` **osc**('pathlen, 'msglen): Sends a OSC message.
+- `;` **udp**: Sends a UDP message.
+- `=` **osc**(path): Sends a OSC message.
 
 ## Controls
 

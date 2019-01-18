@@ -8,7 +8,8 @@
 | Readers    | O Q T
 | Jumpers    | J Y
 | Timers     | C D
-| Misc       | B H K L U V
+| Variables  | K V
+| Misc       | B H L U
 | Special    | * ; : ! #
 
 ## Unstable Glyphs
@@ -52,7 +53,7 @@
 | 37  | #     | +++++  | X      | 
 | 39  | :     | +++++  | X      | 
 | 38  | ;     | +++++  | X      | 
-| 40  | =     | +++    |        | *
+| 40  | =     | +++++  | X      | *
 
 ## Ideas
 
