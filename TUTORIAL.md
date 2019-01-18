@@ -27,7 +27,7 @@ The midi instrument should begin receiving midi notes as soon as the Orca window
 
 ## Dotgrid
 
-To send [UDP](https://github.com/hundredrabbits/Orca#udp) to [Dotgrid](http://github.com/hundredrabbits/Dotgrid), you need to bang the UDP node `;` with different [commands](https://github.com/hundredrabbits/Dotgrid/blob/master/desktop/sources/scripts/listener.js).
+To send [UDP](https://github.com/hundredrabbits/Orca#udp) to [Dotgrid](http://github.com/hundredrabbits/Dotgrid), you need to bang the UDP node `;` with different [commands](https://github.com/hundredrabbits/Dotgrid/blob/master/desktop/sources/scripts/listener.js). Have a look at [dotgrid.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/projects/dotgrid.orca) to see it in action.
 
 - `;0`, clear layer **#1**.
 - `;0l1234`, add a line from `1,2` to `3,4`.
@@ -40,7 +40,6 @@ Here's a list of supported operations.
 ;0l1234    // Draw Line from 1,2 to 3,4
 ;0c1234    // Draw Clockwise Arc from 1,2 to 3,4
 ;0r1234    // Draw Reverse Arc from 1,2 to 3,4
-;0r**78    // Draw Line from last coordinate to 7,8
 ;*      // Draw
 ```
 
