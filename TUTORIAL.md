@@ -1,6 +1,6 @@
 # Tutorial
 
-If you don't understand what ORCA is, here's an [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). If you are on a Windows machine, use [loopMidi](http://www.tobias-erichsen.de/software/loopmidi.html) to help routing midi signal across applications.
+If this is your first time hearing about Orca, watch this [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). If you are on Windows, use something like [loopMidi](http://www.tobias-erichsen.de/software/loopmidi.html) to help routing midi signal across applications.
 
 ## SonicPi
 
