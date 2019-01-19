@@ -24,6 +24,7 @@
     "electron-rebuild": "^1.8.2"
   },
   "dependencies": {
-    "node-osc": "^3.0.0"
+    "node-osc": "^3.0.0",
+    "tone": "^13.4.9"
   }
 }

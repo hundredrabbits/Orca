@@ -1,9 +1,32 @@
 'use strict'
+const Tone = require('tone')
 
 function Midi (terminal) {
   this.index = 0
   this.devices = []
   this.stack = []
+
+  Tone.start()
+  Tone.Transport.start()
+  this.synth = new Tone.AMSynth({
+    "harmonicity" : 2.5,
+    "oscillator" : {
+      "type" : "fatsawtooth"
+    },
+    "envelope" : {
+      "attack" : 0.1,
+      "decay" : 0.2,
+      "sustain" : 0.2,
+      "release" : 0.3
+    },
+    "modulation" : {
+      "type" : "square"
+    },
+    "modulationEnvelope" : {
+      "attack" : 0.5,
+      "decay" : 0.01
+    }
+  }).toMaster();
 
   this.start = function () {
     console.info('Starting Midi..')
@@ -46,8 +69,13 @@ function Midi (terminal) {
     const note = convertNote(data[1], data[2])
     const velocity = data[3]
     const length = window.performance.now() + convertLength(data[4], terminal.bpm)
-
-    if (!device) { console.warn('No midi device!'); return }
+    if (!device) {
+      let mnote = Tone.Frequency(note, "midi").toNote()
+      let noteLength = convertLength(data[4], terminal.bpm) / 1000
+      let vel = (velocity || 127) / 127
+      this.synth.triggerAttackRelease(mnote, noteLength, '+0', vel)
+      return
+    }
 
     device.send([channel[0], note, velocity])
     device.send([channel[1], note, velocity], length)
@@ -90,7 +118,7 @@ function Midi (terminal) {
   }
 
   this.toString = function () {
-    return this.devices.length > 0 ? `${this.devices[this.index].name}` : 'No Midi'
+    return this.devices.length > 0 ? `${this.devices[this.index].name}` : 'Tone.js'
   }
 
   function convertChannel (id) {
