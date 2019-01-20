@@ -14,7 +14,10 @@ function OperatorK (orca, x, y, passive) {
     this.len = this.listen(this.ports.haste.len, true)
     for (let x = 1; x <= this.len; x++) {
       orca.lock(this.x + x, this.y)
-      orca.lock(this.x + x, this.y + 1)
+      const g = orca.glyphAt(this.x + x, this.y)
+      if (g !== '.') {
+        orca.lock(this.x + x, this.y + 1)
+      }
     }
   }
 
