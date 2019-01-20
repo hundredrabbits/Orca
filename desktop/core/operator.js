@@ -72,6 +72,7 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     const offset = { x: this.x + x, y: this.y + y }
     if (!orca.inBounds(offset.x, offset.y)) { this.explode(); return }
     const collider = orca.glyphAt(offset.x, offset.y)
+    if (collider === this.glyph) { return }
     if (collider !== '*' && collider !== '.' && collider !== this.glyph) { this.explode(); return }
     this.erase()
     this.x += x
