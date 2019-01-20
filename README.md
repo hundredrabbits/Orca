@@ -33,7 +33,7 @@ You can follow the [guide](GUIDE.md) to get started and play your first sounds. 
 - `H` **halt**: Stops southward operators from operating.
 - `I` **increment**(min, max): Increments southward operator.
 - `J` **jumper**(val): Outputs the northward operator.
-- `K` **kombine**('len): Reads multiple variables.
+- `K` **konkat**('len): Outputs multiple variables.
 - `L` **loop**('len): Loops a number of eastward operators.
 - `M` **modulo**(val, mod): Outputs the modulo of input.
 - `N` **north**: Moves Northward, or bangs.

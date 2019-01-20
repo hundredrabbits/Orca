@@ -5,8 +5,8 @@ const Operator = require('../operator')
 function OperatorK (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'k', passive)
 
-  this.name = 'kombine'
-  this.info = 'Reads multiple variables.'
+  this.name = 'konkat'
+  this.info = 'Outputs multiple variables.'
 
   this.ports.haste.len = { x: -1, y: 0 }
 
