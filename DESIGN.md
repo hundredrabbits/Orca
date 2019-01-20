@@ -10,7 +10,7 @@
 | Timers     | C D
 | Variables  | K V
 | Misc       | B H L U
-| Special    | * ; : ! #
+| Special    | * # ; : =
 
 ## Unstable Glyphs
 
@@ -50,10 +50,4 @@
 | 37  | #     | +++++  | X      | 
 | 39  | :     | +++++  | X      | 
 | 38  | ;     | +++++  | X      | 
-| 40  | =     | +++++  | X      | *
-
-## Ideas
-
-- Add a terminal control glyph for special cmds.
-- Open folder/switch file.
-- Add color special glyph.
+| 40  | =     | +++++  | X      | 

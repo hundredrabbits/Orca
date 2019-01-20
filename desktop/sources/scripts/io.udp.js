@@ -36,9 +36,9 @@ function Udp (terminal) {
 
   this.select = function (port = 49160) {
     if (port < 1000) { console.warn('Unavailable port'); return }
-    console.log('UDP Port: ', port)
     this.port = port
-    return this
+    console.log(`UDP Port: ${this.port}`)
+    return this.port
   }
 
   this.setup = function () {

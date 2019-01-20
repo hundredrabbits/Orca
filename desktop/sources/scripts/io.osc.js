@@ -40,6 +40,8 @@ function Osc (terminal) {
     if (port < 1000) { console.warn('Unavailable port'); return }
     this.port = port
     this.setup()
+    console.log(`OSC Port: ${this.port}`)
+    return this.port
   }
 
   this.setup = function () {
