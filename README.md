@@ -2,7 +2,7 @@
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/logo.png' width="600"/>
 
-**Each letter of the alphabet is an operation**, lowercase letters operate on bang(`*`), uppercase letters operate each frame. Have a look at some project created with [#ORCΛ](https://twitter.com/hashtag/ORCΛ), or some [example files](https://github.com/hundredrabbits/Orca/tree/master/examples). Here's an [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE).
+**Each letter of the alphabet is an operation**, lowercase letters operate on bang(`*`), uppercase letters operate each frame. Have a look at some project created with [#ORCΛ](https://twitter.com/hashtag/ORCΛ), or some [example files](https://github.com/hundredrabbits/Orca/tree/master/examples). Here's an [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). You can see the [design notes](DESIGN.md) for specs and upcoming features.
 
 ## Install & Run
 
@@ -16,10 +16,6 @@ npm start
 ```
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.jpg' width="600"/>
-
-## Quickstart
-
-You can follow the [guide](GUIDE.md) to get started and play your first sounds. You can see the [design notes](DESIGN.md) for specs and upcoming features.
 
 ## Operators
 
