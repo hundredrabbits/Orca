@@ -2,6 +2,18 @@
 
 If this is your first time hearing about Orca, watch this [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). If you are on Windows, use something like [loopMidi](http://www.tobias-erichsen.de/software/loopmidi.html) to help routing midi signal across applications.
 
+| Families                                               | Glyphs     
+| ----------                                             | ----------- 
+| Directions                                             | N S E W Z
+| [Math](https://www.youtube.com/watch?v=CR1TMGYhCoE)    | A F I M R
+| Writers                                                | G P X 
+| Readers                                                | O Q T
+| [Jumpers](https://www.youtube.com/watch?v=CR1TMGYhCoE) | J Y
+| Timers                                                 | C D
+| Variables                                              | K V
+| Misc                                                   | B H L U
+| Special                                                | * # ; : =
+
 ## SonicPi
 
 To send [OSC messages](https://github.com/hundredrabbits/Orca#osc) to [SonicPi](http://sonic-pi.net), select [port 4559](https://github.com/hundredrabbits/Orca#osc). SonicPi listens to the address defined in `sync`, to send to the `live_loop`, bang the OSC node `=`, like `=a`. Have a look at [sonicpi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/projects/sonicpi.orca) to see it in action.
