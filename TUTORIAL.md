@@ -68,3 +68,14 @@ Move two vertical values next to each other.
 ...A21.
 ...3...
 ```
+
+## Y Projector
+
+A very simple projector using a yumper.
+
+```
+..D4..
+.H*...
+.Ey.E.
+......
+```
