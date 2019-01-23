@@ -2,7 +2,7 @@
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/logo.png' width="600"/>
 
-**Each letter of the alphabet is an operation**, lowercase letters operate on bang(`*`), uppercase letters operate each frame. Have a look at some project created with [#ORCΛ](https://twitter.com/hashtag/ORCΛ), or some [example files](https://github.com/hundredrabbits/Orca/tree/master/examples). Here's an [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). You can see the [design notes](DESIGN.md) for specs and upcoming features. 
+**Each letter of the alphabet is an operation**, lowercase letters operate on bang(`*`), uppercase letters operate each frame. Have a look at some project created with [#ORCΛ](https://twitter.com/hashtag/ORCΛ), or some [example files](https://github.com/hundredrabbits/Orca/tree/master/examples). Here's an [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). You can see the [design notes](DESIGN.md) for specs and upcoming features. If you need some help, visit the [chatroom](https://talk.lurk.org/channel/orca).
 
 For a portable version of Orca, built entirely in C, visit [Orca-c](http://github.com/hundredrabbits/Orca-c).
 
