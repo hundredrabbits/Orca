@@ -122,7 +122,7 @@ In console, type `terminal.io.udp.select(49160)` to select the **49160** udp por
 
 The [OSC](https://github.com/MylesBorins/node-osc) operator `=` locks each consecutive eastwardly ports. 
 
-For example, `=1abc` will send `[10,11,12]` to `/1`, via the port `49162` on `localhost`. `=a123` will send the **integers** `123`, to the path `/a`.  You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/listener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_osc.orca) or try it with [SonicPi](https://github.com/hundredrabbits/Orca/blob/master/TUTORIAL.md#sonicpi).
+ First char is used for path, nexts are sent as integers using [base36 Table](https://github.com/hundredrabbits/Orca#base36-table). For example, `=1abc` will send `10`, `11` and `12` to `/1`, via the port `49162` on `localhost`; `=a123` will send `1`, `2` and `3`, to the path `/a`.  You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/examples/listener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_osc.orca) or try it with [SonicPi](https://github.com/hundredrabbits/Orca/blob/master/TUTORIAL.md#sonicpi).
 
 #### Select OSC Port
 
