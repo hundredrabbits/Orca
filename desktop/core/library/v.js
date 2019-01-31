@@ -12,32 +12,24 @@ function OperatorV (orca, x, y, passive) {
   this.ports.input.read = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
-  this.storage = { write: null, read: null }
-
   this.haste = function () {
-    this.storage.write = this.listen(this.ports.haste.write)
-    this.storage.read = this.listen(this.ports.input.read)
+    const write = this.listen(this.ports.haste.write)
+    const read = this.listen(this.ports.input.read)
 
-    if (this.storage.write !== '.' && this.storage.read !== '.') {
+    if (write !== '.' && read !== '.') {
       this.ports.output = null
     }
   }
 
   this.run = function () {
-    if (this.storage.write !== '.' || this.storage.read === '.') { return }
-    this.output(query(this.storage.read))
-  }
+    const write = this.listen(this.ports.haste.write)
+    const read = this.listen(this.ports.input.read)
 
-  function query (name) {
-    if (name === '.') { return '.' }
-    for (const id in orca.runtime) {
-      const operator = orca.runtime[id]
-      if (orca.lockAt(operator.x, operator.y)) { continue }
-      if (operator.glyph !== 'v' && operator.glyph !== 'V') { continue }
-      if (operator.storage.write !== name) { continue }
-      return operator.storage.read
+    if (write !== '.' || read === '.') {
+      orca.store[write] = read
+    } else if (write === '.') {
+      this.output(orca.store[read])
     }
-    return '.'
   }
 }
 

@@ -24,21 +24,9 @@ function OperatorK (orca, x, y, passive) {
   this.run = function () {
     const a = []
     for (let x = 1; x <= this.len; x++) {
-      const g = orca.glyphAt(this.x + x, this.y)
-      orca.write(this.x + x, this.y + 1, query(g))
+      const key = orca.glyphAt(this.x + x, this.y)
+      orca.write(this.x + x, this.y + 1, orca.store[key])
     }
-  }
-
-  function query (name) {
-    if (name === '.') { return }
-    for (const id in orca.runtime) {
-      const operator = orca.runtime[id]
-      if (orca.lockAt(operator.x, operator.y)) { continue }
-      if (operator.glyph !== 'v' && operator.glyph !== 'V') { continue }
-      if (operator.storage.write !== name) { continue }
-      return operator.storage.read
-    }
-    return '.'
   }
 }
 

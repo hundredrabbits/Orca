@@ -20,6 +20,7 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
 
   this.output = function (g) {
     if (!this.ports.output) { return }
+    if (!g) { return }
     orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, g)
   }
 
