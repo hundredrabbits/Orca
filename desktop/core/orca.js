@@ -12,9 +12,9 @@ function Orca (terminal, host = null) {
 
   this.terminal = terminal
   this.keys = Object.keys(library).slice(0, 36)
+
   this.locks = []
-  this.ports = {}
-  this.store = {}
+  this.values = {}
   this.runtime = []
 
   this.run = function () {
@@ -100,7 +100,7 @@ function Orca (terminal, host = null) {
 
   this.release = function () {
     this.locks = []
-    this.store = {}
+    this.values = {}
   }
 
   this.unlock = function (x, y) {
