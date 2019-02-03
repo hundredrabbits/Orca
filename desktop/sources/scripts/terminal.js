@@ -23,7 +23,7 @@ function Terminal () {
 
   this.el = document.createElement('canvas')
   this.context = this.el.getContext('2d')
-  this.size = { w: 0, h: 0, ratio: 0.5, grid: { w: 8, h: 8 } }
+  this.size = { w: 0, h: 0, ratio: 1, grid: { w: 8, h: 8 } }
   this.isPaused = false
   this.showInterface = true
   this.timer = null
@@ -266,23 +266,25 @@ function Terminal () {
     }
   }
 
+  // Resize tools
+
   this.resize = function (resizeWindow = true) {
     const size = this.getSize()
-    const tiles = { w: Math.floor(size.w / (tile.w * this.size.ratio)), h: Math.floor(size.h / (tile.w * this.size.ratio)) - 3 }
+    const tiles = { w: clamp(Math.floor(size.w / (tile.w * this.size.ratio)), 10, 80), h: clamp(Math.floor(size.h / (tile.h * this.size.ratio)), 10, 30) }
 
-    if (this.orca.w === tiles.w && this.orca.h === tiles.h) { console.warn(`already:`, tiles); return }
+    if (this.orca.w === tiles.w && this.orca.h === tiles.h) { return }
 
-    this.crop(tiles.w, tiles.h)
+    this.crop(tiles.w, tiles.h - 1)
 
     this.size.w = tile.w * this.orca.w
-    this.size.h = tile.h * this.orca.h + (tile.h * 1)
+    this.size.h = tile.h * this.orca.h + tile.h
 
     console.log(`Size: ${this.size.w}x${this.size.h}(${tiles.w}:${tiles.h})`)
 
     this.el.width = this.size.w
     this.el.height = this.size.h + tile.h
-    this.el.style.width = (this.size.w * this.size.ratio) + 'px'
-    this.el.style.height = (this.size.h * this.size.ratio) + 'px'
+    this.el.style.width = `${parseInt(this.size.w * this.size.ratio)}px`
+    this.el.style.height = `${parseInt(this.size.h * this.size.ratio)}px`
   }
 
   this.crop = function (w, h) {
