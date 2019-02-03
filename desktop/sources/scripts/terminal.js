@@ -19,7 +19,6 @@ function Terminal () {
 
   // Themes
   this.theme = new Theme({ background: '#000000', f_high: '#ffffff', f_med: '#777777', f_low: '#444444', f_inv: '#000000', b_high: '#eeeeee', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffb545' })
-  this.window = require('electron').remote.getCurrentWindow()
 
   this.el = document.createElement('canvas')
   this.context = this.el.getContext('2d')
@@ -268,7 +267,7 @@ function Terminal () {
 
   // Resize tools
 
-  this.resize = function (resizeWindow = true) {
+  this.resize = function () {
     const size = this.getSize()
     const tiles = { w: clamp(Math.floor(size.w / (tile.w * this.size.ratio)), 10, 80), h: clamp(Math.floor(size.h / (tile.h * this.size.ratio)), 10, 30) }
 
@@ -285,6 +284,8 @@ function Terminal () {
     this.el.height = this.size.h + tile.h
     this.el.style.width = `${parseInt(this.size.w * this.size.ratio)}px`
     this.el.style.height = `${parseInt(this.size.h * this.size.ratio)}px`
+
+    this.update()
   }
 
   this.crop = function (w, h) {
@@ -305,8 +306,7 @@ function Terminal () {
   }
 
   this.getSize = function () {
-    const size = this.window.getSize()
-    return { w: size[0] - 60, h: size[1] - 60 }
+    return { w: window.innerWidth - 60, h: window.innerHeight - 60 }
   }
 
   function step (v, val) { return Math.floor(v / val) * val }
