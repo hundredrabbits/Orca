@@ -166,7 +166,7 @@ function Terminal () {
   // Canvas
 
   this.clear = function () {
-    this.context.clearRect(0, 0, this.size.w, this.size.h)
+    this.context.clearRect(0, 0, this.size.w, this.size.h + tile.h)
   }
 
   this.guide = function (x, y) {
@@ -212,48 +212,62 @@ function Terminal () {
     const ctx = this.context
 
     ctx.textBaseline = 'bottom'
-    ctx.textAlign = 'center'
     ctx.font = `${tile.h * 0.75}px input_mono_medium`
+    ctx.textAlign = 'center'
+
+    const bgrect = { x: x * tile.w, y: (y) * tile.h, w: tile.w, h: tile.h }
+    const fgrect = { x: (x + 0.5) * tile.w, y: (y + 1) * tile.h, w: tile.w, h: tile.h }
+    const text = styles.isCursor && (g === '.' || g === '+') ? (!this.isPaused ? '@' : '~') : g
+
+    let bg = null
+    let fg = 'transparent'
 
     // Highlight Variables
     if (g === 'V' && this.cursor.read() === 'V') {
-      ctx.fillStyle = this.theme.active.b_inv
-      ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
-      ctx.fillStyle = this.theme.active.background
+      bg = this.theme.active.b_inv
+      fg = this.theme.active.background
     } else if (styles.f && styles.b && this.theme.active[styles.f] && this.theme.active[styles.b]) {
-      ctx.fillStyle = this.theme.active[styles.b]
-      ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
-      ctx.fillStyle = this.theme.active[styles.f]
+      bg = this.theme.active[styles.b]
+      fg = this.theme.active[styles.f]
     } else if (styles.isSelection) {
-      ctx.fillStyle = this.theme.active.b_inv
-      ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
-      ctx.fillStyle = this.theme.active.f_inv
+      bg = this.theme.active.b_inv
+      fg = this.theme.active.f_inv
     } else if (styles.isPort) {
       if (styles.isPort === 'output') { // Output
-        ctx.fillStyle = this.theme.active.b_high
-        ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
-        ctx.fillStyle = this.theme.active.f_low
+        bg = this.theme.active.b_high
+        fg = this.theme.active.f_low
       } else if (styles.isPort === 'input') { // Input
-        ctx.fillStyle = this.theme.active.b_high
+        fg = this.theme.active.b_high
       } else if (styles.isPort === 'passive') { // Passive
-        ctx.fillStyle = this.theme.active.b_med
-        ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
-        ctx.fillStyle = this.theme.active.f_low
+        bg = this.theme.active.b_med
+        fg = this.theme.active.f_low
       } else if (styles.isPort === 'haste') { // Haste
-        ctx.fillStyle = this.theme.active.background
-        ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
-        ctx.fillStyle = this.theme.active.b_med
+        bg = this.theme.active.background
+        fg = this.theme.active.b_med
       } else {
-        ctx.fillStyle = this.theme.active.background
-        ctx.fillRect(x * tile.w, (y) * tile.h, tile.w, tile.h)
-        ctx.fillStyle = this.theme.active.f_high
+        bg = this.theme.active.background
+        fg = this.theme.active.f_high
       }
     } else if (styles.isLocked) {
-      ctx.fillStyle = this.theme.active.f_med
+      fg = this.theme.active.f_med
     } else {
-      ctx.fillStyle = this.theme.active.f_low
+      fg = this.theme.active.f_low
     }
-    ctx.fillText(styles.isCursor && (g === '.' || g === '+') ? (!this.isPaused ? '@' : '~') : g, (x + 0.5) * tile.w, (y + 1) * tile.h)
+
+    drawBackground(ctx, bgrect, bg)
+    drawForeground(ctx, fgrect, fg, text)
+  }
+
+  function drawForeground (ctx, rect, style, text) {
+    if (!style) { return }
+    ctx.fillStyle = style
+    ctx.fillText(text, rect.x, rect.y)
+  }
+
+  function drawBackground (ctx, rect, style) {
+    if (!style) { return }
+    ctx.fillStyle = style
+    ctx.fillRect(rect.x, rect.y, rect.w, rect.h)
   }
 
   this.write = function (text, offsetX, offsetY, limit) {
