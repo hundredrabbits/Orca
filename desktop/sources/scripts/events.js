@@ -20,5 +20,5 @@ window.addEventListener('drop', function (e) {
 })
 
 window.onresize = (event) => {
-  terminal.align()
+  terminal.resize()
 }

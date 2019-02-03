@@ -1,6 +1,6 @@
 'use strict'
 
-function Terminal (tile = { w: 20, h: 30 }) {
+function Terminal () {
   const Orca = require('../../core/orca')
   const Cursor = require('./cursor')
   const Source = require('./source')
@@ -19,14 +19,17 @@ function Terminal (tile = { w: 20, h: 30 }) {
 
   // Themes
   this.theme = new Theme({ background: '#000000', f_high: '#ffffff', f_med: '#777777', f_low: '#444444', f_inv: '#000000', b_high: '#eeeeee', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffb545' })
+  this.window = require('electron').remote.getCurrentWindow()
 
   this.el = document.createElement('canvas')
   this.context = this.el.getContext('2d')
-  this.size = { width: 0, height: 0, ratio: 0.5, grid: { w: 8, h: 8 } }
+  this.size = { w: 0, h: 0, ratio: 0.5, grid: { w: 8, h: 8 } }
   this.isPaused = false
   this.showInterface = true
   this.timer = null
   this.bpm = 120
+
+  const tile = { w: 10 / this.size.ratio, h: 15 / this.size.ratio }
 
   this.install = function (host) {
     host.appendChild(this.el)
@@ -90,26 +93,6 @@ function Terminal (tile = { w: 20, h: 30 }) {
     this.size.grid.w = w
     this.size.grid.h = h
     this.update()
-  }
-
-  this.setSize = function (w, h) {
-    if (w < 17 || h < 17) { return }
-
-    let block = `${this.orca}`
-    if (h > this.orca.h) {
-      block = `${block}${`\n${'.'.repeat(this.orca.w)}`.repeat((h - this.orca.h))}`
-    } else if (h < this.orca.h) {
-      block = `${block}`.split('\n').slice(0, (h - this.orca.h)).join('\n').trim()
-    }
-
-    if (w > this.orca.w) {
-      block = `${block}`.split('\n').map((val) => { return val + ('.').repeat((w - this.orca.w)) }).join('\n').trim()
-    } else if (w < this.orca.w) {
-      block = `${block}`.split('\n').map((val) => { return val.substr(0, val.length + (w - this.orca.w)) }).join('\n').trim()
-    }
-
-    this.orca.load(w, h, block, this.orca.f)
-    this.resize()
   }
 
   this.modSpeed = function (mod = 0) {
@@ -184,7 +167,7 @@ function Terminal (tile = { w: 20, h: 30 }) {
   // Canvas
 
   this.clear = function () {
-    this.context.clearRect(0, 0, this.size.width, this.size.height)
+    this.context.clearRect(0, 0, this.size.w, this.size.h)
   }
 
   this.guide = function (x, y) {
@@ -283,32 +266,48 @@ function Terminal (tile = { w: 20, h: 30 }) {
     }
   }
 
-  this.align = function () {
-    this.el.style.marginTop = (((window.innerHeight - (terminal.size.height * terminal.size.ratio)) / 2) - 20) + 'px'
-  }
-
   this.resize = function (resizeWindow = true) {
-    this.size.width = tile.w * this.orca.w
-    this.size.height = tile.h * this.orca.h + (tile.h * 3)
-    this.el.width = this.size.width
-    this.el.height = this.size.height + tile.h
-    this.el.style.width = (this.size.width * this.size.ratio) + 'px'
-    this.el.style.height = (this.size.height * this.size.ratio) + 'px'
+    const size = this.getSize()
+    const tiles = { w: Math.floor(size.w / (tile.w * this.size.ratio)), h: Math.floor(size.h / (tile.w * this.size.ratio)) - 3 }
 
-    this.align()
+    if (this.orca.w === tiles.w && this.orca.h === tiles.h) { console.warn(`already:`, tiles); return }
 
-    if (resizeWindow === true) {
-      const { remote } = require('electron')
-      const win = remote.getCurrentWindow()
-      const width = parseInt((this.size.width * this.size.ratio) + 60)
-      const height = parseInt((this.size.height * this.size.ratio) + 30)
-      const size = win.getSize()
-      if (width > size[0]) {
-        win.setSize(width, height, true)
-      }
-    }
+    this.crop(tiles.w, tiles.h)
+
+    this.size.w = tile.w * this.orca.w
+    this.size.h = tile.h * this.orca.h + (tile.h * 1)
+
+    console.log(`Size: ${this.size.w}x${this.size.h}(${tiles.w}:${tiles.h})`)
+
+    this.el.width = this.size.w
+    this.el.height = this.size.h + tile.h
+    this.el.style.width = (this.size.w * this.size.ratio) + 'px'
+    this.el.style.height = (this.size.h * this.size.ratio) + 'px'
   }
 
+  this.crop = function (w, h) {
+    let block = `${this.orca}`
+    if (h > this.orca.h) {
+      block = `${block}${`\n${'.'.repeat(this.orca.w)}`.repeat((h - this.orca.h))}`
+    } else if (h < this.orca.h) {
+      block = `${block}`.split('\n').slice(0, (h - this.orca.h)).join('\n').trim()
+    }
+
+    if (w > this.orca.w) {
+      block = `${block}`.split('\n').map((val) => { return val + ('.').repeat((w - this.orca.w)) }).join('\n').trim()
+    } else if (w < this.orca.w) {
+      block = `${block}`.split('\n').map((val) => { return val.substr(0, val.length + (w - this.orca.w)) }).join('\n').trim()
+    }
+
+    this.orca.load(w, h, block, this.orca.f)
+  }
+
+  this.getSize = function () {
+    const size = this.window.getSize()
+    return { w: size[0] - 60, h: size[1] - 60 }
+  }
+
+  function step (v, val) { return Math.floor(v / val) * val }
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
