@@ -94,6 +94,12 @@ function Terminal () {
     this.update()
   }
 
+  this.setSize = function (size) {
+    console.log(`Set Size: ${size.w}x${size.h}`)
+    require('electron').remote.getCurrentWindow().setSize(parseInt(size.w + 60), parseInt(size.h + 60 + tile.h), false)
+    this.resize()
+  }
+
   this.modSpeed = function (mod = 0) {
     this.setSpeed(this.bpm + mod)
   }
@@ -102,12 +108,6 @@ function Terminal () {
     const w = clamp(this.size.grid.w + x, 4, 16)
     const h = clamp(this.size.grid.h + y, 4, 16)
     this.setGrid(w, h)
-  }
-
-  this.modSize = function (x = 0, y = 0) {
-    const w = ((parseInt(this.orca.w / this.size.grid.w) + x) * this.size.grid.w) + 1
-    const h = ((parseInt(this.orca.h / this.size.grid.h) + y) * this.size.grid.h) + 1
-    this.setSize(w, h)
   }
 
   this.modZoom = function (mod = 0, set = false) {
@@ -273,7 +273,7 @@ function Terminal () {
 
   // Resize tools
 
-  this.resize = function (target) {
+  this.resize = function () {
     const size = this.getSize()
     const tiles = { w: clamp(Math.floor(size.w / (tile.w * this.size.ratio)), 10, 80), h: clamp(Math.floor(size.h / (tile.h * this.size.ratio)), 10, 30) }
 
@@ -295,11 +295,6 @@ function Terminal () {
     this.context.font = `${tile.h * 0.75}px input_mono_medium`
 
     this.update()
-  }
-
-  this.setSize = function (size) {
-    require('electron').remote.getCurrentWindow().setSize(size.w + 60, size.h + 60 + tile.h, false)
-    this.resize()
   }
 
   this.crop = function (w, h) {
