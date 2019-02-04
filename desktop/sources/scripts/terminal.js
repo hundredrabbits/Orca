@@ -22,7 +22,7 @@ function Terminal () {
 
   this.el = document.createElement('canvas')
   this.context = this.el.getContext('2d')
-  this.size = { w: 0, h: 0, ratio: 1, grid: { w: 8, h: 8 } }
+  this.size = { w: 0, h: 0, ratio: 0.5, grid: { w: 8, h: 8 } }
   this.isPaused = false
   this.showInterface = true
   this.timer = null
@@ -60,9 +60,10 @@ function Terminal () {
   }
 
   this.load = function (orca, frame = 0) {
+    const size = { w: (orca.w * this.size.ratio) * tile.w, h: (orca.h * this.size.ratio) * tile.h }
     this.history.reset()
     this.orca = orca
-    this.resize()
+    this.setSize(size)
     this.update()
   }
 
@@ -272,7 +273,7 @@ function Terminal () {
 
   // Resize tools
 
-  this.resize = function () {
+  this.resize = function (target) {
     const size = this.getSize()
     const tiles = { w: clamp(Math.floor(size.w / (tile.w * this.size.ratio)), 10, 80), h: clamp(Math.floor(size.h / (tile.h * this.size.ratio)), 10, 30) }
 
@@ -294,6 +295,11 @@ function Terminal () {
     this.context.font = `${tile.h * 0.75}px input_mono_medium`
 
     this.update()
+  }
+
+  this.setSize = function (size) {
+    require('electron').remote.getCurrentWindow().setSize(size.w + 60, size.h + 60 + tile.h, false)
+    this.resize()
   }
 
   this.crop = function (w, h) {

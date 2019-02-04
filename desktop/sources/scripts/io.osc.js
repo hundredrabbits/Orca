@@ -8,7 +8,7 @@ function Osc (terminal) {
   this.ip = '127.0.0.1'
 
   this.start = function () {
-    console.info('Starting OSC..')
+    console.info('OSC Starting..')
     this.setup()
   }
 

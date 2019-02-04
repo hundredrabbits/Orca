@@ -6,7 +6,7 @@ function Midi (terminal) {
   this.stack = []
 
   this.start = function () {
-    console.info('Starting Midi..')
+    console.info('Midi Starting..')
     this.setup()
   }
 
