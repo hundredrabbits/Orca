@@ -41,7 +41,6 @@ function Terminal () {
     this.source.new()
     this.history.record()
     this.setSpeed(120)
-    this.resize()
     this.update()
     this.el.className = 'ready'
   }
@@ -211,8 +210,6 @@ function Terminal () {
   this.drawSprite = function (x, y, g, styles = { isCursor: false, isSelection: false, isPort: false, f: null, b: null }) {
     const ctx = this.context
 
-    ctx.textBaseline = 'bottom'
-    ctx.font = `${tile.h * 0.75}px input_mono_medium`
     ctx.textAlign = 'center'
 
     const bgrect = { x: x * tile.w, y: (y) * tile.h, w: tile.w, h: tile.h }
@@ -254,20 +251,14 @@ function Terminal () {
       fg = this.theme.active.f_low
     }
 
-    drawBackground(ctx, bgrect, bg)
-    drawForeground(ctx, fgrect, fg, text)
-  }
-
-  function drawForeground (ctx, rect, style, text) {
-    if (!style) { return }
-    ctx.fillStyle = style
-    ctx.fillText(text, rect.x, rect.y)
-  }
-
-  function drawBackground (ctx, rect, style) {
-    if (!style) { return }
-    ctx.fillStyle = style
-    ctx.fillRect(rect.x, rect.y, rect.w, rect.h)
+    if (bg) {
+      ctx.fillStyle = bg
+      ctx.fillRect(bgrect.x, bgrect.y, bgrect.w, bgrect.h)
+    }
+    if (fg) {
+      ctx.fillStyle = fg
+      ctx.fillText(text, fgrect.x, fgrect.y)
+    }
   }
 
   this.write = function (text, offsetX, offsetY, limit) {
@@ -292,12 +283,15 @@ function Terminal () {
     this.size.w = tile.w * this.orca.w
     this.size.h = tile.h * this.orca.h + tile.h
 
-    console.log(`Size: ${this.size.w}x${this.size.h}(${tiles.w}:${tiles.h})`)
+    console.log(`Resized to ${this.size.w}x${this.size.h}(${tiles.w}:${tiles.h})`)
 
     this.el.width = this.size.w
     this.el.height = this.size.h + tile.h
     this.el.style.width = `${parseInt(this.size.w * this.size.ratio)}px`
     this.el.style.height = `${parseInt(this.size.h * this.size.ratio)}px`
+
+    this.context.textBaseline = 'bottom'
+    this.context.font = `${tile.h * 0.75}px input_mono_medium`
 
     this.update()
   }
