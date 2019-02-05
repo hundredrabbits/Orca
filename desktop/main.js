@@ -13,9 +13,9 @@ app.on('ready', () => {
     height: 450,
     minWidth: 320,
     minHeight: 320,
-    frame: process.platform === 'win32',
     resizable: true,
     icon: __dirname + '/icon.ico',
+    frame: process.platform === 'win32',
     transparent: process.platform !== 'win32',
     skipTaskbar: process.platform !== 'win32',
     autoHideMenuBar: process.platform !== 'win32'

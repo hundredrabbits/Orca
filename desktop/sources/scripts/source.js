@@ -56,7 +56,7 @@ function Source (terminal) {
     fs.readFile(path, 'utf8', (err, data) => {
       if (err) throw err
       terminal.load(this.parse(data))
-      terminal.history.record()
+      terminal.history.record(terminal.orca.s)
     })
   }
 

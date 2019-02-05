@@ -1,35 +1,16 @@
 'use strict'
 
-function History (terminal, orca = terminal.orca) {
+function History () {
   this.index = 0
   this.frames = []
+  this.host = null
+  this.key = null
 
-  this.record = function () {
-    if (this.index === this.frames.length) {
-      this.append()
-    } else {
-      this.fork()
-    }
-    this.index = this.frames.length
-  }
-
-  this.undo = function () {
-    if (this.index === 0) { console.warn('History', 'Reached beginning'); return }
-
-    this.index = clamp(this.index - 1, 0, this.frames.lengt - 1)
-    this.apply(this.frames[this.index])
-  }
-
-  this.redo = function () {
-    if (this.index > this.frames.length - 1) { console.warn('History', 'Reached end'); return }
-
-    this.index = clamp(this.index + 1, 0, this.frames.lengt - 1)
-    this.apply(this.frames[this.index])
-  }
-
-  this.apply = function (f) {
-    if (!f || f.length !== terminal.orca.s.length) { return }
-    terminal.orca.s = this.frames[this.index]
+  this.bind = function (host, key) {
+    console.log(`History is recording..`)
+    this.host = host
+    this.key = key
+    this.reset()
   }
 
   this.reset = function () {
@@ -37,13 +18,42 @@ function History (terminal, orca = terminal.orca) {
     this.frames = []
   }
 
-  this.append = function () {
-    this.frames.push(terminal.orca.s)
+  this.record = function (data) {
+    if (this.index === this.frames.length) {
+      this.append(data)
+    } else {
+      this.fork(data)
+    }
+    this.index = this.frames.length
   }
 
-  this.fork = function () {
+  this.undo = function () {
+    if (this.index === 0) { console.warn('History', 'Reached beginning'); return }
+    this.index = clamp(this.index - 1, 0, this.frames.length - 2)
+    this.apply(this.frames[this.index])
+  }
+
+  this.redo = function () {
+    if (this.index + 1 > this.frames.length - 1) { console.warn('History', 'Reached end'); return }
+    this.index = clamp(this.index + 1, 0, this.frames.length - 1)
+    this.apply(this.frames[this.index])
+  }
+
+  this.apply = function (f) {
+    if (!this.host[this.key]) { console.log(`Unknown binding to key ${this.key}`); return }
+    if (!f || f.length !== this.host[this.key].length) { return }
+    this.host[this.key] = this.frames[this.index]
+  }
+
+  this.append = function (data) {
+    if (!data) { return }
+    if (this.frames[this.index - 1] && this.frames[this.index - 1] === data) { return }
+    this.frames.push(data)
+  }
+
+  this.fork = function (data) {
     this.frames = this.frames.slice(0, this.index + 1)
-    this.frames.push(terminal.orca.s)
+    this.append(data)
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

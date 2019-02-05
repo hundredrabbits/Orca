@@ -13,8 +13,9 @@ function Terminal () {
   this.io = new IO(this)
   this.cursor = new Cursor(this)
   this.source = new Source(this)
-  this.history = new History(this)
   this.keyboard = new Keyboard(this)
+
+  this.history = new History()
   this.controller = new Controller()
 
   // Themes
@@ -39,7 +40,8 @@ function Terminal () {
     this.theme.start()
     this.io.start()
     this.source.new()
-    this.history.record()
+    this.history.bind(this.orca, 's')
+    this.history.record(this.orca.s)
     this.setSpeed(120)
     this.update()
     this.el.className = 'ready'
@@ -274,7 +276,7 @@ function Terminal () {
   // Resize tools
 
   this.resize = function () {
-    const size = this.getSize()
+    const size = { w: window.innerWidth - 60, h: window.innerHeight - 60 }
     const tiles = { w: clamp(Math.floor(size.w / (tile.w * this.size.ratio)), 10, 80), h: clamp(Math.floor(size.h / (tile.h * this.size.ratio)), 10, 30) }
 
     if (this.orca.w === tiles.w && this.orca.h === tiles.h) { return }
@@ -299,6 +301,7 @@ function Terminal () {
 
   this.crop = function (w, h) {
     let block = `${this.orca}`
+
     if (h > this.orca.h) {
       block = `${block}${`\n${'.'.repeat(this.orca.w)}`.repeat((h - this.orca.h))}`
     } else if (h < this.orca.h) {
@@ -311,11 +314,8 @@ function Terminal () {
       block = `${block}`.split('\n').map((val) => { return val.substr(0, val.length + (w - this.orca.w)) }).join('\n').trim()
     }
 
+    this.history.reset()
     this.orca.load(w, h, block, this.orca.f)
-  }
-
-  this.getSize = function () {
-    return { w: window.innerWidth - 60, h: window.innerHeight - 60 }
   }
 
   function step (v, val) { return Math.floor(v / val) * val }

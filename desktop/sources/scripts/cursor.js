@@ -72,13 +72,13 @@ function Cursor (terminal) {
     if (this.mode === 1) {
       this.move(1, 0)
     }
-    terminal.history.record()
+    terminal.history.record(terminal.orca.s)
   }
 
   this.erase = function () {
     if (this.w === 1 && this.h === 1 && terminal.orca.glyphAt(this.x, this.y) === '.') { this.move(-1, 0); return } // Backspace Effect
     this.eraseBlock(this.x, this.y, this.w, this.h)
-    terminal.history.record()
+    terminal.history.record(terminal.orca.s)
   }
 
   this.goto = function (str) {
@@ -126,7 +126,7 @@ function Cursor (terminal) {
       }
       _y++
     }
-    terminal.history.record()
+    terminal.history.record(terminal.orca.s)
   }
 
   this.eraseBlock = function (x, y, w, h) {
@@ -135,7 +135,7 @@ function Cursor (terminal) {
         terminal.orca.write(_x, _y, '.')
       }
     }
-    terminal.history.record()
+    terminal.history.record(terminal.orca.s)
   }
 
   this.toRect = function () {
