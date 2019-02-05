@@ -24,6 +24,7 @@ function History () {
     } else {
       this.fork(data)
     }
+    this.trim()
     this.index = this.frames.length
   }
 
@@ -54,6 +55,11 @@ function History () {
   this.fork = function (data) {
     this.frames = this.frames.slice(0, this.index + 1)
     this.append(data)
+  }
+
+  this.trim = function (limit = 30) {
+    if (this.frames.length < limit) { return }
+    this.frames.shift()
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
