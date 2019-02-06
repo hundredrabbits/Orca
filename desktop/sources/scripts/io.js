@@ -1,16 +1,19 @@
 'use strict'
 
 const Midi = require('./io.midi')
+const MidiClock = require('./io.midi.clock')
 const Udp = require('./io.udp')
 const Osc = require('./io.osc')
 
 function IO (terminal) {
   this.midi = new Midi(terminal)
+  this.midiClock = new MidiClock(terminal)
   this.udp = new Udp(terminal)
   this.osc = new Osc(terminal)
 
   this.start = function () {
     this.midi.start()
+    this.midiClock.start()
     this.udp.start()
     this.osc.start()
     this.clear()
