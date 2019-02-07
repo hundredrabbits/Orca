@@ -122,10 +122,6 @@ function Terminal () {
     this.showInterface = this.showInterface !== true
   }
 
-  this.toggleBackground = function () {
-    document.body.className = document.body.className === 'transparent' ? '' : 'transparent'
-  }
-
   //
 
   this.isCursor = function (x, y) {

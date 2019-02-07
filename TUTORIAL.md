@@ -91,3 +91,14 @@ A very simple projector using a yumper.
 .Ey.E.
 ......
 ```
+
+## U Loop
+
+A rotating effector.
+
+```
+...U..
+.U....
+....U.
+..U...
+```
