@@ -138,7 +138,7 @@ function Terminal () {
       if (this.orca.lockAt(operator.x, operator.y)) { continue }
       const ports = operator._ports()
       for (const i in ports) {
-        const port = ports[id]
+        const port = ports[i]
         const index = this.orca.indexAt(port[0], port[1])
         a[index] = port
       }
@@ -165,7 +165,8 @@ function Terminal () {
       for (let x = 0; x < this.orca.w; x++) {
         const port = this.ports[this.orca.indexAt(x, y)]
         const glyph = this.guide(x, y)
-        this.drawSprite(x, y, glyph)
+        const style = this.isSelection(x, y) ? 4 : this.orca.lockAt(x, y) ? 5 : port ? port[2] : null
+        this.drawSprite(x, y, glyph, style)
       }
     }
   }
@@ -186,49 +187,43 @@ function Terminal () {
     this.write(`${this.io}`, col * 4, 0, this.size.grid.w)
   }
 
-  this.drawSprite = function (x, y, g) {
+  this.drawSprite = function (x, y, g, style) {
     const ctx = this.context
-
     ctx.textAlign = 'center'
 
     const bgrect = { x: x * tile.w, y: (y) * tile.h, w: tile.w, h: tile.h }
     const fgrect = { x: (x + 0.5) * tile.w, y: (y + 1) * tile.h, w: tile.w, h: tile.h }
-    const text = g
 
-    let bg = 'black'
+    let bg = null
     let fg = 'white'
 
-    // // Highlight Variables
-    // if (g === 'V' && this.cursor.read() === 'V') {
-    //   bg = this.theme.active.b_inv
-    //   fg = this.theme.active.background
-    // } else if (styles.f && styles.b && this.theme.active[styles.f] && this.theme.active[styles.b]) {
-    //   bg = this.theme.active[styles.b]
-    //   fg = this.theme.active[styles.f]
-    // } else if (styles.isSelection) {
-    //   bg = this.theme.active.b_inv
-    //   fg = this.theme.active.f_inv
-    // } else if (styles.isPort) {
-    //   if (styles.isPort === 'output') { // Output
-    //     bg = this.theme.active.b_high
-    //     fg = this.theme.active.f_low
-    //   } else if (styles.isPort === 'input') { // Input
-    //     fg = this.theme.active.b_high
-    //   } else if (styles.isPort === 'passive') { // Passive
-    //     bg = this.theme.active.b_med
-    //     fg = this.theme.active.f_low
-    //   } else if (styles.isPort === 'haste') { // Haste
-    //     bg = this.theme.active.background
-    //     fg = this.theme.active.b_med
-    //   } else {
-    //     bg = this.theme.active.background
-    //     fg = this.theme.active.f_high
-    //   }
-    // } else if (styles.isLocked) {
-    //   fg = this.theme.active.f_med
-    // } else {
-    //   fg = this.theme.active.f_low
-    // }
+    // Default
+    if (style === 0) {
+      bg = this.theme.active.b_med
+      fg = this.theme.active.f_low
+    }
+    // Haste
+    if (style === 1) {
+      fg = this.theme.active.b_med
+    }
+    // Input
+    if (style === 2) {
+      fg = this.theme.active.b_high
+    }
+    // Output
+    if (style === 3) {
+      bg = this.theme.active.b_high
+      fg = this.theme.active.f_low
+    }
+    // Selected
+    if (style === 4) {
+      bg = this.theme.active.b_inv
+      fg = this.theme.active.f_inv
+    }
+    // Locked
+    if (style === 5) {
+      fg = this.theme.active.f_med
+    }
 
     if (bg) {
       ctx.fillStyle = bg
@@ -236,8 +231,12 @@ function Terminal () {
     }
     if (fg) {
       ctx.fillStyle = fg
-      ctx.fillText(text, fgrect.x, fgrect.y)
+      ctx.fillText(g, fgrect.x, fgrect.y)
     }
+  }
+
+  this.drawStyle = function () {
+
   }
 
   this.write = function (text, offsetX, offsetY, limit) {
