@@ -25,7 +25,6 @@ function Terminal () {
   this.context = this.el.getContext('2d')
   this.size = { w: 0, h: 0, ratio: 0.5, grid: { w: 8, h: 8 } }
   this.isPaused = false
-  this.showInterface = true
   this.timer = null
   this.bpm = 120
 
@@ -118,10 +117,6 @@ function Terminal () {
     webFrame.setZoomFactor(set ? mod : currentZoomFactor + mod)
   }
 
-  this.toggleInterface = function () {
-    this.showInterface = this.showInterface !== true
-  }
-
   //
 
   this.isCursor = function (x, y) {
@@ -132,33 +127,23 @@ function Terminal () {
     return !!(x >= this.cursor.x && x < this.cursor.x + this.cursor.w && y >= this.cursor.y && y < this.cursor.y + this.cursor.h)
   }
 
-  this.portAt = function (x, y, req = null) {
-    return this.ports[`${x}:${y}`]
+  this.portAt = function (x, y) {
+    return this.ports[this.orca.indexAt(x, y)]
   }
 
   this.findPorts = function () {
-    const h = {}
+    const a = new Array((this.orca.w * this.orca.h) - 1)
     for (const id in this.orca.runtime) {
-      const g = this.orca.runtime[id]
-      if (this.orca.lockAt(g.x, g.y)) { continue }
-      if (!h[`${g.x}:${g.y}`]) {
-        h[`${g.x}:${g.y}`] = { type: g.passive && g.draw ? 'passive' : 'none', name: `${g.name}` }
+      const operator = this.orca.runtime[id]
+      if (this.orca.lockAt(operator.x, operator.y)) { continue }
+      const ports = operator._ports()
+      for (const i in ports) {
+        const port = ports[id]
+        const index = this.orca.indexAt(port[0], port[1])
+        a[index] = port
       }
-      for (const id in g.ports.haste) {
-        const port = g.ports.haste[id]
-        h[`${g.x + port.x}:${g.y + port.y}`] = { type: 'haste', name: `${g.glyph}'${id}` }
-      }
-      for (const id in g.ports.input) {
-        const port = g.ports.input[id]
-        h[`${g.x + port.x}:${g.y + port.y}`] = { type: 'input', name: `${g.glyph}:${id}` }
-      }
-      if (g.ports.output) { h[`${g.x + g.ports.output.x}:${g.y + g.ports.output.y}`] = { type: 'output', name: `${g.glyph}.out` } }
     }
-    if (this.orca.host) {
-      h[`0:0`] = { type: 'input', name: `${this.orca.id}:input` }
-      h[`${this.orca.w - 1}:${this.orca.h - 1}`] = { type: 'output', name: `${this.orca.id}.output` }
-    }
-    return h
+    return a
   }
 
   // Canvas
@@ -169,6 +154,7 @@ function Terminal () {
 
   this.guide = function (x, y) {
     const g = this.orca.glyphAt(x, y)
+    if (this.isCursor(x, y)) { return this.isPaused ? '~' : '@' }
     if (g !== '.') { return g }
     if (x % this.size.grid.w === 0 && y % this.size.grid.h === 0) { return '+' }
     return g
@@ -177,19 +163,14 @@ function Terminal () {
   this.drawProgram = function () {
     for (let y = 0; y < this.orca.h; y++) {
       for (let x = 0; x < this.orca.w; x++) {
-        const port = this.ports[`${x}:${y}`]
+        const port = this.ports[this.orca.indexAt(x, y)]
         const glyph = this.guide(x, y)
-        const isCursor = this.isCursor(x, y)
-        if (this.showInterface === false && glyph === '.' && !isCursor) { continue }
-        const styles = { isSelection: this.isSelection(x, y), isCursor: isCursor, isPort: port ? port.type : false, isLocked: this.orca.lockAt(x, y) }
-        this.drawSprite(x, y, glyph, styles)
+        this.drawSprite(x, y, glyph)
       }
     }
   }
 
   this.drawInterface = function () {
-    if (this.showInterface !== true) { return }
-
     const col = this.size.grid.w
     // Cursor
     this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1, this.size.grid.w)
@@ -197,7 +178,6 @@ function Terminal () {
     this.write(`${this.cursor.inspect()}`, col * 2, 1, this.size.grid.w)
     this.write(`${this.source}${this.cursor.mode === 2 ? '^' : this.cursor.mode === 1 ? '+' : ''}`, col * 3, 1, this.size.grid.w)
     this.write(`${this.io.midi}`, col * 4, 1, this.size.grid.w * 2)
-
     // Grid
     this.write(`${this.orca.w}x${this.orca.h}`, col * 0, 0, this.size.grid.w)
     this.write(`${this.size.grid.w}/${this.size.grid.h}`, col * 1, 0, this.size.grid.w)
@@ -206,49 +186,49 @@ function Terminal () {
     this.write(`${this.io}`, col * 4, 0, this.size.grid.w)
   }
 
-  this.drawSprite = function (x, y, g, styles = { isCursor: false, isSelection: false, isPort: false, f: null, b: null }) {
+  this.drawSprite = function (x, y, g) {
     const ctx = this.context
 
     ctx.textAlign = 'center'
 
     const bgrect = { x: x * tile.w, y: (y) * tile.h, w: tile.w, h: tile.h }
     const fgrect = { x: (x + 0.5) * tile.w, y: (y + 1) * tile.h, w: tile.w, h: tile.h }
-    const text = styles.isCursor && (g === '.' || g === '+') ? (!this.isPaused ? '@' : '~') : g
+    const text = g
 
-    let bg = null
-    let fg = 'transparent'
+    let bg = 'black'
+    let fg = 'white'
 
-    // Highlight Variables
-    if (g === 'V' && this.cursor.read() === 'V') {
-      bg = this.theme.active.b_inv
-      fg = this.theme.active.background
-    } else if (styles.f && styles.b && this.theme.active[styles.f] && this.theme.active[styles.b]) {
-      bg = this.theme.active[styles.b]
-      fg = this.theme.active[styles.f]
-    } else if (styles.isSelection) {
-      bg = this.theme.active.b_inv
-      fg = this.theme.active.f_inv
-    } else if (styles.isPort) {
-      if (styles.isPort === 'output') { // Output
-        bg = this.theme.active.b_high
-        fg = this.theme.active.f_low
-      } else if (styles.isPort === 'input') { // Input
-        fg = this.theme.active.b_high
-      } else if (styles.isPort === 'passive') { // Passive
-        bg = this.theme.active.b_med
-        fg = this.theme.active.f_low
-      } else if (styles.isPort === 'haste') { // Haste
-        bg = this.theme.active.background
-        fg = this.theme.active.b_med
-      } else {
-        bg = this.theme.active.background
-        fg = this.theme.active.f_high
-      }
-    } else if (styles.isLocked) {
-      fg = this.theme.active.f_med
-    } else {
-      fg = this.theme.active.f_low
-    }
+    // // Highlight Variables
+    // if (g === 'V' && this.cursor.read() === 'V') {
+    //   bg = this.theme.active.b_inv
+    //   fg = this.theme.active.background
+    // } else if (styles.f && styles.b && this.theme.active[styles.f] && this.theme.active[styles.b]) {
+    //   bg = this.theme.active[styles.b]
+    //   fg = this.theme.active[styles.f]
+    // } else if (styles.isSelection) {
+    //   bg = this.theme.active.b_inv
+    //   fg = this.theme.active.f_inv
+    // } else if (styles.isPort) {
+    //   if (styles.isPort === 'output') { // Output
+    //     bg = this.theme.active.b_high
+    //     fg = this.theme.active.f_low
+    //   } else if (styles.isPort === 'input') { // Input
+    //     fg = this.theme.active.b_high
+    //   } else if (styles.isPort === 'passive') { // Passive
+    //     bg = this.theme.active.b_med
+    //     fg = this.theme.active.f_low
+    //   } else if (styles.isPort === 'haste') { // Haste
+    //     bg = this.theme.active.background
+    //     fg = this.theme.active.b_med
+    //   } else {
+    //     bg = this.theme.active.background
+    //     fg = this.theme.active.f_high
+    //   }
+    // } else if (styles.isLocked) {
+    //   fg = this.theme.active.f_med
+    // } else {
+    //   fg = this.theme.active.f_low
+    // }
 
     if (bg) {
       ctx.fillStyle = bg

@@ -51,7 +51,6 @@
       terminal.controller.add("default","View","Zoom In",() => { terminal.modZoom(0.25); },"CmdOrCtrl+=")
       terminal.controller.add("default","View","Zoom Out",() => { terminal.modZoom(-0.25); },"CmdOrCtrl+-")
       terminal.controller.add("default","View","Zoom Reset",() => { terminal.modZoom(1,true); },"CmdOrCtrl+0")
-      terminal.controller.add("default","View","Toggle Interface",() => { terminal.toggleInterface(); },"Tab")
 
       terminal.controller.add("default","OSC Port","Default",() => { terminal.io.osc.select(49162); })
       terminal.controller.add("default","OSC Port","TidalCycles",() => { terminal.io.osc.select(6010); })

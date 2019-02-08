@@ -93,18 +93,22 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   // Docs
 
   this._ports = function () {
-    let ports = ''
-    if (Object.keys(this.ports.haste).length > 0) {
-      for (const name in this.ports.haste) {
-        ports += `'${name}, `
-      }
+    const a = []
+    const TYPE = { operator: 0, haste: 1, input: 2, output: 3 }
+    a.push([this.x, this.y, TYPE.operator, `${this.name}`])
+    for (const id in this.ports.haste) {
+      const port = this.ports.haste[id]
+      a.push([this.x + port.x, this.y + port.y, TYPE.haste, `${this.name} ${id}`])
     }
-    if (Object.keys(this.ports.input).length > 0) {
-      for (const name in this.ports.input) {
-        ports += `${name}, `
-      }
+    for (const id in this.ports.input) {
+      const port = this.ports.input[id]
+      a.push([this.x + port.x, this.y + port.y, TYPE.input, `${this.name} ${id}`])
     }
-    return ports !== '' ? '(' + ports.substr(0, ports.length - 2) + ')' : ''
+    if (this.ports.output) {
+      const port = this.ports.output
+      a.push([this.x + port.x, this.y + port.y, TYPE.output, `${this.name} output`])
+    }
+    return a
   }
 
   this.docs = function () {
