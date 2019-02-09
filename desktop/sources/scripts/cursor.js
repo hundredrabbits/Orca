@@ -95,9 +95,10 @@ function Cursor (terminal) {
 
   this.inspect = function (name = true, ports = false) {
     if (this.w > 1 || this.h > 1) { return 'multi' }
-    if (terminal.orca.lockAt(this.x, this.y)) { return 'locked' }
     const port = terminal.portAt(this.x, this.y)
-    return `${port}`
+    if (port) { return `${port[3]}` }
+    if (terminal.orca.lockAt(this.x, this.y)) { return 'locked' }
+    return 'empty'
   }
 
   // Block

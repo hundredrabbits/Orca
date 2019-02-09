@@ -165,7 +165,7 @@ function Terminal () {
       for (let x = 0; x < this.orca.w; x++) {
         const port = this.ports[this.orca.indexAt(x, y)]
         const glyph = this.guide(x, y)
-        const style = this.isSelection(x, y) ? 4 : this.orca.lockAt(x, y) ? 5 : port ? port[2] : null
+        const style = this.isSelection(x, y) ? 4 : port ? port[2] : this.orca.lockAt(x, y) ? 5 : null
         this.drawSprite(x, y, glyph, style)
       }
     }
@@ -187,63 +187,41 @@ function Terminal () {
     this.write(`${this.io}`, col * 4, 0, this.size.grid.w)
   }
 
-  this.drawSprite = function (x, y, g, style) {
-    const ctx = this.context
-    ctx.textAlign = 'center'
-
-    const bgrect = { x: x * tile.w, y: (y) * tile.h, w: tile.w, h: tile.h }
-    const fgrect = { x: (x + 0.5) * tile.w, y: (y + 1) * tile.h, w: tile.w, h: tile.h }
-
-    let bg = null
-    let fg = 'white'
-
-    // Default
-    if (style === 0) {
-      bg = this.theme.active.b_med
-      fg = this.theme.active.f_low
+  this.drawSprite = function (x, y, g, type) {
+    const style = this.drawStyle(type)
+    if (style.bg) {
+      const bgrect = { x: x * tile.w, y: (y) * tile.h, w: tile.w, h: tile.h }
+      this.context.fillStyle = style.bg
+      this.context.fillRect(bgrect.x, bgrect.y, bgrect.w, bgrect.h)
     }
-    // Haste
-    if (style === 1) {
-      fg = this.theme.active.b_med
-    }
-    // Input
-    if (style === 2) {
-      fg = this.theme.active.b_high
-    }
-    // Output
-    if (style === 3) {
-      bg = this.theme.active.b_high
-      fg = this.theme.active.f_low
-    }
-    // Selected
-    if (style === 4) {
-      bg = this.theme.active.b_inv
-      fg = this.theme.active.f_inv
-    }
-    // Locked
-    if (style === 5) {
-      fg = this.theme.active.f_med
-    }
-
-    if (bg) {
-      ctx.fillStyle = bg
-      ctx.fillRect(bgrect.x, bgrect.y, bgrect.w, bgrect.h)
-    }
-    if (fg) {
-      ctx.fillStyle = fg
-      ctx.fillText(g, fgrect.x, fgrect.y)
+    if (style.fg) {
+      const fgrect = { x: (x + 0.5) * tile.w, y: (y + 1) * tile.h, w: tile.w, h: tile.h }
+      this.context.fillStyle = style.fg
+      this.context.fillText(g, fgrect.x, fgrect.y)
     }
   }
 
-  this.drawStyle = function () {
-
+  this.drawStyle = function (type) {
+    // Operator
+    if (type === 0) { return { bg: this.theme.active.b_med, fg: this.theme.active.f_low } }
+    // Haste
+    if (type === 1) { return { fg: this.theme.active.b_med } }
+    // Input
+    if (type === 2) { return { fg: this.theme.active.b_high } }
+    // Output
+    if (type === 3) { return { bg: this.theme.active.b_high, fg: this.theme.active.f_low } }
+    // Selected
+    if (type === 4) { return { bg: this.theme.active.b_inv, fg: this.theme.active.f_inv } }
+    // Locked
+    if (type === 5) { return { fg: this.theme.active.f_med } }
+    // Default
+    return { fg: this.theme.active.f_low }
   }
 
   this.write = function (text, offsetX, offsetY, limit) {
     let x = 0
     while (x < text.length && x < limit - 1) {
-      const c = text.substr(x, 1)
-      this.drawSprite(offsetX + x, this.orca.h + offsetY, c, { f: 'f_high', b: 'background' })
+      this.drawSprite(offsetX + x, this.orca.h + offsetY, text.substr(x, 1), 2)
       x += 1
     }
   }
@@ -269,6 +247,7 @@ function Terminal () {
     this.el.style.height = `${parseInt(this.size.h * this.size.ratio)}px`
 
     this.context.textBaseline = 'bottom'
+    this.context.textAlign = 'center'
     this.context.font = `${tile.h * 0.75}px input_mono_medium`
 
     this.update()

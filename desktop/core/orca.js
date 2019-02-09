@@ -99,18 +99,17 @@ function Orca (terminal, host = null) {
   // Locks
 
   this.release = function () {
-    this.locks = []
+    this.locks = new Array(this.w * this.h)
     this.values = {}
   }
 
   this.unlock = function (x, y) {
-    const index = this.locks.indexOf(`${x}:${y}`)
-    this.locks.splice(index, 1)
+    this.locks[this.indexAt(x, y)] = null
   }
 
   this.lock = function (x, y) {
     if (this.lockAt(x, y)) { return }
-    this.locks.push(`${x}:${y}`)
+    this.locks[this.indexAt(x, y)] = true
   }
 
   // IO
@@ -154,7 +153,7 @@ function Orca (terminal, host = null) {
   }
 
   this.lockAt = function (x, y) {
-    return this.locks.indexOf(`${x}:${y}`) > -1
+    return this.locks[this.indexAt(x, y)] === true
   }
 
   // Tools
