@@ -96,6 +96,21 @@ function Orca (terminal, host = null) {
     }
   }
 
+  this.bounds = function () {
+    let w = 0
+    let h = 0
+    for (let y = 0; y < this.h; y++) {
+      for (let x = 0; x < this.w; x++) {
+        const g = this.glyphAt(x, y)
+        if (g !== '.') {
+          if (x > w) { w = x }
+          if (y > h) { h = y }
+        }
+      }
+    }
+    return { w: w, h: h }
+  }
+
   // Locks
 
   this.release = function () {
@@ -110,16 +125,6 @@ function Orca (terminal, host = null) {
   this.lock = function (x, y) {
     if (this.lockAt(x, y)) { return }
     this.locks[this.indexAt(x, y)] = true
-  }
-
-  // IO
-
-  this.input = function (g) {
-    this.write(0, 0, g)
-  }
-
-  this.output = function () {
-    return this.s.charAt(this.s.length - 1)
   }
 
   // Helpers

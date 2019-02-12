@@ -154,8 +154,8 @@ function Terminal () {
 
   this.guide = function (x, y) {
     const g = this.orca.glyphAt(x, y)
-    if (this.isCursor(x, y)) { return this.isPaused ? '~' : '@' }
     if (g !== '.') { return g }
+    if (this.isCursor(x, y)) { return this.isPaused ? '~' : '@' }
     if (x % this.size.grid.w === 0 && y % this.size.grid.h === 0) { return '+' }
     return g
   }
@@ -229,15 +229,24 @@ function Terminal () {
   // Resize tools
 
   this.resize = function () {
-    const size = { w: window.innerWidth - 60, h: window.innerHeight - 60 }
-    const tiles = { w: clamp(Math.floor(size.w / (tile.w * this.size.ratio)), 10, 80), h: clamp(Math.floor(size.h / (tile.h * this.size.ratio)), 10, 30) }
+    const size = { w: window.innerWidth - 60, h: window.innerHeight - 70 }
+    const tiles = { w: Math.floor(size.w / (tile.w * this.size.ratio)), h: Math.floor(size.h / (tile.h * this.size.ratio)) }
 
     if (this.orca.w === tiles.w && this.orca.h === tiles.h) { return }
 
-    this.crop(tiles.w, tiles.h - 1)
+    // Limit Tiles to Bounds
+    const bounds = this.orca.bounds()
+    if (tiles.w <= bounds.w) { tiles.w = bounds.w + 1 }
+    if (tiles.h <= bounds.h) { tiles.h = bounds.h + 1 }
+
+    this.crop(tiles.w, tiles.h)
 
     this.size.w = tile.w * this.orca.w
     this.size.h = tile.h * this.orca.h + tile.h
+
+    // Keep cursor in bounds
+    if (this.cursor.x >= tiles.w) { this.cursor.x = tiles.w - 1 }
+    if (this.cursor.y >= tiles.h) { this.cursor.y = tiles.h - 1 }
 
     console.log(`Resized to ${this.size.w}x${this.size.h}(${tiles.w}:${tiles.h})`)
 
