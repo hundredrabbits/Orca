@@ -8,17 +8,19 @@ let isShown = true
 app.win = null
 
 app.on('ready', () => {
+  var frameLessMode = process.platform === 'darwin'
+
   app.win = new BrowserWindow({
     width: 710,
     height: 450,
     minWidth: 320,
     minHeight: 320,
-    frame: process.platform === 'win32',
+    frame: !frameLessMode,
     resizable: true,
     icon: __dirname + '/icon.ico',
-    transparent: process.platform !== 'win32',
-    skipTaskbar: process.platform !== 'win32',
-    autoHideMenuBar: process.platform !== 'win32'
+    transparent: frameLessMode,
+    skipTaskbar: frameLessMode,
+    autoHideMenuBar: frameLessMode
   })
 
   app.win.loadURL(`file://${__dirname}/sources/index.html`)
@@ -59,7 +61,7 @@ app.toggleFullscreen = function () {
 }
 
 app.toggleVisible = function () {
-  if (process.platform === 'win32') {
+  if (process.platform !== 'darwin') {
     if (!app.win.isMinimized()) { app.win.minimize() } else { app.win.restore() }
   } else {
     if (isShown && !app.win.isFullScreen()) { app.win.hide() } else { app.win.show() }
