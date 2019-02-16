@@ -41,6 +41,7 @@
       terminal.controller.add("default","Edit","Redo",() => { terminal.history.redo(); },"CmdOrCtrl+Shift+Z")
 
       terminal.controller.add("default","Program","Play/Pause",() => { terminal.pause(); },"Space")
+      terminal.controller.add("default","Program","Reset Frame",() => { terminal.orca.f = 0; },"CmdOrCtrl+Shift+N")
       terminal.controller.add("default","Program","Incr. Speed",() => { terminal.modSpeed(1); },">")
       terminal.controller.add("default","Program","Decr. Speed",() => { terminal.modSpeed(-1); },"<")
       terminal.controller.add("default","Program","Incr. Col",() => { terminal.modGrid(1,0); },"]")
@@ -56,7 +57,7 @@
       terminal.controller.add("default","OSC Port","TidalCycles",() => { terminal.io.osc.select(6010); })
       terminal.controller.add("default","OSC Port","SonicPi",() => { terminal.io.osc.select(4559); })
 
-      terminal.controller.add("default","Theme","Open Theme",() => { terminal.theme.open(); },"CmdOrCtrl+Shift+o")
+      terminal.controller.add("default","Theme","Open Theme",() => { terminal.theme.open(); },"CmdOrCtrl+Shift+O")
       terminal.controller.add("default","Theme","Reset Theme",() => { terminal.theme.reset(); },"CmdOrCtrl+Shift+Backspace")
       terminal.controller.add("default","Theme","Download Themes..",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes'); })
 

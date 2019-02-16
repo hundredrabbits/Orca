@@ -92,7 +92,7 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
 
   // Docs
 
-  this._ports = function () {
+  this.getPorts = function () {
     const a = []
     const TYPE = { operator: 0, haste: 1, input: 2, output: 3 }
     a.push([this.x, this.y, TYPE.operator, `${this.name.charAt(0).toUpperCase() + this.name.substring(1).toLowerCase()}`])
@@ -112,7 +112,7 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   }
 
   this.docs = function () {
-    return `\`${this.glyph.toUpperCase()}\` **${this.name}**${this._ports()}: ${this.info}`
+    return `\`${this.glyph.toUpperCase()}\` **${this.name}**: ${this.info}`
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

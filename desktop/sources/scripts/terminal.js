@@ -136,7 +136,7 @@ function Terminal () {
     for (const id in this.orca.runtime) {
       const operator = this.orca.runtime[id]
       if (this.orca.lockAt(operator.x, operator.y)) { continue }
-      const ports = operator._ports()
+      const ports = operator.getPorts()
       for (const i in ports) {
         const port = ports[i]
         const index = this.orca.indexAt(port[0], port[1])
@@ -279,6 +279,10 @@ function Terminal () {
 
     this.history.reset()
     this.orca.load(w, h, block, this.orca.f)
+  }
+
+  this.docs = function () {
+    return Object.keys(this.library).reduce((acc, id) => { return ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].indexOf(id) < 0 ? `${acc}- ${new this.library[id]().docs()}\n` : acc }, '')
   }
 
   function step (v, val) { return Math.floor(v / val) * val }

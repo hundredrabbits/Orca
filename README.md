@@ -21,37 +21,37 @@ npm start
 
 ## Operators
 
-- `A` **add**(a, b): Outputs the sum of inputs.
-- `B` **bool**(val): Bangs if input is not empty, or 0.
-- `C` **clock**('rate, mod): Outputs a constant value based on the runtime frame.
-- `D` **delay**('rate, mod): Bangs on a fraction of the runtime frame.
+- `A` **add**: Outputs the sum of inputs.
+- `B` **bool**: Bangs if input is not empty, or 0.
+- `C` **clock**: Outputs a constant value based on the runtime frame.
+- `D` **delay**: Bangs on a fraction of the runtime frame.
 - `E` **east**: Moves eastward, or bangs.
-- `F` **if**(a, b): Bangs if both inputs are equal.
-- `G` **generator**('x, 'y, 'len): Writes distant operators with offset.
+- `F` **if**: Bangs if both inputs are equal.
+- `G` **generator**: Writes distant operators with offset.
 - `H` **halt**: Stops southward operators from operating.
-- `I` **increment**(min, max): Increments southward operator.
-- `J` **jumper**(val): Outputs the northward operator.
-- `K` **konkat**('len): Outputs multiple variables.
-- `L` **loop**('len): Loops a number of eastward operators.
-- `M` **modulo**(val, mod): Outputs the modulo of input.
+- `I` **increment**: Increments southward operator.
+- `J` **jumper**: Outputs the northward operator.
+- `K` **konkat**: Outputs multiple variables.
+- `L` **loop**: Loops a number of eastward operators.
+- `M` **modulo**: Outputs the modulo of input.
 - `N` **north**: Moves Northward, or bangs.
-- `O` **offset**('x, 'y, val): Reads a distant operator with offset.
-- `P` **push**('len, 'key, val): Writes an eastward operator with offset.
-- `Q` **query**('x, 'y, 'len): Reads distant operators with offset.
-- `R` **random**(min, max): Outputs a random value.
+- `O` **offset**: Reads a distant operator with offset.
+- `P` **push**: Writes an eastward operator with offset.
+- `Q` **query**: Reads distant operators with offset.
+- `R` **random**: Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
-- `T` **track**('len, 'key, val): Reads an eastward operator with offset.
-- `U` **uturn**('n, 'e, 's, 'w): Reverses movement of inputs.
-- `V` **variable**('write, read): Reads and write globally available variables.
+- `T` **track**: Reads an eastward operator with offset.
+- `U` **uturn**: Reverses movement of inputs.
+- `V` **variable**: Reads and write globally available variables.
 - `W` **west**: Moves westward, or bangs.
-- `X` **teleport**('x, 'y, val): Writes a distant operator with offset.
-- `Y` **jymper**(val): Outputs the westward operator.
+- `X` **teleport**: Writes a distant operator with offset.
+- `Y` **jymper**: Outputs the westward operator.
 - `Z` **zoom**: Moves eastwardly, respawns west on collision.
 - `*` **bang**: Bangs neighboring operators.
 - `#` **comment**: Comments a line, or characters until the next hash.
-- `:` **midi**('channel, 'octave, 'note, velocity, length): Sends a MIDI note.
+- `:` **midi**: Sends a MIDI note.
 - `;` **udp**: Sends a UDP message.
-- `=` **osc**(path): Sends a OSC message.
+- `=` **osc**: Sends a OSC message.
 
 ## Controls
 

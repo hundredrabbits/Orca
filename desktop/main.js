@@ -13,6 +13,7 @@ app.on('ready', () => {
     height: 450,
     minWidth: 320,
     minHeight: 320,
+    backgroundColor: '#000',
     resizable: true,
     icon: __dirname + '/icon.ico',
     frame: process.platform === 'win32',
