@@ -1,5 +1,7 @@
 'use strict'
 
+const { clipboard } = require('electron')
+
 function Cursor (terminal) {
   this.x = 0
   this.y = 0
@@ -46,8 +48,14 @@ function Cursor (terminal) {
     terminal.update()
   }
 
-  this.copy = function () {
-    this.block = this.getBlock()
+  this.copy =  function(){
+    const block = this.getBlock()
+    var rows = []
+    for (var i = 0; i < block.length; i++) {
+      rows.push(block[i].join(''))
+    }
+    const result = rows.join('\n')
+    clipboard.writeText(result)
   }
 
   this.cut = function () {
@@ -55,8 +63,8 @@ function Cursor (terminal) {
     this.erase()
   }
 
-  this.paste = function () {
-    this.writeBlock(this.toRect(), this.block)
+  this.paste = function() {
+    this.writeBlock(this.toRect(), clipboard.readText().split(/\r?\n/))
   }
 
   this.read = function () {
