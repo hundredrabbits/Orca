@@ -102,3 +102,26 @@ A rotating effector.
 ....U.
 ..U...
 ```
+
+## Capacitor
+
+Banging the lowercase `i` charges it, discharges a bang each n-1 times, n is 9 in the example.
+
+```
+3O.....
+..Y.i09
+..F01..
+.......
+```
+
+## One Shot Counter
+
+Banging the lowercase `x` triggers it, count ranges from the right `x` input to the last right `F` input.
+
+```
+24x0...
+14O....
+.F88...
+.*Y*h..
+....I0z
+```
