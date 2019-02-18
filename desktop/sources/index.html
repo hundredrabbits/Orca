@@ -18,7 +18,7 @@
       const { app } = require('electron').remote
 
       terminal.install(document.body)
-      
+
       terminal.controller.add("default","*","About",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Orca'); },"CmdOrCtrl+,")
       terminal.controller.add("default","*","Fullscreen",() => { app.toggleFullscreen(); },"CmdOrCtrl+Enter")
       terminal.controller.add("default","*","Hide",() => { app.toggleVisible(); },"CmdOrCtrl+H")
@@ -48,7 +48,7 @@
       terminal.controller.add("default","Program","Decr. Col",() => { terminal.modGrid(-1,0); },"[")
       terminal.controller.add("default","Program","Incr. Row",() => { terminal.modGrid(0,1); },"}")
       terminal.controller.add("default","Program","Decr. Row",() => { terminal.modGrid(0,-1); },"{")
-      terminal.controller.add("default", "Program", "Next clock", () => {terminal.nextClock()}, "CmdOrCtrl+Space")
+      terminal.controller.add("default", "Program", "Next clock", () => {terminal.nextClock()}, "Ctrl+Space")
 
 
       terminal.controller.add("default","View","Zoom In",() => { terminal.modZoom(0.25); },"CmdOrCtrl+=")
