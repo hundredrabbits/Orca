@@ -11,6 +11,7 @@ function Terminal () {
 
   this.library = require('../../core/library')
 
+  this.orca = new Orca()
   this.io = new IO(this)
   this.cursor = new Cursor(this)
   this.source = new Source(this)
@@ -19,17 +20,20 @@ function Terminal () {
   this.history = new History()
   this.controller = new Controller()
   this.clocks = [new Clock(120)]
-  this.selectedClock = -1
+  this.selectedClock = 0
 
   // Themes
   this.theme = new Theme({ background: '#000000', f_high: '#ffffff', f_med: '#777777', f_low: '#444444', f_inv: '#000000', b_high: '#eeeeee', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffb545' })
 
   this.el = document.createElement('canvas')
   this.context = this.el.getContext('2d')
-  this.size = { w: 0, h: 0, ratio: 0.5, grid: { w: 8, h: 8 } }
-  this.isPaused = false
 
-  const tile = { w: 10 / this.size.ratio, h: 15 / this.size.ratio }
+  // Settings
+  this.grid = { w: 8, h: 8 }
+  this.tile = { w: 10, h: 15 }
+  this.scale = 2
+
+  this.isPaused = false
 
   this.install = function (host) {
     host.appendChild(this.el)
@@ -47,10 +51,6 @@ function Terminal () {
     this.el.className = 'ready'
   }
 
-  this.clock = function () {
-    return this.clocks[this.selectedClock]
-  }
-
   this.run = function () {
     this.io.clear()
     this.orca.run()
@@ -66,10 +66,9 @@ function Terminal () {
   }
 
   this.load = function (orca, frame = 0) {
-    const size = { w: (orca.w * this.size.ratio) * tile.w, h: (orca.h * this.size.ratio) * tile.h }
     this.history.reset()
     this.orca = orca
-    this.setSize(size)
+    this.setSize({ w: orca.w * this.tile.w, h: orca.h * this.tile.h })
     this.update()
   }
 
@@ -84,7 +83,11 @@ function Terminal () {
     this.theme.reset()
   }
 
-  //
+  // Clock
+
+  this.clock = function () {
+    return this.clocks[this.selectedClock]
+  }
 
   this.nextClock = function () {
     const previousClock = this.clock()
@@ -110,15 +113,20 @@ function Terminal () {
   }
 
   this.setGrid = function (w, h) {
-    this.size.grid.w = w
-    this.size.grid.h = h
+    this.grid.w = w
+    this.grid.h = h
     this.update()
   }
 
   this.setSize = function (size) {
     console.log(`Set Size: ${size.w}x${size.h}`)
-    require('electron').remote.getCurrentWindow().setSize(parseInt(size.w + 60), parseInt(size.h + 60 + tile.h), false)
+    require('electron').remote.getCurrentWindow().setSize(parseInt(size.w + 60), parseInt(size.h + 60 + this.tile.h), false)
     this.resize()
+  }
+
+  this.toggleRetina = function () {
+    this.scale = this.scale === 1 ? 2 : 1
+    this.resize(true)
   }
 
   this.modSpeed = function (mod = 0) {
@@ -128,8 +136,8 @@ function Terminal () {
   }
 
   this.modGrid = function (x = 0, y = 0) {
-    const w = clamp(this.size.grid.w + x, 4, 16)
-    const h = clamp(this.size.grid.h + y, 4, 16)
+    const w = clamp(this.grid.w + x, 4, 16)
+    const h = clamp(this.grid.h + y, 4, 16)
     this.setGrid(w, h)
   }
 
@@ -171,14 +179,14 @@ function Terminal () {
   // Canvas
 
   this.clear = function () {
-    this.context.clearRect(0, 0, this.size.w, this.size.h + tile.h)
+    this.context.clearRect(0, 0, this.el.width, this.el.height)
   }
 
   this.guide = function (x, y) {
     const g = this.orca.glyphAt(x, y)
     if (g !== '.') { return g }
     if (this.isCursor(x, y)) { return this.isPaused ? '~' : '@' }
-    if (x % this.size.grid.w === 0 && y % this.size.grid.h === 0) { return '+' }
+    if (x % this.grid.w === 0 && y % this.grid.h === 0) { return '+' }
     return g
   }
 
@@ -194,30 +202,30 @@ function Terminal () {
   }
 
   this.drawInterface = function () {
-    const col = this.size.grid.w
+    const col = this.grid.w
     // Cursor
-    this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1, this.size.grid.w)
-    this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.size.grid.w)
-    this.write(`${this.cursor.inspect()}`, col * 2, 1, this.size.grid.w)
-    this.write(`${this.source}${this.cursor.mode === 2 ? '^' : this.cursor.mode === 1 ? '+' : ''}`, col * 3, 1, this.size.grid.w)
-    this.write(`${this.io.midi}`, col * 4, 1, this.size.grid.w * 2)
+    this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1, this.grid.w)
+    this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.grid.w)
+    this.write(`${this.cursor.inspect()}`, col * 2, 1, this.grid.w)
+    this.write(`${this.source}${this.cursor.mode === 2 ? '^' : this.cursor.mode === 1 ? '+' : ''}`, col * 3, 1, this.grid.w)
+    this.write(`${this.io.midi}`, col * 4, 1, this.grid.w * 2)
     // Grid
-    this.write(`${this.orca.w}x${this.orca.h}`, col * 0, 0, this.size.grid.w)
-    this.write(`${this.size.grid.w}/${this.size.grid.h}`, col * 1, 0, this.size.grid.w)
-    this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, col * 2, 0, this.size.grid.w)
-    this.write(`${this.clock()}${this.orca.f % 4 === 0 ? '*' : ''}`, col * 3, 0, this.size.grid.w)
-    this.write(`${this.io}`, col * 4, 0, this.size.grid.w)
+    this.write(`${this.orca.w}x${this.orca.h}`, col * 0, 0, this.grid.w)
+    this.write(`${this.grid.w}/${this.grid.h}`, col * 1, 0, this.grid.w)
+    this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, col * 2, 0, this.grid.w)
+    this.write(`${this.clock()}${this.orca.f % 4 === 0 ? '*' : ''}`, col * 3, 0, this.grid.w)
+    this.write(`${this.io}`, col * 4, 0, this.grid.w)
   }
 
   this.drawSprite = function (x, y, g, type) {
     const style = this.drawStyle(type)
     if (style.bg) {
-      const bgrect = { x: x * tile.w, y: (y) * tile.h, w: tile.w, h: tile.h }
+      const bgrect = { x: x * this.tile.w * this.scale, y: (y) * this.tile.h * this.scale, w: this.tile.w * this.scale, h: this.tile.h * this.scale }
       this.context.fillStyle = style.bg
       this.context.fillRect(bgrect.x, bgrect.y, bgrect.w, bgrect.h)
     }
     if (style.fg) {
-      const fgrect = { x: (x + 0.5) * tile.w, y: (y + 1) * tile.h, w: tile.w, h: tile.h }
+      const fgrect = { x: (x + 0.5) * this.tile.w * this.scale, y: (y + 1) * this.tile.h * this.scale, w: this.tile.w * this.scale, h: this.tile.h * this.scale }
       this.context.fillStyle = style.fg
       this.context.fillText(g, fgrect.x, fgrect.y)
     }
@@ -250,36 +258,32 @@ function Terminal () {
 
   // Resize tools
 
-  this.resize = function () {
-    const size = { w: window.innerWidth - 60, h: window.innerHeight - 70 }
-    const tiles = { w: Math.floor(size.w / (tile.w * this.size.ratio)), h: Math.floor(size.h / (tile.h * this.size.ratio)) }
+  this.resize = function (force = false) {
+    const size = { w: window.innerWidth - 60, h: window.innerHeight - 90 }
+    const tiles = { w: Math.floor(size.w / this.tile.w), h: Math.floor(size.h / this.tile.h) }
 
-    if (this.orca.w === tiles.w && this.orca.h === tiles.h) { return }
+    if (this.orca.w === tiles.w && this.orca.h === tiles.h && force === false) { return }
 
     // Limit Tiles to Bounds
     const bounds = this.orca.bounds()
     if (tiles.w <= bounds.w) { tiles.w = bounds.w + 1 }
     if (tiles.h <= bounds.h) { tiles.h = bounds.h + 1 }
-
     this.crop(tiles.w, tiles.h)
-
-    this.size.w = tile.w * this.orca.w
-    this.size.h = tile.h * this.orca.h + tile.h
 
     // Keep cursor in bounds
     if (this.cursor.x >= tiles.w) { this.cursor.x = tiles.w - 1 }
     if (this.cursor.y >= tiles.h) { this.cursor.y = tiles.h - 1 }
 
-    console.log(`Resized to ${this.size.w}x${this.size.h}(${tiles.w}:${tiles.h})`)
+    console.log(`Resize to: ${tiles.w}x${tiles.h}`)
 
-    this.el.width = this.size.w
-    this.el.height = this.size.h + tile.h
-    this.el.style.width = `${parseInt(this.size.w * this.size.ratio)}px`
-    this.el.style.height = `${parseInt(this.size.h * this.size.ratio)}px`
+    this.el.width = this.tile.w * this.orca.w * this.scale
+    this.el.height = (this.tile.h + 3) * this.orca.h * this.scale
+    this.el.style.width = `${parseInt(this.tile.w * this.orca.w)}px`
+    this.el.style.height = `${parseInt((this.tile.h + 3) * this.orca.h)}px`
 
     this.context.textBaseline = 'bottom'
     this.context.textAlign = 'center'
-    this.context.font = `${tile.h * 0.75}px input_mono_medium`
+    this.context.font = `${this.tile.h * 0.75 * this.scale}px input_mono_medium`
 
     this.update()
   }

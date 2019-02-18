@@ -52,7 +52,7 @@ function Keyboard (terminal) {
   }
 
   this.onArrowUp = function (mod = false, skip = false, drag = false) {
-    const leap = skip ? terminal.size.grid.h : 1
+    const leap = skip ? terminal.grid.h : 1
     if (drag) {
       terminal.cursor.drag(0, leap)
     } else if (mod) {
@@ -63,7 +63,7 @@ function Keyboard (terminal) {
   }
 
   this.onArrowDown = function (mod = false, skip = false, drag = false) {
-    const leap = skip ? terminal.size.grid.h : 1
+    const leap = skip ? terminal.grid.h : 1
     if (drag) {
       terminal.cursor.drag(0, -leap)
     } else if (mod) {
@@ -74,7 +74,7 @@ function Keyboard (terminal) {
   }
 
   this.onArrowLeft = function (mod = false, skip = false, drag = false) {
-    const leap = skip ? terminal.size.grid.w : 1
+    const leap = skip ? terminal.grid.w : 1
     if (drag) {
       terminal.cursor.drag(-leap, 0)
     } else if (mod) {
@@ -85,7 +85,7 @@ function Keyboard (terminal) {
   }
 
   this.onArrowRight = function (mod = false, skip = false, drag = false) {
-    const leap = skip ? terminal.size.grid.w : 1
+    const leap = skip ? terminal.grid.w : 1
     if (drag) {
       terminal.cursor.drag(leap, 0)
     } else if (mod) {

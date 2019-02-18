@@ -37,7 +37,7 @@ function IO (terminal) {
     for (let i = 0; i < this.length(); i++) {
       text += '|'
     }
-    while (text.length - 1 <= terminal.size.grid.w) {
+    while (text.length - 1 <= terminal.grid.w) {
       text += '-'
     }
     return text

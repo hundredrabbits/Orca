@@ -8,17 +8,17 @@ function Source (terminal) {
   this.path = null
 
   this.new = function () {
-    console.log('New')
+    console.log('New File')
 
     this.path = null
 
-    terminal.orca = new Orca(terminal)
+    terminal.orca.reset()
     terminal.resize()
     terminal.history.reset()
   }
 
   this.open = function () {
-    console.log('Open')
+    console.log('Open File')
     let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'], filters: [{ name: 'Orca Machines', extensions: ['orca'] }] })
     if (!paths) { console.log('Nothing to load') }
     this.path = paths[0]
@@ -26,7 +26,7 @@ function Source (terminal) {
   }
 
   this.save = function (as = false) {
-    console.log('Save')
+    console.log('Save File')
     if (this.path && !as) {
       this.write(this.path)
     } else {
@@ -40,7 +40,7 @@ function Source (terminal) {
   }
 
   this.revert = function () {
-    console.log('Revert')
+    console.log('Revert File')
     this.read(this.path)
   }
 
@@ -71,7 +71,7 @@ function Source (terminal) {
     const w = lines[0].length
     const h = lines.length
     const s = lines.join('\n').trim()
-    return new Orca(terminal).load(w, h, s)
+    return terminal.orca.load(w, h, s)
   }
 
   // Etc

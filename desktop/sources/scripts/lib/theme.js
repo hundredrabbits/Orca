@@ -9,7 +9,6 @@ function Theme (_default) {
   this.el.type = 'text/css'
 
   this.install = function (host = document.body, callback) {
-    console.log('Theme', 'Installing..')
     host.appendChild(this.el)
     this.callback = callback
   }
@@ -19,7 +18,7 @@ function Theme (_default) {
     if (isJson(localStorage.theme)) {
       const storage = JSON.parse(localStorage.theme)
       if (validate(storage)) {
-        console.log('Theme', 'Found theme in localStorage!')
+        console.log('Theme', 'Loading localStorage..')
         this.load(storage)
         return
       }
@@ -30,7 +29,7 @@ function Theme (_default) {
   this.load = function (data) {
     const theme = parse(data)
     if (!validate(theme)) { console.warn('Theme', 'Not a theme', theme); return }
-    console.log('Theme', `Loading theme with background ${theme.background}.`)
+    console.log('Theme', `Load theme, background: ${theme.background}.`)
     this.el.innerHTML = `:root { --background: ${theme.background}; --f_high: ${theme.f_high}; --f_med: ${theme.f_med}; --f_low: ${theme.f_low}; --f_inv: ${theme.f_inv}; --b_high: ${theme.b_high}; --b_med: ${theme.b_med}; --b_low: ${theme.b_low}; --b_inv: ${theme.b_inv}; }`
     localStorage.setItem('theme', JSON.stringify(theme))
     this.active = theme
