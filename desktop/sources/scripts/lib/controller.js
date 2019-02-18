@@ -18,7 +18,7 @@ function Controller () {
     this.menu[mode][cat][label] = { fn: fn, accelerator: accelerator }
   }
 
-  this.add_role = function (mode, cat, label) {
+  this.addRole = function (mode, cat, label) {
     if (!this.menu[mode]) { this.menu[mode] = {} }
     if (!this.menu[mode][cat]) { this.menu[mode][cat] = {} }
     this.menu[mode][cat][label] = { role: label }
@@ -55,7 +55,7 @@ function Controller () {
     this.app.injectMenu(this.format())
   }
 
-  this.accelerator_for_key = function (key, menu) {
+  this.accelerator = function (key, menu) {
     const acc = { basic: null, ctrl: null }
     for (cat in menu) {
       const options = menu[cat]
@@ -66,6 +66,11 @@ function Controller () {
       }
     }
     return acc
+  }
+
+  this.docs = function () {
+    // TODO
+    console.log(this.menu.default)
   }
 }
 

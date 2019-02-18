@@ -63,7 +63,7 @@ class MidiClock {
   }
 
   start () {
-    console.info('Starting Midi Clock...')
+    console.info('Midi Clock Starting..')
     this.setup()
   }
 

@@ -1,7 +1,7 @@
 'use strict'
 
 const Operator = require('../operator')
-// TODO
+
 function OperatorV (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'v', passive)
 

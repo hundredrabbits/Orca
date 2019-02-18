@@ -87,7 +87,6 @@ function Terminal () {
   //
 
   this.nextClock = function () {
-    console.log('Next clock')
     const previousClock = this.clock()
     if (previousClock) {
       previousClock.setRunning(false)
@@ -97,14 +96,14 @@ function Terminal () {
     this.clock().setRunning(!this.isPaused)
     this.clock().setCallback(() => this.run())
 
-    console.log('Selected clock:', this.clock())
+    console.log('Select clock:', this.clock())
     this.update()
   }
 
   this.setSpeed = function (bpm) {
     if (this.clock().canSetBpm()) {
       bpm = clamp(bpm, 60, 300)
-      console.log(`Changed speed to ${bpm}.`)
+      console.log(`Change Speed: ${bpm}.`)
       this.clock().setBpm(bpm)
       this.update()
     }
