@@ -1,13 +1,17 @@
 'use strict'
 
+const MidiClock = require('./io.midi.clock')
+
 function Midi (terminal) {
   this.index = 0
   this.devices = []
   this.stack = []
+  this.clock = new MidiClock(terminal)
 
   this.start = function () {
     console.info('Midi Starting..')
     this.setup()
+    this.clock.start()
   }
 
   this.clear = function () {
