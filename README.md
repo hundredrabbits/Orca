@@ -108,6 +108,14 @@ In console, type `terminal.io.midi.list()` to see the list of available midi dev
 
 In console, type `terminal.io.midi.select(1)` to select the second midi device.
 
+#### Using MIDI beat clock instead of the built in clock
+
+Orca comes with its own internal clock but you can configure it to receive its clock signal from a MIDI input.
+Press `Ctrl+Space` to cycle through available clocks (built in or MIDI inputs).
+The MIDI clock listens for the START and STOP signals from the midi device to run.
+
+*Warning*: Note length when using the MIDI clock is currently based on note length at 120 BPM.
+
 ## UDP
 
 The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback) operator `;` locks each consecutive eastwardly ports. For example, `;hello`, will send the string "hello", on bang, to the port `49160` on `localhost`

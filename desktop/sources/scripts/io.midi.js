@@ -1,13 +1,17 @@
 'use strict'
 
+const MidiClock = require('./io.midi.clock')
+
 function Midi (terminal) {
   this.index = 0
   this.devices = []
   this.stack = []
+  this.clock = new MidiClock(terminal)
 
   this.start = function () {
     console.info('Midi Starting..')
     this.setup()
+    this.clock.start()
   }
 
   this.clear = function () {
@@ -95,23 +99,7 @@ function Midi (terminal) {
   }
 
   function convertChannel (id) {
-    // return [id + 144, id + 128].toString(16);
-    if (id === 0) { return [0x90, 0x80] } // ch1
-    if (id === 1) { return [0x91, 0x81] } // ch2
-    if (id === 2) { return [0x92, 0x82] } // ch3
-    if (id === 3) { return [0x93, 0x83] } // ch4
-    if (id === 4) { return [0x94, 0x84] } // ch5
-    if (id === 5) { return [0x95, 0x85] } // ch6
-    if (id === 6) { return [0x96, 0x86] } // ch7
-    if (id === 7) { return [0x97, 0x87] } // ch8
-    if (id === 8) { return [0x98, 0x88] } // ch9
-    if (id === 9) { return [0x99, 0x89] } // ch10
-    if (id === 10) { return [0x9A, 0x8A] } // ch11
-    if (id === 11) { return [0x9B, 0x8B] } // ch12
-    if (id === 12) { return [0x9C, 0x8C] } // ch13
-    if (id === 13) { return [0x9D, 0x8D] } // ch14
-    if (id === 14) { return [0x9E, 0x8E] } // ch15
-    if (id === 15) { return [0x9F, 0x8F] } // ch16
+    return [0x90 + id, 0x80 + id]
   }
 
   function convertNote (octave, note) {
@@ -119,6 +107,10 @@ function Midi (terminal) {
   }
 
   function convertLength (val, bpm) {
+    // TODO get bpm from daw midi
+    if (!bpm) {
+      bpm = 120
+    }
     return (60000 / bpm) * (val / 15)
   }
 
