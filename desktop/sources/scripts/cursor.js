@@ -48,7 +48,7 @@ function Cursor (terminal) {
     terminal.update()
   }
 
-  this.copy =  function(){
+  this.copy = function () {
     const block = this.getBlock()
     var rows = []
     for (var i = 0; i < block.length; i++) {
@@ -63,7 +63,7 @@ function Cursor (terminal) {
     this.erase()
   }
 
-  this.paste = function() {
+  this.paste = function () {
     this.writeBlock(this.toRect(), clipboard.readText().split(/\r?\n/))
   }
 

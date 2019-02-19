@@ -31,7 +31,7 @@ function Terminal () {
   // Settings
   this.grid = { w: 8, h: 8 }
   this.tile = { w: 10, h: 15 }
-  this.scale = 2
+  this.scale = window.devicePixelRatio
 
   this.isPaused = false
 
@@ -125,7 +125,7 @@ function Terminal () {
   }
 
   this.toggleRetina = function () {
-    this.scale = this.scale === 1 ? 2 : 1
+    this.scale = this.scale === 1 ? window.devicePixelRatio : 1
     this.resize(true)
   }
 
