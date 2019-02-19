@@ -95,7 +95,7 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   this.getPorts = function () {
     const a = []
     const TYPE = { operator: 0, haste: 1, input: 2, output: 3 }
-    a.push([this.x, this.y, this.passive === true ? TYPE.operator : 5, `${this.name.charAt(0).toUpperCase() + this.name.substring(1).toLowerCase()}`])
+    a.push([this.x, this.y, this.passive === true && this.draw === true ? TYPE.operator : 5, `${this.name.charAt(0).toUpperCase() + this.name.substring(1).toLowerCase()}`])
     for (const id in this.ports.haste) {
       const port = this.ports.haste[id]
       a.push([this.x + port.x, this.y + port.y, TYPE.haste, `${this.glyph}-${id}`])
