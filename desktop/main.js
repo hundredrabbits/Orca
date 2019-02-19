@@ -8,6 +8,12 @@ let isShown = true
 app.win = null
 
 app.on('ready', () => {
+
+  const icon = {
+    darwin: 'icon.icns',
+    linux: 'icon.png',
+    win32: 'icon.ico'
+  }[process.platform] || 'icon.ico'
   app.win = new BrowserWindow({
     width: 710,
     height: 470,
@@ -15,7 +21,7 @@ app.on('ready', () => {
     minHeight: 320,
     backgroundColor: '#000',
     resizable: true,
-    icon: __dirname + '/icon.ico',
+    icon: __dirname + '/' + icon,
     frame: process.platform !== 'darwin',
     skipTaskbar: process.platform === 'darwin',
     autoHideMenuBar: process.platform === 'darwin'
