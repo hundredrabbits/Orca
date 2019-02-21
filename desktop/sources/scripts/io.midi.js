@@ -42,6 +42,7 @@ function Midi (terminal) {
   // Midi
 
   this.send = function (channel, octave, note, velocity, length) {
+    if (isFound([channel, octave, note], this.stack) === true) { return }
     this.stack.push([channel, octave, note, velocity, length])
   }
 
@@ -112,6 +113,17 @@ function Midi (terminal) {
       bpm = 120
     }
     return (60000 / bpm) * (val / 15)
+  }
+
+  function isFound (target, stack) {
+    for (const id in stack) {
+      const item = stack[id]
+      if (item[0] !== target[0]) { continue } // Channel
+      if (item[1] !== target[1]) { continue } // Octave
+      if (item[2] !== target[2]) { continue } // Note
+      return true
+    }
+    return false
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
