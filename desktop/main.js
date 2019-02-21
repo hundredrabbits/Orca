@@ -14,8 +14,8 @@ app.on('ready', () => {
     minWidth: 320,
     minHeight: 320,
     backgroundColor: '#000',
-    resizable: true,
     icon: __dirname + '/' + { darwin: 'icon.icns', linux: 'icon.png', win32: 'icon.ico' }[process.platform] || 'icon.ico',
+    resizable: true,
     frame: process.platform !== 'darwin',
     skipTaskbar: process.platform === 'darwin',
     autoHideMenuBar: process.platform === 'darwin'
