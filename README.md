@@ -126,6 +126,14 @@ You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master
 
 In console, type `terminal.io.udp.select(49160)` to select the **49160** udp port.
 
+#### Control Orca via UDP
+
+You can send UDP to Orca on port **49161**.
+
+- `play`, will start playing.
+- `stop`, will stop playing.
+- `run`, will run the current frame even if paused
+
 ## OSC
 
 The [OSC](https://github.com/MylesBorins/node-osc) operator `=` locks each consecutive eastwardly ports. 
