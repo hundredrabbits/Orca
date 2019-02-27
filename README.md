@@ -132,7 +132,7 @@ You can send UDP to Orca on port **49161**.
 
 - `play`, will start playing.
 - `stop`, will stop playing.
-- `run`, will run the current frame even if paused
+- `run`, will run the current frame.
 
 ## OSC
 
