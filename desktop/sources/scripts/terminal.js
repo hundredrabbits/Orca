@@ -16,7 +16,6 @@ function Terminal () {
   this.cursor = new Cursor(this)
   this.source = new Source(this)
   this.keyboard = new Keyboard(this)
-
   this.history = new History()
   this.controller = new Controller()
   this.clocks = [new Clock(120)]
@@ -58,11 +57,18 @@ function Terminal () {
     this.update()
   }
 
-  this.pause = function () {
-    this.isPaused = !this.isPaused
-    console.log(this.isPaused ? 'Paused' : 'Unpaused')
+  this.play = function(){
+    console.log('play')
+    this.isPaused = false
     this.update()
-    this.clock().setRunning(!this.isPaused)
+    this.clock().setRunning(true)
+  }
+
+  this.stop = function(){
+    console.log('stop')
+    this.isPaused = true
+    this.update()
+    this.clock().setRunning(false)
   }
 
   this.load = function (orca, frame = 0) {
@@ -127,6 +133,15 @@ function Terminal () {
   this.toggleRetina = function () {
     this.scale = this.scale === 1 ? window.devicePixelRatio : 1
     this.resize(true)
+  }
+
+  this.togglePlay = function () {
+    if(this.isPaused === true){
+      this.play()
+    }
+    else{
+      this.stop()
+    }
   }
 
   this.modSpeed = function (mod = 0) {

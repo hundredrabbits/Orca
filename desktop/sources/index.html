@@ -40,7 +40,7 @@
       terminal.controller.add("default","Edit","Undo",() => { terminal.history.undo() },"CmdOrCtrl+Z")
       terminal.controller.add("default","Edit","Redo",() => { terminal.history.redo() },"CmdOrCtrl+Shift+Z")
 
-      terminal.controller.add("default","Program","Play/Pause",() => { terminal.pause() },"Space")
+      terminal.controller.add("default","Program","Play/Pause",() => { terminal.togglePlay() },"Space")
       terminal.controller.add("default","Program","Reset Frame",() => { terminal.orca.f = 0 },"CmdOrCtrl+Shift+N")
       terminal.controller.add("default","Program","Incr. Speed",() => { terminal.modSpeed(1) },">")
       terminal.controller.add("default","Program","Decr. Speed",() => { terminal.modSpeed(-1) },"<")
@@ -58,6 +58,9 @@
       terminal.controller.add("default","OSC Port","Default",() => { terminal.io.osc.select(49162) })
       terminal.controller.add("default","OSC Port","TidalCycles",() => { terminal.io.osc.select(6010) })
       terminal.controller.add("default","OSC Port","SonicPi",() => { terminal.io.osc.select(4559) })
+
+      terminal.controller.add("default","UDP Port","Orca Output — 49160",() => { terminal.io.udp.select(49160) })
+      terminal.controller.add("default","UDP Port","Orca Input — 49161",() => { terminal.io.udp.select(49161) })
 
       terminal.controller.add("default","Theme","Open Theme",() => { terminal.theme.open() },"CmdOrCtrl+Shift+O")
       terminal.controller.add("default","Theme","Reset Theme",() => { terminal.theme.reset() },"CmdOrCtrl+Shift+Backspace")

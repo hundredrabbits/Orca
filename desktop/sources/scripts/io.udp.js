@@ -5,13 +5,13 @@ const dgram = require('dgram')
 function Udp (terminal) {
   this.index = 0
   this.stack = []
-  this.server = null
+  this.server = dgram.createSocket('udp4')
+  this.listener = dgram.createSocket('udp4')
   this.port = 49160
   this.ip = '127.0.0.1'
 
   this.start = function () {
     console.info('UDP Starting..')
-    this.setup()
   }
 
   this.clear = function () {
@@ -41,9 +41,38 @@ function Udp (terminal) {
     return this.port
   }
 
-  this.setup = function () {
-    this.server = dgram.createSocket('udp4')
+  // Input
+
+  this.listener.on('message', (msg, rinfo) => {
+    this.act(`${msg}`.toLowerCase())
+  })
+
+  this.listener.on('listening', () => {
+    const address = this.listener.address()
+    console.log(`Orca listening for UDP: ${address.address}:${address.port}`)
+  })
+
+  this.listener.on('error', (err) => {
+    console.log(`Server error:\n ${err.stack}`)
+    this.listener.close()
+  })
+
+  this.act = function(msg){
+    if(msg === 'play'){
+      terminal.play()
+    }
+    else if(msg === 'stop'){
+      terminal.stop()
+    }
+    else if(msg === 'run'){
+      terminal.run()
+    }
+    else{
+      console.warn(`Unknown message: ${msg}`)
+    }
   }
+
+  this.listener.bind(49161)
 }
 
 module.exports = Udp
