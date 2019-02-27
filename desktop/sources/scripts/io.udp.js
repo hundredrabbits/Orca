@@ -49,7 +49,7 @@ function Udp (terminal) {
 
   this.listener.on('listening', () => {
     const address = this.listener.address()
-    console.log(`Orca listening for UDP: ${address.address}:${address.port}`)
+    console.log(`UDP Listening: ${address.address}:${address.port}`)
   })
 
   this.listener.on('error', (err) => {
