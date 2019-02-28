@@ -57,17 +57,20 @@ function Udp (terminal) {
     this.listener.close()
   })
 
-  this.act = function(msg){
-    if(msg === 'play'){
+  this.act = function (msg) {
+    const key = `${msg}`.substr(0, 1)
+    const val = parseInt(`${msg}`.substr(1))
+    if (key === 'p') {
       terminal.play()
-    }
-    else if(msg === 'stop'){
+    } else if (key === 's') {
       terminal.stop()
-    }
-    else if(msg === 'run'){
+    } else if (key === 'r') {
       terminal.run()
-    }
-    else{
+    } else if (key === 'f' && Number.isInteger(val)) {
+      terminal.orca.f = val
+    } else if (key === 'b' && Number.isInteger(val)) {
+      terminal.setSpeed(val)
+    } else {
       console.warn(`Unknown message: ${msg}`)
     }
   }

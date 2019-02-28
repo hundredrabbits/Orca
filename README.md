@@ -130,9 +130,11 @@ In console, type `terminal.io.udp.select(49160)` to select the **49160** udp por
 
 You can send UDP to Orca on port **49161**.
 
-- `play`, will start playing.
-- `stop`, will stop playing.
-- `run`, will run the current frame.
+- `p`, will start playing.
+- `s`, will stop playing.
+- `r`, will run the current frame.
+- `b123`, will set the bpm to `123`.
+- `f456`, will set the frame to `456`.
 
 ## OSC
 

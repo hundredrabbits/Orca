@@ -57,14 +57,14 @@ function Terminal () {
     this.update()
   }
 
-  this.play = function(){
+  this.play = function () {
     console.log('play')
     this.isPaused = false
     this.update()
     this.clock().setRunning(true)
   }
 
-  this.stop = function(){
+  this.stop = function () {
     console.log('stop')
     this.isPaused = true
     this.update()
@@ -136,10 +136,9 @@ function Terminal () {
   }
 
   this.togglePlay = function () {
-    if(this.isPaused === true){
+    if (this.isPaused === true) {
       this.play()
-    }
-    else{
+    } else {
       this.stop()
     }
   }
