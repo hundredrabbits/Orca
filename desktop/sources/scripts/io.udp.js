@@ -44,7 +44,7 @@ function Udp (terminal) {
   // Input
 
   this.listener.on('message', (msg, rinfo) => {
-    this.act(`${msg}`.toLowerCase())
+    this.act(`${msg}`)
   })
 
   this.listener.on('listening', () => {
@@ -58,7 +58,7 @@ function Udp (terminal) {
   })
 
   this.act = function (msg) {
-    const key = `${msg}`.substr(0, 1)
+    const key = `${msg}`.substr(0, 1).toLowerCase()
     const val = `${msg}`.substr(1)
     const int = parseInt(`${msg}`.substr(1))
     if (key === 'p') {
