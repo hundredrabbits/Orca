@@ -135,6 +135,7 @@ You can send UDP to Orca on port **49161**.
 - `r`, will run the current frame.
 - `b123`, will set the bpm to `123`.
 - `f456`, will set the frame to `456`.
+- `w*12:34`, will write `*`, at `12,34`.
 
 ## OSC
 

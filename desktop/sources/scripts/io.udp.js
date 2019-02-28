@@ -59,17 +59,21 @@ function Udp (terminal) {
 
   this.act = function (msg) {
     const key = `${msg}`.substr(0, 1)
-    const val = parseInt(`${msg}`.substr(1))
+    const val = `${msg}`.substr(1)
+    const int = parseInt(`${msg}`.substr(1))
     if (key === 'p') {
       terminal.play()
     } else if (key === 's') {
       terminal.stop()
     } else if (key === 'r') {
       terminal.run()
-    } else if (key === 'f' && Number.isInteger(val)) {
-      terminal.orca.f = val
-    } else if (key === 'b' && Number.isInteger(val)) {
-      terminal.setSpeed(val)
+    } else if (key === 'f' && Number.isInteger(int)) {
+      terminal.orca.f = int
+    } else if (key === 'b' && Number.isInteger(int)) {
+      terminal.setSpeed(int)
+    } else if (key === 'w' && val.length >= 4 && val.indexOf(':') > -1) {
+      const pos = val.substr(1).split(':')
+      terminal.orca.write(parseInt(pos[0]), parseInt(pos[1]), val.substr(0, 1))
     } else {
       console.warn(`Unknown message: ${msg}`)
     }

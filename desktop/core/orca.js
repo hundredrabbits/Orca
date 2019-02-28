@@ -130,7 +130,7 @@ function Orca (terminal, host = null) {
   // Helpers
 
   this.inBounds = function (x, y) {
-    return x >= 0 && x < this.w && y >= 0 && y < this.h
+    return Number.isInteger(x) && Number.isInteger(y) && x >= 0 && x < this.w && y >= 0 && y < this.h
   }
 
   this.isAllowed = function (g) {
