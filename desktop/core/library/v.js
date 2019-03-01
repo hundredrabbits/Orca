@@ -25,9 +25,9 @@ function OperatorV (orca, x, y, passive) {
     const write = this.listen(this.ports.haste.write)
     const read = this.listen(this.ports.input.read)
 
-    if (write !== '.' || read === '.') {
+    if (write !== '.') {
       orca.values[write] = read
-    } else if (write === '.') {
+    } else {
       this.output(orca.values[read])
     }
   }
