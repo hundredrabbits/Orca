@@ -58,14 +58,14 @@ function Terminal () {
   }
 
   this.play = function () {
-    console.log('play')
+    console.log('Play')
     this.isPaused = false
     this.update()
     this.clock().setRunning(true)
   }
 
   this.stop = function () {
-    console.log('stop')
+    console.log('Stop')
     this.isPaused = true
     this.update()
     this.clock().setRunning(false)

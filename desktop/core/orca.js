@@ -24,6 +24,7 @@ function Orca (terminal, host = null) {
   }
 
   this.reset = function (w = this.w, h = this.h) {
+    this.f = 0
     this.w = w
     this.h = h
     this.s = new Array((this.h * this.w) + 1).join('.')
