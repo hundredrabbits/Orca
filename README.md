@@ -161,6 +161,13 @@ Orca operates on a base of 36 increments. Operators using numeric values will ty
 | **O** | **P** | **Q** | **R** | **S** | **T** | **U** | **V** | **W** | **X** | **Y** | **Z**  | 
 | 24    | 25    | 26    | 27    | 28    | 29    | 30    | 31    | 32    | 33    | 34    | 35     |
 
+## Default Ports
+
+| UDP Input  | OSC Input  |
+| 49160      | -          |
+| UDP Output | OSC Output |
+| 49161      | 49162
+
 ## Extras
 
 - This application supports the [Ecosystem Theme](https://github.com/hundredrabbits/Themes).

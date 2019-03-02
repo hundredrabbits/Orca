@@ -9,7 +9,7 @@ function Source (terminal) {
 
   this.new = function () {
     console.log('New File')
-    
+
     this.path = null
 
     terminal.orca.reset()
