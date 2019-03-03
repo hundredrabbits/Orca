@@ -163,10 +163,9 @@ Orca operates on a base of 36 increments. Operators using numeric values will ty
 
 ## Default Ports
 
-| UDP Input  | OSC Input  |
-| 49160      | -          |
-| UDP Output | OSC Output |
-| 49161      | 49162
+| UDP Input  | OSC Input  | UDP Output | OSC Output |
+| ---------- | ---------- | ---------- | -----------|
+| 49160      | None       | 49161      | 49162
 
 ## Extras
 
