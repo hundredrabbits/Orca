@@ -77,7 +77,7 @@ function Udp (terminal) {
     } else if (key === 'r') {
       terminal.run()
     } else if (key === 'g') {
-      return terminal.orca.s()
+      return `${terminal.orca}`
     } else if (key === 'f' && Number.isInteger(int)) {
       terminal.orca.f = int
     } else if (key === 'b' && Number.isInteger(int)) {
