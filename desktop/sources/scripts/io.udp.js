@@ -53,7 +53,7 @@ function Udp (terminal) {
   // Input
 
   this.listener.on('message', (msg, rinfo) => {
-    this.act(`${msg}`)
+    return this.act(`${msg}`)
   })
 
   this.listener.on('listening', () => {
@@ -76,6 +76,8 @@ function Udp (terminal) {
       terminal.stop()
     } else if (key === 'r') {
       terminal.run()
+    } else if (key === 'g') {
+      return terminal.orca.s()
     } else if (key === 'f' && Number.isInteger(int)) {
       terminal.orca.f = int
     } else if (key === 'b' && Number.isInteger(int)) {
@@ -86,6 +88,7 @@ function Udp (terminal) {
     } else {
       console.warn(`Unknown message: ${msg}`)
     }
+    return 'done.'
   }
 
   this.listener.bind(49160)
