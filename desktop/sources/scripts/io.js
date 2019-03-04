@@ -32,16 +32,15 @@ function IO (terminal) {
     return this.midi.stack.length + this.udp.stack.length + this.osc.stack.length
   }
 
-  this.toString = function () {
+  this.inspect = function (limit = terminal.grid.w) {
     let text = ''
     for (let i = 0; i < this.length(); i++) {
       text += '|'
     }
-    while (text.length - 1 <= terminal.grid.w) {
-      text += '-'
-    }
-    return text
+    return fill(text, limit, '.')
   }
+
+  function fill (str, len, chr) { while (str.length < len) { str += chr }; return str }
 }
 
 module.exports = IO

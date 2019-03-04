@@ -164,8 +164,13 @@ function Orca (terminal, host = null) {
 
   // Tools
 
-  this.inspect = function () {
-    return Object.keys(this.values).join('')
+  this.inspect = function (limit = terminal.grid.w) {
+    const str = Object.keys(this.values).join('')
+    if (str.length < limit) {
+      return fill(str, limit, '.')
+    }
+    const key = this.f % str.length
+    return str.slice(key) + str.substr(0, key)
   }
 
   this.format = function () {
@@ -185,6 +190,7 @@ function Orca (terminal, host = null) {
   this.reset()
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
+  function fill (str, len, chr) { while (str.length < len) { str += chr }; return str }
 }
 
 module.exports = Orca
