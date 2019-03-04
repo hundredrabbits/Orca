@@ -165,7 +165,7 @@ function Orca (terminal, host = null) {
   // Tools
 
   this.inspect = function (limit = terminal.grid.w) {
-    const str = Object.keys(this.values).join('')
+    const str = Object.keys(this.values).filter((key) => { return this.values[key] !== '.' }).join('')
     if (str.length < limit) {
       return fill(str, limit, '.')
     }

@@ -221,13 +221,13 @@ function Terminal () {
     this.write(`${this.cursor.x},${this.cursor.y}`, col * 0, 1, this.grid.w)
     this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.grid.w)
     this.write(`${this.cursor.inspect()}`, col * 2, 1, this.grid.w)
-    this.write(`${this.source}${this.cursor.mode === 2 ? '^' : this.cursor.mode === 1 ? '+' : ''}`, col * 3, 1, this.grid.w)
+    this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, col * 3, 1, this.grid.w)
     this.write(`${this.orca.inspect(this.grid.w)}`, col * 4, 1, this.grid.w)
 
     // Grid
     this.write(`${this.orca.w}x${this.orca.h}`, col * 0, 0, this.grid.w)
     this.write(`${this.grid.w}/${this.grid.h}`, col * 1, 0, this.grid.w)
-    this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, col * 2, 0, this.grid.w)
+    this.write(`${this.source}${this.cursor.mode === 2 ? '^' : this.cursor.mode === 1 ? '+' : ''}`, col * 2, 0, this.grid.w)
     this.write(`${this.clock()}${this.orca.f % 4 === 0 ? '*' : ''}`, col * 3, 0, this.grid.w)
     this.write(`${this.io.inspect(this.grid.w)}`, col * 4, 0, this.grid.w)
 
