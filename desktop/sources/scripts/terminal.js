@@ -222,7 +222,11 @@ function Terminal () {
     this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.grid.w)
     this.write(`${this.cursor.inspect()}`, col * 2, 1, this.grid.w)
     this.write(`${this.source}${this.cursor.mode === 2 ? '^' : this.cursor.mode === 1 ? '+' : ''}`, col * 3, 1, this.grid.w)
-    this.write(`${this.io.midi}`, col * 4, 1, this.grid.w * 2)
+    this.write(`${this.orca.inspect()}`, col * 4, 1, this.grid.w)
+    if (this.orca.f < 25) {
+      this.write(`${this.io.midi}`, col * 5, 0, this.grid.w * 2)
+    }
+
     // Grid
     this.write(`${this.orca.w}x${this.orca.h}`, col * 0, 0, this.grid.w)
     this.write(`${this.grid.w}/${this.grid.h}`, col * 1, 0, this.grid.w)

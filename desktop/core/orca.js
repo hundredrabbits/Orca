@@ -164,6 +164,10 @@ function Orca (terminal, host = null) {
 
   // Tools
 
+  this.inspect = function () {
+    return Object.keys(this.values).join('')
+  }
+
   this.format = function () {
     const a = []
     for (let y = 0; y < this.h; y++) {
