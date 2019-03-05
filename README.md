@@ -168,6 +168,12 @@ Orca operates on a base of 36 increments. Operators using numeric values will ty
 | ---------- | ---------- | ---------- | -----------|
 | 49160      | None       | 49161      | 49162
 
+## Companion Applications
+
+- [AIOI](https://github.com/MAKIO135/aioi), a companion to send complex OSC messages.
+- [ESTRA](https://github.com/kyleaedwards/estra), a companion sampler tool.
+- [PILOT](https://github.com/hundredrabbits/pilot), a companion synth tool.
+
 ## Extras
 
 - This application supports the [Ecosystem Theme](https://github.com/hundredrabbits/Themes).
