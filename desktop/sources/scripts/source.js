@@ -1,17 +1,19 @@
 'use strict'
 
 function Source (terminal) {
-  const Orca = require('../../core/orca')
   const fs = require('fs')
   const { dialog, app } = require('electron').remote
 
   this.path = null
 
+  this.start = function () {
+    this.resume()
+  }
+
   this.new = function () {
-    console.log('New File')
-
+    console.log('Source', 'New File')
+    this.forget('active')
     this.path = null
-
     terminal.orca.reset()
     terminal.resize()
     terminal.history.reset()
@@ -19,46 +21,84 @@ function Source (terminal) {
   }
 
   this.open = function () {
-    console.log('Open File')
+    console.log('Source', 'Open File')
     let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'], filters: [{ name: 'Orca Machines', extensions: ['orca'] }] })
     if (!paths) { console.log('Nothing to load') }
-    this.path = paths[0]
     this.read(paths[0])
   }
 
   this.save = function (as = false) {
-    console.log('Save File')
+    console.log('Source', 'Save File')
     if (this.path && !as) {
       this.write(this.path)
     } else {
-      dialog.showSaveDialog((path) => {
-        if (path === undefined) { return }
-        if (path.indexOf('.orca') < 0) { path += '.orca' }
-        terminal.source.write(path)
-        terminal.source.path = path
-      })
+      this.saveAs()
     }
+  }
+  this.saveAs = function () {
+    console.log('Source', 'Save File As')
+    dialog.showSaveDialog((path) => {
+      if (path === undefined) { return }
+      if (path.indexOf('.orca') < 0) { path += '.orca' }
+      terminal.source.write(path)
+      terminal.source.path = path
+    })
   }
 
   this.revert = function () {
-    console.log('Revert File')
+    console.log('Source', 'Revert File')
     this.read(this.path)
   }
 
   // I/O
 
-  this.write = function (path) {
-    fs.writeFile(path, this.generate(), (err) => {
-      if (err) { alert('An error ocurred updating the file' + err.message); console.log(err) }
+  this.write = function (path, data = this.generate()) {
+    console.log('Source', 'Writing ' + path)
+    fs.writeFile(path, data, (err) => {
+      if (err) { alert('An error ocurred updating the file' + err.message); console.warn(err) }
+      terminal.source.remember('active', path)
     })
   }
 
   this.read = function (path) {
+    console.log('Source', 'Reading ' + path)
     fs.readFile(path, 'utf8', (err, data) => {
-      if (err) throw err
+      if (err) { console.warn(err); terminal.source.new(); return }
+      terminal.source.path = path
+      terminal.source.remember('active', path)
       terminal.load(this.parse(data))
-      terminal.history.record(terminal.orca.s)
     })
+  }
+
+  // LocalStorage
+
+  this.resume = function () {
+    const path = this.recall('active')
+    if (path) {
+      this.read(path)
+    } else {
+      this.new()
+    }
+  }
+
+  this.remember = function (key, val) {
+    if (!key || !val) { return }
+    console.log('Source', `Remember: ${key}=${val}`)
+    localStorage.setItem(key, val)
+  }
+
+  this.recall = function (key) {
+    if (!key) { return }
+    if (localStorage.hasOwnProperty(key)) {
+      console.log('Source', `Recall: ${key}`)
+      return localStorage.getItem(key)
+    }
+  }
+
+  this.forget = function (key) {
+    if (!key) { return }
+    console.log('Source', `Forget: ${key}`)
+    localStorage.removeItem(key)
   }
 
   // Converters
@@ -77,7 +117,7 @@ function Source (terminal) {
 
   // Etc
 
-  this.name = function () {
+  this.name = function (path = this.path) {
     const parts = this.path.replace(/\\/g, '/').split('/')
     return parts[parts.length - 1].replace('.orca', '').trim()
   }

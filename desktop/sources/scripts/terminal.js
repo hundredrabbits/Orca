@@ -42,7 +42,7 @@ function Terminal () {
   this.start = function () {
     this.theme.start()
     this.io.start()
-    this.source.new()
+    this.source.start()
     this.history.bind(this.orca, 's')
     this.history.record(this.orca.s)
     this.nextClock()

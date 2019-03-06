@@ -3,8 +3,8 @@
 const library = require('./library')
 
 function Orca (terminal, host = null) {
-  this.w = 0 // Default Width
-  this.h = 0 // Default Height
+  this.w = 1 // Default Width
+  this.h = 1 // Default Height
   this.s = '' // String
   this.f = host ? host.f : 0 // Frame
 
