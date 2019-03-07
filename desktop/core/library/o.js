@@ -16,10 +16,11 @@ function OperatorO (orca, x, y, passive) {
   this.run = function () {
     const x = this.listen(this.ports.haste.x, true) + 1
     const y = this.listen(this.ports.haste.y, true)
+
     this.ports.input.val = { x: x, y: y }
 
     const res = this.listen(this.ports.input.val)
-    this.output(`${res}`)
+    this.output(`${res}`, true)
   }
 }
 

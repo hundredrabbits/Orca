@@ -11,27 +11,18 @@ function OperatorQ (orca, x, y, passive) {
   this.ports.haste.x = { x: -3, y: 0 }
   this.ports.haste.y = { x: -2, y: 0 }
   this.ports.haste.len = { x: -1, y: 0 }
+  this.ports.input.val = { x: 1, y: 0 }
+  this.ports.output = { x: 0, y: 1 }
 
   this.run = function () {
-    this.ports.input = []
-    this.len = this.listen(this.ports.haste.len, true)
-    if (this.len < 1) { return }
+    const len = this.listen(this.ports.haste.len, true, 1)
     const x = this.listen(this.ports.haste.x, true)
     const y = this.listen(this.ports.haste.y, true)
-    this.ports.output = { x: 0, y: 1 }
-    for (let i = 1; i <= this.len; i++) {
-      this.ports.input.push({ x: i + x, y: y })
-      orca.lock(this.x + this.ports.output.x + i - this.len, this.y + 1)
-    }
 
-    // Read
-    let str = ''
-    for (const id in this.ports.input) {
-      str += this.listen(this.ports.input[id])
-    }
-    // Write
-    for (let i = 0; i < str.length; i++) {
-      orca.write(this.x + this.ports.output.x + i - str.length + 1, this.y + this.ports.output.y, str[i])
+    for (let i = 1; i <= len; i++) {
+      this.ports.input.val = { x: x + i, y: y, unlock: true }
+      const res = this.listen(this.ports.input.val)
+      this.output(`${res}`, true)
     }
   }
 }

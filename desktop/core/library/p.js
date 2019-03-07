@@ -16,7 +16,7 @@ function OperatorP (orca, x, y, passive) {
     const len = this.listen(this.ports.haste.len, true, 1)
     const key = this.listen(this.ports.haste.key, true)
 
-    this.ports.output = { x: (key % len), y: 1, unlock: true }
+    this.ports.output = { x: (key % len), y: 1 }
 
     for (let x = 0; x < len; x++) {
       orca.lock(this.x + x, this.y + 1)
