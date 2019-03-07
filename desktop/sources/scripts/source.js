@@ -7,12 +7,11 @@ function Source (terminal) {
   this.path = null
 
   this.start = function () {
-    this.resume()
+    this.new()
   }
 
   this.new = function () {
     console.log('Source', 'New File')
-    this.forget('active')
     this.path = null
     terminal.orca.reset()
     terminal.resize()
@@ -46,6 +45,7 @@ function Source (terminal) {
   }
 
   this.revert = function () {
+    if (!path) { return }
     console.log('Source', 'Revert File')
     this.read(this.path)
   }
@@ -61,6 +61,7 @@ function Source (terminal) {
   }
 
   this.read = function (path) {
+    if (!path) { return }
     console.log('Source', 'Reading ' + path)
     fs.readFile(path, 'utf8', (err, data) => {
       if (err) { console.warn(err); terminal.source.new(); return }
@@ -76,8 +77,6 @@ function Source (terminal) {
     const path = this.recall('active')
     if (path) {
       this.read(path)
-    } else {
-      this.new()
     }
   }
 
