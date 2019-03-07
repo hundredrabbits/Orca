@@ -18,10 +18,13 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     return toValue ? clamp(orca.valueOf(g), min, max) : g
   }
 
-  this.output = function (g) {
+  this.output = function (g, lock = false) {
     if (!this.ports.output) { return }
     if (!g) { return }
     orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, g)
+    if (lock) {
+      orca.lock(this.x + this.ports.output.x, this.y + this.ports.output.y)
+    }
   }
 
   // Phases

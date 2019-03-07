@@ -43,6 +43,7 @@
 
       terminal.controller.add("default","Program","Play/Pause",() => { terminal.togglePlay() },"Space")
       terminal.controller.add("default","Program","Reset Frame",() => { terminal.orca.f = 0 },"CmdOrCtrl+Shift+N")
+      terminal.controller.add("default","Program","Reset Frame",() => { terminal.nextFrame() },"CmdOrCtrl+Shift+F")
       terminal.controller.add("default","Program","Incr. Speed",() => { terminal.modSpeed(1) },">")
       terminal.controller.add("default","Program","Decr. Speed",() => { terminal.modSpeed(-1) },"<")
       terminal.controller.add("default","Program","Incr. Col",() => { terminal.modGrid(1,0) },"]")

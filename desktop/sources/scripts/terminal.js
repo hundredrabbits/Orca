@@ -71,6 +71,12 @@ function Terminal () {
     this.clock().setRunning(false)
   }
 
+  this.nextFrame = function () {
+    console.log('Frame: ' + this.orca.f)
+    this.stop()
+    this.run()
+  }
+
   this.load = function (orca, frame = 0) {
     this.history.reset()
     this.orca = orca
