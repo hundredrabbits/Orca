@@ -45,7 +45,7 @@ function Source (terminal) {
   }
 
   this.revert = function () {
-    if (!path) { return }
+    if (!this.path) { return }
     console.log('Source', 'Revert File')
     this.read(this.path)
   }
