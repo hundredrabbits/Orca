@@ -13,6 +13,13 @@ function OperatorT (orca, x, y, passive) {
   this.ports.input.val = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
+  this.haste = function () {
+    this.len = this.listen(this.ports.haste.len, true)
+    for (let x = 1; x <= this.len; x++) {
+      orca.lock(this.x + x, this.y)
+    }
+  }
+
   this.run = function () {
     const len = this.listen(this.ports.haste.len, true, 1)
     const key = this.listen(this.ports.haste.key, true)
