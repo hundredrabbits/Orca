@@ -7,6 +7,12 @@ function Midi (terminal) {
   this.devices = []
   this.stack = []
   this.clock = new MidiClock(terminal)
+  this.signals = {
+    CLOCK: 0xF8,
+    START: 0xFA,
+    STOP: 0xFC
+  }
+
 
   this.start = function () {
     console.info('Midi Starting..')
@@ -56,6 +62,12 @@ function Midi (terminal) {
 
     device.send([channel[0], note, velocity])
     device.send([channel[1], note, velocity], length)
+  }
+
+  this.sendClock = function () {
+    let device = this.device()
+    if (!device) return
+    device.send([this.signals.CLOCK], 0)
   }
 
   this.select = function (id) {

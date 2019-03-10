@@ -88,7 +88,7 @@ function Terminal () {
   this.reset = function () {
     this.theme.reset()
   }
-  
+
   this.prevFrame = function () {
     this.orca.f -= 2
     this.stop()
@@ -115,6 +115,7 @@ function Terminal () {
     this.selectedClock = (this.selectedClock + 1) % this.clocks.length
     this.clock().setRunning(!this.isPaused)
     this.clock().setCallback(() => this.run())
+    this.clock().setPpqmCallback(() => this.io.midi.sendClock())
 
     console.log('Select clock:', this.clock())
     this.update()
