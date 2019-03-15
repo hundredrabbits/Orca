@@ -18,9 +18,13 @@ function OperatorG (orca, x, y, passive) {
     const y = this.listen(this.ports.haste.y, true) + 1
 
     for (let i = 0; i < len; i++) {
-      const res = this.listen({ x: i + 1, y: 0 })
+      const port = { x: i + 1, y: 0, unlock: true }
+      this.ports.input[`val${i}`] = port
+
+      const res = this.listen(port)
       this.ports.output = { x: x + i, y: y, unlock: true }
       this.output(`${res}`, true)
+      this.ports.output.x -= 1
     }
   }
 }

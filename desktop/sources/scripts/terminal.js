@@ -88,7 +88,7 @@ function Terminal () {
   this.reset = function () {
     this.theme.reset()
   }
-  
+
   this.prevFrame = function () {
     this.orca.f -= 2
     this.stop()
