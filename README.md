@@ -98,7 +98,7 @@ To open the console, press `ctrl+.`.
 
 The [MIDI](https://en.wikipedia.org/wiki/MIDI) operator `:` takes up to 5 inputs('channel, 'octave, 'note, velocity, length). 
 
-For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. Velocity is an optional value from `0`(0/127) to `f`(127/127). Note length is a value from 0(1/16) to g(16/16) at a fixed 120 bpm, which is a ratio of a full bar, g being 16/16(a full bar), 8 being 1/2(half), 4 being 1/4(quarter), 1 being 1/16(sixteenth). See it in action with [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca).
+For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. Velocity is an optional value from `0`(0/127) to `f`(127/127). Note length is a value from `0`(1/16) to `g`(16/16) at a fixed 120 bpm, which is a ratio of a full bar, `g` being 16/16(a full bar), `8` being 1/2(half), `4` being 1/4(quarter), `1` being 1/16(sixteenth). See it in action with [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca).
 
 #### List Midi Devices
 
