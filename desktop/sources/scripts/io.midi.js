@@ -112,7 +112,7 @@ function Midi (terminal) {
     if (!bpm) {
       bpm = 120
     }
-    return (60000 / bpm) * (val / 15)
+    return (240000 / bpm) * (val / 15)
   }
 
   function isFound (target, stack) {
