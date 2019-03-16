@@ -31,8 +31,8 @@ function OperatorMidi (orca, x, y, passive) {
     const octave = clamp(rawNote === 'b' ? rawOctave + 1 : rawOctave, 1, 9)
     // 0 - 11
     const note = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'].indexOf(rawNote === 'e' ? 'F' : rawNote === 'b' ? 'C' : rawNote)
-    // 0 - F(127)
-    const velocity = rawVelocity === '.' ? 127 : parseInt((clamp(orca.valueOf(rawVelocity), 0, 15) / 15) * 127)
+    // 0 - G(127)
+    const velocity = rawVelocity === '.' ? 127 : parseInt((clamp(orca.valueOf(rawVelocity), 0, 16) / 16) * 127)
     // 0 - G(16)
     const length = clamp(orca.valueOf(rawLength), 1, 16)
 
