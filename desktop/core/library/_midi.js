@@ -33,8 +33,8 @@ function OperatorMidi (orca, x, y, passive) {
     const note = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'].indexOf(rawNote === 'e' ? 'F' : rawNote === 'b' ? 'C' : rawNote)
     // 0 - F(127)
     const velocity = rawVelocity === '.' ? 127 : parseInt((clamp(orca.valueOf(rawVelocity), 0, 15) / 15) * 127)
-    // 0 - F(15)
-    const length = clamp(orca.valueOf(rawLength), 1, 15)
+    // 0 - G(16)
+    const length = clamp(orca.valueOf(rawLength), 1, 16)
 
     if (note < 0) { console.warn(`Unknown note:${rawNote}`); return }
 
