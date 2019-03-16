@@ -28,7 +28,7 @@ function OperatorQ (orca, x, y, passive) {
     const y = this.listen(this.ports.haste.y, true)
 
     for (let i = 1; i <= len; i++) {
-      const res = this.listen({ x: x + i, y: y })
+      const res = this.listen(this.ports.input[`val${i}`])
       this.ports.output = { x: i - len, y: 1, unlock: true }
       this.output(`${res}`, true)
     }
