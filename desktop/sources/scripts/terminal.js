@@ -66,6 +66,7 @@ function Terminal () {
 
   this.stop = function () {
     console.log('Stop')
+    this.io.midi.silence()
     this.isPaused = true
     this.update()
     this.clock().setRunning(false)

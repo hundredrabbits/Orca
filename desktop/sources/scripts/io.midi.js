@@ -15,13 +15,54 @@ function Midi (terminal) {
   }
 
   this.clear = function () {
-    this.stack = []
+
+  }
+
+  this.send = function (channel, octave, note, velocity, length, played = false) {
+    for (const id in this.stack) {
+      const item = this.stack[id]
+      if (item[0] === channel && item[1] === octave && item[2] === note) {
+        item[3] = velocity
+        item[4] = length
+        item[5] = played
+        return
+      }
+    }
+    this.stack.push([channel, octave, note, velocity, length, played])
   }
 
   this.run = function () {
-    for (const id in this.stack) {
-      this.play(this.stack[id], this.device())
-    }
+    const device = this.device()
+    this.stack = this.stack.filter((item) => {
+      const alive = item[4] > 0
+      const played = item[5]
+      if (alive !== true) {
+        this.trigger(item, device, false)
+      } else if (played !== true) {
+        this.trigger(item, device, true)
+      }
+      item[4]--
+      return alive
+    })
+  }
+
+  this.trigger = function (item, device, down) {
+    if (!device) { console.warn('No midi device!'); return }
+
+    const channel = down === true ? 0x90 + item[0] : 0x80 + item[0]
+    const note = 24 + (item[1] * 12) + item[2]
+    const velocity = item[3]
+
+    device.send([channel, note, velocity])
+    item[5] = true
+  }
+
+  this.silence = function () {
+    const device = this.device()
+    this.stack = this.stack.filter((item) => {
+      this.trigger(item, device, false)
+      return false
+    })
   }
 
   this.update = function () {
@@ -39,24 +80,7 @@ function Midi (terminal) {
     terminal.controller.commit()
   }
 
-  // Midi
-
-  this.send = function (channel, octave, note, velocity, length) {
-    if (isFound([channel, octave, note], this.stack) === true) { return }
-    this.stack.push([channel, octave, note, velocity, length])
-  }
-
-  this.play = function (data = this.stack, device) {
-    const channel = convertChannel(data[0])
-    const note = convertNote(data[1], data[2])
-    const velocity = data[3]
-    const length = window.performance.now() + convertLength(data[4], terminal.bpm)
-
-    if (!device) { console.warn('No midi device!'); return }
-
-    device.send([channel[0], note, velocity])
-    device.send([channel[1], note, velocity], length)
-  }
+  // Tools
 
   this.select = function (id) {
     if (!this.devices[id]) { return }
@@ -97,33 +121,6 @@ function Midi (terminal) {
 
   this.toString = function () {
     return this.devices.length > 0 ? `${this.devices[this.index].name}` : 'No Midi'
-  }
-
-  function convertChannel (id) {
-    return [0x90 + id, 0x80 + id]
-  }
-
-  function convertNote (octave, note) {
-    return 24 + (octave * 12) + note // 60 = C3
-  }
-
-  function convertLength (val, bpm) {
-    // TODO get bpm from daw midi
-    if (!bpm) {
-      bpm = 120
-    }
-    return (240000 / bpm) * (val / 16)
-  }
-
-  function isFound (target, stack) {
-    for (const id in stack) {
-      const item = stack[id]
-      if (item[0] !== target[0]) { continue } // Channel
-      if (item[1] !== target[1]) { continue } // Octave
-      if (item[2] !== target[2]) { continue } // Note
-      return true
-    }
-    return false
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
