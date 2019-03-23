@@ -147,7 +147,7 @@ function Orca (terminal, host = null) {
   }
 
   this.indexAt = function (x, y) {
-    return x + (this.w * y)
+    return this.inBounds(x, y) === true ? x + (this.w * y) : -1
   }
 
   this.posAt = function (index) {
