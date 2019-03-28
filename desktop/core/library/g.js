@@ -31,7 +31,7 @@ function OperatorG (orca, x, y, passive) {
       const res = this.listen(this.ports.input[`val${i}`])
       this.ports.output = { x: x + i, y: y, unlock: true }
       this.output(`${res}`, true)
-      this.ports.output.x -= 1
+      this.ports.output.x -= len - 1
     }
   }
 }
