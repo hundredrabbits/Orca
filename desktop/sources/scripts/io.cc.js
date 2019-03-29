@@ -24,11 +24,8 @@ function MidiCC (terminal) {
   this.play = function (data) {
     const device = terminal.io.midi.device()
     if (device) {
-      let channel = data[1]
-      let value = data[2]
-      device.send([0xb0, 64 + channel, value])
-    }
-    else{
+      device.send([0xb0, 64 + data[0], data[1]])
+    } else {
       console.warn(`No Midi device.`)
     }
   }

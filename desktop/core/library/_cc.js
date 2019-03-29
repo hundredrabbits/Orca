@@ -11,14 +11,18 @@ function OperatorCC (orca, x, y) {
   this.ports.haste.channel = { x: 1, y: 0 }
   this.ports.haste.value = { x: 2, y: 0 }
 
-  this.run = function () {
-    if (!this.bang()) { return }
+  this.run = function (force = false) {
+    if (!this.bang() && force === false) { return }
 
     const channel = this.listen(this.ports.haste.channel, true)
     const rawValue = this.listen(this.ports.haste.value, true)
     const val = Math.ceil((127 * rawValue) / 36)
 
     terminal.io.cc.send(channel, val)
+
+    if (force === true) {
+      terminal.io.cc.run()
+    }
   }
 }
 

@@ -100,7 +100,7 @@ function Cursor (terminal) {
   this.trigger = function () {
     const operator = terminal.orca.operatorAt(this.x, this.y)
     if (operator) {
-      operator.run()
+      operator.run(true)
     }
   }
 
