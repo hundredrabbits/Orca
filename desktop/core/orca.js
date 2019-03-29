@@ -150,6 +150,10 @@ function Orca (terminal, host = null) {
     return this.inBounds(x, y) === true ? x + (this.w * y) : -1
   }
 
+  this.operatorAt = function (x, y) {
+    return this.runtime.filter((item) => { return item.x === x && item.y === y })[0]
+  }
+
   this.posAt = function (index) {
     return { x: index % this.w, y: parseInt(index / this.w) }
   }

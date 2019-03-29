@@ -97,6 +97,13 @@ function Cursor (terminal) {
     this.y = pos.y
   }
 
+  this.trigger = function () {
+    const operator = terminal.orca.operatorAt(this.x, this.y)
+    if (operator) {
+      operator.run()
+    }
+  }
+
   this.toggleMode = function (val) {
     this.mode = this.mode === 0 ? val : 0
   }
