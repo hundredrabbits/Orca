@@ -58,7 +58,8 @@ npm start
 
 ### Terminal Controls
 
-- `enter` toggle insert/write.
+- `enter` bang selected operator.
+- `shift+enter` toggle insert/write.
 - `space` toggle play/pause.
 - `>` increase BPM.
 - `<` decrease BPM.
@@ -116,6 +117,12 @@ Press `Ctrl+Space` to cycle through available clocks (built in or MIDI inputs).
 The MIDI clock listens for the START and STOP signals from the midi device to run.
 
 *Warning*: Note length when using the MIDI clock is currently based on note length at 120 BPM.
+
+## MIDI CC
+
+The [MIDI](https://www.sweetwater.com/insync/continuous-controller/) operator `^` takes up to 2 inputs('channel, 'value).
+
+It sends a value **between 0-127**, where the value is calculated as a ratio of 36, over a maximum of 127. For example, `^08`, is equal to **28**, or `(8/36)*127`. You can press `enter`, with the `^` operator select, to assign it to a midi cc enabled knob.
 
 ## UDP
 
