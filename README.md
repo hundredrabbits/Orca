@@ -50,6 +50,7 @@ npm start
 - `*` **bang**: Bangs neighboring operators.
 - `#` **comment**: Comments a line, or characters until the next hash.
 - `:` **midi**: Sends a MIDI note.
+- `^` **cc**: Sends a MIDI CC value.
 - `;` **udp**: Sends a UDP message.
 - `=` **osc**: Sends a OSC message.
 
