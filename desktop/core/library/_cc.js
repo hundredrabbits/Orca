@@ -16,7 +16,7 @@ function OperatorCC (orca, x, y) {
 
     const channel = this.listen(this.ports.haste.channel, true)
     const rawValue = this.listen(this.ports.haste.value, true)
-    const val = Math.ceil((127 * rawValue) / 36)
+    const val = Math.ceil((127 * rawValue) / 35)
 
     terminal.io.cc.send(channel, val)
 
