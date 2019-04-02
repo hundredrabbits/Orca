@@ -67,15 +67,16 @@ function Midi (terminal) {
 
   this.update = function () {
     terminal.controller.clearCat('default', 'Midi')
+    terminal.controller.add('default', 'Midi', `Refresh Device List`, () => { terminal.io.midi.setup(); terminal.io.midi.update() }, 'CmdOrCtrl+Shift+Alt+M')
     const devices = terminal.io.midi.list()
-    for (const id in devices) {
-      terminal.controller.add('default', 'Midi', `${devices[id].name} ${terminal.io.midi.index === parseInt(id) ? ' — Active' : ''}`, () => { terminal.io.midi.select(id) }, '')
-    }
     if (devices.length < 1) {
       terminal.controller.add('default', 'Midi', `No Device Available`)
     }
     if (devices.length > 1) {
       terminal.controller.add('default', 'Midi', `Next Device`, () => { terminal.io.midi.next(id) }, 'CmdOrCtrl+Shift+M')
+    }
+    for (const id in devices) {
+      terminal.controller.add('default', 'Midi', `${devices[id].name} ${terminal.io.midi.index === parseInt(id) ? ' — Active' : ''}`, () => { terminal.io.midi.select(id) }, '')
     }
     terminal.controller.commit()
   }
@@ -106,6 +107,7 @@ function Midi (terminal) {
 
   this.setup = function () {
     if (!navigator.requestMIDIAccess) { return }
+    this.devices = []
     navigator.requestMIDIAccess({ sysex: false }).then(this.access, (err) => {
       console.warn('No Midi', err)
     })
