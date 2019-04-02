@@ -18,7 +18,7 @@ function OperatorL (orca, x, y, passive) {
   }
 
   this.run = function () {
-    if (!this.len || this.len < 1) { return }
+    this.len = this.listen(this.ports.haste.len, true)
     const a = []
     for (let x = 1; x <= this.len; x++) {
       a.push(orca.glyphAt(this.x + x, this.y))
