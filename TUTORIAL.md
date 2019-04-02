@@ -2,11 +2,11 @@
 
 If this is your first time hearing about Orca, watch this [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). If you are on Windows, use something like [loopMidi](http://www.tobias-erichsen.de/software/loopmidi.html) to help routing midi signal across applications.
 
-| Families                                               | Glyphs     
-| ----------                                             | ----------- 
+| Families                                               | Glyphs
+| ----------                                             | -----------
 | Directions                                             | N S E W Z
 | [Math](https://www.youtube.com/watch?v=CR1TMGYhCoE)    | A F I M R
-| Writers                                                | G P X 
+| Writers                                                | G P X
 | Readers                                                | O Q T
 | [Jumpers](https://www.youtube.com/watch?v=CR1TMGYhCoE) | J Y
 | Timers                                                 | C D
@@ -50,8 +50,9 @@ To send [Midi notes](https://github.com/hundredrabbits/Orca#midi) to [Ableton Li
 
 - Launch Ableton Live.
 - Create a new midi instrument track.
-- Select `IAC Driver(Bus 1)`(OSX), or `LoopMidi`(Windows), in the instrument's inputs dropdown. 
-- Activate the **In** toggle. 
+- macOS: Setup the IAC bus. [Using virtual MIDI buses](https://help.ableton.com/hc/en-us/articles/209774225-Using-virtual-MIDI-buses)
+- Select `IAC Driver(Bus 1)`(OSX), or `LoopMidi`(Windows), in the instrument's inputs dropdown.
+- Activate the **In** toggle.
 
 The midi instrument should begin receiving midi notes as soon as the Orca window is **in focus**.
 
