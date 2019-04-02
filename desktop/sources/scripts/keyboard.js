@@ -28,7 +28,7 @@ function Keyboard (terminal) {
     if (event.metaKey) { return }
     if (event.ctrlKey) { return }
 
-    if (event.key === 'Backspace' || event.key === '.') { terminal.cursor.erase(); return }
+    if (event.key === 'Backspace' || event.key === '.') { terminal.cursor.erase(true); return }
     if (event.key === ' ' && terminal.cursor.mode === 0) { terminal.togglePlay(); event.preventDefault(); return }
     if (event.key === 'Escape') { terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
 

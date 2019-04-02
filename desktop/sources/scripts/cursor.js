@@ -76,15 +76,14 @@ function Cursor (terminal) {
       terminal.io.sendKey(event.key)
       return
     }
-    terminal.orca.write(this.x, this.y, g)
-    if (this.mode === 1) {
+    if (terminal.orca.write(this.x, this.y, g) && this.mode === 1) {
       this.move(1, 0)
     }
     terminal.history.record(terminal.orca.s)
   }
 
-  this.erase = function () {
-    if (this.w === 1 && this.h === 1 && terminal.orca.glyphAt(this.x, this.y) === '.') { this.move(-1, 0); return } // Backspace Effect
+  this.erase = function (bs) {
+    if (bs && this.mode === 1) { this.move(-1, 0) }
     this.eraseBlock(this.x, this.y, this.w, this.h)
     terminal.history.record(terminal.orca.s)
   }
