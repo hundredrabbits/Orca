@@ -342,7 +342,6 @@ function Terminal () {
     return Object.keys(this.library).reduce((acc, id) => { return ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].indexOf(id) < 0 ? `${acc}- ${new this.library[id]().docs()}\n` : acc }, '')
   }
 
-  function step (v, val) { return Math.floor(v / val) * val }
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 

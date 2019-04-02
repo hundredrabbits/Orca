@@ -7,7 +7,7 @@ If this is your first time hearing about Orca, watch this [introduction video](h
 | Directions                                             | N S E W Z
 | [Math](https://www.youtube.com/watch?v=CR1TMGYhCoE)    | A F I M R
 | Writers                                                | G P X
-| Readers                                                | O Q T
+| Readers                                                | Q T O
 | [Jumpers](https://www.youtube.com/watch?v=CR1TMGYhCoE) | J Y
 | Timers                                                 | C D
 | Variables                                              | K V

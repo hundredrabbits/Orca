@@ -43,7 +43,7 @@ class WrappedClock {
     switch (message.data[0]) {
       case this.signals.CLOCK:
         this.count = (this.count + 1) % 6
-        if (this.count == 0 && this.started) {
+        if (this.count === 0 && this.started) {
           this.callback()
         }
         break
