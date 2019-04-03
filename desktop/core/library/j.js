@@ -8,7 +8,7 @@ function OperatorJ (orca, x, y, passive) {
   this.name = 'jumper'
   this.info = 'Outputs the northward operator.'
 
-  this.ports.input.val = { x: 0, y: -1 }
+  this.ports.haste.val = { x: 0, y: -1 }
   this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
@@ -16,7 +16,7 @@ function OperatorJ (orca, x, y, passive) {
   }
 
   this.run = function () {
-    const val = this.listen(this.ports.input.val)
+    const val = this.listen(this.ports.haste.val)
     this.output(val)
   }
 }

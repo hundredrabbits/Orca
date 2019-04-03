@@ -8,7 +8,7 @@ function OperatorY (orca, x, y, passive) {
   this.name = 'jymper'
   this.info = 'Outputs the westward operator.'
 
-  this.ports.input.val = { x: -1, y: 0 }
+  this.ports.haste.val = { x: -1, y: 0 }
   this.ports.output = { x: 1, y: 0 }
 
   this.haste = function () {
@@ -16,7 +16,7 @@ function OperatorY (orca, x, y, passive) {
   }
 
   this.run = function () {
-    const val = this.listen(this.ports.input.val)
+    const val = this.listen(this.ports.haste.val)
     this.output(val)
   }
 }
