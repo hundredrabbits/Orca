@@ -39,13 +39,14 @@ function Orca (terminal, host = null) {
   }
 
   this.write = function (x, y, g) {
-    if (!g) { return }
-    if (g.length !== 1) { return }
-    if (!this.inBounds(x, y)) { return }
-    if (!this.isAllowed(g)) { return }
-    if (this.glyphAt(x, y) === g) { return }
+    if (!g) { return false }
+    if (g.length !== 1) { return false }
+    if (!this.inBounds(x, y)) { return false }
+    if (!this.isAllowed(g)) { return false }
+    if (this.glyphAt(x, y) === g) { return false }
     const index = this.indexAt(x, y)
     this.s = this.s.substr(0, index) + g + this.s.substr(index + g.length)
+    return true
   }
 
   this.clean = function (str) {
