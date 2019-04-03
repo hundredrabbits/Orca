@@ -18,7 +18,6 @@ function OperatorO (orca, x, y, passive) {
     const y = this.listen(this.ports.haste.y, true)
     this.ports.input.val = { x: x + 1, y: y }
     orca.lock(this.x + x + 1, this.y + y)
-
     const res = this.listen(this.ports.input.val)
     this.output(`${res}`, true)
   }
