@@ -28,6 +28,7 @@ function OperatorQ (orca, x, y, passive) {
 
     for (let i = 1; i <= len; i++) {
       this.ports.input[`val${i}`] = { x: x + i, y: y }
+      orca.lock(this.x + x + i, this.y + y)
       this.ports.output = { x: i - len, y: 1, unlock: true }
       const res = this.listen(this.ports.input[`val${i}`])
       this.output(`${res}`, true)
