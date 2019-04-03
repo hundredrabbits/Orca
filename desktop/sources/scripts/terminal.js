@@ -79,6 +79,10 @@ function Terminal () {
     this.update()
   }
 
+  this.unload = function () {
+    this.io.midi.silence()
+  }
+
   this.update = function () {
     this.clear()
     this.ports = this.findPorts()
