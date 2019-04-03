@@ -18,11 +18,11 @@ app.on('ready', () => {
     resizable: true,
     frame: process.platform !== 'darwin',
     skipTaskbar: process.platform === 'darwin',
-    autoHideMenuBar: process.platform === 'darwin'
+    autoHideMenuBar: process.platform === 'darwin',
+    webPreferences: { backgroundThrottling: false }
   })
 
   app.win.loadURL(`file://${__dirname}/sources/index.html`)
-  // app.inspect()
 
   app.win.on('closed', () => {
     win = null
