@@ -53,9 +53,9 @@ function Osc (terminal) {
     terminal.controller.commit()
   }
 
-  this.setup = function () {
+  this.setup = function (ip = '127.0.0.1') {
     if (this.client) { this.client.kill() }
-    this.client = new osc.Client('127.0.0.1', this.port)
+    this.client = new osc.Client(ip, this.port)
   }
 }
 

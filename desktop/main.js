@@ -19,6 +19,7 @@ app.on('ready', () => {
     frame: process.platform !== 'darwin',
     skipTaskbar: process.platform === 'darwin',
     autoHideMenuBar: process.platform === 'darwin',
+    webPreferences: { zoomFactor: 1.0 },
     webPreferences: { backgroundThrottling: false }
   })
 
