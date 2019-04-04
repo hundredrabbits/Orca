@@ -4,9 +4,9 @@
 
 **Each letter of the alphabet is an operation**, <br />lowercase letters operate on bang, uppercase letters operate each frame. 
 
-**To get started**, have a look at some projects created with [#ORCΛ](https://twitter.com/hashtag/ORCΛ), watch the [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE), or check out the [example files](https://github.com/hundredrabbits/Orca/tree/master/examples) & [tutorials](TUTORIAL.md). If you need some help, visit the [forum](https://llllllll.co/t/orca-live-coding-tool/17689), or the [chatroom](https://talk.lurk.org/channel/orca). 
+**To learn more**, have a look at some projects created with [#ORCΛ](https://twitter.com/hashtag/ORCΛ), watch the [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE), or check out the [examples](https://github.com/hundredrabbits/Orca/tree/master/examples) & [tutorials](TUTORIAL.md). If you need some help, visit the [forum](https://llllllll.co/t/orca-live-coding-tool/17689), or the [chatroom](https://talk.lurk.org/channel/orca). 
 
-For a **portable version of Orca**, built entirely in C, visit [Orca-c](http://github.com/hundredrabbits/Orca-c). To quicky get started with Orca, have a look at the [Pilot tutorial](https://github.com/hundredrabbits/Orca/blob/master/TUTORIAL.md#pilot).
+To **quicky get started**, have a look at the [Pilot tutorial](https://github.com/hundredrabbits/Orca/blob/master/TUTORIAL.md#pilot). If you're looking for a **light version of Orca**, visit [Orca-c](http://github.com/hundredrabbits/Orca-c). 
 
 ## Install & Run
 
@@ -76,7 +76,7 @@ You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master
 
 ## OSC
 
-The [OSC](https://github.com/MylesBorins/node-osc) operator `=` locks each consecutive eastwardly ports. The first character is used for path, nexts are sent as integers using [base36 Table](https://github.com/hundredrabbits/Orca#base36-table).
+The [OSC](https://github.com/MylesBorins/node-osc) operator `=` locks each consecutive eastwardly ports. The first character is used for the path, the following characters are sent as integers using the [base36 Table](https://github.com/hundredrabbits/Orca#base36-table).
 
 For example, `=1abc` will send `10`, `11` and `12` to `/1`, via the port `49162` on `localhost`; `=a123` will send `1`, `2` and `3`, to the path `/a`. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_osc.orca) or try it with [SonicPi](https://github.com/hundredrabbits/Orca/blob/master/TUTORIAL.md#sonicpi).
 
@@ -84,7 +84,7 @@ For example, `=1abc` will send `10`, `11` and `12` to `/1`, via the port `49162`
 
 ## Base36 Table
 
-Orca operates on a base of 36 increments. Operators using numeric values will typically also operate on letters and convert them into values as per the following table. For instance `Dp` will bang every *24th frame*.
+Orca operates on a base of **36 increments**. Operators using numeric values will typically also operate on letters and convert them into values as per the following table. For instance `Dp` will bang every *24th frame*.
 
 | 0     | 1     | 2     | 3     | 4     | 5     | 6     | 7     | 8     | 9     | A     | B      | 
 | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:    | 
@@ -102,9 +102,9 @@ Orca operates on a base of 36 increments. Operators using numeric values will ty
 
 ## Companion Applications
 
+- [PILOT](https://github.com/hundredrabbits/pilot), a companion synth tool.
 - [AIOI](https://github.com/MAKIO135/aioi), a companion to send complex OSC messages.
 - [ESTRA](https://github.com/kyleaedwards/estra), a companion sampler tool.
-- [PILOT](https://github.com/hundredrabbits/pilot), a companion synth tool.
 
 ## Extras
 
