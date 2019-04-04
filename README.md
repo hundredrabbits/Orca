@@ -62,17 +62,9 @@ The [MIDI](https://en.wikipedia.org/wiki/MIDI) operator `:` takes up to 5 inputs
 
 For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. Velocity is an optional value from `0`(0/127) to `g`(127/127). Note length is the number of frames during which a note remains active. See it in action with [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca).
 
-#### Using MIDI beat clock instead of the built in clock
-
-Orca comes with its own internal clock but you can configure it to receive its clock signal from a MIDI input.
-Press `Ctrl+Space` to cycle through available clocks (built in or MIDI inputs).
-The MIDI clock listens for the START and STOP signals from the midi device to run.
-
-*Warning*: Note length when using the MIDI clock is currently based on note length at 120 BPM.
-
 ## MIDI CC
 
-The [MIDI CC](https://www.sweetwater.com/insync/continuous-controller/) operator `^` takes up to 2 inputs('channel, 'value).
+The [MIDI CC](https://www.sweetwater.com/insync/continuous-controller/) operator `^` takes 2 inputs('channel, 'value).
 
 It sends a value **between 0-127**, where the value is calculated as a ratio of 36, over a maximum of 127. For example, `^08`, is equal to **28**, or `(8/36)*127`. You can press `shift+enter`, with the `^` operator selected, to assign it to a controller.
 
@@ -82,31 +74,11 @@ The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_
 
 You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test UDP messages. See it in action with [udp.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_udp.orca).
 
-#### Select UDP Port
-
-In console, type `terminal.io.udp.select(49160)` to select the **49160** udp port.
-
-#### Control Orca via UDP
-
-You can send UDP to Orca on port **49161**.
-
-- `p`, will start playing.
-- `s`, will stop playing.
-- `r`, will run the current frame.
-- `g`, will return the current frame.
-- `b123`, will set the bpm to `123`.
-- `f456`, will set the frame to `456`.
-- `wA12:34`, will write `A`, at `12,34`.
-
 ## OSC
 
-The [OSC](https://github.com/MylesBorins/node-osc) operator `=` locks each consecutive eastwardly ports. 
+The [OSC](https://github.com/MylesBorins/node-osc) operator `=` locks each consecutive eastwardly ports. The first character is used for path, nexts are sent as integers using [base36 Table](https://github.com/hundredrabbits/Orca#base36-table).
 
-First char is used for path, nexts are sent as integers using [base36 Table](https://github.com/hundredrabbits/Orca#base36-table). For example, `=1abc` will send `10`, `11` and `12` to `/1`, via the port `49162` on `localhost`; `=a123` will send `1`, `2` and `3`, to the path `/a`.  You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_osc.orca) or try it with [SonicPi](https://github.com/hundredrabbits/Orca/blob/master/TUTORIAL.md#sonicpi).
-
-#### Select OSC Port
-
-In console, type `terminal.io.osc.select(49162)` to select the **49162** osc port.
+For example, `=1abc` will send `10`, `11` and `12` to `/1`, via the port `49162` on `localhost`; `=a123` will send `1`, `2` and `3`, to the path `/a`. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_osc.orca) or try it with [SonicPi](https://github.com/hundredrabbits/Orca/blob/master/TUTORIAL.md#sonicpi).
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.hardware.jpg' width="600"/>
 
