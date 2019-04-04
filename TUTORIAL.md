@@ -58,7 +58,7 @@ The midi instrument should begin receiving midi notes as soon as the Orca window
 
 ## Pilot
 
-[Pilot](https://github.com/hundredrabbits/Pilot) is a simple synth designed to work with Orca's UDP. It's designed to quickly get started with Orca. Remember that **Pilot uses UDP instead of MIDI**. Have a look at [pilot.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/projects/pilot.orca) to see it in action.
+[Pilot](https://github.com/hundredrabbits/Pilot) is a minimalist synth software designed to work via UDP. It's designed to quickly get started with Orca. Remember that **Pilot uses UDP instead of MIDI**. Have a look at [pilot.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/projects/pilot.orca) to see it in action.
 
 # Patterns
 
