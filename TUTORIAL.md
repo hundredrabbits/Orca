@@ -56,6 +56,10 @@ To send [Midi notes](https://github.com/hundredrabbits/Orca#midi) to [Ableton Li
 
 The midi instrument should begin receiving midi notes as soon as the Orca window is **in focus**.
 
+## Pilot
+
+[Pilot](https://github.com/hundredrabbits/Pilot) is a simple synth designed to work with Orca's UDP. It's designed to quickly get started with Orca. Remember that **Pilot uses UDP instead of MIDI**. Have a look at [pilot.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/projects/pilot.orca) to see it in action.
+
 # Patterns
 
 Here's a collection of recurring patterns in the design of Orca machines.
