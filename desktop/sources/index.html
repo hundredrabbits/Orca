@@ -38,8 +38,8 @@
       terminal.controller.add("default","Edit","Copy Selection",() => { terminal.cursor.copy() },"CmdOrCtrl+C")
       terminal.controller.add("default","Edit","Cut Selection",() => { terminal.cursor.cut() },"CmdOrCtrl+X")
       terminal.controller.add("default","Edit","Paste Selection",() => { terminal.cursor.paste() },"CmdOrCtrl+V")
-      terminal.controller.add("default","Edit","Trigger Selection",() => { terminal.cursor.trigger() },"Enter")
-      terminal.controller.add("default","Edit","Toggle Insert Mode",() => { terminal.cursor.toggleMode(1) },"Shift+Enter")
+      terminal.controller.add("default","Edit","Trigger Selection",() => { terminal.cursor.trigger() },"Shift+Enter")
+      terminal.controller.add("default","Edit","Toggle Insert Mode",() => { terminal.cursor.toggleMode(1) },"Enter")
       terminal.controller.add("default","Edit","Undo",() => { terminal.history.undo() },"CmdOrCtrl+Z")
       terminal.controller.add("default","Edit","Redo",() => { terminal.history.redo() },"CmdOrCtrl+Shift+Z")
 

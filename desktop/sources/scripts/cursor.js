@@ -104,6 +104,8 @@ function Cursor (terminal) {
   }
 
   this.toggleMode = function (val) {
+    this.w = 1
+    this.h = 1
     this.mode = this.mode === 0 ? val : 0
   }
 
