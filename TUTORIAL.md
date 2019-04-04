@@ -56,6 +56,8 @@ To send [Midi notes](https://github.com/hundredrabbits/Orca#midi) to [Ableton Li
 
 The midi instrument should begin receiving midi notes as soon as the Orca window is **in focus**.
 
+To bind the [Midi CC](https://www.sweetwater.com/insync/continuous-controller/) operator(`^`) to a knob, have **Midi Mapping active**, and bang the `^00` operator, or select it and press `shift+enter`. It will assign the value of channel 0 to this knob.
+
 ## Pilot
 
 [Pilot](https://github.com/hundredrabbits/Pilot) is a minimalist synth software designed to work via UDP. It's designed to quickly get started with Orca. Remember that **Pilot uses UDP instead of MIDI**. Have a look at [pilot.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/projects/pilot.orca) to see it in action.

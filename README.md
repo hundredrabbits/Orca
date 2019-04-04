@@ -72,9 +72,9 @@ The MIDI clock listens for the START and STOP signals from the midi device to ru
 
 ## MIDI CC
 
-The [MIDI](https://www.sweetwater.com/insync/continuous-controller/) operator `^` takes up to 2 inputs('channel, 'value).
+The [MIDI CC](https://www.sweetwater.com/insync/continuous-controller/) operator `^` takes up to 2 inputs('channel, 'value).
 
-It sends a value **between 0-127**, where the value is calculated as a ratio of 36, over a maximum of 127. For example, `^08`, is equal to **28**, or `(8/36)*127`. You can press `enter`, with the `^` operator select, to assign it to a midi cc enabled knob.
+It sends a value **between 0-127**, where the value is calculated as a ratio of 36, over a maximum of 127. For example, `^08`, is equal to **28**, or `(8/36)*127`. You can press `shift+enter`, with the `^` operator selected, to assign it to a controller.
 
 ## UDP
 
@@ -96,7 +96,7 @@ You can send UDP to Orca on port **49161**.
 - `g`, will return the current frame.
 - `b123`, will set the bpm to `123`.
 - `f456`, will set the frame to `456`.
-- `w*12:34`, will write `*`, at `12,34`.
+- `wA12:34`, will write `A`, at `12,34`.
 
 ## OSC
 
