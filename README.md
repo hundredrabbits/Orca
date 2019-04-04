@@ -56,61 +56,11 @@ npm start
 - `;` **udp**: Sends a UDP message.
 - `=` **osc**: Sends a OSC message.
 
-## Controls
-
-### Terminal Controls
-
-- `enter` bang selected operator.
-- `shift+enter` toggle insert/write.
-- `space` toggle play/pause.
-- `>` increase BPM.
-- `<` decrease BPM.
-- `shift+arrowKey` Expand cursor.
-- `ctrl+arrowKey` Leap cursor.
-- `alt+arrowKey` Move selection.
-
-### Edit
-
-- `ctrl+c` copy selection.
-- `ctrl+x` cut selection.
-- `ctrl+v` paste selection.
-- `ctrl+z` undo.
-- `ctrl+shift+z` redo.
-
-### Grid Controls
-
-- `]` increase grid size vertically.
-- `[` decrease grid size vertically.
-- `}` increase grid size horizontally.
-- `{` decrease grid size horizontally.
-- `ctrl/meta+]` increase program size vertically.
-- `ctrl/meta+[` decrease program size vertically.
-- `ctrl/meta+}` increase program size horizontally.
-- `ctrl/meta+{` decrease program size horizontally.
-
-### Window
-
-- `ctrl+=` Zoom In.
-- `ctrl+-` Zoom Out.
-- `ctrl+0` Zoom Reset.
-- `tab` Toggle interface.
-- `backquote` Toggle background.
-
-To open the console, press `ctrl+.`.
-
 ## MIDI
 
 The [MIDI](https://en.wikipedia.org/wiki/MIDI) operator `:` takes up to 5 inputs('channel, 'octave, 'note, velocity, length). 
 
 For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. Velocity is an optional value from `0`(0/127) to `g`(127/127). Note length is the number of frames during which a note remains active. See it in action with [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca).
-
-#### List Midi Devices
-
-In console, type `terminal.io.midi.list()` to see the list of available midi devices.
-
-#### Select Midi Device
-
-In console, type `terminal.io.midi.select(1)` to select the second midi device.
 
 #### Using MIDI beat clock instead of the built in clock
 
@@ -177,20 +127,6 @@ Orca operates on a base of 36 increments. Operators using numeric values will ty
 | UDP Input  | OSC Input  | UDP Output | OSC Output |
 | ---------- | ---------- | ---------- | -----------|
 | 49160      | None       | 49161      | 49162
-
-# Operator Families
-
-| Families   | Operators
-| ---------- | ----------- 
-| Directions | N S E W Z
-| Math       | A F I M R
-| Writers    | G P X 
-| Readers    | O Q T
-| Jumpers    | J Y
-| Timers     | C D
-| Variables  | K V
-| Misc       | B H L U
-| Special    | * # ; : =
 
 ## Companion Applications
 
