@@ -2,11 +2,11 @@
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/logo.png' width="600"/>
 
-**Each letter of the alphabet is an operation**, lowercase letters operate on bang, uppercase letters operate each frame. 
+**Each letter of the alphabet is an operation**, <br />lowercase letters operate on bang, uppercase letters operate each frame. 
 
-To get started, have a look at some projects created with [#ORCΛ](https://twitter.com/hashtag/ORCΛ), watch the [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE), or check out the [example files](https://github.com/hundredrabbits/Orca/tree/master/examples). If you need some help, visit the [forum](https://llllllll.co/t/orca-live-coding-tool/17689), or the [chatroom](https://talk.lurk.org/channel/orca). If you need Software specific help, check out the [tutorials](TUTORIAL.md).
+**To get started**, have a look at some projects created with [#ORCΛ](https://twitter.com/hashtag/ORCΛ), watch the [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE), or check out the [example files](https://github.com/hundredrabbits/Orca/tree/master/examples) & [tutorials](TUTORIAL.md). If you need some help, visit the [forum](https://llllllll.co/t/orca-live-coding-tool/17689), or the [chatroom](https://talk.lurk.org/channel/orca). 
 
-For a portable version of Orca, built entirely in C, visit [Orca-c](http://github.com/hundredrabbits/Orca-c). To quicky get started with Orca, have a look at the [Pilot tutorial](https://github.com/hundredrabbits/Orca/blob/master/TUTORIAL.md#pilot).
+For a **portable version of Orca**, built entirely in C, visit [Orca-c](http://github.com/hundredrabbits/Orca-c). To quicky get started with Orca, have a look at the [Pilot tutorial](https://github.com/hundredrabbits/Orca/blob/master/TUTORIAL.md#pilot).
 
 ## Install & Run
 
