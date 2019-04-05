@@ -16,7 +16,7 @@ function OperatorCC (orca, x, y) {
     if (!this.bang() && force === false) { return }
 
     const channel = this.listen(this.ports.input.channel, true)
-    const knob = this.listen(this.ports.input.channel, true)
+    const knob = this.listen(this.ports.knob.channel, true)
     const rawValue = this.listen(this.ports.input.value, true)
     const val = Math.ceil((127 * rawValue) / 35)
 
