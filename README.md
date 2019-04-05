@@ -64,7 +64,7 @@ For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI chan
 
 ## MIDI CC
 
-The [MIDI CC](https://www.sweetwater.com/insync/continuous-controller/) operator `^` takes 2 inputs('channel, 'value).
+The [MIDI CC](https://www.sweetwater.com/insync/continuous-controller/) operator `^` takes 3 inputs('channel, 'knob, 'value).
 
 It sends a value **between 0-127**, where the value is calculated as a ratio of 36, over a maximum of 127. For example, `^08`, is equal to **28**, or `(8/36)*127`. You can press `shift+enter`, with the `^` operator selected, to assign it to a controller.
 
