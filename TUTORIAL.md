@@ -1,20 +1,10 @@
 # Tutorial
 
-If this is your first time hearing about Orca, watch this [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). If you are on Windows, use something like [loopMidi](http://www.tobias-erichsen.de/software/loopmidi.html) to help routing midi signal across applications.
-
-| Families                                               | Glyphs
-| ----------                                             | -----------
-| Directions                                             | N S E W Z
-| [Math](https://www.youtube.com/watch?v=CR1TMGYhCoE)    | A F I M R
-| Writers                                                | G P X
-| Readers                                                | Q T O
-| [Jumpers](https://www.youtube.com/watch?v=CR1TMGYhCoE) | J Y
-| Timers                                                 | C D
-| Variables                                              | K V
-| Misc                                                   | B H L U
-| Special                                                | * # ; : =
+If this is your first time trying out **Orca**, watch this [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). 
 
 ## MIDI
+
+If you are on Windows, use something like [loopMidi](http://www.tobias-erichsen.de/software/loopmidi.html) to help routing midi signal across applications.
 
 #### Using MIDI beat clock instead of the built in clock
 
@@ -24,7 +14,9 @@ The MIDI clock listens for the START and STOP signals from the midi device to ru
 
 *Warning*: Note length when using the MIDI clock is currently based on note length at 120 BPM.
 
-#### Binding to Midi CC
+## MIDI CC
+
+#### Easy Binding
 
 To bind the [Midi CC](https://www.sweetwater.com/insync/continuous-controller/) operator(`^`) to a knob, have **Midi Mapping active**, and bang the `^00` operator, or select it and press `shift+enter`. It will assign the value of channel 0 to this knob.
 
@@ -96,7 +88,7 @@ The midi instrument should begin receiving midi notes as soon as the Orca window
 
 ## Pilot
 
-[Pilot](https://github.com/hundredrabbits/Pilot) is a minimalist synth software designed to work via UDP. It's designed to quickly get started with Orca. Remember that **Pilot uses UDP instead of MIDI**. Have a look at [pilot.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/projects/pilot.orca) to see it in action.
+[Pilot](https://github.com/hundredrabbits/Pilot) is a minimalist synth software designed to work via UDP, and to quickly get started with Orca. Remember that **Pilot uses UDP instead of MIDI**. Have a look at [pilot.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/projects/pilot.orca) to see how it should be used.
 
 ## Patterns
 
@@ -168,3 +160,17 @@ Banging the lowercase `x` triggers it, count ranges from the right `x` input to 
 .*Y*h..
 ....I0z
 ```
+
+## Families
+
+| Families                                               | Glyphs
+| ----------                                             | -----------
+| Directions                                             | N S E W Z
+| [Math](https://www.youtube.com/watch?v=CR1TMGYhCoE)    | A F I M R
+| Writers                                                | G P X
+| Readers                                                | Q T O
+| [Jumpers](https://www.youtube.com/watch?v=CR1TMGYhCoE) | J Y
+| Timers                                                 | C D
+| Variables                                              | K V
+| Misc                                                   | B H L U
+| Special                                                | * # ; : =
