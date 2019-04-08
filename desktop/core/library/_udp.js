@@ -18,8 +18,8 @@ function OperatorUdp (orca, x, y, passive) {
     }
   }
 
-  this.run = function () {
-    if (!this.bang()) { return }
+  this.run = function (force = false) {
+    if (!this.bang() && force === false) { return }
     this.draw = false
     terminal.io.udp.send(this.msg)
   }

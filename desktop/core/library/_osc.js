@@ -21,8 +21,9 @@ function OperatorOsc (orca, x, y, passive) {
     }
   }
 
-  this.run = function () {
-    if (!this.path || this.path === '' || !this.bang()) { return }
+  this.run = function (force = false) {
+    if (!this.bang() && force === false) { return }
+    if (!this.path || this.path === '') { return }
     this.draw = false
     terminal.io.osc.send('/' + this.path, this.msg)
   }

@@ -14,8 +14,8 @@ function OperatorMidi (orca, x, y, passive) {
   this.ports.input.velocity = { x: 4, y: 0 }
   this.ports.input.length = { x: 5, y: 0 }
 
-  this.run = function () {
-    if (!this.bang()) { return }
+  this.run = function (force = false) {
+    if (!this.bang() && force === false) { return }
 
     let rawChannel = this.listen(this.ports.haste.channel)
     let rawOctave = this.listen(this.ports.haste.octave, true)
