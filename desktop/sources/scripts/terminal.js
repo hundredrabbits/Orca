@@ -221,12 +221,14 @@ function Terminal () {
   }
 
   this.drawProgram = function () {
+    const selection = this.cursor.read()
     for (let y = 0; y < this.orca.h; y++) {
       for (let x = 0; x < this.orca.w; x++) {
         const port = this.ports[this.orca.indexAt(x, y)]
         const glyph = this.guide(x, y)
         const style = this.isSelection(x, y) ? 4 : port ? port[2] : this.orca.lockAt(x, y) ? 5 : null
-        this.drawSprite(x, y, glyph, style)
+        const isVar = !!(glyph === 'V' && selection === 'V')
+        this.drawSprite(x, y, glyph, isVar === true ? 4 : style)
       }
     }
   }
