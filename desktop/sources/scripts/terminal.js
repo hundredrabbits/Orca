@@ -227,8 +227,8 @@ function Terminal () {
         const port = this.ports[this.orca.indexAt(x, y)]
         const glyph = this.guide(x, y)
         const style = this.isSelection(x, y) ? 4 : port ? port[2] : this.orca.lockAt(x, y) ? 5 : null
-        const isVar = !!(glyph === 'V' && selection === 'V')
-        this.drawSprite(x, y, glyph, isVar === true ? 4 : style)
+        const likeCursor = glyph === selection && glyph !== '.' && style !== 4 && !this.orca.lockAt(x, y)
+        this.drawSprite(x, y, glyph, likeCursor ? 6 : style)
       }
     }
   }
@@ -281,6 +281,8 @@ function Terminal () {
     if (type === 4) { return { bg: this.theme.active.b_inv, fg: this.theme.active.f_inv } }
     // Locked
     if (type === 5) { return { fg: this.theme.active.f_med } }
+    // LikeCursor
+    if (type === 6) { return { fg: this.theme.active.b_inv } }
     // Default
     return { fg: this.theme.active.f_low }
   }
