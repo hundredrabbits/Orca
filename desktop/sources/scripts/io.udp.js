@@ -28,7 +28,7 @@ function Udp (terminal) {
 
   this.play = function (data) {
     this.server.send(Buffer.from(`${data}`), this.port, '127.0.0.1', (err) => {
-      if (err) { console.log(err) }
+      if (err) { console.warn(err) }
     })
   }
 
@@ -62,7 +62,7 @@ function Udp (terminal) {
   })
 
   this.listener.on('error', (err) => {
-    console.log(`Server error:\n ${err.stack}`)
+    console.warn(`Server error:\n ${err.stack}`)
     this.listener.close()
   })
 
