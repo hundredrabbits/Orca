@@ -11,23 +11,23 @@ function Source (terminal) {
   }
 
   this.new = function () {
-    console.log('Source', 'New File')
+    console.log('Source', 'Make a new file..')
     this.path = null
     terminal.orca.reset()
     terminal.resize()
     terminal.history.reset()
-    terminal.play()
+    terminal.clock.play()
   }
 
   this.open = function () {
-    console.log('Source', 'Open File')
+    console.log('Source', 'Open a file..')
     let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'], filters: [{ name: 'Orca Machines', extensions: ['orca'] }] })
     if (!paths) { console.log('Nothing to load') }
     this.read(paths[0])
   }
 
   this.save = function (as = false) {
-    console.log('Source', 'Save File')
+    console.log('Source', 'Save a file..')
     if (this.path && !as) {
       this.write(this.path)
     } else {
@@ -35,7 +35,7 @@ function Source (terminal) {
     }
   }
   this.saveAs = function () {
-    console.log('Source', 'Save File As')
+    console.log('Source', 'Save a file as..')
     dialog.showSaveDialog((path) => {
       if (path === undefined) { return }
       if (path.indexOf('.orca') < 0) { path += '.orca' }
@@ -46,7 +46,7 @@ function Source (terminal) {
 
   this.revert = function () {
     if (!this.path) { return }
-    console.log('Source', 'Revert File')
+    console.log('Source', 'Revert a file..')
     this.read(this.path)
   }
 

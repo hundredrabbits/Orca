@@ -71,7 +71,7 @@ function Udp (terminal) {
     const val = `${msg}`.substr(1)
     const int = parseInt(`${msg}`.substr(1))
     if (key === 'p') {
-      terminal.play()
+      terminal.clock.play()
     } else if (key === 's') {
       terminal.stop()
     } else if (key === 'r') {

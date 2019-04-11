@@ -29,15 +29,15 @@ function Keyboard (terminal) {
     if (event.ctrlKey) { return }
 
     if (event.key === 'Backspace' || event.key === '.') { terminal.cursor.erase(true); return }
-    if (event.key === ' ' && terminal.cursor.mode === 0) { terminal.togglePlay(); event.preventDefault(); return }
+    if (event.key === ' ' && terminal.cursor.mode === 0) { terminal.clock.togglePlay(); event.preventDefault(); return }
     if (event.key === 'Escape') { terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
 
     if (event.key === ']') { terminal.modGrid(1, 0); event.preventDefault(); return }
     if (event.key === '[') { terminal.modGrid(-1, 0); event.preventDefault(); return }
     if (event.key === '}') { terminal.modGrid(0, 1); event.preventDefault(); return }
     if (event.key === '{') { terminal.modGrid(0, -1); event.preventDefault(); return }
-    if (event.key === '>') { terminal.modSpeed(1); event.preventDefault(); return }
-    if (event.key === '<') { terminal.modSpeed(-1); event.preventDefault(); return }
+    if (event.key === '>') { terminal.clock.modSpeed(1); event.preventDefault(); return }
+    if (event.key === '<') { terminal.clock.modSpeed(-1); event.preventDefault(); return }
 
     if (event.key.length === 1) {
       terminal.cursor.write(event.key)

@@ -1,9 +1,9 @@
 'use strict'
 
-const Midi = require('./io.midi')
-const MidiCC = require('./io.cc')
-const Udp = require('./io.udp')
-const Osc = require('./io.osc')
+const Midi = require('./io/midi')
+const MidiCC = require('./io/cc')
+const Udp = require('./io/udp')
+const Osc = require('./io/osc')
 
 function IO (terminal) {
   this.midi = new Midi(terminal)

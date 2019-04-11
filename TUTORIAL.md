@@ -6,14 +6,6 @@ If this is your first time trying out **Orca**, watch this [introduction video](
 
 If you are on Windows, use something like [loopMidi](http://www.tobias-erichsen.de/software/loopmidi.html) to help routing midi signal across applications.
 
-#### Using MIDI beat clock instead of the built in clock
-
-Orca comes with its own internal clock but you can configure it to receive its clock signal from a MIDI input.
-Press `Ctrl+Space` to cycle through available clocks (built in or MIDI inputs).
-The MIDI clock listens for the START and STOP signals from the midi device to run.
-
-*Warning*: Note length when using the MIDI clock is currently based on note length at 120 BPM.
-
 ## MIDI CC
 
 #### Easy Binding
