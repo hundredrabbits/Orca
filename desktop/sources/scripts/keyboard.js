@@ -36,8 +36,8 @@ function Keyboard (terminal) {
     if (event.key === '[') { terminal.modGrid(-1, 0); event.preventDefault(); return }
     if (event.key === '}') { terminal.modGrid(0, 1); event.preventDefault(); return }
     if (event.key === '{') { terminal.modGrid(0, -1); event.preventDefault(); return }
-    if (event.key === '>') { terminal.clock.modSpeed(1); event.preventDefault(); return }
-    if (event.key === '<') { terminal.clock.modSpeed(-1); event.preventDefault(); return }
+    if (event.key === '>') { terminal.clock.mod(1); event.preventDefault(); return }
+    if (event.key === '<') { terminal.clock.mod(-1); event.preventDefault(); return }
 
     if (event.key.length === 1) {
       terminal.cursor.write(event.key)

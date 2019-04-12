@@ -81,9 +81,9 @@ function Udp (terminal) {
     } else if (key === 'f' && Number.isInteger(int)) {
       terminal.orca.f = int
     } else if (key === 'b' && Number.isInteger(int)) {
-      terminal.clock.setSpeed(int, false)
+      terminal.clock.set(int, int, true)
     } else if (key === 'a' && Number.isInteger(int)) {
-      terminal.clock.setSpeed(int, true)
+      terminal.clock.set(null, int)
     } else if (key === 'w' && val.length >= 4 && val.indexOf(':') > -1) {
       const pos = val.substr(1).split(':')
       terminal.orca.write(parseInt(pos[0]), parseInt(pos[1]), val.substr(0, 1))

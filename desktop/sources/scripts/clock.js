@@ -12,16 +12,30 @@ function Clock (terminal) {
   }
 
   this.update = function () {
-    if (this.speed.target === this.speed.value) { return }
-
-    this.setTimer(this.speed.value)
-
-    if (this.speed.value < this.speed.target) { this.speed.value++ }
-    if (this.speed.value > this.speed.target) { this.speed.value-- }
-
-    this.speed.value = clamp(this.speed.value, 60, 300)
-    this.speed.target = clamp(this.speed.target, 60, 300)
+    this.animate()
   }
+
+  this.set = function (value, target = null, setTimer = false) {
+    if (value) { this.speed.value = clamp(value, 60, 300) }
+    if (target) { this.speed.target = clamp(target, 60, 300) }
+    if (setTimer === true) { this.setTimer(this.speed.value) }
+  }
+
+  this.mod = function (mod = 0, animate = false) {
+    if (animate === true) {
+      this.set(null, this.speed.target + mod)
+    } else {
+      this.set(this.speed.value + mod, this.speed.value + mod, true)
+      terminal.update()
+    }
+  }
+
+  this.animate = function () {
+    if (this.speed.target === this.speed.value) { return }
+    this.set(this.speed.value + (this.speed.value < this.speed.target ? 1 : -1), null, true)
+  }
+
+  // Controls
 
   this.togglePlay = function () {
     if (this.isPaused === true) {
@@ -35,7 +49,7 @@ function Clock (terminal) {
     if (!this.isPaused) { console.warn('Already playing'); return }
     console.log('Play')
     this.isPaused = false
-    this.setTimer(this.speed.target)
+    this.set(this.speed.target, this.speed.target, true)
   }
 
   this.stop = function () {
@@ -46,6 +60,8 @@ function Clock (terminal) {
     this.clearTimer()
   }
 
+  // Timer
+
   this.clearTimer = function () {
     if (this.timer) {
       clearInterval(this.timer)
@@ -53,33 +69,15 @@ function Clock (terminal) {
   }
 
   this.setTimer = function (bpm) {
-    this.speed.value = bpm
     this.clearTimer()
     this.timer = setInterval(() => { terminal.run(); this.update() }, (60000 / bpm) / 4)
-  }
-
-  this.setSpeed = function (bpm, animate = false) {
-    if (animate === true) {
-      this.speed.target = bpm
-    } else {
-      this.speed.target = bpm
-      this.setTimer(bpm)
-    }
-  }
-
-  this.modSpeed = function (mod = 0, animate = false) {
-    if (animate === true) {
-      this.speed.target += mod
-    } else {
-      this.setTimer(this.speed.value + mod)
-      this.speed.target = this.speed.value
-      terminal.update()
-    }
   }
 
   this.resetFrame = function () {
     terminal.orca.f = 0
   }
+
+  // UI
 
   this.toString = function () {
     const diff = this.speed.target - this.speed.value
