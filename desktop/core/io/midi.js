@@ -5,6 +5,8 @@ function Midi (terminal) {
   this.devices = []
   this.stack = []
 
+  this.sendClock = false
+
   this.start = function () {
     console.info('Midi Starting..')
     this.setup()
@@ -64,7 +66,7 @@ function Midi (terminal) {
 
   this.update = function () {
     terminal.controller.clearCat('default', 'Midi')
-    terminal.controller.add('default', 'Midi', `Refresh Device List`, () => { terminal.io.midi.setup(); terminal.io.midi.update() }, 'CmdOrCtrl+Shift+Alt+M')
+    terminal.controller.add('default', 'Midi', `Refresh Device List`, () => { terminal.io.midi.setup(); terminal.io.midi.update() })
     const devices = terminal.io.midi.list()
     if (devices.length < 1) {
       terminal.controller.add('default', 'Midi', `No Device Available`)
@@ -75,6 +77,7 @@ function Midi (terminal) {
     for (const id in devices) {
       terminal.controller.add('default', 'Midi', `${devices[id].name} ${terminal.io.midi.index === parseInt(id) ? ' — Active' : ''}`, () => { terminal.io.midi.select(id) }, '')
     }
+    terminal.controller.add('default', 'Midi', this.sendClock === true ? 'Mute Clock' : 'Send Clock', () => { terminal.io.midi.toggleClock() }, '')
     terminal.controller.commit()
   }
 
@@ -84,6 +87,7 @@ function Midi (terminal) {
 
   this.clock = function (device) {
     if (!device) { return }
+    if (this.sendClock !== true) { return }
 
     const bpm = terminal.clock.speed.value
     const frameTime = (60000 / bpm) / 4
@@ -93,6 +97,11 @@ function Midi (terminal) {
       if (this.ticks[id]) { clearTimeout(this.ticks[id]) }
       this.ticks[id] = setTimeout(() => { device.send([0xF8], 0) }, parseInt(id) * frameFrag)
     }
+  }
+
+  this.toggleClock = function () {
+    this.sendClock = !this.sendClock
+    this.update()
   }
 
   // Tools
