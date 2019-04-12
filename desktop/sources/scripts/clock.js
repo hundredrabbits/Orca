@@ -18,6 +18,9 @@ function Clock (terminal) {
 
     if (this.speed.value < this.speed.target) { this.speed.value++ }
     if (this.speed.value > this.speed.target) { this.speed.value-- }
+
+    this.speed.value = clamp(this.speed.value, 60, 300)
+    this.speed.target = clamp(this.speed.target, 60, 300)
   }
 
   this.togglePlay = function () {
@@ -83,6 +86,8 @@ function Clock (terminal) {
     const _beat = diff === 0 && terminal.orca.f % 4 === 0 ? '*' : ''
     return `${this.speed.value}${_offset}${_beat}`
   }
+
+  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = Clock
