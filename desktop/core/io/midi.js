@@ -14,19 +14,6 @@ function Midi (terminal) {
 
   }
 
-  this.send = function (channel, octave, note, velocity, length, played = false) {
-    for (const id in this.stack) {
-      const item = this.stack[id]
-      if (item[0] === channel && item[1] === octave && item[2] === note) {
-        item[3] = velocity
-        item[4] = length
-        item[5] = played
-        return
-      }
-    }
-    this.stack.push([channel, octave, note, velocity, length, played])
-  }
-
   this.run = function () {
     const device = this.device()
     this.stack = this.stack.filter((item) => {
@@ -40,6 +27,7 @@ function Midi (terminal) {
       item[4]--
       return alive
     })
+    this.clock(device)
   }
 
   this.trigger = function (item, device, down) {
@@ -51,6 +39,19 @@ function Midi (terminal) {
 
     device.send([channel, note, velocity])
     item[5] = true
+  }
+
+  this.send = function (channel, octave, note, velocity, length, played = false) {
+    for (const id in this.stack) {
+      const item = this.stack[id]
+      if (item[0] === channel && item[1] === octave && item[2] === note) {
+        item[3] = velocity
+        item[4] = length
+        item[5] = played
+        return
+      }
+    }
+    this.stack.push([channel, octave, note, velocity, length, played])
   }
 
   this.silence = function () {
@@ -75,6 +76,25 @@ function Midi (terminal) {
       terminal.controller.add('default', 'Midi', `${devices[id].name} ${terminal.io.midi.index === parseInt(id) ? ' — Active' : ''}`, () => { terminal.io.midi.select(id) }, '')
     }
     terminal.controller.commit()
+  }
+
+  // Clock
+
+  this.clock = function (device) {
+    if (!device) { return }
+    const bpm = terminal.clock.speed.value
+    const frameTime = (60000 / bpm) / 4
+    const frameFrag = frameTime / 6
+    setTimeout(() => { this.tick(device) }, frameFrag * 0)
+    setTimeout(() => { this.tick(device) }, frameFrag * 1)
+    setTimeout(() => { this.tick(device) }, frameFrag * 2)
+    setTimeout(() => { this.tick(device) }, frameFrag * 3)
+    setTimeout(() => { this.tick(device) }, frameFrag * 4)
+    setTimeout(() => { this.tick(device) }, frameFrag * 5)
+  }
+
+  this.tick = function (device) {
+    device.send([0xF8], 0)
   }
 
   // Tools
