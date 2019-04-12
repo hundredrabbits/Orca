@@ -59,9 +59,10 @@ function Clock (terminal) {
   }
 
   this.setSpeed = function (bpm, animate = false) {
-    if (animate) {
+    if (animate === true) {
       this.speed.target = bpm
     } else {
+      this.speed.target = bpm
       this.setTimer(bpm)
     }
   }
