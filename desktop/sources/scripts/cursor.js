@@ -64,7 +64,7 @@ function Cursor (terminal) {
   }
 
   this.paste = function () {
-    this.writeBlock(this.toRect(), clipboard.readText().split(/\r?\n/))
+    this.writeBlock(clipboard.readText().split(/\r?\n/))
   }
 
   this.read = function () {
@@ -118,7 +118,12 @@ function Cursor (terminal) {
   }
 
   this.comment = function () {
-    console.log('!!')
+    const block = this.getBlock()
+    for (const id in block) {
+      block[id][0] = block[id][0] === '#' ? '.' : '#'
+      block[id][block[id].length - 1] = block[id][block[id].length - 1] === '#' ? '.' : '#'
+    }
+    this.writeBlock(block)
   }
 
   // Block
@@ -135,7 +140,7 @@ function Cursor (terminal) {
     return block
   }
 
-  this.writeBlock = function (rect, block) {
+  this.writeBlock = function (block, rect = this.toRect()) {
     if (!block || block.length === 0) { return }
     let _y = rect.y
     for (const lineId in block) {
