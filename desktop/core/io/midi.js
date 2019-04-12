@@ -80,7 +80,7 @@ function Midi (terminal) {
 
   // Clock
 
-  this.ticks = new Array(6)
+  this.ticks = []
 
   this.clock = function (device) {
     if (!device) { return }

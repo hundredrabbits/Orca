@@ -13,6 +13,12 @@ function OperatorO (orca, x, y, passive) {
   this.ports.input.val = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
+  this.haste = function () {
+    const x = this.listen(this.ports.haste.x, true)
+    const y = this.listen(this.ports.haste.y, true)
+    this.ports.input.val = { x: x + 1, y: y }
+  }
+
   this.run = function () {
     const x = this.listen(this.ports.haste.x, true)
     const y = this.listen(this.ports.haste.y, true)

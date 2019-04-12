@@ -117,6 +117,10 @@ function Cursor (terminal) {
     return 'empty'
   }
 
+  this.comment = function () {
+    console.log('!!')
+  }
+
   // Block
 
   this.getBlock = function (rect = this.toRect()) {
