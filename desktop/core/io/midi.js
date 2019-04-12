@@ -80,21 +80,19 @@ function Midi (terminal) {
 
   // Clock
 
+  this.ticks = new Array(6)
+
   this.clock = function (device) {
     if (!device) { return }
+
     const bpm = terminal.clock.speed.value
     const frameTime = (60000 / bpm) / 4
     const frameFrag = frameTime / 6
-    setTimeout(() => { this.tick(device) }, frameFrag * 0)
-    setTimeout(() => { this.tick(device) }, frameFrag * 1)
-    setTimeout(() => { this.tick(device) }, frameFrag * 2)
-    setTimeout(() => { this.tick(device) }, frameFrag * 3)
-    setTimeout(() => { this.tick(device) }, frameFrag * 4)
-    setTimeout(() => { this.tick(device) }, frameFrag * 5)
-  }
 
-  this.tick = function (device) {
-    device.send([0xF8], 0)
+    for (let id = 0; id < 6; id++) {
+      if (this.ticks[id]) { clearTimeout(this.ticks[id]) }
+      this.ticks[id] = setTimeout(() => { device.send([0xF8], 0) }, parseInt(id) * frameFrag)
+    }
   }
 
   // Tools
