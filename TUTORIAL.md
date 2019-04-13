@@ -78,6 +78,24 @@ To send [Midi notes](https://github.com/hundredrabbits/Orca#midi) to [Ableton Li
 
 The midi instrument should begin receiving midi notes as soon as the Orca window is **in focus**.
 
+## Bitwig (on Linux)
+
+The following is taken from this page: https://answers.bitwig.com/questions/1218/how-do-i-get-midi-inout-of-bws-on-linux
+
+- Quit BWS if running
+- Start qjacktl.
+- Go to Setup > Settings > Parameters-tab and set MIDI Driver to "none" (this turns off jack-midi)
+- Go to Setup > Misc and check "Enable ALSA Sequencer Support" (if not enabled)
+- Stop Jack if running and quit gjackctl
+- Run sudo modprobe snd_virmidi midi_devs=1 (to enable virtual midi with one device which is easier to understand for now)
+- Start qjacktl
+- Start jack
+- Open Connections: Connect device on left "0: QuNexus MIDI 1" to "0:VirMIDI 5-0"
+- Open Bitwig
+- Under Options > Preferences > Controllers click "Add controller manually"
+- Choose "Generic MIDI Keyboard"
+- Once it appears as an input choose "Virtual Raw MIDI/1"
+
 ## Pilot
 
 [Pilot](https://github.com/hundredrabbits/Pilot) is a minimalist synth software designed to work via UDP, and to quickly get started with Orca. Remember that **Pilot uses UDP instead of MIDI**. Have a look at [pilot.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/projects/pilot.orca) to see how it should be used.
