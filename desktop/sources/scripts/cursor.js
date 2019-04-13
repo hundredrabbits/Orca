@@ -88,7 +88,9 @@ function Cursor (terminal) {
     const i = terminal.orca.s.indexOf(str)
     if (i < 0) { return }
     const pos = terminal.orca.posAt(i)
-    this.x = pos.x + 1
+    this.w = str.length
+    this.h = 1
+    this.x = pos.x
     this.y = pos.y
   }
 
