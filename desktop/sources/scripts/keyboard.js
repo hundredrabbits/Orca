@@ -28,9 +28,8 @@ function Keyboard (terminal) {
     if (event.metaKey) { return }
     if (event.ctrlKey) { return }
 
-    if (event.key === 'Backspace' || event.key === '.') { terminal.cursor.erase(true); return }
     if (event.key === ' ' && terminal.cursor.mode === 0) { terminal.clock.togglePlay(); event.preventDefault(); return }
-    if (event.key === 'Escape') { terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
+    if (event.key === 'Escape') { terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
 
     if (event.key === ']') { terminal.modGrid(1, 0); event.preventDefault(); return }
     if (event.key === '[') { terminal.modGrid(-1, 0); event.preventDefault(); return }
@@ -39,10 +38,7 @@ function Keyboard (terminal) {
     if (event.key === '>') { terminal.clock.mod(1); event.preventDefault(); return }
     if (event.key === '<') { terminal.clock.mod(-1); event.preventDefault(); return }
 
-    if (event.key.length === 1) {
-      terminal.cursor.write(event.key)
-      terminal.update()
-    }
+    terminal.commander.read(event.key)
   }
 
   this.onKeyUp = function (event) {

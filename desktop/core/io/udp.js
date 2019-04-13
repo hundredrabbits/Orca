@@ -53,7 +53,7 @@ function Udp (terminal) {
   // Input
 
   this.listener.on('message', (msg, rinfo) => {
-    return this.act(`${msg}`)
+    return terminal.commander.trigger(`${msg}`)
   })
 
   this.listener.on('listening', () => {
@@ -65,33 +65,6 @@ function Udp (terminal) {
     console.warn(`Server error:\n ${err.stack}`)
     this.listener.close()
   })
-
-  this.act = function (msg) {
-    const key = `${msg}`.substr(0, 1).toLowerCase()
-    const val = `${msg}`.substr(1)
-    const int = parseInt(`${msg}`.substr(1))
-    if (key === 'p') {
-      terminal.clock.play()
-    } else if (key === 's') {
-      terminal.stop()
-    } else if (key === 'r') {
-      terminal.run()
-    } else if (key === 'g') {
-      return `${terminal.orca}`
-    } else if (key === 'f' && Number.isInteger(int)) {
-      terminal.orca.f = int
-    } else if (key === 'b' && Number.isInteger(int)) {
-      terminal.clock.set(int, int, true)
-    } else if (key === 'a' && Number.isInteger(int)) {
-      terminal.clock.set(null, int)
-    } else if (key === 'w' && val.length >= 4 && val.indexOf(':') > -1) {
-      const pos = val.substr(1).split(':')
-      terminal.orca.write(parseInt(pos[0]), parseInt(pos[1]), val.substr(0, 1))
-    } else {
-      console.warn(`Unknown message: ${msg}`)
-    }
-    return 'done.'
-  }
 
   this.listener.bind(49160)
 }

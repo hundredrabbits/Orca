@@ -38,8 +38,7 @@
       terminal.controller.add("default","Edit","Copy Selection",() => { terminal.cursor.copy() },"CmdOrCtrl+C")
       terminal.controller.add("default","Edit","Cut Selection",() => { terminal.cursor.cut() },"CmdOrCtrl+X")
       terminal.controller.add("default","Edit","Paste Selection",() => { terminal.cursor.paste() },"CmdOrCtrl+V")
-      terminal.controller.add("default","Edit","Trigger Selection",() => { terminal.cursor.trigger() },"Shift+Enter")
-      terminal.controller.add("default","Edit","Toggle Insert Mode",() => { terminal.cursor.toggleMode(1) },"Enter")
+      terminal.controller.add("default","Edit","Toggle Insert Mode",() => { terminal.cursor.toggleMode(1) },"CmdOrCtrl+I")
       terminal.controller.add("default","Edit","Block Comment",() => { terminal.cursor.comment() },"CmdOrCtrl+/")
       terminal.controller.add("default","Edit","Undo",() => { terminal.history.undo() },"CmdOrCtrl+Z")
       terminal.controller.add("default","Edit","Redo",() => { terminal.history.redo() },"CmdOrCtrl+Shift+Z")
@@ -60,6 +59,8 @@
       terminal.controller.add("default","View","Zoom Out",() => { terminal.modZoom(-0.25) },"CmdOrCtrl+-")
       terminal.controller.add("default","View","Zoom Reset",() => { terminal.modZoom(1,true) },"CmdOrCtrl+0")
       terminal.controller.add("default","View","Toggle Retina",() => { terminal.toggleRetina() },"`")
+      terminal.controller.add("default","View","Toggle Commander",() => { terminal.commander.start() },"CmdOrCtrl+K")
+      terminal.controller.add("default","View","Run Commander",() => { terminal.commander.run() },"Enter")
 
       terminal.controller.add("default","Midi","Default")
       terminal.controller.add("default","UDP","Default")

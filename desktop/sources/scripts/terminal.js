@@ -7,6 +7,7 @@ function Terminal () {
   const Source = require('./source')
   const History = require('./history')
   const Keyboard = require('./keyboard')
+  const Commander = require('./commander')
   const Clock = require('./clock')
 
   this.library = require('../../core/library')
@@ -19,6 +20,7 @@ function Terminal () {
   this.cursor = new Cursor(this)
   this.source = new Source(this)
   this.keyboard = new Keyboard(this)
+  this.commander = new Commander(this)
   this.clock = new Clock(this)
 
   // Themes
@@ -180,6 +182,10 @@ function Terminal () {
 
     if (this.orca.f < 25) {
       this.write(`${this.io.midi}`, col * 5, 0, this.grid.w * 2)
+    }
+
+    if (this.commander.isActive === true) {
+      this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 5, 1, this.grid.w * 2)
     }
   }
 

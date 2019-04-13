@@ -72,18 +72,14 @@ function Cursor (terminal) {
   }
 
   this.write = function (g) {
-    if (this.mode === 2) {
-      terminal.io.sendKey(event.key)
-      return
-    }
     if (terminal.orca.write(this.x, this.y, g) && this.mode === 1) {
       this.move(1, 0)
     }
     terminal.history.record(terminal.orca.s)
   }
 
-  this.erase = function (bs) {
-    if (bs && this.mode === 1) { this.move(-1, 0) }
+  this.erase = function (key) {
+    if (this.mode === 1) { this.move(-1, 0) }
     this.eraseBlock(this.x, this.y, this.w, this.h)
     terminal.history.record(terminal.orca.s)
   }
