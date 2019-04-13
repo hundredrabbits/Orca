@@ -60,9 +60,8 @@ function Commander (terminal) {
 
   this.read = function (key) {
     const tool = this.isActive === true ? 'commander' : 'cursor'
-    const func = event.key === 'Backspace' ? 'erase' : 'write'
 
-    terminal[tool][func](event.key)
+    terminal[tool].write(event.key)
     terminal.update()
   }
 

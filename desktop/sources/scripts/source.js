@@ -16,6 +16,7 @@ function Source (terminal) {
     terminal.orca.reset()
     terminal.resize()
     terminal.history.reset()
+    terminal.cursor.reset()
     terminal.clock.play()
   }
 
