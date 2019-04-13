@@ -2,40 +2,6 @@
 
 If this is your first time trying out **Orca**, watch this [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). 
 
-## MIDI
-
-If you are on Windows, use something like [loopMidi](http://www.tobias-erichsen.de/software/loopmidi.html) to help routing midi signal across applications.
-
-## MIDI CC
-
-#### Easy Binding
-
-To bind the [Midi CC](https://www.sweetwater.com/insync/continuous-controller/) operator(`^`) to a knob, have **Midi Mapping active**, and bang the `^00` operator, or select it and press `shift+enter`. It will assign the value of channel 0 to this knob.
-
-## UDP
-
-#### Select UDP Port
-
-In console, type `terminal.io.udp.select(49160)` to select the **49160** UDP port.
-
-#### Control Orca via UDP
-
-You can send UDP to Orca on port **49161**.
-
-- `p`, will start playing.
-- `s`, will stop playing.
-- `r`, will run the current frame.
-- `g`, will return the current frame.
-- `b123`, will set the bpm to `123`.
-- `f456`, will set the frame to `456`.
-- `wA12:34`, will write `A`, at `12,34`.
-
-## OSC
-
-#### Select OSC Port
-
-In console, type `terminal.io.osc.select(49162)` to select the **49162** osc port.
-
 ## SonicPi
 
 To send [OSC messages](https://github.com/hundredrabbits/Orca#osc) to [SonicPi](http://sonic-pi.net), select [port 4559](https://github.com/hundredrabbits/Orca#osc). SonicPi listens to the address defined in `sync`, to send to the `live_loop`, bang the OSC node `=`, like `=a`. Have a look at [sonicpi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/projects/sonicpi.orca) to see it in action.
