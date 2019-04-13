@@ -2,6 +2,39 @@
 
 If this is your first time trying out **Orca**, watch this [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). 
 
+## General
+
+- On OSX, setup [IAC virtual MIDI buses](https://help.ableton.com/hc/en-us/articles/209774225-Using-virtual-MIDI-buses).
+- On Windows, setup [loopMidi](http://www.tobias-erichsen.de/software/loopmidi.html).
+- On Linux, setup [qjacktl](https://qjackctl.sourceforge.io/).
+
+## Ableton Live
+
+To send [Midi notes](https://github.com/hundredrabbits/Orca#midi) to [Ableton Live](https://www.ableton.com/en/) instruments, bang the Midi operator `:`, like `:03C` to send to _Channel 1, Octave 3, Note C_. Have a look at [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca) to see it in action.
+
+- Launch Ableton Live.
+- Create a new **midi instrument** track.
+- Select `IAC Driver(Bus 1)`(OSX), or `LoopMidi`(Windows), in the instrument's inputs dropdown.
+- Activate the **In** toggle, on the instrument track.
+
+## Bitwig
+
+The following is taken from this page: https://answers.bitwig.com/questions/1218/how-do-i-get-midi-inout-of-bws-on-linux
+
+- Quit Bitwig if running.
+- Start `qjacktl`.
+- Go to _Setup > Settings > Parameters_ and set MIDI Driver to "none" (this turns off jack-midi)
+- Go to Setup > Misc and check "Enable ALSA Sequencer Support" (if not enabled)
+- Stop Jack if running and quit gjackctl
+- Run sudo modprobe snd_virmidi midi_devs=1 (to enable virtual midi with one device which is easier to understand for now)
+- Start qjacktl
+- Start jack
+- Open Connections: Connect device on left "0: QuNexus MIDI 1" to "0:VirMIDI 5-0"
+- Open Bitwig
+- Under Options > Preferences > Controllers click "Add controller manually"
+- Choose "Generic MIDI Keyboard"
+- Once it appears as an input choose "Virtual Raw MIDI/1"
+
 ## SonicPi
 
 To send [OSC messages](https://github.com/hundredrabbits/Orca#osc) to [SonicPi](http://sonic-pi.net), select [port 4559](https://github.com/hundredrabbits/Orca#osc). SonicPi listens to the address defined in `sync`, to send to the `live_loop`, bang the OSC node `=`, like `=a`. Have a look at [sonicpi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/projects/sonicpi.orca) to see it in action.
@@ -31,36 +64,6 @@ Here's a list of supported operations.
 ;0r1234    // Add Reverse Arc from 1,2 to 3,4
 ;          // Redraw
 ```
-
-## Ableton Live
-
-To send [Midi notes](https://github.com/hundredrabbits/Orca#midi) to [Ableton Live](https://www.ableton.com/en/) instruments, bang the Midi node `:`, like `:03C` to send to _Channel 1, Octave 3, Note C_. Have a look at [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca) to see it in action.
-
-- Launch Ableton Live.
-- Create a new midi instrument track.
-- macOS: Setup the IAC bus. [Using virtual MIDI buses](https://help.ableton.com/hc/en-us/articles/209774225-Using-virtual-MIDI-buses)
-- Select `IAC Driver(Bus 1)`(OSX), or `LoopMidi`(Windows), in the instrument's inputs dropdown.
-- Activate the **In** toggle.
-
-The midi instrument should begin receiving midi notes as soon as the Orca window is **in focus**.
-
-## Bitwig (on Linux)
-
-The following is taken from this page: https://answers.bitwig.com/questions/1218/how-do-i-get-midi-inout-of-bws-on-linux
-
-- Quit BWS if running
-- Start qjacktl.
-- Go to Setup > Settings > Parameters-tab and set MIDI Driver to "none" (this turns off jack-midi)
-- Go to Setup > Misc and check "Enable ALSA Sequencer Support" (if not enabled)
-- Stop Jack if running and quit gjackctl
-- Run sudo modprobe snd_virmidi midi_devs=1 (to enable virtual midi with one device which is easier to understand for now)
-- Start qjacktl
-- Start jack
-- Open Connections: Connect device on left "0: QuNexus MIDI 1" to "0:VirMIDI 5-0"
-- Open Bitwig
-- Under Options > Preferences > Controllers click "Add controller manually"
-- Choose "Generic MIDI Keyboard"
-- Once it appears as an input choose "Virtual Raw MIDI/1"
 
 ## Pilot
 
