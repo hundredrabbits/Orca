@@ -5,7 +5,7 @@ const patterns = {}
 // Setters
 
 patterns['vion'] = `
-iV...oV...nV`
+iV......oV......nV`
 
 patterns['vionvl'] = `
 iV......oV......nV......vV......lV.`
@@ -30,9 +30,9 @@ patterns['oct#'] = `
 .7Tcdefgab
 ..C.......`
 
-patterns['range'] = `
+patterns['ca44'] = `
 .C4
-A08`
+A04`
 
 patterns['dy'] = `
 D8
