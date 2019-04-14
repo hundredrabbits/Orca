@@ -22,6 +22,12 @@ function Cursor (terminal) {
     terminal.update()
   }
 
+  this.resize = function (w, h) {
+    this.w = clamp(w, 1, terminal.orca.w - this.x)
+    this.h = clamp(h, 1, terminal.orca.h - this.y)
+    terminal.update()
+  }
+
   this.drag = function (x, y) {
     this.cut()
     this.move(x, y)

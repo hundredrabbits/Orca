@@ -185,7 +185,7 @@ function Terminal () {
     }
 
     if (this.commander.isActive === true) {
-      this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 5, 1, this.grid.w * 2)
+      this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 5, 1, this.grid.w * 2, 6)
     }
   }
 
@@ -222,10 +222,10 @@ function Terminal () {
     return { fg: this.theme.active.f_low }
   }
 
-  this.write = function (text, offsetX, offsetY, limit) {
+  this.write = function (text, offsetX, offsetY, limit, type = 2) {
     let x = 0
     while (x < text.length && x < limit - 1) {
-      this.drawSprite(offsetX + x, this.orca.h + offsetY, text.substr(x, 1), 2)
+      this.drawSprite(offsetX + x, this.orca.h + offsetY, text.substr(x, 1), type)
       x += 1
     }
   }
