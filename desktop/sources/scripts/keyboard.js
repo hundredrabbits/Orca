@@ -25,14 +25,10 @@ function Keyboard (terminal) {
     if (event.keyCode === 37) { terminal.keyboard.onArrowLeft(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
     if (event.keyCode === 39) { terminal.keyboard.onArrowRight(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
 
-    if (event.key === 'p' && event.ctrlKey) { terminal.keyboard.onArrowUp(event.shiftKey, event.metaKey, event.altKey); return }
-    if (event.key === 'n' && event.ctrlKey) { terminal.keyboard.onArrowDown(event.shiftKey, event.metaKey, event.altKey); return }
-    if (event.key === 'b' && event.ctrlKey) { terminal.keyboard.onArrowLeft(event.shiftKey, event.metaKey, event.altKey); return }
-    if (event.key === 'f' && event.ctrlKey) { terminal.keyboard.onArrowRight(event.shiftKey, event.metaKey, event.altKey); return }
-    if (event.keyCode === 80 && event.altKey) { terminal.keyboard.onArrowUp(event.shiftKey, true, false); return }
-    if (event.keyCode === 78 && event.altKey) { terminal.keyboard.onArrowDown(event.shiftKey, true, false); return }
-    if (event.keyCode === 66 && event.altKey) { terminal.keyboard.onArrowLeft(event.shiftKey, true, false); return }
-    if (event.keyCode === 70 && event.altKey) { terminal.keyboard.onArrowRight(event.shiftKey, true, false); return }
+    if (event.keyCode === 80 && (event.ctrlKey || event.altKey)) { terminal.keyboard.onArrowUp(event.shiftKey, event.altKey, false); return }
+    if (event.keyCode === 78 && (event.ctrlKey || event.altKey)) { terminal.keyboard.onArrowDown(event.shiftKey, event.altKey, false); return }
+    if (event.keyCode === 66 && (event.ctrlKey || event.altKey)) { terminal.keyboard.onArrowLeft(event.shiftKey, event.altKey, false); return }
+    if (event.keyCode === 70 && (event.ctrlKey || event.altKey)) { terminal.keyboard.onArrowRight(event.shiftKey, event.altKey, false); return }
 
     if (event.metaKey) { return }
     if (event.ctrlKey) { return }
