@@ -6,22 +6,21 @@ function Terminal () {
   const Cursor = require('./cursor')
   const Source = require('./source')
   const History = require('./history')
-  const Keyboard = require('./keyboard')
   const Commander = require('./commander')
   const Clock = require('./clock')
+  const Theme = require('./lib/theme')
+  const Controller = require('./lib/controller')
 
   this.library = require('../../core/library')
-
-  this.history = new History()
-  this.controller = new Controller()
 
   this.orca = new Orca()
   this.io = new IO(this)
   this.cursor = new Cursor(this)
   this.source = new Source(this)
-  this.keyboard = new Keyboard(this)
   this.commander = new Commander(this)
   this.clock = new Clock(this)
+  this.history = new History()
+  this.controller = new Controller()
 
   // Themes
   this.theme = new Theme({ background: '#000000', f_high: '#ffffff', f_med: '#777777', f_low: '#444444', f_inv: '#000000', b_high: '#eeeeee', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffb545' })
@@ -284,6 +283,32 @@ function Terminal () {
   this.docs = function () {
     return Object.keys(this.library).reduce((acc, id) => { return ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].indexOf(id) < 0 ? `${acc}- ${new this.library[id]().docs()}\n` : acc }, '')
   }
+
+  // Events
+
+  window.addEventListener('dragover', (e) => {
+    e.stopPropagation()
+    e.preventDefault()
+    e.dataTransfer.dropEffect = 'copy'
+  })
+
+  window.addEventListener('drop', (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    const file = e.dataTransfer.files[0]
+    const path = file.path ? file.path : file.name
+
+    if (!path || path.indexOf('.orca') < 0) { console.log('Orca', 'Not a orca file'); return }
+
+    terminal.source.read(path)
+  })
+
+  window.onresize = (event) => {
+    terminal.resize()
+  }
+
+  // Helpers
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }

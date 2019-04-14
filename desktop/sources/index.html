@@ -1,21 +1,16 @@
 <html>
   <head>
-    <script type="text/javascript" src="scripts/lib/controller.js"></script>
-    <script type="text/javascript" src="scripts/lib/theme.js"></script>
-    <script type="text/javascript" src="scripts/events.js"></script>
-
     <link rel="stylesheet" type="text/css" href="links/reset.css"/>
     <link rel="stylesheet" type="text/css" href="links/fonts.css"/>
     <link rel="stylesheet" type="text/css" href="links/main.css"/>
     <link rel="stylesheet" type="text/css" href="links/theme.css"/>
-
     <title>Orca</title>
   </head>
   <body>
     <script>
+      const app = require('electron').remote.app
       const Terminal = require('./scripts/terminal')
       const terminal = new Terminal()
-      const { app } = require('electron').remote
 
       terminal.install(document.body)
 
@@ -71,6 +66,7 @@
       terminal.controller.add("default","Theme","Download Themes..",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes') })
 
       terminal.controller.commit()
+
       terminal.start()
 
       </script>

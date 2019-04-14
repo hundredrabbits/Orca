@@ -4,9 +4,9 @@ If this is your first time trying out **Orca**, watch this [introduction video](
 
 ## General
 
-- On OSX, setup [IAC virtual MIDI buses](https://help.ableton.com/hc/en-us/articles/209774225-Using-virtual-MIDI-buses).
-- On Windows, setup [loopMidi](http://www.tobias-erichsen.de/software/loopmidi.html).
-- On Linux, setup [qjacktl](https://qjackctl.sourceforge.io/).
+- On **OSX**, setup [IAC virtual MIDI buses](https://help.ableton.com/hc/en-us/articles/209774225-Using-virtual-MIDI-buses).
+- On **Windows**, setup [loopMidi](http://www.tobias-erichsen.de/software/loopmidi.html).
+- On **Linux**, setup [qjacktl](https://qjackctl.sourceforge.io/).
 
 ## Ableton Live
 

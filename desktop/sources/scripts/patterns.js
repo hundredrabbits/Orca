@@ -2,25 +2,35 @@
 
 const patterns = {}
 
-patterns['3vion'] = `
+// Setters
+
+patterns['vion'] = `
 iV...oV...nV`
 
-patterns['5vion'] = `
+patterns['vionvl'] = `
 iV......oV......nV......vV......lV.`
 
-patterns['3kion'] = `
+// Readers
+
+patterns['kion'] = `
 3Kion
 .:...`
 
-patterns['5kion'] = `
+patterns['kionvl'] = `
 5Kionvl
 .:.....`
+
+// Notes
 
 patterns['oct'] = `
 .7TCDEFGAB
 ..C.......`
 
-patterns['ca84'] = `
+patterns['oct#'] = `
+.7Tcdefgab
+..C.......`
+
+patterns['range'] = `
 .C4
 A08`
 

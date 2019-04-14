@@ -23,7 +23,7 @@ function Source (terminal) {
   this.open = function () {
     console.log('Source', 'Open a file..')
     let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'], filters: [{ name: 'Orca Machines', extensions: ['orca'] }] })
-    if (!paths) { console.log('Nothing to load') }
+    if (!paths) { console.log('Nothing to load'); return }
     this.read(paths[0])
   }
 

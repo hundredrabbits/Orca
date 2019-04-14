@@ -1,8 +1,8 @@
 'use strict'
 
-const patterns = require('./patterns')
-
 function Commander (terminal) {
+  this.patterns = require('./patterns')
+
   this.isActive = false
   this.query = ''
 
@@ -35,55 +35,135 @@ function Commander (terminal) {
     terminal.update()
   }
 
-  this.read = function (key) {
-    const tool = this.isActive === true ? 'commander' : 'cursor'
-    terminal[tool].write(event.key)
-    terminal.update()
+  this.operations = {
+    'p': (val) => { terminal.clock.play() },
+    's': (val) => { terminal.clock.stop() },
+    'f': (val) => { terminal.clock.resetFrame() },
+    'r': (val) => { terminal.run() },
+    'b': (val) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
+    'a': (val) => { terminal.clock.set(null, parseInt(val)) },
+    '/': (val) => { terminal.cursor.goto(val) }
   }
 
   this.trigger = function (msg = this.query) {
-    const key = `${msg}`.substr(0, 1).toLowerCase()
-    const val = `${msg}`.substr(1)
-    const int = parseInt(`${msg}`.substr(1))
-    if (key === 'p') {
-      terminal.clock.play()
-    } else if (key === 's') {
-      terminal.clock.stop()
-    } else if (key === 'r') {
-      terminal.run()
-    } else if (key === 'f' && Number.isInteger(int)) {
-      terminal.orca.f = int
-    } else if (key === '/') {
-      terminal.cursor.goto(val)
-    } else if (key === 'b' && Number.isInteger(int)) {
-      terminal.clock.set(int, int, true)
-    } else if (key === 'a' && Number.isInteger(int)) {
-      terminal.clock.set(null, int)
-    } else if (key === 'w' && val.length >= 4 && val.indexOf(':') > -1) {
-      const pos = val.substr(1).split(':')
-      terminal.orca.write(parseInt(pos[0]), parseInt(pos[1]), val.substr(0, 1))
-    } else if (patterns[msg]) {
-      terminal.commander.inject(msg)
+    const cmd = `${msg}`.substr(0, 1).toLowerCase()
+
+    if (this.operations[cmd]) {
+      this.operations[cmd](msg.substr(1))
+    } else if (this.patterns[msg]) {
+      this.inject(this.patterns[cmd])
     } else {
       console.warn(`Unknown message: ${msg}`)
     }
+
     this.stop()
   }
 
   // Injections
 
   this.inject = function (val = this.query) {
-    const result = patterns[val] ? patterns[val].trim().split('\n') : null
+    const result = this.patterns[val] ? this.patterns[val].trim().split('\n') : null
     if (!result) { return }
     terminal.cursor.writeBlock(result)
     terminal.cursor.reset()
   }
 
   this.preview = function () {
-    const result = patterns[this.query] ? patterns[this.query].trim().split('\n') : null
+    const result = this.patterns[this.query] ? this.patterns[this.query].trim().split('\n') : null
     if (!result) { terminal.cursor.reset(); return }
     terminal.cursor.resize(result[0].length, result.length)
   }
+
+  this.onKeyDown = function (event) {
+    // Reset
+    if ((event.metaKey || event.ctrlKey) && event.key === 'Backspace') {
+      terminal.reset()
+      event.preventDefault()
+      return
+    }
+    if (event.key === 'c' && (event.metaKey || event.ctrlKey)) { terminal.cursor.copy(); event.preventDefault(); return }
+    if (event.key === 'x' && (event.metaKey || event.ctrlKey)) { terminal.cursor.cut(); event.preventDefault(); return }
+    if (event.key === 'v' && (event.metaKey || event.ctrlKey)) { terminal.cursor.paste(); event.preventDefault(); return }
+    if (event.key === 'a' && (event.metaKey || event.ctrlKey)) { terminal.cursor.selectAll(); event.preventDefault(); return }
+
+    // Undo/Redo
+    if (event.key === 'z' && (event.metaKey || event.ctrlKey) && event.shiftKey) { terminal.history.redo(); event.preventDefault(); return }
+    if (event.key === 'z' && (event.metaKey || event.ctrlKey)) { terminal.history.undo(); event.preventDefault(); return }
+
+    if (event.keyCode === 38) { this.onArrowUp(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
+    if (event.keyCode === 40) { this.onArrowDown(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
+    if (event.keyCode === 37) { this.onArrowLeft(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
+    if (event.keyCode === 39) { this.onArrowRight(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
+
+    if (event.metaKey) { return }
+    if (event.ctrlKey) { return }
+
+    if (event.key === ' ' && terminal.cursor.mode === 0) { terminal.clock.togglePlay(); event.preventDefault(); return }
+    if (event.key === 'Escape') { terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
+
+    if (event.key === ']') { terminal.modGrid(1, 0); event.preventDefault(); return }
+    if (event.key === '[') { terminal.modGrid(-1, 0); event.preventDefault(); return }
+    if (event.key === '}') { terminal.modGrid(0, 1); event.preventDefault(); return }
+    if (event.key === '{') { terminal.modGrid(0, -1); event.preventDefault(); return }
+    if (event.key === '>') { terminal.clock.mod(1); event.preventDefault(); return }
+    if (event.key === '<') { terminal.clock.mod(-1); event.preventDefault(); return }
+
+    // Route key to Commander or Cursor
+    terminal[this.isActive === true ? 'commander' : 'cursor'].write(event.key)
+  }
+
+  this.onKeyUp = function (event) {
+    terminal.update()
+  }
+
+  this.onArrowUp = function (mod = false, skip = false, drag = false) {
+    const leap = skip ? terminal.grid.h : 1
+    if (drag) {
+      terminal.cursor.drag(0, leap)
+    } else if (mod) {
+      terminal.cursor.scale(0, leap)
+    } else {
+      terminal.cursor.move(0, leap)
+    }
+  }
+
+  this.onArrowDown = function (mod = false, skip = false, drag = false) {
+    const leap = skip ? terminal.grid.h : 1
+    if (drag) {
+      terminal.cursor.drag(0, -leap)
+    } else if (mod) {
+      terminal.cursor.scale(0, -leap)
+    } else {
+      terminal.cursor.move(0, -leap)
+    }
+  }
+
+  this.onArrowLeft = function (mod = false, skip = false, drag = false) {
+    const leap = skip ? terminal.grid.w : 1
+    if (drag) {
+      terminal.cursor.drag(-leap, 0)
+    } else if (mod) {
+      terminal.cursor.scale(-leap, 0)
+    } else {
+      terminal.cursor.move(-leap, 0)
+    }
+  }
+
+  this.onArrowRight = function (mod = false, skip = false, drag = false) {
+    const leap = skip ? terminal.grid.w : 1
+    if (drag) {
+      terminal.cursor.drag(leap, 0)
+    } else if (mod) {
+      terminal.cursor.scale(leap, 0)
+    } else {
+      terminal.cursor.move(leap, 0)
+    }
+  }
+
+  // Events
+
+  document.onkeydown = (event) => { this.onKeyDown(event) }
+  document.onkeyup = (event) => { this.onKeyUp(event) }
 
   // UI
 
