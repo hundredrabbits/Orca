@@ -94,6 +94,8 @@ Some of Orca's features can be **controlled externally** via UDP though port `49
 
 ### Commands
 
+All commands have a shorthand equivalent to their first character, for example, `write` can also be called using `w`.
+
 - `play` Plays program.
 - `stop` Stops program.
 - `run` Runs current frame.
@@ -101,6 +103,7 @@ Some of Orca's features can be **controlled externally** via UDP though port `49
 - `goto:aV` Sends cursor to `aV`.
 - `bpm:140` Sets bpm speed to `140`.
 - `apm:160` Animates bpm speed to `160`.
+- `write:H12;34` Write glyph `H`, at `12,34`.
 
 ## Base36 Table
 

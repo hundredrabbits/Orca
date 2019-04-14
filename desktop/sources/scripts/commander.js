@@ -36,15 +36,27 @@ function Commander (terminal) {
   }
 
   this.operations = {
+    'apm': (val) => { terminal.clock.set(null, parseInt(val)) },
+    'bpm': (val) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
+    'goto': (val) => { terminal.cursor.goto(val) },
     'play': (val) => { terminal.clock.play() },
+    'run': (val) => { terminal.run() },
     'stop': (val) => { terminal.clock.stop() },
     'time': (val) => { terminal.clock.setFrame(parseInt(val)) },
-    'next': (val) => { terminal.clock.setFrame(parseInt(val)) },
-    'back': (val) => { terminal.clock.setFrame(parseInt(val)) },
-    'goto': (val) => { terminal.cursor.goto(val) },
-    'run': (val) => { terminal.run() },
-    'bpm': (val) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
-    'apm': (val) => { terminal.clock.set(null, parseInt(val)) }
+    'write': (val) => {
+      const g = val.substr(0, 1)
+      const pos = val.substr(1).split(';')
+      const x = parseInt(pos[0])
+      const y = parseInt(pos[1])
+      if (!isNaN(x) && !isNaN(y) && g) {
+        terminal.orca.write(x, y, g)
+      }
+    }
+  }
+
+  // Make shorthands
+  for (const id in this.operations) {
+    this.operations[id.substr(0, 1)] = this.operations[id]
   }
 
   this.trigger = function (msg = this.query) {
