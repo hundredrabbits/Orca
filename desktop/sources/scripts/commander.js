@@ -6,9 +6,9 @@ function Commander (terminal) {
   this.isActive = false
   this.query = ''
 
-  this.start = function () {
+  this.start = function (q = '') {
     this.isActive = true
-    this.query = ''
+    this.query = q
     terminal.update()
   }
 

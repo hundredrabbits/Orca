@@ -35,6 +35,7 @@
       terminal.controller.add("default","Edit","Paste Selection",() => { terminal.cursor.paste() },"CmdOrCtrl+V")
       terminal.controller.add("default","Edit","Toggle Insert Mode",() => { terminal.cursor.toggleMode(1) },"CmdOrCtrl+I")
       terminal.controller.add("default","Edit","Block Comment",() => { terminal.cursor.comment() },"CmdOrCtrl+/")
+      terminal.controller.add("default","Edit","Goto",() => { terminal.commander.start('goto:') },"/")
       terminal.controller.add("default","Edit","Undo",() => { terminal.history.undo() },"CmdOrCtrl+Z")
       terminal.controller.add("default","Edit","Redo",() => { terminal.history.redo() },"CmdOrCtrl+Shift+Z")
 
