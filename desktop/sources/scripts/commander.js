@@ -25,7 +25,7 @@ function Commander (terminal) {
 
   this.write = function (key) {
     if (key.length !== 1) { return }
-    this.query += key.toLowerCase()
+    this.query += key
     this.preview()
   }
 
