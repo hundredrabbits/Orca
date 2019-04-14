@@ -51,8 +51,6 @@ function Commander (terminal) {
       terminal.clock.stop()
     } else if (key === 'r') {
       terminal.run()
-    } else if (key === 'i') {
-      terminal.commander.inject(val)
     } else if (key === 'f' && Number.isInteger(int)) {
       terminal.orca.f = int
     } else if (key === '/') {
@@ -64,6 +62,8 @@ function Commander (terminal) {
     } else if (key === 'w' && val.length >= 4 && val.indexOf(':') > -1) {
       const pos = val.substr(1).split(':')
       terminal.orca.write(parseInt(pos[0]), parseInt(pos[1]), val.substr(0, 1))
+    } else if (patterns[msg]) {
+      terminal.commander.inject(msg)
     } else {
       console.warn(`Unknown message: ${msg}`)
     }
@@ -72,7 +72,7 @@ function Commander (terminal) {
 
   // Injections
 
-  this.inject = function (val) {
+  this.inject = function (val = this.query) {
     const result = patterns[val] ? patterns[val].trim().split('\n') : null
     if (!result) { return }
     terminal.cursor.writeBlock(result)
@@ -80,9 +80,7 @@ function Commander (terminal) {
   }
 
   this.preview = function () {
-    if (this.query.substr(0, 1) !== 'i') { return }
-    const val = this.query.substr(1)
-    const result = patterns[val] ? patterns[val].trim().split('\n') : null
+    const result = patterns[this.query] ? patterns[this.query].trim().split('\n') : null
     if (!result) { terminal.cursor.reset(); return }
     terminal.cursor.resize(result[0].length, result.length)
   }
