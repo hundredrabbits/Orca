@@ -38,7 +38,7 @@ function Commander (terminal) {
   this.operations = {
     'play': (val) => { terminal.clock.play() },
     'stop': (val) => { terminal.clock.stop() },
-    'time': (val) => { terminal.clock.setFrame(val) },
+    'time': (val) => { terminal.clock.setFrame(parseInt(val)) },
     'goto': (val) => { terminal.cursor.goto(val) },
     'run': (val) => { terminal.run() },
     'bpm': (val) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
