@@ -78,7 +78,8 @@ function Clock (terminal) {
   }
 
   this.setFrame = function (f) {
-    terminal.orca.f = clamp(f,0,9999999)
+    if (isNaN(f)) { return }
+    terminal.orca.f = clamp(f, 0, 9999999)
   }
 
   // UI
