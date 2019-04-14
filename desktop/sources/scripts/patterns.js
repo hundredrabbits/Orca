@@ -2,11 +2,11 @@
 
 const patterns = {}
 
-patterns['vion'] = `
+patterns['3vion'] = `
 iV...oV...nV`
 
-patterns['vionvl'] = `
-iV...oV...nV...vV...lV`
+patterns['5vion'] = `
+iV......oV......nV......vV......lV.`
 
 patterns['3kion'] = `
 3Kion
@@ -20,9 +20,9 @@ patterns['oct'] = `
 .7TCDEFGAB
 ..C.......`
 
-patterns['c4a4'] = `
+patterns['ca84'] = `
 .C4
-A04`
+A08`
 
 patterns['dy'] = `
 D8
