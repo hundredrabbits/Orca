@@ -82,6 +82,26 @@ For example, `=1abc` will send `10`, `11` and `12` to `/1`, via the port `49162`
 
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.hardware.jpg' width="600"/>
 
+## Advanced Controls
+
+Some of Orca's features can be **controlled externally** via UDP though port `49160`, or via its own command-line interface. To activate the command-line prompt, press `CmdOrCtrl+K`. The prompt can also be used to inject patterns, to see the full list of patterns, see [patterns.js](https://github.com/hundredrabbits/Orca/blob/master/desktop/sources/scripts/patterns.js).
+
+### Default Ports
+
+| UDP Input  | OSC Input  | UDP Output | OSC Output |
+| ---------- | ---------- | ---------- | -----------|
+| 49160      | None       | 49161      | 49162
+
+### Commands
+
+- `play` Plays program.
+- `stop` Stops program.
+- `run` Runs current frame.
+- `time:0` Sets the frame value to `0`.
+- `goto:aV` Sends cursor to `aV`.
+- `bpm:140` Sets bpm speed to `140`.
+- `apm:160` Animates bpm speed to `160`.
+
 ## Base36 Table
 
 Orca operates on a base of **36 increments**. Operators using numeric values will typically also operate on letters and convert them into values as per the following table. For instance `Dp` will bang every *24th frame*.
@@ -94,11 +114,6 @@ Orca operates on a base of **36 increments**. Operators using numeric values wil
 | **O** | **P** | **Q** | **R** | **S** | **T** | **U** | **V** | **W** | **X** | **Y** | **Z**  | 
 | 24    | 25    | 26    | 27    | 28    | 29    | 30    | 31    | 32    | 33    | 34    | 35     |
 
-## Default Ports
-
-| UDP Input  | OSC Input  | UDP Output | OSC Output |
-| ---------- | ---------- | ---------- | -----------|
-| 49160      | None       | 49161      | 49162
 
 ## Companion Applications
 
