@@ -77,6 +77,10 @@ function Clock (terminal) {
     terminal.orca.f = 0
   }
 
+  this.setFrame = function (f) {
+    terminal.orca.f = f
+  }
+
   // UI
 
   this.toString = function () {

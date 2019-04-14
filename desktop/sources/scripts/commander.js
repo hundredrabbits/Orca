@@ -36,22 +36,23 @@ function Commander (terminal) {
   }
 
   this.operations = {
-    'p': (val) => { terminal.clock.play() },
-    's': (val) => { terminal.clock.stop() },
-    'f': (val) => { terminal.clock.resetFrame() },
-    'r': (val) => { terminal.run() },
-    'b': (val) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
-    'a': (val) => { terminal.clock.set(null, parseInt(val)) },
-    '/': (val) => { terminal.cursor.goto(val) }
+    'play': (val) => { terminal.clock.play() },
+    'stop': (val) => { terminal.clock.stop() },
+    'time': (val) => { terminal.clock.setFrame(val) },
+    'goto': (val) => { terminal.cursor.goto(val) },
+    'run': (val) => { terminal.run() },
+    'bpm': (val) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
+    'apm': (val) => { terminal.clock.set(null, parseInt(val)) }
   }
 
   this.trigger = function (msg = this.query) {
-    const cmd = `${msg}`.substr(0, 1).toLowerCase()
+    const cmd = `${msg}`.split(':')[0].toLowerCase()
+    const val = `${msg}`.substr(cmd.length + 1)
 
     if (this.operations[cmd]) {
-      this.operations[cmd](msg.substr(1))
+      this.operations[cmd](val)
     } else if (this.patterns[msg]) {
-      this.inject(this.patterns[cmd])
+      this.inject(this.patterns[msg])
     } else {
       console.warn(`Unknown message: ${msg}`)
     }
@@ -61,16 +62,15 @@ function Commander (terminal) {
 
   // Injections
 
-  this.inject = function (val = this.query) {
-    const result = this.patterns[val] ? this.patterns[val].trim().split('\n') : null
-    if (!result) { return }
-    terminal.cursor.writeBlock(result)
+  this.inject = function (pattern) {
+    if (!pattern) { return }
+    terminal.cursor.writeBlock(pattern.trim().split('\n'))
     terminal.cursor.reset()
   }
 
   this.preview = function () {
-    const result = this.patterns[this.query] ? this.patterns[this.query].trim().split('\n') : null
-    if (!result) { terminal.cursor.reset(); return }
+    if (!this.patterns[this.query]) { terminal.cursor.reset(); return }
+    const result = this.patterns[this.query].trim().split('\n')
     terminal.cursor.resize(result[0].length, result.length)
   }
 
@@ -108,7 +108,7 @@ function Commander (terminal) {
     if (event.key === '>') { terminal.clock.mod(1); event.preventDefault(); return }
     if (event.key === '<') { terminal.clock.mod(-1); event.preventDefault(); return }
 
-    // Route key to Commander or Cursor
+    // Route key to Operator or Cursor
     terminal[this.isActive === true ? 'commander' : 'cursor'].write(event.key)
   }
 
