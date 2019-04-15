@@ -60,8 +60,24 @@ function Clock (terminal) {
     this.clearTimer()
   }
 
+  this.intervals = []
+  this.lastTap = 0
+
   this.tap = function () {
-    console.log('Clock', 'Tapped..')
+    if (this.intervals.length > 8) {
+      this.intervals.shift()
+    }
+    if (this.intervals.length === 8) {
+      const sum = this.intervals.reduce((sum, interval) => { return sum + interval })
+      const bpm = parseInt((1000 / sum) * 60)
+      if (Math.abs(bpm - this.speed.target) > 3) {
+        this.speed.target = bpm
+      }
+    }
+
+    const now = performance.now()
+    this.intervals.push(now - this.lastTap)
+    this.lastTap = now
   }
 
   // Timer

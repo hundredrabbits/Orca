@@ -117,7 +117,9 @@ function Midi (terminal) {
     switch (msg.data[0]) {
       case 0xF8:
         this.count = (this.count + 1) % 6
-        terminal.clock.tap()
+        if (this.count % 4 === 0) {
+          terminal.clock.tap()
+        }
         break
       case 0xFA:
         console.log('Midi', 'Clock start.')
@@ -179,7 +181,7 @@ function Midi (terminal) {
     for (let i = inputs.next(); i && !i.done; i = inputs.next()) {
       terminal.io.midi.inputs.push(i.value)
     }
-    terminal.io.midi.selectInput(0)
+    terminal.io.midi.selectInput(-1)
   }
 
   // UI
