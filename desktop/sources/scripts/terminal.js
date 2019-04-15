@@ -166,7 +166,7 @@ function Terminal () {
   this.drawInterface = function () {
     const col = this.grid.w
     // Cursor
-    this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.mode === 2 ? '^' : this.cursor.mode === 1 ? '+' : ''}`, col * 0, 1, this.grid.w)
+    this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.mode === 1 ? '+' : ''}`, col * 0, 1, this.grid.w, this.cursor.mode === 1 ? 1 : 2)
     this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.grid.w)
     this.write(`${this.cursor.inspect()}`, col * 2, 1, this.grid.w)
     this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, col * 3, 1, this.grid.w)
@@ -176,7 +176,7 @@ function Terminal () {
     this.write(`${this.orca.w}x${this.orca.h}`, col * 0, 0, this.grid.w)
     this.write(`${this.grid.w}/${this.grid.h}`, col * 1, 0, this.grid.w)
     this.write(`${this.source}`, col * 2, 0, this.grid.w)
-    this.write(`${this.clock}`, col * 3, 0, this.grid.w, this.io.midi.inputIndex > -1 ? 6 : 2)
+    this.write(`${this.clock}`, col * 3, 0, this.grid.w, this.io.midi.inputIndex > -1 ? 1 : 2)
     this.write(`${this.io.inspect(this.grid.w)}`, col * 4, 0, this.grid.w)
 
     if (this.orca.f < 25) {
@@ -184,7 +184,7 @@ function Terminal () {
     }
 
     if (this.commander.isActive === true) {
-      this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 5, 1, this.grid.w * 2, 6)
+      this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 5, 1, this.grid.w * 2, 1)
     }
   }
 

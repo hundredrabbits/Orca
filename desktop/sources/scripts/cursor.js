@@ -29,6 +29,7 @@ function Cursor (terminal) {
   }
 
   this.drag = function (x, y) {
+    this.mode = 0
     this.cut()
     this.move(x, y)
     this.paste()
