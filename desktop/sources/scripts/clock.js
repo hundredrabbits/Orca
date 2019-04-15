@@ -12,7 +12,10 @@ function Clock (terminal) {
   }
 
   this.update = function () {
-    this.animate()
+    // Animate
+    if (this.speed.target !== this.speed.value) {
+      this.set(this.speed.value + (this.speed.value < this.speed.target ? 1 : -1), null, true)
+    }
   }
 
   this.set = function (value, target = null, setTimer = false) {
@@ -28,11 +31,6 @@ function Clock (terminal) {
       this.set(this.speed.value + mod, this.speed.value + mod, true)
       terminal.update()
     }
-  }
-
-  this.animate = function () {
-    if (this.speed.target === this.speed.value) { return }
-    this.set(this.speed.value + (this.speed.value < this.speed.target ? 1 : -1), null, true)
   }
 
   // Controls
@@ -60,6 +58,8 @@ function Clock (terminal) {
     this.clearTimer()
   }
 
+  // Midi Tap
+
   this.intervals = []
   this.lastTap = 0
 
@@ -71,7 +71,7 @@ function Clock (terminal) {
       const sum = this.intervals.reduce((sum, interval) => { return sum + interval })
       const bpm = parseInt((1000 / sum) * 60)
       if (Math.abs(bpm - this.speed.target) > 3) {
-        this.speed.target = clamp(bpm,60,300)
+        this.set(null, bpm)
       }
     }
 
