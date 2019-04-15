@@ -24,6 +24,12 @@ function Controller () {
     this.menu[mode][cat][label] = { role: label }
   }
 
+  this.addSpacer = function (mode, cat, label, type = 'separator') {
+    if (!this.menu[mode]) { this.menu[mode] = {} }
+    if (!this.menu[mode][cat]) { this.menu[mode][cat] = {} }
+    this.menu[mode][cat][label] = { type: type }
+  }
+
   this.clearCat = function (mode, cat) {
     if (this.menu[mode]) { this.menu[mode][cat] = {} }
   }
@@ -42,6 +48,8 @@ function Controller () {
         const option = m[cat][name]
         if (option.role) {
           submenu.push({ role: option.role })
+        } else if (option.type) {
+          submenu.push({ type: option.type })
         } else {
           submenu.push({ label: name, accelerator: option.accelerator, click: option.fn })
         }

@@ -47,17 +47,21 @@ function Clock (terminal) {
 
   this.play = function () {
     if (!this.isPaused) { console.warn('Already playing'); return }
-    console.log('Play')
+    console.log('Clock', 'Play')
     this.isPaused = false
     this.set(this.speed.target, this.speed.target, true)
   }
 
   this.stop = function () {
     if (this.isPaused) { console.warn('Already stopped'); return }
-    console.log('Stop')
+    console.log('Clock', 'Stop')
     terminal.io.midi.silence()
     this.isPaused = true
     this.clearTimer()
+  }
+
+  this.tap = function () {
+    console.log('Clock', 'Tapped..')
   }
 
   // Timer
