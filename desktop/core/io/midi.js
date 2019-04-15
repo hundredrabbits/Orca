@@ -62,13 +62,13 @@ function Midi (terminal) {
   }
 
   this.trigger = function (item, down) {
-    if (!this.device()) { console.warn('No midi device!'); return }
+    if (!this.outputDevice()) { console.warn('Midi', 'No midi output!'); return }
 
     const channel = down === true ? 0x90 + item[0] : 0x80 + item[0]
     const note = 24 + (item[1] * 12) + item[2]
     const velocity = item[3]
 
-    this.device().send([channel, note, velocity])
+    this.outputDevice().send([channel, note, velocity])
     item[5] = true
   }
 
@@ -97,7 +97,7 @@ function Midi (terminal) {
   this.ticks = []
   // TODO
   this.sendClock = function () {
-    if (!this.device()) { return }
+    if (!this.outputDevice()) { return }
     if (this.sendClock !== true) { return }
 
     const bpm = terminal.clock.speed.value
@@ -106,7 +106,7 @@ function Midi (terminal) {
 
     for (let id = 0; id < 6; id++) {
       if (this.ticks[id]) { clearTimeout(this.ticks[id]) }
-      this.ticks[id] = setTimeout(() => { this.device().send([0xF8], 0) }, parseInt(id) * frameFrag)
+      this.ticks[id] = setTimeout(() => { this.outputDevice().send([0xF8], 0) }, parseInt(id) * frameFrag)
     }
   }
 
@@ -152,10 +152,6 @@ function Midi (terminal) {
 
     this.update()
     console.log('Midi', `Input Device: ${this.inputDevice().name}`)
-  }
-
-  this.device = function () {
-    return this.outputs[this.outputIndex]
   }
 
   this.outputDevice = function () {
