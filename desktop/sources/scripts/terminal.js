@@ -176,7 +176,7 @@ function Terminal () {
     this.write(`${this.orca.w}x${this.orca.h}`, col * 0, 0, this.grid.w)
     this.write(`${this.grid.w}/${this.grid.h}`, col * 1, 0, this.grid.w)
     this.write(`${this.source}`, col * 2, 0, this.grid.w)
-    this.write(`${this.clock}`, col * 3, 0, this.grid.w)
+    this.write(`${this.clock}`, col * 3, 0, this.grid.w, this.io.midi.inputIndex > -1 ? 6 : 2)
     this.write(`${this.io.inspect(this.grid.w)}`, col * 4, 0, this.grid.w)
 
     if (this.orca.f < 25) {
