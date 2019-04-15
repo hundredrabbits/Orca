@@ -50,7 +50,6 @@
       terminal.controller.add("default","Clock","Decr. Speed",() => { terminal.clock.mod(-1) },"<")
       terminal.controller.add("default","Clock","Incr. Speed(10x)",() => { terminal.clock.mod(10,true) },"CmdOrCtrl+>")
       terminal.controller.add("default","Clock","Decr. Speed(10x)",() => { terminal.clock.mod(-10,true) },"CmdOrCtrl+<")
-      terminal.controller.add("default","Clock","Tap",() => { terminal.clock.tap() },"CmdOrCtrl+T")
       
       terminal.controller.add("default","View","Zoom In",() => { terminal.modZoom(0.25) },"CmdOrCtrl+=")
       terminal.controller.add("default","View","Zoom Out",() => { terminal.modZoom(-0.25) },"CmdOrCtrl+-")

@@ -71,7 +71,7 @@ function Clock (terminal) {
       const sum = this.intervals.reduce((sum, interval) => { return sum + interval })
       const bpm = parseInt((1000 / sum) * 60)
       if (Math.abs(bpm - this.speed.target) > 3) {
-        this.speed.target = bpm
+        this.speed.target = clamp(bpm,60,300)
       }
     }
 
