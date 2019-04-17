@@ -123,9 +123,11 @@ function Midi (terminal) {
         break
       case 0xFA:
         console.log('Midi', 'Clock start.')
+        terminal.clock.play()
         break
       case 0xFC:
         console.log('Midi', 'Clock stop.')
+        terminal.clock.stop()
         break
     }
   }
