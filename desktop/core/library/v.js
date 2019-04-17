@@ -28,7 +28,8 @@ function OperatorV (orca, x, y, passive) {
     if (write !== '.') {
       orca.values[write] = read
     } else {
-      this.output(orca.values[read])
+      const res = orca.values[read]
+      this.output(`${res}`)
     }
   }
 }

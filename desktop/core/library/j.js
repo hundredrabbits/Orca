@@ -16,8 +16,8 @@ function OperatorJ (orca, x, y, passive) {
   }
 
   this.run = function () {
-    const val = this.listen(this.ports.haste.val)
-    this.output(val)
+    const res = this.listen(this.ports.haste.val)
+    this.output(`${res}`)
   }
 }
 

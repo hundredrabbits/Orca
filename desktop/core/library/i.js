@@ -23,7 +23,7 @@ function OperatorI (orca, x, y, passive) {
     const next = val + (min < max ? 1 : -1)
     const res = next >= real.max ? real.min : next < real.min ? real.max - 1 : next
 
-    this.output(`${orca.keyOf(res)}`)
+    this.output(`${orca.keyOf(res)}`, false, true)
   }
 }
 

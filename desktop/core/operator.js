@@ -18,10 +18,11 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     return toValue ? clamp(orca.valueOf(g), min, max) : g
   }
 
-  this.output = function (g, lock = false) {
-    if (!this.ports.output) { return }
-    if (!g) { return }
-    orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, g)
+  this.output = function (g, lock = false, casesensitive = false) {
+    if (!this.ports.output || !g) { return }
+    const uppercase = casesensitive === true ? this.getCase() : false
+    const glyph = uppercase === true ? `${g}`.toUpperCase() : g
+    orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, glyph)
     if (lock) {
       orca.lock(this.x + this.ports.output.x, this.y + this.ports.output.y)
     }
@@ -115,10 +116,21 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     return a
   }
 
+  this.getCase = function (ports = this.ports.input) {
+    for (const id in ports) {
+      const value = this.listen(ports[id])
+      if (isUpperCase(value) === false) {
+        return false
+      }
+    }
+    return true
+  }
+
   this.docs = function () {
     return `\`${this.glyph.toUpperCase()}\` **${this.name}**: ${this.info}`
   }
 
+  function isUpperCase (a) { return `${a}`.toUpperCase() === `${a}` }
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 

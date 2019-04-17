@@ -16,7 +16,7 @@ function OperatorA (orca, x, y, passive) {
     const a = this.listen(this.ports.input.a, true)
     const b = this.listen(this.ports.input.b, true)
     const res = orca.keyOf(a + b)
-    this.output(`${res}`)
+    this.output(`${res}`, false, true)
   }
 }
 
