@@ -1,7 +1,8 @@
 'use strict'
 
 function Commander (terminal) {
-  this.patterns = require('./patterns')
+  const Patterns = require('./patterns')
+  this.patterns = new Patterns(terminal)
 
   this.isActive = false
   this.query = ''
@@ -65,8 +66,8 @@ function Commander (terminal) {
 
     if (this.operations[cmd]) {
       this.operations[cmd](val)
-    } else if (this.patterns[msg]) {
-      this.inject(this.patterns[msg])
+    } else if (this.patterns.find(msg)) {
+      this.inject(this.patterns.find(msg))
     } else {
       console.warn(`Unknown message: ${msg}`)
     }
@@ -83,8 +84,8 @@ function Commander (terminal) {
   }
 
   this.preview = function () {
-    if (!this.patterns[this.query]) { terminal.cursor.reset(); return }
-    const result = this.patterns[this.query].trim().split('\n')
+    if (!this.patterns.find(this.query)) { terminal.cursor.reset(); return }
+    const result = this.patterns.find(this.query).trim().split('\n')
     terminal.cursor.resize(result[0].length, result.length)
   }
 

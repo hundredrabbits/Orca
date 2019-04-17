@@ -1,45 +1,39 @@
 'use strict'
 
-const patterns = {}
+const Patterns = function (terminal) {
+  const fs = require('fs')
 
-// Setters
+  this.collection = {}
 
-patterns['vion'] = `
-iV......oV......nV`
+  // Writers
+  this.collection['vion'] = `iV......oV......nV`
+  this.collection['vionvl'] = `iV......oV......nV......vV......lV`
 
-patterns['vionvl'] = `
-iV......oV......nV......vV......lV.`
+  // Readers
+  this.collection['kion'] = `3Kion\n.:...`
+  this.collection['kionvl'] = `5Kionvl\n.:.....`
 
-// Readers
+  // Notes
+  this.collection['oct'] = `.7TCDEFGAB\n..C.......`
+  this.collection['oct#'] = `.7Tcdefgab\n..C.......`
+  this.collection['scale'] = `cTCcDdEFfGgAaB\n.C............`
+  this.collection['ca44'] = `.C4\nA04`
+  this.collection['dy'] = `D8\n.Y`
 
-patterns['kion'] = `
-3Kion
-.:...`
+  this.find = function (name) {
+    // Basics
+    if (this.collection[name]) {
+      return this.collection[name]
+    }
+    // Dynamics
+    if (terminal.source.path) {
+      const path = terminal.source.folder() + '/' + name + '.orca'
+      if (fs.existsSync(path)) {
+        return fs.readFileSync(path, 'utf8')
+      }
+    }
+    return null
+  }
+}
 
-patterns['kionvl'] = `
-5Kionvl
-.:.....`
-
-// Notes
-
-patterns['oct'] = `
-.7TCDEFGAB
-..C.......`
-
-patterns['oct#'] = `
-.7Tcdefgab
-..C.......`
-
-patterns['scale'] = `
-cTCcDdEFfGgAaB
-.C............`
-
-patterns['ca44'] = `
-.C4
-A04`
-
-patterns['dy'] = `
-D8
-.Y`
-
-module.exports = patterns
+module.exports = Patterns

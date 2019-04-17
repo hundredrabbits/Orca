@@ -118,8 +118,11 @@ function Source (terminal) {
   // Etc
 
   this.name = function (path = this.path) {
-    const parts = this.path.replace(/\\/g, '/').split('/')
-    return parts[parts.length - 1].replace('.orca', '').trim()
+    return path ? path.substr(path.lastIndexOf('/') + 1).replace('.orca', '').trim() : null
+  }
+
+  this.folder = function (path = this.path) {
+    return path ? path.substring(0, path.lastIndexOf('/')).trim() : null
   }
 
   this.toString = function () {
