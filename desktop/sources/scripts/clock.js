@@ -44,14 +44,14 @@ function Clock (terminal) {
   }
 
   this.play = function () {
-    if (!this.isPaused) { return }
+    if (!this.isPaused) { console.warn('Already playing'); return }
     console.log('Clock', 'Play')
     this.isPaused = false
     this.set(this.speed.target, this.speed.target, true)
   }
 
   this.stop = function () {
-    if (this.isPaused) { return }
+    if (this.isPaused) { console.warn('Already stopped'); return }
     console.log('Clock', 'Stop')
     terminal.io.midi.silence()
     this.isPaused = true
@@ -69,8 +69,10 @@ function Clock (terminal) {
     }
     if (this.intervals.length === 8) {
       const sum = this.intervals.reduce((sum, interval) => { return sum + interval })
-      const bpm = Math.floor((1000 / sum) * 60) * 2
-      this.set(bpm, bpm)
+      const bpm = parseInt((1000 / sum) * 60)
+      if (Math.abs(bpm - this.speed.target) > 1) {
+        this.set(null, bpm)
+      }
     }
 
     const now = performance.now()

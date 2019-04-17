@@ -117,10 +117,8 @@ function Midi (terminal) {
     switch (msg.data[0]) {
       case 0xF8:
         this.count = (this.count + 1) % 6
-        if (this.count % 8 === 0) {
-          terminal.clock.stop()
+        if (this.count % 4 === 0) {
           terminal.clock.tap()
-          terminal.run()
         }
         break
       case 0xFA:
