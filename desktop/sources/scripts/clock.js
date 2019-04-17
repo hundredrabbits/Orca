@@ -106,7 +106,7 @@ function Clock (terminal) {
 
   this.toString = function () {
     const diff = this.speed.target - this.speed.value
-    const _offset = diff > 0 ? `+${diff}` : diff < 0 ? diff : ''
+    const _offset = Math.abs(diff) > 5 ? (diff > 0 ? `+${diff}` : diff) : ''
     const _beat = diff === 0 && terminal.orca.f % 4 === 0 ? '*' : ''
     return `${this.speed.value}${_offset}${_beat}`
   }

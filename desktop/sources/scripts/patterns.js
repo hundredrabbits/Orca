@@ -30,6 +30,10 @@ patterns['oct#'] = `
 .7Tcdefgab
 ..C.......`
 
+patterns['scale'] = `
+cTCcDdEFfGgAab
+.C............`
+
 patterns['ca44'] = `
 .C4
 A04`
