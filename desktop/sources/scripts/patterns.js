@@ -31,7 +31,7 @@ patterns['oct#'] = `
 ..C.......`
 
 patterns['scale'] = `
-cTCcDdEFfGgAab
+cTCcDdEFfGgAaB
 .C............`
 
 patterns['ca44'] = `
