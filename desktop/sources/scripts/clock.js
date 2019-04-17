@@ -70,7 +70,7 @@ function Clock (terminal) {
     if (this.intervals.length === 8) {
       const sum = this.intervals.reduce((sum, interval) => { return sum + interval })
       const bpm = parseInt((1000 / sum) * 60)
-      if (Math.abs(bpm - this.speed.target) > 3) {
+      if (Math.abs(bpm - this.speed.target) > 1) {
         this.set(null, bpm)
       }
     }
