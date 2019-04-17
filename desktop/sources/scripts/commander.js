@@ -84,8 +84,9 @@ function Commander (terminal) {
   }
 
   this.preview = function () {
-    if (!this.patterns.find(this.query)) { terminal.cursor.reset(); return }
-    const result = this.patterns.find(this.query).trim().split('\n')
+    const pattern = this.patterns.find(this.query)
+    if (!pattern) { terminal.cursor.reset(); return }
+    const result = pattern.trim().split('\n')
     terminal.cursor.resize(result[0].length, result.length)
   }
 

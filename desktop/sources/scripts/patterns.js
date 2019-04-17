@@ -21,7 +21,7 @@ const Patterns = function (terminal) {
   this.collection['dy'] = `D8\n.Y`
 
   this.find = function (name) {
-    // Basics
+    // Statics
     if (this.collection[name]) {
       return this.collection[name]
     }
