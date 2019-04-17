@@ -40,6 +40,14 @@ function Commander (terminal) {
     'apm': (val) => { terminal.clock.set(null, parseInt(val)) },
     'bpm': (val) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
     'goto': (val) => { terminal.cursor.goto(val) },
+    'move': (val) => {
+      const pos = val.split(';')
+      const x = parseInt(pos[0])
+      const y = parseInt(pos[1])
+      if (!isNaN(x) && !isNaN(y)) {
+        terminal.cursor.moveTo(x, y)
+      }
+    },
     'play': (val) => { terminal.clock.play() },
     'run': (val) => { terminal.run() },
     'stop': (val) => { terminal.clock.stop() },
