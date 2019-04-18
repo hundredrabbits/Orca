@@ -42,7 +42,7 @@ function Orca (terminal, host = null) {
     if (!g) { return false }
     if (g.length !== 1) { return false }
     if (!this.inBounds(x, y)) { return false }
-    if (!this.isAllowed(g)) { return false }
+    if (!this.isAllowed(g, x, y)) { return false }
     if (this.glyphAt(x, y) === g) { return false }
     const index = this.indexAt(x, y)
     this.s = this.s.substr(0, index) + g + this.s.substr(index + g.length)
@@ -135,8 +135,8 @@ function Orca (terminal, host = null) {
     return Number.isInteger(x) && Number.isInteger(y) && x >= 0 && x < this.w && y >= 0 && y < this.h
   }
 
-  this.isAllowed = function (g) {
-    return g === '.' || !!library[`${g}`.toLowerCase()]
+  this.isAllowed = function (g, x, y) {
+    return this.lockAt(x, y) ? true : g === '.' || !!library[`${g}`.toLowerCase()]
   }
 
   this.keyOf = function (val) {
