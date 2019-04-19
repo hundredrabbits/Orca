@@ -121,9 +121,9 @@ function Terminal () {
   this.isMarker = function (x, y) {
     return x % this.grid.w === 0 && y % this.grid.h === 0
   }
-  
+
   this.isHelper = function (x, y) {
-    return y === 0 && this.cursor.x === x || x === 0 && this.cursor.y === y || y === this.orca.h - 1 && this.cursor.x === x || x === this.orca.w - 1 && this.cursor.y === y
+    return (y === 0 && this.cursor.x === x) || (x === 0 && this.cursor.y === y) || (y === this.orca.h - 1 && this.cursor.x === x) || (x === this.orca.w - 1 && this.cursor.y === y)
   }
 
   this.portAt = function (x, y) {
