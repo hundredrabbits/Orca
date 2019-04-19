@@ -25,8 +25,6 @@ function Renderer (terminal) {
 
     this.drawProgram()
     this.drawInterface()
-
-    this.spritesheet.print(this.context)
   }
 
   this.clear = function () {
@@ -80,18 +78,6 @@ function Renderer (terminal) {
   }
 
   this.drawSprite = function (x, y, g, type) {
-    const style = this.drawStyle(type)
-    if (style.bg) {
-      const bgrect = { x: x * this.tile.w * this.scale, y: (y) * this.tile.h * this.scale, w: this.tile.w * this.scale, h: this.tile.h * this.scale }
-      this.context.fillStyle = style.bg
-      this.context.fillRect(bgrect.x, bgrect.y, bgrect.w, bgrect.h)
-    }
-    if (style.fg) {
-      const fgrect = { x: (x + 0.5) * this.tile.w * this.scale, y: (y + 1) * this.tile.h * this.scale, w: this.tile.w * this.scale, h: this.tile.h * this.scale }
-      this.context.fillStyle = style.fg
-      this.context.fillText(g, fgrect.x, fgrect.y)
-    }
-
     this.spritesheet.draw(this.context, x, y, g, type)
   }
 
@@ -236,15 +222,14 @@ function Spritesheet (terminal) {
     return { x: x, y: y, w: w, h: h }
   }
 
-
   this.draw = function (context, x, y, glyph, type) {
-    const rect = this.getRect(glyph, type) 
-    context.drawImage(this.el, rect.x, rect.y, this.tile.w * this.scale, this.tile.h * this.scale, x * this.tile.w * this.scale, 0, this.tile.w * this.scale, this.tile.h * this.scale)
+    const rect = this.getRect(glyph, type)
+    context.drawImage(this.el, rect.x, rect.y, this.tile.w * this.scale, this.tile.h * this.scale, x * this.tile.w * this.scale, y * this.tile.h * this.scale, this.tile.w * this.scale, this.tile.h * this.scale)
   }
 
   this.print = function (context) {
     // context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
-    // context.drawImage(this.el, 0, 0, this.el.width, this.el.height, 0, 0, this.el.width, this.el.height)
+    context.drawImage(this.el, 0, 0, this.el.width, this.el.height, 0, 0, this.el.width, this.el.height)
   }
 }
 
