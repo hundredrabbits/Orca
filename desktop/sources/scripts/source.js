@@ -14,7 +14,7 @@ function Source (terminal) {
     console.log('Source', 'Make a new file..')
     this.path = null
     terminal.orca.reset()
-    terminal.resize()
+    terminal.renderer.resize()
     terminal.history.reset()
     terminal.cursor.reset()
     terminal.clock.play()
