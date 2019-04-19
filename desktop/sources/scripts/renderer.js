@@ -25,6 +25,8 @@ function Renderer (terminal) {
 
     this.drawProgram()
     this.drawInterface()
+
+    this.spritesheet.print(this.context)
   }
 
   this.clear = function () {
@@ -45,7 +47,7 @@ function Renderer (terminal) {
       for (let x = 0; x < terminal.orca.w; x++) {
         const port = terminal.ports[terminal.orca.indexAt(x, y)]
         const glyph = this.guide(x, y)
-        const style = terminal.isSelection(x, y) ? 4 : port ? port[2] : terminal.orca.lockAt(x, y) ? 5 : null
+        const style = terminal.isSelection(x, y) ? 4 : port ? port[2] : terminal.orca.lockAt(x, y) ? 5 : 7
         const likeCursor = glyph === selection && glyph !== '.' && style !== 4 && !terminal.orca.lockAt(x, y)
         this.drawSprite(x, y, glyph, likeCursor ? 6 : style)
       }
@@ -79,25 +81,6 @@ function Renderer (terminal) {
 
   this.drawSprite = function (x, y, g, type) {
     this.spritesheet.draw(this.context, x, y, g, type)
-  }
-
-  this.drawStyle = function (type) {
-    // Operator
-    if (type === 0) { return { bg: terminal.theme.active.b_med, fg: terminal.theme.active.f_low } }
-    // Haste
-    if (type === 1) { return { fg: terminal.theme.active.b_med } }
-    // Input
-    if (type === 2) { return { fg: terminal.theme.active.b_high } }
-    // Output
-    if (type === 3) { return { bg: terminal.theme.active.b_high, fg: terminal.theme.active.f_low } }
-    // Selected
-    if (type === 4) { return { bg: terminal.theme.active.b_inv, fg: terminal.theme.active.f_inv } }
-    // Locked
-    if (type === 5) { return { fg: terminal.theme.active.f_med } }
-    // LikeCursor
-    if (type === 6) { return { fg: terminal.theme.active.b_inv } }
-    // Default
-    return { fg: terminal.theme.active.f_low }
   }
 
   this.write = function (text, offsetX, offsetY, limit, type = 2) {
@@ -197,10 +180,9 @@ function Spritesheet (terminal) {
     const uc = glyph === glyph.toUpperCase()
     const row = this.glyphs.indexOf(glyph.toLowerCase())
 
-    if (style.bg) {
-      this.context.fillStyle = style.bg
-      this.context.fillRect(rect.x, rect.y, rect.w, rect.h)
-    }
+    this.context.fillStyle = style.bg ? style.bg : 'black'
+    this.context.fillRect(rect.x, rect.y, rect.w, rect.h)
+
     if (style.fg) {
       this.context.fillStyle = style.fg
       this.context.fillText(glyph, rect.x + (this.tile.w * this.scale * 0.5), rect.y + (this.tile.h * this.scale))
@@ -212,9 +194,9 @@ function Spritesheet (terminal) {
   }
 
   this.getRect = function (glyph, type) {
-    const uc = glyph === glyph.toUpperCase()
+    const uc = `${glyph}` === `${glyph}`.toUpperCase()
     const col = (type * 2) + (uc === true ? 1 : 0)
-    const row = this.glyphs.indexOf(glyph.toLowerCase())
+    const row = this.glyphs.indexOf(`${glyph}`.toLowerCase())
     const x = row * this.tile.w * this.scale
     const y = col * this.tile.h * this.scale
     const w = this.tile.w * this.scale

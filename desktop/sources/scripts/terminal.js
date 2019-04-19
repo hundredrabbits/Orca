@@ -33,11 +33,13 @@ function Terminal () {
   this.scale = window.devicePixelRatio
 
   this.install = function (host) {
+    console.info('Terminal', 'Installing..')
     this.theme.install(host)
     this.renderer.install(host)
   }
 
   this.start = function () {
+    console.info('Terminal', 'Starting..')
     this.theme.start()
     this.io.start()
     this.source.start()

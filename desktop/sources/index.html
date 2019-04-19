@@ -7,6 +7,7 @@
     <title>Orca</title>
   </head>
   <body>
+    
     <script>
       const app = require('electron').remote.app
       const Terminal = require('./scripts/terminal')
@@ -70,8 +71,9 @@
 
       terminal.controller.commit()
 
-      terminal.start()
+      window.addEventListener('load', () => { terminal.start() })
 
       </script>
+      <div id="loader">&nbsp;</div>
   </body>
 </html>
