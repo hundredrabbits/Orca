@@ -26,7 +26,6 @@ function Renderer (terminal) {
     this.drawProgram()
     this.drawInterface()
 
-    this.spritesheet.generate()
     this.spritesheet.print(this.context)
   }
 
@@ -92,6 +91,8 @@ function Renderer (terminal) {
       this.context.fillStyle = style.fg
       this.context.fillText(g, fgrect.x, fgrect.y)
     }
+
+    this.spritesheet.draw(this.context, x, y, g, type)
   }
 
   this.drawStyle = function (type) {
@@ -165,27 +166,11 @@ function Spritesheet (terminal) {
 
   this.start = function () {
     this.setup()
-    this.generate()
+    this.update()
   }
 
   this.setup = function () {
     console.log('Spritesheet', `Setup ${this.glyphs.length} glyphs..`)
-
-    this.scale = 2
-    this.el.width = this.glyphs.length * this.tile.w * this.scale
-    this.el.height = this.styles.length * this.tile.h * this.scale * 2
-
-    this.context.textBaseline = 'bottom'
-    this.context.textAlign = 'center'
-    this.context.font = `${this.tile.h * 0.75 * this.scale}px input_mono_medium`
-  }
-
-  this.generate = function () {
-    console.log('Spritesheet', 'Generating..')
-
-    this.clear()
-    // this.context.fillStyle = 'red'
-    // this.context.fillRect(0, 0, this.el.width, this.el.height)
 
     this.styles = [
       { fg: terminal.theme.active.f_low, bg: terminal.theme.active.b_med },
@@ -198,11 +183,41 @@ function Spritesheet (terminal) {
       { fg: terminal.theme.active.f_low }
     ]
 
+    this.scale = 2
+    this.el.width = this.glyphs.length * this.tile.w * this.scale
+    this.el.height = this.styles.length * this.tile.h * this.scale * 2
+
+    this.context.textBaseline = 'bottom'
+    this.context.textAlign = 'center'
+    this.context.font = `${this.tile.h * 0.75 * this.scale}px input_mono_medium`
+  }
+
+  this.update = function () {
+    console.log('Spritesheet', 'Updating..')
+
+    this.clear()
+
     for (let col in this.styles) {
       for (const row in this.glyphs) {
-        this.write(parseInt(row), parseInt(col) * 2, this.glyphs[row], this.styles[col])
-        this.write(parseInt(row), parseInt(col) * 2, this.glyphs[row].toUpperCase(), this.styles[col], true)
+        this.write(this.glyphs[row], parseInt(col))
+        this.write(this.glyphs[row].toUpperCase(), parseInt(col))
       }
+    }
+  }
+
+  this.write = function (glyph, type) {
+    const rect = this.getRect(glyph, type)
+    const style = this.styles[type]
+    const uc = glyph === glyph.toUpperCase()
+    const row = this.glyphs.indexOf(glyph.toLowerCase())
+
+    if (style.bg) {
+      this.context.fillStyle = style.bg
+      this.context.fillRect(rect.x, rect.y, rect.w, rect.h)
+    }
+    if (style.fg) {
+      this.context.fillStyle = style.fg
+      this.context.fillText(glyph, rect.x + (this.tile.w * this.scale * 0.5), rect.y + (this.tile.h * this.scale))
     }
   }
 
@@ -210,26 +225,26 @@ function Spritesheet (terminal) {
     this.context.clearRect(0, 0, this.el.width, this.el.height)
   }
 
-  this.read = function (glyph, style) {
-
+  this.getRect = function (glyph, type) {
+    const uc = glyph === glyph.toUpperCase()
+    const col = (type * 2) + (uc === true ? 1 : 0)
+    const row = this.glyphs.indexOf(glyph.toLowerCase())
+    const x = row * this.tile.w * this.scale
+    const y = col * this.tile.h * this.scale
+    const w = this.tile.w * this.scale
+    const h = this.tile.h * this.scale
+    return { x: x, y: y, w: w, h: h }
   }
 
-  this.write = function (row, col, glyph, style, uc = false) {
-    const x = row * this.tile.w * this.scale
-    const y = col * this.tile.h * this.scale + (uc === true ? this.tile.h * this.scale : 0)
-    if (style.bg) {
-      this.context.fillStyle = style.bg
-      this.context.fillRect(x, y, this.tile.w * this.scale, this.tile.h * this.scale)
-    }
-    if (style.fg) {
-      this.context.fillStyle = style.fg
-      this.context.fillText(glyph, x + (this.tile.w * this.scale * 0.5), y + (this.tile.h * this.scale))
-    }
+
+  this.draw = function (context, x, y, glyph, type) {
+    const rect = this.getRect(glyph, type) 
+    context.drawImage(this.el, rect.x, rect.y, this.tile.w * this.scale, this.tile.h * this.scale, x * this.tile.w * this.scale, 0, this.tile.w * this.scale, this.tile.h * this.scale)
   }
 
   this.print = function (context) {
     // context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
-    context.drawImage(this.el, 0, 0, this.el.width, this.el.height, 0, 0, this.el.width, this.el.height)
+    // context.drawImage(this.el, 0, 0, this.el.width, this.el.height, 0, 0, this.el.width, this.el.height)
   }
 }
 
