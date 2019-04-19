@@ -143,7 +143,18 @@ function Terminal () {
     this.context.clearRect(0, 0, this.el.width, this.el.height)
   }
 
-  this.guide = function (x, y) {
+  this.drawProgram = function () {
+    const selection = this.cursor.read()
+    for (let y = 0; y < this.orca.h; y++) {
+      for (let x = 0; x < this.orca.w; x++) {
+        const glyph = this.makeGlyph(x, y)
+        const style = this.makeStyle(x, y, glyph, selection)
+        this.drawSprite(x, y, glyph, style)
+      }
+    }
+  }
+
+  this.makeGlyph = function (x, y) {
     const g = this.orca.glyphAt(x, y)
     if (g !== '.') { return g }
     if (this.isCursor(x, y)) { return this.isPaused ? '~' : '@' }
@@ -151,17 +162,14 @@ function Terminal () {
     return g
   }
 
-  this.drawProgram = function () {
-    const selection = this.cursor.read()
-    for (let y = 0; y < this.orca.h; y++) {
-      for (let x = 0; x < this.orca.w; x++) {
-        const port = this.ports[this.orca.indexAt(x, y)]
-        const glyph = this.guide(x, y)
-        const style = this.isSelection(x, y) ? 4 : port ? port[2] : this.orca.lockAt(x, y) ? 5 : null
-        const likeCursor = glyph === selection && glyph !== '.' && style !== 4 && !this.orca.lockAt(x, y)
-        this.drawSprite(x, y, glyph, likeCursor ? 6 : style)
-      }
-    }
+  this.makeStyle = function (x, y, glyph, selection) {
+
+    const isLocked = this.orca.lockAt(x, y)
+    if(glyph === '.' && isLocked === false){ return 7}
+    const port = this.ports[this.orca.indexAt(x, y)]
+    const style = this.isSelection(x, y) ? 4 : port ? port[2] : isLocked === true ? 5 : null
+    const likeCursor = glyph === selection && glyph !== '.' && style !== 4 && isLocked === false
+    return likeCursor ? 6 : style
   }
 
   this.drawInterface = function () {
@@ -218,6 +226,8 @@ function Terminal () {
     if (type === 5) { return { fg: this.theme.active.f_med } }
     // LikeCursor
     if (type === 6) { return { fg: this.theme.active.b_inv } }
+    // Invisible
+    if (type === 7) { return {} }
     // Default
     return { fg: this.theme.active.f_low }
   }
