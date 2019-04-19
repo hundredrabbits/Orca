@@ -60,6 +60,7 @@ function Controller () {
   }
 
   this.commit = function () {
+    console.log('Controller', 'Changing..')
     this.app.injectMenu(this.format())
   }
 

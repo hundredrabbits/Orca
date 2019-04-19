@@ -92,6 +92,7 @@ function Terminal () {
 
   this.toggleRetina = function () {
     this.scale = this.scale === 1 ? window.devicePixelRatio : 1
+    console.log('Terminal', `Pixel resolution: ${this.scale}`)
     this.resize(true)
   }
 

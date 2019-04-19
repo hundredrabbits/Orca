@@ -29,13 +29,13 @@ const Patterns = function (terminal) {
     if (terminal.source.path) {
       const path = terminal.source.folder() + '/' + name + '.orca'
       if (fs.existsSync(path)) {
-        return this.add(name,fs.readFileSync(path, 'utf8'))
+        return this.add(name, fs.readFileSync(path, 'utf8'))
       }
     }
     return null
   }
 
-  this.add = function(name,data){
+  this.add = function (name, data) {
     console.log('Patterns', `Added "${name}".`)
     this.collection[name] = data
     return data

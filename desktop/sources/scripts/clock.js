@@ -89,6 +89,7 @@ function Clock (terminal) {
   }
 
   this.setTimer = function (bpm) {
+    console.log('Clock', `Setting new ${bpm} timer..`)
     this.clearTimer()
     this.timer = setInterval(() => { terminal.run(); this.update() }, (60000 / bpm) / 4)
   }
