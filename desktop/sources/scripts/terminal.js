@@ -118,6 +118,10 @@ function Terminal () {
     return !!(x >= this.cursor.x && x < this.cursor.x + this.cursor.w && y >= this.cursor.y && y < this.cursor.y + this.cursor.h)
   }
 
+  this.isMarker = function (x, y) {
+    return x % this.grid.w === 0 && y % this.grid.h === 0
+  }
+
   this.portAt = function (x, y) {
     return this.ports[this.orca.indexAt(x, y)]
   }
@@ -137,6 +141,27 @@ function Terminal () {
     return a
   }
 
+  // Interface
+
+  this.makeGlyph = function (x, y) {
+    const g = this.orca.glyphAt(x, y)
+    if (g !== '.') { return g }
+    if (this.isCursor(x, y)) { return this.isPaused ? '~' : '@' }
+    if (this.isMarker(x, y)) { return '+' }
+    return g
+  }
+
+  this.makeStyle = function (x, y, glyph, selection) {
+    const isLocked = this.orca.lockAt(x, y)
+    const port = this.ports[this.orca.indexAt(x, y)]
+    if (this.isSelection(x, y)) { return 4 }
+    if (glyph === '.' && isLocked === false) { return 7 }
+    if (selection === glyph && isLocked === false) { return 6 }
+    if (port) { return port[2] }
+    if (isLocked === true) { return 5 }
+    return 9
+  }
+
   // Canvas
 
   this.clear = function () {
@@ -152,24 +177,6 @@ function Terminal () {
         this.drawSprite(x, y, glyph, style)
       }
     }
-  }
-
-  this.makeGlyph = function (x, y) {
-    const g = this.orca.glyphAt(x, y)
-    if (g !== '.') { return g }
-    if (this.isCursor(x, y)) { return this.isPaused ? '~' : '@' }
-    if (x % this.grid.w === 0 && y % this.grid.h === 0) { return '+' }
-    return g
-  }
-
-  this.makeStyle = function (x, y, glyph, selection) {
-
-    const isLocked = this.orca.lockAt(x, y)
-    if(glyph === '.' && isLocked === false){ return 7}
-    const port = this.ports[this.orca.indexAt(x, y)]
-    const style = this.isSelection(x, y) ? 4 : port ? port[2] : isLocked === true ? 5 : null
-    const likeCursor = glyph === selection && glyph !== '.' && style !== 4 && isLocked === false
-    return likeCursor ? 6 : style
   }
 
   this.drawInterface = function () {
