@@ -124,6 +124,7 @@ function Commander (terminal) {
 
     if (event.key === ' ' && terminal.cursor.mode === 0) { terminal.clock.togglePlay(); event.preventDefault(); return }
     if (event.key === 'Escape') { terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
+    if (event.key === 'Backspace') { terminal[this.isActive === true ? 'commander' : 'cursor'].erase(); event.preventDefault(); return }
 
     if (event.key === ']') { terminal.modGrid(1, 0); event.preventDefault(); return }
     if (event.key === '[') { terminal.modGrid(-1, 0); event.preventDefault(); return }
