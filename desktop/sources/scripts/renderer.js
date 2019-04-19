@@ -25,8 +25,6 @@ function Renderer (terminal) {
 
     this.drawProgram()
     this.drawInterface()
-
-    this.spritesheet.print(this.context)
   }
 
   this.clear = function () {
@@ -114,10 +112,6 @@ function Renderer (terminal) {
     this.el.style.width = `${parseInt(this.tile.w * terminal.orca.w)}px`
     this.el.style.height = `${parseInt((this.tile.h + 3) * terminal.orca.h)}px`
 
-    this.context.textBaseline = 'bottom'
-    this.context.textAlign = 'center'
-    this.context.font = `${this.tile.h * 0.75 * this.scale}px input_mono_medium`
-
     terminal.update()
   }
 }
@@ -130,7 +124,7 @@ function Spritesheet (terminal) {
   this.el.height = 100
 
   this.glyphs = Object.keys(terminal.orca.library)
-
+  this.cache = {}
   this.tile = { w: 10, h: 15 }
 
   this.start = function () {
@@ -152,13 +146,13 @@ function Spritesheet (terminal) {
       { fg: terminal.theme.active.f_low }
     ]
 
-    this.scale = 2
+    this.scale = terminal.renderer.scale
     this.el.width = this.glyphs.length * this.tile.w * this.scale
     this.el.height = this.styles.length * this.tile.h * this.scale * 2
 
     this.context.textBaseline = 'bottom'
     this.context.textAlign = 'center'
-    this.context.font = `${this.tile.h * 0.75 * this.scale}px input_mono_medium`
+    this.context.font = `${parseInt(this.tile.h * 0.75 * this.scale)}px input_mono_regular`
   }
 
   this.update = function () {
@@ -175,17 +169,22 @@ function Spritesheet (terminal) {
   }
 
   this.write = function (glyph, type) {
-    const rect = this.getRect(glyph, type)
+    const rect = this.makeRect(glyph, type)
     const style = this.styles[type]
-    const uc = glyph === glyph.toUpperCase()
-    const row = this.glyphs.indexOf(glyph.toLowerCase())
 
-    this.context.fillStyle = style.bg ? style.bg : 'black'
-    this.context.fillRect(rect.x, rect.y, rect.w, rect.h)
+    if (!this.cache[glyph]) {
+      this.cache[glyph] = {}
+    }
+    this.cache[glyph][type] = rect
+
+    if (style.bg) {
+      this.context.fillStyle = style.bg ? style.bg : 'black'
+      this.context.fillRect(rect.x, rect.y, rect.w, rect.h)
+    }
 
     if (style.fg) {
       this.context.fillStyle = style.fg
-      this.context.fillText(glyph, rect.x + (this.tile.w * this.scale * 0.5), rect.y + (this.tile.h * this.scale))
+      this.context.fillText(glyph, parseInt(rect.x + (this.tile.w * this.scale * 0.5)), parseInt(rect.y + (this.tile.h * this.scale)))
     }
   }
 
@@ -193,7 +192,7 @@ function Spritesheet (terminal) {
     this.context.clearRect(0, 0, this.el.width, this.el.height)
   }
 
-  this.getRect = function (glyph, type) {
+  this.makeRect = function (glyph, type) {
     const uc = `${glyph}` === `${glyph}`.toUpperCase()
     const col = (type * 2) + (uc === true ? 1 : 0)
     const row = this.glyphs.indexOf(`${glyph}`.toLowerCase())
@@ -204,13 +203,17 @@ function Spritesheet (terminal) {
     return { x: x, y: y, w: w, h: h }
   }
 
+  this.getRect = function (glyph, type) {
+    return this.cache[glyph] ? this.cache[glyph][type] : null
+  }
+
   this.draw = function (context, x, y, glyph, type) {
     const rect = this.getRect(glyph, type)
+    if (!rect) { return }
     context.drawImage(this.el, rect.x, rect.y, this.tile.w * this.scale, this.tile.h * this.scale, x * this.tile.w * this.scale, y * this.tile.h * this.scale, this.tile.w * this.scale, this.tile.h * this.scale)
   }
 
   this.print = function (context) {
-    // context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
     context.drawImage(this.el, 0, 0, this.el.width, this.el.height, 0, 0, this.el.width, this.el.height)
   }
 }

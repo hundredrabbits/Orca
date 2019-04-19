@@ -1,4 +1,4 @@
 body { font-family: 'input_mono_medium'; padding:30px; overflow: hidden; -webkit-app-region: drag; transition: background-color 500ms; }
 canvas { display: block;white-space: pre;font-size: 11px;line-height: 10px; text-transform: uppercase; width:300px; -webkit-app-region: drag; opacity: 0; transition: opacity 1000ms}
 canvas.ready { opacity: 1 }
-#loader { font-family:'input_mono_medium'; position: absolute; width:1px; height:1px; }
+#loader { font-family:'input_mono_regular'; position: absolute; width:1px; height:1px; }

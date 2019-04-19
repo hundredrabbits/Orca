@@ -44,6 +44,8 @@ module.exports = {
   '=': require('./library/_osc'),
   '^': require('./library/_cc'),
   '.': require('./library/_null'),
+  ',': require('./library/_null'),
+  '|': require('./library/_null'),
   '+': require('./library/_null'),
   '@': require('./library/_null')
 }
