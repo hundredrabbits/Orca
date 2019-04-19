@@ -121,6 +121,10 @@ function Terminal () {
   this.isMarker = function (x, y) {
     return x % this.grid.w === 0 && y % this.grid.h === 0
   }
+  
+  this.isHelper = function (x, y) {
+    return y === 0 && this.cursor.x === x || x === 0 && this.cursor.y === y || y === this.orca.h - 1 && this.cursor.x === x || x === this.orca.w - 1 && this.cursor.y === y
+  }
 
   this.portAt = function (x, y) {
     return this.ports[this.orca.indexAt(x, y)]
@@ -148,6 +152,7 @@ function Terminal () {
     if (g !== '.') { return g }
     if (this.isCursor(x, y)) { return this.isPaused ? '~' : '@' }
     if (this.isMarker(x, y)) { return '+' }
+    if (this.isHelper(x, y)) { return '"' }
     return g
   }
 
