@@ -172,10 +172,7 @@ function Spritesheet (terminal) {
     const rect = this.makeRect(glyph, type)
     const style = this.styles[type]
 
-    if (!this.cache[glyph]) {
-      this.cache[glyph] = {}
-    }
-    this.cache[glyph][type] = rect
+    this.store(glyph, type, rect)
 
     if (style.bg) {
       this.context.fillStyle = style.bg ? style.bg : 'black'
@@ -186,6 +183,13 @@ function Spritesheet (terminal) {
       this.context.fillStyle = style.fg
       this.context.fillText(glyph, parseInt(rect.x + (this.tile.w * this.scale * 0.5)), parseInt(rect.y + (this.tile.h * this.scale)))
     }
+  }
+
+  this.store = function (glyph, type, rect) {
+    if (!this.cache[glyph]) {
+      this.cache[glyph] = {}
+    }
+    this.cache[glyph][type] = rect
   }
 
   this.clear = function () {
@@ -209,8 +213,9 @@ function Spritesheet (terminal) {
 
   this.draw = function (context, x, y, glyph, type) {
     const rect = this.getRect(glyph, type)
-    if (!rect) { return }
-    context.drawImage(this.el, rect.x, rect.y, this.tile.w * this.scale, this.tile.h * this.scale, x * this.tile.w * this.scale, y * this.tile.h * this.scale, this.tile.w * this.scale, this.tile.h * this.scale)
+    if (rect) {
+      context.drawImage(this.el, rect.x, rect.y, this.tile.w * this.scale, this.tile.h * this.scale, x * this.tile.w * this.scale, y * this.tile.h * this.scale, this.tile.w * this.scale, this.tile.h * this.scale)
+    }
   }
 
   this.print = function (context) {
