@@ -9,6 +9,7 @@ function Orca (terminal, host = null) {
   this.f = host ? host.f : 0 // Frame
 
   this.host = host
+  this.library = library
 
   this.terminal = terminal
   this.keys = Object.keys(library).slice(0, 36)

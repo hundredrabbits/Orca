@@ -33,8 +33,8 @@ function Terminal () {
   this.scale = window.devicePixelRatio
 
   this.install = function (host) {
-    this.renderer.install(host)
     this.theme.install(host)
+    this.renderer.install(host)
   }
 
   this.start = function () {

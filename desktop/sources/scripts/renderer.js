@@ -1,27 +1,33 @@
 'use strict'
 
-function Renderer(terminal){
-
+function Renderer (terminal) {
   this.el = document.createElement('canvas')
   this.context = this.el.getContext('2d')
+
+  this.spritesheet = new Spritesheet(terminal)
 
   // Settings
   this.grid = { w: 8, h: 8 }
   this.tile = { w: 10, h: 15 }
   this.scale = window.devicePixelRatio
 
-  this.install = function(host){
+  this.install = function (host) {
     host.appendChild(this.el)
   }
 
-  this.start = function(){
+  this.start = function () {
+    this.spritesheet.start()
     this.el.className = 'ready'
   }
 
-  this.update = function(){
+  this.update = function () {
     this.clear()
+
     this.drawProgram()
     this.drawInterface()
+
+    this.spritesheet.generate()
+    this.spritesheet.print(this.context)
   }
 
   this.clear = function () {
@@ -144,7 +150,87 @@ function Renderer(terminal){
 
     terminal.update()
   }
+}
 
+function Spritesheet (terminal) {
+  this.el = document.createElement('canvas')
+  this.context = this.el.getContext('2d')
+
+  this.el.width = 600
+  this.el.height = 100
+
+  this.glyphs = Object.keys(terminal.orca.library)
+
+  this.tile = { w: 10, h: 15 }
+
+  this.start = function () {
+    this.setup()
+    this.generate()
+  }
+
+  this.setup = function () {
+    console.log('Spritesheet', `Setup ${this.glyphs.length} glyphs..`)
+
+    this.scale = 2
+    this.el.width = this.glyphs.length * this.tile.w * this.scale
+    this.el.height = this.styles.length * this.tile.h * this.scale * 2
+
+    this.context.textBaseline = 'bottom'
+    this.context.textAlign = 'center'
+    this.context.font = `${this.tile.h * 0.75 * this.scale}px input_mono_medium`
+  }
+
+  this.generate = function () {
+    console.log('Spritesheet', 'Generating..')
+
+    this.clear()
+    // this.context.fillStyle = 'red'
+    // this.context.fillRect(0, 0, this.el.width, this.el.height)
+
+    this.styles = [
+      { fg: terminal.theme.active.f_low, bg: terminal.theme.active.b_med },
+      { fg: terminal.theme.active.b_med },
+      { fg: terminal.theme.active.b_high },
+      { fg: terminal.theme.active.f_low, bg: terminal.theme.active.b_high },
+      { fg: terminal.theme.active.f_inv, bg: terminal.theme.active.b_inv },
+      { fg: terminal.theme.active.f_med },
+      { fg: terminal.theme.active.b_inv },
+      { fg: terminal.theme.active.f_low }
+    ]
+
+    for (let col in this.styles) {
+      for (const row in this.glyphs) {
+        this.write(parseInt(row), parseInt(col) * 2, this.glyphs[row], this.styles[col])
+        this.write(parseInt(row), parseInt(col) * 2, this.glyphs[row].toUpperCase(), this.styles[col], true)
+      }
+    }
+  }
+
+  this.clear = function () {
+    this.context.clearRect(0, 0, this.el.width, this.el.height)
+  }
+
+  this.read = function (glyph, style) {
+
+  }
+
+  this.write = function (row, col, glyph, style, uc = false) {
+    const x = row * this.tile.w * this.scale
+    const y = col * this.tile.h * this.scale + (uc === true ? this.tile.h * this.scale : 0)
+    if (style.bg) {
+      this.context.fillStyle = style.bg
+      this.context.fillRect(x, y, this.tile.w * this.scale, this.tile.h * this.scale)
+    }
+    if (style.fg) {
+      this.context.fillStyle = style.fg
+      this.context.fillText(glyph, x + (this.tile.w * this.scale * 0.5), y + (this.tile.h * this.scale))
+    }
+  }
+
+  this.print = function (context) {
+    // context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+    context.drawImage(this.el, 0, 0, this.el.width, this.el.height, 0, 0, this.el.width, this.el.height)
+  }
 }
 
 module.exports = Renderer
