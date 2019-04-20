@@ -32,6 +32,7 @@ function Terminal () {
   this.grid = { w: 8, h: 8 }
   this.tile = { w: 10, h: 15 }
   this.scale = window.devicePixelRatio
+  this.hardmode = true
 
   this.install = function (host) {
     host.appendChild(this.el)
@@ -94,6 +95,12 @@ function Terminal () {
     this.scale = this.scale === 1 ? window.devicePixelRatio : 1
     console.log('Terminal', `Pixel resolution: ${this.scale}`)
     this.resize(true)
+  }
+
+  this.toggleHardmode = function () {
+    this.hardmode = this.hardmode !== true
+    console.log('Terminal', `Hardmode: ${this.hardmode}`)
+    this.update()
   }
 
   this.modGrid = function (x = 0, y = 0) {
@@ -171,7 +178,7 @@ function Terminal () {
     const isLocked = this.orca.lockAt(x, y)
     const port = this.ports[this.orca.indexAt(x, y)]
     if (this.isSelection(x, y)) { return 4 }
-    if (glyph === '.' && isLocked === false) { return this.isLocals(x, y) === true ? 9 : 7 }
+    if (glyph === '.' && isLocked === false && this.hardmode === true) { return this.isLocals(x, y) === true ? 9 : 7 }
     if (selection === glyph && isLocked === false && selection !== '.') { return 6 }
     if (port) { return port[2] }
     if (isLocked === true) { return 5 }
