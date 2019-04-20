@@ -109,10 +109,12 @@ function Terminal () {
     this.setGrid(w, h)
   }
 
-  this.modZoom = function (mod = 0, set = false) {
-    const { webFrame } = require('electron')
-    const currentZoomFactor = webFrame.getZoomFactor()
-    webFrame.setZoomFactor(set ? mod : currentZoomFactor + mod)
+  this.modZoom = function (mod = 0, reset = false) {
+    this.tile = {
+      w: reset ? 10 : this.tile.w * (mod + 1),
+      h: reset ? 15 : this.tile.h * (mod + 1)
+    }
+    this.resize()
   }
 
   //
