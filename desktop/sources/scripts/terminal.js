@@ -109,10 +109,12 @@ function Terminal () {
     this.setGrid(w, h)
   }
 
-  this.modZoom = function (mod = 0, set = false) {
-    const { webFrame } = require('electron')
-    const currentZoomFactor = webFrame.getZoomFactor()
-    webFrame.setZoomFactor(set ? mod : currentZoomFactor + mod)
+  this.modZoom = function (mod = 0, reset = false) {
+    this.tile = {
+      w: reset ? 10 : this.tile.w * (mod + 1),
+      h: reset ? 15 : this.tile.h * (mod + 1)
+    }
+    this.resize(true)
   }
 
   //
@@ -273,7 +275,7 @@ function Terminal () {
   // Resize tools
 
   this.resize = function (force = false) {
-    const size = { w: window.innerWidth - 60, h: window.innerHeight - 90 }
+    const size = { w: window.innerWidth - 60, h: window.innerHeight - (60 + this.tile.h * 2) }
     const tiles = { w: Math.floor(size.w / this.tile.w), h: Math.floor(size.h / this.tile.h) }
 
     if (this.orca.w === tiles.w && this.orca.h === tiles.h && force === false) { return }
@@ -291,9 +293,9 @@ function Terminal () {
     console.log(`Resize to: ${tiles.w}x${tiles.h}`)
 
     this.el.width = this.tile.w * this.orca.w * this.scale
-    this.el.height = (this.tile.h + 3) * this.orca.h * this.scale
+    this.el.height = (this.tile.h + (this.tile.h / 5)) * this.orca.h * this.scale
     this.el.style.width = `${parseInt(this.tile.w * this.orca.w)}px`
-    this.el.style.height = `${parseInt((this.tile.h + 3) * this.orca.h)}px`
+    this.el.style.height = `${parseInt((this.tile.h + (this.tile.h / 5)) * this.orca.h)}px`
 
     this.context.textBaseline = 'bottom'
     this.context.textAlign = 'center'
