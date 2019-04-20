@@ -55,6 +55,10 @@ app.inspect = function () {
   app.win.toggleDevTools()
 }
 
+app.toggleMenubar = function () {
+  app.win.setMenuBarVisibility(!app.win.isMenuBarVisible())
+}
+
 app.toggleFullscreen = function () {
   app.win.setFullScreen(!app.win.isFullScreen())
 }
