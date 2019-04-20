@@ -111,6 +111,7 @@ function Commander (terminal) {
       event.preventDefault()
       return
     }
+
     if (event.key === 'c' && (event.metaKey || event.ctrlKey)) { terminal.cursor.copy(); event.preventDefault(); return }
     if (event.key === 'x' && (event.metaKey || event.ctrlKey)) { terminal.cursor.cut(); event.preventDefault(); return }
     if (event.key === 'v' && (event.metaKey || event.ctrlKey)) { terminal.cursor.paste(); event.preventDefault(); return }
@@ -124,6 +125,8 @@ function Commander (terminal) {
     if (event.keyCode === 40) { this.onArrowDown(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
     if (event.keyCode === 37) { this.onArrowLeft(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
     if (event.keyCode === 39) { this.onArrowRight(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
+
+    if (event.keyCode === 9) { terminal.toggleHardmode(); event.preventDefault(); return }
 
     if (event.metaKey) { return }
     if (event.ctrlKey) { return }
