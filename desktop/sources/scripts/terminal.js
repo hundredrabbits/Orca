@@ -32,6 +32,7 @@ function Terminal () {
   this.grid = { w: 8, h: 8 }
   this.tile = { w: 10, h: 15 }
   this.scale = window.devicePixelRatio
+  this.hardmode = true
 
   this.install = function (host) {
     host.appendChild(this.el)
@@ -96,6 +97,12 @@ function Terminal () {
     this.resize(true)
   }
 
+  this.toggleHardmode = function () {
+    this.hardmode = this.hardmode !== true
+    console.log('Terminal', `Hardmode: ${this.hardmode}`)
+    this.update()
+  }
+
   this.modGrid = function (x = 0, y = 0) {
     const w = clamp(this.grid.w + x, 4, 16)
     const h = clamp(this.grid.h + y, 4, 16)
@@ -118,6 +125,26 @@ function Terminal () {
     return !!(x >= this.cursor.x && x < this.cursor.x + this.cursor.w && y >= this.cursor.y && y < this.cursor.y + this.cursor.h)
   }
 
+  this.isMarker = function (x, y) {
+    return x % this.grid.w === 0 && y % this.grid.h === 0
+  }
+
+  this.isNear = function (x, y) {
+    return x > (parseInt(this.cursor.x / this.grid.w) * this.grid.w) - 1 && x <= ((1 + parseInt(this.cursor.x / this.grid.w)) * this.grid.w) && y > (parseInt(this.cursor.y / this.grid.h) * this.grid.h) - 1 && y <= ((1 + parseInt(this.cursor.y / this.grid.h)) * this.grid.h)
+  }
+
+  this.isAligned = function (x, y) {
+    return x === this.cursor.x || y == this.cursor.y
+  }
+
+  this.isEdge = function (x, y) {
+    return x === 0 || y === 0 || x === this.orca.w - 1 || y === this.orca.h - 1
+  }
+
+  this.isLocals = function (x, y) {
+    return this.isNear(x, y) === true && (x % (this.grid.w / 4) === 0 && y % (this.grid.h / 4) === 0) === true
+  }
+
   this.portAt = function (x, y) {
     return this.ports[this.orca.indexAt(x, y)]
   }
@@ -137,29 +164,61 @@ function Terminal () {
     return a
   }
 
+  // Interface
+
+  this.makeGlyph = function (x, y) {
+    const g = this.orca.glyphAt(x, y)
+    if (g !== '.') { return g }
+    if (this.isCursor(x, y)) { return this.isPaused ? '~' : '@' }
+    if (this.isMarker(x, y)) { return '+' }
+    return g
+  }
+
+  this.makeStyle = function (x, y, glyph, selection) {
+    const isLocked = this.orca.lockAt(x, y)
+    const port = this.ports[this.orca.indexAt(x, y)]
+    if (this.isSelection(x, y)) { return 4 }
+    if (glyph === '.' && isLocked === false && this.hardmode === true) { return this.isLocals(x, y) === true ? 9 : 7 }
+    if (selection === glyph && isLocked === false && selection !== '.') { return 6 }
+    if (port) { return port[2] }
+    if (isLocked === true) { return 5 }
+    return 9
+  }
+
+  this.makeTheme = function (type) {
+    // Operator
+    if (type === 0) { return { bg: this.theme.active.b_med, fg: this.theme.active.f_low } }
+    // Haste
+    if (type === 1) { return { fg: this.theme.active.b_med } }
+    // Input
+    if (type === 2) { return { fg: this.theme.active.b_high } }
+    // Output
+    if (type === 3) { return { bg: this.theme.active.b_high, fg: this.theme.active.f_low } }
+    // Selected
+    if (type === 4) { return { bg: this.theme.active.b_inv, fg: this.theme.active.f_inv } }
+    // Locked
+    if (type === 5) { return { fg: this.theme.active.f_med } }
+    // LikeCursor
+    if (type === 6) { return { fg: this.theme.active.b_inv } }
+    // Invisible
+    if (type === 7) { return {} }
+    // Default
+    return { fg: this.theme.active.f_low }
+  }
+
   // Canvas
 
   this.clear = function () {
     this.context.clearRect(0, 0, this.el.width, this.el.height)
   }
 
-  this.guide = function (x, y) {
-    const g = this.orca.glyphAt(x, y)
-    if (g !== '.') { return g }
-    if (this.isCursor(x, y)) { return this.isPaused ? '~' : '@' }
-    if (x % this.grid.w === 0 && y % this.grid.h === 0) { return '+' }
-    return g
-  }
-
   this.drawProgram = function () {
     const selection = this.cursor.read()
     for (let y = 0; y < this.orca.h; y++) {
       for (let x = 0; x < this.orca.w; x++) {
-        const port = this.ports[this.orca.indexAt(x, y)]
-        const glyph = this.guide(x, y)
-        const style = this.isSelection(x, y) ? 4 : port ? port[2] : this.orca.lockAt(x, y) ? 5 : null
-        const likeCursor = glyph === selection && glyph !== '.' && style !== 4 && !this.orca.lockAt(x, y)
-        this.drawSprite(x, y, glyph, likeCursor ? 6 : style)
+        const glyph = this.makeGlyph(x, y)
+        const style = this.makeStyle(x, y, glyph, selection)
+        this.drawSprite(x, y, glyph, style)
       }
     }
   }
@@ -190,36 +249,17 @@ function Terminal () {
   }
 
   this.drawSprite = function (x, y, g, type) {
-    const style = this.drawStyle(type)
-    if (style.bg) {
+    const theme = this.makeTheme(type)
+    if (theme.bg) {
       const bgrect = { x: x * this.tile.w * this.scale, y: (y) * this.tile.h * this.scale, w: this.tile.w * this.scale, h: this.tile.h * this.scale }
-      this.context.fillStyle = style.bg
+      this.context.fillStyle = theme.bg
       this.context.fillRect(bgrect.x, bgrect.y, bgrect.w, bgrect.h)
     }
-    if (style.fg) {
+    if (theme.fg) {
       const fgrect = { x: (x + 0.5) * this.tile.w * this.scale, y: (y + 1) * this.tile.h * this.scale, w: this.tile.w * this.scale, h: this.tile.h * this.scale }
-      this.context.fillStyle = style.fg
+      this.context.fillStyle = theme.fg
       this.context.fillText(g, fgrect.x, fgrect.y)
     }
-  }
-
-  this.drawStyle = function (type) {
-    // Operator
-    if (type === 0) { return { bg: this.theme.active.b_med, fg: this.theme.active.f_low } }
-    // Haste
-    if (type === 1) { return { fg: this.theme.active.b_med } }
-    // Input
-    if (type === 2) { return { fg: this.theme.active.b_high } }
-    // Output
-    if (type === 3) { return { bg: this.theme.active.b_high, fg: this.theme.active.f_low } }
-    // Selected
-    if (type === 4) { return { bg: this.theme.active.b_inv, fg: this.theme.active.f_inv } }
-    // Locked
-    if (type === 5) { return { fg: this.theme.active.f_med } }
-    // LikeCursor
-    if (type === 6) { return { fg: this.theme.active.b_inv } }
-    // Default
-    return { fg: this.theme.active.f_low }
   }
 
   this.write = function (text, offsetX, offsetY, limit, type = 2) {
