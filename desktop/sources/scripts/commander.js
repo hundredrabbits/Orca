@@ -39,6 +39,12 @@ function Commander (terminal) {
   this.operations = {
     'apm': (val) => { terminal.clock.set(null, parseInt(val)) },
     'bpm': (val) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
+    'color': (val) => {
+      const parts = val.split(';')
+      if (isColor(parts[0])) { terminal.theme.active.b_med = '#' + parts[0] }
+      if (isColor(parts[1])) { terminal.theme.active.b_inv = '#' + parts[1] }
+      if (isColor(parts[2])) { terminal.theme.active.b_high = '#' + parts[2] }
+    },
     'goto': (val) => { terminal.cursor.goto(val) },
     'move': (val) => {
       const pos = val.split(';')
@@ -194,6 +200,10 @@ function Commander (terminal) {
 
   this.toString = function () {
     return `${this.query}`
+  }
+
+  function isColor (str) {
+    return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test('#' + str)
   }
 }
 
