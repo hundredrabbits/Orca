@@ -61,8 +61,8 @@ function Commander (terminal) {
     'write': (val) => {
       const g = val.substr(0, 1)
       const pos = val.substr(1).split(';')
-      const x = parseInt(pos[0])
-      const y = parseInt(pos[1])
+      const x = pos[0] ? parseInt(pos[0]) : terminal.cursor.x
+      const y = pos[1] ? parseInt(pos[1]) : terminal.cursor.y
       if (!isNaN(x) && !isNaN(y) && g) {
         terminal.orca.write(x, y, g)
       }
