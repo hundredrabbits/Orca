@@ -52,7 +52,7 @@ function OperatorMidi (orca, x, y, passive) {
 
   function transpose (octave, note) {
     if (OCTAVE.indexOf(note) > -1) { return { octave, note } }
-    const noteOffset = (orca.valueOf(note) - 16) + 5
+    const noteOffset = (orca.valueOf(note) - 16) + 7
     const noteArray = isUpperCase(note) === true ? MAJOR : MINOR
     const noteIndex = noteArray.indexOf(note.toUpperCase()) + noteOffset
     const noteMod = noteArray[noteIndex % noteArray.length]
