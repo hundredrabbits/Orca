@@ -113,19 +113,27 @@ You can **quickly inject orca files** into the currently active file, by using t
 
 ## Base36 Table
 
-Orca operates on a base of **36 increments**. Operators using numeric values will typically also operate on letters and convert them into values as per the following table. For instance `Dp` will bang every *24th frame*. The midi operator interprets any letter above the chromatic scale as a transpose value, for instance `3H`, is equivalent to `4C`.
+Orca operates on a base of **36 increments**. Operators using numeric values will typically also operate on letters and convert them into values as per the following table. For instance `Dp` will bang every *24th frame*. 
 
 | **0** | **1** | **2** | **3** | **4** | **5** | **6** | **7** | **8** | **9** | **A** | **B**  | 
 | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:    | 
 | 0     | 1     | 2     | 3     | 4     | 5     | 6     | 7     | 8     | 9     | 10    | 11     |
-| _     | _     | _     | _     | _     | _     | _     | _     | _     | _     | A     | B      |
 | **C** | **D** | **E** | **F** | **G** | **H** | **I** | **J** | **K** | **L** | **M** | **N**  |
 | 12    | 13    | 14    | 15    | 16    | 17    | 18    | 19    | 20    | 21    | 22    | 23     |
-| C     | D     | E     | F     | G     | C+1   | D+1   | E+1   | F+1   | G+1   | A+1   | B+1    | 
 | **O** | **P** | **Q** | **R** | **S** | **T** | **U** | **V** | **W** | **X** | **Y** | **Z**  | 
 | 24    | 25    | 26    | 27    | 28    | 29    | 30    | 31    | 32    | 33    | 34    | 35     |
-| C+2   | D+2   | E+2   | F+2   | G+2   | A+3   | B+3   | C+3   | D+3   | E+3   | F+3   | G+4    | 
 
+## Transpose Table
+
+The midi operator interprets any letter above the chromatic scale as a transpose value, for instance `3H`, is equivalent to `4C`.
+
+| **0** | **1** | **2** | **3** | **4** | **5** | **6** | **7** | **8** | **9** | **A** | **B**  | 
+| :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:    | 
+| _     | _     | _     | _     | _     | _     | _     | _     | _     | _     | A     | B      |
+| **C** | **D** | **E** | **F** | **G** | **H** | **I** | **J** | **K** | **L** | **M** | **N**  |
+| C     | D     | E     | F     | G     | C+1   | D+1   | E+1   | F+1   | G+1   | A+1   | B+1    | 
+| **O** | **P** | **Q** | **R** | **S** | **T** | **U** | **V** | **W** | **X** | **Y** | **Z**  | 
+| C+2   | D+2   | E+2   | F+2   | G+2   | A+3   | B+3   | C+3   | D+3   | E+3   | F+3   | G+4    | 
 
 ## Companion Applications
 
