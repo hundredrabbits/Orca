@@ -133,7 +133,7 @@ The midi operator interprets any letter above the chromatic scale as a transpose
 | **C** | **D** | **E** | **F** | **G** | **H** | **I** | **J** | **K** | **L** | **M** | **N**  |
 | C     | D     | E     | F     | G     | C1    | D1    | E1    | F1    | G1    | A1    | B1     | 
 | **O** | **P** | **Q** | **R** | **S** | **T** | **U** | **V** | **W** | **X** | **Y** | **Z**  | 
-| C2    | D2    | E2    | F2    | G2    | A3    | B3    | C3    | D3    | E3    | F3    | G4     | 
+| C2    | D2    | E2    | F2    | G2    | A3    | B3    | C4    | D4    | E4    | F4    | G4     | 
 
 ## Companion Applications
 
