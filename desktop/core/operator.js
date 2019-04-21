@@ -12,10 +12,10 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
 
   // Actions
 
-  this.listen = function (port, toValue = false, min = 0, max = 36) {
-    if (!port) { return toValue ? 0 : '.' }
+  this.listen = function (port, toValue = false, min = 0, max = 36, fallback = null) {
+    if (!port) { return fallback || (toValue ? 0 : '.') }
     const g = orca.glyphAt(this.x + port.x, this.y + port.y)
-    return toValue ? clamp(orca.valueOf(g), min, max) : g
+    return fallback && g === '.' ? fallback : toValue ? clamp(orca.valueOf(g), min, max) : g
   }
 
   this.output = function (g, lock = false, casesensitive = false) {

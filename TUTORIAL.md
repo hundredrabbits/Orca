@@ -140,6 +140,18 @@ Banging the lowercase `x` triggers it, count ranges from the right `x` input to 
 ....I0z
 ```
 
+### Increment Major Note
+
+This technique does not use a lookup table.
+
+```
+...AC8
+..AKq.
+.Ma7..
+A3A...
+D.....
+```
+
 ## Families
 
 | Families                                               | Glyphs

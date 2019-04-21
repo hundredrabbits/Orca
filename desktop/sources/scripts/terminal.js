@@ -136,7 +136,7 @@ function Terminal () {
   }
 
   this.isAligned = function (x, y) {
-    return x === this.cursor.x || y == this.cursor.y
+    return x === this.cursor.x || y === this.cursor.y
   }
 
   this.isEdge = function (x, y) {
