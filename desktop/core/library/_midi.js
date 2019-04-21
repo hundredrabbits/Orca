@@ -32,7 +32,6 @@ function OperatorMidi (orca, x, y, passive) {
     if (orca.valueOf(rawChannel) > 15) { return }
 
     const transposed = transpose(rawOctave, rawNote)
-    console.log(rawOctave, rawNote, transposed)
     // 0 - 16
     const channel = clamp(orca.valueOf(rawChannel), 0, 15)
     // 1 - 8
