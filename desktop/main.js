@@ -2,15 +2,21 @@ const { app, BrowserWindow, webFrame, Menu } = require('electron')
 const path = require('path')
 const url = require('url')
 const shell = require('electron').shell
+const fs = require('fs')
 
 let isShown = true
-
+let windowState = false
 app.win = null
+
+const userWindowState = `${app.getPath('userData')}/window-state.json`
+if (fs.existsSync(userWindowState)) windowState = JSON.parse(fs.readFileSync(userWindowState))
 
 app.on('ready', () => {
   app.win = new BrowserWindow({
-    width: 710,
-    height: 470,
+    width: windowState ? windowState.width : 710,
+    height: windowState ? windowState.height : 470,
+    x: windowState && windowState.x,
+    y: windowState && windowState.y,
     minWidth: 310,
     minHeight: 350,
     backgroundColor: '#000',
@@ -49,6 +55,15 @@ app.on('ready', () => {
       app.win.show()
     }
   })
+
+  app.win.on('resize', () => {
+    updateWindowState()
+  })
+  
+  app.win.on('move', () => {
+    updateWindowState()
+  })
+
 })
 
 app.inspect = function () {
@@ -77,4 +92,8 @@ app.injectMenu = function (menu) {
   } catch (err) {
     console.warn('Cannot inject menu.')
   }
+}
+
+const updateWindowState = () => {
+  fs.writeFileSync(userWindowState, JSON.stringify(app.win.getBounds()))
 }
