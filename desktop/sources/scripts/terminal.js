@@ -30,7 +30,10 @@ function Terminal () {
 
   // Settings
   this.grid = { w: 8, h: 8 }
-  this.tile = { w: 10, h: 15 }
+  this.tile = { 
+    w: +localStorage.getItem('tilew') || 10, 
+    h: +localStorage.getItem('tileh') || 15 
+  }
   this.scale = window.devicePixelRatio
   this.hardmode = true
 
@@ -114,6 +117,8 @@ function Terminal () {
       w: reset ? 10 : this.tile.w * (mod + 1),
       h: reset ? 15 : this.tile.h * (mod + 1)
     }
+    localStorage.setItem('tilew', this.tile.w)
+    localStorage.setItem('tileh', this.tile.h)
     this.resize(true)
   }
 
