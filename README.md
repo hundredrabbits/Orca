@@ -1,6 +1,6 @@
 # ORCΛ
 
-<img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/logo.png' width="600"/>
+<img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/logo.png?v=1' width="600"/>
 
 **Each letter of the alphabet is an operation**, <br />lowercase letters operate on bang, uppercase letters operate each frame. 
 
