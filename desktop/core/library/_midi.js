@@ -52,14 +52,14 @@ function OperatorMidi (orca, x, y, passive) {
 
   function transpose (octave, note) {
     if (OCTAVE.indexOf(note) > -1) { return { octave, note } }
-    const noteOffset = (orca.valueOf(note) - 16) + 7
     const noteArray = isUpperCase(note) === true ? MAJOR : MINOR
-    const noteIndex = noteArray.indexOf(note.toUpperCase()) + noteOffset
+    const noteIndex = letterValue(note) - 7
     const noteMod = noteArray[noteIndex % noteArray.length]
-    const octaveMod = Math.floor(noteIndex / noteArray.length)
+    const octaveMod = Math.floor(noteIndex / noteArray.length) + 1
     return { octave: octave + octaveMod, note: noteMod === 'e' ? 'F' : noteMod === 'b' ? 'C' : noteMod }
   }
 
+  function letterValue (c) { return c.toLowerCase().charCodeAt(0) - 97 }
   function isUpperCase (s) { return `${s}`.toUpperCase() === `${s}` }
   function clampNotes (n) { return n === 'e' ? 'F' : n === 'b' ? 'C' : n }
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
