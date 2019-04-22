@@ -8,8 +8,8 @@ function OperatorA (orca, x, y, passive) {
   this.name = 'add'
   this.info = 'Outputs the sum of inputs.'
 
-  this.ports.input.a = { x: 1, y: 0 }
-  this.ports.input.b = { x: 2, y: 0 }
+  this.ports.input.a = { x: -1, y: 0 }
+  this.ports.input.b = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
   this.run = function () {

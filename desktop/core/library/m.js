@@ -8,8 +8,8 @@ function OperatorM (orca, x, y, passive) {
   this.name = 'modulo'
   this.info = 'Outputs the modulo of input.'
 
-  this.ports.input.val = { x: 1, y: 0 }
-  this.ports.input.mod = { x: 2, y: 0 }
+  this.ports.input.val = { x: -1, y: 0 }
+  this.ports.input.mod = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
   this.run = function () {
