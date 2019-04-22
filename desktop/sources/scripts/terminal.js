@@ -30,9 +30,9 @@ function Terminal () {
 
   // Settings
   this.grid = { w: 8, h: 8 }
-  this.tile = { 
-    w: +localStorage.getItem('tilew') || 10, 
-    h: +localStorage.getItem('tileh') || 15 
+  this.tile = {
+    w: +localStorage.getItem('tilew') || 10,
+    h: +localStorage.getItem('tileh') || 15
   }
   this.scale = window.devicePixelRatio
   this.hardmode = true
