@@ -114,10 +114,12 @@ function Commander (terminal) {
 
     if (event.keyCode === 191 && (event.metaKey || event.ctrlKey)) { terminal.cursor.comment(); event.preventDefault(); return }
 
-    if ((event.key === 'c' || event.key === 'C') && (event.metaKey || event.ctrlKey)) { terminal.cursor.copy(); event.preventDefault(); return }
-    if ((event.key === 'x' || event.key === 'X') && (event.metaKey || event.ctrlKey)) { terminal.cursor.cut(); event.preventDefault(); return }
-    if ((event.key === 'v' || event.key === 'V') && (event.metaKey || event.ctrlKey)) { terminal.cursor.paste(); event.preventDefault(); return }
-    if ((event.key === 'a' || event.key === 'A') && (event.metaKey || event.ctrlKey)) { terminal.cursor.selectAll(); event.preventDefault(); return }
+  // 67 88 86 65
+
+    if (event.keyCode === 67 && (event.metaKey || event.ctrlKey)) { terminal.cursor.copy(); event.preventDefault(); return }
+    if (event.keyCode === 88 && (event.metaKey || event.ctrlKey)) { terminal.cursor.cut(); event.preventDefault(); return }
+    if (event.keyCode === 86 && (event.metaKey || event.ctrlKey)) { terminal.cursor.paste(); event.preventDefault(); return }
+    if (event.keyCode === 65 && (event.metaKey || event.ctrlKey)) { terminal.cursor.selectAll(); event.preventDefault(); return }
 
     // Undo/Redo
     if (event.key === 'z' && (event.metaKey || event.ctrlKey) && event.shiftKey) { terminal.history.redo(); event.preventDefault(); return }
