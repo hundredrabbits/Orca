@@ -11,6 +11,11 @@ function Clock (terminal) {
     this.play()
   }
 
+  this.touch = function () {
+    this.stop()
+    terminal.run()
+  }
+
   this.update = function () {
     // Animate
     if (this.speed.target !== this.speed.value) {
