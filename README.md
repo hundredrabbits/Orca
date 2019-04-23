@@ -24,7 +24,7 @@ npm start
 ## Operators
 
 - `A` **add**: Outputs the sum of inputs.
-- `B` **bong**: Bounces between two values based on the runtime frame.
+- `B` **bounce**: Bounces between two values based on the runtime frame.
 - `C` **clock**: Outputs a constant value based on the runtime frame.
 - `D` **delay**: Bangs on a fraction of the runtime frame.
 - `E` **east**: Moves eastward, or bangs.

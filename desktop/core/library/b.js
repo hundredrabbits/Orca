@@ -5,7 +5,7 @@ const Operator = require('../operator')
 function OperatorB (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'b', passive)
 
-  this.name = 'bong'
+  this.name = 'bounce'
   this.info = 'Bounces between two values based on the runtime frame.'
 
   this.ports.haste.rate = { x: -1, y: 0 }
