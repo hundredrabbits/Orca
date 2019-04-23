@@ -66,7 +66,7 @@ function Midi (terminal) {
     if (!this.outputDevice()) { console.warn('Midi', 'No midi output!'); return }
 
     const channel = down === true ? 0x90 + item[0] : 0x80 + item[0]
-    const note = 24 + (item[1] * 12) + item[2]
+    const note = clamp(24 + (item[1] * 12) + item[2], 0, 127)
     const velocity = item[3]
 
     this.outputDevice().send([channel, note, velocity])
