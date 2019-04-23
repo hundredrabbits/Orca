@@ -5,15 +5,19 @@ const Operator = require('../operator')
 function OperatorB (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'b', passive)
 
-  this.name = 'bool'
-  this.info = 'Bangs if input is not empty, or 0.'
+  this.name = 'bong'
+  this.info = 'Bounces between two values based on the runtime frame.'
 
-  this.ports.haste.val = { x: -1, y: 0 }
+  this.ports.haste.rate = { x: -1, y: 0 }
+  this.ports.input.to = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
   this.run = function () {
-    const val = this.listen(this.ports.haste.val)
-    const res = val !== '.' && val !== '0' ? '*' : '.'
+    const rate = this.listen(this.ports.haste.rate, true, 1)
+    const to = this.listen(this.ports.input.to, true) - 1
+    const key = (Math.floor(orca.f / rate) % (to * 2))
+    const val = key <= to ? key : to - (key - to)
+    const res = orca.keyOf(val)
     this.output(`${res}`)
   }
 }
