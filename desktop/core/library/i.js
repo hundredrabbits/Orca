@@ -12,13 +12,6 @@ function OperatorI (orca, x, y, passive) {
   this.ports.input.max = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
-  this.haste = function () {
-    const len = this.listen(this.ports.haste.len, true, 1, 36)
-    for (let x = 1; x <= len; x++) {
-      orca.lock(this.x + x, this.y)
-    }
-  }
-
   this.run = function () {
     const min = this.listen(this.ports.input.min, true)
     const max = this.listen(this.ports.input.max, true)
