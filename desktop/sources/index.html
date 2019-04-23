@@ -17,7 +17,7 @@
       terminal.controller.add("default","*","About",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Orca') },"CmdOrCtrl+,")
       terminal.controller.add("default","*","Fullscreen",() => { app.toggleFullscreen() },"CmdOrCtrl+Enter")
       terminal.controller.add("default","*","Hide",() => { app.toggleVisible() },"CmdOrCtrl+H")
-      terminal.controller.add("default","*","Toggle Menubar",() => { app.toggleMenubar() },"Alt+Escape")
+      terminal.controller.add("default","*","Toggle Menubar",() => { app.toggleMenubar() },"Alt+H")
       terminal.controller.add("default","*","Inspect",() => { app.inspect() },"CmdOrCtrl+.")
       terminal.controller.add("default","*","Reset",() => { terminal.reset() },"CmdOrCtrl+Backspace")
       terminal.controller.add("default","*","Quit",() => { terminal.unload(); app.exit() },"CmdOrCtrl+Q")
