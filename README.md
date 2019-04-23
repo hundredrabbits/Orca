@@ -31,7 +31,7 @@ npm start
 - `F` **if**: Bangs if both inputs are equal.
 - `G` **generator**: Writes distant operators with offset.
 - `H` **halt**: Stops southward operators from operating.
-- `I` **increment**: Increments southward operator.
+- `I` **index**: Outputs the index of the first instance of a character.
 - `J` **jumper**: Outputs the northward operator.
 - `K` **konkat**: Outputs multiple variables.
 - `L` **loop**: Loops a number of eastward operators.
