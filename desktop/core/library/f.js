@@ -15,8 +15,7 @@ function OperatorF (orca, x, y, passive) {
   this.run = function () {
     const a = this.listen(this.ports.input.a)
     const b = this.listen(this.ports.input.b)
-    if (a === '.' && b === '.') { return }
-    const res = a === b ? '*' : '.'
+    const res = a === '.' && b === '.' ? '.' : a === b ? '*' : '.'
     this.output(`${res}`)
   }
 }
