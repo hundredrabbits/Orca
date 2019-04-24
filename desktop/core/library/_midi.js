@@ -29,7 +29,7 @@ function OperatorMidi (orca, x, y, passive) {
 
     if (rawChannel === -1) { return }
     if (rawOctave === -1) { return }
-    if (rawNote === '.') { return }
+    if (rawNote === '.' || !isNaN(rawNote)) { return }
 
     const transposed = transpose(rawOctave, rawNote)
     // 0 - 16
