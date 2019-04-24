@@ -21,19 +21,17 @@ function OperatorMidi (orca, x, y, passive) {
   this.run = function (force = false) {
     if (!this.bang() && force === false) { return }
 
-    const rawChannel = this.listen(this.ports.haste.channel)
+    const rawChannel = this.listen(this.ports.haste.channel, true, 0, 15)
     const rawOctave = this.listen(this.ports.haste.octave, true, 0, 8)
     const rawNote = this.listen(this.ports.haste.note)
     const rawVelocity = this.listen(this.ports.input.velocity, true, 0, 16, 16)
     const rawLength = this.listen(this.ports.input.length, true, 0, 16, 1)
 
-    if (rawChannel === '.') { return }
     if (rawNote === '.') { return }
-    if (orca.valueOf(rawChannel) > 15) { return }
 
     const transposed = transpose(rawOctave, rawNote)
     // 0 - 16
-    const channel = clamp(orca.valueOf(rawChannel), 0, 15)
+    const channel = rawChannel
     // 1 - 8
     const octave = clamp(transposed.note === 'b' ? transposed.octave + 1 : transposed.octave, 0, 8)
     // 0 - 11
