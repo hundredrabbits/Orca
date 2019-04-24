@@ -27,8 +27,8 @@ function OperatorMidi (orca, x, y, passive) {
     const rawVelocity = this.listen(this.ports.input.velocity, true, 0, 16, 16)
     const rawLength = this.listen(this.ports.input.length, true, 0, 16, 1)
 
-    if (rawChannel === '.') { console.warn('ch'); return }
-    if (rawNote === '.') { console.warn('note'); return }
+    if (rawChannel === '.') { return }
+    if (rawNote === '.') { return }
     if (orca.valueOf(rawChannel) > 15) { return }
 
     const transposed = transpose(rawOctave, rawNote)
