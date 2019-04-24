@@ -8,18 +8,23 @@ function OperatorCC (orca, x, y) {
   this.name = 'Midi CC'
   this.info = 'Sends a MIDI control change message.'
 
-  this.ports.input.channel = { x: 1, y: 0 }
-  this.ports.input.knob = { x: 2, y: 0 }
+  this.ports.haste.channel = { x: 1, y: 0 }
+  this.ports.haste.knob = { x: 2, y: 0 }
   this.ports.input.value = { x: 3, y: 0 }
 
   this.run = function (force = false) {
     if (!this.bang() && force === false) { return }
 
-    const channel = this.listen(this.ports.input.channel, true, 0, 15)
-    const knob = this.listen(this.ports.input.knob, true)
-    const rawValue = this.listen(this.ports.input.value, true)
+    const channel = this.listen(this.ports.haste.channel, true, 0, 15, -1)
+    const knob = this.listen(this.ports.haste.knob, true, 0, 36, -1)
+    const rawValue = this.listen(this.ports.input.value, true, 0, 36)
+
+    if (channel === -1) { return }
+    if (knob === -1) { return }
+
     const val = Math.ceil((127 * rawValue) / 35)
 
+    this.draw = false
     terminal.io.cc.send(channel, knob, val)
 
     if (force === true) {

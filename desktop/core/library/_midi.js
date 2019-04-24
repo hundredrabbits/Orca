@@ -21,12 +21,14 @@ function OperatorMidi (orca, x, y, passive) {
   this.run = function (force = false) {
     if (!this.bang() && force === false) { return }
 
-    const rawChannel = this.listen(this.ports.haste.channel, true, 0, 15)
-    const rawOctave = this.listen(this.ports.haste.octave, true, 0, 8)
+    const rawChannel = this.listen(this.ports.haste.channel, true, 0, 15, -1)
+    const rawOctave = this.listen(this.ports.haste.octave, true, 0, 8, -1)
     const rawNote = this.listen(this.ports.haste.note)
     const rawVelocity = this.listen(this.ports.input.velocity, true, 0, 16, 16)
     const rawLength = this.listen(this.ports.input.length, true, 0, 16, 1)
 
+    if (rawChannel === -1) { return }
+    if (rawOctave === -1) { return }
     if (rawNote === '.') { return }
 
     const transposed = transpose(rawOctave, rawNote)
