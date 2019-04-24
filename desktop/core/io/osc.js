@@ -54,7 +54,7 @@ function Osc (terminal) {
   }
 
   this.setup = function (ip = '127.0.0.1') {
-    if (this.client) { this.client.kill() }
+    if (this.client) { this.client.close() }
     this.client = new osc.Client(ip, this.port)
   }
 }
