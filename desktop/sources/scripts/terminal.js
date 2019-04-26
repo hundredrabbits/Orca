@@ -185,7 +185,7 @@ function Terminal () {
     const isLocked = this.orca.lockAt(x, y)
     const port = this.ports[this.orca.indexAt(x, y)]
     if (this.isSelection(x, y)) { return 4 }
-    if (glyph === '.' && isLocked === false && this.hardmode === true) { return this.isLocals(x, y) === true ? 9 : 7 }
+    if (!port && glyph === '.' && isLocked === false && this.hardmode === true) { return this.isLocals(x, y) === true ? 9 : 7 }
     if (selection === glyph && isLocked === false && selection !== '.') { return 6 }
     if (port) { return port[2] }
     if (isLocked === true) { return 5 }
