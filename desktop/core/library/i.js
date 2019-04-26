@@ -13,8 +13,8 @@ function OperatorI (orca, x, y, passive) {
   this.ports.output = { x: 0, y: 1 }
 
   this.run = function () {
-    const min = this.listen(this.ports.haste.min, true)
-    const max = this.listen(this.ports.input.max, true)
+    const min = this.listen(this.ports.haste.min, true, 0, 36, 0)
+    const max = this.listen(this.ports.input.max, true, 0, 36, 36)
     const val = this.listen(this.ports.output, true)
     if (min === max) { return }
     const next = val + (min < max ? 1 : -1)
