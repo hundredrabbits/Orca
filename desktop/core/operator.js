@@ -31,12 +31,6 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   // Phases
 
   this.permissions = function () {
-    for (const id in this.ports.haste) {
-      const port = this.ports.haste[id]
-      if (!port.unlock) {
-        orca.lock(this.x + port.x, this.y + port.y)
-      }
-    }
     for (const id in this.ports.input) {
       const port = this.ports.input[id]
       if (!port.unlock) {
