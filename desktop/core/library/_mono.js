@@ -12,21 +12,26 @@ function OperatorMono (orca, x, y, passive) {
   this.name = 'mono'
   this.info = 'Sends MIDI note to a monophonic instrument.'
 
-  this.ports.input.octave = { x: 1, y: 0 }
-  this.ports.input.note = { x: 2, y: 0 }
-  this.ports.input.length = { x: 3, y: 0 }
+  this.ports.input.channel = { x: 1, y: 0 }
+  this.ports.input.octave = { x: 2, y: 0 }
+  this.ports.input.note = { x: 3, y: 0 }
+  this.ports.input.length = { x: 4, y: 0 }
 
   this.run = function (force = false) {
     if (!this.bang() && force === false) { return }
 
+    const rawChannel = this.listen(this.ports.input.channel, true, 0, 15, -1)
     const rawOctave = this.listen(this.ports.input.octave, true, 0, 8, -1)
     const rawNote = this.listen(this.ports.input.note)
-    const rawLength = this.listen(this.ports.input.length, true, 0, 16, 1)
+    const rawLength = this.listen(this.ports.input.length, true, 0, 16, 0)
 
+    if (rawChannel === -1) { return }
     if (rawOctave === -1) { return }
     if (rawNote === '.' || !isNaN(rawNote)) { return }
 
     const transposed = transpose(rawOctave, rawNote)
+    // 0 - 16
+    const channel = rawChannel
     // 1 - 8
     const octave = clamp(transposed.note === 'b' ? transposed.octave + 1 : transposed.octave, 0, 8)
     // 0 - 11
@@ -38,7 +43,7 @@ function OperatorMono (orca, x, y, passive) {
 
     this.draw = false
 
-    terminal.io.mono.send(octave, note, length)
+    terminal.io.mono.send(channel, octave, note, length)
   }
 
   function transpose (octave, note) {

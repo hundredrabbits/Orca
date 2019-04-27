@@ -1,6 +1,7 @@
 'use strict'
 
 function Mono (terminal) {
+  this.queue = null
   this.stack = []
 
   this.start = function () {
@@ -8,17 +9,34 @@ function Mono (terminal) {
   }
 
   this.run = function () {
-    this.stack = this.stack.filter((item) => {
-      const alive = item[4] > 0
-      const played = item[5]
-      if (alive !== true) {
-        this.trigger(item, false)
-      } else if (played !== true) {
-        this.trigger(item, true)
+    if (this.stack[0]) {
+      if (this.stack[0].length < 1) {
+        this.release(this.stack[0])
+      } else {
+        console.log('life', this.stack[0].length)
+        this.stack[0].length--
       }
-      item[4]--
-      return alive
-    })
+    }
+
+    if (this.queue) {
+      this.press()
+    }
+  }
+
+  this.press = function (item = this.queue) {
+    if (!item) { return }
+    if (this.stack[0]) { this.release() }
+    console.log('press', item)
+    this.trigger(item, true)
+    this.stack[0] = item
+    this.queue = null
+  }
+
+  this.release = function (item = this.stack[0]) {
+    if (!item) { return }
+    console.log('release', item)
+    this.trigger(this.stack[0], false)
+    this.stack[0] = null
   }
 
   this.clear = function () {
@@ -27,27 +45,20 @@ function Mono (terminal) {
 
   this.trigger = function (item, down) {
     if (!terminal.io.midi.outputDevice()) { console.warn('Mono', 'No midi output!'); return }
+    if (!item) { return }
 
-    const channel = down === true ? 0x90 : 0x80
-    const note = clamp(24 + (item[1] * 12) + item[2], 0, 127)
+    const channel = down === true ? 0x90 + item.channel : 0x80 + item.channel
+    const note = clamp(24 + (item.octave * 12) + item.note, 0, 127)
 
-    console.log(down, item)
-    // this.outputDevice().send([channel, note, velocity])
-    item[5] = true
+    terminal.io.midi.outputDevice().send([channel, note, 127])
   }
 
-  this.send = function (octave, note, length, played = false) {
-    for (const id in this.stack) {
-      const item = this.stack[id]
-    }
-    this.stack.push([octave, note, length, played])
+  this.send = function (channel, octave, note, length) {
+    this.queue = { channel, octave, note, length }
   }
 
   this.silence = function () {
-    this.stack = this.stack.filter((item) => {
-      this.trigger(item, false)
-      return false
-    })
+    this.release()
   }
 
   // UI
