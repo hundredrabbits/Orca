@@ -23,7 +23,7 @@ function OperatorMidi (orca, x, y, passive) {
 
     const rawChannel = this.listen(this.ports.input.channel, true, 0, 15, -1)
     const rawOctave = this.listen(this.ports.input.octave, true, 0, 8, -1)
-    const rawNote = this.listen(this.ports.input.note)
+    const rawNote = clampNotes(this.listen(this.ports.input.note))
     const rawVelocity = this.listen(this.ports.input.velocity, true, 0, 16, 16)
     const rawLength = this.listen(this.ports.input.length, true, 0, 16, 1)
 
