@@ -67,7 +67,7 @@ For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI chan
 
 The [MIDI](https://en.wikipedia.org/wiki/MIDI) operator `%` takes up to 5 inputs('channel, 'octave, 'note, velocity, length). 
 
-This operator is very similar to the default Midi operator, but each new note will mute the previously sustained note, would its length overlap with the new one. Making certain that only a single note is played at one, this is ideal for monophonic analog synthetisers that might struggle to dealing with chords and note overlaps.
+This operator is very similar to the default Midi operator, but **each new note will stop the previously playing note**, would its length overlap with the new one. Making certain that only a single note is ever played at once, this is ideal for monophonic analog synthetisers that might struggle to dealing with chords and note overlaps.
 
 ## MIDI CC
 
