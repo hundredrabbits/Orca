@@ -15,7 +15,8 @@ function OperatorMono (orca, x, y, passive) {
   this.ports.input.channel = { x: 1, y: 0 }
   this.ports.input.octave = { x: 2, y: 0 }
   this.ports.input.note = { x: 3, y: 0 }
-  this.ports.input.length = { x: 4, y: 0 }
+  this.ports.input.velocity = { x: 4, y: 0 }
+  this.ports.input.length = { x: 5, y: 0 }
 
   this.run = function (force = false) {
     if (!this.bang() && force === false) { return }
@@ -23,6 +24,7 @@ function OperatorMono (orca, x, y, passive) {
     const rawChannel = this.listen(this.ports.input.channel, true, 0, 15, -1)
     const rawOctave = this.listen(this.ports.input.octave, true, 0, 8, -1)
     const rawNote = this.listen(this.ports.input.note)
+    const rawVelocity = this.listen(this.ports.input.velocity, true, 0, 16, 16)
     const rawLength = this.listen(this.ports.input.length, true, 0, 16, 0)
 
     if (rawChannel === -1) { return }
@@ -36,6 +38,8 @@ function OperatorMono (orca, x, y, passive) {
     const octave = clamp(transposed.note === 'b' ? transposed.octave + 1 : transposed.octave, 0, 8)
     // 0 - 11
     const note = OCTAVE.indexOf(transposed.note)
+    // 0 - G(127)
+    const velocity = parseInt((rawVelocity / 16) * 127)
     // 0 - G(16)
     const length = rawLength
 
@@ -43,7 +47,7 @@ function OperatorMono (orca, x, y, passive) {
 
     this.draw = false
 
-    terminal.io.mono.send(channel, octave, note, length)
+    terminal.io.mono.send(channel, octave, note, velocity, length)
   }
 
   function transpose (octave, note) {
@@ -52,7 +56,7 @@ function OperatorMono (orca, x, y, passive) {
     const noteIndex = letterValue(note) - 7
     const noteMod = noteArray[noteIndex % noteArray.length]
     const octaveMod = Math.floor(noteIndex / noteArray.length) + 1
-    return { octave: octave + octaveMod, note: noteMod === 'e' ? 'F' : noteMod === 'b' ? 'C' : noteMod }
+    return { octave: octave + octaveMod, note: clampNotes(noteMod) }
   }
 
   function letterValue (c) { return c.toLowerCase().charCodeAt(0) - 97 }

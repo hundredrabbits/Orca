@@ -56,7 +56,7 @@ function OperatorMidi (orca, x, y, passive) {
     const noteIndex = letterValue(note) - 7
     const noteMod = noteArray[noteIndex % noteArray.length]
     const octaveMod = Math.floor(noteIndex / noteArray.length) + 1
-    return { octave: octave + octaveMod, note: noteMod === 'e' ? 'F' : noteMod === 'b' ? 'C' : noteMod }
+    return { octave: octave + octaveMod, note: clampNotes(noteMod) }
   }
 
   function letterValue (c) { return c.toLowerCase().charCodeAt(0) - 97 }

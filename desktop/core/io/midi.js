@@ -67,7 +67,7 @@ function Midi (terminal) {
 
     const channel = down === true ? 0x90 + item[0] : 0x80 + item[0]
     const note = clamp(24 + (item[1] * 12) + item[2], 0, 127)
-    const velocity = item[3]
+    const velocity = clamp(item.velocity, 0, 127)
 
     this.outputDevice().send([channel, note, velocity])
     item[5] = true

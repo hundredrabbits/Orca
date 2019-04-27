@@ -49,12 +49,13 @@ function Mono (terminal) {
 
     const channel = down === true ? 0x90 + item.channel : 0x80 + item.channel
     const note = clamp(24 + (item.octave * 12) + item.note, 0, 127)
+    const velocity = clamp(item.velocity, 0, 127)
 
-    terminal.io.midi.outputDevice().send([channel, note, 127])
+    terminal.io.midi.outputDevice().send([channel, note, velocity])
   }
 
-  this.send = function (channel, octave, note, length) {
-    this.queue = { channel, octave, note, length }
+  this.send = function (channel, octave, note, velocity, length) {
+    this.queue = { channel, octave, note, velocity, length }
   }
 
   this.silence = function () {
