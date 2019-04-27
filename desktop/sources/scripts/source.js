@@ -83,6 +83,7 @@ function Source (terminal) {
   }
 
   this.hasChanges = function () {
+    if (terminal.history.length() < 5) { return }
     console.log('Source', 'Looking for changes..')
     if (!this.path) {
       console.log('Source', 'File is unsaved..')

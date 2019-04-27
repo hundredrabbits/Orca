@@ -62,6 +62,14 @@ function History () {
     this.frames.shift()
   }
 
+  this.last = function () {
+    return this.frames[this.index - 1]
+  }
+
+  this.length = function () {
+    return this.frames.length
+  }
+
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 

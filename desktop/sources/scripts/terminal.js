@@ -64,6 +64,7 @@ function Terminal () {
     this.history.reset()
     this.orca = orca
     this.setSize({ w: orca.w * this.tile.w, h: orca.h * this.tile.h })
+    this.history.record(this.orca.s)
     this.update()
   }
 

@@ -25,7 +25,7 @@ function OperatorMono (orca, x, y, passive) {
     const rawOctave = this.listen(this.ports.input.octave, true, 0, 8)
     const rawNote = clampNotes(this.listen(this.ports.input.note))
     const rawVelocity = this.listen(this.ports.input.velocity, true, 0, 16)
-    const rawLength = this.listen(this.ports.input.length, true, 0, 1)
+    const rawLength = this.listen(this.ports.input.length, true, 0, 16)
 
     if (rawChannel === -1) { return }
     if (rawOctave === -1) { return }
