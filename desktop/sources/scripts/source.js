@@ -28,22 +28,22 @@ function Source (terminal) {
     this.read(paths[0])
   }
 
-  this.save = function (as = false, quit = false) {
+  this.save = function (quitAfter = false) {
     console.log('Source', 'Save a file..')
-    if (this.path && !as) {
-      this.write(this.path, quit)
+    if (this.path) {
+      this.write(this.path, this.generate(), quitAfter)
     } else {
-      this.saveAs(quit)
+      this.saveAs(quitAfter)
     }
   }
 
-  this.saveAs = function (quit = false) {
+  this.saveAs = function (quitAfter = false) {
     console.log('Source', 'Save a file as..')
     dialog.showSaveDialog((path) => {
       if (path === undefined) { return }
       if (path.indexOf('.orca') < 0) { path += '.orca' }
-      terminal.source.write(path, this.generate(), quit)
-      terminal.source.path = path
+      this.write(path, this.generate(), quitAfter)
+      this.path = path
     })
   }
 
@@ -55,11 +55,11 @@ function Source (terminal) {
 
   // I/O
 
-  this.write = function (path, data = this.generate(), quit = false) {
+  this.write = function (path, data = this.generate(), quitAfter = false) {
     console.log('Source', 'Writing ' + path)
     fs.writeFileSync(path, data)
     terminal.source.remember('active', path)
-    if (quit === true) {
+    if (quitAfter === true) {
       app.exit()
     }
   }
@@ -92,7 +92,7 @@ function Source (terminal) {
       icon: path.join(__dirname, '../../icon.png')
     })
     if (response === 2) {
-      this.save(true, true)
+      this.save(true)
     } else if (response === 1) {
       app.exit()
     }
@@ -107,8 +107,8 @@ function Source (terminal) {
         return true
       }
     } else {
-      console.log('Source', 'Comparing with last saved copy..')
       if (fs.existsSync(this.path)) {
+        console.log('Source', 'Comparing with last saved copy..')
         const diff = isDifferent(fs.readFileSync(this.path, 'utf8'), this.generate())
         if (diff === true) {
           console.log('Source', 'File has been changed.')
