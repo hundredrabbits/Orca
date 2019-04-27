@@ -75,7 +75,7 @@ function Source (terminal) {
   }
 
   this.quit = function () {
-    if (this.hasChanges()) {
+    if (this.hasChanges() === true) {
       this.verify()
     } else {
       app.exit()
@@ -100,12 +100,14 @@ function Source (terminal) {
   this.verify = function () {
     let response = dialog.showMessageBox(app.win, {
       type: 'question',
-      buttons: ['Yes', 'No'],
+      buttons: ['Save', 'Discard'],
       title: 'Confirm',
-      message: 'Unsaved data will be lost. Are you sure you want to quit?',
+      message: 'Unsaved data will be lost. Would you like to save your changes before leaving?',
       icon: path.join(__dirname, '../../icon.png')
     })
     if (response === 0) {
+      this.save()
+    } else {
       app.exit()
     }
   }
@@ -167,7 +169,9 @@ function Source (terminal) {
     return this.path ? this.name() : 'blank'
   }
 
-  function isDifferent (a, b) { return a.replace(/[^a-zA-Z0-9+]+/gi, '').trim() === b.replace(/[^a-zA-Z0-9+]+/gi, '').trim() }
+  function isDifferent (a, b) {
+    return a.replace(/[^a-zA-Z0-9+]+/gi, '').trim() !== b.replace(/[^a-zA-Z0-9+]+/gi, '').trim()
+  }
 }
 
 module.exports = Source
