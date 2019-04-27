@@ -29,9 +29,9 @@ function Midi (terminal) {
       terminal.controller.add('default', 'Midi', `No Midi Outputs`)
     } else {
       for (const id in this.outputs) {
-        terminal.controller.add('default', 'Midi', `${this.outputs[id].name} ${terminal.io.midi.outputIndex === parseInt(id) ? ' — Output' : ''}`, () => { terminal.io.midi.selectOutput(id) }, '')
+        terminal.controller.add('default', 'Midi', `${this.outputs[id].name} Output ${terminal.io.midi.outputIndex === parseInt(id) ? ' — Active' : ''}`, () => { terminal.io.midi.selectOutput(id) }, '')
       }
-      terminal.controller.add('default', 'Midi', `No Output ${terminal.io.midi.outputIndex === -1 ? ' — Output' : ''}`, () => { terminal.io.midi.selectOutput(-1) }, '')
+      terminal.controller.add('default', 'Midi', `No Output ${terminal.io.midi.outputIndex === -1 ? ' — Active' : ''}`, () => { terminal.io.midi.selectOutput(-1) }, '')
       terminal.controller.addSpacer('default', 'Midi', 'spacer2')
     }
 
@@ -40,9 +40,9 @@ function Midi (terminal) {
       terminal.controller.add('default', 'Midi', `No Midi Inputs`)
     } else {
       for (const id in this.inputs) {
-        terminal.controller.add('default', 'Midi', `${this.inputs[id].name} ${terminal.io.midi.inputIndex === parseInt(id) ? ' — Input' : ''}`, () => { terminal.io.midi.selectInput(id) }, '')
+        terminal.controller.add('default', 'Midi', `${this.inputs[id].name} Input ${terminal.io.midi.inputIndex === parseInt(id) ? ' — Active' : ''}`, () => { terminal.io.midi.selectInput(id) }, '')
       }
-      terminal.controller.add('default', 'Midi', `No Input ${terminal.io.midi.inputIndex === -1 ? ' — Input' : ''}`, () => { terminal.io.midi.selectInput(-1) }, '')
+      terminal.controller.add('default', 'Midi', `No Input ${terminal.io.midi.inputIndex === -1 ? ' — Active' : ''}`, () => { terminal.io.midi.selectInput(-1) }, '')
     }
 
     terminal.controller.commit()
