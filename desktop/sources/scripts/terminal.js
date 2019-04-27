@@ -69,6 +69,7 @@ function Terminal () {
 
   this.unload = function () {
     this.io.midi.silence()
+    this.io.mono.silence()
   }
 
   this.update = function () {
