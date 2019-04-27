@@ -13,7 +13,6 @@ function Mono (terminal) {
       if (this.stack[0].length < 1) {
         this.release(this.stack[0])
       } else {
-        console.log('life', this.stack[0].length)
         this.stack[0].length--
       }
     }
@@ -26,7 +25,6 @@ function Mono (terminal) {
   this.press = function (item = this.queue) {
     if (!item) { return }
     if (this.stack[0]) { this.release() }
-    console.log('press', item)
     this.trigger(item, true)
     this.stack[0] = item
     this.queue = null
@@ -34,7 +32,6 @@ function Mono (terminal) {
 
   this.release = function (item = this.stack[0]) {
     if (!item) { return }
-    console.log('release', item)
     this.trigger(this.stack[0], false)
     this.stack[0] = null
   }
