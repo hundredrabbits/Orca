@@ -20,7 +20,7 @@
       terminal.controller.add("default","*","Toggle Menubar",() => { app.toggleMenubar() },"Alt+H")
       terminal.controller.add("default","*","Inspect",() => { app.inspect() },"CmdOrCtrl+.")
       terminal.controller.add("default","*","Reset",() => { terminal.reset() },"CmdOrCtrl+Backspace")
-      terminal.controller.add("default","*","Quit",() => { terminal.unload(); app.exit() },"CmdOrCtrl+Q")
+      terminal.controller.add("default","*","Quit",() => { terminal.unload(); terminal.source.quit() },"CmdOrCtrl+Q")
 
       terminal.controller.add("default","File","New",() => { terminal.source.new() },"CmdOrCtrl+N")
       terminal.controller.add("default","File","Save",() => { terminal.source.save() },"CmdOrCtrl+S")

@@ -2,6 +2,7 @@
 
 function Source (terminal) {
   const fs = require('fs')
+  const path = require('path')
   const { dialog, app } = require('electron').remote
 
   this.path = null
@@ -35,6 +36,7 @@ function Source (terminal) {
       this.saveAs()
     }
   }
+
   this.saveAs = function () {
     console.log('Source', 'Save a file as..')
     dialog.showSaveDialog((path) => {
@@ -61,7 +63,7 @@ function Source (terminal) {
     })
   }
 
-  this.read = function (path) {
+  this.read = function (path = this.path) {
     if (!path) { return }
     console.log('Source', 'Reading ' + path)
     fs.readFile(path, 'utf8', (err, data) => {
@@ -70,6 +72,42 @@ function Source (terminal) {
       terminal.source.remember('active', path)
       terminal.load(this.parse(data))
     })
+  }
+
+  this.quit = function () {
+    if (this.hasChanges()) {
+      this.verify()
+    } else {
+      app.exit()
+    }
+  }
+
+  this.hasChanges = function () {
+    console.log('Source', 'Looking for changes..')
+    if (!this.path) {
+      console.log('Source', 'File is unsaved..')
+      if (terminal.findPorts().filter(Boolean).length > 0) {
+        return true
+      }
+    } else {
+      console.log('Source', 'Comparing with last saved copy..')
+      if (fs.existsSync(this.path)) {
+        return isDifferent(fs.readFileSync(this.path, 'utf8'), this.generate())
+      }
+    }
+  }
+
+  this.verify = function () {
+    let response = dialog.showMessageBox(app.win, {
+      type: 'question',
+      buttons: ['Yes', 'No'],
+      title: 'Confirm',
+      message: 'Unsaved data will be lost. Are you sure you want to quit?',
+      icon: path.join(__dirname, '../../icon.png')
+    })
+    if (response === 0) {
+      app.exit()
+    }
   }
 
   // LocalStorage
@@ -128,6 +166,8 @@ function Source (terminal) {
   this.toString = function () {
     return this.path ? this.name() : 'blank'
   }
+
+  function isDifferent (a, b) { return a.replace(/[^a-zA-Z0-9+]+/gi, '').trim() === b.replace(/[^a-zA-Z0-9+]+/gi, '').trim() }
 }
 
 module.exports = Source
