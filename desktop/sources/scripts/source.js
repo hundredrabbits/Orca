@@ -86,7 +86,7 @@ function Source (terminal) {
     console.log('Source', 'Looking for changes..')
     if (!this.path) {
       console.log('Source', 'File is unsaved..')
-      if (terminal.findPorts().filter(Boolean).length > 0) {
+      if (terminal.findPorts().filter(Boolean).length > 10) {
         return true
       }
     } else {

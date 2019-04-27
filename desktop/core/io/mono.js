@@ -5,7 +5,6 @@ function Mono (terminal) {
 
   this.start = function () {
     console.info('Mono Starting..')
-    this.setup()
   }
 
   this.run = function () {
@@ -22,28 +21,26 @@ function Mono (terminal) {
     })
   }
 
+  this.clear = function () {
+
+  }
+
   this.trigger = function (item, down) {
-    if (!this.outputDevice()) { console.warn('Midi', 'No midi output!'); return }
+    if (!terminal.io.midi.outputDevice()) { console.warn('Mono', 'No midi output!'); return }
 
     const channel = down === true ? 0x90 : 0x80
     const note = clamp(24 + (item[1] * 12) + item[2], 0, 127)
-    const velocity = item[3]
 
-    this.outputDevice().send([channel, note, velocity])
+    console.log(down, item)
+    // this.outputDevice().send([channel, note, velocity])
     item[5] = true
   }
 
-  this.send = function (channel, octave, note, velocity, length, played = false) {
+  this.send = function (octave, note, length, played = false) {
     for (const id in this.stack) {
       const item = this.stack[id]
-      if (item[0] === channel && item[1] === octave && item[2] === note) {
-        item[3] = velocity
-        item[4] = length
-        item[5] = played
-        return
-      }
     }
-    this.stack.push([channel, octave, note, velocity, length, played])
+    this.stack.push([octave, note, length, played])
   }
 
   this.silence = function () {
@@ -58,4 +55,4 @@ function Mono (terminal) {
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
-module.exports = Midi
+module.exports = Mono

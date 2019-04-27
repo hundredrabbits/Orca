@@ -6,23 +6,21 @@ const OCTAVE = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B']
 const MAJOR = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
 const MINOR = ['c', 'd', 'F', 'f', 'g', 'a', 'C']
 
-function OperatorMidi (orca, x, y, passive) {
+function OperatorMono (orca, x, y, passive) {
   Operator.call(this, orca, x, y, ':', true)
 
   this.name = 'mono'
   this.info = 'Sends MIDI note to a monophonic instrument.'
 
-  this.ports.input.octave = { x: 2, y: 0 }
-  this.ports.input.note = { x: 3, y: 0 }
-  this.ports.input.velocity = { x: 4, y: 0 }
-  this.ports.input.length = { x: 5, y: 0 }
+  this.ports.input.octave = { x: 1, y: 0 }
+  this.ports.input.note = { x: 2, y: 0 }
+  this.ports.input.length = { x: 3, y: 0 }
 
   this.run = function (force = false) {
     if (!this.bang() && force === false) { return }
 
     const rawOctave = this.listen(this.ports.input.octave, true, 0, 8, -1)
     const rawNote = this.listen(this.ports.input.note)
-    const rawVelocity = this.listen(this.ports.input.velocity, true, 0, 16, 16)
     const rawLength = this.listen(this.ports.input.length, true, 0, 16, 1)
 
     if (rawOctave === -1) { return }
@@ -33,8 +31,6 @@ function OperatorMidi (orca, x, y, passive) {
     const octave = clamp(transposed.note === 'b' ? transposed.octave + 1 : transposed.octave, 0, 8)
     // 0 - 11
     const note = OCTAVE.indexOf(transposed.note)
-    // 0 - G(127)
-    const velocity = parseInt((rawVelocity / 16) * 127)
     // 0 - G(16)
     const length = rawLength
 
@@ -42,7 +38,7 @@ function OperatorMidi (orca, x, y, passive) {
 
     this.draw = false
 
-    terminal.io.mono.send(octave, note, velocity, length)
+    terminal.io.mono.send(octave, note, length)
   }
 
   function transpose (octave, note) {
@@ -60,4 +56,4 @@ function OperatorMidi (orca, x, y, passive) {
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
-module.exports = OperatorMidi
+module.exports = OperatorMono
