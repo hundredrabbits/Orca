@@ -63,17 +63,17 @@ The [MIDI](https://en.wikipedia.org/wiki/MIDI) operator `:` takes up to 5 inputs
 
 For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. Velocity is an optional value from `0`(0/127) to `g`(127/127). Note length is the number of frames during which a note remains active. See it in action with [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca).
 
-## MIDI CC
-
-The [MIDI CC](https://www.sweetwater.com/insync/continuous-controller/) operator `^` takes 3 inputs('channel, 'knob, 'value).
-
-It sends a value **between 0-127**, where the value is calculated as a ratio of 36, over a maximum of 127. For example, `^008`, is sending **28**, or `(8/36)*127` through the first channel, to the control mapped with `id0`. You can press **enter**, with the `^` operator selected, to assign it to a controller.
-
 ## MIDI MONO
 
 The [MIDI](https://en.wikipedia.org/wiki/MIDI) operator `%` takes up to 5 inputs('channel, 'octave, 'note, velocity, length). 
 
 This operator is very similar to the default Midi operator, but each new note will mute the previously sustained note, would its length overlap with the new one. Making certain that only a single note is played at one, this is ideal for monophonic analog synthetisers that might struggle to dealing with chords and note overlaps.
+
+## MIDI CC
+
+The [MIDI CC](https://www.sweetwater.com/insync/continuous-controller/) operator `^` takes 3 inputs('channel, 'knob, 'value).
+
+It sends a value **between 0-127**, where the value is calculated as a ratio of 36, over a maximum of 127. For example, `^008`, is sending **28**, or `(8/36)*127` through the first channel, to the control mapped with `id0`. You can press **enter**, with the `^` operator selected, to assign it to a controller.
 
 ## UDP
 
