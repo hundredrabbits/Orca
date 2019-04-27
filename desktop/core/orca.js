@@ -188,6 +188,10 @@ function Orca (terminal, host = null) {
     }, '')
   }
 
+  this.length = function () {
+    return this.strip().length
+  }
+
   this.strip = function () {
     return this.s.replace(/[^a-zA-Z0-9+]+/gi, '').trim()
   }

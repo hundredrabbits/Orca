@@ -83,20 +83,6 @@ function Source (terminal) {
     }
   }
 
-  this.hasChanges = function () {
-    if (terminal.history.length() < 3) { return }
-    console.log('Source', 'Looking for changes..')
-    if (!this.path) {
-      console.log('Source', 'File is unsaved..')
-      return true
-    } else {
-      console.log('Source', 'Comparing with last saved copy..')
-      if (fs.existsSync(this.path)) {
-        return isDifferent(fs.readFileSync(this.path, 'utf8'), this.generate())
-      }
-    }
-  }
-
   this.verify = function () {
     let response = dialog.showMessageBox(app.win, {
       type: 'question',
@@ -109,6 +95,29 @@ function Source (terminal) {
       this.save(true, true)
     } else if (response === 1) {
       app.exit()
+    }
+  }
+
+  this.hasChanges = function () {
+    console.log('Source', 'Looking for changes..')
+    if (!this.path) {
+      console.log('Source', 'File is unsaved..')
+      if (terminal.orca.length() > 2) {
+        console.log('Source', `File is length ${terminal.orca.length()}.`)
+        return true
+      }
+    } else {
+      console.log('Source', 'Comparing with last saved copy..')
+      if (fs.existsSync(this.path)) {
+        const diff = isDifferent(fs.readFileSync(this.path, 'utf8'), this.generate())
+        if (diff === true) {
+          console.log('Source', 'File has been changed.')
+          return true
+        }
+      } else {
+        console.log('Source', 'File does not exist.')
+        return true
+      }
     }
   }
 
