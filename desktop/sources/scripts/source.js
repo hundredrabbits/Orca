@@ -28,22 +28,25 @@ function Source (terminal) {
     this.read(paths[0])
   }
 
-  this.save = function (as = false) {
+  this.save = function (as = false, quit = false) {
     console.log('Source', 'Save a file..')
     if (this.path && !as) {
       this.write(this.path)
     } else {
-      this.saveAs()
+      this.saveAs(quit)
     }
   }
 
-  this.saveAs = function () {
+  this.saveAs = function (quit = false) {
     console.log('Source', 'Save a file as..')
     dialog.showSaveDialog((path) => {
       if (path === undefined) { return }
       if (path.indexOf('.orca') < 0) { path += '.orca' }
       terminal.source.write(path)
       terminal.source.path = path
+      if (quit === true) {
+        app.exit()
+      }
     })
   }
 
@@ -105,7 +108,7 @@ function Source (terminal) {
       icon: path.join(__dirname, '../../icon.png')
     })
     if (response === 2) {
-      this.save()
+      this.save(true, true)
     } else if (response === 1) {
       app.exit()
     }
