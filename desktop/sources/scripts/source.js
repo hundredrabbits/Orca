@@ -103,7 +103,7 @@ function Source (terminal) {
     if (!this.path) {
       console.log('Source', 'File is unsaved..')
       if (terminal.orca.length() > 2) {
-        console.log('Source', `File is length ${terminal.orca.length()}.`)
+        console.log('Source', `File is not empty.`)
         return true
       }
     } else {
