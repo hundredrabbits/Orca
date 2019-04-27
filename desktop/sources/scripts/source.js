@@ -31,7 +31,7 @@ function Source (terminal) {
   this.save = function (as = false, quit = false) {
     console.log('Source', 'Save a file..')
     if (this.path && !as) {
-      this.write(this.path)
+      this.write(this.path, quit)
     } else {
       this.saveAs(quit)
     }
@@ -42,11 +42,8 @@ function Source (terminal) {
     dialog.showSaveDialog((path) => {
       if (path === undefined) { return }
       if (path.indexOf('.orca') < 0) { path += '.orca' }
-      terminal.source.write(path)
+      terminal.source.write(path, this.generate(), quit)
       terminal.source.path = path
-      if (quit === true) {
-        app.exit()
-      }
     })
   }
 
@@ -58,12 +55,13 @@ function Source (terminal) {
 
   // I/O
 
-  this.write = function (path, data = this.generate()) {
+  this.write = function (path, data = this.generate(), quit = false) {
     console.log('Source', 'Writing ' + path)
-    fs.writeFile(path, data, (err) => {
-      if (err) { alert('An error ocurred updating the file' + err.message); console.warn(err) }
-      terminal.source.remember('active', path)
-    })
+    fs.writeFileSync(path, data)
+    terminal.source.remember('active', path)
+    if (quit === true) {
+      app.exit()
+    }
   }
 
   this.read = function (path = this.path) {
