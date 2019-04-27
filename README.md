@@ -51,6 +51,9 @@ npm start
 - `Z` **zoom**: Moves eastwardly, respawns west on collision.
 - `*` **bang**: Bangs neighboring operators.
 - `#` **comment**: Comments a line, or characters until the next hash.
+
+### IO
+
 - `:` **midi**: Sends a MIDI note.
 - `^` **cc**: Sends a MIDI CC value.
 - `%` **mono**: Sends a Monophonic MIDI value.
