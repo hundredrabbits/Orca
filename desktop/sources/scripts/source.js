@@ -83,13 +83,11 @@ function Source (terminal) {
   }
 
   this.hasChanges = function () {
-    if (terminal.history.length() < 5) { return }
+    if (terminal.history.length() < 3) { return }
     console.log('Source', 'Looking for changes..')
     if (!this.path) {
       console.log('Source', 'File is unsaved..')
-      if (terminal.findPorts().filter(Boolean).length > 10) {
-        return true
-      }
+      return true
     } else {
       console.log('Source', 'Comparing with last saved copy..')
       if (fs.existsSync(this.path)) {
