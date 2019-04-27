@@ -100,14 +100,14 @@ function Source (terminal) {
   this.verify = function () {
     let response = dialog.showMessageBox(app.win, {
       type: 'question',
-      buttons: ['Save', 'Discard'],
+      buttons: ['Cancel', 'Discard', 'Save'],
       title: 'Confirm',
       message: 'Unsaved data will be lost. Would you like to save your changes before leaving?',
       icon: path.join(__dirname, '../../icon.png')
     })
-    if (response === 0) {
+    if (response === 2) {
       this.save()
-    } else {
+    } else if (response === 1) {
       app.exit()
     }
   }
