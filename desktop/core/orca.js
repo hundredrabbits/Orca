@@ -51,8 +51,12 @@ function Orca (terminal, host = null) {
 
   this.clean = function (str) {
     let s = `${str}`
+    // remove spaces
     s = s.replace(/\n/g, '').trim()
+    // trim length
     s = s.substr(0, this.w * this.h)
+    // remove special characters
+    s = s.replace(/[^a-z0-9\#\*\:\;\=\^\%\.+]+/gi, '.')
     return s
   }
 
