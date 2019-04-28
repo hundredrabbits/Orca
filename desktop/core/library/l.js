@@ -18,7 +18,7 @@ function OperatorL (orca, x, y, passive) {
     }
   }
 
-  this.run = function () {
+  this.operation = function () {
     const step = this.listen(this.ports.haste.step, true)
     const len = this.listen(this.ports.haste.len, true)
     const index = orca.indexAt(this.x + 1, this.y)

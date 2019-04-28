@@ -13,7 +13,7 @@ function OperatorU (orca, x, y, passive) {
   this.ports.haste.s = { x: 0, y: 1 }
   this.ports.haste.w = { x: -1, y: 0 }
 
-  this.run = function () {
+  this.operation = function () {
     for (const id in this.ports.haste) {
       this.flip(id, this.ports.haste[id])
     }

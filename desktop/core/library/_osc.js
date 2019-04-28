@@ -21,7 +21,7 @@ function OperatorOsc (orca, x, y, passive) {
     }
   }
 
-  this.run = function (force = false) {
+  this.operation = function (force = false) {
     if (!this.hasNeighbor('*') && force === false) { return }
     if (!this.path || this.path === '.') { return }
     this.draw = false

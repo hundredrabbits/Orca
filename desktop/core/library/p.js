@@ -20,14 +20,11 @@ function OperatorP (orca, x, y, passive) {
     }
   }
 
-  this.run = function () {
+  this.operation = function () {
     const len = this.listen(this.ports.haste.len, true)
     const key = this.listen(this.ports.haste.key, true)
-
     this.ports.output = { x: (key % len), y: 1 }
-
-    const res = this.listen(this.ports.input.val)
-    this.output(`${res}`)
+    return this.listen(this.ports.input.val)
   }
 }
 

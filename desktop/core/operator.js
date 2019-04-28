@@ -49,7 +49,19 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   this.haste = function () {
   }
 
+  this.operation = function () {
+
+  }
+
   this.run = function () {
+    const payload = this.operation()
+    if (this.ports.output) {
+      if (this.ports.output.bang === true) {
+        this.bang(payload)
+      } else {
+        this.output(payload)
+      }
+    }
   }
 
   // Helpers

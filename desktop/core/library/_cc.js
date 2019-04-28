@@ -12,7 +12,7 @@ function OperatorCC (orca, x, y) {
   this.ports.haste.knob = { x: 2, y: 0, default: -1, clamp: { min: 0 } }
   this.ports.input.value = { x: 3, y: 0, clamp: { min: 0 } }
 
-  this.run = function (force = false) {
+  this.operation = function (force = false) {
     if (!this.hasNeighbor('*') && force === false) { return }
 
     const channel = this.listen(this.ports.haste.channel, true)

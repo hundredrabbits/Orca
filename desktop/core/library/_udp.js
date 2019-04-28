@@ -18,7 +18,7 @@ function OperatorUdp (orca, x, y, passive) {
     }
   }
 
-  this.run = function (force = false) {
+  this.operation = function (force = false) {
     if (!this.hasNeighbor('*') && force === false) { return }
     if (this.msg === '') { return }
     this.draw = false

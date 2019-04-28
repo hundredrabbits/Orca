@@ -12,13 +12,12 @@ function OperatorR (orca, x, y, passive) {
   this.ports.input.max = { x: 1, y: 0, default: 36 }
   this.ports.output = { x: 0, y: 1, sensitive: true }
 
-  this.run = function () {
+  this.operation = function () {
     const min = this.listen(this.ports.haste.min, true)
     const max = this.listen(this.ports.input.max, true)
     if (min === max) { return }
     const val = parseInt((Math.random() * (max - min)) + min)
-    const res = orca.keyOf(val)
-    this.output(`${res}`)
+    return orca.keyOf(val)
   }
 }
 

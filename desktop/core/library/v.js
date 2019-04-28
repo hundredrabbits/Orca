@@ -15,21 +15,18 @@ function OperatorV (orca, x, y, passive) {
   this.haste = function () {
     const write = this.listen(this.ports.haste.write)
     const read = this.listen(this.ports.input.read)
-
     if (write !== '.') {
       this.ports.output = null
     }
   }
 
-  this.run = function () {
+  this.operation = function () {
     const write = this.listen(this.ports.haste.write)
     const read = this.listen(this.ports.input.read)
-
     if (write !== '.') {
       orca.values[write] = read
     } else {
-      const res = orca.values[read]
-      this.output(`${res}`)
+      this.output(orca.values[read])
     }
   }
 }

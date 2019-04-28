@@ -21,7 +21,7 @@ function OperatorK (orca, x, y, passive) {
     }
   }
 
-  this.run = function () {
+  this.operation = function () {
     const a = []
     for (let x = 1; x <= this.len; x++) {
       const key = orca.glyphAt(this.x + x, this.y)
