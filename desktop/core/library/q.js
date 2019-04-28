@@ -10,10 +10,10 @@ function OperatorQ (orca, x, y, passive) {
 
   this.ports.haste.x = { x: -3, y: 0 }
   this.ports.haste.y = { x: -2, y: 0 }
-  this.ports.haste.len = { x: -1, y: 0 }
+  this.ports.haste.len = { x: -1, y: 0, clamp: { min: 1, max: 36 } }
 
   this.haste = function () {
-    const len = this.listen(this.ports.haste.len, true, 1)
+    const len = this.listen(this.ports.haste.len, true)
     const x = this.listen(this.ports.haste.x, true)
     const y = this.listen(this.ports.haste.y, true)
     for (let i = 1; i <= len; i++) {
@@ -22,7 +22,7 @@ function OperatorQ (orca, x, y, passive) {
   }
 
   this.run = function () {
-    const len = this.listen(this.ports.haste.len, true, 1)
+    const len = this.listen(this.ports.haste.len, true)
     const x = this.listen(this.ports.haste.x, true)
     const y = this.listen(this.ports.haste.y, true)
     for (let i = 1; i <= len; i++) {

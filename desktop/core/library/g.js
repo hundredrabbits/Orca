@@ -8,19 +8,19 @@ function OperatorG (orca, x, y, passive) {
   this.name = 'generator'
   this.info = 'Writes distant operators with offset.'
 
-  this.ports.haste.x = { x: -3, y: 0 }
+  this.ports.haste.x = { x: -3, y: 0, clamp: { min: 1, max: 36 } }
   this.ports.haste.y = { x: -2, y: 0 }
   this.ports.haste.len = { x: -1, y: 0 }
 
   this.haste = function () {
-    const len = this.listen(this.ports.haste.len, true, 1)
+    const len = this.listen(this.ports.haste.len, true)
     for (let x = 1; x <= len; x++) {
       orca.lock(this.x + x, this.y)
     }
   }
 
   this.run = function () {
-    const len = this.listen(this.ports.haste.len, true, 1)
+    const len = this.listen(this.ports.haste.len, true)
     const x = this.listen(this.ports.haste.x, true)
     const y = this.listen(this.ports.haste.y, true) + 1
 
