@@ -8,10 +8,10 @@ function OperatorH (orca, x, y, passive) {
   this.name = 'halt'
   this.info = 'Stops southward operators from operating.'
 
-  this.ports.output = { x: 0, y: 1 }
+  this.ports.input.target = { x: 0, y: 1 }
 
   this.haste = function () {
-    orca.lock(this.x + this.ports.output.x, this.y + this.ports.output.y)
+    orca.lock(this.x + this.ports.input.target.x, this.y + this.ports.input.target.y)
   }
 }
 

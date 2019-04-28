@@ -25,7 +25,8 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   }
 
   this.output = function (g) {
-    if (!this.ports.output || !g) { console.warn(this.name, 'Trying to output, but no port'); return }
+    if (!this.ports.output) { console.warn(this.name, 'Trying to output, but no port'); return }
+    if (!g) { console.warn(this.name, 'Trying to output, but no value'); return }
     orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, this.isUpperCase() === true ? `${g}`.toUpperCase() : g)
   }
 
