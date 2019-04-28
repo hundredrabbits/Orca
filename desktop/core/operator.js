@@ -25,13 +25,12 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   }
 
   this.output = function (g) {
-    if (!this.ports.output || !g) { return }
-    const uppercase = this.ports.output.sensitive === true ? this.getCase() : false
-    const glyph = uppercase === true ? `${g}`.toUpperCase() : g
-    orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, glyph)
+    if (!this.ports.output || !g) { console.warn(this.name, 'Trying to output, but no port'); return }
+    orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, this.isUpperCase() === true ? `${g}`.toUpperCase() : g)
   }
 
   this.bang = function (b) {
+    if (!this.ports.output) { console.warn(this.name, 'Trying to bang, but no port'); return }
     orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, b === true ? '*' : '.')
   }
 
@@ -123,7 +122,8 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     return a
   }
 
-  this.getCase = function (ports = this.ports.input) {
+  this.isUpperCase = function (ports = this.ports.input) {
+    if (this.ports.output.sensitive !== true) { return false }
     for (const id in ports) {
       const value = this.listen(ports[id])
       if (isUpperCase(value) === false) {
