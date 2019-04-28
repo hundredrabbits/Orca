@@ -19,9 +19,9 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     return toValue ? clamp(orca.valueOf(g), min, max) : g
   }
 
-  this.output = function (g, lock = false, casesensitive = false) {
+  this.output = function (g, lock = false) {
     if (!this.ports.output || !g) { return }
-    const uppercase = casesensitive === true ? this.getCase() : false
+    const uppercase = this.ports.output.sensitive === true ? this.getCase() : false
     const glyph = uppercase === true ? `${g}`.toUpperCase() : g
     orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, glyph)
     if (lock) {

@@ -10,13 +10,13 @@ function OperatorA (orca, x, y, passive) {
 
   this.ports.haste.a = { x: -1, y: 0 }
   this.ports.input.b = { x: 1, y: 0 }
-  this.ports.output = { x: 0, y: 1 }
+  this.ports.output = { x: 0, y: 1, sensitive: true }
 
   this.run = function () {
     const a = this.listen(this.ports.haste.a, true)
     const b = this.listen(this.ports.input.b, true)
     const res = orca.keyOf(a + b)
-    this.output(`${res}`, false, true)
+    this.output(`${res}`, false)
   }
 }
 
