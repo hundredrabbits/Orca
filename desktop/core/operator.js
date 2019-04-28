@@ -127,7 +127,7 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     return `\`${this.glyph.toUpperCase()}\` **${this.name}**: ${this.info}`
   }
 
-  function isUpperCase (a) { return `${a}`.toUpperCase() === `${a}` }
+  function isUpperCase (a) { return isNaN(a) && `${a}`.toUpperCase() === `${a}` }
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
