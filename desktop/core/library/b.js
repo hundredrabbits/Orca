@@ -18,7 +18,7 @@ function OperatorB (orca, x, y, passive) {
     const key = (Math.floor(orca.f / rate) % (mod * 2))
     const val = key <= mod ? key : mod - (key - mod)
     const res = orca.keyOf(val)
-    this.output(`${res}`, false)
+    this.output(`${res}`)
   }
 }
 

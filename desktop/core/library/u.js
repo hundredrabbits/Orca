@@ -8,10 +8,10 @@ function OperatorU (orca, x, y, passive) {
   this.name = 'uturn'
   this.info = 'Reverses movement of inputs.'
 
-  this.ports.haste.n = { x: 0, y: -1, unlock: true }
-  this.ports.haste.e = { x: 1, y: 0, unlock: true }
-  this.ports.haste.s = { x: 0, y: 1, unlock: true }
-  this.ports.haste.w = { x: -1, y: 0, unlock: true }
+  this.ports.haste.n = { x: 0, y: -1 }
+  this.ports.haste.e = { x: 1, y: 0 }
+  this.ports.haste.s = { x: 0, y: 1 }
+  this.ports.haste.w = { x: -1, y: 0 }
 
   this.run = function () {
     for (const id in this.ports.haste) {

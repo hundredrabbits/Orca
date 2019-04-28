@@ -18,7 +18,7 @@ function OperatorR (orca, x, y, passive) {
     if (min === max) { return }
     const val = parseInt((Math.random() * (max - min)) + min)
     const res = orca.keyOf(val)
-    this.output(`${res}`, false)
+    this.output(`${res}`)
   }
 }
 

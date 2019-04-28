@@ -24,9 +24,6 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     const uppercase = this.ports.output.sensitive === true ? this.getCase() : false
     const glyph = uppercase === true ? `${g}`.toUpperCase() : g
     orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, glyph)
-    if (lock) {
-      orca.lock(this.x + this.ports.output.x, this.y + this.ports.output.y)
-    }
   }
 
   // Phases
@@ -34,11 +31,9 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   this.permissions = function () {
     for (const id in this.ports.input) {
       const port = this.ports.input[id]
-      if (!port.unlock) {
-        orca.lock(this.x + port.x, this.y + port.y)
-      }
+      orca.lock(this.x + port.x, this.y + port.y)
     }
-    if (this.ports.output && !this.ports.output.unlock) {
+    if (this.ports.output) {
       orca.lock(this.x + this.ports.output.x, this.y + this.ports.output.y)
     }
   }

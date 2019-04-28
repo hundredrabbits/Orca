@@ -25,7 +25,7 @@ function OperatorT (orca, x, y, passive) {
     const key = this.listen(this.ports.haste.key, true)
     this.ports.haste.val = { x: (key % len) + 1, y: 0 }
     const res = this.listen(this.ports.haste.val)
-    this.output(`${res}`, true)
+    this.output(`${res}`)
   }
 }
 

@@ -28,11 +28,11 @@ function OperatorQ (orca, x, y, passive) {
     for (let i = 1; i <= len; i++) {
       this.ports.haste[`val${i}`] = { x: x + i, y: y }
       orca.lock(this.x + x + i, this.y + y)
-      this.ports.output = { x: i - len, y: 1, unlock: true }
+      this.ports.output = { x: i - len, y: 1 }
       const res = this.listen(this.ports.haste[`val${i}`])
-      this.output(`${res}`, true)
+      this.output(`${res}`)
     }
-    this.ports.output = { x: 0, y: 1, unlock: true }
+    this.ports.output = { x: 0, y: 1 }
   }
 }
 
