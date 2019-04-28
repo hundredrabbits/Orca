@@ -17,18 +17,22 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     const g = orca.glyphAt(this.x + port.x, this.y + port.y)
     if (g === '.' && port.default) { return port.default }
     if (toValue) {
-      const min = port.clamp ? port.clamp.min : 0
-      const max = port.clamp ? port.clamp.max : 36
+      const min = port.clamp && port.clamp.min ? port.clamp.min : 0
+      const max = port.clamp && port.clamp.max ? port.clamp.max : 35
       return clamp(orca.valueOf(g), min, max)
     }
     return g
   }
 
-  this.output = function (g, lock = false) {
+  this.output = function (g) {
     if (!this.ports.output || !g) { return }
     const uppercase = this.ports.output.sensitive === true ? this.getCase() : false
     const glyph = uppercase === true ? `${g}`.toUpperCase() : g
     orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, glyph)
+  }
+
+  this.bang = function (b) {
+    orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, b === true ? '*' : '.')
   }
 
   // Phases
@@ -81,11 +85,19 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     this.lock()
   }
 
-  this.bang = function () {
-    if (orca.glyphAt(this.x + 1, this.y) === '*') { return { x: 1, y: 0 } }
-    if (orca.glyphAt(this.x - 1, this.y) === '*') { return { x: -1, y: 0 } }
-    if (orca.glyphAt(this.x, this.y + 1) === '*') { return { x: 0, y: 1 } }
-    if (orca.glyphAt(this.x, this.y - 1) === '*') { return { x: 0, y: -1 } }
+  this.neighborLike = function (g) {
+    if (orca.glyphAt(this.x + 1, this.y) === g) { return { x: 1, y: 0 } }
+    if (orca.glyphAt(this.x - 1, this.y) === g) { return { x: -1, y: 0 } }
+    if (orca.glyphAt(this.x, this.y + 1) === g) { return { x: 0, y: 1 } }
+    if (orca.glyphAt(this.x, this.y - 1) === g) { return { x: 0, y: -1 } }
+    return false
+  }
+
+  this.hasNeighbor = function (g) {
+    if (orca.glyphAt(this.x + 1, this.y) === g) { return true }
+    if (orca.glyphAt(this.x - 1, this.y) === g) { return true }
+    if (orca.glyphAt(this.x, this.y + 1) === g) { return true }
+    if (orca.glyphAt(this.x, this.y - 1) === g) { return true }
     return false
   }
 

@@ -8,7 +8,7 @@ function OperatorG (orca, x, y, passive) {
   this.name = 'generator'
   this.info = 'Writes distant operators with offset.'
 
-  this.ports.haste.x = { x: -3, y: 0, clamp: { min: 1, max: 36 } }
+  this.ports.haste.x = { x: -3, y: 0, clamp: { min: 1 } }
   this.ports.haste.y = { x: -2, y: 0 }
   this.ports.haste.len = { x: -1, y: 0 }
 

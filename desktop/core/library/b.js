@@ -8,7 +8,7 @@ function OperatorB (orca, x, y, passive) {
   this.name = 'bounce'
   this.info = 'Bounces between two values based on the runtime frame.'
 
-  this.ports.haste.rate = { x: -1, y: 0, clamp: { min: 1, max: 36 } }
+  this.ports.haste.rate = { x: -1, y: 0, clamp: { min: 1 } }
   this.ports.input.mod = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1, sensitive: true }
 

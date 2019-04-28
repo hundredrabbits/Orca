@@ -84,7 +84,7 @@ function Orca (terminal, host = null) {
     for (const id in operators) {
       const operator = operators[id]
       if (this.lockAt(operator.x, operator.y)) { continue }
-      if (operator.passive || operator.bang()) {
+      if (operator.passive || operator.hasNeighbor('*')) {
         operator.haste()
         operator.permissions()
       }
@@ -92,7 +92,7 @@ function Orca (terminal, host = null) {
     for (const id in operators) {
       const operator = operators[id]
       if (this.lockAt(operator.x, operator.y)) { continue }
-      if (operator.passive || operator.bang()) {
+      if (operator.passive || operator.hasNeighbor('*')) {
         operator.run()
       }
     }

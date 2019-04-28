@@ -19,7 +19,7 @@ function OperatorMidi (orca, x, y, passive) {
   this.ports.input.length = { x: 5, y: 0, default: 1, clamp: { min: 0, max: 16 } }
 
   this.run = function (force = false) {
-    if (!this.bang() && force === false) { return }
+    if (!this.hasNeighbor('*') && force === false) { return }
 
     const rawChannel = this.listen(this.ports.input.channel, true)
     const rawOctave = this.listen(this.ports.input.octave, true)

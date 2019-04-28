@@ -10,7 +10,7 @@ function OperatorQ (orca, x, y, passive) {
 
   this.ports.haste.x = { x: -3, y: 0 }
   this.ports.haste.y = { x: -2, y: 0 }
-  this.ports.haste.len = { x: -1, y: 0, clamp: { min: 1, max: 36 } }
+  this.ports.haste.len = { x: -1, y: 0, clamp: { min: 1 } }
 
   this.haste = function () {
     const len = this.listen(this.ports.haste.len, true)
