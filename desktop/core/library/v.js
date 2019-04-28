@@ -10,13 +10,12 @@ function OperatorV (orca, x, y, passive) {
 
   this.ports.haste.write = { x: -1, y: 0 }
   this.ports.input.read = { x: 1, y: 0 }
-  this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
     const write = this.listen(this.ports.haste.write)
     const read = this.listen(this.ports.input.read)
-    if (write !== '.') {
-      this.ports.output = null
+    if (write === '.' && read !== '.' && orca.values[read]) {
+      this.ports.output = { x: 0, y: 1 }
     }
   }
 
@@ -25,8 +24,8 @@ function OperatorV (orca, x, y, passive) {
     const read = this.listen(this.ports.input.read)
     if (write !== '.') {
       orca.values[write] = read
-    } else {
-      this.output(orca.values[read])
+    } else if (read !== '.' && orca.values[read]) {
+      return orca.values[read]
     }
   }
 }
