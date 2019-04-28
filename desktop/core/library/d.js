@@ -15,8 +15,8 @@ function OperatorD (orca, x, y, passive) {
   this.run = function () {
     const rate = this.listen(this.ports.haste.rate, true)
     const mod = this.listen(this.ports.input.mod, true)
-    const val = orca.f % (mod * rate)
-    this.bang(val === 0 || mod === 1)
+    const res = orca.f % (mod * rate)
+    this.bang(res === 0 || mod === 1)
   }
 }
 
