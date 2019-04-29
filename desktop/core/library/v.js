@@ -19,7 +19,7 @@ function OperatorV (orca, x, y, passive) {
     }
   }
 
-  this.operation = function () {
+  this.operation = function (force = false) {
     const write = this.listen(this.ports.haste.write)
     const read = this.listen(this.ports.input.read)
     if (write !== '.') {

@@ -54,8 +54,8 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
 
   }
 
-  this.run = function () {
-    const payload = this.operation()
+  this.run = function (force = false) {
+    const payload = this.operation(force)
     if (this.ports.output) {
       if (this.ports.output.bang === true) {
         this.bang(payload)

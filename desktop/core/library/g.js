@@ -19,7 +19,7 @@ function OperatorG (orca, x, y, passive) {
     }
   }
 
-  this.operation = function () {
+  this.operation = function (force = false) {
     const len = this.listen(this.ports.haste.len, true)
     const x = this.listen(this.ports.haste.x, true)
     const y = this.listen(this.ports.haste.y, true) + 1

@@ -12,7 +12,7 @@ function OperatorR (orca, x, y, passive) {
   this.ports.input.max = { x: 1, y: 0, default: 36 }
   this.ports.output = { x: 0, y: 1, sensitive: true }
 
-  this.operation = function () {
+  this.operation = function (force = false) {
     const min = this.listen(this.ports.haste.min, true)
     const max = this.listen(this.ports.input.max, true)
     if (min === max) { return }

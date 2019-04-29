@@ -15,7 +15,7 @@ function OperatorY (orca, x, y, passive) {
     orca.lock(this.x + 1, this.y)
   }
 
-  this.operation = function () {
+  this.operation = function (force = false) {
     return this.listen(this.ports.haste.val)
   }
 }

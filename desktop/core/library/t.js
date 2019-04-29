@@ -20,7 +20,7 @@ function OperatorT (orca, x, y, passive) {
     }
   }
 
-  this.operation = function () {
+  this.operation = function (force = false) {
     const len = this.listen(this.ports.haste.len, true)
     const key = this.listen(this.ports.haste.key, true)
     this.ports.haste.val = { x: (key % len) + 1, y: 0 }

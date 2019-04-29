@@ -19,7 +19,7 @@ function OperatorO (orca, x, y, passive) {
     this.ports.haste.val = { x: x + 1, y: y }
   }
 
-  this.operation = function () {
+  this.operation = function (force = false) {
     const x = this.listen(this.ports.haste.x, true)
     const y = this.listen(this.ports.haste.y, true)
     this.ports.haste.val = { x: x + 1, y: y }

@@ -12,7 +12,7 @@ function OperatorI (orca, x, y, passive) {
   this.ports.input.mod = { x: 1, y: 0, default: 36 }
   this.ports.output = { x: 0, y: 1, sensitive: true }
 
-  this.operation = function () {
+  this.operation = function (force = false) {
     const step = this.listen(this.ports.haste.step, true)
     const mod = this.listen(this.ports.input.mod, true)
     const val = this.listen(this.ports.output, true)
