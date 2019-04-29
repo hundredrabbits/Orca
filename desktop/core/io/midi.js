@@ -10,6 +10,8 @@ function Midi (terminal) {
   this.inputs = []
   this.stack = []
 
+  this.key = null
+
   this.start = function () {
     console.info('Midi Starting..')
     this.setup()
@@ -93,9 +95,20 @@ function Midi (terminal) {
     })
   }
 
+  // Keys
+
+  this.press = function (key) {
+    this.key = parseInt(key)
+  }
+
+  this.release = function () {
+    this.key = null
+  }
+
   // Clock
 
   this.ticks = []
+
   // TODO
   this.sendClock = function () {
     if (!this.outputDevice()) { return }
@@ -115,10 +128,18 @@ function Midi (terminal) {
 
   this.receive = function (msg) {
     switch (msg.data[0]) {
+      // Keys
+      case 0x90:
+        this.press(msg.data[1])
+        break
+      case 0x80:
+        this.release()
+        break
+      // Clock
       case 0xF8:
         this.count = (this.count + 1) % 6
         if (this.count % 4 === 0) {
-          terminal.clock.tap()
+          // terminal.clock.tap()
         }
         break
       case 0xFA:

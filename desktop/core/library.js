@@ -43,5 +43,6 @@ module.exports = {
   ';': require('./library/_udp'),
   '=': require('./library/_osc'),
   '^': require('./library/_cc'),
-  '%': require('./library/_mono')
+  '%': require('./library/_mono'),
+  '&': require('./library/_keys')
 }
