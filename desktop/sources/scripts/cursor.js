@@ -109,9 +109,9 @@ function Cursor (terminal) {
 
   this.trigger = function () {
     const operator = terminal.orca.operatorAt(this.x, this.y)
-    if (operator) {
-      operator.run(true)
-    }
+    if (!operator) { console.warn('Cursor', 'Nothing to trigger.'); return }
+    console.log('Cursor', 'Trigger: ' + operator.name)
+    operator.operation(true)
   }
 
   this.toggleMode = function (val) {
