@@ -157,7 +157,7 @@ function Source (terminal) {
   }
 
   this.parse = function (text) {
-    const lines = text.split('\n')
+    const lines = text.split('\n').map((line) => { return clean(line) })
     const w = lines[0].length
     const h = lines.length
     const s = lines.join('\n').trim()
@@ -180,6 +180,15 @@ function Source (terminal) {
 
   function isDifferent (a, b) {
     return a.replace(/[^a-zA-Z0-9+]+/gi, '').trim() !== b.replace(/[^a-zA-Z0-9+]+/gi, '').trim()
+  }
+
+  function clean (s) {
+    let c = ''
+    for (let x = 0; x <= s.length; x++) {
+      const char = s.charAt(x)
+      c += !terminal.orca.isAllowed(char) ? '.' : char
+    }
+    return c
   }
 }
 
