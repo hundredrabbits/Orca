@@ -60,11 +60,6 @@ function Terminal () {
     this.update()
   }
 
-  this.unload = function () {
-    this.io.midi.silence()
-    this.io.mono.silence()
-  }
-
   this.update = function () {
     this.clear()
     this.ports = this.findPorts()
@@ -83,8 +78,15 @@ function Terminal () {
   }
 
   this.setSize = function (size) {
-    console.log(`Set Size: ${size.w}x${size.h}`)
-    require('electron').remote.getCurrentWindow().setSize(parseInt(size.w + 60), parseInt(size.h + 60 + this.tile.h), false)
+    const win = require('electron').remote.getCurrentWindow()
+    const winSize = win.getSize()
+    const targetSize = [parseInt(size.w + 60), parseInt(size.h + 60 + this.tile.h)]
+
+    if (winSize[0] === targetSize[0] && winSize[1] === targetSize[1]) { return }
+
+    console.log(`Window Size: ${targetSize[0]}x${targetSize[1]}, from ${winSize[0]}x${winSize[1]}`)
+
+    win.setSize(targetSize[0], targetSize[1], false)
     this.resize()
   }
 
@@ -294,7 +296,7 @@ function Terminal () {
     if (this.cursor.x >= tiles.w) { this.cursor.x = tiles.w - 1 }
     if (this.cursor.y >= tiles.h) { this.cursor.y = tiles.h - 1 }
 
-    console.log(`Resize to: ${tiles.w}x${tiles.h}`)
+    console.log(`Resized to: ${tiles.w}x${tiles.h}`)
 
     this.el.width = this.tile.w * this.orca.w * this.scale
     this.el.height = (this.tile.h + (this.tile.h / 5)) * this.orca.h * this.scale

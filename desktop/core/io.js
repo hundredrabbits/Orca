@@ -38,6 +38,11 @@ function IO (terminal) {
     this.osc.run()
   }
 
+  this.silence = function () {
+    this.midi.silence()
+    this.mono.silence()
+  }
+
   this.length = function () {
     return this.midi.stack.length + this.cc.stack.length + this.udp.stack.length + this.osc.stack.length + this.mono.stack.length
   }
