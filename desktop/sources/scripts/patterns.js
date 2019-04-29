@@ -29,7 +29,9 @@ const Patterns = function (terminal) {
     if (terminal.source.path) {
       const path = terminal.source.folder() + '/' + name + '.orca'
       if (fs.existsSync(path)) {
-        return this.add(name, fs.readFileSync(path, 'utf8'))
+        const data = fs.readFileSync(path, 'utf8')
+        const cleanData = data.split('\n').map((line) => { return clean(line) }).join('\n')
+        return this.add(name, cleanData)
       }
     }
     return null
@@ -39,6 +41,15 @@ const Patterns = function (terminal) {
     console.log('Patterns', `Added "${name}".`)
     this.collection[name] = data
     return data
+  }
+
+  function clean (s) {
+    let c = ''
+    for (let x = 0; x <= s.length; x++) {
+      const char = s.charAt(x)
+      c += !terminal.orca.isAllowed(char) ? '.' : char
+    }
+    return c
   }
 }
 

@@ -60,14 +60,6 @@ function Terminal () {
     this.update()
   }
 
-  this.load = function (orca, frame = 0) {
-    this.history.reset()
-    this.orca = orca
-    this.setSize({ w: orca.w * this.tile.w, h: orca.h * this.tile.h })
-    this.history.record(this.orca.s)
-    this.update()
-  }
-
   this.unload = function () {
     this.io.midi.silence()
     this.io.mono.silence()
@@ -94,6 +86,11 @@ function Terminal () {
     console.log(`Set Size: ${size.w}x${size.h}`)
     require('electron').remote.getCurrentWindow().setSize(parseInt(size.w + 60), parseInt(size.h + 60 + this.tile.h), false)
     this.resize()
+  }
+
+  this.updateSize = function () {
+    console.log('Terminal', 'Update size')
+    this.setSize({ w: this.orca.w * this.tile.w, h: this.orca.h * this.tile.h })
   }
 
   this.toggleRetina = function () {

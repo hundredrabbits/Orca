@@ -66,13 +66,22 @@ function Source (terminal) {
 
   this.read = function (path = this.path) {
     if (!path) { return }
+    if (!fs.existsSync(path)) { console.warn('Source', 'File does not exist: ' + path); return }
     console.log('Source', 'Reading ' + path)
-    fs.readFile(path, 'utf8', (err, data) => {
-      if (err) { console.warn(err); terminal.source.new(); return }
-      terminal.source.path = path
-      terminal.source.remember('active', path)
-      terminal.load(this.parse(data))
-    })
+    this.path = path
+    this.remember('active', path)
+
+    //
+    const data = fs.readFileSync(path, 'utf8')
+    const lines = data.split('\n').map((line) => { return clean(line) })
+    const w = lines[0].length
+    const h = lines.length
+    const s = lines.join('\n').trim()
+
+    terminal.orca.load(w, h, s)
+    terminal.history.reset()
+    terminal.history.record(terminal.orca.s)
+    terminal.updateSize()
   }
 
   this.quit = function () {

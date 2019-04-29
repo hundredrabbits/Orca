@@ -27,14 +27,14 @@ function Orca (terminal, host = null) {
     this.f = 0
     this.w = w
     this.h = h
-    this.s = new Array((this.h * this.w) + 1).join('.')
+    this.replace(new Array((this.h * this.w) + 1).join('.'))
   }
 
   this.load = function (w, h, s, f = 0) {
     this.w = w
     this.h = h
     this.f = f
-    this.s = this.clean(s)
+    this.replace(this.clean(s))
     return this
   }
 
@@ -42,15 +42,20 @@ function Orca (terminal, host = null) {
     if (!g) { return false }
     if (g.length !== 1) { return false }
     if (!this.inBounds(x, y)) { return false }
-    if (!this.isAllowed(g)) { return false }
     if (this.glyphAt(x, y) === g) { return false }
     const index = this.indexAt(x, y)
-    this.s = this.s.substr(0, index) + g + this.s.substr(index + g.length)
+    const glyph = !this.isAllowed(g) ? '.' : g
+    const string = this.s.substr(0, index) + glyph + this.s.substr(index + 1)
+    this.replace(string)
     return true
   }
 
   this.clean = function (str) {
     return `${str}`.replace(/\n/g, '').trim().substr(0, this.w * this.h)
+  }
+
+  this.replace = function (s) {
+    this.s = s
   }
 
   // Operators
