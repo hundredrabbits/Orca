@@ -156,7 +156,8 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     const octave = clamp(parseInt(transpose[n].charAt(1)) + o, 0, 8)
     const value = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'].indexOf(note)
     const id = clamp((octave * 12) + value, 0, 127)
-    return { id, value, note, octave }
+    const real = id < 89 ? Object.keys(transpose)[id - 45] : null
+    return { id, value, note, octave, real }
   }
 
   this.normalize = function (n) {
