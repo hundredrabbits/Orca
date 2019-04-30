@@ -25,7 +25,7 @@ function OperatorMono (orca, x, y, passive) {
     const rawNote = this.listen(this.ports.input.note)
 
     if (rawOctave === -1) { return }
-    if (rawNote === '.' || !isNaN(rawNote)) { return }
+    if (rawNote === '.') { return }
 
     const rawVelocity = this.listen(this.ports.input.velocity, true)
     const rawLength = this.listen(this.ports.input.length, true)
