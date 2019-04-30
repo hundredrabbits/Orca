@@ -36,6 +36,8 @@ function Commander (terminal) {
     terminal.update()
   }
 
+  const v = document.getElementById('v')
+
   this.operations = {
     'apm': (val) => { terminal.clock.set(null, parseInt(val)) },
     'bpm': (val) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
@@ -58,6 +60,11 @@ function Commander (terminal) {
     'run': (val) => { terminal.run() },
     'stop': (val) => { terminal.clock.stop() },
     'time': (val) => { terminal.clock.setFrame(parseInt(val)) },
+    'video': (val) => { 
+      if (!val) val = Math.random()
+      else val = val / 10
+      v.currentTime = v.duration * val
+     },
     'write': (val) => {
       const g = val.substr(0, 1)
       const pos = val.substr(1).split(';')
