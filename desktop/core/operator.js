@@ -1,5 +1,7 @@
 'use strict'
 
+const transpose = require('./transpose')
+
 function Operator (orca, x, y, glyph = '.', passive = false) {
   this.name = 'unknown'
   this.x = x
@@ -145,6 +147,23 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     }
     return true
   }
+
+  // Notes tools
+
+  this.transpose = function (n, o = 3) {
+    if (!transpose[n]) { return { note: n, octave: o } }
+    const note = this.normalize(transpose[n].charAt(0))
+    const octave = clamp(parseInt(transpose[n].charAt(1)) + o, 0, 8)
+    const value = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'].indexOf(note)
+    const id = clamp((octave * 12) + value, 0, 127)
+    return { id, value, note, octave }
+  }
+
+  this.normalize = function (n) {
+    return n === 'e' ? 'F' : n === 'b' ? 'C' : n
+  }
+
+  // Docs
 
   this.docs = function () {
     return `\`${this.glyph.toUpperCase()}\` **${this.name}**: ${this.info}`

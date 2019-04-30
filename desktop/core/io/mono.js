@@ -12,8 +12,9 @@ function Mono (terminal) {
     if (this.stack[0]) {
       if (this.stack[0].length <= 1) {
         this.release()
+      } else {
+        this.stack[0].length--
       }
-      this.stack[0].length--
     }
 
     if (this.queue) {
