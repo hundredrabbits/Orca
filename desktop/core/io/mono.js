@@ -10,11 +10,10 @@ function Mono (terminal) {
 
   this.run = function () {
     if (this.stack[0]) {
-      if (this.stack[0].length < 1) {
-        this.release(this.stack[0])
-      } else {
-        this.stack[0].length--
+      if (this.stack[0].length <= 1) {
+        this.release()
       }
+      this.stack[0].length--
     }
 
     if (this.queue) {
@@ -33,7 +32,7 @@ function Mono (terminal) {
   this.release = function (item = this.stack[0]) {
     if (!item) { return }
     this.trigger(this.stack[0], false)
-    this.stack[0] = null
+    this.stack = []
   }
 
   this.clear = function () {

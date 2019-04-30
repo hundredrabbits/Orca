@@ -28,6 +28,7 @@ function Osc (terminal) {
   }
 
   this.play = function ({ path, msg }) {
+    if (!this.client) { return }
     const oscMsg = new osc.Message(path)
     for (var i = 0; i < msg.length; i++) {
       oscMsg.append(terminal.orca.valueOf(msg.charAt(i)))
