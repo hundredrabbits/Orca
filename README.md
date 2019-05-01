@@ -123,7 +123,7 @@ Place a file called `video.mp4` in the `sources` directory. Please be cautious o
 
 The `;video` or `;v` command accepts the following filters...
 
-- Seek: `:x` 0-9 (will jump to 30% duration). Not specifying `x` will jump to a random spot in the video on each bang.
+- Seek: `:x` 0-9 (`:x5` will jump to 50% duration, and so on). Not specifying `x` will jump to a random spot in the video on each bang.
 - Invert: `:i` 0-1. 1 is inverted.
 - Hue Rotate: `:h` 0-1. Will cycle through color wheel.
 - Saturate: `:s` 0-9. Will boost saturation.
