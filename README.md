@@ -117,6 +117,21 @@ All commands have a shorthand equivalent to their first character, for example, 
 - `write:H12;34` Writes glyph `H`, at `12,34`.
 - `color:f00;0f0;00f` Colorizes the interface.
 
+##### Video
+
+Place a file called `video.mp4` in the `sources` directory. Please be cautious of filesize and resolution -- as too large will perform poorly.
+
+The `;video` or `;v` command accepts the following filters...
+
+- Seek: `:x` 0-9 (will jump to 30% duration). Not specifying `x` will jump to a random spot in the video on each bang.
+- Invert: `:i` 0-1. 1 is inverted.
+- Hue Rotate: `:h` 0-1. Will cycle through color wheel.
+- Saturate: `:s` 0-9. Will boost saturation.
+- Desaturate: `:d` 0-9. Will reduce saturation.
+- Zoom: `:z` 0-9. Will zoom video.
+
+These can be chained: `;v:i1:h7:s4`
+ 
 ### Project Mode
 
 You can **quickly inject orca files** into the currently active file, by using the command-line prompt — Allowing you to navigate across multiple files like you would a project. Type `CmdOrCtrl+K` and the name of another `.orca` file, **located in the same folder** as the opened file, to paste it into the current patch.
