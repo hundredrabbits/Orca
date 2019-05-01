@@ -15,7 +15,6 @@ function OperatorR (orca, x, y, passive) {
   this.operation = function (force = false) {
     const min = this.listen(this.ports.haste.min, true)
     const max = this.listen(this.ports.input.max, true)
-    if (min === max) { return }
     const val = parseInt((Math.random() * (max - min)) + min)
     return orca.keyOf(val)
   }

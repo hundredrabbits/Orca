@@ -12,9 +12,12 @@ function OperatorKeys (orca, x, y, passive) {
   this.ports.output = { x: 0, y: 1 }
 
   this.operation = function (force = false) {
+    if (!terminal.io.midi.key) { return '.' }
     const octave = Math.floor(terminal.io.midi.key / 12)
-    const note = terminal.io.midi.key % 12
-    return terminal.io.midi.key ? OCTAVE[note] : '.'
+    const value = terminal.io.midi.key % 12
+    const note = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'][value]
+    console.log(this.transpose(note, octave))
+    return '2'
   }
 }
 

@@ -2,10 +2,6 @@
 
 const Operator = require('../operator')
 
-const OCTAVE = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B']
-const MAJOR = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
-const MINOR = ['c', 'd', 'F', 'f', 'g', 'a', 'C']
-
 function OperatorMidi (orca, x, y, passive) {
   Operator.call(this, orca, x, y, ':', true)
 
@@ -21,48 +17,31 @@ function OperatorMidi (orca, x, y, passive) {
   this.operation = function (force = false) {
     if (!this.hasNeighbor('*') && force === false) { return }
 
-    const rawChannel = this.listen(this.ports.input.channel, true)
+    const channel = this.listen(this.ports.input.channel, true)
+
+    if (channel === -1) { return }
+
     const rawOctave = this.listen(this.ports.input.octave, true)
-    const rawNote = clampNotes(this.listen(this.ports.input.note))
-    const rawVelocity = this.listen(this.ports.input.velocity, true)
-    const rawLength = this.listen(this.ports.input.length, true)
+    const rawNote = this.listen(this.ports.input.note)
 
-    if (rawChannel === -1) { return }
     if (rawOctave === -1) { return }
-    if (rawNote === '.' || !isNaN(rawNote)) { return }
+    if (rawNote === '.') { return }
 
-    const transposed = transpose(rawOctave, rawNote)
-    // 0 - 16
-    const channel = rawChannel
+    const rawVelocity = this.listen(this.ports.input.velocity, true)
+    const length = this.listen(this.ports.input.length, true)
+
+    const transposed = this.transpose(rawNote, rawOctave)
     // 1 - 8
-    const octave = clamp(transposed.note === 'b' ? transposed.octave + 1 : transposed.octave, 0, 8)
+    const octave = transposed.octave
     // 0 - 11
-    const note = OCTAVE.indexOf(transposed.note)
+    const note = transposed.value
     // 0 - G(127)
     const velocity = parseInt((rawVelocity / 16) * 127)
-    // 0 - G(16)
-    const length = rawLength
-
-    if (note < 0) { return }
 
     this.draw = false
 
     terminal.io.midi.send(channel, octave, note, velocity, length)
   }
-
-  function transpose (octave, note) {
-    if (OCTAVE.indexOf(note) > -1) { return { octave, note } }
-    const noteArray = isUpperCase(note) === true ? MAJOR : MINOR
-    const noteIndex = letterValue(note) - 7
-    const noteMod = noteArray[noteIndex % noteArray.length]
-    const octaveMod = Math.floor(noteIndex / noteArray.length) + 1
-    return { octave: octave + octaveMod, note: clampNotes(noteMod) }
-  }
-
-  function letterValue (c) { return c.toLowerCase().charCodeAt(0) - 97 }
-  function isUpperCase (s) { return `${s}`.toUpperCase() === `${s}` }
-  function clampNotes (n) { return n === 'e' ? 'F' : n === 'b' ? 'C' : n }
-  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
 module.exports = OperatorMidi

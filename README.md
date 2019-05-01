@@ -37,7 +37,7 @@ npm start
 - `L` **loop**: Loops a number of eastward operators.
 - `M` **modulo**: Outputs the modulo of input.
 - `N` **north**: Moves Northward, or bangs.
-- `O` **offset**: Reads a distant operator with offset.
+- `O` **read**: Reads a distant operator with offset.
 - `P` **push**: Writes an eastward operator with offset.
 - `Q` **query**: Reads distant operators with offset.
 - `R` **random**: Outputs a random value.
@@ -46,7 +46,7 @@ npm start
 - `U` **uturn**: Reverses movement of inputs.
 - `V` **variable**: Reads and write globally available variables.
 - `W` **west**: Moves westward, or bangs.
-- `X` **teleport**: Writes a distant operator with offset.
+- `X` **write**: Writes a distant operator with offset.
 - `Y` **jymper**: Outputs the westward operator.
 - `Z` **zoom**: Moves eastwardly, respawns west on collision.
 - `*` **bang**: Bangs neighboring operators.
@@ -156,9 +156,9 @@ The midi operator interprets any letter above the chromatic scale as a transpose
 | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:    | 
 | _     | _     | _     | _     | _     | _     | _     | _     | _     | _     | A0    | B0     |
 | **C** | **D** | **E** | **F** | **G** | **H** | **I** | **J** | **K** | **L** | **M** | **N**  |
-| C0    | D0    | E0    | F0    | G0    | C1    | D1    | E1    | F1    | G1    | A1    | B1     | 
+| C0    | D0    | E0    | F0    | G0    | A0    | B0    | C1    | D1    | E1    | F1    | G1     | 
 | **O** | **P** | **Q** | **R** | **S** | **T** | **U** | **V** | **W** | **X** | **Y** | **Z**  | 
-| C2    | D2    | E2    | F2    | G2    | A3    | B3    | C4    | D4    | E4    | F4    | G4     | 
+| A1    | B1    | C2    | D2    | E2    | F2    | G2    | A2    | B2    | C3    | D3    | E3     | 
 
 ## Companion Applications
 
