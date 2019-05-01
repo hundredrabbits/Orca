@@ -28,7 +28,7 @@ function OperatorMidi (orca, x, y, passive) {
     if (rawNote === '.') { return }
 
     const rawVelocity = this.listen(this.ports.input.velocity, true)
-    const rawLength = this.listen(this.ports.input.length, true)
+    const length = this.listen(this.ports.input.length, true)
 
     const transposed = this.transpose(rawNote, rawOctave)
     // 1 - 8
@@ -40,7 +40,7 @@ function OperatorMidi (orca, x, y, passive) {
 
     this.draw = false
 
-    terminal.io.mono.send(channel, octave, note, velocity, length)
+    terminal.io.midi.send(channel, octave, note, velocity, length)
   }
 }
 
