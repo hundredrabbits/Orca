@@ -54,11 +54,17 @@ npm start
 
 ### IO
 
+#### Send
+
 - `:` **midi**: Sends a MIDI note.
 - `^` **cc**: Sends a MIDI CC value.
 - `%` **mono**: Sends a Monophonic MIDI value.
 - `;` **udp**: Sends a UDP message.
 - `=` **osc**: Sends a OSC message.
+
+#### Receive
+
+- `&` **keys**: Receives a MIDI note.
 
 ## MIDI
 
