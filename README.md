@@ -37,7 +37,7 @@ npm start
 - `L` **loop**: Loops a number of eastward operators.
 - `M` **modulo**: Outputs the modulo of input.
 - `N` **north**: Moves Northward, or bangs.
-- `O` **offset**: Reads a distant operator with offset.
+- `O` **read**: Reads a distant operator with offset.
 - `P` **push**: Writes an eastward operator with offset.
 - `Q` **query**: Reads distant operators with offset.
 - `R` **random**: Outputs a random value.
@@ -46,7 +46,7 @@ npm start
 - `U` **uturn**: Reverses movement of inputs.
 - `V` **variable**: Reads and write globally available variables.
 - `W` **west**: Moves westward, or bangs.
-- `X` **teleport**: Writes a distant operator with offset.
+- `X` **write**: Writes a distant operator with offset.
 - `Y` **jymper**: Outputs the westward operator.
 - `Z` **zoom**: Moves eastwardly, respawns west on collision.
 - `*` **bang**: Bangs neighboring operators.

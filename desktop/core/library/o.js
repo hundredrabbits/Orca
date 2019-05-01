@@ -5,7 +5,7 @@ const Operator = require('../operator')
 function OperatorO (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'o', passive)
 
-  this.name = 'offset'
+  this.name = 'read'
   this.info = 'Reads a distant operator with offset.'
 
   this.ports.haste.x = { x: -2, y: 0 }
