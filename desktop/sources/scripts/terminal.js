@@ -11,7 +11,7 @@ function Terminal () {
   const Theme = require('./lib/theme')
   const Controller = require('./lib/controller')
 
-  this.version = 100
+  this.version = 101
   this.library = require('../../core/library')
 
   this.orca = new Orca()
@@ -244,7 +244,7 @@ function Terminal () {
     this.write(`${this.orca.w}x${this.orca.h}`, col * 0, 0, this.grid.w)
     this.write(`${this.grid.w}/${this.grid.h}`, col * 1, 0, this.grid.w)
     this.write(`${this.source}`, col * 2, 0, this.grid.w)
-    this.write(`${this.clock}`, col * 3, 0, this.grid.w, this.io.midi.inputIndex > -1 ? 1 : 2)
+    this.write(`${this.clock}`, col * 3, 0, this.grid.w, this.io.midi.inputIndex > -1 ? 4 : 2)
     this.write(`${this.io.inspect(this.grid.w)}`, col * 4, 0, this.grid.w)
 
     if (this.orca.f < 20) {
@@ -253,8 +253,8 @@ function Terminal () {
 
     if (this.commander.isActive === true) {
       this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 5, 1, this.grid.w * 2, 1)
-    } else if (this.orca.f < 19) {
-      this.write(`v${this.version}`, col * 5, 1, this.grid.w * 2, 3)
+    } else if (this.orca.f < 8 && this.orca.f % 2 === 0) {
+      this.write(`v${this.version}`, col * 5, 1, this.grid.w * 2, 5)
     }
   }
 
