@@ -43,7 +43,7 @@ npm start
 - `R` **random**: Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
 - `T` **track**: Reads an eastward operator with offset.
-- `U` **uturn**: Reverses movement of inputs.
+- `U` **uturn**: Releases input on bang.
 - `V` **variable**: Reads and write globally available variables.
 - `W` **west**: Moves westward, or bangs.
 - `X` **write**: Writes a distant operator with offset.
