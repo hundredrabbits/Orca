@@ -16,8 +16,8 @@ function OperatorKeys (orca, x, y, passive) {
     const octave = Math.floor(terminal.io.midi.key / 12)
     const value = terminal.io.midi.key % 12
     const note = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'][value]
-    console.log(this.transpose(note, octave))
-    return '2'
+    const transposed = this.transpose(note, octave)
+    return transposed && transposed.real ? transposed.real : '.'
   }
 }
 
