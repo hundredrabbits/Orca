@@ -125,7 +125,7 @@ The `;video` or `;v` command accepts the following filters...
 
 - Seek: `:x` 0-9 (`:x5` will jump to 50% duration, and so on). Not specifying `x` will jump to a random spot in the video on each bang.
 - Invert: `:i` 0-1. 1 is inverted.
-- Hue Rotate: `:h` 0-1. Will cycle through color wheel.
+- Hue Rotate: `:h` 0-9. Will cycle through color wheel.
 - Saturate: `:s` 0-9. Will boost saturation.
 - Desaturate: `:d` 0-9. Will reduce saturation.
 - Zoom: `:z` 0-9. Will zoom video.
