@@ -19,6 +19,11 @@ const Patterns = function (terminal) {
   this.collection['scale'] = `cTCcDdEFfGgAaB\n.C............`
   this.collection['ca44'] = `.C4\nA04`
   this.collection['dy'] = `D8\n.Y`
+  this.collection['42f'] = `D4\n.:03C`
+  this.collection['hh8'] = `D2\n.:13C`
+  this.collection['sn24'] = `D8\n.:23C`
+  this.collection['bass'] = `..Cg2..\nD12gTC.\n.:34.51`
+  this.collection['lead'] = `..Cg2..\nD12gTC.\n.:54.51`
 
   this.find = function (name) {
     // Statics

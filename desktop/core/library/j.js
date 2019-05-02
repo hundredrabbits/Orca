@@ -8,7 +8,6 @@ function OperatorJ (orca, x, y, passive) {
   this.name = 'jumper'
   this.info = 'Copies the northward value southward.'
 
-
   this.ports.haste.y = { x: -1, y: 0 }
   this.ports.input.val = { x: 0, y: -1 }
 
