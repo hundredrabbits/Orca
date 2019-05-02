@@ -5,20 +5,20 @@ const Operator = require('../operator')
 function OperatorU (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'u', passive)
 
-  this.name = 'Unhalt'
-  this.info = 'Releases input on bang.'
+  this.name = 'jumpuper'
+  this.info = 'Outputs the southward operator.'
 
-  this.ports.input.target = { x: 0, y: 1 }
+  this.ports.haste.val = { x: 0, y: 1 }
+  this.ports.output = { x: 0, y: -1 }
 
   this.haste = function () {
-    orca.lock(this.x + this.ports.input.target.x, this.y + this.ports.input.target.y)
+    orca.lock(this.x, this.y - 1)
   }
 
   this.operation = function (force = false) {
-    if (this.hasNeighbor('*') || force === true) {
-      orca.unlock(this.x + this.ports.input.target.x, this.y + this.ports.input.target.y)
-    }
+    return this.listen(this.ports.haste.val)
   }
 }
 
 module.exports = OperatorU
+
