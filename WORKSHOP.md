@@ -2,12 +2,12 @@
 
 This workshop is designed to go over the most commonly used patterns in composition with Orca. If you are using [Pilot](http://github.com/hundredrabbits/Pilot) as a sound source, remember to use the UDP operator `;` instead of `:`.
 
-- **Part 1: Basics**: `D`, `R`, `T`, `C`
-- **Part 2: Projectors**: `E`, `X`, `B`, `I`
-- **Part 3: Logic**: `A`, `I`, `F`, `M`
-- **Part 4: Estate**: `V`, `K`, `J`, `Y`
+- **Part 1**: [Basics](#Basics) `D`, `R`, `T`, `C`
+- **Part 2**: [Projectors](#Projectors) `E`, `X`, `B`, `I`
+- **Part 3**: [Logic](#Logic) `A`, `I`, `F`, `M`
+- **Part 4**: [Estate](#Estate) `V`, `K`, `J`, `Y`
 
-## Part 1: Basics
+## Basics
 
 ### Send a midi note
 
@@ -47,7 +47,7 @@ D804TCAFE
 .:03C....
 ```
 
-## Part 2: Projectors
+## Projectors
 
 ### Send a bang
 
@@ -94,11 +94,11 @@ B8.
 ....E.......E.....;03C
 ```
 
-## Part 3: Logic
+## Logic
 
 ### Play a note with value offset, via A
 
-- `1AC`
+- `1AC`, or `(add 1 12)`.
 
 ```
 D8.1AC.
@@ -126,11 +126,11 @@ aV..bVD...
 ..;03D....
 ```
 
-## Part 4: Estate
+## Estate
 
 ### Write a variable
 
-- `aV5`
+- `aV5`, will store `5` in the variable `a`.
 
 ```
 aV5
@@ -156,7 +156,7 @@ aV5.bV7
 ..57...
 ```
 
-### Use 2 variables
+### Use 3 variables
 
 - `3Kion`
 
