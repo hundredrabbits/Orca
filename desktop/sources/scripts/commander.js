@@ -36,6 +36,13 @@ function Commander (terminal) {
     terminal.update()
   }
 
+  const v = document.getElementById('v')
+  const getVideoValue = (string, value) => {
+    let index = string.indexOf(value)
+    if (index < 0) return 0
+    return string.substring(index + 1, index + 2)
+  }
+
   this.operations = {
     'apm': (val) => { terminal.clock.set(null, parseInt(val)) },
     'bpm': (val) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
@@ -58,6 +65,18 @@ function Commander (terminal) {
     'run': (val) => { terminal.run() },
     'stop': (val) => { terminal.clock.stop() },
     'time': (val) => { terminal.clock.setFrame(parseInt(val)) },
+    'video': (val) => { 
+      v.currentTime = v.duration * (getVideoValue(val, 'x') ? getVideoValue(val, 'x') /10 : Math.random())
+      v.style.filter = `
+        invert(${getVideoValue(val, 'i') == 1 ? '100%' :'0%'})
+        hue-rotate(${360 *(getVideoValue(val, 'h') / 10)}deg)
+        saturate(${getVideoValue(val, 's') * 40 + 100}%)
+        saturate(${100 - (getVideoValue(val, 'd') * 10)}%)
+      `
+      v.style.transform = `
+        scale(${getVideoValue(val, 'z') / 5 + 1})
+      `
+     },
     'write': (val) => {
       const g = val.substr(0, 1)
       const pos = val.substr(1).split(';')
