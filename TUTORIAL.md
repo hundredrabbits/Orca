@@ -1,6 +1,6 @@
 # Tutorial
 
-If this is your first time trying out **Orca**, watch this [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). 
+If this is your first time trying out **Orca**, watch this [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). If you want to learn how to use a handful of basic operators, have a look at the [workshop](WORKSHOP.md).
 
 ## General
 
@@ -68,100 +68,3 @@ Here's a list of supported operations.
 ## Pilot
 
 [Pilot](https://github.com/hundredrabbits/Pilot) is a minimalist synth software designed to work via UDP, and to quickly get started with Orca. Remember that **Pilot uses UDP instead of MIDI**. Have a look at [pilot.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/software/pilot.orca) to see how it should be used.
-
-## Patterns
-
-Here's a collection of recurring patterns in the design of Orca machines.
-
-### J Funnel
-
-Move two horizontal values next to each other.
-
-```
-.1Y12.
-...JJ.
-..A12.
-..3...
-```
-
-### X Stack
-
-Move two vertical values next to each other.
-
-```
-.21X1..
-.10X2..
-...A21.
-...3...
-```
-
-### Y Projector
-
-A very simple projector using a yumper.
-
-```
-..D4..
-.H*...
-.Ey.E.
-......
-```
-
-### U Loop
-
-A rotating effector.
-
-```
-...U..
-.U....
-....U.
-..U...
-```
-
-### Capacitor
-
-Banging the lowercase `i` charges it, discharges a bang each n-1 times, n is 9 in the example.
-
-```
-3O.....
-..Y.i09
-..F01..
-.......
-```
-
-### One Shot Counter
-
-Banging the lowercase `x` triggers it, count ranges from the right `x` input to the last right `F` input.
-
-```
-24x0...
-14O....
-.F88...
-.*Y*h..
-....I0z
-```
-
-### Increment Major Note
-
-This technique does not use a lookup table.
-
-```
-...AC8
-..AKq.
-.Ma7..
-A3A...
-D.....
-```
-
-## Families
-
-| Families                                               | Glyphs
-| ----------                                             | -----------
-| Directions                                             | N S E W Z
-| [Math](https://www.youtube.com/watch?v=CR1TMGYhCoE)    | A F I M R
-| Writers                                                | G P X
-| Readers                                                | Q T O
-| [Jumpers](https://www.youtube.com/watch?v=CR1TMGYhCoE) | J Y
-| Timers                                                 | C D
-| Variables                                              | K V
-| Misc                                                   | B H L U
-| Special                                                | * # ; : =

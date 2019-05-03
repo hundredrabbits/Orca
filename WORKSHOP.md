@@ -1,6 +1,6 @@
 # Workshop
 
-This workshop is designed to go over the **most commonly used patterns in composition** with [Orca](https://github.com/hundredrabbits/Orca). If you are using [Pilot](http://github.com/hundredrabbits/Pilot) as a sound source, remember to use the UDP operator `;` instead of the MIDI operator `:`.
+This workshop is designed to go over the **most commonly used patterns in composition** with [Orca](https://github.com/hundredrabbits/Orca). If you are using [Pilot](http://github.com/hundredrabbits/Pilot) as a sound source, remember to use the UDP operator `;` instead of the MIDI operator `:`. It's recommended to distribute a copy of the [list of operators](https://github.com/hundredrabbits/Orca#operators), so students can do their own experiments.
 
 - **Part 1**: [Basics](#Basics) `D`, `R`, `T`, `C`
 - **Part 2**: [Projectors](#Projectors) `E`, `X`, `B`, `I`
@@ -165,3 +165,4 @@ iV0.oV3.nVC
 D43Kion...
 .Y.:03C...
 ```
+
