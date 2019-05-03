@@ -1,6 +1,6 @@
 # Workshop
 
-This workshop is designed to go over the most commonly used patterns in composition with Orca. If you are using [Pilot](http://github.com/hundredrabbits/Pilot) as a sound source, remember to use the UDP operator `;` instead of `:`.
+This workshop is designed to go over the **most commonly used patterns in composition** with [Orca](https://github.com/hundredrabbits/Orca). If you are using [Pilot](http://github.com/hundredrabbits/Pilot) as a sound source, remember to use the UDP operator `;` instead of the MIDI operator `:`.
 
 - **Part 1**: [Basics](#Basics) `D`, `R`, `T`, `C`
 - **Part 2**: [Projectors](#Projectors) `E`, `X`, `B`, `I`
@@ -11,7 +11,7 @@ This workshop is designed to go over the most commonly used patterns in composit
 
 ### Send a midi note
 
-- `D8`, will send a bang every **8th frame**.
+- `D8`, will send a bang, every **8th frame**.
 - `:03C`, will send the `C3` midi note.
 
 ```
@@ -84,14 +84,14 @@ B8.
 ```
 7I8...................
 .5XE..................
-.....E.......E....;03C
-......E.......E...;03D
-.......E.......E..;03E
-........E.......E.;03F
-.........E.......E;03G
-..E.......E......*;03A
-...E.......E......;03B
-....E.......E.....;03C
+.....E.......E....:03C
+......E.......E...:03D
+.......E.......E..:03E
+........E.......E.:03F
+.........E.......E:03G
+..E.......E......*:03A
+...E.......E......:03B
+....E.......E.....:03C
 ```
 
 ## Logic
@@ -102,18 +102,18 @@ B8.
 
 ```
 D8.1AC.
-.;03D..
+.:03D..
 ```
 
 ### Play a note with time offset, via F
 
-- `.I4`, will increment to 4.
+- `.I4`, will increment to `4`.
 - `F2`, will bang if leftside input is equal to `2`.
 
 ```
 I4.....
 3F2.1AC
-..;03D.
+..:03D.
 ```
 
 ## Estate
