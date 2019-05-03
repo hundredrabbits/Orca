@@ -161,6 +161,7 @@ The midi operator interprets any letter above the chromatic scale as a transpose
 
 - [Japanese](https://qiita.com/rucochanman/items/98a4ea988ae99e04b333)
 - [German](http://tropone.de/2019/03/13/orca-ein-sequenzer-der-kryptischer-nicht-aussehen-kann-und-ein-versuch-einer-anleitung/)
+- [French](http://makingsound.fr/blog/orca-sequenceur-modulaire/)
 
 ## Extras
 
