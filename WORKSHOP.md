@@ -11,7 +11,7 @@ This workshop is designed to go over the most commonly used patterns in composit
 
 ### Send a midi note
 
-- `D8`, will send a bang every 8th frame.
+- `D8`, will send a bang every **8th frame**.
 - `:03C`, will send the `C3` midi note.
 
 ```
@@ -21,7 +21,7 @@ D8...
 
 ### Play a random note
 
-- `aRG`, will output a random value between `a-g`, the right-side uppercase letter indicates an uppercase output.
+- `aRG`, will output a random value between `a` & `g`, the rightside uppercase letter indicates an **uppercase output**.
 
 ```
 D8.aRG.
@@ -30,7 +30,7 @@ D8.aRG.
 
 ### Make a melody
 
-- `14TCAFE`, set a track of 4 notes.
+- `14TCAFE`, set a track of **4 notes**.
 
 ```
 D814TCAFE
@@ -39,7 +39,7 @@ D814TCAFE
 
 ### Play the melody
 
-- `8C4`, will count to `4`, every 8th frame.
+- `8C4`, will count to `4`, every **8th frame**.
 
 ```
 .8C4.....
@@ -51,11 +51,11 @@ D804TCAFE
 
 ### Send a bang
 
-- `E`, will send a `E` eastward.
+- `E`, will travel **eastward**.
 
 ### Write an X projector
 
-- `XE`, will create a `E` every second frame.
+- `XE`, will create a `E`, every **2nd frame**.
 
 ```
 ..XE
@@ -72,7 +72,7 @@ B8.
 
 ### Animate the projector, with I
 
-- `2I8`, will increment to `8`, at a rate of `2` each frame.
+- `2I8`, will increment to `8`, at a rate of `2`, **every frame**.
 
 ```
 7I8.
@@ -107,23 +107,13 @@ D8.1AC.
 
 ### Play a note with time offset, via F
 
-- `I4` and `F2`
+- `.I4`, will increment to 4.
+- `F2`, will bang if leftside input is equal to `2`.
 
 ```
 I4.....
 3F2.1AC
 ..;03D.
-```
-
-### Store values in variables
-
-```
-.I4.......
-.1F2.1AC..
-aV..bVD...
-..........
-.Va..Vb...
-..;03D....
 ```
 
 ## Estate
@@ -138,7 +128,7 @@ aV5
 
 ### Read a variable
 
-- `Va`
+- `Va`, will output the value of the variable `a`.
 
 ```
 .Va
@@ -147,7 +137,7 @@ aV5
 
 ### Read 2 variables
 
-- `2Kab`
+- `2Kab`, will output the values of `a` & `b`, side-by-side.
 
 ```
 aV5.bV7
@@ -158,7 +148,7 @@ aV5.bV7
 
 ### Use 3 variables
 
-- `3Kion`
+- `3Kion`, will output the values of `i`, `o` & `n`, side-by-side.
 
 ```
 iV0.oV3.nVC
@@ -169,7 +159,7 @@ iV0.oV3.nVC
 
 ### Carry a bang
 
-- `Y`
+- `Y`, will output the leftside input, eastwardly.
 
 ```
 D43Kion...
