@@ -17,7 +17,7 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   this.listen = function (port, toValue = false) {
     if (!port) { return (toValue ? 0 : '.') }
     const g = orca.glyphAt(this.x + port.x, this.y + port.y)
-    if (g === '.' && port.default) { return port.default }
+    if ((g === '.' || g === '*') && port.default) { return port.default }
     if (toValue) {
       const min = port.clamp && port.clamp.min ? port.clamp.min : 0
       const max = port.clamp && port.clamp.max ? port.clamp.max : 35
