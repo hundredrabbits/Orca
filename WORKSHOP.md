@@ -11,8 +11,8 @@ This workshop is designed to go over the most commonly used patterns in composit
 
 ### Send a midi note
 
-- `D8`
-- `:03C`
+- `D8`, will send a bang every 8th frame.
+- `:03C`, will send the `C3` midi note.
 
 ```
 D8...
@@ -21,7 +21,7 @@ D8...
 
 ### Play a random note
 
-- `aRG`
+- `aRG`, will output a random value between `a-g`, the right-side uppercase letter indicates an uppercase output.
 
 ```
 D8.aRG.
@@ -30,7 +30,7 @@ D8.aRG.
 
 ### Make a melody
 
-- `14TCAFE`
+- `14TCAFE`, set a track of 4 notes.
 
 ```
 D814TCAFE
@@ -39,7 +39,7 @@ D814TCAFE
 
 ### Play the melody
 
-- `8C4`
+- `8C4`, will count to `4`, every 8th frame.
 
 ```
 .8C4.....
@@ -51,11 +51,11 @@ D804TCAFE
 
 ### Send a bang
 
-- `E`
+- `E`, will send a `E` eastward.
 
 ### Write an X projector
 
-- `XE`
+- `XE`, will create a `E` every second frame.
 
 ```
 ..XE
@@ -63,7 +63,7 @@ D804TCAFE
 
 ### Animate the projector, with B
 
-- `B8`
+- `B8`, will bounce between `0` and `8`.
 
 ```
 B8.
@@ -72,7 +72,7 @@ B8.
 
 ### Animate the projector, with I
 
-- `2I8`
+- `2I8`, will increment to `8`, at a rate of `2` each frame.
 
 ```
 7I8.
