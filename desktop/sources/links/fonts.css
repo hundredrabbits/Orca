@@ -1,15 +1,15 @@
 /* Input */
 
 @font-face {
-    font-family: 'input_mono_regular';
-    src: url('../media/fonts/input_mono_regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'input_mono_regular';
+  src: url('../media/fonts/input_mono_regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'input_mono_medium';
-    src: url('../media/fonts/input_mono_medium.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'input_mono_medium';
+  src: url('../media/fonts/input_mono_medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
