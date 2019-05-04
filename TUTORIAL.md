@@ -17,7 +17,7 @@ To send [Midi notes](https://github.com/hundredrabbits/Orca#midi) to [Ableton Li
 - Select `IAC Driver(Bus 1)`(OSX), or `LoopMidi`(Windows), in the instrument's inputs dropdown.
 - Activate the **In** toggle, on the instrument track.
 
-## Bitwig
+## Bitwig [Linux and JACK]
 
 The following is taken from this page: https://answers.bitwig.com/questions/1218/how-do-i-get-midi-inout-of-bws-on-linux
 
@@ -29,7 +29,7 @@ The following is taken from this page: https://answers.bitwig.com/questions/1218
 - Run sudo modprobe snd_virmidi midi_devs=1 (to enable virtual midi with one device which is easier to understand for now)
 - Start qjacktl
 - Start jack
-- Open Connections: Connect device on left "0: QuNexus MIDI 1" to "0:VirMIDI 5-0"
+- Open Connections: Connect device on left "0: QuNexus MIDI 1" (as an example) to "0:VirMIDI 5-0"
 - Open Bitwig
 - Under Options > Preferences > Controllers click "Add controller manually"
 - Choose "Generic MIDI Keyboard"
