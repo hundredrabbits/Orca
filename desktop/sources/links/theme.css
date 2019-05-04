@@ -1,1 +1,1 @@
-body { background:var(--background) !important }
+body { background-color:var(--background) !important; background-size: cover; background-position: center center; }

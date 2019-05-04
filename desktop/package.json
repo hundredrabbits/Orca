@@ -23,6 +23,7 @@
     "electron-packager": "^13.1.1"
   },
   "dependencies": {
+    "fs": "0.0.1-security",
     "node-osc": "^4.1.0"
   }
 }

@@ -1,11 +1,18 @@
 'use strict'
+const fs = require('fs')
 
 function Commander (terminal) {
   const Patterns = require('./patterns')
   this.patterns = new Patterns(terminal)
-
+  
   this.isActive = false
   this.query = ''
+  this.images = []
+  
+  fs.readdir(`${__dirname}/../images`, (err, images) => {
+    this.images = images
+    console.log(images)
+  });
 
   this.start = function (q = '') {
     this.isActive = true
@@ -53,6 +60,18 @@ function Commander (terminal) {
       if (isColor(parts[2])) { terminal.theme.active.b_high = '#' + parts[2] }
     },
     'goto': (val) => { terminal.cursor.goto(val) },
+    'image': (val) => { 
+      if(isNaN(val)){
+        val = this.hex2dec(val)
+      }
+      document.body.style.backgroundImage = `url(./images/${this.images[+val % this.images.length]})`
+     },
+     'reload': () => {
+      fs.readdir(`${__dirname}/../images`, (err, images) => {
+        this.images = images
+        console.log(images)
+      });
+     },
     'move': (val) => {
       const pos = val.split(';')
       const x = parseInt(pos[0])
@@ -109,6 +128,92 @@ function Commander (terminal) {
   }
 
   // Injections
+
+  this.hex2dec = function (hex){
+    switch(hex)
+    {
+        case 'a':
+        return 10
+        break
+        case 'b':
+        return 11
+        break
+        case 'c':
+        return 12
+        break
+        case 'd':
+        return 13
+        break
+        case 'e':
+        return 14
+        break
+        case 'f':
+        return 15
+        break
+        case 'g':
+        return 16
+        break
+        case 'h':
+        return 17
+        break
+        case 'i':
+        return 18
+        break
+        case 'j':
+        return 19
+        break
+        case 'k':
+        return 20
+        break
+        case 'l':
+        return 21
+        break
+        case 'm':
+        return 22
+        break
+        case 'n':
+        return 23
+        break
+        case 'o':
+        return 24
+        break
+        case 'p':
+        return 25
+        break
+        case 'q':
+        return 26
+        break
+        case 'r':
+        return 27
+        break
+        case 's':
+        return 28
+        break
+        case 't':
+        return 29
+        break
+        case 'u':
+        return 30
+        break
+        case 'v':
+        return 31
+        break
+        case 'w':
+        return 32
+        break
+        case 'x':
+        return 33
+        break
+        case 'y':
+        return 34
+        break
+        case 'z':
+        return 35
+        break
+        default:
+        return 0
+    }
+  }
 
   this.inject = function (pattern) {
     if (!pattern) { return }
