@@ -120,7 +120,9 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
 
   this.getPorts = function () {
     const a = []
-    a.push([this.x, this.y, this.draw === true ? 0 : 5, `${this.name.charAt(0).toUpperCase() + this.name.substring(1).toLowerCase()}`])
+    if (this.draw === true) {
+      a.push([this.x, this.y, 0, `${this.name.charAt(0).toUpperCase() + this.name.substring(1).toLowerCase()}`])
+    }
     if (!this.passive) { return a }
     for (const id in this.ports.haste) {
       const port = this.ports.haste[id]
