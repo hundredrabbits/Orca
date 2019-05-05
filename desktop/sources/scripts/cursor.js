@@ -155,8 +155,6 @@ function Cursor (terminal) {
     if (!block || block.length === 0) { return }
     const rect = this.toRect()
     let _y = rect.y
-
-    console.log(overlap)
     for (const lineId in block) {
       let _x = rect.x
       for (const glyphId in block[lineId]) {

@@ -9,7 +9,7 @@ function OperatorM (orca, x, y, passive) {
   this.info = 'Outputs the modulo of input.'
 
   this.ports.haste.val = { x: -1, y: 0 }
-  this.ports.input.mod = { x: 1, y: 0, clamp: { min: 1 }, default: 'G' }
+  this.ports.input.mod = { x: 1, y: 0, clamp: { min: 1 }, default: '8' }
   this.ports.output = { x: 0, y: 1, sensitive: true }
 
   this.operation = function (force = false) {
