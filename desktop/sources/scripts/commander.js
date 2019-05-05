@@ -45,7 +45,7 @@ function Commander (terminal) {
       if (isColor(parts[1])) { terminal.theme.active.b_inv = '#' + parts[1] }
       if (isColor(parts[2])) { terminal.theme.active.b_high = '#' + parts[2] }
     },
-    'goto': (val) => { terminal.cursor.goto(val) },
+    'find': (val) => { terminal.cursor.find(val) },
     'move': (val) => {
       const pos = val.split(';')
       const x = parseInt(pos[0])

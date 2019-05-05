@@ -31,11 +31,8 @@
 
       terminal.controller.add("default","Edit","Toggle Insert Mode",() => { terminal.cursor.toggleMode(1) },"CmdOrCtrl+I")
       terminal.controller.add("default","Edit","Block Comment",() => { terminal.cursor.comment() },"CmdOrCtrl+/")
-      terminal.controller.add("default","Edit","Goto",() => { terminal.commander.start('goto:') },"/")
+      terminal.controller.add("default","Edit","Find",() => { terminal.commander.start('find:') },"/")
       terminal.controller.add("default","Edit","Trigger Operator",() => { terminal.cursor.trigger() },"CmdOrCtrl+B")
-      terminal.controller.addSpacer('default', 'Edit', 'history')
-      terminal.controller.add("default","Edit","Undo",() => { terminal.history.undo() },"CmdOrCtrl+Z")
-      terminal.controller.add("default","Edit","Redo",() => { terminal.history.redo() },"CmdOrCtrl+Shift+Z")
       terminal.controller.addSpacer('default', 'Edit', 'selection')
       terminal.controller.add("default","Edit","Select All",() => { terminal.cursor.selectAll() },"CmdOrCtrl+A")
       terminal.controller.add("default","Edit","Erase Selection",() => { terminal.cursor.erase() },"Backspace")
@@ -43,11 +40,8 @@
       terminal.controller.add("default","Edit","Cut Selection",() => { terminal.cursor.cut() },"CmdOrCtrl+X")
       terminal.controller.add("default","Edit","Paste Selection",() => { terminal.cursor.paste(false) },"CmdOrCtrl+V")
       terminal.controller.add("default","Edit","Paste Over",() => { terminal.cursor.paste(true) },"CmdOrCtrl+Shift+V")
-
-      terminal.controller.add("default","Program","Incr. Col",() => { terminal.modGrid(1,0) },"]")
-      terminal.controller.add("default","Program","Decr. Col",() => { terminal.modGrid(-1,0) },"[")
-      terminal.controller.add("default","Program","Incr. Row",() => { terminal.modGrid(0,1) },"}")
-      terminal.controller.add("default","Program","Decr. Row",() => { terminal.modGrid(0,-1) },"{")
+      terminal.controller.add("default","Edit","Undo",() => { terminal.history.undo() },"CmdOrCtrl+Z")
+      terminal.controller.add("default","Edit","Redo",() => { terminal.history.redo() },"CmdOrCtrl+Shift+Z")
 
       terminal.controller.add("default","Clock","Play/Pause",() => { terminal.clock.togglePlay() },"Space")
       terminal.controller.add("default","Clock","Frame By Frame",() => { terminal.clock.touch() },"CmdOrCtrl+F")
@@ -65,6 +59,11 @@
       terminal.controller.addSpacer('default', 'View', 'commander')
       terminal.controller.add("default","View","Toggle Commander",() => { terminal.commander.start() },"CmdOrCtrl+K")
       terminal.controller.add("default","View","Run Commander",() => { terminal.commander.run() },"Enter")
+      terminal.controller.addSpacer('default', 'View', 'sizes')
+      terminal.controller.add("default","View","Incr. Col",() => { terminal.modGrid(1,0) },"]")
+      terminal.controller.add("default","View","Decr. Col",() => { terminal.modGrid(-1,0) },"[")
+      terminal.controller.add("default","View","Incr. Row",() => { terminal.modGrid(0,1) },"}")
+      terminal.controller.add("default","View","Decr. Row",() => { terminal.modGrid(0,-1) },"{")
 
       terminal.controller.add("default","Midi","Default")
       terminal.controller.add("default","UDP","Default")

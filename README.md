@@ -116,7 +116,7 @@ All commands have a shorthand equivalent to their first character, for example, 
 - `stop` Stops program.
 - `run` Runs current frame.
 - `time:0` Sets the frame value to `0`.
-- `goto:aV` Sends cursor to string `aV`.
+- `find:aV` Sends cursor to string `aV`.
 - `move:3;4` Move cursor to position `3,4`.
 - `bpm:140` Sets bpm speed to `140`.
 - `apm:160` Animates bpm speed to `160`.

@@ -97,7 +97,7 @@ function Cursor (terminal) {
     terminal.history.record(terminal.orca.s)
   }
 
-  this.goto = function (str) {
+  this.find = function (str) {
     const i = terminal.orca.s.indexOf(str)
     if (i < 0) { return }
     const pos = terminal.orca.posAt(i)
