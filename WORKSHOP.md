@@ -89,7 +89,7 @@ D2.5AC.
 - `.F2`, will bang only if leftside input is equal to `2`.
 
 ```
-I8.....
+I4.....
 3F2.1AC
 ..:03D.
 ```
