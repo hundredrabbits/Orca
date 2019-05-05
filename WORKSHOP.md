@@ -130,7 +130,7 @@ E..
 ....E
 ```
 
-### Animate the projector, with B
+### Animate a projector
 
 - `B8`, will bounce between `0` and `8`.
 
@@ -173,7 +173,7 @@ aV5.bV7
 ..57...
 ```
 
-### Use 3 variables
+### Read 3 variables
 
 - `3Kion`, will output the values of `i`, `o` & `n`, side-by-side.
 
