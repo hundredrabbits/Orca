@@ -1,6 +1,6 @@
 # Workshop
 
-This workshop is designed to go over the **most commonly used patterns in composition** with [Orca](https://github.com/hundredrabbits/Orca). If you are using [Pilot](http://github.com/hundredrabbits/Pilot) as a sound source, remember to use the UDP operator `;` instead of the MIDI operator `:`. 
+This workshop is designed to go over the **most commonly used patterns in composition** with [Orca](https://github.com/hundredrabbits/Orca). If you are using [Pilot](http://github.com/hundredrabbits/Pilot) as a sound source, remember to use the UDP operator `;` instead of the MIDI operator `:`.
 
 We recommend to distribute a printed copy of the [list of operators](https://github.com/hundredrabbits/Orca#operators), so students can do their own experiments.
 
@@ -78,7 +78,7 @@ D8.1AC.
 - `5AC`, will increment the value so the sequence starts at the note `C`.
 
 ```
-..2B7..
+..2B8..
 D2.5AC.
 .:03H..
 ```
