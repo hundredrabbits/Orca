@@ -35,7 +35,7 @@ npm start
 - `J` **jumper**: Outputs the northward operator.
 - `K` **konkat**: Outputs multiple variables.
 - `L` **loop**: Loops a number of eastward operators.
-- `M` **modulo**: Outputs the modulo of input.
+- `M` **multiply**: Outputs the product of inputs.
 - `N` **north**: Moves Northward, or bangs.
 - `O` **read**: Reads a distant operator with offset.
 - `P` **push**: Writes an eastward operator with offset.
