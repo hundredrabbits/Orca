@@ -9,7 +9,7 @@ function OperatorD (orca, x, y, passive) {
   this.info = 'Bangs on a fraction of the runtime frame.'
 
   this.ports.haste.rate = { x: -1, y: 0, clamp: { min: 1 } }
-  this.ports.input.mod = { x: 1, y: 0, default: 8 }
+  this.ports.input.mod = { x: 1, y: 0, default: '8' }
   this.ports.output = { x: 0, y: 1, bang: true }
 
   this.operation = function (force = false) {

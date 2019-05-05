@@ -8,7 +8,7 @@ function OperatorL (orca, x, y, passive) {
   this.name = 'loop'
   this.info = 'Loops a number of eastward operators.'
 
-  this.ports.haste.step = { x: -2, y: 0, default: 1 }
+  this.ports.haste.step = { x: -2, y: 0, default: '1' }
   this.ports.haste.len = { x: -1, y: 0 }
 
   this.haste = function () {
