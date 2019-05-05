@@ -41,6 +41,10 @@ function OperatorMidi (orca, x, y, passive) {
     this.draw = false
 
     terminal.io.midi.send(channel, octave, note, velocity, length)
+
+    if (force === true) {
+      terminal.io.midi.run()
+    }
   }
 }
 

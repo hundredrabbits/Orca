@@ -41,6 +41,10 @@ function OperatorMono (orca, x, y, passive) {
     this.draw = false
 
     terminal.io.mono.send(channel, octave, note, velocity, length)
+
+    if (force === true) {
+      terminal.io.mono.run()
+    }
   }
 }
 

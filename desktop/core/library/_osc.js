@@ -26,6 +26,10 @@ function OperatorOsc (orca, x, y, passive) {
     if (!this.path || this.path === '.') { return }
     this.draw = false
     terminal.io.osc.send('/' + this.path, this.msg)
+
+    if (force === true) {
+      terminal.io.osc.run()
+    }
   }
 }
 
