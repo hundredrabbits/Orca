@@ -9,6 +9,12 @@ function OperatorBang (orca, x, y, passive) {
   this.info = 'Bangs neighboring operators.'
   this.draw = false
 
+  // Overwrite run, to disable draw.
+
+  this.run = function (force = false) {
+
+  }
+
   this.haste = function () {
     this.passive = true
     this.erase()

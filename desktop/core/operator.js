@@ -7,7 +7,7 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   this.x = x
   this.y = y
   this.passive = passive
-  this.draw = true
+  this.draw = passive
   this.glyph = passive ? glyph.toUpperCase() : glyph
   this.info = '--'
   this.ports = { input: {}, haste: {}, bang: !passive }
@@ -57,6 +57,7 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   }
 
   this.run = function (force = false) {
+    this.draw = true
     const payload = this.operation(force)
     if (this.ports.output) {
       if (this.ports.output.bang === true) {
@@ -118,21 +119,24 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   // Docs
 
   this.getPorts = function () {
-    if (!this.passive) { return [] }
+    console.log(this)
     const a = []
-    const TYPE = { operator: 0, haste: 1, input: 2, output: 3 }
-    a.push([this.x, this.y, this.passive === true && this.draw === true ? TYPE.operator : 5, `${this.name.charAt(0).toUpperCase() + this.name.substring(1).toLowerCase()}`])
+
+    a.push([this.x, this.y, this.draw === true ? 0 : 5, `${this.name.charAt(0).toUpperCase() + this.name.substring(1).toLowerCase()}`])
+
+    if (!this.passive) { return a }
+
     for (const id in this.ports.haste) {
       const port = this.ports.haste[id]
-      a.push([this.x + port.x, this.y + port.y, TYPE.haste, `${this.glyph}-${id}`])
+      a.push([this.x + port.x, this.y + port.y, 1, `${this.glyph}-${id}`])
     }
     for (const id in this.ports.input) {
       const port = this.ports.input[id]
-      a.push([this.x + port.x, this.y + port.y, TYPE.input, `${this.glyph}-${id}`])
+      a.push([this.x + port.x, this.y + port.y, 2, `${this.glyph}-${id}`])
     }
     if (this.ports.output) {
       const port = this.ports.output
-      a.push([this.x + port.x, this.y + port.y, TYPE.output, `${this.glyph}-output`])
+      a.push([this.x + port.x, this.y + port.y, 3, `${this.glyph}-output`])
     }
     return a
   }

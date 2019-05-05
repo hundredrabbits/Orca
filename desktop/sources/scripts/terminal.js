@@ -11,7 +11,7 @@ function Terminal () {
   const Theme = require('./lib/theme')
   const Controller = require('./lib/controller')
 
-  this.version = 105
+  this.version = 106
   this.library = require('../../core/library')
 
   this.orca = new Orca()
