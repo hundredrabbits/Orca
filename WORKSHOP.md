@@ -155,11 +155,16 @@ aV5
 
 ### Read a variable
 
-- `Va`, will output the value of the variable `a`.
+- `Va`, will output the value of the variable `a`. Notice how variables have to be written before the place where they are read.
 
 ```
-.Va
-.5.
+.....Va
+.......
+aV5..Va
+.....5.
+.......
+aV6..Va
+.....6.
 ```
 
 ### Read 2 variables
