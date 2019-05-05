@@ -158,8 +158,7 @@ function Cursor (terminal) {
       let _x = rect.x
       for (const glyphId in block[lineId]) {
         const glyph = block[lineId][glyphId]
-        if (this.mode === 1 && glyph === '.') { continue }
-        terminal.orca.write(_x, _y, glyph)
+        terminal.orca.write(_x, _y, this.mode === 1 && glyph === '.' ? terminal.orca.glyphAt(_x, _y) : glyph)
         _x++
       }
       _y++
