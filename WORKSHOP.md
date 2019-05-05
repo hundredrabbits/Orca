@@ -135,12 +135,12 @@ E..
 - `B8`, will bounce between `0` and `8`.
 
 ```
-B4...................
-5XE..................
-....E.......E....:03C
-.....E.......E...:03D
-......E.......E..:03E
-.......E.......E.:03F
+B4..........
+1XE.........
+........:03C
+........:03D
+........:03E
+........:03F
 ```
 
 ## Estate
@@ -155,7 +155,7 @@ aV5
 
 ### Read a variable
 
-- `Va`, will output the value of the variable `a`. Notice how variables have to be written before the place where they are read.
+- `Va`, will output the value of the variable `a`. Notice how **variables have to be written before they are read**.
 
 ```
 .....Va
@@ -169,13 +169,13 @@ aV6..Va
 
 ### Read 2 variables
 
-- `2Kab`, will output the values of `a` & `b`, side-by-side.
+- `3Ka.b`, will output the values of `a` & `b`, next to each other.
 
 ```
 aV5.bV7
 .......
-2Kab...
-..57...
+3Ka.b..
+..5.7..
 ```
 
 ### Read 3 variables
