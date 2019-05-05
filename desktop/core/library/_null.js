@@ -7,6 +7,12 @@ function OperatorNull (orca, x, y, passive) {
 
   this.name = 'null'
   this.info = 'empty'
+
+  // Overwrite run, to disable draw.
+
+  this.run = function (force = false) {
+
+  }
 }
 
 module.exports = OperatorNull

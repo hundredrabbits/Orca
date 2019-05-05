@@ -76,8 +76,8 @@ function Cursor (terminal) {
     this.erase()
   }
 
-  this.paste = function () {
-    this.writeBlock(clipboard.readText().split(/\r?\n/))
+  this.paste = function (overlap = false) {
+    this.writeBlock(clipboard.readText().split(/\r?\n/), overlap)
   }
 
   this.read = function () {
@@ -151,14 +151,17 @@ function Cursor (terminal) {
     return block
   }
 
-  this.writeBlock = function (block, rect = this.toRect()) {
+  this.writeBlock = function (block, overlap = false) {
     if (!block || block.length === 0) { return }
+    const rect = this.toRect()
     let _y = rect.y
+
+    console.log(overlap)
     for (const lineId in block) {
       let _x = rect.x
       for (const glyphId in block[lineId]) {
         const glyph = block[lineId][glyphId]
-        terminal.orca.write(_x, _y, this.mode === 1 && glyph === '.' ? terminal.orca.glyphAt(_x, _y) : glyph)
+        terminal.orca.write(_x, _y, overlap === true && glyph === '.' ? terminal.orca.glyphAt(_x, _y) : glyph)
         _x++
       }
       _y++

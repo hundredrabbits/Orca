@@ -41,7 +41,8 @@
       terminal.controller.add("default","Edit","Erase Selection",() => { terminal.cursor.erase() },"Backspace")
       terminal.controller.add("default","Edit","Copy Selection",() => { terminal.cursor.copy() },"CmdOrCtrl+C")
       terminal.controller.add("default","Edit","Cut Selection",() => { terminal.cursor.cut() },"CmdOrCtrl+X")
-      terminal.controller.add("default","Edit","Paste Selection",() => { terminal.cursor.paste() },"CmdOrCtrl+V")
+      terminal.controller.add("default","Edit","Paste Selection",() => { terminal.cursor.paste(false) },"CmdOrCtrl+V")
+      terminal.controller.add("default","Edit","Paste Over",() => { terminal.cursor.paste(true) },"CmdOrCtrl+Shift+V")
 
       terminal.controller.add("default","Program","Incr. Col",() => { terminal.modGrid(1,0) },"]")
       terminal.controller.add("default","Program","Decr. Col",() => { terminal.modGrid(-1,0) },"[")
