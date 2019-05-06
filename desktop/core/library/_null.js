@@ -3,7 +3,7 @@
 const Operator = require('../operator')
 
 function OperatorNull (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, '.', passive)
+  Operator.call(this, orca, x, y, '.', false)
 
   this.name = 'null'
   this.info = 'empty'

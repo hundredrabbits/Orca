@@ -2,20 +2,18 @@
 
 const library = require('./library')
 
-function Orca (terminal, host = null) {
+function Orca (terminal) {
   this.w = 1 // Default Width
   this.h = 1 // Default Height
+  this.f = 0 // Frame
   this.s = '' // String
-  this.f = host ? host.f : 0 // Frame
-
-  this.host = host
 
   this.terminal = terminal
   this.keys = Object.keys(library).slice(0, 36)
 
   this.locks = []
-  this.values = {}
   this.runtime = []
+  this.variables = {}
 
   this.run = function () {
     this.runtime = this.parse()
@@ -77,7 +75,7 @@ function Orca (terminal, host = null) {
   this.cast = function (g, x, y) {
     if (g === '.') { return }
     if (!library[g.toLowerCase()]) { return }
-    const passive = g === g.toUpperCase() && this.valueOf(g) > 9
+    const passive = g === g.toUpperCase()
     return new library[g.toLowerCase()](this, x, y, passive)
   }
 
@@ -113,7 +111,7 @@ function Orca (terminal, host = null) {
 
   this.release = function () {
     this.locks = new Array(this.w * this.h)
-    this.values = {}
+    this.variables = {}
   }
 
   this.unlock = function (x, y) {
@@ -140,7 +138,7 @@ function Orca (terminal, host = null) {
   }
 
   this.valueOf = function (g) {
-    return clamp(this.keys.indexOf(`${g}`.toLowerCase()), 0, 35)
+    return this.keys.indexOf(`${g}`.toLowerCase())
   }
 
   this.indexAt = function (x, y) {
@@ -163,16 +161,11 @@ function Orca (terminal, host = null) {
     return this.locks[this.indexAt(x, y)] === true
   }
 
-  // Tools
-
-  this.inspect = function (limit = terminal.grid.w) {
-    const str = Object.keys(this.values).filter((key) => { return this.values[key] !== '.' }).join('')
-    if (str.length < limit) {
-      return fill(str, limit, '.')
-    }
-    const key = this.f % str.length
-    return str.slice(key) + str.substr(0, key)
+  this.valueIn = function (key) {
+    return this.variables[key]
   }
+
+  // Tools
 
   this.format = function () {
     const a = []
@@ -197,9 +190,6 @@ function Orca (terminal, host = null) {
   }
 
   this.reset()
-
-  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
-  function fill (str, len, chr) { while (str.length < len) { str += chr }; return str }
 }
 
 module.exports = Orca

@@ -15,7 +15,7 @@ function OperatorComment (orca, x, y, passive) {
       if (orca.glyphAt(x, this.y) === this.glyph) { break }
     }
     this.passive = false
-    this.lock()
+    orca.lock(this.x, this.y)
   }
 }
 

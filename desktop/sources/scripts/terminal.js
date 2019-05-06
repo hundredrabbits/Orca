@@ -14,7 +14,7 @@ function Terminal () {
   this.version = 110
   this.library = require('../../core/library')
 
-  this.orca = new Orca()
+  this.orca = new Orca(this)
   this.io = new IO(this)
   this.cursor = new Cursor(this)
   this.source = new Source(this)
@@ -234,12 +234,13 @@ function Terminal () {
 
   this.drawInterface = function () {
     const col = this.grid.w
+    const variables = Object.keys(this.orca.variables).join('')
     // Cursor
     this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.mode === 1 ? '+' : ''}`, col * 0, 1, this.grid.w, this.cursor.mode === 1 ? 1 : 2)
     this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.grid.w)
     this.write(`${this.cursor.inspect()}`, col * 2, 1, this.grid.w)
     this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, col * 3, 1, this.grid.w)
-    this.write(`${this.orca.inspect(this.grid.w)}`, col * 4, 1, this.grid.w)
+    this.write(`${display(variables, this.orca.f, this.grid.w)}`, col * 4, 1, this.grid.w)
     // Grid
     this.write(`${this.orca.w}x${this.orca.h}`, col * 0, 0, this.grid.w)
     this.write(`${this.grid.w}/${this.grid.h}`, col * 1, 0, this.grid.w)
@@ -361,6 +362,8 @@ function Terminal () {
 
   // Helpers
 
+  function display (str, f, max) { return str.length < max ? str : str.slice(f % str.length) + str.substr(0, f % str.length) }
+  function fill (str, len, chr) { while (str.length < len) { str += chr }; return str }
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 

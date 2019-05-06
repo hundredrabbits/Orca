@@ -29,7 +29,7 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   this.output = function (g) {
     if (!this.ports.output) { console.warn(this.name, 'Trying to output, but no port'); return }
     if (!g) { return }
-    orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, this.isUpperCase() === true ? `${g}`.toUpperCase() : g)
+    orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, this.requireUC() === true ? `${g}`.toUpperCase() : g)
   }
 
   this.bang = function (b) {
@@ -91,21 +91,12 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     const offset = { x: this.x + x, y: this.y + y }
     if (!orca.inBounds(offset.x, offset.y)) { this.explode(); return }
     const collider = orca.glyphAt(offset.x, offset.y)
-    if (collider === this.glyph) { return }
-    if (collider !== '*' && collider !== '.' && collider !== this.glyph) { this.explode(); return }
+    if (collider !== '*' && collider !== '.') { this.explode(); return }
     this.erase()
     this.x += x
     this.y += y
     this.replace(this.glyph)
     this.lock()
-  }
-
-  this.neighborLike = function (g) {
-    if (orca.glyphAt(this.x + 1, this.y) === g) { return { x: 1, y: 0 } }
-    if (orca.glyphAt(this.x - 1, this.y) === g) { return { x: -1, y: 0 } }
-    if (orca.glyphAt(this.x, this.y + 1) === g) { return { x: 0, y: 1 } }
-    if (orca.glyphAt(this.x, this.y - 1) === g) { return { x: 0, y: -1 } }
-    return false
   }
 
   this.hasNeighbor = function (g) {
@@ -139,31 +130,27 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     return a
   }
 
-  this.isUpperCase = function (ports = this.ports.input) {
+  this.requireUC = function (ports = this.ports.input) {
     if (this.ports.output.sensitive !== true) { return false }
     for (const id in ports) {
       const value = this.listen(ports[id])
-      if (isUpperCase(value) === false) {
-        return false
-      }
+      if (value.length !== 1) { continue }
+      if (value.toLowerCase() === value.toUpperCase()) { continue }
+      if (`${value}`.toUpperCase() === `${value}`) { return true }
     }
-    return true
+    return false
   }
 
   // Notes tools
 
   this.transpose = function (n, o = 3) {
     if (!transpose[n]) { return { note: n, octave: o } }
-    const note = this.normalize(transpose[n].charAt(0))
+    const note = transpose[n].charAt(0)
     const octave = clamp(parseInt(transpose[n].charAt(1)) + o, 0, 8)
     const value = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'].indexOf(note)
     const id = clamp((octave * 12) + value, 0, 127)
     const real = id < 89 ? Object.keys(transpose)[id - 45] : null
     return { id, value, note, octave, real }
-  }
-
-  this.normalize = function (n) {
-    return n === 'e' ? 'F' : n === 'b' ? 'C' : n
   }
 
   // Docs
@@ -172,7 +159,6 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     return `\`${this.glyph.toUpperCase()}\` **${this.name}**: ${this.info}`
   }
 
-  function isUpperCase (a) { return isNaN(a) && `${a}`.toUpperCase() === `${a}` }
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
 
