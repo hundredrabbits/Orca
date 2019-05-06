@@ -11,7 +11,7 @@ We recommend to distribute a printed copy of the [list of operators](https://git
 
 ## Basics
 
-This section will teach the basics of assembling a pattern, and sending a note.
+This section will teach the basics of playing a note and a sequence of notes.
 
 ### Send a midi note
 
@@ -43,7 +43,7 @@ D814TCAFE
 
 ### Play the melody
 
-- `8C4`, will count from `0` to `3`, every **8th frame**.
+- `8C4`, will count from `0` to `3`, at **1/8th speed**.
 
 ```
 .8C4.....
@@ -52,6 +52,8 @@ D804TCAFE
 ```
 
 ## Logic
+
+This section will teach the basics of automating logic decisions and changing the values of operators dynamically.
 
 ### Play every second note
 
@@ -95,6 +97,8 @@ I4.....
 ```
 
 ## Projectors
+
+This section will teach the basics of creating new operators procedurally.
 
 ### Send a bang
 
@@ -145,6 +149,8 @@ B4..........
 
 ## Variables
 
+This section will teach the basics of storing accessing and combining that stored data.
+
 ### Write a variable
 
 - `aV5`, will store `5` in the variable `a`.
@@ -155,7 +161,7 @@ aV5
 
 ### Read a variable
 
-- `Va`, will output the value of the variable `a`. Notice how **variables have to be written before they are read**.
+- `Va`, will output the value of the variable `a`. Notice how variables always **have to be written above where they are read**.
 
 ```
 .....Va
@@ -165,17 +171,6 @@ aV5..Va
 .......
 aV6..Va
 .....6.
-```
-
-### Read 2 variables
-
-- `3Ka.b`, will output the values of `a` & `b`, next to each other.
-
-```
-aV5.bV7
-.......
-3Ka.b..
-..5.7..
 ```
 
 ### Read 3 variables
@@ -189,11 +184,25 @@ iV0.oV3.nVC
 .:03C......
 ```
 
+### Carry a value horizontally and vertically
+
+- `Y`, will output the west input, eastward.
+- `J`, will output the north input, southward.
+
+```
+3..
+J..
+3Y3
+```
+
 ### Carry a bang
 
-- `Y`, will output the leftside input, eastwardly.
+- This method will allow you to bring bangs into tight spots.
 
 ```
-D43Kion...
+D43Ka...
 .Y.:03C...
 ```
+
+I hope this workshop has been enlightening, if you have questions or suggestions, please visit the [forum](https://llllllll.co/t/orca-live-coding-tool/17689), or the [chatroom](https://talk.lurk.org/channel/orca). Enjoy!
+
