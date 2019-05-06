@@ -141,7 +141,7 @@ Orca operates on a base of **36 increments**. Operators using numeric values wil
 
 ## Transpose Table
 
-The midi operator interprets any letter above the chromatic scale as a transpose value, for instance `3H`, is equivalent to `4C`.
+The midi operator interprets any letter above the chromatic scale as a transpose value, for instance `3H`, is equivalent to `4A`.
 
 | **0** | **1** | **2** | **3** | **4** | **5** | **6** | **7** | **8** | **9** | **A** | **B**  | 
 | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:    | 
