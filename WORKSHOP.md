@@ -7,7 +7,7 @@ We recommend to distribute a printed copy of the [list of operators](https://git
 - **Part 1**: [Basics](#Basics) `D`, `R`, `T`, `C`
 - **Part 2**: [Logic](#Logic) `I`, `A`, `F`, `B`
 - **Part 3**: [Projectors](#Projectors) `E`, `H`, `X`, `O`,
-- **Part 4**: [Estate](#Estate) `V`, `K`, `J`, `Y`
+- **Part 4**: [Variables](#Variables) `V`, `K`, `J`, `Y`
 
 ## Basics
 
@@ -143,7 +143,7 @@ B4..........
 ........:03F
 ```
 
-## Estate
+## Variables
 
 ### Write a variable
 
