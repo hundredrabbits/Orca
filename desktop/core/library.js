@@ -40,9 +40,9 @@ module.exports = {
   '*': require('./library/_bang'),
   '#': require('./library/_comment'),
   ':': require('./library/_midi'),
+  '%': require('./library/_mono'),
+  '!': require('./library/_cc'),
   ';': require('./library/_udp'),
   '=': require('./library/_osc'),
-  '^': require('./library/_cc'),
-  '%': require('./library/_mono'),
   '&': require('./library/_keys')
 }

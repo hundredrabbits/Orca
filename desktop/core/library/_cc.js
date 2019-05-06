@@ -3,7 +3,7 @@
 const Operator = require('../operator')
 
 function OperatorCC (orca, x, y) {
-  Operator.call(this, orca, x, y, '^', true)
+  Operator.call(this, orca, x, y, '!', true)
 
   this.name = 'Midi CC'
   this.info = 'Sends a MIDI control change message.'
