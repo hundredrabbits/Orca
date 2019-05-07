@@ -39,11 +39,11 @@ function Source (terminal) {
 
   this.saveAs = function (quitAfter = false) {
     console.log('Source', 'Save a file as..')
-    dialog.showSaveDialog((path) => {
-      if (path === undefined) { return }
-      if (path.indexOf('.orca') < 0) { path += '.orca' }
-      this.write(path, this.generate(), quitAfter)
-      this.path = path
+    dialog.showSaveDialog((loc) => {
+      if (loc === undefined) { return }
+      if (loc.indexOf('.orca') < 0) { loc += '.orca' }
+      this.write(loc, this.generate(), quitAfter)
+      this.path = loc
     })
   }
 
@@ -55,24 +55,24 @@ function Source (terminal) {
 
   // I/O
 
-  this.write = function (path, data = this.generate(), quitAfter = false) {
-    console.log('Source', 'Writing ' + path)
-    fs.writeFileSync(path, data)
-    terminal.source.remember('active', path)
+  this.write = function (loc, data = this.generate(), quitAfter = false) {
+    console.log('Source', 'Writing ' + loc)
+    fs.writeFileSync(loc, data)
+    terminal.source.remember('active', loc)
     if (quitAfter === true) {
       app.exit()
     }
   }
 
-  this.read = function (path = this.path) {
-    if (!path) { return }
-    if (!fs.existsSync(path)) { console.warn('Source', 'File does not exist: ' + path); return }
-    console.log('Source', 'Reading ' + path)
-    this.path = path
-    this.remember('active', path)
+  this.read = function (loc = this.path) {
+    if (!loc) { return }
+    if (!fs.existsSync(loc)) { console.warn('Source', 'File does not exist: ' + loc); return }
+    console.log('Source', 'Reading ' + loc)
+    this.path = loc
+    this.remember('active', loc)
 
     //
-    const data = fs.readFileSync(path, 'utf8')
+    const data = fs.readFileSync(loc, 'utf8')
     const lines = data.split('\n').map((line) => { return clean(line) })
     const w = lines[0].length
     const h = lines.length
@@ -133,10 +133,7 @@ function Source (terminal) {
   // LocalStorage
 
   this.resume = function () {
-    const path = this.recall('active')
-    if (path) {
-      this.read(path)
-    }
+    this.read(this.recall('active'))
   }
 
   this.remember = function (key, val) {
@@ -175,12 +172,12 @@ function Source (terminal) {
 
   // Etc
 
-  this.name = function (path = this.path) {
-    return path ? path.substr(path.lastIndexOf('/') + 1).replace('.orca', '').trim() : null
+  this.name = function () {
+    return this.path ? path.basename(this.path, '.orca') : null
   }
 
-  this.folder = function (path = this.path) {
-    return path ? path.substring(0, path.lastIndexOf('/')).trim() : null
+  this.folder = function () {
+    return this.path ? path.dirname(this.path) : null
   }
 
   this.toString = function () {
