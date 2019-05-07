@@ -2,6 +2,7 @@
 
 const Patterns = function (terminal) {
   const fs = require('fs')
+  const path = require('path')
 
   this.collection = {}
 
@@ -27,9 +28,9 @@ const Patterns = function (terminal) {
     }
     // Dynamics
     if (terminal.source.path) {
-      const path = terminal.source.folder() + '/' + name + '.orca'
-      if (fs.existsSync(path)) {
-        const data = fs.readFileSync(path, 'utf8')
+      const target = path.join(terminal.source.folder(), name + '.orca')
+      if (fs.existsSync(target)) {
+        const data = fs.readFileSync(target, 'utf8')
         const cleanData = data.split('\n').map((line) => { return clean(line) }).join('\n')
         return this.add(name, cleanData)
       }

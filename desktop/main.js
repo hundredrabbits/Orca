@@ -1,4 +1,5 @@
 const { app, BrowserWindow, webFrame, Menu } = require('electron')
+const path = require('path')
 
 let isShown = true
 
@@ -11,7 +12,7 @@ app.on('ready', () => {
     minWidth: 310,
     minHeight: 350,
     backgroundColor: '#000',
-    icon: __dirname + '/' + { darwin: 'icon.icns', linux: 'icon.png', win32: 'icon.ico' }[process.platform] || 'icon.ico',
+    icon: path.join(__dirname, { darwin: 'icon.icns', linux: 'icon.png', win32: 'icon.ico' }[process.platform] || 'icon.ico'),
     resizable: true,
     frame: process.platform !== 'darwin',
     skipTaskbar: process.platform === 'darwin',
