@@ -10,7 +10,6 @@ function OperatorU (orca, x, y, passive) {
 
   this.ports.haste.key = { x: -2, y: 0 }
   this.ports.haste.len = { x: -1, y: 0, clamp: { min: 1 } }
-  this.ports.input.target = { x: 0, y: 1 }
   this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
@@ -26,6 +25,9 @@ function OperatorU (orca, x, y, passive) {
     const index = orca.indexAt(this.x + 1, this.y)
     const seg = orca.s.substr(index, len)
     const res = seg.indexOf(key)
+    if (res >= 0) {
+      this.ports.input.target = { x: res + 1, y: 0 }
+    }
     return res < 0 ? '.' : orca.keyOf(res)
   }
 }
