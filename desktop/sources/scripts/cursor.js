@@ -139,7 +139,8 @@ function Cursor (terminal) {
 
   // Block
 
-  this.getBlock = function (rect = this.toRect()) {
+  this.getBlock = function () {
+    const rect = this.toRect()
     const block = []
     for (let _y = rect.y; _y < rect.y + rect.h; _y++) {
       const line = []

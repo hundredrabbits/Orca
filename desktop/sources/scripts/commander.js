@@ -55,6 +55,20 @@ function Commander (terminal) {
       }
     },
     'play': (val) => { terminal.clock.play() },
+    'rot': (val) => {
+      const cols = terminal.cursor.getBlock()
+      for (const y in cols) {
+        for (const x in cols[y]) {
+          if (cols[y][x] === '.') { continue }
+          const isUC = cols[y][x] === cols[y][x].toUpperCase()
+          cols[y][x] = terminal.orca.keyOf(parseInt(val) + terminal.orca.valueOf(cols[y][x]))
+          if (isUC) {
+            cols[y][x] = cols[y][x].toUpperCase()
+          }
+        }
+      }
+      terminal.cursor.writeBlock(cols)
+    },
     'run': (val) => { terminal.run() },
     'stop': (val) => { terminal.clock.stop() },
     'time': (val) => { terminal.clock.setFrame(parseInt(val)) },
@@ -99,7 +113,7 @@ function Commander (terminal) {
 
   this.preview = function () {
     const pattern = this.patterns.find(this.query)
-    if (!pattern) { terminal.cursor.reset(); return }
+    if (!pattern) { return }
     const result = pattern.trim().split('\n')
     terminal.cursor.resize(result[0].length, result.length)
   }
