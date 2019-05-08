@@ -80,9 +80,9 @@ This operator is very similar to the default Midi operator, but **each new note 
 
 ## MIDI CC
 
-The [MIDI CC](https://www.sweetwater.com/insync/continuous-controller/) operator `^` takes 3 inputs('channel, 'knob, 'value).
+The [MIDI CC](https://www.sweetwater.com/insync/continuous-controller/) operator `!` takes 3 inputs('channel, 'knob, 'value).
 
-It sends a value **between 0-127**, where the value is calculated as a ratio of 36, over a maximum of 127. For example, `^008`, is sending **28**, or `(8/36)*127` through the first channel, to the control mapped with `id0`. You can press **enter**, with the `^` operator selected, to assign it to a controller.
+It sends a value **between 0-127**, where the value is calculated as a ratio of 36, over a maximum of 127. For example, `!008`, is sending **28**, or `(8/36)*127` through the first channel, to the control mapped with `id0`. You can press **enter**, with the `!` operator selected, to assign it to a controller.
 
 ## UDP
 
