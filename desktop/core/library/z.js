@@ -16,7 +16,7 @@ function OperatorZ (orca, x, y, passive) {
     const rate = this.listen(this.ports.haste.rate, true)
     const target = this.listen(this.ports.input.target, true)
     const val = this.listen(this.ports.output, true)
-    const mod = val <= target - rate ? rate : val >= target + rate ? -rate : 0
+    const mod = val <= target - rate ? rate : val >= target + rate ? -rate : target - val
     return orca.keyOf(val + mod)
   }
 }
