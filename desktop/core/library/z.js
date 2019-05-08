@@ -3,21 +3,21 @@
 const Operator = require('../operator')
 
 function OperatorZ (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, 'z', passive)
+  Operator.call(this, orca, x, y, 'u', passive)
 
-  this.name = 'zoom'
-  this.info = 'Moves eastwardly, respawns west on collision.'
-  this.draw = false
+  this.name = 'Lerp'
+  this.info = 'Transitions southward operator toward input.'
 
-  this.haste = function () {
-    if (orca.glyphAt(this.x + 1, this.y) === '.') { this.move(1, 0); return }
-    for (var x = this.x; x >= 0; x--) {
-      const g = orca.glyphAt(x - 1, this.y)
-      if (g === '.' && x !== 0) { continue }
-      orca.write(x, this.y, 'Z')
-      this.explode()
-      break
-    }
+  this.ports.haste.rate = { x: -1, y: 0, default: '1' }
+  this.ports.input.target = { x: 1, y: 0 }
+  this.ports.output = { x: 0, y: 1, sensitive: true }
+
+  this.operation = function (force = false) {
+    const rate = this.listen(this.ports.haste.rate, true)
+    const target = this.listen(this.ports.input.target, true)
+    const val = this.listen(this.ports.output, true)
+    const mod = val <= target - rate ? rate : val >= target + rate ? -rate : 0
+    return orca.keyOf(val + mod)
   }
 }
 

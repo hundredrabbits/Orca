@@ -48,7 +48,7 @@ npm start
 - `W` **west**: Moves westward, or bangs.
 - `X` **write**: Writes a distant operator with offset.
 - `Y` **jymper**: Outputs the westward operator.
-- `Z` **zoom**: Moves eastwardly, respawns west on collision.
+- `Z` **lerp**: Transitions southward operator toward input.
 - `*` **bang**: Bangs neighboring operators.
 - `#` **comment**: Comments a line, or characters until the next hash.
 
