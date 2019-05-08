@@ -43,7 +43,7 @@ npm start
 - `R` **random**: Outputs a random value.
 - `S` **south**: Moves southward, or bangs.
 - `T` **track**: Reads an eastward operator with offset.
-- `U` **util**: Outputs the index of a value in a list.
+- `U` **uclid**: Bangs at a rate defined by the [Euclidean pattern](http://www-cgrl.cs.mcgill.ca/~godfried/publications/banff.pdf).
 - `V` **variable**: Reads and write globally available variables.
 - `W` **west**: Moves westward, or bangs.
 - `X` **write**: Writes a distant operator with offset.
