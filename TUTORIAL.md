@@ -68,3 +68,36 @@ Here's a list of supported operations.
 ## Pilot
 
 [Pilot](https://github.com/hundredrabbits/Pilot) is a minimalist synth software designed to work via UDP, and to quickly get started with Orca. Remember that **Pilot uses UDP instead of MIDI**. Have a look at [pilot.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/software/pilot.orca) to see how it should be used.
+
+## Patterns
+
+### Modulo
+
+```
+1X.
+6I4
+```
+
+### Delay
+
+```
+3O..
+....
+.3O.
+....
+...D
+```
+
+### WN Corner
+
+```
+H....
+Ny..W
+```
+
+### ES Corner
+
+```
+....H
+E..xS
+```
