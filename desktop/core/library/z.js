@@ -3,7 +3,7 @@
 const Operator = require('../operator')
 
 function OperatorZ (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, 'u', passive)
+  Operator.call(this, orca, x, y, 'z', passive)
 
   this.name = 'Lerp'
   this.info = 'Transitions southward operator toward input.'
