@@ -1,6 +1,6 @@
 'use strict'
 
-function Midi (terminal) {
+export default function Midi (terminal) {
   this.mode = 0
 
   this.outputIndex = -1
@@ -216,5 +216,3 @@ function Midi (terminal) {
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
-
-module.exports = Midi

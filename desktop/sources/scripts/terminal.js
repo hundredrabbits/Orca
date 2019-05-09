@@ -1,18 +1,20 @@
 'use strict'
 
-function Terminal () {
-  const Orca = require('../../core/orca')
-  const IO = require('../../core/io')
-  const Cursor = require('./cursor')
-  const Source = require('./source')
-  const History = require('./history')
-  const Commander = require('./commander')
-  const Clock = require('./clock')
-  const Theme = require('./lib/theme')
-  const Controller = require('./lib/controller')
+import Orca from '../../core/orca.js';
+import IO from '../../core/io.js'
+import Cursor from './cursor.js'
+import Source from './source.js'
+import History from './history.js'
+import Commander from './commander.js'
+import Clock from'./clock.js'
+import Theme from './lib/theme.js'
+import Controller from './lib/controller.js'
 
+import library from '../../core/library.js'
+
+export default function Terminal () {
   this.version = 118
-  this.library = require('../../core/library')
+  this.library = library
 
   this.orca = new Orca(this)
   this.io = new IO(this)
@@ -367,5 +369,3 @@ function Terminal () {
   function display (str, f, max) { return str.length < max ? str : str.slice(f % str.length) + str.substr(0, f % str.length) }
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
-
-module.exports = Terminal

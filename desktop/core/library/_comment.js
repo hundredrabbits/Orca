@@ -1,8 +1,8 @@
 'use strict'
 
-const Operator = require('../operator')
+import Operator from '../operator.js'
 
-function OperatorComment (orca, x, y, passive) {
+export default function OperatorComment (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '#', true)
 
   this.name = 'comment'
@@ -18,5 +18,3 @@ function OperatorComment (orca, x, y, passive) {
     orca.lock(this.x, this.y)
   }
 }
-
-module.exports = OperatorComment

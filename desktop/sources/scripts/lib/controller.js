@@ -1,6 +1,6 @@
 'use strict'
 
-function Controller () {
+export default function Controller () {
   const fs = require('fs')
   const { dialog, app } = require('electron').remote
 
@@ -82,5 +82,3 @@ function Controller () {
     console.log(this.menu.default)
   }
 }
-
-module.exports = Controller

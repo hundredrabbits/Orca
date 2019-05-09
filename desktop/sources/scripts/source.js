@@ -1,6 +1,6 @@
 'use strict'
 
-function Source (terminal) {
+export default function Source (terminal) {
   const fs = require('fs')
   const path = require('path')
   const { dialog, app } = require('electron').remote
@@ -206,5 +206,3 @@ function Source (terminal) {
     return c
   }
 }
-
-module.exports = Source

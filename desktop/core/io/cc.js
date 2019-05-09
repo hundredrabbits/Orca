@@ -1,6 +1,6 @@
 'use strict'
 
-function MidiCC (terminal) {
+export default function MidiCC (terminal) {
   this.stack = []
 
   this.start = function () {
@@ -27,5 +27,3 @@ function MidiCC (terminal) {
     device.send([0xb0 + data[0], 64 + data[1], data[2]])
   }
 }
-
-module.exports = MidiCC

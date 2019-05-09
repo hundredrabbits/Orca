@@ -1,6 +1,6 @@
 'use strict'
 
-function Theme (_default) {
+export default function Theme (_default) {
   const themer = this
 
   this.active = _default
@@ -125,5 +125,3 @@ function Theme (_default) {
     try { new DOMParser().parseFromString(text, 'text/xml'); return true } catch (error) { return false }
   }
 }
-
-module.exports = Theme

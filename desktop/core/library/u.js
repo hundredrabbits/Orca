@@ -1,8 +1,8 @@
 'use strict'
 
-const Operator = require('../operator')
+import Operator from '../operator.js'
 
-function OperatorU (orca, x, y, passive) {
+export default function OperatorU (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'u', passive)
 
   this.name = 'Uclid'
@@ -36,5 +36,3 @@ function OperatorU (orca, x, y, passive) {
     return sequence[orca.f % sequence.length] === 1
   }
 }
-
-module.exports = OperatorU

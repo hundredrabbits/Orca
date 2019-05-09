@@ -1,8 +1,8 @@
 'use strict'
 
-const transpose = require('./transpose')
+import transpose from './transpose.js'
 
-function Operator (orca, x, y, glyph = '.', passive = false) {
+export default function Operator (orca, x, y, glyph = '.', passive = false) {
   this.name = 'unknown'
   this.x = x
   this.y = y
@@ -161,5 +161,3 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
-
-module.exports = Operator

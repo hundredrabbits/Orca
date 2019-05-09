@@ -1,6 +1,6 @@
 'use strict'
 
-function Commander (terminal) {
+export default function Commander (terminal) {
   this.isActive = false
   this.query = ''
 
@@ -209,5 +209,3 @@ function Commander (terminal) {
     return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test('#' + str)
   }
 }
-
-module.exports = Commander
