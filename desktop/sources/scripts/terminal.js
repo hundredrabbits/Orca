@@ -241,7 +241,7 @@ export default function Terminal () {
     const variables = Object.keys(this.orca.variables).join('')
 
     if (this.commander.isActive === true) {
-      this.write(`> ${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 0, 1, this.grid.w * 2)
+      this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 0, 1, this.grid.w * 2)
     } else {
       this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.mode === 1 ? '+' : ''}`, col * 0, 1, this.grid.w, this.cursor.mode === 1 ? 1 : 2)
       this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.grid.w)

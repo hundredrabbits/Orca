@@ -24,7 +24,7 @@ export default function Commander (terminal) {
         terminal.cursor.moveTo(x, y)
       }
     },
-    'get': (val) => {
+    'inject': (val) => {
       terminal.source.inject(val)
     },
     'play': (val) => { terminal.clock.play() },

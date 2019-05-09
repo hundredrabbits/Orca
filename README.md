@@ -120,7 +120,7 @@ All commands have a shorthand equivalent to their first character, for example, 
 - `move:3;4` Move cursor to position `3,4`.
 - `bpm:140` Sets bpm speed to `140`.
 - `apm:160` Animates bpm speed to `160`.
-- `get:pattern` Inject the file `pattern.orca`.
+- `inject:pattern` Inject the file `pattern.orca`.
 - `write:H12;34` Writes glyph `H`, at `12,34`.
 - `color:f00;0f0;00f` Colorizes the interface.
 
