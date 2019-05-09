@@ -1,12 +1,12 @@
 'use strict'
 
-import Orca from '../../core/orca.js';
+import Orca from '../../core/orca.js'
 import IO from '../../core/io.js'
 import Cursor from './cursor.js'
 import Source from './source.js'
 import History from './history.js'
 import Commander from './commander.js'
-import Clock from'./clock.js'
+import Clock from './clock.js'
 import Theme from './lib/theme.js'
 import Controller from './lib/controller.js'
 

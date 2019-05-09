@@ -1,15 +1,15 @@
 const { app, BrowserWindow, webFrame, Menu } = require('electron')
 const path = require('path')
 
-require("electron").protocol.registerSchemesAsPrivileged([
-  { scheme: "js", privileges: { standard: true, secure: true } }
-]);
+require('electron').protocol.registerSchemesAsPrivileged([
+  { scheme: 'js', privileges: { standard: true, secure: true } }
+])
 
-function protocolHandler(request, respond) {
+function protocolHandler (request, respond) {
   try {
-    let pathname = request.url.replace(/^js:\/*/, "")
+    let pathname = request.url.replace(/^js:\/*/, '')
     let filename = path.resolve(app.getAppPath(), pathname)
-    respond({ mimeType:"text/javascript", data:require("fs").readFileSync(filename) })
+    respond({ mimeType: 'text/javascript', data: require('fs').readFileSync(filename) })
   } catch (e) {
     console.error(e, request)
   }
@@ -20,7 +20,7 @@ let isShown = true
 app.win = null
 
 app.on('ready', () => {
-  require("electron").protocol.registerBufferProtocol("js", protocolHandler)
+  require('electron').protocol.registerBufferProtocol('js', protocolHandler)
 
   app.win = new BrowserWindow({
     width: 710,
