@@ -11,7 +11,7 @@ function Terminal () {
   const Theme = require('./lib/theme')
   const Controller = require('./lib/controller')
 
-  this.version = 114
+  this.version = 115
   this.library = require('../../core/library')
 
   this.orca = new Orca(this)
@@ -207,7 +207,7 @@ function Terminal () {
     if (type === 4) { return { bg: this.theme.active.b_inv, fg: this.theme.active.f_inv } }
     // Locked
     if (type === 5) { return { fg: this.theme.active.f_med } }
-    // LikeCursor
+    // Reader
     if (type === 6) { return { fg: this.theme.active.b_inv } }
     // Invisible
     if (type === 7) { return {} }

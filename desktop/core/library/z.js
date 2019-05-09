@@ -10,7 +10,7 @@ function OperatorZ (orca, x, y, passive) {
 
   this.ports.haste.rate = { x: -1, y: 0, default: '1' }
   this.ports.input.target = { x: 1, y: 0 }
-  this.ports.output = { x: 0, y: 1, sensitive: true }
+  this.ports.output = { x: 0, y: 1, sensitive: true, reader: true }
 
   this.operation = function (force = false) {
     const rate = this.listen(this.ports.haste.rate, true)
