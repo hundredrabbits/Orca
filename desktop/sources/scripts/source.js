@@ -107,7 +107,7 @@ export default function Source (terminal) {
       buttons: ['Cancel', 'Discard', 'Save'],
       title: 'Confirm',
       message: 'Unsaved data will be lost. Would you like to save your changes before leaving?',
-      icon: path.join(__dirname, '../../icon.png')
+      icon: path.join(__dirname, '../icon.png')
     })
     if (response === 2) {
       this.save(true)
