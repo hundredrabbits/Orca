@@ -254,12 +254,12 @@ export default function Terminal () {
     this.write(`${this.source}`, col * 2, 0, this.grid.w)
     this.write(`${this.clock}`, col * 3, 0, this.grid.w, this.io.midi.inputIndex > -1 ? 4 : 2)
 
-    if (this.orca.f < 12) {
-      this.write(`${this.io.midi}`, col * 5, 1, this.grid.w * 2)
-      this.write(`v${this.version}`, col * 5, 0, this.grid.w * 2)
+    if (this.orca.f < 15) {
+      this.write(`${this.io.midi}`, col * 4, 0, this.grid.w * 2)
+      this.write(`Version ${this.version}`, col * 4, 1, this.grid.w * 2)
     } else {
-      this.write(`${display(variables, this.orca.f, this.grid.w)}`, col * 4, 1, this.grid.w)
       this.write(`${this.io.inspect(this.grid.w)}`, col * 4, 0, this.grid.w)
+      this.write(`${display(variables, this.orca.f, this.grid.w)}`, col * 4, 1, this.grid.w)
     }
   }
 
