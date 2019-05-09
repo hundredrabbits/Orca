@@ -53,6 +53,16 @@ function Source (terminal) {
     this.read(this.path)
   }
 
+  this.inject = function (name) {
+    if (!this.path) { console.warn('Source', 'Not in a project.'); return }
+    const loc = path.join(this.folder(), name + '.orca')
+    if (!fs.existsSync(loc)) { console.warn('Source', 'File does not exist: ' + target); return }
+    const data = fs.readFileSync(loc, 'utf8')
+    if (!data) { console.warn('Source', 'File is empty: ' + target); return }
+    terminal.cursor.writeBlock(data.split('\n'))
+    terminal.cursor.reset()
+  }
+
   // I/O
 
   this.write = function (loc, data = this.generate(), quitAfter = false) {
@@ -71,7 +81,6 @@ function Source (terminal) {
     this.path = loc
     this.remember('active', loc)
 
-    //
     const data = fs.readFileSync(loc, 'utf8')
     const lines = data.split('\n').map((line) => { return clean(line) })
     const w = lines[0].length
