@@ -125,7 +125,7 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     }
     if (this.ports.output) {
       const port = this.ports.output
-      a.push([this.x + port.x, this.y + port.y, 3, `${this.glyph}-output`])
+      a.push([this.x + port.x, this.y + port.y, port.reader || port.bang ? 8 : 3, `${this.glyph}-output`])
     }
     return a
   }

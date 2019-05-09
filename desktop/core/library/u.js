@@ -9,7 +9,7 @@ function OperatorU (orca, x, y, passive) {
   this.info = 'Bangs based on the Euclidean pattern.'
 
   this.ports.haste.step = { x: -1, y: 0, clamp: { min: 1 } }
-  this.ports.input.max = { x: 1, y: 0, clamp: { min: 1 } }
+  this.ports.input.max = { x: 1, y: 0, clamp: { min: 1 }, default: '8' }
   this.ports.output = { x: 0, y: 1, bang: true }
 
   this.operation = function (force = false) {

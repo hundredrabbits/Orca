@@ -11,7 +11,7 @@ function Terminal () {
   const Theme = require('./lib/theme')
   const Controller = require('./lib/controller')
 
-  this.version = 114
+  this.version = 117
   this.library = require('../../core/library')
 
   this.orca = new Orca(this)
@@ -207,10 +207,12 @@ function Terminal () {
     if (type === 4) { return { bg: this.theme.active.b_inv, fg: this.theme.active.f_inv } }
     // Locked
     if (type === 5) { return { fg: this.theme.active.f_med } }
-    // LikeCursor
+    // Reader
     if (type === 6) { return { fg: this.theme.active.b_inv } }
     // Invisible
     if (type === 7) { return {} }
+    // Reader
+    if (type === 8) { return { bg: this.theme.active.b_low, fg: this.theme.active.f_high } }
     // Default
     return { fg: this.theme.active.f_low }
   }
@@ -248,14 +250,14 @@ function Terminal () {
     this.write(`${this.clock}`, col * 3, 0, this.grid.w, this.io.midi.inputIndex > -1 ? 4 : 2)
     this.write(`${this.io.inspect(this.grid.w)}`, col * 4, 0, this.grid.w)
 
-    if (this.orca.f < 20) {
+    if (this.orca.f < 12) {
       this.write(`${this.io.midi}`, col * 5, 0, this.grid.w * 2)
     }
 
     if (this.commander.isActive === true) {
       this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 5, 1, this.grid.w * 2, 1)
     } else if (this.orca.f < 8 && this.orca.f % 2 === 0) {
-      this.write(`v${this.version}`, col * 5, 1, this.grid.w * 2, 5)
+      this.write(`v${this.version}`, col * 5, 1, this.grid.w * 2)
     }
   }
 
