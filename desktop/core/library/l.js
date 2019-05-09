@@ -10,7 +10,7 @@ export default function OperatorL (orca, x, y, passive) {
 
   this.ports.haste.step = { x: -2, y: 0, default: '1' }
   this.ports.haste.len = { x: -1, y: 0 }
-  this.ports.haste.val = { x: 1, y: 0 }
+  this.ports.input.val = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
@@ -29,6 +29,6 @@ export default function OperatorL (orca, x, y, passive) {
     for (let x = 0; x < len; x++) {
       orca.write(this.x + x + 1, this.y, res.charAt(x))
     }
-    return this.listen(this.ports.haste.val)
+    return this.listen(this.ports.input.val)
   }
 }

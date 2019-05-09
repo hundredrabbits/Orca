@@ -1,41 +1,10 @@
 'use strict'
 
-import Patterns from './patterns.js'
-
 export default function Commander (terminal) {
-  this.patterns = new Patterns(terminal)
-
   this.isActive = false
   this.query = ''
 
-  this.start = function (q = '') {
-    this.isActive = true
-    this.query = q
-    terminal.update()
-  }
-
-  this.stop = function () {
-    this.isActive = false
-    this.query = ''
-    terminal.update()
-  }
-
-  this.erase = function () {
-    this.query = this.query.slice(0, -1)
-    this.preview()
-  }
-
-  this.write = function (key) {
-    if (key.length !== 1) { return }
-    this.query += key
-    this.preview()
-  }
-
-  this.run = function () {
-    const tool = this.isActive === true ? 'commander' : 'cursor'
-    terminal[tool].trigger()
-    terminal.update()
-  }
+  // Library
 
   this.operations = {
     'apm': (val) => { terminal.clock.set(null, parseInt(val)) },
@@ -54,6 +23,9 @@ export default function Commander (terminal) {
       if (!isNaN(x) && !isNaN(y)) {
         terminal.cursor.moveTo(x, y)
       }
+    },
+    'get': (val) => {
+      terminal.source.inject(val)
     },
     'play': (val) => { terminal.clock.play() },
     'rot': (val) => {
@@ -89,35 +61,44 @@ export default function Commander (terminal) {
     this.operations[id.substr(0, 1)] = this.operations[id]
   }
 
+  // Begin
+
+  this.start = function (q = '') {
+    this.isActive = true
+    this.query = q
+    terminal.update()
+  }
+
+  this.stop = function () {
+    this.isActive = false
+    this.query = ''
+    terminal.update()
+  }
+
+  this.erase = function () {
+    this.query = this.query.slice(0, -1)
+  }
+
+  this.write = function (key) {
+    if (key.length !== 1) { return }
+    this.query += key
+  }
+
+  this.run = function () {
+    const tool = this.isActive === true ? 'commander' : 'cursor'
+    terminal[tool].trigger()
+    terminal.update()
+  }
+
   this.trigger = function (msg = this.query) {
     const cmd = `${msg}`.split(':')[0].toLowerCase()
     const val = `${msg}`.substr(cmd.length + 1)
-
-    if (this.operations[cmd]) {
-      this.operations[cmd](val)
-    } else if (this.patterns.find(msg)) {
-      this.inject(this.patterns.find(msg))
-    } else {
-      console.warn(`Unknown message: ${msg}`)
-    }
-
+    if (!this.operations[cmd]) { console.warn(`Unknown message: ${msg}`); return }
+    this.operations[cmd](val)
     this.stop()
   }
 
-  // Injections
-
-  this.inject = function (pattern) {
-    if (!pattern) { return }
-    terminal.cursor.writeBlock(pattern.trim().split('\n'))
-    terminal.cursor.reset()
-  }
-
-  this.preview = function () {
-    const pattern = this.patterns.find(this.query)
-    if (!pattern) { return }
-    const result = pattern.trim().split('\n')
-    terminal.cursor.resize(result[0].length, result.length)
-  }
+  // Events
 
   this.onKeyDown = function (event) {
     // Reset

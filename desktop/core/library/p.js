@@ -10,7 +10,7 @@ export default function OperatorP (orca, x, y, passive) {
 
   this.ports.haste.len = { x: -1, y: 0, clamp: { min: 1 } }
   this.ports.haste.key = { x: -2, y: 0 }
-  this.ports.haste.val = { x: 1, y: 0 }
+  this.ports.input.val = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
   this.haste = function () {
@@ -24,6 +24,6 @@ export default function OperatorP (orca, x, y, passive) {
     const len = this.listen(this.ports.haste.len, true)
     const key = this.listen(this.ports.haste.key, true)
     this.ports.output = { x: (key % len), y: 1 }
-    return this.listen(this.ports.haste.val)
+    return this.listen(this.ports.input.val)
   }
 }
