@@ -23,9 +23,9 @@ function OperatorL (orca, x, y, passive) {
     const len = this.listen(this.ports.haste.len, true)
     const index = orca.indexAt(this.x + 1, this.y)
     const seg = orca.s.substr(index, len)
-    const string = seg.substr(step, len - step) + seg.substr(0, step)
+    const res = seg.substr(len - step, step) + seg.substr(0, len - step)
     for (let x = 0; x < len; x++) {
-      orca.write(this.x + x + 1, this.y, string.charAt(x))
+      orca.write(this.x + x + 1, this.y, res.charAt(x))
     }
   }
 }
