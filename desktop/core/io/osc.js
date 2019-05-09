@@ -2,7 +2,7 @@
 
 const osc = require('node-osc')
 
-function Osc (terminal) {
+export default function Osc (terminal) {
   this.stack = []
   this.port = null
   this.options = { default: 49162, tidalCycles: 6010, sonicPi: 4559 }
@@ -59,5 +59,3 @@ function Osc (terminal) {
     this.client = new osc.Client(ip, this.port)
   }
 }
-
-module.exports = Osc

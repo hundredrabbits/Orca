@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = {
+export default {
   'A': 'A0',
   'a': 'a0',
   'B': 'B0',

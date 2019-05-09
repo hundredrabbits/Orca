@@ -1,6 +1,6 @@
 'use strict'
 
-const Patterns = function (terminal) {
+export default function Patterns(terminal) {
   const fs = require('fs')
   const path = require('path')
 
@@ -53,5 +53,3 @@ const Patterns = function (terminal) {
     return c
   }
 }
-
-module.exports = Patterns

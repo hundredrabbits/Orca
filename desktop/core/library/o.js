@@ -1,8 +1,8 @@
 'use strict'
 
-const Operator = require('../operator')
+import Operator from '../operator.js'
 
-function OperatorO (orca, x, y, passive) {
+export default function OperatorO (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'o', passive)
 
   this.name = 'read'
@@ -20,5 +20,3 @@ function OperatorO (orca, x, y, passive) {
     return this.listen(this.ports.haste.read)
   }
 }
-
-module.exports = OperatorO

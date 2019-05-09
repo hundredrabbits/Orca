@@ -2,7 +2,7 @@
 
 const dgram = require('dgram')
 
-function Udp (terminal) {
+export default function Udp (terminal) {
   this.stack = []
   this.port = null
   this.options = { default: 49161, orca: 49160 }
@@ -68,5 +68,3 @@ function Udp (terminal) {
 
   this.listener.bind(49160)
 }
-
-module.exports = Udp

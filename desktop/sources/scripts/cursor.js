@@ -2,7 +2,7 @@
 
 const { clipboard } = require('electron')
 
-function Cursor (terminal) {
+export default function Cursor (terminal) {
   this.x = 0
   this.y = 0
   this.w = 1
@@ -183,5 +183,3 @@ function Cursor (terminal) {
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
-
-module.exports = Cursor

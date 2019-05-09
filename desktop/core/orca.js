@@ -1,8 +1,8 @@
 'use strict'
 
-const library = require('./library')
+import library from './library.js'
 
-function Orca (terminal) {
+export default function Orca (terminal) {
   this.w = 1 // Default Width
   this.h = 1 // Default Height
   this.f = 0 // Frame
@@ -191,5 +191,3 @@ function Orca (terminal) {
 
   this.reset()
 }
-
-module.exports = Orca

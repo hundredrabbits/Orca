@@ -1,7 +1,8 @@
 'use strict'
 
-function Commander (terminal) {
-  const Patterns = require('./patterns')
+import Patterns from './patterns.js'
+
+export default function Commander (terminal) {
   this.patterns = new Patterns(terminal)
 
   this.isActive = false
@@ -227,5 +228,3 @@ function Commander (terminal) {
     return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test('#' + str)
   }
 }
-
-module.exports = Commander

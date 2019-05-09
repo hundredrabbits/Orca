@@ -1,12 +1,12 @@
 'use strict'
 
-const Midi = require('./io/midi')
-const MidiCC = require('./io/cc')
-const Mono = require('./io/mono')
-const Udp = require('./io/udp')
-const Osc = require('./io/osc')
+import Midi from './io/midi.js'
+import MidiCC from './io/cc.js'
+import Mono from './io/mono.js'
+import Udp from './io/udp.js'
+import Osc from './io/osc.js'
 
-function IO (terminal) {
+export default function IO (terminal) {
   this.midi = new Midi(terminal)
   this.cc = new MidiCC(terminal)
   this.mono = new Mono(terminal)
@@ -57,5 +57,3 @@ function IO (terminal) {
 
   function fill (str, len, chr) { while (str.length < len) { str += chr }; return str }
 }
-
-module.exports = IO

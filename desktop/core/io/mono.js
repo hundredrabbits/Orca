@@ -1,6 +1,6 @@
 'use strict'
 
-function Mono (terminal) {
+export default function Mono (terminal) {
   this.queue = null
   this.stack = []
 
@@ -63,5 +63,3 @@ function Mono (terminal) {
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
-
-module.exports = Mono

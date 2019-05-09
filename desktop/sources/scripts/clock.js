@@ -1,6 +1,6 @@
 'use strict'
 
-function Clock (terminal) {
+export default function Clock (terminal) {
   this.isPaused = true
   this.timer = null
 
@@ -124,5 +124,3 @@ function Clock (terminal) {
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
-
-module.exports = Clock
