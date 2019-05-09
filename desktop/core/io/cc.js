@@ -1,6 +1,10 @@
 'use strict'
 
 function MidiCC (terminal) {
+  var mapping = require('../../sources/media/mappings/cc.json');
+
+  if (!mapping) { console.warn('MidiCC', `Mapping not found`)}
+
   this.stack = []
 
   this.start = function () {
@@ -24,7 +28,12 @@ function MidiCC (terminal) {
   this.play = function (data) {
     const device = terminal.io.midi.outputDevice()
     if (!device) { console.warn('MidiCC', `No Midi device.`); return }
-    device.send([0xb0 + data[0], 64 + data[1], data[2]])
+    if (mapping) {
+      device.send([0xb0 + data[0], mapping[data[1]], data[2]])
+    }
+    else  {
+      device.send([0xb0 + data[0], 64 + data[1], data[2]])
+    }
   }
 }
 
