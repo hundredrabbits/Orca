@@ -18,11 +18,7 @@ export default function Commander (terminal) {
     'find': (val) => { terminal.cursor.find(val) },
     'move': (val) => {
       const pos = val.split(';')
-      const x = parseInt(pos[0])
-      const y = parseInt(pos[1])
-      if (!isNaN(x) && !isNaN(y)) {
-        terminal.cursor.moveTo(x, y)
-      }
+      terminal.cursor.moveTo(parseInt(pos[0]), parseInt(pos[1]))
     },
     'inject': (val) => {
       terminal.source.inject(val)
