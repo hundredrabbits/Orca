@@ -29,7 +29,7 @@ function MidiCC (terminal) {
     const device = terminal.io.midi.outputDevice()
     if (!device) { console.warn('MidiCC', `No Midi device.`); return }
     if (mapping) {
-      device.send([0xb0 + data[0], mapping[data[1]], data[2]])
+      device.send([0xb0 + data[0], mapping[data[1].toString()], data[2]])
     }
     else  {
       device.send([0xb0 + data[0], 64 + data[1], data[2]])
