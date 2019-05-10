@@ -78,7 +78,7 @@ export default function Clock (terminal) {
   this.tap = function () {
     lastPulse = performance.now()
     if (!this.isPuppet) {
-      console.log('midi taking over')
+      console.log('Clock', 'Puppeteering starts..')
       this.isPuppet = true
       this.clearTimer()
       pulseCheck = setInterval(() => {
@@ -96,6 +96,7 @@ export default function Clock (terminal) {
   }
 
   this.untap = function () {
+    console.log('Clock', 'Puppeteering stops..')
     clearInterval(pulseCheck)
     this.isPuppet = false
     count = 1
