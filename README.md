@@ -100,7 +100,7 @@ For example, `=1abc` will send `10`, `11` and `12` to `/1`, via the port `49162`
 
 ## Advanced Controls
 
-Some of Orca's features can be **controlled externally** via UDP though port `49160`, or via its own command-line interface. To activate the command-line prompt, press `CmdOrCtrl+K`. The prompt can also be used to inject patterns, files that are located at the same location as the open file, see `get:`.
+Some of Orca's features can be **controlled externally** via UDP though port `49160`, or via its own command-line interface. To activate the command-line prompt, press `CmdOrCtrl+K`. The prompt can also be used to inject patterns or graphics, local files are located in the same directory as the active `.orca` file.
 
 ### Default Ports
 
