@@ -3,6 +3,7 @@
 export default function Clock (terminal) {
   this.isPaused = true
   this.timer = null
+  this.isMidiControlled = false
 
   this.speed = { value: 120, target: 120 }
 
@@ -57,6 +58,7 @@ export default function Clock (terminal) {
     if (!this.isPaused) { console.warn('Already playing'); return }
     console.log('Clock', 'Play')
     this.isPaused = false
+    if (this.isMidiControlled) return console.warn('External Midi control')
     this.set(this.speed.target, this.speed.target, true)
   }
 
@@ -65,33 +67,42 @@ export default function Clock (terminal) {
     console.log('Clock', 'Stop')
     terminal.io.midi.silence()
     this.isPaused = true
+    if (this.isMidiControlled) return console.warn('External Midi control')
     this.clearTimer()
   }
 
-  // Midi Tap
-
-  this.intervals = []
-  this.lastTap = 0
+  // external midi clock
+  let count = 1
+  let lastPulse = null
+  let pulseCheck = null
 
   this.tap = function () {
-    if (this.intervals.length > 8) {
-      this.intervals.shift()
-    }
-    if (this.intervals.length === 8) {
-      const sum = this.intervals.reduce((sum, interval) => { return sum + interval })
-      const bpm = parseInt((1000 / sum) * 60)
-      if (Math.abs(bpm - this.speed.target) > 1) {
-        this.set(null, bpm)
-      }
-    }
+    lastPulse = performance.now()
 
-    const now = performance.now()
-    this.intervals.push(now - this.lastTap)
-    this.lastTap = now
+    if (!this.isMidiControlled) {
+      console.log('midi taking over')
+      this.isMidiControlled = true
+      this.clearTimer()
+      pulseCheck = setInterval(() => {
+        if (performance.now() - lastPulse < 2000) return
+        // we've lost the midi pulse, resume the internal timer
+        clearInterval(pulseCheck)
+        this.isMidiControlled = false
+        count = 1
+        lastPulse = null
+        this.setTimer(this.speed.value)
+      }, 2000)
+    }
+    if (this.isPaused) return
+    // midi pulse are 24 PPQ, orca frames are 4 PPQ, so we only worry about every 6th pulse
+    count = count + 1
+    if (count % 6 === 0) {
+      terminal.run(); this.update()
+      count = 0
+    }
   }
 
   // Timer
-
   this.clearTimer = function () {
     if (this.timer) {
       clearInterval(this.timer)
@@ -118,8 +129,11 @@ export default function Clock (terminal) {
   this.toString = function () {
     const diff = this.speed.target - this.speed.value
     const _offset = Math.abs(diff) > 5 ? (diff > 0 ? `+${diff}` : diff) : ''
+    let message = `${this.speed.value}${_offset}`
+    if (this.isMidiControlled) message = 'midi'
+
     const _beat = diff === 0 && terminal.orca.f % 4 === 0 ? '*' : ''
-    return `${this.speed.value}${_offset}${_beat}`
+    return `${message}${_beat}`
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

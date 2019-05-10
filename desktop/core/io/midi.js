@@ -124,8 +124,6 @@ export default function Midi (terminal) {
     }
   }
 
-  this.count = 0
-
   this.receive = function (msg) {
     switch (msg.data[0]) {
       // Keys
@@ -137,10 +135,7 @@ export default function Midi (terminal) {
         break
       // Clock
       case 0xF8:
-        this.count = (this.count + 1) % 6
-        if (this.count % 4 === 0) {
-          // terminal.clock.tap()
-        }
+        terminal.clock.tap()
         break
       case 0xFA:
         console.log('Midi', 'Clock start.')
