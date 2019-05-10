@@ -13,7 +13,7 @@ import Controller from './lib/controller.js'
 import library from '../../core/library.js'
 
 export default function Terminal () {
-  this.version = 120
+  this.version = 121
   this.library = library
 
   this.orca = new Orca(this)
