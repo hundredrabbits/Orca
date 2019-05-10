@@ -56,9 +56,9 @@ export default function Source (terminal) {
   this.inject = function (name, paste = false) {
     if (!this.path) { console.warn('Source', 'Not in a project.'); return }
     const loc = path.join(this.folder(), name + '.orca')
-    if (!fs.existsSync(loc)) { console.warn('Source', 'File does not exist: ' + loc); return }
+    if (!fs.existsSync(loc)) { return }
     const data = fs.readFileSync(loc, 'utf8')
-    if (!data) { console.warn('Source', 'File is empty: ' + loc); return }
+    if (!data) { return }
     const lines = data.split('\n')
     if (paste === true) {
       terminal.cursor.writeBlock(lines)
