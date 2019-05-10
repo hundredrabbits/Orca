@@ -1,6 +1,7 @@
 'use strict'
 
 export default function Theme (_default) {
+  const fs = require('fs')
   const themer = this
 
   this.active = _default
@@ -40,6 +41,10 @@ export default function Theme (_default) {
 
   this.reset = function () {
     this.load(_default)
+  }
+
+  this.setImage = function (path) {
+    document.body.style.backgroundImage = path && fs.existsSync(path) ? `url(${path})` : ''
   }
 
   function parse (any) {
