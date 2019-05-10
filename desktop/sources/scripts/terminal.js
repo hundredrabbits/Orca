@@ -250,7 +250,7 @@ export default function Terminal () {
     }
 
     this.write(`${this.orca.w}x${this.orca.h}`, col * 0, 0, this.grid.w)
-    this.write(`${this.grid.w}/${this.grid.h}`, col * 1, 0, this.grid.w)
+    this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' '+(this.tile.w/10).toFixed(1) : ''}`, col * 1, 0, this.grid.w)
     this.write(`${this.source}`, col * 2, 0, this.grid.w)
     this.write(`${this.clock}`, col * 3, 0, this.grid.w, this.io.midi.inputIndex > -1 ? 4 : 2)
 
