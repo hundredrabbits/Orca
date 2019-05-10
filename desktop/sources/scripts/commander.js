@@ -7,24 +7,24 @@ export default function Commander (terminal) {
   // Library
 
   this.operations = {
-    'apm': (val) => { terminal.clock.set(null, parseInt(val)) },
-    'bpm': (val) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
-    'color': (val) => {
+    'apm': (val, run) => { terminal.clock.set(null, parseInt(val)) },
+    'bpm': (val, run) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
+    'color': (val, run) => {
       const parts = val.split(';')
       if (isColor(parts[0])) { terminal.theme.active.b_med = '#' + parts[0] }
       if (isColor(parts[1])) { terminal.theme.active.b_inv = '#' + parts[1] }
       if (isColor(parts[2])) { terminal.theme.active.b_high = '#' + parts[2] }
     },
-    'find': (val) => { terminal.cursor.find(val) },
-    'move': (val) => {
+    'find': (val, run) => { terminal.cursor.find(val) },
+    'move': (val, run) => {
       const pos = val.split(';')
       terminal.cursor.moveTo(parseInt(pos[0]), parseInt(pos[1]))
     },
-    'inject': (val) => {
-      terminal.source.inject(val)
+    'inject': (val, run) => {
+      terminal.source.inject(val, run)
     },
-    'play': (val) => { terminal.clock.play() },
-    'rot': (val) => {
+    'play': (val, run) => { terminal.clock.play() },
+    'rot': (val, run) => {
       const cols = terminal.cursor.getBlock()
       for (const y in cols) {
         for (const x in cols[y]) {
@@ -38,10 +38,10 @@ export default function Commander (terminal) {
       }
       terminal.cursor.writeBlock(cols)
     },
-    'run': (val) => { terminal.run() },
-    'stop': (val) => { terminal.clock.stop() },
-    'time': (val) => { terminal.clock.setFrame(parseInt(val)) },
-    'write': (val) => {
+    'run': (val, run) => { terminal.run() },
+    'stop': (val, run) => { terminal.clock.stop() },
+    'time': (val, run) => { terminal.clock.setFrame(parseInt(val)) },
+    'write': (val, run) => {
       const g = val.substr(0, 1)
       const pos = val.substr(1).split(';')
       const x = pos[0] ? parseInt(pos[0]) : terminal.cursor.x
@@ -73,11 +73,13 @@ export default function Commander (terminal) {
 
   this.erase = function () {
     this.query = this.query.slice(0, -1)
+    this.preview()
   }
 
   this.write = function (key) {
     if (key.length !== 1) { return }
     this.query += key
+    this.preview()
   }
 
   this.run = function () {
@@ -90,8 +92,15 @@ export default function Commander (terminal) {
     const cmd = `${msg}`.split(':')[0].toLowerCase()
     const val = `${msg}`.substr(cmd.length + 1)
     if (!this.operations[cmd]) { console.warn(`Unknown message: ${msg}`); return }
-    this.operations[cmd](val)
+    this.operations[cmd](val, true)
     this.stop()
+  }
+
+  this.preview = function (msg = this.query) {
+    const cmd = `${msg}`.split(':')[0].toLowerCase()
+    const val = `${msg}`.substr(cmd.length + 1)
+    if (!this.operations[cmd]) { console.warn(`Unknown message: ${msg}`); return }
+    this.operations[cmd](val, false)
   }
 
   // Events

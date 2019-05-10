@@ -53,14 +53,19 @@ export default function Source (terminal) {
     this.read(this.path)
   }
 
-  this.inject = function (name) {
+  this.inject = function (name, paste = false) {
     if (!this.path) { console.warn('Source', 'Not in a project.'); return }
     const loc = path.join(this.folder(), name + '.orca')
-    if (!fs.existsSync(loc)) { console.warn('Source', 'File does not exist: ' + target); return }
+    if (!fs.existsSync(loc)) { console.warn('Source', 'File does not exist: ' + loc); return }
     const data = fs.readFileSync(loc, 'utf8')
-    if (!data) { console.warn('Source', 'File is empty: ' + target); return }
-    terminal.cursor.writeBlock(data.split('\n'))
-    terminal.cursor.reset()
+    if (!data) { console.warn('Source', 'File is empty: ' + loc); return }
+    const lines = data.split('\n')
+    if (paste === true) {
+      terminal.cursor.writeBlock(lines)
+      terminal.cursor.reset()
+    } else {
+      terminal.cursor.resize(lines[0].length, lines.length)
+    }
   }
 
   // I/O
