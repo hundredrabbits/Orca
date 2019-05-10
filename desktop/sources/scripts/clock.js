@@ -23,8 +23,8 @@ export default function Clock (terminal) {
   }
 
   this.set = function (value, target = null, setTimer = false) {
-    if (value) { this.speed.value = clamp(value, 60, 300) }
-    if (target) { this.speed.target = clamp(target, 60, 300) }
+    if (value) { this.speed.value = clamp(value, 60, Infinity) }
+    if (target) { this.speed.target = clamp(target, 60, Infinity) }
     if (setTimer === true) { this.setTimer(this.speed.value) }
   }
 
