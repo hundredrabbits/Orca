@@ -185,10 +185,9 @@ export default function Source (terminal) {
   }
 
   this.locate = function (name) {
-    if (!this.path) { console.warn('Source', 'Not in a project.'); return }
+    if (!this.path) { return }
     const loc = path.join(this.folder(), name)
-    if (!fs.existsSync(loc)) { console.warn('Source', 'No such file ' + loc); return }
-    return loc
+    return fs.existsSync(loc) ? loc : null
   }
 
   // Etc
