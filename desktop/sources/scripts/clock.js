@@ -71,36 +71,34 @@ export default function Clock (terminal) {
 
   // External Clock
 
-  let count = 1
-  let lastPulse = null
-  let pulseCheck = null
+  const pulse = { count: 0, last: null, timer: null }
 
   this.tap = function () {
-    lastPulse = performance.now()
+    pulse.last = performance.now()
     if (!this.isPuppet) {
       console.log('Clock', 'Puppeteering starts..')
       this.isPuppet = true
       this.clearTimer()
-      pulseCheck = setInterval(() => {
-        if (performance.now() - lastPulse < 2000) { return }
+      pulse.timer = setInterval(() => {
+        if (performance.now() - pulse.last < 2000) { return }
         this.untap()
       }, 2000)
     }
     if (this.isPaused) { return }
-    count = count + 1
-    if (count % 6 === 0) {
+    pulse.count = pulse.count + 1
+    if (pulse.count % 6 === 0) {
       terminal.run()
       this.update()
-      count = 0
+      pulse.count = 0
     }
   }
 
   this.untap = function () {
     console.log('Clock', 'Puppeteering stops..')
-    clearInterval(pulseCheck)
+    clearInterval(pulse.timer)
     this.isPuppet = false
-    count = 1
-    lastPulse = null
+    pulse.count = 1
+    pulse.last = null
     this.setTimer(this.speed.value)
   }
 
