@@ -82,7 +82,8 @@ export default function Clock (terminal) {
       this.isPuppet = true
       this.clearTimer()
       pulseCheck = setInterval(() => {
-        if (performance.now() - lastPulse < 2000) { }
+        if (performance.now() - lastPulse < 2000) { return }
+        this.untap()
       }, 2000)
     }
     if (this.isPaused) { return }
