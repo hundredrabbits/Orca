@@ -20,6 +20,10 @@ export default function Commander (terminal) {
       const pos = val.split(';')
       terminal.cursor.moveTo(parseInt(pos[0]), parseInt(pos[1]))
     },
+    'graphic': (val, run) => {
+      if (!terminal.source.path) { return }
+      document.body.style.backgroundImage = `url(${terminal.source.folder()}/${val}.jpg)`
+    },
     'inject': (val, run) => {
       terminal.source.inject(val, run)
     },
