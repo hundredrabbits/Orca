@@ -78,6 +78,15 @@ Here's a list of supported operations.
 6I4
 ```
 
+### Hold Bang
+
+```
+..S
+...
+Hh.
+SF.
+```
+
 ### Delay
 
 ```

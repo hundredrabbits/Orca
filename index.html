@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="desktop/sources/links/style.css"/>
+    <title>Orca</title>
+  </head>
+  <body>
+  	<script type="module" src="browser/mock/require.js"></script>
+    <script type="module">
+      import Terminal from "desktop/sources/scripts/terminal.js";
+      const terminal = new Terminal()
+      window.terminal = terminal
+      terminal.install(document.body)
+      terminal.start()
+    </script>
+  </body>
+</html>
