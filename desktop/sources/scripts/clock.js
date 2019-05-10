@@ -1,6 +1,8 @@
 'use strict'
 
 export default function Clock (terminal) {
+  const path = require('path')
+
   this.isPaused = true
   this.timer = null
   this.isPuppet = false
@@ -17,7 +19,7 @@ export default function Clock (terminal) {
     terminal.run()
   }
 
-  this.update = function () {
+  this.run = function () {
     if (this.speed.target === this.speed.value) { return }
     this.set(this.speed.value + (this.speed.value < this.speed.target ? 1 : -1), null, true)
   }
@@ -88,7 +90,6 @@ export default function Clock (terminal) {
     pulse.count = pulse.count + 1
     if (pulse.count % 6 === 0) {
       terminal.run()
-      this.update()
       pulse.count = 0
     }
   }
@@ -104,25 +105,28 @@ export default function Clock (terminal) {
 
   // Timer
 
+  this.setTimer = function (bpm) {
+    console.log('Clock', 'New Timer ' + bpm + 'bpm')
+    this.clearTimer()
+    this.timer = new Worker(path.join(__dirname, 'scripts/timer.js'))
+    this.timer.postMessage((60000 / bpm) / 4)
+    this.timer.onmessage = (event) => { terminal.run() }
+  }
+
   this.clearTimer = function () {
     if (this.timer) {
-      clearInterval(this.timer)
+      this.timer.terminate()
     }
-  }
-
-  this.setTimer = function (bpm) {
-    console.log('Clock', `Setting new ${bpm} timer..`)
-    this.clearTimer()
-    this.timer = setInterval(() => { terminal.run(); this.update() }, (60000 / bpm) / 4)
-  }
-
-  this.resetFrame = function () {
-    terminal.orca.f = 0
+    this.timer = null
   }
 
   this.setFrame = function (f) {
     if (isNaN(f)) { return }
     terminal.orca.f = clamp(f, 0, 9999999)
+  }
+
+  this.resetFrame = function () {
+    terminal.orca.f = 0
   }
 
   // UI

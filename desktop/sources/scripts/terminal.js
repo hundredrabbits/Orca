@@ -13,7 +13,7 @@ import Controller from './lib/controller.js'
 import library from '../../core/library.js'
 
 export default function Terminal () {
-  this.version = 121
+  this.version = 122
   this.library = library
 
   this.orca = new Orca(this)
@@ -58,12 +58,14 @@ export default function Terminal () {
 
   this.run = function () {
     this.io.clear()
+    this.clock.run()
     this.orca.run()
     this.io.run()
     this.update()
   }
 
   this.update = function () {
+    if (document.hidden === true) { return }
     this.clear()
     this.ports = this.findPorts()
     this.drawProgram()
@@ -250,7 +252,7 @@ export default function Terminal () {
     }
 
     this.write(`${this.orca.w}x${this.orca.h}`, col * 0, 0, this.grid.w)
-    this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' '+(this.tile.w/10).toFixed(1) : ''}`, col * 1, 0, this.grid.w)
+    this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, col * 1, 0, this.grid.w)
     this.write(`${this.source}`, col * 2, 0, this.grid.w)
     this.write(`${this.clock}`, col * 3, 0, this.grid.w, this.io.midi.inputIndex > -1 ? 4 : 2)
 
