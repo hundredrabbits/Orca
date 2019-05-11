@@ -7,8 +7,8 @@ export default function Commander (terminal) {
   // Library
 
   this.operations = {
-    'apm': (val, run) => { terminal.clock.set(null, parseInt(val)) },
-    'bpm': (val, run) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
+    'apm': (val, run) => { if (run) { terminal.clock.set(null, parseInt(val)) } },
+    'bpm': (val, run) => { if (run) { terminal.clock.set(parseInt(val), parseInt(val), true) } },
     'color': (val, run) => {
       const parts = val.split(';')
       if (isColor(parts[0])) { terminal.theme.active.b_med = '#' + parts[0] }
@@ -41,8 +41,8 @@ export default function Commander (terminal) {
       }
       terminal.cursor.writeBlock(cols)
     },
-    'run': (val, run) => { terminal.run() },
-    'stop': (val, run) => { terminal.clock.stop() },
+    'run': (val, run) => { if (run) { terminal.run() } },
+    'stop': (val, run) => { if (run) { terminal.clock.stop() } },
     'time': (val, run) => { terminal.clock.setFrame(parseInt(val)) },
     'write': (val, run) => {
       const g = val.substr(0, 1)
