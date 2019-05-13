@@ -69,6 +69,12 @@ Here's a list of supported operations.
 
 [Pilot](https://github.com/hundredrabbits/Pilot) is a minimalist synth software designed to work via UDP, and to quickly get started with Orca. Remember that **Pilot uses UDP instead of MIDI**. Have a look at [pilot.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/software/pilot.orca) to see how it should be used.
 
+## FAQS
+
+### Why does placement of `V` matter?
+
+Orca operates linearly from the top-left, to the bottom-right, operators are executed in that sequence, and so the variables stored at the top, can be overwritten by the variables declared at the bottom.
+
 ## Patterns
 
 ### Modulo
