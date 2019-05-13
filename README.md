@@ -23,44 +23,45 @@ npm start
 
 ## Operators
 
-- `A` **add**: Outputs the sum of inputs.
-- `B` **bounce**: Bounces between two values based on the runtime frame.
-- `C` **clock**: Outputs a constant value based on the runtime frame.
-- `D` **delay**: Bangs on a fraction of the runtime frame.
+- `A` **add**(*a* b): Outputs sum of inputs.
+- `B` **bounce**(*rate* mod): Outputs values between inputs.
+- `C` **clock**(*rate* mod): Outputs modulo of frame.
+- `D` **delay**(*rate* mod): Bangs on modulo of frame.
 - `E` **east**: Moves eastward, or bangs.
-- `F` **if**: Bangs if both inputs are equal.
-- `G` **generator**: Writes distant operators with offset.
-- `H` **halt**: Stops southward operators from operating.
-- `I` **increment**: Increments southward operator.
-- `J` **jumper**: Outputs the northward operator.
-- `K` **konkat**: Outputs multiple variables.
-- `L` **loop**: Loops a number of eastward operators.
-- `M` **multiply**: Outputs the product of inputs.
+- `F` **if**(*a* b): Bangs if inputs are equal.
+- `G` **generator**(*x* *y* *len*): Writes operators with offset.
+- `H` **halt**: Halts southward operator.
+- `I` **increment**(*step* mod): Increments southward operator.
+- `J` **jumper**(*val*): Outputs northward operator.
+- `K` **konkat**(*len*): Reads multiple variables.
+- `L` **loop**(*step* *len* val): Moves eastward operators.
+- `M` **multiply**(*a* b): Outputs product of inputs.
 - `N` **north**: Moves Northward, or bangs.
-- `O` **read**: Reads a distant operator with offset.
-- `P` **push**: Writes an eastward operator with offset.
-- `Q` **query**: Reads distant operators with offset.
-- `R` **random**: Outputs a random value.
+- `O` **read**(*x* *y* read): Reads operator with offset.
+- `P` **push**(*len* *key* val): Writes eastward operator.
+- `Q` **query**(*x* *y* *len*): Reads operators with offset.
+- `R` **random**(*min* max): Outputs random value.
 - `S` **south**: Moves southward, or bangs.
-- `T` **track**: Reads an eastward operator with offset.
-- `U` **uclid**: Bangs at a rate defined by the [Euclidean pattern](http://www-cgrl.cs.mcgill.ca/~godfried/publications/banff.pdf).
-- `V` **variable**: Reads and write globally available variables.
+- `T` **track**(*key* *len* val): Reads eastward operator.
+- `U` **Uclid**(*step* max): Bangs on Euclidean rhythm.
+- `V` **variable**(*write* read): Reads and writes variable.
 - `W` **west**: Moves westward, or bangs.
-- `X` **write**: Writes a distant operator with offset.
-- `Y` **jymper**: Outputs the westward operator.
-- `Z` **lerp**: Transitions southward operator toward input.
+- `X` **write**(*x* *y* val): Writes operator with offset.
+- `Y` **jymper**(*val*): Outputs westward operator.
+- `Z` **Lerp**(*rate* target): Transitions operator to input.
 - `*` **bang**: Bangs neighboring operators.
-- `#` **comment**: Comments a line, or characters until the next hash.
+- `#` **comment**: Halts a line.
 
 ### IO
 
 #### Send
 
-- `:` **midi**: Sends a MIDI note.
-- `!` **cc**: Sends a MIDI CC value.
-- `%` **mono**: Sends a Monophonic MIDI value.
-- `;` **udp**: Sends a UDP message.
-- `=` **osc**: Sends a OSC message.
+- `:` **midi**(channel octave note velocity length): Sends a MIDI note.
+- `%` **mono**(channel octave note velocity length): Sends monophonic MIDI note.
+- `!` **cc**(channel knob value): Sends MIDI control change.
+- `;` **udp**: Sends UDP message.
+- `=` **osc**(*path*): Sends OSC message.
+- `:` **mono**: Receive MIDI note.
 
 #### Receive
 

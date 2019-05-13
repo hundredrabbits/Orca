@@ -3,7 +3,7 @@
 import Operator from '../operator.js'
 
 export default function OperatorMono (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, ':', true)
+  Operator.call(this, orca, x, y, '%', true)
 
   this.name = 'mono'
   this.info = 'Sends monophonic MIDI note'

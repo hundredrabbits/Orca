@@ -5,7 +5,7 @@ import Operator from '../operator.js'
 export default function OperatorCC (orca, x, y) {
   Operator.call(this, orca, x, y, '!', true)
 
-  this.name = 'Midi CC'
+  this.name = 'cc'
   this.info = 'Sends MIDI control change'
 
   this.ports.input.channel = { x: 1, y: 0, clamp: { min: 0, max: 15 } }

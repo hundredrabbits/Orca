@@ -13,7 +13,7 @@ import Controller from './lib/controller.js'
 import library from '../../core/library.js'
 
 export default function Terminal () {
-  this.version = 122
+  this.version = 124
   this.library = library
 
   this.orca = new Orca(this)
@@ -71,6 +71,7 @@ export default function Terminal () {
     this.ports = this.findPorts()
     this.drawProgram()
     this.drawInterface()
+    this.drawGuide()
   }
 
   this.reset = function () {
@@ -274,13 +275,10 @@ export default function Terminal () {
       this.write(`${this.io.inspect(this.grid.w)}`, col * 4, this.orca.h, this.grid.w)
       this.write(`${display(variables, this.orca.f, this.grid.w)}`, col * 4, this.orca.h + 1, this.grid.w)
     }
-
-    if (this.guide === true) {
-      this.drawGuide()
-    }
   }
 
   this.drawGuide = function () {
+    if (this.guide !== true) { return }
     const operators = Object.keys(this.library).filter((val) => { return isNaN(val) })
     for (const id in operators) {
       const key = operators[id]
@@ -367,6 +365,18 @@ export default function Terminal () {
     this.orca.load(w, h, block, this.orca.f)
   }
 
+  // Docs
+
+  this.docs = function () {
+    let html = ''
+    const operators = Object.keys(library).filter((val) => { return isNaN(val) })
+    for (const id in operators) {
+      const oper = new this.library[operators[id]]()
+      const ports = (oper.ports.haste ? Object.keys(oper.ports.haste).reduce((acc, key, val) => { return acc + ' *' + key + '*' }, '') : '') + (oper.ports.input ? Object.keys(oper.ports.input).reduce((acc, key, val) => { return acc + ' ' + key }, '') : '')
+      html += `- \`${oper.glyph.toUpperCase()}\` **${oper.name}**${ports !== '' ? '(' + ports.trim() + ')' : ''}: ${oper.info}.\n`
+    }
+    return html
+  }
   // Events
 
   window.addEventListener('dragover', (e) => {
