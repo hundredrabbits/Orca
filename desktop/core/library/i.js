@@ -6,7 +6,7 @@ export default function OperatorI (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'i', passive)
 
   this.name = 'increment'
-  this.info = 'Increments southward operator.'
+  this.info = 'Increments southward operator'
 
   this.ports.haste.step = { x: -1, y: 0, default: '1' }
   this.ports.input.mod = { x: 1, y: 0 }

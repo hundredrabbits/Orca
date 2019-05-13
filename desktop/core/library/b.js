@@ -6,7 +6,7 @@ export default function OperatorB (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'b', passive)
 
   this.name = 'bounce'
-  this.info = 'Bounces between two values based on the runtime frame.'
+  this.info = 'Outputs values between inputs'
 
   this.ports.haste.rate = { x: -1, y: 0, clamp: { min: 1 } }
   this.ports.input.mod = { x: 1, y: 0, default: '8' }

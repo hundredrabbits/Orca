@@ -6,7 +6,7 @@ export default function OperatorN (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'n', passive)
 
   this.name = 'north'
-  this.info = 'Moves Northward, or bangs.'
+  this.info = 'Moves Northward, or bangs'
   this.draw = false
 
   this.haste = function () {

@@ -6,7 +6,7 @@ export default function OperatorG (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'g', passive)
 
   this.name = 'generator'
-  this.info = 'Writes distant operators with offset.'
+  this.info = 'Writes operators with offset'
 
   this.ports.haste.x = { x: -3, y: 0 }
   this.ports.haste.y = { x: -2, y: 0 }

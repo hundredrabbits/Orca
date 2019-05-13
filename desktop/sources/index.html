@@ -9,6 +9,7 @@
 
       const app = require('electron').remote.app
       const terminal = new Terminal()
+
       window.terminal = terminal // global availability for e.g. udp
 
       terminal.install(document.body)
@@ -56,6 +57,7 @@
       terminal.controller.add("default","View","Zoom Reset",() => { terminal.modZoom(1,true) },"CmdOrCtrl+0")
       terminal.controller.add("default","View","Toggle Retina",() => { terminal.toggleRetina() },"`")
       terminal.controller.add("default","View","Toggle Hardmode",() => { terminal.toggleHardmode() },"Tab")
+      terminal.controller.add("default","View","Toggle Guide",() => { terminal.toggleGuide() },"CmdOrCtrl+G")
       terminal.controller.addSpacer('default', 'View', 'commander')
       terminal.controller.add("default","View","Toggle Commander",() => { terminal.commander.start() },"CmdOrCtrl+K")
       terminal.controller.add("default","View","Run Commander",() => { terminal.commander.run() },"Enter")
@@ -75,7 +77,10 @@
       terminal.controller.add("default","Theme","Download Themes..",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes') })
 
       terminal.controller.commit()
-      terminal.start();
+      
+      window.addEventListener('load', () => { 
+        terminal.start(); 
+      })
     </script>
   </body>
 </html>

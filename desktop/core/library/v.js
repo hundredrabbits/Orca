@@ -6,7 +6,7 @@ export default function OperatorV (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'v', passive)
 
   this.name = 'variable'
-  this.info = 'Reads and write globally available variables.'
+  this.info = 'Reads and writes variable'
 
   this.ports.haste.write = { x: -1, y: 0 }
   this.ports.input.read = { x: 1, y: 0 }

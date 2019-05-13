@@ -6,7 +6,7 @@ export default function OperatorH (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'h', passive)
 
   this.name = 'halt'
-  this.info = 'Stops southward operators from operating.'
+  this.info = 'Halts southward operator'
 
   this.ports.output = { x: 0, y: 1, reader: true }
 

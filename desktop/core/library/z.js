@@ -6,7 +6,7 @@ export default function OperatorZ (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'z', passive)
 
   this.name = 'Lerp'
-  this.info = 'Transitions southward operator toward input.'
+  this.info = 'Transitions operator to input'
 
   this.ports.haste.rate = { x: -1, y: 0, default: '1' }
   this.ports.input.target = { x: 1, y: 0 }

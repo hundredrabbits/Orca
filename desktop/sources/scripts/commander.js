@@ -116,6 +116,8 @@ export default function Commander (terminal) {
       return
     }
 
+    terminal.guide = false
+
     if (event.keyCode === 191 && (event.metaKey || event.ctrlKey)) { terminal.cursor.comment(); event.preventDefault(); return }
 
     // Copy/Paste

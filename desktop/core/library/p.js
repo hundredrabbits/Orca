@@ -6,7 +6,7 @@ export default function OperatorP (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'p', passive)
 
   this.name = 'push'
-  this.info = 'Writes an eastward operator with offset.'
+  this.info = 'Writes eastward operator'
 
   this.ports.haste.len = { x: -1, y: 0, clamp: { min: 1 } }
   this.ports.haste.key = { x: -2, y: 0 }

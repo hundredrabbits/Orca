@@ -6,7 +6,7 @@ export default function OperatorUdp (orca, x, y, passive) {
   Operator.call(this, orca, x, y, ';', true)
 
   this.name = 'udp'
-  this.info = 'Sends a UDP message.'
+  this.info = 'Sends UDP message'
 
   this.haste = function () {
     for (let x = 1; x <= 36; x++) {

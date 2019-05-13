@@ -6,7 +6,7 @@ export default function OperatorCC (orca, x, y) {
   Operator.call(this, orca, x, y, '!', true)
 
   this.name = 'Midi CC'
-  this.info = 'Sends a MIDI control change message.'
+  this.info = 'Sends MIDI control change'
 
   this.ports.input.channel = { x: 1, y: 0, clamp: { min: 0, max: 15 } }
   this.ports.input.knob = { x: 2, y: 0, clamp: { min: 0 } }

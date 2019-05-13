@@ -6,7 +6,7 @@ export default function OperatorD (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'd', passive)
 
   this.name = 'delay'
-  this.info = 'Bangs on a fraction of the runtime frame.'
+  this.info = 'Bangs on modulo of frame'
 
   this.ports.haste.rate = { x: -1, y: 0, clamp: { min: 1 } }
   this.ports.input.mod = { x: 1, y: 0, default: '8' }

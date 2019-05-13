@@ -6,7 +6,7 @@ export default function OperatorA (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'a', passive)
 
   this.name = 'add'
-  this.info = 'Outputs the sum of inputs.'
+  this.info = 'Outputs sum of inputs'
 
   this.ports.haste.a = { x: -1, y: 0 }
   this.ports.input.b = { x: 1, y: 0 }

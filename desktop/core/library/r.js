@@ -6,7 +6,7 @@ export default function OperatorR (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'r', passive)
 
   this.name = 'random'
-  this.info = 'Outputs a random value.'
+  this.info = 'Outputs random value'
 
   this.ports.haste.min = { x: -1, y: 0 }
   this.ports.input.max = { x: 1, y: 0 }

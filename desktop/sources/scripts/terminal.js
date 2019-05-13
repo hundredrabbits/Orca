@@ -39,6 +39,7 @@ export default function Terminal () {
   }
   this.scale = window.devicePixelRatio
   this.hardmode = true
+  this.guide = false
 
   this.install = function (host) {
     host.appendChild(this.el)
@@ -109,6 +110,12 @@ export default function Terminal () {
   this.toggleHardmode = function () {
     this.hardmode = this.hardmode !== true
     console.log('Terminal', `Hardmode: ${this.hardmode}`)
+    this.update()
+  }
+
+  this.toggleGuide = function () {
+    this.guide = this.guide !== true
+    console.log('Terminal', `Guide: ${this.guide}`)
     this.update()
   }
 
@@ -217,6 +224,8 @@ export default function Terminal () {
     if (type === 7) { return {} }
     // Reader
     if (type === 8) { return { bg: this.theme.active.b_low, fg: this.theme.active.f_high } }
+    // Reader
+    if (type === 10) { return { bg: this.theme.active.background, fg: this.theme.active.f_high } }
     // Default
     return { fg: this.theme.active.f_low }
   }
@@ -241,27 +250,47 @@ export default function Terminal () {
   this.drawInterface = function () {
     const col = this.grid.w
     const variables = Object.keys(this.orca.variables).join('')
+    const col1 = this.orca.h
+    const col2 = this.orca.h + 1
 
     if (this.commander.isActive === true) {
-      this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 0, 1, this.grid.w * 2)
+      this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 0, this.orca.h + 1, this.grid.w * 2)
     } else {
-      this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.mode === 1 ? '+' : ''}`, col * 0, 1, this.grid.w, this.cursor.mode === 1 ? 1 : 2)
-      this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, 1, this.grid.w)
-      this.write(`${this.cursor.inspect()}`, col * 2, 1, this.grid.w)
-      this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, col * 3, 1, this.grid.w)
+      this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.mode === 1 ? '+' : ''}`, col * 0, this.orca.h + 1, this.grid.w, this.cursor.mode === 1 ? 1 : 2)
+      this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, this.orca.h + 1, this.grid.w)
+      this.write(`${this.cursor.inspect()}`, col * 2, this.orca.h + 1, this.grid.w)
+      this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, col * 3, this.orca.h + 1, this.grid.w)
     }
 
-    this.write(`${this.orca.w}x${this.orca.h}`, col * 0, 0, this.grid.w)
-    this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, col * 1, 0, this.grid.w)
-    this.write(`${this.source}`, col * 2, 0, this.grid.w)
-    this.write(`${this.clock}`, col * 3, 0, this.grid.w, this.io.midi.inputIndex > -1 ? 4 : 2)
+    this.write(`${this.orca.w}x${this.orca.h}`, col * 0, this.orca.h, this.grid.w)
+    this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, col * 1, this.orca.h, this.grid.w)
+    this.write(`${this.source}`, col * 2, this.orca.h, this.grid.w)
+    this.write(`${this.clock}`, col * 3, this.orca.h, this.grid.w, this.io.midi.inputIndex > -1 ? 4 : 2)
 
     if (this.orca.f < 15) {
-      this.write(`${this.io.midi}`, col * 4, 0, this.grid.w * 2)
-      this.write(`Version ${this.version}`, col * 4, 1, this.grid.w * 2)
+      this.write(`${this.io.midi}`, col * 4, this.orca.h, this.grid.w * 2)
+      this.write(`Version ${this.version}`, col * 4, this.orca.h + 1, this.grid.w * 2)
     } else {
-      this.write(`${this.io.inspect(this.grid.w)}`, col * 4, 0, this.grid.w)
-      this.write(`${display(variables, this.orca.f, this.grid.w)}`, col * 4, 1, this.grid.w)
+      this.write(`${this.io.inspect(this.grid.w)}`, col * 4, this.orca.h, this.grid.w)
+      this.write(`${display(variables, this.orca.f, this.grid.w)}`, col * 4, this.orca.h + 1, this.grid.w)
+    }
+
+    if (this.guide === true) {
+      this.drawGuide()
+    }
+  }
+
+  this.drawGuide = function () {
+    const operators = Object.keys(this.library).filter((val) => { return isNaN(val) })
+    for (const id in operators) {
+      const key = operators[id]
+      const oper = new this.library[key]()
+      const text = oper.info
+      const frame = this.orca.h - 4
+      const x = (Math.floor(parseInt(id) / frame) * 32) + 2
+      const y = (parseInt(id) % frame) + 2
+      this.write(text, x + 2, y, 99, 10)
+      this.write(key, x, y, 99, 3)
     }
   }
 
@@ -279,10 +308,10 @@ export default function Terminal () {
     }
   }
 
-  this.write = function (text, offsetX, offsetY, limit, type = 2) {
+  this.write = function (text, offsetX, offsetY, limit = 50, type = 2) {
     let x = 0
     while (x < text.length && x < limit - 1) {
-      this.drawSprite(offsetX + x, this.orca.h + offsetY, text.substr(x, 1), type)
+      this.drawSprite(offsetX + x, offsetY, text.substr(x, 1), type)
       x += 1
     }
   }
@@ -336,10 +365,6 @@ export default function Terminal () {
 
     this.history.reset()
     this.orca.load(w, h, block, this.orca.f)
-  }
-
-  this.docs = function () {
-    return Object.keys(this.library).reduce((acc, id) => { return ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].indexOf(id) < 0 ? `${acc}- ${new this.library[id]().docs()}\n` : acc }, '')
   }
 
   // Events

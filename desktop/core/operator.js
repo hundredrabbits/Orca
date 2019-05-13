@@ -155,9 +155,5 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
 
   // Docs
 
-  this.docs = function () {
-    return `\`${this.glyph.toUpperCase()}\` **${this.name}**: ${this.info}`
-  }
-
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }

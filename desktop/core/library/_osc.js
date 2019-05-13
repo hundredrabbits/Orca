@@ -6,7 +6,7 @@ export default function OperatorOsc (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '=', true)
 
   this.name = 'osc'
-  this.info = 'Sends a OSC message.'
+  this.info = 'Sends OSC message'
 
   this.ports.haste.path = { x: 1, y: 0 }
 

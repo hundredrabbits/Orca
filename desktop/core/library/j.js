@@ -6,7 +6,7 @@ export default function OperatorJ (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'j', passive)
 
   this.name = 'jumper'
-  this.info = 'Outputs the northward operator.'
+  this.info = 'Outputs northward operator'
 
   this.ports.haste.val = { x: 0, y: -1 }
   this.ports.output = { x: 0, y: 1 }
