@@ -65,7 +65,7 @@ npm start
 
 #### Receive
 
-- `&` **keys**: Receives a MIDI note.
+- `&` **keys**: Receives MIDI note.
 
 ## MIDI
 

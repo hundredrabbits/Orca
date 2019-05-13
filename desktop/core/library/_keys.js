@@ -5,7 +5,7 @@ import Operator from '../operator.js'
 const OCTAVE = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B']
 
 export default function OperatorKeys (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, ':', true)
+  Operator.call(this, orca, x, y, '&', true)
 
   this.name = 'mono'
   this.info = 'Receive MIDI note'
