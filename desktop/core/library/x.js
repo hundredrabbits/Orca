@@ -6,7 +6,7 @@ export default function OperatorX (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'x', passive)
 
   this.name = 'write'
-  this.info = 'Writes operator with offset'
+  this.info = 'Writes operand with offset'
 
   this.ports.haste.x = { x: -2, y: 0 }
   this.ports.haste.y = { x: -1, y: 0 }

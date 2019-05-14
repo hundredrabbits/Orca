@@ -29,27 +29,27 @@ npm start
 - `D` **delay**(*rate* mod): Bangs on modulo of frame.
 - `E` **east**: Moves eastward, or bangs.
 - `F` **if**(*a* b): Bangs if inputs are equal.
-- `G` **generator**(*x* *y* *len*): Writes operators with offset.
-- `H` **halt**: Halts southward operator.
-- `I` **increment**(*step* mod): Increments southward operator.
-- `J` **jumper**(*val*): Outputs northward operator.
+- `G` **generator**(*x* *y* *len*): Writes operands with offset.
+- `H` **halt**: Halts southward operand.
+- `I` **increment**(*step* mod): Increments southward operand.
+- `J` **jumper**(*val*): Outputs northward operand.
 - `K` **konkat**(*len*): Reads multiple variables.
-- `L` **loop**(*step* *len* val): Moves eastward operators.
+- `L` **loop**(*step* *len* val): Moves eastward operands.
 - `M` **multiply**(*a* b): Outputs product of inputs.
 - `N` **north**: Moves Northward, or bangs.
-- `O` **read**(*x* *y* read): Reads operator with offset.
-- `P` **push**(*len* *key* val): Writes eastward operator.
-- `Q` **query**(*x* *y* *len*): Reads operators with offset.
+- `O` **read**(*x* *y* read): Reads operand with offset.
+- `P` **push**(*len* *key* val): Writes eastward operand.
+- `Q` **query**(*x* *y* *len*): Reads operands with offset.
 - `R` **random**(*min* max): Outputs random value.
 - `S` **south**: Moves southward, or bangs.
-- `T` **track**(*key* *len* val): Reads eastward operator.
+- `T` **track**(*key* *len* val): Reads eastward operand.
 - `U` **Uclid**(*step* max): Bangs on Euclidean rhythm.
 - `V` **variable**(*write* read): Reads and writes variable.
 - `W` **west**: Moves westward, or bangs.
-- `X` **write**(*x* *y* val): Writes operator with offset.
-- `Y` **jymper**(*val*): Outputs westward operator.
-- `Z` **Lerp**(*rate* target): Transitions operator to input.
-- `*` **bang**: Bangs neighboring operators.
+- `X` **write**(*x* *y* val): Writes operand with offset.
+- `Y` **jymper**(*val*): Outputs westward operand.
+- `Z` **Lerp**(*rate* target): Transitions operand to input.
+- `*` **bang**: Bangs neighboring operands.
 - `#` **comment**: Halts a line.
 
 ### IO
@@ -61,11 +61,10 @@ npm start
 - `!` **cc**(channel knob value): Sends MIDI control change.
 - `;` **udp**: Sends UDP message.
 - `=` **osc**(*path*): Sends OSC message.
-- `:` **mono**: Receive MIDI note.
 
 #### Receive
 
-- `&` **keys**: Receives MIDI note.
+- `&` **mono**: Receive MIDI note.
 
 ## MIDI
 

@@ -6,7 +6,7 @@ export default function OperatorO (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'o', passive)
 
   this.name = 'read'
-  this.info = 'Reads operator with offset'
+  this.info = 'Reads operand with offset'
 
   this.ports.haste.x = { x: -2, y: 0 }
   this.ports.haste.y = { x: -1, y: 0 }

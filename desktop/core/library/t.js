@@ -6,7 +6,7 @@ export default function OperatorT (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 't', passive)
 
   this.name = 'track'
-  this.info = 'Reads eastward operator'
+  this.info = 'Reads eastward operand'
 
   this.ports.haste.key = { x: -2, y: 0 }
   this.ports.haste.len = { x: -1, y: 0, clamp: { min: 1 } }
