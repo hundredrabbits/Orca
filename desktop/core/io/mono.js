@@ -5,7 +5,7 @@ export default function Mono (terminal) {
   this.stack = []
 
   this.start = function () {
-    console.info('Mono Starting..')
+    console.info('MidiMono Starting..')
   }
 
   this.run = function () {
@@ -41,7 +41,7 @@ export default function Mono (terminal) {
   }
 
   this.trigger = function (item, down) {
-    if (!terminal.io.midi.outputDevice()) { console.warn('Mono', 'No midi output!'); return }
+    if (!terminal.io.midi.outputDevice()) { console.warn('MidiMono', 'No midi output!'); return }
     if (!item) { return }
 
     const channel = down === true ? 0x90 + item.channel : 0x80 + item.channel

@@ -6,7 +6,7 @@ export default function OperatorComment (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '#', true)
 
   this.name = 'comment'
-  this.info = 'Halts a line'
+  this.info = 'Halts line'
   this.draw = false
 
   this.haste = function () {
