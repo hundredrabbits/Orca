@@ -9,11 +9,10 @@ import Commander from './commander.js'
 import Clock from './clock.js'
 import Theme from './lib/theme.js'
 import Controller from './lib/controller.js'
-
 import library from '../../core/library.js'
 
 export default function Terminal () {
-  this.version = 124
+  this.version = 125
   this.library = library
 
   this.orca = new Orca(this)
@@ -55,6 +54,8 @@ export default function Terminal () {
     this.clock.start()
     this.update()
     this.el.className = 'ready'
+
+    this.toggleGuide(this.reqGuide() === true)
   }
 
   this.run = function () {
@@ -114,10 +115,19 @@ export default function Terminal () {
     this.update()
   }
 
-  this.toggleGuide = function () {
-    this.guide = this.guide !== true
-    console.log('Terminal', `Guide: ${this.guide}`)
+  this.toggleGuide = function (force = null) {
+    const display = force !== null ? force : this.guide !== true
+    if (display === this.guide) { return }
+    console.log('Terminal', `Toggle Guide: ${display}`)
+    this.guide = display
     this.update()
+  }
+
+  this.reqGuide = function () {
+    const session = this.source.recall('session')
+    console.log('Terminal', 'Session #' + session)
+    if (!session || parseInt(session) < 20) { return true }
+    return false
   }
 
   this.modGrid = function (x = 0, y = 0) {
@@ -225,7 +235,7 @@ export default function Terminal () {
     if (type === 7) { return {} }
     // Reader
     if (type === 8) { return { bg: this.theme.active.b_low, fg: this.theme.active.f_high } }
-    // Reader
+    // Reader+Background
     if (type === 10) { return { bg: this.theme.active.background, fg: this.theme.active.f_high } }
     // Default
     return { fg: this.theme.active.f_low }

@@ -116,8 +116,6 @@ export default function Commander (terminal) {
       return
     }
 
-    terminal.guide = false
-
     if (event.keyCode === 191 && (event.metaKey || event.ctrlKey)) { terminal.cursor.comment(); event.preventDefault(); return }
 
     // Copy/Paste
@@ -142,7 +140,7 @@ export default function Commander (terminal) {
     if (event.ctrlKey) { return }
 
     if (event.key === ' ' && terminal.cursor.mode === 0) { terminal.clock.togglePlay(); event.preventDefault(); return }
-    if (event.key === 'Escape') { terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
+    if (event.key === 'Escape') { terminal.toggleGuide(false); terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
     if (event.key === 'Backspace') { terminal[this.isActive === true ? 'commander' : 'cursor'].erase(); event.preventDefault(); return }
 
     if (event.key === ']') { terminal.modGrid(1, 0); event.preventDefault(); return }
@@ -162,6 +160,7 @@ export default function Commander (terminal) {
 
   this.onArrowUp = function (mod = false, skip = false, drag = false) {
     const leap = skip ? terminal.grid.h : 1
+    terminal.toggleGuide(false)
     if (drag) {
       terminal.cursor.drag(0, leap)
     } else if (mod) {
@@ -173,6 +172,7 @@ export default function Commander (terminal) {
 
   this.onArrowDown = function (mod = false, skip = false, drag = false) {
     const leap = skip ? terminal.grid.h : 1
+    terminal.toggleGuide(false)
     if (drag) {
       terminal.cursor.drag(0, -leap)
     } else if (mod) {
@@ -184,6 +184,7 @@ export default function Commander (terminal) {
 
   this.onArrowLeft = function (mod = false, skip = false, drag = false) {
     const leap = skip ? terminal.grid.w : 1
+    terminal.toggleGuide(false)
     if (drag) {
       terminal.cursor.drag(-leap, 0)
     } else if (mod) {
@@ -195,6 +196,7 @@ export default function Commander (terminal) {
 
   this.onArrowRight = function (mod = false, skip = false, drag = false) {
     const leap = skip ? terminal.grid.w : 1
+    terminal.toggleGuide(false)
     if (drag) {
       terminal.cursor.drag(leap, 0)
     } else if (mod) {

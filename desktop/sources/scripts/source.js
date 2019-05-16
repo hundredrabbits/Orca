@@ -8,6 +8,7 @@ export default function Source (terminal) {
   this.path = null
 
   this.start = function () {
+    this.increment()
     this.new()
   }
 
@@ -168,6 +169,11 @@ export default function Source (terminal) {
     if (!key) { return }
     console.log('Source', `Forget: ${key}`)
     localStorage.removeItem(key)
+  }
+
+  this.increment = function () {
+    const val = this.recall('session')
+    this.remember('session', isNaN(val) ? 1 : parseInt(val) + 1)
   }
 
   // Converters
