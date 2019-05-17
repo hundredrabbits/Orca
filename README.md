@@ -6,7 +6,7 @@
 
 **To learn more**, have a look at some projects created with [#ORCΛ](https://twitter.com/hashtag/ORCΛ), watch the [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE), or check out the [examples](https://github.com/hundredrabbits/Orca/tree/master/examples) & [tutorials](TUTORIAL.md). If you need some help, visit the [forum](https://llllllll.co/t/orca-live-coding-tool/17689), or the [chatroom](https://talk.lurk.org/channel/orca). 
 
-If you're looking for a **portable distribution**, visit [Orca-c](http://github.com/hundredrabbits/Orca-c). 
+If you're looking for a **portable distribution**, visit [Orca-c](http://github.com/hundredrabbits/Orca-c). If you're looking for the library for your [Monome Norns](https://monome.org/norns/), visit [Orca Norns](https://github.com/itsyourbedtime/orca/).
 
 ## Install & Run
 
