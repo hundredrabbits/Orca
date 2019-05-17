@@ -31,11 +31,11 @@ export default function Commander (terminal) {
       const cols = terminal.cursor.getBlock()
       for (const y in cols) {
         for (const x in cols[y]) {
-          if (cols[y][x] === '.') { continue }
+          if (!cols[y][x] || cols[y][x] === '.') { continue }
           const isUC = cols[y][x] === cols[y][x].toUpperCase()
           cols[y][x] = terminal.orca.keyOf(parseInt(val) + terminal.orca.valueOf(cols[y][x]))
           if (isUC) {
-            cols[y][x] = cols[y][x].toUpperCase()
+            cols[y][x] = `${cols[y][x]}`.toUpperCase()
           }
         }
       }

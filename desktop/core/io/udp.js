@@ -53,7 +53,10 @@ export default function Udp (terminal) {
   // Input
 
   this.listener.on('message', (msg, rinfo) => {
-    return terminal.commander.trigger(`${msg}`)
+    const cmd = `${msg}`.split(':')[0].toLowerCase()
+    const val = `${msg}`.substr(cmd.length + 1)
+    if (!terminal.commander.operations[cmd]) { console.warn(`Unknown message: ${msg}`); return }
+    terminal.commander.operations[cmd](val, true)
   })
 
   this.listener.on('listening', () => {

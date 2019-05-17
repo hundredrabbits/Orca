@@ -44,7 +44,7 @@ export default function Theme (_default) {
   }
 
   this.setImage = function (path) {
-    document.body.style.backgroundImage = path && fs.existsSync(path) ? `url(${path})` : ''
+    document.body.style.backgroundImage = path && fs.existsSync(path) && document.body.style.backgroundImage !== `url(${path})` ? `url(${path})` : ''
   }
 
   function parse (any) {

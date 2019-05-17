@@ -138,7 +138,7 @@ export default function Orca (terminal) {
   }
 
   this.valueOf = function (g) {
-    return this.keys.indexOf(`${g}`.toLowerCase())
+    return g === '.' ? 0 : this.keys.indexOf(`${g}`.toLowerCase())
   }
 
   this.indexAt = function (x, y) {
@@ -153,8 +153,12 @@ export default function Orca (terminal) {
     return { x: index % this.w, y: parseInt(index / this.w) }
   }
 
-  this.glyphAt = function (x, y, req = null) {
+  this.glyphAt = function (x, y) {
     return this.s.charAt(this.indexAt(x, y))
+  }
+
+  this.valueAt = function (x, y) {
+    return this.valueOf(this.glyphAt(x, y))
   }
 
   this.lockAt = function (x, y) {
