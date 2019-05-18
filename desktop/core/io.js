@@ -28,12 +28,18 @@ export default function IO (terminal) {
     this.mono.clear()
     this.udp.clear()
     this.osc.clear()
+
+    // Light
+    this.udp.send('clear')
   }
 
   this.run = function () {
     this.midi.run()
     this.cc.run()
     this.mono.run()
+    // Light
+    this.udp.send('show')
+    
     this.udp.run()
     this.osc.run()
   }

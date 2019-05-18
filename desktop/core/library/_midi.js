@@ -20,6 +20,7 @@ export default function OperatorMidi (orca, x, y, passive) {
     if (this.listen(this.ports.input.channel) === '.') { return }
     if (this.listen(this.ports.input.octave) === '.') { return }
     if (this.listen(this.ports.input.note) === '.') { return }
+    if (!isNaN(this.listen(this.ports.input.note))) { return }
 
     const channel = this.listen(this.ports.input.channel, true)
     const rawOctave = this.listen(this.ports.input.octave, true)
@@ -38,6 +39,25 @@ export default function OperatorMidi (orca, x, y, passive) {
     this.draw = false
 
     terminal.io.midi.send(channel, octave, note, velocity, length)
+
+    if(channel < 4){
+      if(rawNote === "C"){
+        terminal.io.udp.send('f:9')  
+      }
+      else{
+        terminal.io.udp.send('f:4')
+      }
+    }
+    else if(channel > 7 && channel < 12 && !isNaN(transposed.id)){
+      terminal.io.udp.send(`l:${parseInt(transposed.id)%16}`)
+    }
+    else if(channel > 2 && channel < 8 && !isNaN(transposed.id)){
+      terminal.io.udp.send(`n:${parseInt(transposed.id)%16}`)
+    }
+
+    if(!isNaN(note) && !isNaN(channel)){
+      terminal.io.udp.send(`d:${parseInt(note)%16};${parseInt(channel)}`)  
+    }
 
     if (force === true) {
       terminal.io.midi.run()
