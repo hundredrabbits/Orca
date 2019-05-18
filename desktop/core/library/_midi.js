@@ -27,6 +27,8 @@ export default function OperatorMidi (orca, x, y, passive) {
     const rawVelocity = this.listen(this.ports.input.velocity, true)
     const length = this.listen(this.ports.input.length, true)
 
+    if (!isNaN(rawNote)) { return }
+
     const transposed = this.transpose(rawNote, rawOctave)
     // 1 - 8
     const octave = transposed.octave
