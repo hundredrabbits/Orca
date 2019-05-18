@@ -31,7 +31,7 @@
 
       terminal.controller.add("default","Edit","Toggle Insert Mode",() => { terminal.cursor.toggleMode(1) },"CmdOrCtrl+I")
       terminal.controller.add("default","Edit","Block Comment",() => { terminal.cursor.comment() },"CmdOrCtrl+/")
-      terminal.controller.add("default","Edit","Find",() => { terminal.commander.start('find:') },"/")
+      terminal.controller.add("default","Edit","Find",() => { terminal.commander.start('find:') },"CmdOrCtrl+P")
       terminal.controller.add("default","Edit","Inject",() => { terminal.commander.start('inject:') },"CmdOrCtrl+J")
       terminal.controller.add("default","Edit","Trigger Operator",() => { terminal.cursor.trigger() },"CmdOrCtrl+B")
       terminal.controller.addSpacer('default', 'Edit', 'selection')
