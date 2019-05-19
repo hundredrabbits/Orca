@@ -188,7 +188,6 @@ export default function Commander (terminal) {
 
     if (event.key === '~') {
       const c = terminal.cursor.read()
-      let out = c;
       if (!/^[a-zA-Z]$/.test(c)) {
         return;
       }
@@ -199,6 +198,15 @@ export default function Commander (terminal) {
       }
       return
     }
+
+    if (modifierOn && event.key === '[') { terminal.toggleGuide(false); terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
+    if (event.key === 'Escape') { terminal.toggleGuide(false); terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
+    if (event.key === 'Backspace') { terminal[this.isActive === true ? 'commander' : 'cursor'].erase(); event.preventDefault(); return }
+
+    // Undo/Redo
+    // key: z
+    if (event.keyCode === 90 && modifierOn && shiftOn) { terminal.history.redo(); event.preventDefault(); return }
+    if (event.keyCode === 90 && modifierOn) { terminal.history.undo(); event.preventDefault(); return }
   }
 
   this.insertModeKeyMapping = function (event) {
