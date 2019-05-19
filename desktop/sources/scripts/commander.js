@@ -145,10 +145,10 @@ export default function Commander (terminal) {
     if (event.keyCode === 90 && (event.metaKey || event.ctrlKey) && event.shiftKey) { terminal.history.redo(); event.preventDefault(); return }
     if (event.keyCode === 90 && (event.metaKey || event.ctrlKey)) { terminal.history.undo(); event.preventDefault(); return }
 
-    if (event.keyCode === 38) { this.onArrowUp(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
-    if (event.keyCode === 40) { this.onArrowDown(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
-    if (event.keyCode === 37) { this.onArrowLeft(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
-    if (event.keyCode === 39) { this.onArrowRight(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
+    if (event.keyCode === 38) { this.onCursorUp(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
+    if (event.keyCode === 40) { this.onCursorDown(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
+    if (event.keyCode === 37) { this.onCursorLeft(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
+    if (event.keyCode === 39) { this.onCursorRight(event.shiftKey, (event.metaKey || event.ctrlKey), event.altKey); return }
 
     if (event.keyCode === 9) { terminal.toggleHardmode(); event.preventDefault(); return }
 
@@ -194,7 +194,7 @@ export default function Commander (terminal) {
     }
   }
 
-  this.onArrowDown = function (mod = false, skip = false, drag = false) {
+  this.onCursorDown = function (mod = false, skip = false, drag = false) {
     // Navigate History
     if (this.isActive === true) {
       this.historyIndex += this.historyIndex < this.history.length ? 1 : 0
@@ -212,7 +212,7 @@ export default function Commander (terminal) {
     }
   }
 
-  this.onArrowLeft = function (mod = false, skip = false, drag = false) {
+  this.onCursorLeft = function (mod = false, skip = false, drag = false) {
     const leap = skip ? terminal.grid.w : 1
     terminal.toggleGuide(false)
     if (drag) {
@@ -224,7 +224,7 @@ export default function Commander (terminal) {
     }
   }
 
-  this.onArrowRight = function (mod = false, skip = false, drag = false) {
+  this.onCursorRight = function (mod = false, skip = false, drag = false) {
     const leap = skip ? terminal.grid.w : 1
     terminal.toggleGuide(false)
     if (drag) {
