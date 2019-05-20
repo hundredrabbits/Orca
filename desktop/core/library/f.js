@@ -15,6 +15,6 @@ export default function OperatorF (orca, x, y, passive) {
   this.operation = function (force = false) {
     const a = this.listen(this.ports.haste.a)
     const b = this.listen(this.ports.input.b)
-    return a === b && a !== '.' && b !== '.'
+    return a === b && a !== '.'
   }
 }
