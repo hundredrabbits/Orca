@@ -6,7 +6,9 @@ export default function Commander (terminal) {
   this.history = []
   this.historyIndex = 0
   this.editorMode = 'insert'
-  this.vimMode = localStorage.getItem('vimMode') || 0;
+  this.vimMode = false
+
+  if (localStorage.getItem('vimMode') === 'enabled') { this.vimMode = true }
 
   if (this.vimMode) { this.editorMode = 'command' }
 
@@ -129,14 +131,10 @@ export default function Commander (terminal) {
 
   // Events
 
-  this.toggleVimMode = function (val) {
-    this.vimMode = this.vimMode === 0 ? val : 0
-    localStorage.setItem('vimMode', this.vimMode)
-    if (this.vimMode === 0) {
-      this.setEditorMode('insert')
-    } else {
-      this.setEditorMode('command')
-    }
+  this.toggleVimMode = function () {
+    this.vimMode = !this.vimMode
+    localStorage.setItem('vimMode', this.vimMode ? 'enabled' : 'disabled')
+    this.setEditorMode(this.vimMode ? 'command' : 'insert')
   }
 
   this.setEditorMode = function (mode) {

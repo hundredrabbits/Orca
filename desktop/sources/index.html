@@ -65,7 +65,7 @@
       terminal.controller.addSpacer('default', 'View', 'commander')
       terminal.controller.add("default","View","Toggle Commander",() => { terminal.commander.start() },"CmdOrCtrl+K")
       terminal.controller.add("default","View","Run Commander",() => { terminal.commander.run() },"Enter")
-      terminal.controller.add("default","View","Toggle Vim Mode",() => { terminal.commander.toggleVimMode(1) })
+      terminal.controller.add("default","View","Toggle Vim Mode",() => { terminal.commander.toggleVimMode() })
       terminal.controller.addSpacer('default', 'View', 'sizes')
       terminal.controller.add("default","View","Incr. Col",() => { terminal.modGrid(1,0) },"]")
       terminal.controller.add("default","View","Decr. Col",() => { terminal.modGrid(-1,0) },"[")
