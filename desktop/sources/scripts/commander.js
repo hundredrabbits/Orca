@@ -6,6 +6,7 @@ export default function Commander (terminal) {
   this.history = []
   this.historyIndex = 0
   this.editorMode = 'insert'
+  this.vimMode = 0
 
   // Library
 
@@ -126,10 +127,14 @@ export default function Commander (terminal) {
 
   // Events
 
+  this.toggleVimMode = function (val) {
+    this.vimMode = this.vimMode === 0 ? val : 0
+    if (this.vimMode === 0) { this.setEditorMode('insert') }
+  }
+
   this.setEditorMode = function (mode) {
     if (
       mode !== 'insert' &&
-      mode !== 'insertOnce' &&
       mode !== 'replace' &&
       mode !== 'replaceContinue' &&
       mode !== 'command'
@@ -140,73 +145,103 @@ export default function Commander (terminal) {
     this.editorMode = mode
   }
 
+  this.resetControl = function () {
+    terminal.toggleGuide(false)
+    terminal.commander.stop()
+    terminal.clear()
+    terminal.isPaused = false
+    terminal.cursor.reset()
+  }
+
   this.onKeyDown = function (event) {
-    switch (this.editorMode) {
-      case 'insert':
-        this.insertModeKeyMapping(event)
-        break
-      case 'replace':
-      case 'insertOnce':
-        this.insertModeKeyMapping(event)
-        if (event.keyCode >= 48 && event.keyCode <= 90) {
-          this.setEditorMode('command')
-        }
-        break
-      case 'replaceContinue':
-        this.insertModeKeyMapping(event)
-        if (event.keyCode >= 48 && event.keyCode <= 90) {
-          terminal.cursor.move(1, 0)
-        }
-        break
-      case 'command':
-        this.commandModeKeyMapping(event)
-        break
+    if (this.editorMode === 'insert') { this.insertModeKeyMapping(event); return }
+    if (this.editorMode === 'command') { this.commandModeKeyMapping(event); return }
+
+    if (this.editorMode === 'replace') {
+      this.insertModeKeyMapping(event)
+      if (event.keyCode >= 48 && event.keyCode <= 90) {
+        this.setEditorMode('command')
+      }
+      return
     }
   }
 
+  this.promptModeKeyMapping = function (event) {
+    const modifierOn = (event.metaKey || event.ctrlKey)
+
+    if (event.key === '[' && modifierOn) { this.stop(); event.preventDefault(); return }
+    if (event.key === 'Escape') { this.stop(); event.preventDefault(); return }
+
+    if (event.key === 'Backspace') { this.erase(); event.preventDefault(); return }
+
+    this.write(event.key)
+  }
+
   this.commandModeKeyMapping = function (event) {
+    if (this.isActive === true) { this.promptModeKeyMapping(event); return }
+
     const modifierOn = (event.metaKey || event.ctrlKey)
     const shiftOn = event.shiftKey
 
     // key: k
-    if (event.keyCode === 75) { this.onCursorUp(shiftOn, modifierOn, event.altKey); return }
+    if (event.keyCode === 75) { this.onCursorUp(shiftOn, modifierOn, event.altKey); event.preventDefault(); return }
     // key: j
-    if (event.keyCode === 74) { this.onCursorDown(shiftOn, modifierOn, event.altKey); return }
+    if (event.keyCode === 74) { this.onCursorDown(shiftOn, modifierOn, event.altKey); event.preventDefault(); return }
     // key: h
-    if (event.keyCode === 72) { this.onCursorLeft(shiftOn, modifierOn, event.altKey); return }
+    if (event.keyCode === 72) { this.onCursorLeft(shiftOn, modifierOn, event.altKey); event.preventDefault(); return }
     // key: l
-    if (event.keyCode === 76) { this.onCursorRight(shiftOn, modifierOn, event.altKey); return }
+    if (event.keyCode === 76) { this.onCursorRight(shiftOn, modifierOn, event.altKey); event.preventDefault(); return }
 
-    // key: I
-    if (shiftOn && event.keyCode === 73) { this.setEditorMode('insert'); return }
-    // key: i
-    if (event.keyCode === 73) { this.setEditorMode('insertOnce'); return }
-    // key: R
-    if (shiftOn && event.keyCode === 82) { this.setEditorMode('replaceContinue'); return }
-    // key: r
-    if (event.keyCode === 82) { this.setEditorMode('replace'); return }
-
+    // swap case
     if (event.key === '~') {
       const c = terminal.cursor.read()
-      if (!/^[a-zA-Z]$/.test(c)) {
-        return;
-      }
-      if (c.toUpperCase() === c) {
-        terminal.cursor.write(c.toLowerCase())
-      } else {
+      if (/^[a-z]$/.test(c)) {
         terminal.cursor.write(c.toUpperCase())
+      } else if (/^[A-Z]$/.test(c)) {
+        terminal.cursor.write(c.toLowerCase())
       }
       return
     }
 
-    if (modifierOn && event.key === '[') { terminal.toggleGuide(false); terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
+    if (event.key === '[' && modifierOn) { terminal.toggleGuide(false); terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
     if (event.key === 'Escape') { terminal.toggleGuide(false); terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
+
+    // Deletion
     if (event.key === 'Backspace') { terminal[this.isActive === true ? 'commander' : 'cursor'].erase(); event.preventDefault(); return }
+    // key: x
+    if (event.keyCode === 88) { terminal.cursor.erase(); return }
 
     // Undo/Redo
-    // key: z
-    if (event.keyCode === 90 && modifierOn && shiftOn) { terminal.history.redo(); event.preventDefault(); return }
-    if (event.keyCode === 90 && modifierOn) { terminal.history.undo(); event.preventDefault(); return }
+    // key: r
+    if (event.keyCode === 82 && modifierOn) { terminal.history.redo(); event.preventDefault(); return }
+    // key: u
+    if (event.keyCode === 85) { terminal.history.undo(); return }
+
+    // Copy/Paste
+    // key: y
+    if (event.keyCode === 89) { terminal.cursor.copy(); return }
+    // key: d
+    if (event.keyCode === 68) { terminal.cursor.cut(); return }
+    // key: P
+    if (event.keyCode === 80 && shiftOn) { terminal.cursor.paste(true); return }
+    // key: p
+    if (event.keyCode === 80) { terminal.cursor.paste(false); return }
+    // key: a
+    if (event.keyCode === 65) { terminal.cursor.selectAll(); return }
+
+    // key: Tab
+    if (event.keyCode === 9) { terminal.toggleHardmode(); event.preventDefault(); return }
+
+    // Toggle Command mode
+    if (event.key === ':') { this.start(); return }
+
+    // key: I
+    if (event.keyCode === 73 && shiftOn) { terminal.cursor.toggleMode(1); this.setEditorMode('insert'); return }
+    // key: i
+    if (event.keyCode === 73) { this.setEditorMode('insert'); return }
+    // key: r
+    if (event.keyCode === 82) { this.setEditorMode('replace'); return }
+
   }
 
   this.insertModeKeyMapping = function (event) {
@@ -220,7 +255,14 @@ export default function Commander (terminal) {
       return
     }
 
-    if (modifierOn && event.key === '[') { this.setEditorMode('command'); event.preventDefault(); return }
+    // Enter command mode if vim mode enabled
+    if (modifierOn && event.key === '[') {
+      if (!this.vimMode) { return }
+      terminal.cursor.reset()
+      this.setEditorMode('command')
+      event.preventDefault()
+      return
+    }
 
     // key: /
     if (event.keyCode === 191 && modifierOn) { terminal.cursor.comment(); event.preventDefault(); return }
