@@ -5,7 +5,7 @@ import Operator from '../operator.js'
 export default function OperatorU (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'u', passive)
 
-  this.name = 'Uclid'
+  this.name = 'uclid'
   this.info = 'Bangs on Euclidean rhythm'
 
   this.ports.haste.step = { x: -1, y: 0, clamp: { min: 0 }, default: '1' }

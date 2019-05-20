@@ -5,7 +5,7 @@ import Operator from '../operator.js'
 export default function OperatorZ (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'z', passive)
 
-  this.name = 'Lerp'
+  this.name = 'lerp'
   this.info = 'Transitions operand to input'
 
   this.ports.haste.rate = { x: -1, y: 0, default: '1' }

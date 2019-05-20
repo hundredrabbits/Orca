@@ -43,12 +43,12 @@ npm start
 - `R` **random**(*min* max): Outputs random value.
 - `S` **south**: Moves southward, or bangs.
 - `T` **track**(*key* *len* val): Reads eastward operand.
-- `U` **Uclid**(*step* max): Bangs on Euclidean rhythm.
+- `U` **uclid**(*step* max): Bangs on Euclidean rhythm.
 - `V` **variable**(*write* read): Reads and writes variable.
 - `W` **west**: Moves westward, or bangs.
 - `X` **write**(*x* *y* val): Writes operand with offset.
 - `Y` **jymper**(*val*): Outputs westward operand.
-- `Z` **Lerp**(*rate* target): Transitions operand to input.
+- `Z` **lerp**(*rate* target): Transitions operand to input.
 - `*` **bang**: Bangs neighboring operands.
 - `#` **comment**: Halts a line.
 
