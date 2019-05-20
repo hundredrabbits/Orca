@@ -8,6 +8,8 @@ export default function Commander (terminal) {
   this.editorMode = 'insert'
   this.vimMode = localStorage.getItem('vimMode') || 0;
 
+  if (this.vimMode) { this.editorMode = 'command' }
+
   // Library
 
   this.passives = {
