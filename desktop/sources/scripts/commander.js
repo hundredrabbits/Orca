@@ -6,7 +6,7 @@ export default function Commander (terminal) {
   this.history = []
   this.historyIndex = 0
   this.editorMode = 'insert'
-  this.vimMode = 0
+  this.vimMode = localStorage.getItem('vimMode') || 0;
 
   // Library
 
@@ -129,6 +129,7 @@ export default function Commander (terminal) {
 
   this.toggleVimMode = function (val) {
     this.vimMode = this.vimMode === 0 ? val : 0
+    localStorage.setItem(this.vimMode)
     if (this.vimMode === 0) { this.setEditorMode('insert') }
   }
 
