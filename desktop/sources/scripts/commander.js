@@ -129,7 +129,7 @@ export default function Commander (terminal) {
 
   this.toggleVimMode = function (val) {
     this.vimMode = this.vimMode === 0 ? val : 0
-    localStorage.setItem(this.vimMode)
+    localStorage.setItem('vimMode', this.vimMode)
     if (this.vimMode === 0) {
       this.setEditorMode('insert')
     } else {
