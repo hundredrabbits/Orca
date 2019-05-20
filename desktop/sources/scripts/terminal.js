@@ -297,8 +297,8 @@ export default function Terminal () {
       const frame = this.orca.h - 4
       const x = (Math.floor(parseInt(id) / frame) * 32) + 2
       const y = (parseInt(id) % frame) + 2
-      this.write(text, x + 2, y, 99, 10)
       this.write(key, x, y, 99, 3)
+      this.write(text, x + 2, y, 99, 10)
     }
   }
 

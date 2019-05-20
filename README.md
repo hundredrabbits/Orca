@@ -155,9 +155,10 @@ The midi operator interprets any letter above the chromatic scale as a transpose
 
 ## Companion Applications
 
-- [PILOT](https://github.com/hundredrabbits/pilot), a companion synth tool.
-- [AIOI](https://github.com/MAKIO135/aioi), a companion to send complex OSC messages.
-- [ESTRA](https://github.com/kyleaedwards/estra), a companion sampler tool.
+- [Pilot](https://github.com/hundredrabbits/pilot), a companion synth tool.
+- [Aioi](https://github.com/MAKIO135/aioi), a companion to send complex OSC messages.
+- [Estra](https://github.com/kyleaedwards/estra), a companion sampler tool.
+- [Sonic Pi](https://in-thread.sonic-pi.net/t/using-orca-to-control-sonic-pi-with-osc/2381/), a livecoding environment.
 
 ## Tutorials
 
