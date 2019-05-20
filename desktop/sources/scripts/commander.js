@@ -257,11 +257,17 @@ export default function Commander (terminal) {
     }
 
     // Enter command mode if vim mode enabled
-    if (modifierOn && event.key === '[') {
-      if (!this.vimMode) { return }
+    if ((modifierOn && event.key === '[') || event.key === 'Escape') {
       terminal.cursor.reset()
-      this.setEditorMode('command')
+      terminal.toggleGuide(false)
+      terminal.commander.stop()
+      terminal.isPaused = false
       event.preventDefault()
+
+      // This causes a flicker so problematic to do every time escape
+      // is pressed if using vim mode. Possibly need another key to clear
+      if (!this.vimMode) { terminal.clear(); return }
+      this.setEditorMode('command')
       return
     }
 
@@ -301,7 +307,6 @@ export default function Commander (terminal) {
     if (event.key === ' ' && terminal.cursor.mode === 0) { terminal.clock.togglePlay(); event.preventDefault(); return }
     if (event.key === ' ' && terminal.cursor.mode === 1) { terminal.cursor.move(1, 0); event.preventDefault(); return }
 
-    if (event.key === 'Escape') { terminal.toggleGuide(false); terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }
     if (event.key === 'Backspace') { terminal[this.isActive === true ? 'commander' : 'cursor'].erase(); event.preventDefault(); return }
 
     if (event.key === ']') { terminal.modGrid(1, 0); event.preventDefault(); return }
