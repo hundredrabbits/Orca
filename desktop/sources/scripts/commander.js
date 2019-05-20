@@ -142,6 +142,7 @@ export default function Commander (terminal) {
       mode !== 'insert' &&
       mode !== 'replace' &&
       mode !== 'replaceContinue' &&
+      mode !== 'visual' &&
       mode !== 'command'
     ) {
       console.warn(`Unknown editor mode: ${mode}`)
@@ -161,6 +162,7 @@ export default function Commander (terminal) {
   this.onKeyDown = function (event) {
     if (this.editorMode === 'insert') { this.insertModeKeyMapping(event); return }
     if (this.editorMode === 'command') { this.commandModeKeyMapping(event); return }
+    if (this.editorMode === 'visual') { this.visualModeKeyMapping(event); return }
 
     if (this.editorMode === 'replace') {
       this.insertModeKeyMapping(event)
@@ -233,6 +235,8 @@ export default function Commander (terminal) {
     if (event.keyCode === 80) { terminal.cursor.paste(false); return }
     // key: a
     if (event.keyCode === 65) { terminal.cursor.selectAll(); return }
+    // key: v
+    if (event.keyCode === 86) { this.setEditorMode('visual'); return }
 
     // key: Tab
     if (event.keyCode === 9) { terminal.toggleHardmode(); event.preventDefault(); return }
@@ -246,6 +250,72 @@ export default function Commander (terminal) {
     if (event.keyCode === 73) { this.setEditorMode('insert'); return }
     // key: r
     if (event.keyCode === 82) { this.setEditorMode('replace'); return }
+
+  }
+
+  this.leaveVisualMode = function (newMode) {
+    terminal.cursor.reset()
+    this.setEditorMode(newMode)
+  }
+
+  this.visualModeKeyMapping = function (event) {
+    if (this.isActive === true) { this.promptModeKeyMapping(event); return }
+
+    const modifierOn = (event.metaKey || event.ctrlKey)
+    const shiftOn = event.shiftKey
+
+    // key: k
+    if (event.keyCode === 75) { this.onCursorUp(true, modifierOn, event.altKey); event.preventDefault(); return }
+    // key: j
+    if (event.keyCode === 74) { this.onCursorDown(true, modifierOn, event.altKey); event.preventDefault(); return }
+    // key: h
+    if (event.keyCode === 72) { this.onCursorLeft(true, modifierOn, event.altKey); event.preventDefault(); return }
+    // key: l
+    if (event.keyCode === 76) { this.onCursorRight(true, modifierOn, event.altKey); event.preventDefault(); return }
+
+    /*
+      // swap case
+      // swap case of everything selected?
+    */
+
+    if (event.key === '[' && modifierOn) { terminal.toggleGuide(false); terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; this.leaveVisualMode('command'); return }
+    if (event.key === 'Escape') { terminal.toggleGuide(false); terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; this.leaveVisualMode('command'); return }
+
+    // Deletion
+    if (event.key === 'Backspace') { terminal[this.isActive === true ? 'commander' : 'cursor'].erase(); this.leaveVisualMode('command'); event.preventDefault(); return }
+    // key: x
+    if (event.keyCode === 88) { terminal.cursor.erase(); this.leaveVisualMode('command'); return }
+
+    // Undo/Redo
+    // key: r
+    if (event.keyCode === 82 && modifierOn) { terminal.history.redo(); event.preventDefault(); return }
+    // key: u
+    if (event.keyCode === 85) { terminal.history.undo(); return }
+
+    // Copy/Paste
+    // key: y
+    if (event.keyCode === 89) { terminal.cursor.copy(); return }
+    // key: d
+    if (event.keyCode === 68) { terminal.cursor.cut(); this.leaveVisualMode('command'); return }
+    // key: P
+    if (event.keyCode === 80 && shiftOn) { terminal.cursor.paste(true); return }
+    // key: p
+    if (event.keyCode === 80) { terminal.cursor.paste(false); return }
+    // key: a
+    if (event.keyCode === 65) { terminal.cursor.selectAll(); return }
+
+    // key: Tab
+    if (event.keyCode === 9) { terminal.toggleHardmode(); event.preventDefault(); return }
+
+    // Toggle Command mode
+    if (event.key === ':') { this.start(); return }
+
+    // key: I
+    if (event.keyCode === 73 && shiftOn) { terminal.cursor.toggleMode(1); this.leaveVisualMode('insert'); return }
+    // key: i
+    if (event.keyCode === 73) { this.leaveVisualMode('insert'); return }
+    // key: r
+    if (event.keyCode === 82) { this.leaveVisualMode('replace'); return }
 
   }
 
