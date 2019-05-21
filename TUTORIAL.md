@@ -10,7 +10,7 @@ If this is your first time trying out **Orca**, watch this [introduction video](
 
 ## Pilot
 
-[Pilot](https://github.com/hundredrabbits/Pilot) is a minimalist synth software designed to work via UDP, and to quickly get started with Orca. Have a look at [pilot.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/software/pilot.orca) to see how it should be used. This **requires no setup**, as long as both applications are open, they should be able to communicate with each other. 
+[Pilot](https://github.com/hundredrabbits/Pilot) is a minimalist synth software designed to work via UDP(port `49161`), and to quickly get started with Orca. Have a look at [pilot.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/software/pilot.orca) to see how it should be used. This **requires no setup**, as long as both applications are open, they should be able to communicate with each other. 
 
 - Launch Orca.
 - Launch Pilot.
