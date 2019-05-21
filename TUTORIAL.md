@@ -13,9 +13,9 @@ If this is your first time trying out **Orca**, watch this [introduction video](
 [Pilot](https://github.com/hundredrabbits/Pilot) is a minimalist synth software designed to work via UDP, and to quickly get started with Orca. Have a look at [pilot.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/software/pilot.orca) to see how it should be used. This **requires no setup**, as long as both applications are open, they should be able to communicate with each other. 
 
 - Launch Orca & Pilot.
-- Make sure that Orca's UDP is pointing to port `49161`.
-- In Orca, bang something like `;03Cff` to [play a note](https://github.com/hundredrabbits/pilot#play).
-- In Orca, bang something like `;revff` to [add reverb](https://github.com/hundredrabbits/pilot#effects).
+- In Orca, make sure that UDP is pointing to port `49161`.
+- Bang something like `;03Cff` to [play a note](https://github.com/hundredrabbits/pilot#play).
+- Bang something like `;revff` to [add reverb](https://github.com/hundredrabbits/pilot#effects).
 
 ## Ableton Live
 
