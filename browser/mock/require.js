@@ -2,7 +2,7 @@ import * as fs from "./fs.js";
 import * as path from "./path.js";
 import * as osc from "./osc.js";
 import * as electron from "./electron.js";
-import * as dgram from "./dgram.js";
+import * as dgram from "https://unpkg.com/browser-dgram@latest/index.js";
 
 import Buffer from "./buffer.js";
 window.Buffer = Buffer;
