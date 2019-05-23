@@ -61,6 +61,7 @@ export default function Terminal () {
   this.run = function () {
     this.io.clear()
     this.clock.run()
+    this.source.run()
     this.orca.run()
     this.io.run()
     this.update()

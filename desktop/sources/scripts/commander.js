@@ -15,6 +15,15 @@ export default function Commander (terminal) {
       if (isColor(parts[1])) { terminal.theme.active.b_inv = '#' + parts[1] }
       if (isColor(parts[2])) { terminal.theme.active.b_high = '#' + parts[2] }
     },
+    'erase': (val, run) => { terminal.cursor.erase() },
+    'select': (val, run) => {
+      const rect = val.split(';')
+      const x = rect[0] ? parseInt(rect[0]) : terminal.cursor.x
+      const y = rect[1] ? parseInt(rect[1]) : terminal.cursor.y
+      const w = rect[2] ? parseInt(rect[2]) : terminal.cursor.w
+      const h = rect[3] ? parseInt(rect[3]) : terminal.cursor.h
+      terminal.cursor.select(x, y, w, h)
+    },
     'find': (val, run) => { terminal.cursor.find(val) },
     'move': (val, run) => {
       const pos = val.split(';')
@@ -45,10 +54,10 @@ export default function Commander (terminal) {
     'stop': (val, run) => { if (run) { terminal.clock.stop() } },
     'time': (val, run) => { terminal.clock.setFrame(parseInt(val)) },
     'write': (val, run) => {
-      const g = val.substr(0, 1)
-      const pos = val.substr(1).split(';')
-      const x = pos[0] ? parseInt(pos[0]) : terminal.cursor.x
-      const y = pos[1] ? parseInt(pos[1]) : terminal.cursor.y
+      const pos = val.split(';')
+      const g = pos[0].substr(0,1)
+      const x = pos[1] ? parseInt(pos[1]) : terminal.cursor.x
+      const y = pos[2] ? parseInt(pos[2]) : terminal.cursor.y
       if (!isNaN(x) && !isNaN(y) && g) {
         terminal.orca.write(x, y, g)
       }
@@ -95,6 +104,7 @@ export default function Commander (terminal) {
     const cmd = `${msg}`.split(':')[0].toLowerCase()
     const val = `${msg}`.substr(cmd.length + 1)
     if (!this.operations[cmd]) { console.warn(`Unknown message: ${msg}`); return }
+    console.info('Commander', msg)
     this.operations[cmd](val, true)
     this.stop()
   }
