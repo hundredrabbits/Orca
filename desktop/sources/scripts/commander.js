@@ -55,12 +55,12 @@ export default function Commander (terminal) {
     'time': (val, run) => { terminal.clock.setFrame(parseInt(val)) },
     'write': (val, run) => {
       const pos = val.split(';')
-      const g = pos[0].substr(0, 1)
+      const t = pos[0].split('')
       const x = pos[1] ? parseInt(pos[1]) : terminal.cursor.x
       const y = pos[2] ? parseInt(pos[2]) : terminal.cursor.y
-      if (!isNaN(x) && !isNaN(y) && g) {
+      if (!isNaN(x) && !isNaN(y) && t.length > 0) {
         terminal.cursor.select(x, y)
-        terminal.orca.write(x, y, g)
+        terminal.cursor.writeBlock([t])
       }
     }
   }

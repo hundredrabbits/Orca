@@ -73,8 +73,7 @@ export default function Cursor (terminal) {
     terminal.update()
   }
 
-  this.select = function (x, y, w, h) {
-    console.log(x, y, w, h)
+  this.select = function (x, y, w = this.w, h = this.h) {
     this.moveTo(x, y)
     this.scaleTo(w, h)
     terminal.update()
@@ -175,10 +174,10 @@ export default function Cursor (terminal) {
     if (!block || block.length === 0) { return }
     const rect = this.toRect()
     let _y = rect.y
-    for (const lineId in block) {
+    for (const x in block) {
       let _x = rect.x
-      for (const glyphId in block[lineId]) {
-        const glyph = block[lineId][glyphId]
+      for (const y in block[x]) {
+        const glyph = block[x][y]
         terminal.orca.write(_x, _y, overlap === true && glyph === '.' ? terminal.orca.glyphAt(_x, _y) : glyph)
         _x++
       }
