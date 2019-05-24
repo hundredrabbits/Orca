@@ -91,7 +91,7 @@ export default function Source (terminal) {
     this.load(fs.readFileSync(this.path, 'utf8'))
 
     // Look for queue
-    const queue = path.join(this.folder(), 'queue.orca')
+    const queue = path.join(this.folder(), this.name() + '.queue')
     if (fs.existsSync(queue)) {
       this.queue = fs.readFileSync(queue, 'utf8').split('\n')
       terminal.clock.resetFrame()
@@ -216,7 +216,7 @@ export default function Source (terminal) {
   }
 
   this.toString = function () {
-    return this.path ? this.name() : 'blank'
+    return this.path ? this.name() : 'unsaved'
   }
 
   function isDifferent (a, b) {

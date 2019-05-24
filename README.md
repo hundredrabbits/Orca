@@ -129,6 +129,8 @@ All commands have a shorthand equivalent to their first character, for example, 
 
 You can **quickly inject orca files** into the currently active file, by using the command-line prompt — Allowing you to navigate across multiple files like you would a project. Type `CmdOrCtrl+K` and the name of another `.orca` file, **located in the same folder** as the opened file, to paste it into the current patch.
 
+If a file a local file `.queue` is found, each line will be ran as a command when the line number corresponding to the frame value is reached. For example, if your working file is named `project.orca`, the file `project.queue` will be loaded automatically as the file opens. 
+
 ## Base36 Table
 
 Orca operates on a base of **36 increments**. Operators using numeric values will typically also operate on letters and convert them into values as per the following table. For instance `Dp` will bang every *24th frame*. 
