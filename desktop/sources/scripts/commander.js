@@ -9,6 +9,8 @@ export default function Commander (terminal) {
   this.operations = {
     'apm': (val, run) => { if (run) { terminal.clock.set(null, parseInt(val)) } },
     'bpm': (val, run) => { if (run) { terminal.clock.set(parseInt(val), parseInt(val), true) } },
+    'copy': (val, run) => { if (run) { terminal.cursor.copy() } },
+    'paste': (val, run) => { if (run) { terminal.cursor.paste(true) } },
     'color': (val, run) => {
       const parts = val.split(';')
       if (isColor(parts[0])) { terminal.theme.active.b_med = '#' + parts[0] }
