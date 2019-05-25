@@ -5,7 +5,7 @@ const osc = require('node-osc')
 export default function Osc (terminal) {
   this.stack = []
   this.port = null
-  this.options = { default: 49162, tidalCycles: 6010, sonicPi: 4559 }
+  this.options = { default: 49162, tidalCycles: 6010, sonicPi: 4559, superCollider: 57120 }
 
   this.start = function () {
     console.info('OSC Starting..')
