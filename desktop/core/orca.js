@@ -169,6 +169,10 @@ export default function Orca (terminal) {
     return this.variables[key]
   }
 
+  this.currentFrame = function () {
+    return this.f
+  }
+
   // Tools
 
   this.format = function () {

@@ -55,6 +55,7 @@ export default function Commander (terminal) {
     'run': (val, run) => { if (run) { terminal.run() } },
     'stop': (val, run) => { if (run) { terminal.clock.stop() } },
     'time': (val, run) => { terminal.clock.setFrame(parseInt(val)) },
+    'back': (val, run) => { terminal.clock.setFrame(terminal.orca.currentFrame() - parseInt(val)) },
     'write': (val, run) => {
       const pos = val.split(';')
       const t = pos[0].split('')
