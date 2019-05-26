@@ -2,6 +2,7 @@
 
 export default function Theme (_default) {
   const fs = require('fs')
+  const url = require('url')
   const themer = this
 
   this.active = _default
@@ -44,8 +45,7 @@ export default function Theme (_default) {
   }
 
   this.setImage = function (path) {
-    path = cleanPath(path)
-    document.body.style.backgroundImage = path && fs.existsSync(path) && document.body.style.backgroundImage !== `url(${path})` ? `url(${path})` : ''
+    document.body.style.backgroundImage = path && fs.existsSync(path) && document.body.style.backgroundImage !== `url(${url.pathToFileURL(path)})` ? `url(${url.pathToFileURL(path)})` : ''
   }
 
   function parse (any) {
@@ -131,11 +131,4 @@ export default function Theme (_default) {
     try { new DOMParser().parseFromString(text, 'text/xml'); return true } catch (error) { return false }
   }
 
-  function cleanPath(text) {
-    if (process.platform === 'win32' && text) {
-        return text.replace(/\\/g, '//')
-    } else {
-        return text
-    }
-  }
 }
