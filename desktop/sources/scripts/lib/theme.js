@@ -44,6 +44,7 @@ export default function Theme (_default) {
   }
 
   this.setImage = function (path) {
+    path = cleanPath(path)
     document.body.style.backgroundImage = path && fs.existsSync(path) && document.body.style.backgroundImage !== `url(${path})` ? `url(${path})` : ''
   }
 
@@ -128,5 +129,13 @@ export default function Theme (_default) {
 
   function isHtml (text) {
     try { new DOMParser().parseFromString(text, 'text/xml'); return true } catch (error) { return false }
+  }
+
+  function cleanPath(text) {
+    if (process.platform === 'win32' && text) {
+        return text.replace(/\\/g, '//')
+    } else {
+        return text
+    }
   }
 }
