@@ -12,7 +12,7 @@ import Controller from './lib/controller.js'
 import library from '../../core/library.js'
 
 export default function Terminal () {
-  this.version = 128
+  this.version = 129
   this.library = library
 
   this.orca = new Orca(this)
@@ -84,24 +84,6 @@ export default function Terminal () {
     this.grid.w = w
     this.grid.h = h
     this.update()
-  }
-
-  this.setSize = function (size) {
-    const win = require('electron').remote.getCurrentWindow()
-    const winSize = win.getSize()
-    const targetSize = [parseInt(size.w + 60), parseInt(size.h + 60 + this.tile.h)]
-
-    if (winSize[0] === targetSize[0] && winSize[1] === targetSize[1]) { return }
-
-    console.log(`Window Size: ${targetSize[0]}x${targetSize[1]}, from ${winSize[0]}x${winSize[1]}`)
-
-    win.setSize(targetSize[0], targetSize[1], false)
-    this.resize()
-  }
-
-  this.updateSize = function () {
-    console.log('Terminal', 'Update size')
-    this.setSize({ w: this.orca.w * this.tile.w, h: this.orca.h * this.tile.h })
   }
 
   this.toggleRetina = function () {
@@ -327,9 +309,20 @@ export default function Terminal () {
 
   // Resize tools
 
+  this.fit = function () {
+    const size = { w: (this.orca.w * this.tile.w) + 60, h: (this.orca.h * this.tile.h) + 60 + (2 * this.tile.h) }
+    const win = require('electron').remote.getCurrentWindow()
+    const winSize = win.getSize()
+    const current = { w: winSize[0], h: winSize[1] }
+    if (current.w === size.w && current.h === size.h) { console.warn('Terminal', 'No resize required.'); return }
+    console.log('Source', `Fit terminal for ${this.orca.w}x${this.orca.h}(${size.w}x${size.h})`)
+    win.setSize(size.w, size.h, false)
+    this.resize()
+  }
+
   this.resize = function (force = false) {
     const size = { w: window.innerWidth - 60, h: window.innerHeight - (60 + this.tile.h * 2) }
-    const tiles = { w: Math.floor(size.w / this.tile.w), h: Math.floor(size.h / this.tile.h) }
+    const tiles = { w: Math.ceil(size.w / this.tile.w), h: Math.ceil(size.h / this.tile.h) }
 
     if (this.orca.w === tiles.w && this.orca.h === tiles.h && force === false) { return }
 
@@ -347,8 +340,8 @@ export default function Terminal () {
 
     this.el.width = this.tile.w * this.orca.w * this.scale
     this.el.height = (this.tile.h + (this.tile.h / 5)) * this.orca.h * this.scale
-    this.el.style.width = `${parseInt(this.tile.w * this.orca.w)}px`
-    this.el.style.height = `${parseInt((this.tile.h + (this.tile.h / 5)) * this.orca.h)}px`
+    this.el.style.width = `${Math.ceil(this.tile.w * this.orca.w)}px`
+    this.el.style.height = `${Math.ceil((this.tile.h + (this.tile.h / 5)) * this.orca.h)}px`
 
     this.context.textBaseline = 'bottom'
     this.context.textAlign = 'center'

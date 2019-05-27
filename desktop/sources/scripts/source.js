@@ -113,7 +113,7 @@ export default function Source (terminal) {
     terminal.orca.load(w, h, s)
     terminal.history.reset()
     terminal.history.record(terminal.orca.s)
-    terminal.updateSize()
+    terminal.fit()
   }
 
   this.quit = function () {
