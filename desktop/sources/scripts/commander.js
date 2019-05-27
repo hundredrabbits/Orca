@@ -9,6 +9,8 @@ export default function Commander (terminal) {
   this.operations = {
     'apm': (val, run) => { if (run) { terminal.clock.set(null, parseInt(val)) } },
     'bpm': (val, run) => { if (run) { terminal.clock.set(parseInt(val), parseInt(val), true) } },
+    'rewind': (val, run) => { terminal.clock.setFrame(terminal.orca.f - parseInt(val)) },
+    'skip': (val, run) => { terminal.clock.setFrame(terminal.orca.f + parseInt(val)) },
     'copy': (val, run) => { if (run) { terminal.cursor.copy() } },
     'paste': (val, run) => { if (run) { terminal.cursor.paste(true) } },
     'color': (val, run) => {
@@ -32,7 +34,7 @@ export default function Commander (terminal) {
       terminal.cursor.moveTo(parseInt(pos[0]), parseInt(pos[1]))
     },
     'graphic': (val, run) => {
-      terminal.theme.setImage(terminal.source.locate(val + '.jpg'))
+      terminal.theme.setImage(terminal.source.locate(val + '.gif'))
     },
     'inject': (val, run) => {
       terminal.source.inject(val, run)
@@ -55,7 +57,6 @@ export default function Commander (terminal) {
     'run': (val, run) => { if (run) { terminal.run() } },
     'stop': (val, run) => { if (run) { terminal.clock.stop() } },
     'time': (val, run) => { terminal.clock.setFrame(parseInt(val)) },
-    'back': (val, run) => { terminal.clock.setFrame(terminal.orca.currentFrame() - parseInt(val)) },
     'write': (val, run) => {
       const pos = val.split(';')
       const t = pos[0].split('')
