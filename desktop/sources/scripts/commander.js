@@ -34,7 +34,7 @@ export default function Commander (terminal) {
       terminal.cursor.moveTo(parseInt(pos[0]), parseInt(pos[1]))
     },
     'graphic': (val, run) => {
-      terminal.theme.setImage(terminal.source.locate(val + '.gif'))
+      terminal.theme.setImage(terminal.source.locate(val + '.jpg'))
     },
     'inject': (val, run) => {
       terminal.source.inject(val, run)
