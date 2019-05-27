@@ -48,6 +48,12 @@ export default function Theme (_default) {
     document.body.style.backgroundImage = path && fs.existsSync(path) && document.body.style.backgroundImage !== `url(${url.pathToFileURL(path)})` ? `url(${url.pathToFileURL(path)})` : ''
   }
 
+  this.set = function (key, value) {
+    if (!this.active[key]) { console.warn('Theme', 'Unknown key ' + key); return }
+    if (!isColor(value)) { console.warn('Theme', 'Not a color ' + value); return }
+    this.active[key] = value
+  }
+
   function parse (any) {
     if (any && any.background) { return any } else if (any && any.data) { return any.data } else if (any && isJson(any)) { return JSON.parse(any) } else if (any && isHtml(any)) { return extract(any) }
     return null
@@ -127,8 +133,11 @@ export default function Theme (_default) {
     try { JSON.parse(text); return true } catch (error) { return false }
   }
 
+  function isColor (str) {
+    return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test('#' + str)
+  }
+
   function isHtml (text) {
     try { new DOMParser().parseFromString(text, 'text/xml'); return true } catch (error) { return false }
   }
-
 }

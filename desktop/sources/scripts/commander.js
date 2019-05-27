@@ -6,72 +6,35 @@ export default function Commander (terminal) {
 
   // Library
 
-  this.operations = {
-    'apm': (val, run) => { if (run) { terminal.clock.set(null, parseInt(val)) } },
-    'bpm': (val, run) => { if (run) { terminal.clock.set(parseInt(val), parseInt(val), true) } },
-    'rewind': (val, run) => { terminal.clock.setFrame(terminal.orca.f - parseInt(val)) },
-    'skip': (val, run) => { terminal.clock.setFrame(terminal.orca.f + parseInt(val)) },
-    'copy': (val, run) => { if (run) { terminal.cursor.copy() } },
-    'paste': (val, run) => { if (run) { terminal.cursor.paste(true) } },
-    'color': (val, run) => {
-      const parts = val.split(';')
-      if (isColor(parts[0])) { terminal.theme.active.b_med = '#' + parts[0] }
-      if (isColor(parts[1])) { terminal.theme.active.b_inv = '#' + parts[1] }
-      if (isColor(parts[2])) { terminal.theme.active.b_high = '#' + parts[2] }
-    },
-    'erase': (val, run) => { terminal.cursor.erase() },
-    'select': (val, run) => {
-      const rect = val.split(';')
-      const x = rect[0] ? parseInt(rect[0]) : terminal.cursor.x
-      const y = rect[1] ? parseInt(rect[1]) : terminal.cursor.y
-      const w = rect[2] ? parseInt(rect[2]) : terminal.cursor.w
-      const h = rect[3] ? parseInt(rect[3]) : terminal.cursor.h
-      terminal.cursor.select(x, y, w, h)
-    },
-    'find': (val, run) => { terminal.cursor.find(val) },
-    'move': (val, run) => {
-      const pos = val.split(';')
-      terminal.cursor.moveTo(parseInt(pos[0]), parseInt(pos[1]))
-    },
-    'graphic': (val, run) => {
-      terminal.theme.setImage(terminal.source.locate(val + '.jpg'))
-    },
-    'inject': (val, run) => {
-      terminal.source.inject(val, run)
-    },
-    'play': (val, run) => { terminal.clock.play() },
-    'rot': (val, run) => {
-      const cols = terminal.cursor.getBlock()
-      for (const y in cols) {
-        for (const x in cols[y]) {
-          if (!cols[y][x] || cols[y][x] === '.') { continue }
-          const isUC = cols[y][x] === cols[y][x].toUpperCase()
-          cols[y][x] = terminal.orca.keyOf(parseInt(val) + terminal.orca.valueOf(cols[y][x]))
-          if (isUC) {
-            cols[y][x] = `${cols[y][x]}`.toUpperCase()
-          }
-        }
-      }
-      terminal.cursor.writeBlock(cols)
-    },
-    'run': (val, run) => { if (run) { terminal.run() } },
-    'stop': (val, run) => { if (run) { terminal.clock.stop() } },
-    'time': (val, run) => { terminal.clock.setFrame(parseInt(val)) },
-    'write': (val, run) => {
-      const pos = val.split(';')
-      const t = pos[0].split('')
-      const x = pos[1] ? parseInt(pos[1]) : terminal.cursor.x
-      const y = pos[2] ? parseInt(pos[2]) : terminal.cursor.y
-      if (!isNaN(x) && !isNaN(y) && t.length > 0) {
-        terminal.cursor.select(x, y, t.length)
-        terminal.cursor.writeBlock([t])
-      }
-    }
+  this.passives = {
+    'find': (val) => { terminal.cursor.find(val) },
+    'select': (val) => { const rect = val.split(';'); terminal.cursor.select(rect[0], rect[1], rect[2], rect[3]) },
+    'inject': (val) => { terminal.source.inject(val, false) },
+    'rot': (val) => { terminal.cursor.rotate(parseInt(val)) },
+    'write': (val) => { const parts = val.split(';'); terminal.cursor.select(parts[1], parts[2], parts[0].length) }
+  }
+
+  this.actives = {
+    'copy': (val) => { terminal.cursor.copy() },
+    'paste': (val) => { terminal.cursor.paste(true) },
+    'erase': (val) => { terminal.cursor.erase() },
+    'play': (val) => { terminal.clock.play() },
+    'stop': (val) => { terminal.clock.stop() },
+    'run': (val) => { terminal.run() },
+    'apm': (val) => { terminal.clock.set(null, parseInt(val)) },
+    'bpm': (val) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
+    'time': (val) => { terminal.clock.setFrame(parseInt(val)) },
+    'rewind': (val) => { terminal.clock.setFrame(terminal.orca.f - parseInt(val)) },
+    'skip': (val) => { terminal.clock.setFrame(terminal.orca.f + parseInt(val)) },
+    'color': (val) => { const parts = val.split(';'); terminal.theme.set('b_med', parts[0]); terminal.theme.set('b_inv', parts[1]); terminal.theme.set('b_high', parts[2]) },
+    'graphic': (val) => { terminal.theme.setImage(terminal.source.locate(val + '.jpg')) },
+    'inject': (val) => { terminal.source.inject(val, true) },
+    'write': (val) => { const parts = val.split(';') ; terminal.cursor.select(parts[1], parts[2], parts[0].length) ; terminal.cursor.writeBlock([parts[0].split('')]) }
   }
 
   // Make shorthands
-  for (const id in this.operations) {
-    this.operations[id.substr(0, 1)] = this.operations[id]
+  for (const id in this.actives) {
+    this.actives[id.substr(0, 2)] = this.actives[id]
   }
 
   // Begin
@@ -108,17 +71,17 @@ export default function Commander (terminal) {
   this.trigger = function (msg = this.query) {
     const cmd = `${msg}`.split(':')[0].toLowerCase()
     const val = `${msg}`.substr(cmd.length + 1)
-    if (!this.operations[cmd]) { console.warn(`Unknown message: ${msg}`); return }
+    if (!this.actives[cmd]) { console.warn(`Unknown message: ${msg}`); this.stop(); return }
     console.info('Commander', msg)
-    this.operations[cmd](val, true)
+    this.actives[cmd](val, true)
     this.stop()
   }
 
   this.preview = function (msg = this.query) {
     const cmd = `${msg}`.split(':')[0].toLowerCase()
     const val = `${msg}`.substr(cmd.length + 1)
-    if (!this.operations[cmd]) { console.warn(`Unknown message: ${msg}`); return }
-    this.operations[cmd](val, false)
+    if (!this.passives[cmd]) { return }
+    this.passives[cmd](val, false)
   }
 
   // Events
@@ -230,9 +193,5 @@ export default function Commander (terminal) {
 
   this.toString = function () {
     return `${this.query}`
-  }
-
-  function isColor (str) {
-    return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test('#' + str)
   }
 }

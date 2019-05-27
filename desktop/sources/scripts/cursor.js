@@ -12,36 +12,36 @@ export default function Cursor (terminal) {
 
   this.move = function (x, y) {
     if (isNaN(x) || isNaN(y)) { return }
-    this.x = clamp(this.x + x, 0, terminal.orca.w - 1)
-    this.y = clamp(this.y - y, 0, terminal.orca.h - 1)
+    this.x = clamp(this.x + parseInt(x), 0, terminal.orca.w - 1)
+    this.y = clamp(this.y - parseInt(y), 0, terminal.orca.h - 1)
     terminal.update()
   }
 
   this.moveTo = function (x, y) {
-    if (isNaN(x) || isNaN(y)) { return }
-    this.x = clamp(x, 0, terminal.orca.w - 1)
-    this.y = clamp(y, 0, terminal.orca.h - 1)
+    if (!x || !y || isNaN(x) || isNaN(y)) { return }
+    this.x = clamp(parseInt(x), 0, terminal.orca.w - 1)
+    this.y = clamp(parseInt(y), 0, terminal.orca.h - 1)
     terminal.update()
   }
 
   this.scale = function (x, y) {
     if (isNaN(x) || isNaN(y)) { return }
-    this.w = clamp(this.w + x, 1, terminal.orca.w - this.x)
-    this.h = clamp(this.h - y, 1, terminal.orca.h - this.y)
+    this.w = clamp(this.w + parseInt(x), 1, terminal.orca.w - this.x)
+    this.h = clamp(this.h - parseInt(y), 1, terminal.orca.h - this.y)
     terminal.update()
   }
 
   this.scaleTo = function (w, h) {
     if (isNaN(w) || isNaN(h)) { return }
-    this.w = clamp(w, 0, terminal.orca.w - 1)
-    this.h = clamp(h, 0, terminal.orca.h - 1)
+    this.w = clamp(parseInt(w), 0, terminal.orca.w - 1)
+    this.h = clamp(parseInt(h), 0, terminal.orca.h - 1)
     terminal.update()
   }
 
   this.resize = function (w, h) {
     if (isNaN(w) || isNaN(h)) { return }
-    this.w = clamp(w, 1, terminal.orca.w - this.x)
-    this.h = clamp(h, 1, terminal.orca.h - this.y)
+    this.w = clamp(parseInt(w), 1, terminal.orca.w - this.x)
+    this.h = clamp(parseInt(h), 1, terminal.orca.h - this.y)
     terminal.update()
   }
 
@@ -51,6 +51,21 @@ export default function Cursor (terminal) {
     this.cut()
     this.move(x, y)
     this.paste()
+  }
+
+  this.selectAll = function () {
+    this.x = 0
+    this.y = 0
+    this.w = terminal.orca.w
+    this.h = terminal.orca.h
+    this.mode = 0
+    terminal.update()
+  }
+
+  this.select = function (x = this.x, y = this.y, w = this.w, h = this.h) {
+    this.moveTo(x, y)
+    this.scaleTo(w, h)
+    terminal.update()
   }
 
   this.reset = function (pos = false) {
@@ -64,29 +79,13 @@ export default function Cursor (terminal) {
     this.mode = 0
   }
 
-  this.selectAll = function () {
-    this.x = 0
-    this.y = 0
-    this.w = terminal.orca.w
-    this.h = terminal.orca.h
-    this.mode = 0
-    terminal.update()
-  }
-
-  this.select = function (x, y, w = this.w, h = this.h) {
-    this.moveTo(x, y)
-    this.scaleTo(w, h)
-    terminal.update()
-  }
-
   this.copy = function () {
     const block = this.getBlock()
     var rows = []
     for (var i = 0; i < block.length; i++) {
       rows.push(block[i].join(''))
     }
-    const result = rows.join('\n')
-    clipboard.writeText(result)
+    clipboard.writeText(rows.join('\n'))
   }
 
   this.cut = function () {
@@ -113,6 +112,20 @@ export default function Cursor (terminal) {
     this.eraseBlock(this.x, this.y, this.w, this.h)
     if (this.mode === 1) { this.move(-1, 0) }
     terminal.history.record(terminal.orca.s)
+  }
+
+  this.rotate = function (rate = 1) {
+    if (isNaN(rate)) { return }
+    const cols = terminal.cursor.getBlock()
+    for (const y in cols) {
+      for (const x in cols[y]) {
+        if (!cols[y][x] || cols[y][x] === '.') { continue }
+        const isUC = cols[y][x] === cols[y][x].toUpperCase()
+        const value = terminal.orca.valueOf(cols[y][x])
+        cols[y][x] = terminal.orca.keyOf(parseInt(rate) + value, isUC)
+      }
+    }
+    terminal.cursor.writeBlock(cols)
   }
 
   this.find = function (str) {

@@ -133,8 +133,8 @@ export default function Orca (terminal) {
     return g === '.' || !!library[`${g}`.toLowerCase()]
   }
 
-  this.keyOf = function (val) {
-    return this.keys[val % 36]
+  this.keyOf = function (val, uc = false) {
+    return uc === true ? this.keys[val % 36].toUpperCase() : this.keys[val % 36]
   }
 
   this.valueOf = function (g) {

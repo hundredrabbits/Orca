@@ -110,20 +110,22 @@ Some of Orca's features can be **controlled externally** via UDP though port `49
 
 ### Commands
 
-All commands have a shorthand equivalent to their first character, for example, `write` can also be called using `w`.
+All commands have a shorthand equivalent to their first two characters, for example, `write` can also be called using `wr`.
 
 - `play` Plays program.
 - `stop` Stops program.
 - `run` Runs current frame.
-- `time:0` Sets the frame value to `0`.
-- `find:aV` Sends cursor to string `aV`.
-- `move:3;4` Move cursor to position `3,4`.
 - `bpm:140` Sets bpm speed to `140`.
 - `apm:160` Animates bpm speed to `160`.
-- `inject:pattern` Inject the local file `pattern.orca`.
-- `graphic:123` Set the background to the local graphic `123.jpg`.
-- `write:H12;34` Writes glyph `H`, at `12,34`.
+- `time:0` Sets the frame value to `0`.
+- `skip:2` Adds `2`, to the current frame value.
+- `rewind:2` Removes `2`, to the current frame value.
 - `color:f00;0f0;00f` Colorizes the interface.
+- `graphic:123` Set the background to the local graphic `123.jpg`.
+- `find:aV` Sends cursor to string `aV`.
+- `select:3;4;5;6` Move cursor to position `3,4`, and select size `5:6`.
+- `inject:pattern` Inject the local file `pattern.orca`.
+- `write:H12;34` Writes glyph `H`, at `12,34`.
 
 ### Project Mode
 
