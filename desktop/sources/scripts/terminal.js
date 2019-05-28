@@ -316,7 +316,7 @@ export default function Terminal () {
     const current = { w: winSize[0], h: winSize[1] }
     if (current.w === size.w && current.h === size.h) { console.warn('Terminal', 'No resize required.'); return }
     console.log('Source', `Fit terminal for ${this.orca.w}x${this.orca.h}(${size.w}x${size.h})`)
-    win.setSize(size.w, size.h, false)
+    win.setSize(parseInt(size.w), parseInt(size.h), false)
     this.resize()
   }
 

@@ -104,6 +104,14 @@ CA1.
 .dAz
 ```
 
+### Not Null
+
+```
+cYc
+J.J
+cFc
+```
+
 ### Hold Bang
 
 ```
