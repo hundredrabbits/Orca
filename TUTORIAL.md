@@ -84,6 +84,8 @@ Orca operates linearly from the top-left, to the bottom-right, operators are exe
 
 ### Modulo
 
+Will output the modulo of `6 % 4`.
+
 ```
 1X.
 6I4
@@ -91,12 +93,16 @@ Orca operates linearly from the top-left, to the bottom-right, operators are exe
 
 ### Uppercase
 
+Will output uppercase `C`.
+
 ```
 cA1.
 .dAZ
 ```
 
 ### Lowercase
+
+Will output lowercase `C`.
 
 ```
 H... 
@@ -106,10 +112,21 @@ CA1.
 
 ### Not Null
 
+Will bang if not null.
+
 ```
 cYc
 J.J
 cFc
+```
+
+### Substract
+
+Will substract `8 - 3`.
+
+```
+.3Mz
+8Ax.
 ```
 
 ### Hold Bang
