@@ -33,13 +33,13 @@ export default function Udp (terminal) {
   }
 
   this.select = function (port = this.options.default) {
-    if (port < 1000) { console.warn('Unavailable port'); return }
-    this.port = port
+    if (isNaN(port) || port < 1000) { console.warn('Unavailable port'); return }
+    console.info('OSC', `Selected port: ${port}`)
+    this.port = parseInt(port)
     this.update()
   }
 
   this.update = function () {
-    console.log(`UDP Port: ${this.port}`)
     terminal.controller.clearCat('default', 'UDP')
     for (const id in this.options) {
       terminal.controller.add('default', 'UDP', `${id.charAt(0).toUpperCase() + id.substr(1)}(${this.options[id]}) ${this.port === this.options[id] ? ' — Active' : ''}`, () => { terminal.io.udp.select(this.options[id]) }, '')

@@ -3,6 +3,8 @@
 export default function Commander (terminal) {
   this.isActive = false
   this.query = ''
+  this.history = []
+  this.historyIndex = 0
 
   // Library
 
@@ -15,6 +17,8 @@ export default function Commander (terminal) {
   }
 
   this.actives = {
+    'osc': (val) => { terminal.io.osc.select(parseInt(val)) },
+    'udp': (val) => { terminal.io.udp.select(parseInt(val)) },
     'copy': (val) => { terminal.cursor.copy() },
     'paste': (val) => { terminal.cursor.paste(true) },
     'erase': (val) => { terminal.cursor.erase() },
@@ -29,7 +33,7 @@ export default function Commander (terminal) {
     'color': (val) => { const parts = val.split(';'); terminal.theme.set('b_med', parts[0]); terminal.theme.set('b_inv', parts[1]); terminal.theme.set('b_high', parts[2]) },
     'graphic': (val) => { terminal.theme.setImage(terminal.source.locate(val + '.jpg')) },
     'inject': (val) => { terminal.source.inject(val, true) },
-    'write': (val) => { const parts = val.split(';') ; terminal.cursor.select(parts[1], parts[2], parts[0].length) ; terminal.cursor.writeBlock([parts[0].split('')]) }
+    'write': (val) => { const parts = val.split(';'); terminal.cursor.select(parts[1], parts[2], parts[0].length); terminal.cursor.writeBlock([parts[0].split('')]) }
   }
 
   // Make shorthands
@@ -48,6 +52,7 @@ export default function Commander (terminal) {
   this.stop = function () {
     this.isActive = false
     this.query = ''
+    this.historyIndex = this.history.length
     terminal.update()
   }
 
@@ -74,6 +79,8 @@ export default function Commander (terminal) {
     if (!this.actives[cmd]) { console.warn(`Unknown message: ${msg}`); this.stop(); return }
     console.info('Commander', msg)
     this.actives[cmd](val, true)
+    this.history.push(msg)
+    this.historyIndex = this.history.length
     this.stop()
   }
 
@@ -137,6 +144,12 @@ export default function Commander (terminal) {
   }
 
   this.onArrowUp = function (mod = false, skip = false, drag = false) {
+    // Navigate History
+    if (this.isActive === true) {
+      this.historyIndex -= this.historyIndex > 0 ? 1 : 0
+      this.start(this.history[this.historyIndex])
+      return
+    }
     const leap = skip ? terminal.grid.h : 1
     terminal.toggleGuide(false)
     if (drag) {
@@ -149,6 +162,12 @@ export default function Commander (terminal) {
   }
 
   this.onArrowDown = function (mod = false, skip = false, drag = false) {
+    // Navigate History
+    if (this.isActive === true) {
+      this.historyIndex += this.historyIndex < this.history.length ? 1 : 0
+      this.start(this.history[this.historyIndex])
+      return
+    }
     const leap = skip ? terminal.grid.h : 1
     terminal.toggleGuide(false)
     if (drag) {
