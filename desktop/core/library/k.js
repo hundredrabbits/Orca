@@ -8,7 +8,7 @@ export default function OperatorK (orca, x, y, passive) {
   this.name = 'konkat'
   this.info = 'Reads multiple variables'
 
-  this.ports.len = { x: -1, y: 0, unlocked: true, clamp: { min: 1 } }
+  this.ports.len = { x: -1, y: 0, clamp: { min: 1 } }
 
   this.operation = function (force = false) {
     this.len = this.listen(this.ports.len, true)

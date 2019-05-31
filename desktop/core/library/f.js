@@ -8,7 +8,7 @@ export default function OperatorF (orca, x, y, passive) {
   this.name = 'if'
   this.info = 'Bangs if inputs are equal'
 
-  this.ports.a = { x: -1, y: 0, unlocked: true }
+  this.ports.a = { x: -1, y: 0 }
   this.ports.b = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1, bang: true }
 

@@ -8,7 +8,7 @@ export default function OperatorM (orca, x, y, passive) {
   this.name = 'multiply'
   this.info = 'Outputs product of inputs'
 
-  this.ports.a = { x: -1, y: 0, unlocked: true }
+  this.ports.a = { x: -1, y: 0 }
   this.ports.b = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1, sensitive: true }
 

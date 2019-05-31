@@ -8,9 +8,9 @@ export default function OperatorG (orca, x, y, passive) {
   this.name = 'generator'
   this.info = 'Writes operands with offset'
 
-  this.ports.x = { x: -3, y: 0, unlocked: true }
-  this.ports.y = { x: -2, y: 0, unlocked: true }
-  this.ports.len = { x: -1, y: 0, clamp: { min: 1 }, unlocked: true }
+  this.ports.x = { x: -3, y: 0 }
+  this.ports.y = { x: -2, y: 0 }
+  this.ports.len = { x: -1, y: 0, clamp: { min: 1 } }
   this.ports.output = { x: 0, y: 1 }
 
   this.operation = function (force = false) {

@@ -111,7 +111,7 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
     if (!this.passive) { return a }
     for (const id in this.ports) {
       const port = this.ports[id]
-      a.push([this.x + port.x, this.y + port.y, port.unlocked === true ? 1 : 2, `${this.glyph}-${id}`])
+      a.push([this.x + port.x, this.y + port.y, port.x < 0 || port.y < 0 ? 1 : 2, `${this.glyph}-${id}`])
     }
     if (this.ports.output) {
       const port = this.ports.output

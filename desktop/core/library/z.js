@@ -8,7 +8,7 @@ export default function OperatorZ (orca, x, y, passive) {
   this.name = 'lerp'
   this.info = 'Transitions operand to target'
 
-  this.ports.rate = { x: -1, y: 0, unlocked: true, default: '1' }
+  this.ports.rate = { x: -1, y: 0, default: '1' }
   this.ports.target = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1, sensitive: true, reader: true }
 

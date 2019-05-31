@@ -8,7 +8,7 @@ export default function OperatorV (orca, x, y, passive) {
   this.name = 'variable'
   this.info = 'Reads and writes variable'
 
-  this.ports.write = { x: -1, y: 0, unlocked: true }
+  this.ports.write = { x: -1, y: 0 }
   this.ports.read = { x: 1, y: 0 }
 
   this.operation = function (force = false) {

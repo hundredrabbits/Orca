@@ -8,7 +8,7 @@ export default function OperatorD (orca, x, y, passive) {
   this.name = 'delay'
   this.info = 'Bangs on modulo of frame'
 
-  this.ports.rate = { x: -1, y: 0, unlocked: true, clamp: { min: 1 } }
+  this.ports.rate = { x: -1, y: 0, clamp: { min: 1 } }
   this.ports.mod = { x: 1, y: 0, default: '8' }
   this.ports.output = { x: 0, y: 1, bang: true }
 

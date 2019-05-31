@@ -8,7 +8,7 @@ export default function OperatorI (orca, x, y, passive) {
   this.name = 'increment'
   this.info = 'Increments southward operand'
 
-  this.ports.step = { x: -1, y: 0, default: '1', unlocked: true }
+  this.ports.step = { x: -1, y: 0, default: '1' }
   this.ports.mod = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1, sensitive: true, reader: true }
 

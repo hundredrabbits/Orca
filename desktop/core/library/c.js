@@ -8,7 +8,7 @@ export default function OperatorC (orca, x, y, passive) {
   this.name = 'clock'
   this.info = 'Outputs modulo of frame'
 
-  this.ports.rate = { x: -1, y: 0, unlocked: true, clamp: { min: 1 } }
+  this.ports.rate = { x: -1, y: 0, clamp: { min: 1 } }
   this.ports.mod = { x: 1, y: 0, default: '8' }
   this.ports.output = { x: 0, y: 1, sensitive: true }
 

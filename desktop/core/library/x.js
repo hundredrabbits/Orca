@@ -8,8 +8,8 @@ export default function OperatorX (orca, x, y, passive) {
   this.name = 'write'
   this.info = 'Writes operand with offset'
 
-  this.ports.x = { x: -2, y: 0, unlocked: true }
-  this.ports.y = { x: -1, y: 0, unlocked: true }
+  this.ports.x = { x: -2, y: 0 }
+  this.ports.y = { x: -1, y: 0 }
   this.ports.val = { x: 1, y: 0 }
 
   this.operation = function (force = false) {

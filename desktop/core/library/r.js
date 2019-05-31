@@ -8,7 +8,7 @@ export default function OperatorR (orca, x, y, passive) {
   this.name = 'random'
   this.info = 'Outputs random value'
 
-  this.ports.min = { x: -1, y: 0, unlocked: true }
+  this.ports.min = { x: -1, y: 0 }
   this.ports.max = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1, sensitive: true }
 

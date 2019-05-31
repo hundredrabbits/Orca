@@ -8,7 +8,7 @@ export default function OperatorJ (orca, x, y, passive) {
   this.name = 'jumper'
   this.info = 'Outputs northward operand'
 
-  this.ports.val = { x: 0, y: -1, unlocked: true }
+  this.ports.val = { x: 0, y: -1 }
   this.ports.output = { x: 0, y: 1 }
 
   this.operation = function (force = false) {
