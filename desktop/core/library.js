@@ -35,6 +35,7 @@ import _cc from './library/_cc.js'
 import _udp from './library/_udp.js'
 import _osc from './library/_osc.js'
 import _keys from './library/_keys.js'
+import _midi_degrees from './library/_midi_degrees.js'
 
 export default {
   '0': _null,
@@ -80,5 +81,6 @@ export default {
   '!': _cc,
   ';': _udp,
   '=': _osc,
-  '&': _keys
+  '&': _keys,
+  '_': _midi_degrees
 }
