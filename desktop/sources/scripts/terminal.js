@@ -376,7 +376,7 @@ export default function Terminal () {
     const operators = Object.keys(library).filter((val) => { return isNaN(val) })
     for (const id in operators) {
       const oper = new this.library[operators[id]]()
-      const ports = (oper.ports.haste ? Object.keys(oper.ports.haste).reduce((acc, key, val) => { return acc + ' *' + key + '*' }, '') : '') + (oper.ports.input ? Object.keys(oper.ports.input).reduce((acc, key, val) => { return acc + ' ' + key }, '') : '')
+      const ports = oper.ports.input ? Object.keys(oper.ports.input).reduce((acc, key, val) => { return acc + ' ' + key }, '') : ''
       html += `- \`${oper.glyph.toUpperCase()}\` **${oper.name}**${ports !== '' ? '(' + ports.trim() + ')' : ''}: ${oper.info}.\n`
     }
     return html

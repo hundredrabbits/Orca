@@ -8,22 +8,19 @@ export default function OperatorG (orca, x, y, passive) {
   this.name = 'generator'
   this.info = 'Writes operands with offset'
 
-  this.ports.haste.x = { x: -3, y: 0 }
-  this.ports.haste.y = { x: -2, y: 0 }
-  this.ports.haste.len = { x: -1, y: 0, clamp: { min: 1 } }
+  this.ports.x = { x: -3, y: 0, unlocked: true }
+  this.ports.y = { x: -2, y: 0, unlocked: true }
+  this.ports.len = { x: -1, y: 0, clamp: { min: 1 }, unlocked: true }
   this.ports.output = { x: 0, y: 1 }
 
-  this.haste = function () {
-    const len = this.listen(this.ports.haste.len, true)
+  this.operation = function (force = false) {
+    const len = this.listen(this.ports.len, true)
     for (let x = 1; x <= len; x++) {
       orca.lock(this.x + x, this.y)
     }
-  }
 
-  this.operation = function (force = false) {
-    const len = this.listen(this.ports.haste.len, true)
-    const x = this.listen(this.ports.haste.x, true)
-    const y = this.listen(this.ports.haste.y, true) + 1
+    const x = this.listen(this.ports.x, true)
+    const y = this.listen(this.ports.y, true) + 1
     this.ports.output = { x: x, y: y }
     // Read
     for (let i = 0; i < len; i++) {
