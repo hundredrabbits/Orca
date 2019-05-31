@@ -17,7 +17,6 @@ export default function OperatorV (orca, x, y, passive) {
     if (write === '.' && read !== '.') {
       this.ports.output = { x: 0, y: 1 }
     }
-
     if (write !== '.') {
       orca.variables[write] = read
       return

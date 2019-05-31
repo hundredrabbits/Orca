@@ -10,7 +10,6 @@ export default function OperatorO (orca, x, y, passive) {
 
   this.ports.x = { x: -2, y: 0 }
   this.ports.y = { x: -1, y: 0 }
-  this.ports.read = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1 }
 
   this.operation = function (force = false) {

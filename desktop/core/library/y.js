@@ -13,7 +13,6 @@ export default function OperatorY (orca, x, y, passive) {
 
   this.operation = function (force = false) {
     orca.lock(this.x + 1, this.y)
-
     return this.listen(this.ports.val)
   }
 }
