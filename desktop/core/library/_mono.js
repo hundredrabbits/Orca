@@ -13,6 +13,8 @@ export default function OperatorMono (orca, x, y, passive) {
   this.ports.note = { x: 3, y: 0 }
   this.ports.velocity = { x: 4, y: 0, default: 'f', clamp: { min: 0, max: 16 } }
   this.ports.length = { x: 5, y: 0, default: '1', clamp: { min: 0, max: 16 } }
+  this.ports.key = {x: 6, y: 0}
+  this.ports.scale = {x: 7, y: 0, default: '0'}
 
   this.operation = function (force = false) {
     if (!this.hasNeighbor('*') && force === false) { return }
@@ -22,10 +24,18 @@ export default function OperatorMono (orca, x, y, passive) {
     if (this.listen(this.ports.note) === '.') { return }
 
     const channel = this.listen(this.ports.channel, true)
-    const rawOctave = this.listen(this.ports.octave, true)
-    const rawNote = this.listen(this.ports.note)
+    let rawOctave = this.listen(this.ports.octave, true)
+    let rawNote = this.listen(this.ports.note, this.listen(this.ports.key) === '.' ? false : true)
     const rawVelocity = this.listen(this.ports.velocity, true)
     const length = this.listen(this.ports.length, true)
+    const key = this.listen(this.ports.key)
+    const scale = this.listen(this.ports.scale, true)
+
+    if(key!=='.' && this.notes.includes(key)) {
+      const noteAndOct = this.resolveDegree(key,scale,rawNote)
+      rawNote = noteAndOct.note;
+      rawOctave = rawOctave + noteAndOct.octave;
+    }
 
     if (!isNaN(rawNote)) { return }
 

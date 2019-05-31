@@ -1,8 +1,10 @@
 'use strict'
 
 import transpose from './transpose.js'
+import scales from './scales.js'
 
 export default function Operator (orca, x, y, glyph = '.', passive = false) {
+  this.notes = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B']
   this.name = 'unknown'
   this.x = x
   this.y = y
@@ -135,10 +137,34 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
     if (!transpose[n]) { return { note: n, octave: o } }
     const note = transpose[n].charAt(0)
     const octave = clamp(parseInt(transpose[n].charAt(1)) + o, 0, 8)
-    const value = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'].indexOf(note)
+    const value = this.notes.indexOf(note)
     const id = clamp((octave * 12) + value, 0, 127)
     const real = id < 89 ? Object.keys(transpose)[id - 45] : null
     return { id, value, note, octave, real }
+  }
+
+  this.resolveDegree = function(key, scaleIndex, degree) {
+    const scale = scales[scaleIndex];
+    const keyIndex = this.notes.indexOf(key);
+    let octave = 0;
+
+    degree+=1; // Makes degree calculations easier
+    if (degree > scale.length) {
+      octave = ~~((degree-1) / scale.length);
+      degree = degree % scale.length;
+      if (degree == 0) degree = scale.length;
+    }
+
+    const noteIndex = scale[degree-1];
+
+    if(keyIndex!=0) {
+      // If not C then change ordering of notes
+      this.notes = this.notes.slice(keyIndex,this.notes.length).concat(this.notes.slice(0,keyIndex))
+      if(noteIndex>=(12-keyIndex)) octave += 1; // Shift octave for the last keys.
+      return {"note": this.notes[noteIndex], "octave": octave};
+    } else {
+      return {"note": this.notes[noteIndex], "octave": octave};
+    }
   }
 
   // Docs
