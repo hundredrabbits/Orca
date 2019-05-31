@@ -39,14 +39,13 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
 
   // Phases
 
-  this.permissions = function () {
+  this.run = function (force = false) {
+    // Permissions
     for (const id in this.ports) {
       orca.lock(this.x + this.ports[id].x, this.y + this.ports[id].y)
     }
-  }
-
-  this.run = function (force = false) {
     this.draw = true
+    // Operate
     const payload = this.operation(force)
     if (this.ports.output) {
       if (this.ports.output.bang === true) {

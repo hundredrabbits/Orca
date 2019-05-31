@@ -20,11 +20,10 @@ export default function OperatorCC (orca, x, y) {
     const channel = this.listen(this.ports.channel, true)
     const knob = this.listen(this.ports.knob, true)
     const rawValue = this.listen(this.ports.value, true)
-
-    const val = Math.ceil((127 * rawValue) / 35)
+    const value = Math.ceil((127 * rawValue) / 35)
 
     this.draw = false
-    terminal.io.cc.send(channel, knob, val)
+    terminal.io.cc.send(channel, knob, value)
 
     if (force === true) {
       terminal.io.cc.run()

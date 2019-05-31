@@ -27,6 +27,8 @@ export default function OperatorMono (orca, x, y, passive) {
     const rawVelocity = this.listen(this.ports.velocity, true)
     const length = this.listen(this.ports.length, true)
 
+    if (!isNaN(rawNote)) { return }
+      
     const transposed = this.transpose(rawNote, rawOctave)
     // 1 - 8
     const octave = transposed.octave
