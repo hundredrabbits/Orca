@@ -9,7 +9,8 @@ export default function OperatorBang (orca, x, y, passive) {
   this.info = 'Bangs neighboring operands'
   this.draw = false
 
-  this.operation = function () {
+  this.run = function (force = false) {
+    this.draw = false
     this.erase()
   }
 }
