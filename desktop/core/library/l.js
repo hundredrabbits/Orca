@@ -15,16 +15,15 @@ export default function OperatorL (orca, x, y, passive) {
 
   this.operation = function (force = false) {
     const len = this.listen(this.ports.len, true)
-    for (let x = 1; x <= len; x++) {
-      orca.lock(this.x + x, this.y)
-    }
-
     const step = this.listen(this.ports.step, true)
     const index = orca.indexAt(this.x + 1, this.y)
     const seg = orca.s.substr(index, len)
     const res = seg.substr(len - step, step) + seg.substr(0, len - step)
-    for (let x = 0; x < len; x++) {
-      orca.write(this.x + x + 1, this.y, res.charAt(x))
+    for (let offset = 0; offset <= len; offset++) {
+      if (offset > 0) {
+        orca.lock(this.x + offset, this.y)
+      }
+      orca.write(this.x + offset + 1, this.y, res.charAt(offset))
     }
     return this.listen(this.ports.val)
   }
