@@ -8,14 +8,11 @@ export default function OperatorJ (orca, x, y, passive) {
   this.name = 'jumper'
   this.info = 'Outputs northward operand'
 
-  this.ports.haste.val = { x: 0, y: -1 }
+  this.ports.val = { x: 0, y: -1 }
   this.ports.output = { x: 0, y: 1 }
 
-  this.haste = function () {
-    orca.lock(this.x, this.y + 1)
-  }
-
   this.operation = function (force = false) {
-    return this.listen(this.ports.haste.val)
+    orca.lock(this.x, this.y + 1)
+    return this.listen(this.ports.val)
   }
 }

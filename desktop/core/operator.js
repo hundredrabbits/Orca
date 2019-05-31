@@ -10,7 +10,7 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
   this.draw = passive
   this.glyph = passive ? glyph.toUpperCase() : glyph
   this.info = '--'
-  this.ports = { input: {}, haste: {}, bang: !passive }
+  this.ports = { bang: !passive }
 
   // Actions
 
@@ -39,25 +39,13 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
 
   // Phases
 
-  this.permissions = function () {
-    for (const id in this.ports.input) {
-      const port = this.ports.input[id]
-      orca.lock(this.x + port.x, this.y + port.y)
-    }
-    if (this.ports.output) {
-      orca.lock(this.x + this.ports.output.x, this.y + this.ports.output.y)
-    }
-  }
-
-  this.haste = function () {
-  }
-
-  this.operation = function () {
-
-  }
-
   this.run = function (force = false) {
+    // Permissions
+    for (const id in this.ports) {
+      orca.lock(this.x + this.ports[id].x, this.y + this.ports[id].y)
+    }
     this.draw = true
+    // Operate
     const payload = this.operation(force)
     if (this.ports.output) {
       if (this.ports.output.bang === true) {
@@ -66,6 +54,10 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
         this.output(payload)
       }
     }
+  }
+
+  this.operation = function () {
+
   }
 
   // Helpers
@@ -84,7 +76,7 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
 
   this.explode = function () {
     this.replace('*')
-    this.lock()
+    // this.lock()
   }
 
   this.move = function (x, y) {
@@ -115,13 +107,9 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
       a.push([this.x, this.y, 0, `${this.name.charAt(0).toUpperCase() + this.name.substring(1).toLowerCase()}`])
     }
     if (!this.passive) { return a }
-    for (const id in this.ports.haste) {
-      const port = this.ports.haste[id]
-      a.push([this.x + port.x, this.y + port.y, 1, `${this.glyph}-${id}`])
-    }
-    for (const id in this.ports.input) {
-      const port = this.ports.input[id]
-      a.push([this.x + port.x, this.y + port.y, 2, `${this.glyph}-${id}`])
+    for (const id in this.ports) {
+      const port = this.ports[id]
+      a.push([this.x + port.x, this.y + port.y, port.x < 0 || port.y < 0 ? 1 : 2, `${this.glyph}-${id}`])
     }
     if (this.ports.output) {
       const port = this.ports.output
@@ -130,7 +118,7 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
     return a
   }
 
-  this.requireUC = function (ports = this.ports.input) {
+  this.requireUC = function (ports = this.ports) {
     if (this.ports.output.sensitive !== true) { return false }
     for (const id in ports) {
       const value = this.listen(ports[id])

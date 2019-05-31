@@ -8,22 +8,15 @@ export default function OperatorK (orca, x, y, passive) {
   this.name = 'konkat'
   this.info = 'Reads multiple variables'
 
-  this.ports.haste.len = { x: -1, y: 0, clamp: { min: 1 } }
-
-  this.haste = function () {
-    this.len = this.listen(this.ports.haste.len, true)
-    for (let x = 1; x <= this.len; x++) {
-      orca.lock(this.x + x, this.y)
-      const g = orca.glyphAt(this.x + x, this.y)
-      if (g !== '.') {
-        orca.lock(this.x + x, this.y + 1)
-      }
-    }
-  }
+  this.ports.len = { x: -1, y: 0, clamp: { min: 1 } }
 
   this.operation = function (force = false) {
+    this.len = this.listen(this.ports.len, true)
     for (let x = 1; x <= this.len; x++) {
+      orca.lock(this.x + x, this.y)
       const key = orca.glyphAt(this.x + x, this.y)
+      if (key === '.') { continue }
+      orca.lock(this.x + x, this.y + 1)
       orca.write(this.x + x, this.y + 1, orca.valueIn(key))
     }
   }

@@ -9,12 +9,11 @@ export default function OperatorComment (orca, x, y, passive) {
   this.info = 'Halts line'
   this.draw = false
 
-  this.haste = function () {
+  this.operation = function () {
     for (let x = this.x + 1; x <= orca.w; x++) {
       orca.lock(x, this.y)
       if (orca.glyphAt(x, this.y) === this.glyph) { break }
     }
-    this.passive = false
     orca.lock(this.x, this.y)
   }
 }

@@ -85,8 +85,6 @@ export default function Orca (terminal) {
       const operator = operators[id]
       if (this.lockAt(operator.x, operator.y)) { continue }
       if (operator.passive || operator.hasNeighbor('*')) {
-        operator.haste()
-        operator.permissions()
         operator.run()
       }
     }

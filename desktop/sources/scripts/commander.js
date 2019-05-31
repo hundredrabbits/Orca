@@ -17,21 +17,27 @@ export default function Commander (terminal) {
   }
 
   this.actives = {
+    // Ports
     'osc': (val) => { terminal.io.osc.select(parseInt(val)) },
     'udp': (val) => { terminal.io.udp.select(parseInt(val)) },
+    // Cursor
     'copy': (val) => { terminal.cursor.copy() },
     'paste': (val) => { terminal.cursor.paste(true) },
     'erase': (val) => { terminal.cursor.erase() },
+    // Controls
     'play': (val) => { terminal.clock.play() },
     'stop': (val) => { terminal.clock.stop() },
     'run': (val) => { terminal.run() },
+    // Speed
     'apm': (val) => { terminal.clock.set(null, parseInt(val)) },
     'bpm': (val) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
     'time': (val) => { terminal.clock.setFrame(parseInt(val)) },
     'rewind': (val) => { terminal.clock.setFrame(terminal.orca.f - parseInt(val)) },
     'skip': (val) => { terminal.clock.setFrame(terminal.orca.f + parseInt(val)) },
+    // Themeing
     'color': (val) => { const parts = val.split(';'); terminal.theme.set('b_med', parts[0]); terminal.theme.set('b_inv', parts[1]); terminal.theme.set('b_high', parts[2]) },
     'graphic': (val) => { terminal.theme.setImage(terminal.source.locate(val + '.jpg')) },
+    // Edit
     'inject': (val) => { terminal.source.inject(val, true) },
     'write': (val) => { const parts = val.split(';'); terminal.cursor.select(parts[1], parts[2], parts[0].length); terminal.cursor.writeBlock([parts[0].split('')]) }
   }
