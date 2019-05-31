@@ -15,7 +15,7 @@ export default function OperatorC (orca, x, y, passive) {
   this.operation = function (force = false) {
     const rate = this.listen(this.ports.rate, true)
     const mod = this.listen(this.ports.mod, true)
-    const val = (Math.floor(orca.f / rate) % mod)
+    const val = Math.floor(orca.f / rate) % mod
     return orca.keyOf(val)
   }
 }

@@ -11,22 +11,19 @@ export default function OperatorG (orca, x, y, passive) {
   this.ports.x = { x: -3, y: 0 }
   this.ports.y = { x: -2, y: 0 }
   this.ports.len = { x: -1, y: 0, clamp: { min: 1 } }
-  this.ports.output = { x: 0, y: 1 }
 
   this.operation = function (force = false) {
     const len = this.listen(this.ports.len, true)
-    for (let x = 1; x <= len; x++) {
-      orca.lock(this.x + x, this.y)
-    }
-
     const x = this.listen(this.ports.x, true)
     const y = this.listen(this.ports.y, true) + 1
-    this.ports.output = { x: x, y: y }
-    // Read
-    for (let i = 0; i < len; i++) {
-      const port = { x: i + 1, y: 0 }
+    for (let offset = 0; offset <= len; offset++) {
+      if (offset > 0) {
+        orca.lock(this.x + offset, this.y)
+      }
+      const port = { x: offset + 1, y: 0 }
       const value = this.listen(port)
-      orca.write(this.x + x + i, this.y + y, value)
+      orca.write(this.x + x + offset, this.y + y, value)
     }
+    this.ports.output = { x: x, y: y }
   }
 }

@@ -41,13 +41,8 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
 
   this.permissions = function () {
     for (const id in this.ports) {
-      const port = this.ports[id]
-      orca.lock(this.x + port.x, this.y + port.y)
+      orca.lock(this.x + this.ports[id].x, this.y + this.ports[id].y)
     }
-  }
-
-  this.operation = function () {
-
   }
 
   this.run = function (force = false) {
@@ -60,6 +55,10 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
         this.output(payload)
       }
     }
+  }
+
+  this.operation = function () {
+
   }
 
   // Helpers
