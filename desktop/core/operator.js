@@ -151,7 +151,6 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
     if (degree > scale.length) {
       octave = ~~((degree-1) / scale.length);
       degree = degree % scale.length;
-      degree = degree % scale.length;
       if (degree == 0) degree = scale.length;
     }
 
