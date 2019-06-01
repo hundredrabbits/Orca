@@ -1,6 +1,6 @@
 'use strict'
-
-export default [
+export const OCTAVE = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B']
+export const SCALES = [
     [0,1,2,3,4,5,6,7,8,9,10,11], //chromatic
     [0,2,4,5,7,9,11], //major
     [0,2,3,5,7,8,10], //minor

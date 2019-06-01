@@ -1,6 +1,7 @@
 'use strict'
 
 import Operator from '../operator.js'
+import {OCTAVE} from '../scales.js'
 
 export default function OperatorMidi (orca, x, y, passive) {
   Operator.call(this, orca, x, y, ':', true)
@@ -31,7 +32,7 @@ export default function OperatorMidi (orca, x, y, passive) {
     const key = this.listen(this.ports.key)
     const scale = this.listen(this.ports.scale, true)
 
-    if(key!=='.' && this.notes.includes(key)) {
+    if(key!=='.' && OCTAVE.includes(key)) {
       const noteAndOct = this.resolveDegree(key,scale,rawNote)
       rawNote = noteAndOct.note;
       rawOctave = rawOctave + noteAndOct.octave;
