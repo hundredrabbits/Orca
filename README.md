@@ -62,10 +62,6 @@ npm start
 - `;` **udp**: Sends UDP message.
 - `=` **osc**(*path*): Sends OSC message.
 
-#### Receive
-
-- `&` **mono**: Receive MIDI note.
-
 ## MIDI
 
 The [MIDI](https://en.wikipedia.org/wiki/MIDI) operator `:` takes up to 5 inputs('channel, 'octave, 'note, velocity, length). 

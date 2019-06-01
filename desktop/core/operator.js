@@ -1,7 +1,5 @@
 'use strict'
 
-import transpose from './transpose.js'
-
 export default function Operator (orca, x, y, glyph = '.', passive = false) {
   this.name = 'unknown'
   this.x = x
@@ -127,18 +125,6 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
       if (`${value}`.toUpperCase() === `${value}`) { return true }
     }
     return false
-  }
-
-  // Notes tools
-
-  this.transpose = function (n, o = 3) {
-    if (!transpose[n]) { return { note: n, octave: o } }
-    const note = transpose[n].charAt(0)
-    const octave = clamp(parseInt(transpose[n].charAt(1)) + o, 0, 8)
-    const value = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'].indexOf(note)
-    const id = clamp((octave * 12) + value, 0, 127)
-    const real = id < 89 ? Object.keys(transpose)[id - 45] : null
-    return { id, value, note, octave, real }
   }
 
   // Docs
