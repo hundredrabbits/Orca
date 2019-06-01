@@ -17,32 +17,22 @@ export default function OperatorMono (orca, x, y, passive) {
   this.operation = function (force = false) {
     if (!this.hasNeighbor('*') && force === false) { return }
 
-    if (this.listen(this.ports.channel) === '.') { return }
-    if (this.listen(this.ports.octave) === '.') { return }
-    if (this.listen(this.ports.note) === '.') { return }
+    const channel = this.listen(this.ports.channel)
+    if (channel === '.') { return }
+    const octave = this.listen(this.ports.octave)
+    if (octave === '.') { return }
+    const note = this.listen(this.ports.note)
+    if (note === '.') { return }
 
-    const channel = this.listen(this.ports.channel, true)
-    const rawOctave = this.listen(this.ports.octave, true)
-    const rawNote = this.listen(this.ports.note)
-    const rawVelocity = this.listen(this.ports.velocity, true)
-    const length = this.listen(this.ports.length, true)
-
-    if (!isNaN(rawNote)) { return }
-
-    const transposed = this.transpose(rawNote, rawOctave)
-    // 1 - 8
-    const octave = transposed.octave
-    // 0 - 11
-    const note = transposed.value
-    // 0 - G(127)
-    const velocity = parseInt((rawVelocity / 16) * 127)
-
-    this.draw = false
+    const velocity = this.listen(this.ports.velocity)
+    const length = this.listen(this.ports.length)
 
     terminal.io.mono.send(channel, octave, note, velocity, length)
 
     if (force === true) {
       terminal.io.mono.run()
     }
+
+    this.draw = false
   }
 }
