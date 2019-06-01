@@ -37,20 +37,16 @@ export default function Mono (terminal) {
     delete this.stack[item.channel]
   }
 
-  this.send = function (channel, octave, note, velocity, length, isPlayed = false) {
-    if (this.stack[channel]) {
-      this.release(this.stack[channel])
-    }
-    this.stack[channel] = { channel, octave, note, velocity, length, isPlayed }
-  }
-
   this.silence = function () {
     for (const id in this.stack) {
       this.release(this.stack[id])
     }
   }
 
-  // UI
-
-  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
+  this.send = function (channel, octave, note, velocity, length, isPlayed = false) {
+    if (this.stack[channel]) {
+      this.release(this.stack[channel])
+    }
+    this.stack[channel] = { channel, octave, note, velocity, length, isPlayed }
+  }
 }
