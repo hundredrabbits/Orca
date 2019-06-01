@@ -49,4 +49,8 @@ export default function Mono (terminal) {
     }
     this.stack[channel] = { channel, octave, note, velocity, length, isPlayed }
   }
+
+  this.length = function () {
+    return Object.keys(this.stack).length
+  }
 }

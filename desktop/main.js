@@ -37,7 +37,7 @@ app.on('ready', () => {
   })
 
   app.win.loadURL(`file://${__dirname}/sources/index.html`)
-  app.inspect()
+  // app.inspect()
 
   app.win.on('closed', () => {
     win = null
