@@ -1,5 +1,7 @@
 'use strict'
 
+import transpose from '../transpose.js'
+
 export default function Midi (terminal) {
   this.mode = 0
 
@@ -67,12 +69,16 @@ export default function Midi (terminal) {
   this.trigger = function (item, down) {
     if (!this.outputDevice()) { console.warn('Midi', 'No midi output!'); return }
 
-    const channel = down === true ? 0x90 + item[0] : 0x80 + item[0]
-    const note = clamp(24 + (item[1] * 12) + item[2], 0, 127)
-    const velocity = clamp(item[3], 0, 127)
+    const transposed = this.transpose(item.note, item.octave)
+    const channel = terminal.orca.valueOf(item.channel)
 
-    this.outputDevice().send([channel, note, velocity])
-    item[5] = true
+    const c = down === true ? 0x90 + channel : 0x80 + channel
+    const n = transposed.id
+    const v = parseInt((item.velocity / 16) * 127)
+
+    console.log(c,n,v,down)
+
+    this.outputDevice().send([c, n, v])
   }
 
   this.send = function (channel, octave, note, velocity, length, played = false) {
@@ -204,6 +210,16 @@ export default function Midi (terminal) {
   }
 
   // UI
+
+  this.transpose = function (n, o = 3) {
+    if (!transpose[n]) { return { note: n, octave: o } }
+    const note = transpose[n].charAt(0)
+    const octave = clamp(parseInt(transpose[n].charAt(1)) + o, 0, 8)
+    const value = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'].indexOf(note)
+    const id = clamp((octave * 12) + value, 0, 127)
+    const real = id < 89 ? Object.keys(transpose)[id - 45] : null
+    return { id, value, note, octave, real }
+  }
 
   this.toString = function () {
     return this.outputDevice() ? `${this.outputDevice().name}` : 'No Midi'

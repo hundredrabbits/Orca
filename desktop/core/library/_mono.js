@@ -24,8 +24,8 @@ export default function OperatorMono (orca, x, y, passive) {
     const note = this.listen(this.ports.note)
     if (note === '.') { return }
 
-    const velocity = this.listen(this.ports.velocity)
-    const length = this.listen(this.ports.length)
+    const velocity = this.listen(this.ports.velocity, true)
+    const length = this.listen(this.ports.length, true)
 
     terminal.io.mono.send(channel, octave, note, velocity, length)
 
