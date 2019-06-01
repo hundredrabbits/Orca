@@ -46,6 +46,8 @@ export default function Midi (terminal) {
     const n = transposed.id
     const v = parseInt((item.velocity / 16) * 127)
 
+    if (!n || c === 127) { return }
+
     this.outputDevice().send([c, n, v])
   }
 

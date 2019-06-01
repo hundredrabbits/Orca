@@ -24,6 +24,8 @@ export default function OperatorMono (orca, x, y, passive) {
     const note = this.listen(this.ports.note)
     if (note === '.') { return }
 
+    if (!isNaN(note)) { return }
+
     const velocity = this.listen(this.ports.velocity, true)
     const length = this.listen(this.ports.length, true)
 
