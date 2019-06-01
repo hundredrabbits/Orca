@@ -42,6 +42,8 @@ export default function Midi (terminal) {
     const transposed = this.transpose(item.note, item.octave)
     const channel = terminal.orca.valueOf(item.channel)
 
+    if(!transposed){ return }
+
     const c = down === true ? 0x90 + channel : 0x80 + channel
     const n = transposed.id
     const v = parseInt((item.velocity / 16) * 127)
@@ -218,13 +220,12 @@ export default function Midi (terminal) {
   // UI
 
   this.transpose = function (n, o = 3) {
-    if (!transpose[n]) { return { note: n, octave: o } }
+    if (!transpose[n]) { return null }
+    const octave = clamp(parseInt(o) + parseInt(transpose[n].charAt(1)), 0, 8)
     const note = transpose[n].charAt(0)
-    const octave = clamp(parseInt(transpose[n].charAt(1)) + o, 0, 8)
     const value = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'].indexOf(note)
     const id = clamp((octave * 12) + value + 24, 0, 127)
-    const real = id < 89 ? Object.keys(transpose)[id - 45] : null
-    return { id, value, note, octave, real }
+    return { id, value, note, octave }
   }
 
   this.toString = function () {
