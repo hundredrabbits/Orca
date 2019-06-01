@@ -16,7 +16,7 @@ export default function Mono (terminal) {
       if (this.stack[id].isPlayed === false) {
         this.press(this.stack[id])
       }
-      if (this.stack[id].length <= 1) {
+      if (this.stack[id].length < 1) {
         this.release(this.stack[id])
       }
       if (this.stack[id]) {
