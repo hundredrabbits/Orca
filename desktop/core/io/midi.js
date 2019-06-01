@@ -20,7 +20,7 @@ export default function Midi (terminal) {
   }
 
   this.clear = function () {
-
+    this.stack = this.stack.filter((item) => { return item })
   }
 
   this.run = function () {
@@ -28,12 +28,11 @@ export default function Midi (terminal) {
       if (this.stack[id].length < 1) {
         this.release(this.stack[id], id)
       }
+      if (!this.stack[id]) { continue }
       if (this.stack[id].isPlayed === false) {
         this.press(this.stack[id])
       }
-      if (this.stack[id]) {
-        this.stack[id].length--
-      }
+      this.stack[id].length--
     }
   }
 
@@ -69,13 +68,12 @@ export default function Midi (terminal) {
   }
 
   this.send = function (channel, octave, note, velocity, length, isPlayed = false) {
-    // Stop duplicates
+    const item = { channel, octave, note, velocity, length, isPlayed }
+    // Retrigger duplicates
     for (const id in this.stack) {
-      if (this.stack[id].channel === channel) { return }
-      if (this.stack[id].octave === octave) { return }
-      if (this.stack[id].note === note) { return }
+      if (this.stack[id].channel === channel && this.stack[id].octave === octave && this.stack[id].note === note) { this.release(item, id) }
     }
-    this.stack.push({ channel, octave, note, velocity, length, isPlayed })
+    this.stack.push(item)
   }
 
   this.update = function () {
