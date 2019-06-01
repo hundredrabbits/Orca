@@ -25,18 +25,16 @@ export default function Midi (terminal) {
 
   this.run = function () {
     for (const id in this.stack) {
+      if (this.stack[id].length < 1) {
+        this.release(this.stack[id], id)
+      }
       if (this.stack[id].isPlayed === false) {
         this.press(this.stack[id])
-      }
-      if (this.stack[id].length < 1) {
-        this.release(this.stack[id])
       }
       if (this.stack[id]) {
         this.stack[id].length--
       }
     }
-
-    this.stack = this.stack.filter((item) => { return item.length > 0 })
   }
 
   this.trigger = function (item, down) {
@@ -58,9 +56,10 @@ export default function Midi (terminal) {
     item.isPlayed = true
   }
 
-  this.release = function (item) {
+  this.release = function (item, id) {
     if (!item) { return }
     this.trigger(item, false)
+    delete this.stack[id]
   }
 
   this.silence = function () {
