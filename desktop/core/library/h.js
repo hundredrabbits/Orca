@@ -10,11 +10,8 @@ export default function OperatorH (orca, x, y, passive) {
 
   this.ports.output = { x: 0, y: 1, reader: true }
 
-  this.haste = function () {
-    orca.lock(this.x + this.ports.output.x, this.y + this.ports.output.y)
-  }
-
   this.operation = function (force = false) {
+    orca.lock(this.x + this.ports.output.x, this.y + this.ports.output.y)
     return this.listen(this.ports.output, true)
   }
 }

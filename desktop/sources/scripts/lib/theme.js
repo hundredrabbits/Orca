@@ -2,6 +2,7 @@
 
 export default function Theme (_default) {
   const fs = require('fs')
+  const url = require('url')
   const themer = this
 
   this.active = _default
@@ -44,7 +45,13 @@ export default function Theme (_default) {
   }
 
   this.setImage = function (path) {
-    document.body.style.backgroundImage = path && fs.existsSync(path) && document.body.style.backgroundImage !== `url(${path})` ? `url(${path})` : ''
+    document.body.style.backgroundImage = path && fs.existsSync(path) && document.body.style.backgroundImage !== `url(${url.pathToFileURL(path)})` ? `url(${url.pathToFileURL(path)})` : ''
+  }
+
+  this.set = function (key, value) {
+    if (!this.active[key]) { console.warn('Theme', 'Unknown key ' + key); return }
+    if (!isColor(value)) { console.warn('Theme', 'Not a color ' + value); return }
+    this.active[key] = value
   }
 
   function parse (any) {
@@ -124,6 +131,10 @@ export default function Theme (_default) {
 
   function isJson (text) {
     try { JSON.parse(text); return true } catch (error) { return false }
+  }
+
+  function isColor (str) {
+    return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test('#' + str)
   }
 
   function isHtml (text) {

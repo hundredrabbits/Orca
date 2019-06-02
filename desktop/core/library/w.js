@@ -9,7 +9,7 @@ export default function OperatorW (orca, x, y, passive) {
   this.info = 'Moves westward, or bangs'
   this.draw = false
 
-  this.haste = function () {
+  this.operation = function () {
     this.move(-1, 0)
     this.passive = false
   }

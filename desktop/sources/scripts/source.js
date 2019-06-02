@@ -6,6 +6,7 @@ export default function Source (terminal) {
   const { dialog, app } = require('electron').remote
 
   this.path = null
+  this.queue = []
 
   this.start = function () {
     this.increment()
@@ -15,6 +16,7 @@ export default function Source (terminal) {
   this.new = function () {
     console.log('Source', 'Make a new file..')
     this.path = null
+    this.queue = []
     terminal.orca.reset()
     terminal.resize()
     terminal.history.reset()
@@ -85,9 +87,24 @@ export default function Source (terminal) {
     if (!fs.existsSync(loc)) { console.warn('Source', 'File does not exist: ' + loc); return }
     console.log('Source', 'Reading ' + loc)
     this.path = loc
-    this.remember('active', loc)
+    this.remember('active', this.path)
+    this.load(fs.readFileSync(this.path, 'utf8'))
 
-    const data = fs.readFileSync(loc, 'utf8')
+    // Look for queue
+    const queue = path.join(this.folder(), this.name() + '.queue')
+    if (fs.existsSync(queue)) {
+      this.queue = fs.readFileSync(queue, 'utf8').split('\n')
+      terminal.clock.resetFrame()
+      console.log('Source', `Found Queue: ${this.queue.length} lines`)
+    }
+  }
+
+  this.run = function () {
+    if (!this.queue || this.queue.length < terminal.orca.f || !this.queue[terminal.orca.f]) { return }
+    terminal.commander.trigger(this.queue[terminal.orca.f])
+  }
+
+  this.load = function (data) {
     const lines = data.split('\n').map((line) => { return clean(line) })
     const w = lines[0].length
     const h = lines.length
@@ -96,7 +113,7 @@ export default function Source (terminal) {
     terminal.orca.load(w, h, s)
     terminal.history.reset()
     terminal.history.record(terminal.orca.s)
-    terminal.updateSize()
+    terminal.fit()
   }
 
   this.quit = function () {
@@ -182,14 +199,6 @@ export default function Source (terminal) {
     return `${orca}`
   }
 
-  this.parse = function (text) {
-    const lines = text.split('\n').map((line) => { return clean(line) })
-    const w = lines[0].length
-    const h = lines.length
-    const s = lines.join('\n').trim()
-    return terminal.orca.load(w, h, s)
-  }
-
   this.locate = function (name) {
     if (!this.path) { return }
     const loc = path.join(this.folder(), name)
@@ -207,7 +216,7 @@ export default function Source (terminal) {
   }
 
   this.toString = function () {
-    return this.path ? this.name() : 'blank'
+    return this.path ? this.name() : 'unsaved'
   }
 
   function isDifferent (a, b) {

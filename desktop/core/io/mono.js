@@ -1,65 +1,55 @@
 'use strict'
 
 export default function Mono (terminal) {
-  this.queue = null
-  this.stack = []
+  this.stack = {}
 
   this.start = function () {
     console.info('MidiMono Starting..')
-  }
-
-  this.run = function () {
-    if (this.stack[0]) {
-      if (this.stack[0].length <= 1) {
-        this.release()
-      } else {
-        this.stack[0].length--
-      }
-    }
-
-    if (this.queue) {
-      this.press()
-    }
-  }
-
-  this.press = function (item = this.queue) {
-    if (!item) { return }
-    if (this.stack[0]) { this.release() }
-    this.trigger(item, true)
-    this.stack[0] = item
-    this.queue = null
-  }
-
-  this.release = function (item = this.stack[0]) {
-    if (!item) { return }
-    this.trigger(this.stack[0], false)
-    this.stack = []
   }
 
   this.clear = function () {
 
   }
 
-  this.trigger = function (item, down) {
-    if (!terminal.io.midi.outputDevice()) { console.warn('MidiMono', 'No midi output!'); return }
-    if (!item) { return }
-
-    const channel = down === true ? 0x90 + item.channel : 0x80 + item.channel
-    const note = clamp(24 + (item.octave * 12) + item.note, 0, 127)
-    const velocity = clamp(item.velocity, 0, 127)
-
-    terminal.io.midi.outputDevice().send([channel, note, velocity])
+  this.run = function () {
+    for (const id in this.stack) {
+      if (this.stack[id].length < 1) {
+        this.release(this.stack[id], id)
+      }
+      if (!this.stack[id]) { continue }
+      if (this.stack[id].isPlayed === false) {
+        this.press(this.stack[id])
+      }
+      this.stack[id].length--
+    }
   }
 
-  this.send = function (channel, octave, note, velocity, length) {
-    this.queue = { channel, octave, note, velocity, length }
+  this.press = function (item) {
+    if (!item) { return }
+    terminal.io.midi.trigger(item, true)
+    item.isPlayed = true
+  }
+
+  this.release = function (item) {
+    if (!item) { return }
+    terminal.io.midi.trigger(item, false)
+    delete this.stack[item.channel]
   }
 
   this.silence = function () {
-    this.release()
+    for (const id in this.stack) {
+      this.release(this.stack[id])
+    }
   }
 
-  // UI
+  this.send = function (channel, octave, note, velocity, length, isPlayed = false) {
+    if (this.stack[channel]) {
+      this.release(this.stack[channel])
+    }
+    this.stack[channel] = { channel, octave, note, velocity, length, isPlayed }
+  }
 
-  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
+  this.length = function () {
+    return Object.keys(this.stack).length
+  }
 }

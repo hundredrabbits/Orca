@@ -46,7 +46,7 @@
 
       terminal.controller.add("default","Clock","Play/Pause",() => { terminal.clock.togglePlay() },"Space")
       terminal.controller.add("default","Clock","Frame By Frame",() => { terminal.clock.touch() },"CmdOrCtrl+F")
-      terminal.controller.add("default","Clock","Reset Frame",() => { terminal.clock.resetFrame() },"CmdOrCtrl+Shift+N")
+      terminal.controller.add("default","Clock","Reset Frame",() => { terminal.clock.resetFrame() },"CmdOrCtrl+R")
       terminal.controller.add("default","Clock","Incr. Speed",() => { terminal.clock.mod(1) },">")
       terminal.controller.add("default","Clock","Decr. Speed",() => { terminal.clock.mod(-1) },"<")
       terminal.controller.add("default","Clock","Incr. Speed(10x)",() => { terminal.clock.mod(10,true) },"CmdOrCtrl+>")

@@ -1,4 +1,4 @@
-const UDP_PORT = 49160
+const UDP_PORT = 49161
 const OSC_PORT = 49162
 
 const dgram = require('dgram');
@@ -28,7 +28,7 @@ udpserver.on('message', (msg, rinfo) => {
 })
 
 oscserver.on('message', (msg, rinfo) => {
-  console.log(`OSC server: ${msg} from ${rinfo.address}:${rinfo.port} at /${msg[0]}`)
+  console.log(`OSC server: ${msg} from ${rinfo.address}:${rinfo.port} at ${msg[0]}`)
 })
 
 udpserver.bind(UDP_PORT)

@@ -50,7 +50,7 @@ export default function IO (terminal) {
   }
 
   this.length = function () {
-    return this.midi.stack.length + this.cc.stack.length + this.udp.stack.length + this.osc.stack.length + this.mono.stack.length
+    return this.midi.length() + this.mono.length() + this.cc.stack.length + this.udp.stack.length + this.osc.stack.length
   }
 
   this.inspect = function (limit = terminal.grid.w) {

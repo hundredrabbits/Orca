@@ -43,12 +43,12 @@ npm start
 - `R` **random**(*min* max): Outputs random value.
 - `S` **south**: Moves southward, or bangs.
 - `T` **track**(*key* *len* val): Reads eastward operand.
-- `U` **Uclid**(*step* max): Bangs on Euclidean rhythm.
+- `U` **uclid**(*step* max): Bangs on Euclidean rhythm.
 - `V` **variable**(*write* read): Reads and writes variable.
 - `W` **west**: Moves westward, or bangs.
 - `X` **write**(*x* *y* val): Writes operand with offset.
 - `Y` **jymper**(*val*): Outputs westward operand.
-- `Z` **Lerp**(*rate* target): Transitions operand to input.
+- `Z` **lerp**(*rate* target): Transitions operand to input.
 - `*` **bang**: Bangs neighboring operands.
 - `#` **comment**: Halts a line.
 
@@ -61,10 +61,6 @@ npm start
 - `!` **cc**(channel knob value): Sends MIDI control change.
 - `;` **udp**: Sends UDP message.
 - `=` **osc**(*path*): Sends OSC message.
-
-#### Receive
-
-- `&` **mono**: Receive MIDI note.
 
 ## MIDI
 
@@ -86,13 +82,13 @@ It sends a value **between 0-127**, where the value is calculated as a ratio of 
 
 ## UDP
 
-The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback) operator `;` locks each consecutive eastwardly ports. For example, `;hello`, will send the string "hello", on bang, to the port `49160` on `localhost`. In console, use `terminal.io.udp.select()` to select a **custom UDP port**.
+The [UDP](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback) operator `;` locks each consecutive eastwardly ports. For example, `;hello`, will send the string "hello", on bang, to the port `49160` on `localhost`. In commander, use `udp:7777` to select the **custom UDP port 7777**.
 
 You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test UDP messages. See it in action with [udp.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_udp.orca).
 
 ## OSC
 
-The [OSC](https://github.com/MylesBorins/node-osc) operator `=` locks each consecutive eastwardly ports. The first character is used for the path, the following characters are sent as integers using the [base36 Table](https://github.com/hundredrabbits/Orca#base36-table). In console, use `terminal.io.osc.select()` to select a **custom osc port**.
+The [OSC](https://github.com/MylesBorins/node-osc) operator `=` locks each consecutive eastwardly ports. The first character is used for the path, the following characters are sent as integers using the [base36 Table](https://github.com/hundredrabbits/Orca#base36-table). In commander, use `osc:7777` to select the **custom OSC port 7777**.
 
 For example, `=1abc` will send `10`, `11` and `12` to `/1`, via the port `49162` on `localhost`; `=a123` will send `1`, `2` and `3`, to the path `/a`. You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/listener.js) to test OSC messages. See it in action with [osc.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_osc.orca) or try it with [SonicPi](https://github.com/hundredrabbits/Orca/blob/master/TUTORIAL.md#sonicpi).
 
@@ -110,24 +106,28 @@ Some of Orca's features can be **controlled externally** via UDP though port `49
 
 ### Commands
 
-All commands have a shorthand equivalent to their first character, for example, `write` can also be called using `w`.
+All commands have a shorthand equivalent to their first two characters, for example, `write` can also be called using `wr`.
 
 - `play` Plays program.
 - `stop` Stops program.
 - `run` Runs current frame.
-- `time:0` Sets the frame value to `0`.
-- `find:aV` Sends cursor to string `aV`.
-- `move:3;4` Move cursor to position `3,4`.
 - `bpm:140` Sets bpm speed to `140`.
 - `apm:160` Animates bpm speed to `160`.
-- `inject:pattern` Inject the local file `pattern.orca`.
-- `graphic:123` Set the background to the local graphic `123.jpg`.
-- `write:H12;34` Writes glyph `H`, at `12,34`.
+- `time:0` Sets the frame value to `0`.
+- `skip:2` Adds `2`, to the current frame value.
+- `rewind:2` Removes `2`, to the current frame value.
 - `color:f00;0f0;00f` Colorizes the interface.
+- `graphic:123` Set the background to the local graphic `123.jpg`.
+- `find:aV` Sends cursor to string `aV`.
+- `select:3;4;5;6` Move cursor to position `3,4`, and select size `5:6`.
+- `inject:pattern` Inject the local file `pattern.orca`.
+- `write:H12;34` Writes glyph `H`, at `12,34`.
 
 ### Project Mode
 
 You can **quickly inject orca files** into the currently active file, by using the command-line prompt — Allowing you to navigate across multiple files like you would a project. Type `CmdOrCtrl+K` and the name of another `.orca` file, **located in the same folder** as the opened file, to paste it into the current patch.
+
+If a file a local file `.queue` is found, each line will be ran as a command when the line number corresponding to the frame value is reached. For example, if your working file is named `project.orca`, the file `project.queue` will be loaded automatically as the file opens. 
 
 ## Base36 Table
 
@@ -155,9 +155,10 @@ The midi operator interprets any letter above the chromatic scale as a transpose
 
 ## Companion Applications
 
-- [PILOT](https://github.com/hundredrabbits/pilot), a companion synth tool.
-- [AIOI](https://github.com/MAKIO135/aioi), a companion to send complex OSC messages.
-- [ESTRA](https://github.com/kyleaedwards/estra), a companion sampler tool.
+- [Pilot](https://github.com/hundredrabbits/pilot), a companion synth tool.
+- [Aioi](https://github.com/MAKIO135/aioi), a companion to send complex OSC messages.
+- [Estra](https://github.com/kyleaedwards/estra), a companion sampler tool.
+- [Sonic Pi](https://in-thread.sonic-pi.net/t/using-orca-to-control-sonic-pi-with-osc/2381/), a livecoding environment.
 
 ## Tutorials
 

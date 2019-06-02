@@ -34,7 +34,6 @@ import _mono from './library/_mono.js'
 import _cc from './library/_cc.js'
 import _udp from './library/_udp.js'
 import _osc from './library/_osc.js'
-import _keys from './library/_keys.js'
 
 export default {
   '0': _null,
@@ -79,6 +78,5 @@ export default {
   '%': _mono,
   '!': _cc,
   ';': _udp,
-  '=': _osc,
-  '&': _keys
+  '=': _osc
 }

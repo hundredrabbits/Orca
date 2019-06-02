@@ -12,7 +12,7 @@ import Controller from './lib/controller.js'
 import library from '../../core/library.js'
 
 export default function Terminal () {
-  this.version = 126
+  this.version = 134
   this.library = library
 
   this.orca = new Orca(this)
@@ -61,6 +61,7 @@ export default function Terminal () {
   this.run = function () {
     this.io.clear()
     this.clock.run()
+    this.source.run()
     this.orca.run()
     this.io.run()
     this.update()
@@ -83,24 +84,6 @@ export default function Terminal () {
     this.grid.w = w
     this.grid.h = h
     this.update()
-  }
-
-  this.setSize = function (size) {
-    const win = require('electron').remote.getCurrentWindow()
-    const winSize = win.getSize()
-    const targetSize = [parseInt(size.w + 60), parseInt(size.h + 60 + this.tile.h)]
-
-    if (winSize[0] === targetSize[0] && winSize[1] === targetSize[1]) { return }
-
-    console.log(`Window Size: ${targetSize[0]}x${targetSize[1]}, from ${winSize[0]}x${winSize[1]}`)
-
-    win.setSize(targetSize[0], targetSize[1], false)
-    this.resize()
-  }
-
-  this.updateSize = function () {
-    console.log('Terminal', 'Update size')
-    this.setSize({ w: this.orca.w * this.tile.w, h: this.orca.h * this.tile.h })
   }
 
   this.toggleRetina = function () {
@@ -211,6 +194,7 @@ export default function Terminal () {
     if (this.isSelection(x, y)) { return 4 }
     if (!port && glyph === '.' && isLocked === false && this.hardmode === true) { return this.isLocals(x, y) === true ? 9 : 7 }
     if (selection === glyph && isLocked === false && selection !== '.') { return 6 }
+    if (glyph === '*' && isLocked === false) { return 6 }
     if (port) { return port[2] }
     if (isLocked === true) { return 5 }
     return 9
@@ -275,8 +259,8 @@ export default function Terminal () {
 
     this.write(`${this.orca.w}x${this.orca.h}`, col * 0, this.orca.h, this.grid.w)
     this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, col * 1, this.orca.h, this.grid.w)
-    this.write(`${this.source}`, col * 2, this.orca.h, this.grid.w)
-    this.write(`${this.clock}`, col * 3, this.orca.h, this.grid.w, this.io.midi.inputIndex > -1 ? 4 : 2)
+    this.write(`${this.source}`, col * 2, this.orca.h, this.grid.w, this.source.queue.length > terminal.orca.f ? 3 : 2)
+    this.write(`${this.clock}`, col * 3, this.orca.h, this.grid.w, this.io.midi.inputIndex > -1 ? 3 : 2)
 
     if (this.orca.f < 15) {
       this.write(`${this.io.midi}`, col * 4, this.orca.h, this.grid.w * 2)
@@ -297,8 +281,8 @@ export default function Terminal () {
       const frame = this.orca.h - 4
       const x = (Math.floor(parseInt(id) / frame) * 32) + 2
       const y = (parseInt(id) % frame) + 2
-      this.write(text, x + 2, y, 99, 10)
       this.write(key, x, y, 99, 3)
+      this.write(text, x + 2, y, 99, 10)
     }
   }
 
@@ -326,9 +310,20 @@ export default function Terminal () {
 
   // Resize tools
 
+  this.fit = function () {
+    const size = { w: (this.orca.w * this.tile.w) + 60, h: (this.orca.h * this.tile.h) + 60 + (2 * this.tile.h) }
+    const win = require('electron').remote.getCurrentWindow()
+    const winSize = win.getSize()
+    const current = { w: winSize[0], h: winSize[1] }
+    if (current.w === size.w && current.h === size.h) { console.warn('Terminal', 'No resize required.'); return }
+    console.log('Source', `Fit terminal for ${this.orca.w}x${this.orca.h}(${size.w}x${size.h})`)
+    win.setSize(parseInt(size.w), parseInt(size.h), false)
+    this.resize()
+  }
+
   this.resize = function (force = false) {
     const size = { w: window.innerWidth - 60, h: window.innerHeight - (60 + this.tile.h * 2) }
-    const tiles = { w: Math.floor(size.w / this.tile.w), h: Math.floor(size.h / this.tile.h) }
+    const tiles = { w: Math.ceil(size.w / this.tile.w), h: Math.ceil(size.h / this.tile.h) }
 
     if (this.orca.w === tiles.w && this.orca.h === tiles.h && force === false) { return }
 
@@ -346,8 +341,8 @@ export default function Terminal () {
 
     this.el.width = this.tile.w * this.orca.w * this.scale
     this.el.height = (this.tile.h + (this.tile.h / 5)) * this.orca.h * this.scale
-    this.el.style.width = `${parseInt(this.tile.w * this.orca.w)}px`
-    this.el.style.height = `${parseInt((this.tile.h + (this.tile.h / 5)) * this.orca.h)}px`
+    this.el.style.width = `${Math.ceil(this.tile.w * this.orca.w)}px`
+    this.el.style.height = `${Math.ceil((this.tile.h + (this.tile.h / 5)) * this.orca.h)}px`
 
     this.context.textBaseline = 'bottom'
     this.context.textAlign = 'center'
@@ -382,7 +377,7 @@ export default function Terminal () {
     const operators = Object.keys(library).filter((val) => { return isNaN(val) })
     for (const id in operators) {
       const oper = new this.library[operators[id]]()
-      const ports = (oper.ports.haste ? Object.keys(oper.ports.haste).reduce((acc, key, val) => { return acc + ' *' + key + '*' }, '') : '') + (oper.ports.input ? Object.keys(oper.ports.input).reduce((acc, key, val) => { return acc + ' ' + key }, '') : '')
+      const ports = oper.ports.input ? Object.keys(oper.ports.input).reduce((acc, key, val) => { return acc + ' ' + key }, '') : ''
       html += `- \`${oper.glyph.toUpperCase()}\` **${oper.name}**${ports !== '' ? '(' + ports.trim() + ')' : ''}: ${oper.info}.\n`
     }
     return html

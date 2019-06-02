@@ -5,7 +5,7 @@ const osc = require('node-osc')
 export default function Osc (terminal) {
   this.stack = []
   this.port = null
-  this.options = { default: 49162, tidalCycles: 6010, sonicPi: 4559 }
+  this.options = { default: 49162, tidalCycles: 6010, sonicPi: 4559, superCollider: 57120 }
 
   this.start = function () {
     console.info('OSC Starting..')
@@ -39,14 +39,14 @@ export default function Osc (terminal) {
   }
 
   this.select = function (port = this.options.default) {
-    if (port < 1000) { console.warn('Unavailable port'); return }
-    this.port = port
+    if (isNaN(port) || port < 1000) { console.warn('Unavailable port'); return }
+    console.info('OSC', `Selected port: ${port}`)
+    this.port = parseInt(port)
     this.setup()
     this.update()
   }
 
   this.update = function () {
-    console.log(`OSC Port: ${this.port}`)
     terminal.controller.clearCat('default', 'OSC')
     for (const id in this.options) {
       terminal.controller.add('default', 'OSC', `${id.charAt(0).toUpperCase() + id.substr(1)}(${this.options[id]}) ${this.port === this.options[id] ? ' — Active' : ''}`, () => { terminal.io.osc.select(this.options[id]) }, '')
