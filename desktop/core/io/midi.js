@@ -57,18 +57,17 @@ export default function Midi (terminal) {
         terminal.io.udp.send('f:9')  
       }
       else{
-        terminal.io.udp.send('f:4')
+        terminal.io.udp.send('c:9')
       }
     }
-    else if(channel > 7 && channel < 12 && !isNaN(transposed.id)){
-      terminal.io.udp.send(`l:${parseInt(transposed.id)%16}`)
-    }
     else if(channel > 2 && channel < 8 && !isNaN(transposed.id)){
-      terminal.io.udp.send(`n:${parseInt(transposed.id)%16}`)
+      terminal.io.udp.send(`n:${transposed.id}`)
     }
-
-    if(!isNaN(transposed.note) && !isNaN(channel)){
-      terminal.io.udp.send(`d:${parseInt(transposed.note)%16};${parseInt(channel)}`)  
+    else if(channel > 7 && channel < 12 && !isNaN(transposed.id)){
+      terminal.io.udp.send(`l:${transposed.id}`)
+    }
+    else if(!isNaN(transposed.note) && !isNaN(channel)){
+      terminal.io.udp.send(`r:${parseInt(transposed.id)}`)  
     }
 
     // Light Listener - End
