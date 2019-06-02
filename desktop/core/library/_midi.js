@@ -17,19 +17,12 @@ export default function OperatorMidi (orca, x, y, passive) {
   this.operation = function (force = false) {
     if (!this.hasNeighbor('*') && force === false) { return }
 
-<<<<<<< HEAD
-    if (this.listen(this.ports.input.channel) === '.') { return }
-    if (this.listen(this.ports.input.octave) === '.') { return }
-    if (this.listen(this.ports.input.note) === '.') { return }
-    if (!isNaN(this.listen(this.ports.input.note))) { return }
-=======
     const channel = this.listen(this.ports.channel)
     if (channel === '.') { return }
     const octave = this.listen(this.ports.octave)
     if (octave === '.') { return }
     const note = this.listen(this.ports.note)
     if (note === '.') { return }
->>>>>>> master
 
     if (!isNaN(note)) { return }
 
@@ -39,7 +32,7 @@ export default function OperatorMidi (orca, x, y, passive) {
     terminal.io.midi.send(channel, octave, note, velocity, length)
 
     if(channel < 4){
-      if(rawNote === "C"){
+      if(note === "C"){
         terminal.io.udp.send('f:9')  
       }
       else{
