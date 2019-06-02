@@ -50,6 +50,29 @@ export default function Midi (terminal) {
 
     if (!n || c === 127) { return }
 
+    // Light Listener - Start
+
+    if(channel < 4){
+      if(transposed.note === "C"){
+        terminal.io.udp.send('f:9')  
+      }
+      else{
+        terminal.io.udp.send('f:4')
+      }
+    }
+    else if(channel > 7 && channel < 12 && !isNaN(transposed.id)){
+      terminal.io.udp.send(`l:${parseInt(transposed.id)%16}`)
+    }
+    else if(channel > 2 && channel < 8 && !isNaN(transposed.id)){
+      terminal.io.udp.send(`n:${parseInt(transposed.id)%16}`)
+    }
+
+    if(!isNaN(transposed.note) && !isNaN(channel)){
+      terminal.io.udp.send(`d:${parseInt(transposed.note)%16};${parseInt(channel)}`)  
+    }
+
+    // Light Listener - End
+
     this.outputDevice().send([c, n, v])
   }
 
