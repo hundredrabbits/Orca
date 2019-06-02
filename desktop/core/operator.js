@@ -120,6 +120,7 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
     if (this.ports.output.sensitive !== true) { return false }
     for (const id in ports) {
       const value = this.listen(ports[id])
+      if (ports[id] === this.ports.output) { continue }
       if (value.length !== 1) { continue }
       if (value.toLowerCase() === value.toUpperCase()) { continue }
       if (`${value}`.toUpperCase() === `${value}`) { return true }
