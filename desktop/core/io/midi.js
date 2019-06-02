@@ -42,7 +42,7 @@ export default function Midi (terminal) {
     const transposed = this.transpose(item.note, item.octave)
     const channel = terminal.orca.valueOf(item.channel)
 
-    if(!transposed){ return }
+    if (!transposed) { return }
 
     const c = down === true ? 0x90 + channel : 0x80 + channel
     const n = transposed.id
