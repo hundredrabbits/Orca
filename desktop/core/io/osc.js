@@ -28,7 +28,8 @@ export default function Osc (terminal) {
   }
 
   this.play = function ({ path, msg }) {
-    if (!this.client) { return }
+    if (!this.client) { console.warn('OSC', 'Unavailable client'); return }
+    if (!msg) { console.warn('OSC', 'Empty message'); return }
     const oscMsg = new osc.Message(path)
     for (var i = 0; i < msg.length; i++) {
       oscMsg.append(terminal.orca.valueOf(msg.charAt(i)))
