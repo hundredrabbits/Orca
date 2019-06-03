@@ -80,6 +80,10 @@ Here's a list of supported operations.
 
 Orca operates linearly from the top-left, to the bottom-right, operators are executed in that sequence, and so the variables stored at the top, can be overwritten by the variables declared at the bottom.
 
+### Why is orca not making any sound?
+
+Orca is not a synthetizer, it is meant to control audio & visual software, or hardware. Orca will never include domain specific operators to generate music or to create pictures. It is designed to be as generic as possible.
+
 ## Golf
 
 ### Modulo
@@ -107,7 +111,15 @@ Will output lowercase `C`.
 ```
 H..
 CM1
-.c.
+```
+
+### Substract
+
+Will substract `8 - 3`.
+
+```
+.3Mz
+8Ax.
 ```
 
 ### Not Null
@@ -120,34 +132,3 @@ J.J
 cFc
 ```
 
-### Substract
-
-Will substract `8 - 3`.
-
-```
-.3Mz
-8Ax.
-```
-
-### Hold Bang
-
-```
-..S
-...
-Hh.
-SF.
-```
-
-### WN Corner
-
-```
-H....
-Ny..W
-```
-
-### ES Corner
-
-```
-....H
-E..xS
-```
