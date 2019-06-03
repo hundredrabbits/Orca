@@ -1,5 +1,7 @@
 'use strict'
 
+import transpose from '../transpose.js'
+
 export default function Midi (terminal) {
   this.mode = 0
 
@@ -18,7 +20,64 @@ export default function Midi (terminal) {
   }
 
   this.clear = function () {
+    this.stack = this.stack.filter((item) => { return item })
+  }
 
+  this.run = function () {
+    for (const id in this.stack) {
+      if (this.stack[id].length < 1) {
+        this.release(this.stack[id], id)
+      }
+      if (!this.stack[id]) { continue }
+      if (this.stack[id].isPlayed === false) {
+        this.press(this.stack[id])
+      }
+      this.stack[id].length--
+    }
+  }
+
+  this.trigger = function (item, down) {
+    if (!this.outputDevice()) { console.warn('Midi', 'No midi output!'); return }
+
+    const transposed = this.transpose(item.note, item.octave)
+    const channel = terminal.orca.valueOf(item.channel)
+
+    if (!transposed) { return }
+
+    const c = down === true ? 0x90 + channel : 0x80 + channel
+    const n = transposed.id
+    const v = parseInt((item.velocity / 16) * 127)
+
+    if (!n || c === 127) { return }
+
+    this.outputDevice().send([c, n, v])
+  }
+
+  this.press = function (item) {
+    if (!item) { return }
+    this.trigger(item, true)
+    item.isPlayed = true
+  }
+
+  this.release = function (item, id) {
+    if (!item) { return }
+    this.trigger(item, false)
+    delete this.stack[id]
+  }
+
+  this.silence = function () {
+    for (const id in this.stack) {
+      this.release(this.stack[id])
+    }
+  }
+
+  this.send = function (channel, octave, note, velocity, length, isPlayed = false) {
+    const item = { channel, octave, note, velocity, length, isPlayed }
+    // Retrigger duplicates
+    for (const id in this.stack) {
+      if (this.stack[id].channel === channel && this.stack[id].octave === octave && this.stack[id].note === note) { this.release(item, id) }
+    }
+    this.stack.push(item)
   }
 
   this.update = function () {
@@ -50,58 +109,13 @@ export default function Midi (terminal) {
     terminal.controller.commit()
   }
 
-  this.run = function () {
-    this.stack = this.stack.filter((item) => {
-      const alive = item[4] > 0
-      const played = item[5]
-      if (alive !== true) {
-        this.trigger(item, false)
-      } else if (played !== true) {
-        this.trigger(item, true)
-      }
-      item[4]--
-      return alive
-    })
-  }
-
-  this.trigger = function (item, down) {
-    if (!this.outputDevice()) { console.warn('Midi', 'No midi output!'); return }
-
-    const channel = down === true ? 0x90 + item[0] : 0x80 + item[0]
-    const note = clamp(24 + (item[1] * 12) + item[2], 0, 127)
-    const velocity = clamp(item[3], 0, 127)
-
-    this.outputDevice().send([channel, note, velocity])
-    item[5] = true
-  }
-
-  this.send = function (channel, octave, note, velocity, length, played = false) {
-    for (const id in this.stack) {
-      const item = this.stack[id]
-      if (item[0] === channel && item[1] === octave && item[2] === note) {
-        item[3] = velocity
-        item[4] = length
-        item[5] = played
-        return
-      }
-    }
-    this.stack.push([channel, octave, note, velocity, length, played])
-  }
-
-  this.silence = function () {
-    this.stack = this.stack.filter((item) => {
-      this.trigger(item, false)
-      return false
-    })
-  }
-
   // Keys
 
-  this.press = function (key) {
+  this.keyDown = function (key) {
     this.key = parseInt(key)
   }
 
-  this.release = function () {
+  this.keyUp = function () {
     this.key = null
   }
 
@@ -128,10 +142,10 @@ export default function Midi (terminal) {
     switch (msg.data[0]) {
       // Keys
       case 0x90:
-        this.press(msg.data[1])
+        this.keyDown(msg.data[1])
         break
       case 0x80:
-        this.release()
+        this.keyUp()
         break
       // Clock
       case 0xF8:
@@ -205,8 +219,21 @@ export default function Midi (terminal) {
 
   // UI
 
+  this.transpose = function (n, o = 3) {
+    if (!transpose[n]) { return null }
+    const octave = clamp(parseInt(o) + parseInt(transpose[n].charAt(1)), 0, 8)
+    const note = transpose[n].charAt(0)
+    const value = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'].indexOf(note)
+    const id = clamp((octave * 12) + value + 24, 0, 127)
+    return { id, value, note, octave }
+  }
+
   this.toString = function () {
     return this.outputDevice() ? `${this.outputDevice().name}` : 'No Midi'
+  }
+
+  this.length = function () {
+    return this.stack.length
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }

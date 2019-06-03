@@ -105,9 +105,9 @@ cA1.
 Will output lowercase `C`.
 
 ```
-H... 
-CA1.
-.dAz
+H..
+CM1
+.c.
 ```
 
 ### Not Null

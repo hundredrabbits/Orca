@@ -62,10 +62,6 @@ npm start
 - `;` **udp**: Sends UDP message.
 - `=` **osc**(*path*): Sends OSC message.
 
-#### Receive
-
-- `&` **mono**: Receive MIDI note.
-
 ## MIDI
 
 The [MIDI](https://en.wikipedia.org/wiki/MIDI) operator `:` takes up to 5 inputs('channel, 'octave, 'note, velocity, length). 
@@ -162,6 +158,7 @@ The midi operator interprets any letter above the chromatic scale as a transpose
 - [Pilot](https://github.com/hundredrabbits/pilot), a companion synth tool.
 - [Aioi](https://github.com/MAKIO135/aioi), a companion to send complex OSC messages.
 - [Estra](https://github.com/kyleaedwards/estra), a companion sampler tool.
+- [Gull](https://github.com/qleonetti/gull), a companion sampler, slicer and synth tool.
 - [Sonic Pi](https://in-thread.sonic-pi.net/t/using-orca-to-control-sonic-pi-with-osc/2381/), a livecoding environment.
 
 ## Tutorials

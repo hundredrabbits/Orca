@@ -30,7 +30,7 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
   this.output = function (g) {
     if (!this.ports.output) { console.warn(this.name, 'Trying to output, but no port'); return }
     if (!g) { return }
-    orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, this.requireUC() === true ? `${g}`.toUpperCase() : g)
+    orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, this.shouldUpperCase() === true ? `${g}`.toUpperCase() : g)
   }
 
   this.bang = function (b) {
@@ -132,14 +132,12 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
 
   // Notes tools
 
-  this.transpose = function (n, o = 3) {
-    if (!transpose[n]) { return { note: n, octave: o } }
-    const note = transpose[n].charAt(0)
-    const octave = clamp(parseInt(transpose[n].charAt(1)) + o, 0, 8)
-    const value = OCTAVE.indexOf(note)
-    const id = clamp((octave * 12) + value, 0, 127)
-    const real = id < 89 ? Object.keys(transpose)[id - 45] : null
-    return { id, value, note, octave, real }
+  this.shouldUpperCase = function (ports = this.ports) {
+    if (!this.ports.output || !this.ports.output.sensitive) { return false }
+    const value = this.listen({ x: 1, y: 0 })
+    if (value.toLowerCase() === value.toUpperCase()) { return false }
+    if (value.toUpperCase() !== value) { return false }
+    return true
   }
 
   this.resolveDegree = function(key, scaleIndex, degree) {
@@ -154,20 +152,18 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
       if (degree == 0) degree = scale.length;
     }
 
-    const noteIndex = scale[degree-1];
+    let noteIndex = scale[degree-1];
     if(keyIndex!==0) {
-      // If not first then shift the array
-      const keyOctave = OCTAVE.slice(keyIndex,OCTAVE.length).concat(OCTAVE.slice(0,keyIndex))
       if(noteIndex>=(12-keyIndex)) {
         octave += 1; // Shift octave for the last keys.
       }
-      return {"note": keyOctave[noteIndex], "octave": octave};
-    } else {
-      return {"note": OCTAVE[noteIndex], "octave": octave};
+      noteIndex = (degree+keyIndex) % 12 // Set offset for the current key
     }
+      return {"note": OCTAVE[noteIndex], "octave": octave};
   }
 
   // Docs
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
+
 }
