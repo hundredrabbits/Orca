@@ -121,7 +121,7 @@ All commands have a shorthand equivalent to their first two characters, for exam
 - `find:aV` Sends cursor to string `aV`.
 - `select:3;4;5;6` Move cursor to position `3,4`, and select size `5:6`.
 - `inject:pattern` Inject the local file `pattern.orca`.
-- `write:H12;34` Writes glyph `H`, at `12,34`.
+- `write:H;12;34` Writes glyph `H`, at `12,34`.
 
 ### Project Mode
 
