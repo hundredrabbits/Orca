@@ -165,8 +165,17 @@ export default function Commander (terminal) {
     if (this.editorMode === 'visual') { this.visualModeKeyMapping(event); return }
 
     if (this.editorMode === 'replace') {
+      console.log(event.keyCode, event.key);
       this.insertModeKeyMapping(event)
-      if (event.keyCode >= 48 && event.keyCode <= 90) {
+      if (
+        (event.keyCode >= 48 && event.keyCode <= 90) ||
+        event.key === '=' ||
+        event.key === ';' ||
+        event.key === '*' ||
+        event.key === '%' ||
+        event.key === '!' ||
+        event.key === '#'
+      ) {
         this.setEditorMode('command')
       }
       return
