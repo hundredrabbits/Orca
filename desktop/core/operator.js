@@ -119,19 +119,6 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
     return a
   }
 
-  this.requireUC = function (ports = this.ports) {
-    if (this.ports.output.sensitive !== true) { return false }
-    for (const id in ports) {
-      const value = this.listen(ports[id])
-      if (value.length !== 1) { continue }
-      if (value.toLowerCase() === value.toUpperCase()) { continue }
-      if (`${value}`.toUpperCase() === `${value}`) { return true }
-    }
-    return false
-  }
-
-  // Notes tools
-
   this.shouldUpperCase = function (ports = this.ports) {
     if (!this.ports.output || !this.ports.output.sensitive) { return false }
     const value = this.listen({ x: 1, y: 0 })
