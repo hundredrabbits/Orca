@@ -1,6 +1,7 @@
 'use strict'
 
 import transpose from '../transpose.js'
+import {OCTAVE} from '../scales.js'
 
 export default function Midi (terminal) {
   this.mode = 0
@@ -223,7 +224,7 @@ export default function Midi (terminal) {
     if (!transpose[n]) { return null }
     const octave = clamp(parseInt(o) + parseInt(transpose[n].charAt(1)), 0, 8)
     const note = transpose[n].charAt(0)
-    const value = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'].indexOf(note)
+    const value = OCTAVE.indexOf(note)
     const id = clamp((octave * 12) + value + 24, 0, 127)
     return { id, value, note, octave }
   }
