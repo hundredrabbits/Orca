@@ -16,11 +16,13 @@ export default function OperatorMidi (orca, x, y, passive) {
     this.ports.length = { x: 5, y: 0, default: '1', clamp: { min: 0, max: 16 } }
     this.ports.key = {x: 6, y: 0}
     this.ports.scale = {x: 7, y: 0, default: '0'}
+    this.ports.page = {x: 8, y: 0, default: '0'}
 
     this.operation = function (force = false) {
         if (!this.hasNeighbor('*') && force === false) { return }
         const key = this.listen(this.ports.key)
-        const scale = this.listen(this.ports.scale)
+        const scale = this.listen(this.ports.scale, true)
+        const page = this.listen(this.ports.page, true)
         const channel = this.listen(this.ports.channel)
         if (channel === '.') { return }
         let octave = this.listen(this.ports.octave)
@@ -29,7 +31,7 @@ export default function OperatorMidi (orca, x, y, passive) {
         if (note === '.') { return }
 
         if(key!=='.' && OCTAVE.includes(key)) {
-            const noteAndOct = this.resolveDegree(key,scale,note)
+            const noteAndOct = this.resolveDegree(note,key,scale,page)
             note = noteAndOct.note;
             octave = parseInt(octave) + noteAndOct.octave;
         }

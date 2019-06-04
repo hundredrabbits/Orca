@@ -140,10 +140,11 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
     return true
   }
 
-  this.resolveDegree = function(key, scaleIndex, degree) {
-    const scale = SCALES[scaleIndex];
-    const keyIndex = OCTAVE.indexOf(key);
-    let octave = 0;
+  this.resolveDegree = function(degree, key, scaleIndex, page) {
+    const pageSize = page*36
+    const scale = SCALES[pageSize ? (pageSize+scaleIndex<SCALES.length ? pageSize+scaleIndex : (pageSize+scaleIndex)%SCALES.length) : scaleIndex].scale
+    const keyIndex = OCTAVE.indexOf(key)
+    let octave = 0
 
     degree+=1; // Makes degree calculations easier
     if (degree > scale.length) {

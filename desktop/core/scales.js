@@ -1,64 +1,99 @@
 'use strict'
 export const OCTAVE = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B']
-export const SCALES = [
-    [0,1,2,3,4,5,6,7,8,9,10,11], //chromatic
-    [0,2,4,5,7,9,11], //major
-    [0,2,3,5,7,8,10], //minor
-    [0,2,3,4,7,9], //blues_major
-    [0,3,5,6,7,10], //blues_minor
-    [0,2,4,7,9], //major_pentatonic
-    [0,3,5,7,10], //minor_pentatonic
-    [0,2,4,5,7,8,11], //harmonic_major
-    [0,2,3,5,7,8,11], //harmonic_minor
-    [0,2,4,5,7,8,10], //melodic_major
-    [0,2,3,5,7,9,11], //melodic_minor
-    [0,2,4,6,7,8,10], //lydian_minor
-    [0,2,4,6,7,9,11], //lydian_major
-    [0,2,4,5,7,9,10], //mixolydian
-    [0,2,3,5,6,8,9,11], //octatonic
-    [0,2,3,5,7,9,10], //dorian
-    [0,1,3,4,6,7,9,10], //diminished
-    [0,1,3,4,6,7,9,10], //messiaen2
-    [0,1,3,4,6,8,10], //super_locrian
-    [0,1,3,5,6,8,10], //locrian
-    [0,1,3,5,7,8,10], //phrygian
-    [0,3,4,7,8,11], //augmented
-    [0,1,3,5,7,8,11], //neapolitan_minor
-    [0,1,3,5,7,9,11], //neapolitan_major
-    [0,1,3,5,8,10], //hex_phrygian
-    [0,1,3,6,7,8,11], //todi
-    [0,1,3,7,8], //pelog
-    [0,1,4,5,7,8,10], //spanish
-    [0,1,4,5,7,8,11], //bhairav
-    [0,1,4,5,7,9,10], //ahirbhairav
-    [0,1,4,5,8,9], //augmented2
-    [0,1,4,6,7,8,11], //purvi
-    [0,1,4,6,7,9,11], //marva
-    [0,1,4,6,8,10,11], //enigmatic
-    [0,1,4,7,9], //scriabin
-    [0,1,5,6,7,11], //messiaen5
-    /* Not accessible after index 36 */
-    [0,1,5,6,10], //iwato
-    [0,2,3,4,6,7,8,10,11], //messiaen3
-    [0,2,3,5,7,10], //hex_dorian
-    [0,2,3,6,7,8,11], //hungarian_minor
-    [0,2,3,6,7,9,10], //romanian_minor
-    [0,2,3,7,8], //hirajoshi
-    [0,2,3,7,9], //kumoi
-    [0,1,2,3,5,6,7,8,9,11], //messiaen7
-    [0,1,2,5,6,7,8,11], //messiaen4
-    [0,2,4,5,6,8,10,11], //messiaen6
-    [0,2,4,5,6,8,10], //locrian_major
-    [0,2,4,5,7,8,10], //bartok
-    [0,2,4,5,7,9], //hex_major6
-    [0,2,4,6,8,10,11], //leading_whole
-    [0,2,4,6,8,10], //whole
-    [0,2,4,6,11], //prometheus
-    [0,2,4,7,9,11], //hex_major7
-    [0,2,5,7,9,10], //hex_sus
-    [0,2,5,7,9], //ritusen
-    [0,2,5,7,10], //egyptian
-    [0,3,5,8,10], //jiao
-    [0,4,5,7,10], //indian
-    [0,4,6,7,11], //chinese
-]
+export const SCALES = [{"name":"Chromatic", "scale":[0,1,2,3,4,5,6,7,8,9,10,11]},
+    {"name":"Major", "scale":[0,2,4,5,7,9,11]},
+    {"name":"Minor", "scale":[0,2,3,5,7,8,10]},
+    {"name":"Major Blues", "scale":[0,2,3,4,7,9]},
+    {"name":"Minor Blues", "scale":[0,3,5,6,7,10]},
+    {"name":"Pentatonic Major", "scale":[0,2,4,7,9]},
+    {"name":"Pentatonic Minor", "scale":[0,3,5,7,10]},
+    {"name":"Aeolian", "scale":[0,2,3,5,7,8,10]},
+    {"name":"Ahir Bhairav", "scale":[0,1,4,5,7,9,10]},
+    {"name":"Algerian", "scale":[0,2,3,5,6,7,8,11]},
+    {"name":"Asian", "scale":[0,3,5,7,10]},
+    {"name":"Augmented", "scale":[0,3,4,7,8,11]},
+    {"name":"Augmented Second", "scale":[0,1,4,5,8,9]},
+    {"name":"Balinese", "scale":[0,1,3,7,8]},
+    {"name":"Bhairav", "scale":[0,1,4,5,7,9,10]},
+    {"name":"Byzantine / Hungarian Gypsy / Magams", "scale":[0,1,4,5,7,8,11]},
+    {"name":"Chad Gadyo", "scale":[0,2,3,5,7]},
+    {"name":"Chaio", "scale":[0,2,5,8,10]},
+    {"name":"Chinese", "scale":[0,4,6,7,11]},
+    {"name":"Diminished", "scale":[0,2,3,5,6,8,9,11]},
+    {"name":"Dominant Diminished", "scale":[0,1,3,4,6,7,9,10]},
+    {"name":"Dorian", "scale":[0,2,3,5,7,9,10]},
+    {"name":"Dorian Hex", "scale":[0,2,3,5,7,10]},
+    {"name":"Dorico Flamenco", "scale":[0,1,4,5,7,8,10]},
+    {"name":"Egyptian", "scale":[0,2,5,7,10]},
+    {"name":"Eight Tone Spanish", "scale":[0,1,3,4,5,6,8,10]},
+    {"name":"Enigmatic", "scale":[0,1,4,5,6,8,10,11]},
+    {"name":"Enigmatic Major", "scale":[0,1,4,6,8,10,11]},
+    {"name":"Enigmatic Minor", "scale":[0,1,3,6,7,10,11]},
+    {"name":"Ethiopian", "scale":[0,2,4,5,7,8,11]},
+    {"name":"Flamenco", "scale":[0,1,3,4,5,7,8,10]},
+    {"name":"Geez", "scale":[0,2,3,5,7,8,10]},
+    {"name":"Harmonic Major", "scale":[0,2,4,5,7,8,11]},
+    {"name":"Harmonic Minor", "scale":[0,2,3,5,7,8,11]},
+    {"name":"Hungarian Minor", "scale":[0,2,3,6,7,8,11]},
+    {"name":"Hex Major7", "scale":[0,2,4,7,9,11]},
+    {"name":"Hex Sus", "scale":[0,2,5,7,9,10]},
+    {"name":"Hawaiian", "scale":[0,2,3,7,9,11]},
+    {"name":"Hirajoshi", "scale":[0,2,3,7,8]},
+    {"name":"Hungarian Major", "scale":[0,3,4,6,7,9,10]},
+    {"name":"Indian", "scale":[0,4,5,7,10]},
+    {"name":"Ionian", "scale":[0,2,4,5,7,9,11]},
+    {"name":"Iwato", "scale":[0,1,5,6,10]},
+    {"name":"Japanese", "scale":[0,1,5,7,10]},
+    {"name":"Jazz Minor Inverse", "scale":[0,1,3,5,7,9,10]},
+    {"name":"Jiao", "scale":[0,3,5,8,10]},
+    {"name":"Kumoi", "scale":[0,2,3,7,9]},
+    {"name":"Kung", "scale":[0,2,4,6,9]},
+    {"name":"Locrian", "scale":[0,1,3,5,6,8,10]},
+    {"name":"Locrian Major / Arabic", "scale":[0,2,4,5,6,8,10]},
+    {"name":"Lydian", "scale":[0,2,4,6,7,9,11]},
+    {"name":"Lydian Augmented", "scale":[0,2,4,6,8,9,11]},
+    {"name":"Lydian Dominant", "scale":[0,2,4,6,7,9,10]},
+    {"name":"Leading Whole", "scale":[0,2,4,6,8,10,11]},
+    {"name":"Magen Abot", "scale":[0,1,3,4,6,8,9,11]},
+    {"name":"Major Bebop", "scale":[0,2,4,5,7,8,9,11]},
+    {"name":"Major Diatonic Hex", "scale":[0,2,4,5,7,9]},
+    {"name":"Marva", "scale":[0,1,4,6,7,9,11]},
+    {"name":"Melodic Major / Bartok / Hindu", "scale":[0,2,4,5,7,8,10]},
+    {"name":"Melodic Minor", "scale":[0,2,3,5,7,9,11]},
+    {"name":"Messiaen1 / Whole tone", "scale":[0,2,4,6,8,10]},
+    {"name":"Messiaen2", "scale":[0,1,3,4,6,7,9,10]},
+    {"name":"Messiaen3", "scale":[0,2,3,4,6,7,8,10,11]},
+    {"name":"Messiaen4", "scale":[0,1,2,5,6,7,8,11]},
+    {"name":"Messiaen5", "scale":[0,1,5,6,7,11]},
+    {"name":"Messiaen6", "scale":[0,2,4,5,6,8,10,11]},
+    {"name":"Messiaen7", "scale":[0,1,2,3,5,6,7,8,9,11]},
+    {"name":"Minor Bebop", "scale":[0,2,3,4,5,7,9,10]},
+    {"name":"Mixo-blues", "scale":[0,2,3,4,5,6,7,9,10,11]},
+    {"name":"Mixolydian", "scale":[0,2,4,5,7,9,10]},
+    {"name":"Neapolitan Major", "scale":[0,1,3,5,7,9,11]},
+    {"name":"Neapolitan Minor", "scale":[0,1,3,5,7,8,11]},
+    {"name":"Neveseri", "scale":[0,1,3,6,7,8,10,11]},
+    {"name":"Nohkan", "scale":[0,2,5,6,8,9,11]},
+    {"name":"Nine Tone", "scale":[0,2,3,4,6,7,8,9,11]},
+    {"name":"Octatonic Half Whole", "scale":[0,1,3,4,6,7,9,10]},
+    {"name":"Octatonic Whole Half", "scale":[0,2,3,5,6,8,9,11]},
+    {"name":"Oriental", "scale":[0,1,4,5,6,9,10]},
+    {"name":"Overtone", "scale":[0,2,4,6,7,9,10]},
+    {"name":"Persian", "scale":[0,1,4,5,6,8,11]},
+    {"name":"Prometheus", "scale":[0,2,4,6,9,10]},
+    {"name":"Phrygian", "scale":[0,1,3,5,7,8,10]},
+    {"name":"Phrygian Hex", "scale":[0,3,5,7,8,10]},
+    {"name":"Pseudo Turkish", "scale":[0,1,3,5,6,9,10]},
+    {"name":"Pyramid Hex", "scale":[0,2,3,5,6,9]},
+    {"name":"Purvi", "scale":[0,1,4,6,7,8,11]},
+    {"name":"Prometheus", "scale":[0,2,4,6,11]},
+    {"name":"Ritusen", "scale":[0,2,5,7,9]},
+    {"name":"Romanian Minor", "scale":[0,2,3,6,7,9,10]},
+    {"name":"Sabach", "scale":[0,2,3,4,7,8,10]},
+    {"name":"Spanish Gypsy", "scale":[0,1,4,5,7,8,10]},
+    {"name":"Super Locrian", "scale":[0,1,3,4,6,8,10]},
+    {"name":"Scriabin", "scale":[0,1,4,7,9]},
+    {"name":"Todi", "scale":[0,1,3,5,7,8,10]},
+    {"name":"Ultra Locrian", "scale":[0,1,3,4,6,8,9]},
+    {"name":"Yo", "scale":[0,2,5,7,9]},
+    {"name":"Zirafkend", "scale":[0,2,3,5,7,8,9,11]}]
