@@ -254,8 +254,8 @@ export default function Terminal () {
       this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.mode === 1 ? '+' : ''}`, col * 0, this.orca.h + 1, this.grid.w, this.cursor.mode === 1 ? 1 : 2)
       this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, this.orca.h + 1, this.grid.w)
       this.write(`${this.cursor.inspect()}`, col * 2, this.orca.h + 1, this.grid.w)
-      if(this.cursor.scalePort()) {
-        this.write(`${this.cursor.scalePort()}`, col * 4, this.orca.h + 1, this.grid.w*6)
+      if(this.cursor.inspectContext()) {
+        this.write(`${this.cursor.inspectContext()}`, col * 4, this.orca.h + 1, this.grid.w*6)
       }
       this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, col * 3, this.orca.h + 1, this.grid.w)
     }

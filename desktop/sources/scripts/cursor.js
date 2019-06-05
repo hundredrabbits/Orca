@@ -1,7 +1,7 @@
 'use strict'
 
 const { clipboard } = require('electron')
-import {SCALES} from "../../core/scales.js";
+import {OCTAVE,SCALES} from "../../core/scales.js";
 
 export default function Cursor (terminal) {
   this.x = 0
@@ -160,15 +160,21 @@ export default function Cursor (terminal) {
     return 'empty'
   }
 
-  this.scalePort = function (name = true, ports = false) {
+  this.inspectContext = function (name = true, ports = false) {
     const port = terminal.portAt(this.x, this.y)
-    if (port && port[3]===':-scale') {
+    if (port && port[3].endsWith('-scale')) {
       let scaleIndex = terminal.orca.glyphAt(this.x, this.y)
-      if(scaleIndex==='.') { return null }
+      if(scaleIndex==='.') { return "Input: [1-z]" }
       scaleIndex = parseInt(scaleIndex,36)
       let pageSize = terminal.orca.glyphAt(this.x+1, this.y)
       pageSize = pageSize==='.' ? null : parseInt(pageSize,36)*36
       return SCALES[pageSize ? (pageSize+scaleIndex<SCALES.length ? pageSize+scaleIndex : (pageSize+scaleIndex)%SCALES.length) : scaleIndex].name }
+    else if (port && port[3].endsWith('-key')) {
+      const key = terminal.orca.glyphAt(this.x, this.y)
+      if(key==='.') { return "Input: [CcDdEFfGgAaB]" }
+      else if(OCTAVE.includes(key)) { return key }
+      else { return "Invalid key" }
+    }
     return null
   }
 

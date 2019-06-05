@@ -135,19 +135,19 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
 
     degree+=1; // Makes degree calculations easier
     if (degree > scale.length) {
-      octave = ~~((degree-1) / scale.length);
-      degree = degree % scale.length;
-      if (degree == 0) degree = scale.length;
+      octave = ~~((degree-1) / scale.length)
+      degree = degree % scale.length
+      if (degree == 0) degree = scale.length
     }
 
-    let noteIndex = scale[degree-1];
+    let noteIndex = scale[degree-1]
     if(keyIndex!==0) {
       if(noteIndex>=(12-keyIndex)) {
         octave += 1; // Shift octave for the last keys.
       }
       noteIndex = (degree+keyIndex) % 12 // Set offset for the current key
     }
-      return {"note": OCTAVE[noteIndex], "octave": octave};
+      return {"note": OCTAVE[noteIndex], "octave": octave}
   }
 
   // Docs
