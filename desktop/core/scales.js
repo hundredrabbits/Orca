@@ -15,7 +15,7 @@ export const SCALES = [{"name":"Chromatic", "scale":[0,1,2,3,4,5,6,7,8,9,10,11]}
     {"name":"Augmented Second", "scale":[0,1,4,5,8,9]},
     {"name":"Balinese", "scale":[0,1,3,7,8]},
     {"name":"Bhairav", "scale":[0,1,4,5,7,9,10]},
-    {"name":"Byzantine / Hungarian Gypsy / Magams", "scale":[0,1,4,5,7,8,11]},
+    {"name":"Byzantine / Magams", "scale":[0,1,4,5,7,8,11]},
     {"name":"Chad Gadyo", "scale":[0,2,3,5,7]},
     {"name":"Chaio", "scale":[0,2,5,8,10]},
     {"name":"Chinese", "scale":[0,4,6,7,11]},
