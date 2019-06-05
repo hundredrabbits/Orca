@@ -20,13 +20,14 @@ export default function OperatorMidi (orca, x, y, passive) {
 
     this.operation = function (force = false) {
         if (!this.hasNeighbor('*') && force === false) { return }
-        const key = this.listen(this.ports.key)
-        const scale = this.listen(this.ports.scale, true)
-        const page = this.listen(this.ports.page, true)
+
         const channel = this.listen(this.ports.channel)
         if (channel === '.') { return }
         let octave = this.listen(this.ports.octave)
         if (octave === '.') { return }
+        const key = this.listen(this.ports.key)
+        const scale = this.listen(this.ports.scale, true)
+        const page = this.listen(this.ports.page, true)
         let note = this.listen(this.ports.note, key!=='.' ? true : false)
         if (note === '.') { return }
 

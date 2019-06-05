@@ -14,6 +14,8 @@ export default function OperatorMono (orca, x, y, passive) {
     this.ports.note = { x: 3, y: 0 }
     this.ports.velocity = { x: 4, y: 0, default: 'f', clamp: { min: 0, max: 16 } }
     this.ports.length = { x: 5, y: 0, default: '1', clamp: { min: 0, max: 16 } }
+    this.ports.key = {x: 6, y: 0}
+    this.ports.scale = {x: 7, y: 0, default: '0'}
     this.ports.page = {x: 8, y: 0, default: '0'}
 
     this.operation = function (force = false) {
@@ -23,11 +25,12 @@ export default function OperatorMono (orca, x, y, passive) {
         if (channel === '.') { return }
         let octave = this.listen(this.ports.octave)
         if (octave === '.') { return }
-        let note = this.listen(this.ports.note, key!=='.' ? true : false)
-        if (note === '.') { return }
         const key = this.listen(this.ports.key)
         const scale = this.listen(this.ports.scale, true)
         const page = this.listen(this.ports.page, true)
+        let note = this.listen(this.ports.note, key!=='.' ? true : false)
+        if (note === '.') { return }
+
 
         if(key!=='.' && OCTAVE.includes(key)) {
             const noteAndOct = this.resolveDegree(note,key,scale,page)
