@@ -20,6 +20,7 @@ export default function Commander (terminal) {
     // Ports
     'osc': (val) => { terminal.io.osc.select(parseInt(val)) },
     'udp': (val) => { terminal.io.udp.select(parseInt(val)) },
+    'ip': (val) => { terminal.io.setIp(val) },
     // Cursor
     'copy': (val) => { terminal.cursor.copy() },
     'paste': (val) => { terminal.cursor.paste(true) },

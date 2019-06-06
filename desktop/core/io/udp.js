@@ -27,14 +27,15 @@ export default function Udp (terminal) {
   }
 
   this.play = function (data) {
-    this.server.send(Buffer.from(`${data}`), this.port, '127.0.0.1', (err) => {
+    this.server.send(Buffer.from(`${data}`), this.port, terminal.io.ip, (err) => {
       if (err) { console.warn(err) }
     })
   }
 
   this.select = function (port = this.options.default) {
-    if (isNaN(port) || port < 1000) { console.warn('Unavailable port'); return }
-    console.info('OSC', `Selected port: ${port}`)
+    if (parseInt(port) === this.port) { console.warn('UDP', 'Already selected'); return }
+    if (isNaN(port) || port < 1000) { console.warn('UDP', 'Unavailable port'); return }
+    console.info('UDP', `Selected port: ${port}`)
     this.port = parseInt(port)
     this.update()
   }
