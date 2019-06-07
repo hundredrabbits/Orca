@@ -71,7 +71,7 @@
       terminal.controller.add("default","UDP","Default")
       terminal.controller.add("default","OSC","Default")
 
-      terminal.controller.add("default","Theme","Open Theme",() => { terminal.theme.open() },"CmdOrCtrl+Shift+O")
+      terminal.controller.add("default","Theme","Open Theme",() => { terminal.theme.open(); terminal.updateColors() },"CmdOrCtrl+Shift+O")
       terminal.controller.add("default","Theme","Reset Theme",() => { terminal.theme.reset() },"CmdOrCtrl+Shift+Backspace")
       terminal.controller.addSpacer('default', 'Theme', 'Download')
       terminal.controller.add("default","Theme","Download Themes..",() => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes') })

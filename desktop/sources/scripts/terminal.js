@@ -45,7 +45,7 @@ export default function Terminal () {
     host.appendChild(this.el)
     this.theme.install(host)
 
-    this.operatorColors = hueDerivedColors(this.theme.active.b_med)
+    this.updateColors()
   }
 
   this.start = function () {
@@ -77,6 +77,10 @@ export default function Terminal () {
     this.drawProgram()
     this.drawInterface()
     this.drawGuide()
+  }
+
+  this.updateColors = function () {
+    this.operatorColors = hueDerivedColors(this.theme.active.b_med)
   }
 
   this.reset = function () {
