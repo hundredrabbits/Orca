@@ -9,21 +9,15 @@ export default function OperatorUdp (orca, x, y, passive) {
   this.info = 'Sends UDP message'
 
   this.operation = function (force = false) {
-    if (!this.hasNeighbor('*') && force === false) { return }
-
-    for (let x = 1; x <= 36; x++) {
-      const g = orca.glyphAt(this.x + x, this.y)
-      if (g === '.') { break }
-      orca.lock(this.x + x, this.y)
-    }
-
     let msg = ''
     for (let x = 1; x <= 36; x++) {
       const g = orca.glyphAt(this.x + x, this.y)
+      orca.lock(this.x + x, this.y)
       if (g === '.') { break }
       msg += g
     }
 
+    if (!this.hasNeighbor('*') && force === false) { return }
     if (msg === '') { return }
 
     this.draw = false

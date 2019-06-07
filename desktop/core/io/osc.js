@@ -8,7 +8,7 @@ export default function Osc (terminal) {
   this.options = { default: 49162, tidalCycles: 6010, sonicPi: 4559, superCollider: 57120 }
 
   this.start = function () {
-    console.info('OSC Starting..')
+    console.info('OSC', 'Starting..')
     this.setup()
     this.select()
   }
@@ -28,7 +28,8 @@ export default function Osc (terminal) {
   }
 
   this.play = function ({ path, msg }) {
-    if (!this.client) { return }
+    if (!this.client) { console.warn('OSC', 'Unavailable client'); return }
+    if (!msg) { console.warn('OSC', 'Empty message'); return }
     const oscMsg = new osc.Message(path)
     for (var i = 0; i < msg.length; i++) {
       oscMsg.append(terminal.orca.valueOf(msg.charAt(i)))
@@ -39,7 +40,8 @@ export default function Osc (terminal) {
   }
 
   this.select = function (port = this.options.default) {
-    if (isNaN(port) || port < 1000) { console.warn('Unavailable port'); return }
+    if (parseInt(port) === this.port) { console.warn('OSC', 'Already selected'); return }
+    if (isNaN(port) || port < 1000) { console.warn('OSC', 'Unavailable port'); return }
     console.info('OSC', `Selected port: ${port}`)
     this.port = parseInt(port)
     this.setup()
@@ -54,8 +56,10 @@ export default function Osc (terminal) {
     terminal.controller.commit()
   }
 
-  this.setup = function (ip = '127.0.0.1') {
+  this.setup = function () {
+    if (!this.port) { return }
     if (this.client) { this.client.close() }
-    this.client = new osc.Client(ip, this.port)
+    this.client = new osc.Client(terminal.io.ip, this.port)
+    console.info('OSC', 'Started client at ' + terminal.io.ip + ':' + this.port)
   }
 }
