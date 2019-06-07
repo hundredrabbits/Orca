@@ -27,11 +27,7 @@ export default function Udp (terminal) {
   }
 
   this.play = function (data) {
-<<<<<<< HEAD
-    this.server.send(Buffer.from(`${data}`), this.port, '192.168.2.16', (err) => {
-=======
     this.server.send(Buffer.from(`${data}`), this.port, terminal.io.ip, (err) => {
->>>>>>> master
       if (err) { console.warn(err) }
     })
   }
