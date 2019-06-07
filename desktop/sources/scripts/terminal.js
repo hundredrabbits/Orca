@@ -257,6 +257,13 @@ export default function Terminal () {
       this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, col * 3, this.orca.h + 1, this.grid.w)
     }
 
+    // If cursor under the cursor show legend for it
+    const port = this.ports[this.orca.indexAt(this.cursor.x, this.cursor.y)]
+    if (port && port[2] === 0) {
+      const operator = this.orca.operatorAt(this.cursor.x, this.cursor.y)
+      this.write(`${operator.name}: ${operator.info}`, col * 0, this.orca.h + 2)
+    }
+
     this.write(`${this.orca.w}x${this.orca.h}`, col * 0, this.orca.h, this.grid.w)
     this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, col * 1, this.orca.h, this.grid.w)
     this.write(`${this.source}`, col * 2, this.orca.h, this.grid.w, this.source.queue.length > terminal.orca.f ? 3 : 2)
@@ -322,7 +329,7 @@ export default function Terminal () {
   }
 
   this.resize = function (force = false) {
-    const size = { w: window.innerWidth - 60, h: window.innerHeight - (60 + this.tile.h * 2) }
+    const size = { w: window.innerWidth - 60, h: window.innerHeight - (60 + this.tile.h * 3) }
     const tiles = { w: Math.ceil(size.w / this.tile.w), h: Math.ceil(size.h / this.tile.h) }
 
     if (this.orca.w === tiles.w && this.orca.h === tiles.h && force === false) { return }
