@@ -42,7 +42,7 @@ export default function Midi (terminal) {
     const transposed = this.transpose(item.note, item.octave)
     const channel = terminal.orca.valueOf(item.channel)
 
-    if(!transposed){ return }
+    if (!transposed) { return }
 
     const c = down === true ? 0x90 + channel : 0x80 + channel
     const n = transposed.id
@@ -50,29 +50,32 @@ export default function Midi (terminal) {
 
     if (!n || c === 127) { return }
 
+    this.outputDevice().send([c, n, v])
+
     // Light Listener - Start
 
-    if(channel < 4){
-      if(transposed.note === "C"){
-        terminal.io.udp.send('f:9')  
-      }
-      else{
+    if (down !== true) { return }
+
+    // Drums
+    if (channel >= 0 && channel <= 3) {
+      if (transposed.note === 'C') {
+        terminal.io.udp.send('f:9')
+      } else if (transposed.note === 'E') {
         terminal.io.udp.send('c:9')
+      } else {
+        terminal.io.udp.send('e:9')
       }
     }
-    else if(channel > 2 && channel < 8 && !isNaN(transposed.id)){
+    // Synths
+    else if (channel >= 4 && channel <= 7 && !isNaN(transposed.id)) {
       terminal.io.udp.send(`n:${transposed.id}`)
     }
-    else if(channel > 7 && channel < 12 && !isNaN(transposed.id)){
+    //
+    else if (channel >= 8 && channel <= 11 && !isNaN(transposed.id)) {
       terminal.io.udp.send(`l:${transposed.id}`)
+    } else {
+      terminal.io.udp.send(`r:${parseInt(transposed.id)}`)
     }
-    else if(!isNaN(transposed.note) && !isNaN(channel)){
-      terminal.io.udp.send(`r:${parseInt(transposed.id)}`)  
-    }
-
-    // Light Listener - End
-
-    this.outputDevice().send([c, n, v])
   }
 
   this.press = function (item) {

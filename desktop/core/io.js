@@ -39,7 +39,7 @@ export default function IO (terminal) {
     this.mono.run()
     // Light
     this.udp.send('show')
-    
+
     this.udp.run()
     this.osc.run()
   }
