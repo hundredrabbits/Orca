@@ -10,6 +10,7 @@ import Clock from './clock.js'
 import Theme from './lib/theme.js'
 import Controller from './lib/controller.js'
 import library from '../../core/library.js'
+import hueDerivedColors from './colors.js'
 
 export default function Terminal () {
   this.version = 137
@@ -43,6 +44,8 @@ export default function Terminal () {
   this.install = function (host) {
     host.appendChild(this.el)
     this.theme.install(host)
+
+    this.operatorColors = hueDerivedColors(this.theme.active.b_med)
   }
 
   this.start = function () {
@@ -200,9 +203,12 @@ export default function Terminal () {
     return 9
   }
 
-  this.makeTheme = function (type) {
+  this.makeTheme = function (g, type) {
     // Operator
-    if (type === 0) { return { bg: this.theme.active.b_med, fg: this.theme.active.f_low } }
+    if (type === 0) {
+      // Get color as a variation of b_med by changing the hue
+      return { bg: this.operatorColors[g], fg: this.theme.active.f_low }
+    }
     // Haste
     if (type === 1) { return { fg: this.theme.active.b_med } }
     // Input
@@ -287,7 +293,7 @@ export default function Terminal () {
   }
 
   this.drawSprite = function (x, y, g, type) {
-    const theme = this.makeTheme(type)
+    const theme = this.makeTheme(g, type)
     if (theme.bg) {
       const bgrect = { x: x * this.tile.w * this.scale, y: (y) * this.tile.h * this.scale, w: this.tile.w * this.scale, h: this.tile.h * this.scale }
       this.context.fillStyle = theme.bg
