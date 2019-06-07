@@ -12,7 +12,7 @@ export default function Midi (terminal) {
   this.inputs = []
   this.stack = []
 
-  this.key = null
+  this.keys = {}
 
   this.start = function () {
     console.info('Midi Starting..')
@@ -136,12 +136,12 @@ export default function Midi (terminal) {
 
   // Keys
 
-  this.keyDown = function (key) {
-    this.key = parseInt(key)
+  this.keyDown = function (channel, key) {
+    this.keys[channel] = key
   }
 
-  this.keyUp = function () {
-    this.key = null
+  this.keyUp = function (channel, key) {
+    this.keys[channel] = null
   }
 
   // Clock
@@ -164,14 +164,17 @@ export default function Midi (terminal) {
   }
 
   this.receive = function (msg) {
+    // Keys
+    if (msg.data[0] >= 144 && msg.data[0] < 160) {
+      this.keyDown(msg.data[0] - 144, msg.data[1])
+      return
+    }
+    if (msg.data[0] >= 128 && msg.data[0] < 144) {
+      this.keyUp(msg.data[0] - 128, msg.data[1])
+      return
+    }
+
     switch (msg.data[0]) {
-      // Keys
-      case 0x90:
-        this.keyDown(msg.data[1])
-        break
-      case 0x80:
-        this.keyUp()
-        break
       // Clock
       case 0xF8:
         terminal.clock.tap()
@@ -251,6 +254,14 @@ export default function Midi (terminal) {
     const value = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'].indexOf(note)
     const id = clamp((octave * 12) + value + 24, 0, 127)
     return { id, value, note, octave }
+  }
+
+  this.convert = function (id) {
+    const note = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'][id % 12]
+    const octave = Math.floor(id / 12) - 5
+    const name = `${note}${octave}`
+    const key = Object.values(transpose).indexOf(name)
+    return Object.keys(transpose)[key]
   }
 
   this.toString = function () {
