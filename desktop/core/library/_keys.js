@@ -8,12 +8,11 @@ export default function OperatorKeys (orca, x, y, passive) {
   this.name = 'keys'
   this.info = 'Receive MIDI note'
 
-  this.ports.channel = { x: 1, y: 0, clamp: { min: 0, max: 16 } }
+  this.ports.channel = { x: 1, y: 0, clamp: { min: 0, max: 16 }, default: '0' }
   this.ports.output = { x: 0, y: 1 }
 
   this.operation = function (force = false) {
     const channel = this.listen(this.ports.channel, true)
-    if (channel === '.') { return }
 
     const id = terminal.io.midi.keys[channel]
 
