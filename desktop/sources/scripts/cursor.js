@@ -119,10 +119,10 @@ export default function Cursor (terminal) {
     const cols = terminal.cursor.getBlock()
     for (const y in cols) {
       for (const x in cols[y]) {
-        if (!cols[y][x] || cols[y][x] === '.') { continue }
-        const isUC = cols[y][x] === cols[y][x].toUpperCase()
-        const value = terminal.orca.valueOf(cols[y][x])
-        cols[y][x] = terminal.orca.keyOf(parseInt(rate) + value, isUC)
+        const g = cols[y][x]
+        if (g === '.') { continue }
+        if (terminal.orca.isSpecial(g)) { continue }
+        cols[y][x] = terminal.orca.keyOf(parseInt(rate) + terminal.orca.valueOf(g), sense(g))
       }
     }
     terminal.cursor.writeBlock(cols)
@@ -213,5 +213,6 @@ export default function Cursor (terminal) {
     return { x: this.x, y: this.y, w: this.w, h: this.h }
   }
 
+  function sense (s) { return s === s.toUpperCase() && s.toLowerCase() !== s.toUpperCase() }
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }

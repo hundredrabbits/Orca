@@ -12,7 +12,6 @@ export default function Commander (terminal) {
     'find': (val) => { terminal.cursor.find(val) },
     'select': (val) => { const rect = val.split(';'); terminal.cursor.select(rect[0], rect[1], rect[2], rect[3]) },
     'inject': (val) => { terminal.source.inject(val, false) },
-    'rot': (val) => { terminal.cursor.rotate(parseInt(val)) },
     'write': (val) => { const parts = val.split(';'); terminal.cursor.select(parts[1], parts[2], parts[0].length) }
   }
 
@@ -35,10 +34,14 @@ export default function Commander (terminal) {
     'time': (val) => { terminal.clock.setFrame(parseInt(val)) },
     'rewind': (val) => { terminal.clock.setFrame(terminal.orca.f - parseInt(val)) },
     'skip': (val) => { terminal.clock.setFrame(terminal.orca.f + parseInt(val)) },
+    // Effects
+    'rot': (val) => { terminal.cursor.rotate(parseInt(val)) },
     // Themeing
     'color': (val) => { const parts = val.split(';'); terminal.theme.set('b_med', parts[0]); terminal.theme.set('b_inv', parts[1]); terminal.theme.set('b_high', parts[2]) },
     'graphic': (val) => { terminal.theme.setImage(terminal.source.locate(val + '.jpg')) },
     // Edit
+    'find': (val) => { terminal.cursor.find(val) },
+    'select': (val) => { const rect = val.split(';'); terminal.cursor.select(rect[0], rect[1], rect[2], rect[3]) },
     'inject': (val) => { terminal.source.inject(val, true) },
     'write': (val) => { const parts = val.split(';'); terminal.cursor.select(parts[1], parts[2], parts[0].length); terminal.cursor.writeBlock([parts[0].split('')]) }
   }
@@ -83,7 +86,7 @@ export default function Commander (terminal) {
   this.trigger = function (msg = this.query) {
     const cmd = `${msg}`.split(':')[0].toLowerCase()
     const val = `${msg}`.substr(cmd.length + 1)
-    if (!this.actives[cmd]) { console.warn(`Unknown message: ${msg}`); this.stop(); return }
+    if (!this.actives[cmd]) { console.warn('Commander', `Unknown message: ${msg}`); this.stop(); return }
     console.info('Commander', msg)
     this.actives[cmd](val, true)
     this.history.push(msg)

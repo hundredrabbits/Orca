@@ -131,12 +131,16 @@ export default function Orca (terminal) {
     return g === '.' || !!library[`${g}`.toLowerCase()]
   }
 
+  this.isSpecial = function (g) {
+    return g.toLowerCase() === g.toUpperCase() && isNaN(g)
+  }
+
   this.keyOf = function (val, uc = false) {
     return uc === true ? this.keys[val % 36].toUpperCase() : this.keys[val % 36]
   }
 
   this.valueOf = function (g) {
-    return g === '.' ? 0 : this.keys.indexOf(`${g}`.toLowerCase())
+    return !g || g === '.' ? 0 : this.keys.indexOf(`${g}`.toLowerCase())
   }
 
   this.indexAt = function (x, y) {
