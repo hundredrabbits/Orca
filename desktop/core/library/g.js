@@ -16,7 +16,7 @@ export default function OperatorG (orca, x, y, passive) {
     const len = this.listen(this.ports.len, true)
     const x = this.listen(this.ports.x, true)
     const y = this.listen(this.ports.y, true) + 1
-    for (let offset = 0; offset <= len; offset++) {
+    for (let offset = 0; offset < len; offset++) {
       if (offset > 0) {
         orca.lock(this.x + offset, this.y)
       }

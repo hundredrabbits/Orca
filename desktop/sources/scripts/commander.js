@@ -9,42 +9,58 @@ export default function Commander (terminal) {
   // Library
 
   this.passives = {
-    'find': (val) => { terminal.cursor.find(val) },
-    'select': (val) => { const rect = val.split(';'); terminal.cursor.select(rect[0], rect[1], rect[2], rect[3]) },
-    'inject': (val) => { terminal.source.inject(val, false) },
-    'rot': (val) => { terminal.cursor.rotate(parseInt(val)) },
-    'write': (val) => { const parts = val.split(';'); terminal.cursor.select(parts[1], parts[2], parts[0].length) }
+    'find': (p) => { terminal.cursor.find(p.str) },
+    'select': (p) => { terminal.cursor.select(p.x, p.y, p.w, p.h) },
+    'inject': (p) => { terminal.source.inject(p.str, false) },
+    'write': (p) => { terminal.cursor.select(p.x, p.y, p.length) }
   }
 
   this.actives = {
     // Ports
-    'osc': (val) => { terminal.io.osc.select(parseInt(val)) },
-    'udp': (val) => { terminal.io.udp.select(parseInt(val)) },
+    'osc': (p) => { terminal.io.osc.select(p.int) },
+    'udp': (p) => { terminal.io.udp.select(p.int) },
+    'ip': (p) => { terminal.io.setIp(p.str) },
     // Cursor
-    'copy': (val) => { terminal.cursor.copy() },
-    'paste': (val) => { terminal.cursor.paste(true) },
-    'erase': (val) => { terminal.cursor.erase() },
+    'copy': (p) => { terminal.cursor.copy() },
+    'paste': (p) => { terminal.cursor.paste(true) },
+    'erase': (p) => { terminal.cursor.erase() },
     // Controls
-    'play': (val) => { terminal.clock.play() },
-    'stop': (val) => { terminal.clock.stop() },
-    'run': (val) => { terminal.run() },
+    'play': (p) => { terminal.clock.play() },
+    'stop': (p) => { terminal.clock.stop() },
+    'run': (p) => { terminal.run() },
     // Speed
-    'apm': (val) => { terminal.clock.set(null, parseInt(val)) },
-    'bpm': (val) => { terminal.clock.set(parseInt(val), parseInt(val), true) },
-    'time': (val) => { terminal.clock.setFrame(parseInt(val)) },
-    'rewind': (val) => { terminal.clock.setFrame(terminal.orca.f - parseInt(val)) },
-    'skip': (val) => { terminal.clock.setFrame(terminal.orca.f + parseInt(val)) },
+    'apm': (p) => { terminal.clock.set(null, p.int) },
+    'bpm': (p) => { terminal.clock.set(p.int, p.int, true) },
+    'time': (p) => { terminal.clock.setFrame(p.int) },
+    'rewind': (p) => { terminal.clock.setFrame(terminal.orca.f - p.int) },
+    'skip': (p) => { terminal.clock.setFrame(terminal.orca.f + p.int) },
+    // Effects
+    'rot': (p) => { terminal.cursor.rotate(p.int) },
     // Themeing
-    'color': (val) => { const parts = val.split(';'); terminal.theme.set('b_med', parts[0]); terminal.theme.set('b_inv', parts[1]); terminal.theme.set('b_high', parts[2]) },
-    'graphic': (val) => { terminal.theme.setImage(terminal.source.locate(val + '.jpg')) },
+    'color': (p) => { terminal.theme.set('b_med', p.parts[0]); terminal.theme.set('b_inv', p.parts[1]); terminal.theme.set('b_high', p.parts[2]) },
+    'graphic': (p) => { terminal.theme.setImage(terminal.source.locate(p.str + '.jpg')) },
     // Edit
-    'inject': (val) => { terminal.source.inject(val, true) },
-    'write': (val) => { const parts = val.split(';'); terminal.cursor.select(parts[1], parts[2], parts[0].length); terminal.cursor.writeBlock([parts[0].split('')]) }
+    'find': (p) => { terminal.cursor.find(p.str) },
+    'select': (p) => { terminal.cursor.select(p.x, p.y, p.w, p.h) },
+    'inject': (p) => { terminal.source.inject(p.str, true) },
+    'write': (p) => { terminal.cursor.select(p.x, p.y, p.length.length); terminal.cursor.writeBlock([p.chars]) }
   }
 
   // Make shorthands
   for (const id in this.actives) {
     this.actives[id.substr(0, 2)] = this.actives[id]
+  }
+
+  function Param (val) {
+    this.str = `${val}`
+    this.length = this.str.length
+    this.chars = this.str.split('')
+    this.int = !isNaN(val) ? parseInt(val) : null
+    this.parts = val.split(';')
+    this.x = parseInt(this.parts[0])
+    this.y = parseInt(this.parts[1])
+    this.w = parseInt(this.parts[2])
+    this.h = parseInt(this.parts[3])
   }
 
   // Begin
@@ -79,22 +95,24 @@ export default function Commander (terminal) {
     terminal.update()
   }
 
-  this.trigger = function (msg = this.query) {
+  this.trigger = function (msg = this.query, touch = true) {
     const cmd = `${msg}`.split(':')[0].toLowerCase()
     const val = `${msg}`.substr(cmd.length + 1)
-    if (!this.actives[cmd]) { console.warn(`Unknown message: ${msg}`); this.stop(); return }
+    if (!this.actives[cmd]) { console.warn('Commander', `Unknown message: ${msg}`); this.stop(); return }
     console.info('Commander', msg)
-    this.actives[cmd](val, true)
-    this.history.push(msg)
-    this.historyIndex = this.history.length
-    this.stop()
+    this.actives[cmd](new Param(val), true)
+    if (touch === true) {
+      this.history.push(msg)
+      this.historyIndex = this.history.length
+      this.stop()
+    }
   }
 
   this.preview = function (msg = this.query) {
     const cmd = `${msg}`.split(':')[0].toLowerCase()
     const val = `${msg}`.substr(cmd.length + 1)
     if (!this.passives[cmd]) { return }
-    this.passives[cmd](val, false)
+    this.passives[cmd](new Param(val), false)
   }
 
   // Events

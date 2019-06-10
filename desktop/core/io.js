@@ -7,6 +7,8 @@ import Udp from './io/udp.js'
 import Osc from './io/osc.js'
 
 export default function IO (terminal) {
+  this.ip = '127.0.0.1'
+
   this.midi = new Midi(terminal)
   this.cc = new MidiCC(terminal)
   this.mono = new Mono(terminal)
@@ -43,6 +45,13 @@ export default function IO (terminal) {
     this.mono.silence()
   }
 
+  this.setIp = function (addr = '127.0.0.1') {
+    if (validateIP(addr) !== true) { console.warn('IO', 'Invalid IP'); return }
+    this.ip = addr
+    console.log('IO', 'Set target IP to ' + this.ip)
+    this.osc.setup()
+  }
+
   this.length = function () {
     return this.midi.length() + this.mono.length() + this.cc.stack.length + this.udp.stack.length + this.osc.stack.length
   }
@@ -55,5 +64,6 @@ export default function IO (terminal) {
     return fill(text, limit, '.')
   }
 
+  function validateIP (addr) { return !!(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(addr)) }
   function fill (str, len, chr) { while (str.length < len) { str += chr }; return str }
 }
