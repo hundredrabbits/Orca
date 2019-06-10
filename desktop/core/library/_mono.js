@@ -25,14 +25,14 @@ export default function OperatorMono (orca, x, y, passive) {
         if (channel === '.') { return }
         let octave = this.listen(this.ports.octave)
         if (octave === '.') { return }
+        let note = this.listen(this.ports.note)
+        if (note === '.') { return }
         const key = this.listen(this.ports.key)
         const scale = this.listen(this.ports.scale, true)
         const page = this.listen(this.ports.page, true)
-        let note = this.listen(this.ports.note, key!=='.' ? true : false)
-        if (note === '.') { return }
-
 
         if(key!=='.' && OCTAVE.includes(key)) {
+            note = this.listen(this.ports.note, true)
             const noteAndOct = this.resolveDegree(note,key,scale,page)
             note = noteAndOct.note;
             octave = parseInt(octave) + noteAndOct.octave;
