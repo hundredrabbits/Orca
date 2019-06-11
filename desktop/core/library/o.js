@@ -15,7 +15,7 @@ export default function OperatorO (orca, x, y, passive) {
   this.operation = function (force = false) {
     const x = this.listen(this.ports.x, true)
     const y = this.listen(this.ports.y, true)
-    this.ports.read = { x: x + 1, y: y }
+    this.addPort('read', { x: x + 1, y: y })
     return this.listen(this.ports.read)
   }
 }

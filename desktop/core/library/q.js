@@ -16,13 +16,13 @@ export default function OperatorQ (orca, x, y, passive) {
     const len = this.listen(this.ports.len, true)
     const x = this.listen(this.ports.x, true)
     const y = this.listen(this.ports.y, true)
-    for (let i = 1; i <= len; i++) {
-      orca.lock(this.x + x + i, this.y + y)
-      this.ports[`val${i}`] = { x: x + i, y: y }
-      this.ports.output = { x: i - len, y: 1 }
-      const res = this.listen(this.ports[`val${i}`])
-      this.output(`${res}`)
+    for (let offset = 0; offset < len; offset++) {
+      const inPort = { x: x + offset + 1, y: y }
+      const outPort = { x: offset - len + 1, y: 1, output: true }
+      this.addPort(`in${offset}`, inPort)
+      this.addPort(`out${offset}`, outPort)
+      const res = this.listen(inPort)
+      this.output(`${res}`, outPort)
     }
-    this.ports.output = { x: 0, y: 1 }
   }
 }

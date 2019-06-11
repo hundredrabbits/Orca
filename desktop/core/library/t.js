@@ -15,8 +15,8 @@ export default function OperatorT (orca, x, y, passive) {
   this.operation = function (force = false) {
     const len = this.listen(this.ports.len, true)
     const key = this.listen(this.ports.key, true)
-    for (let x = 1; x <= len; x++) {
-      orca.lock(this.x + x, this.y)
+    for (let offset = 0; offset < len; offset++) {
+      orca.lock(this.x + offset + 1, this.y)
     }
     this.ports.val = { x: (key % len) + 1, y: 0 }
     return this.listen(this.ports.val)

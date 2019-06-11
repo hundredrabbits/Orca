@@ -24,10 +24,10 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
     return glyph
   }
 
-  this.output = function (g) {
-    if (!this.ports.output) { console.warn(this.name, 'Trying to output, but no port'); return }
+  this.output = function (g, port = this.ports.output) {
+    if (!port) { console.warn(this.name, 'Trying to output, but no port'); return }
     if (!g) { return }
-    orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, this.shouldUpperCase() === true ? `${g}`.toUpperCase() : g)
+    orca.write(this.x + port.x, this.y + port.y, this.shouldUpperCase() === true ? `${g}`.toUpperCase() : g)
   }
 
   this.bang = function (b) {
@@ -38,13 +38,14 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
   // Phases
 
   this.run = function (force = false) {
+    // Operate
+    const payload = this.operation(force)
     // Permissions
     for (const id in this.ports) {
       orca.lock(this.x + this.ports[id].x, this.y + this.ports[id].y)
     }
     this.draw = true
-    // Operate
-    const payload = this.operation(force)
+
     if (this.ports.output) {
       if (this.ports.output.bang === true) {
         this.bang(payload)
@@ -99,6 +100,10 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
 
   // Docs
 
+  this.addPort = function (name, pos) {
+    this.ports[name] = pos
+  }
+
   this.getPorts = function () {
     const a = []
     if (this.draw === true) {
@@ -107,13 +112,21 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
     if (!this.passive) { return a }
     for (const id in this.ports) {
       const port = this.ports[id]
-      a.push([this.x + port.x, this.y + port.y, port.x < 0 || port.y < 0 ? 1 : 2, `${this.glyph}-${id}`])
-    }
-    if (this.ports.output) {
-      const port = this.ports.output
-      a.push([this.x + port.x, this.y + port.y, port.reader || port.bang ? 8 : 3, `${this.glyph}-output`])
+      const type = this.getPortType(id)
+      a.push([this.x + port.x, this.y + port.y, type, `${this.glyph}-${id}`])
     }
     return a
+  }
+
+  this.getPortType = function (id) {
+    const port = this.ports[id]
+    if (port.output || id === 'output') {
+      return port.reader || port.bang ? 8 : 3
+    }
+    if (port.x < 0 || port.y < 0) {
+      return 1
+    }
+    return 2
   }
 
   this.shouldUpperCase = function (ports = this.ports) {

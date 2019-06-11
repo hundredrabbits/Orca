@@ -17,13 +17,12 @@ export default function OperatorG (orca, x, y, passive) {
     const x = this.listen(this.ports.x, true)
     const y = this.listen(this.ports.y, true) + 1
     for (let offset = 0; offset < len; offset++) {
-      if (offset > 0) {
-        orca.lock(this.x + offset, this.y)
-      }
-      const port = { x: offset + 1, y: 0 }
-      const value = this.listen(port)
-      orca.write(this.x + x + offset, this.y + y, value)
+      const inPort = { x: offset + 1, y: 0 }
+      const outPort = { x: x + offset, y: y, output: true }
+      this.addPort(`in${offset}`, inPort)
+      this.addPort(`out${offset}`, outPort)
+      const res = this.listen(inPort)
+      this.output(`${res}`, outPort)
     }
-    this.ports.output = { x: x, y: y }
   }
 }

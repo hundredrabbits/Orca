@@ -12,12 +12,16 @@ export default function OperatorK (orca, x, y, passive) {
 
   this.operation = function (force = false) {
     this.len = this.listen(this.ports.len, true)
-    for (let x = 1; x <= this.len; x++) {
-      orca.lock(this.x + x, this.y)
-      const key = orca.glyphAt(this.x + x, this.y)
+    for (let offset = 0; offset < this.len; offset++) {
+      const key = orca.glyphAt(this.x + offset + 1, this.y)
+      orca.lock(this.x + offset + 1, this.y)
       if (key === '.') { continue }
-      orca.lock(this.x + x, this.y + 1)
-      orca.write(this.x + x, this.y + 1, orca.valueIn(key))
+      const inPort = { x: offset + 1, y: 0 }
+      const outPort = { x: offset + 1, y: 1, output: true }
+      this.addPort(`in${offset}`, inPort)
+      this.addPort(`out${offset}`, outPort)
+      const res = orca.valueIn(key)
+      this.output(`${res}`, outPort)
     }
   }
 }
