@@ -95,7 +95,7 @@ For example, `=1abc` will send `10`, `11` and `12` to `/1`, via the port `49162`
 
 ## Advanced Controls
 
-Some of Orca's features can be **controlled externally** via UDP though port `49160`, or via its own command-line interface. To activate the command-line prompt, press `CmdOrCtrl+K`. The prompt can also be used to inject patterns or graphics, local files are located in the same directory as the active `.orca` file.
+Some of Orca's features can be **controlled externally** via UDP though port `49160`, or via its own command-line interface. To activate the command-line prompt, press `Cmd or Ctrl`+`K`. The prompt can also be used to inject patterns or graphics, local files are located in the same directory as the active `.orca` file.
 
 ### Default Ports
 
@@ -124,7 +124,7 @@ All commands have a shorthand equivalent to their first two characters, for exam
 
 ### Project Mode
 
-You can **quickly inject orca files** into the currently active file, by using the command-line prompt — Allowing you to navigate across multiple files like you would a project. Type `CmdOrCtrl+K` and the name of another `.orca` file, **located in the same folder** as the opened file, to paste it into the current patch.
+You can **quickly inject orca files** into the currently active file, by using the command-line prompt — Allowing you to navigate across multiple files like you would a project. Type `Cmd or Ctrl`+ `K` and the name of another `.orca` file, **located in the same folder** as the opened file, to paste it into the current patch.
 
 If a file a local file `.queue` is found, each line will be ran as a command when the line number corresponding to the frame value is reached. For example, if your working file is named `project.orca`, the file `project.queue` will be loaded automatically as the file opens. 
 
@@ -142,7 +142,7 @@ Orca operates on a base of **36 increments**. Operators using numeric values wil
 
 ## Transpose Table
 
-The midi operator interprets any letter above the chromatic scale as a transpose value, for instance `3H`, is equivalent to `4A`.
+The midi operator interprets any letter above the chromatic scale as a transpose value, for instance `3H`, is equivalent to `A4`.
 
 | **0** | **1** | **2** | **3** | **4** | **5** | **6** | **7** | **8** | **9** | **A** | **B**  | 
 | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:   | :-:    | 
