@@ -18,7 +18,7 @@ export default function Cursor (terminal) {
   }
 
   this.moveTo = function (x, y) {
-    if (!x || !y || isNaN(x) || isNaN(y)) { return }
+    if (isNaN(x) || isNaN(y)) { return }
     this.x = clamp(parseInt(x), 0, terminal.orca.w - 1)
     this.y = clamp(parseInt(y), 0, terminal.orca.h - 1)
     terminal.update()
