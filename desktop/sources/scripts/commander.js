@@ -11,7 +11,7 @@ export default function Commander (terminal) {
   this.passives = {
     'find': (p) => { terminal.cursor.find(p.str) },
     'select': (p) => { terminal.cursor.select(p.x, p.y, p.w, p.h) },
-    'inject': (p) => { terminal.source.inject(p.str, false) },
+    'inject': (p) => { terminal.source.inject(p.parts, false) },
     'write': (p) => { terminal.cursor.select(p.x, p.y, p.length) }
   }
 
@@ -42,7 +42,7 @@ export default function Commander (terminal) {
     // Edit
     'find': (p) => { terminal.cursor.find(p.str) },
     'select': (p) => { terminal.cursor.select(p.x, p.y, p.w, p.h) },
-    'inject': (p) => { terminal.source.inject(p.str, true) },
+    'inject': (p) => { terminal.source.inject(p.parts, true) },
     'write': (p) => { terminal.cursor.select(p.x, p.y, p.length.length); terminal.cursor.writeBlock([p.chars]) }
   }
 

@@ -56,18 +56,46 @@ export default function Source (terminal) {
     this.read(this.path)
   }
 
-  this.inject = function (name, paste = false) {
+  this.inject = function (parts, paste = false) {
     if (!this.path) { console.warn('Source', 'Not in a project.'); return }
-    const loc = path.join(this.folder(), name + '.orca')
-    if (!fs.existsSync(loc)) { return }
-    const data = fs.readFileSync(loc, 'utf8')
-    if (!data) { return }
-    const lines = data.split('\n')
-    if (paste === true) {
-      terminal.cursor.writeBlock(lines)
-      terminal.cursor.reset()
-    } else {
-      terminal.cursor.resize(lines[0].length, lines.length)
+    if (parts[1] && parts[2]) {
+      const name = parts[0]
+      const loc = path.join(this.folder(), name + '.orca')
+      if (!fs.existsSync(loc)) { return }
+      const data = fs.readFileSync(loc, 'utf8')
+      if (!data) { return }
+      const lines = data.split('\n')
+      if (paste === true) {
+        if(!lines || lines.length === 0) { return }
+        let _y = parseInt(parts[2])
+        for (const x in lines) {
+          let _x = parseInt(parts[1])
+          for (const y in lines[x]) {
+            const glyph = lines[x][y]
+            terminal.orca.write(_x, _y, glyph)
+            _x ++
+          }
+          _y ++
+        }
+        terminal.history.record(terminal.orca.s)
+        terminal.cursor.reset()
+      } else {
+        terminal.cursor.resize(lines[0].length, lines.length)
+      }
+    }
+    else {
+      const name = parts[0]
+      const loc = path.join(this.folder(), name + '.orca')
+      if (!fs.existsSync(loc)) { return }
+      const data = fs.readFileSync(loc, 'utf8')
+      if (!data) { return }
+      const lines = data.split('\n')
+      if (paste === true) {
+        terminal.cursor.writeBlock(lines)
+        terminal.cursor.reset()
+      } else {
+        terminal.cursor.resize(lines[0].length, lines.length)
+      }
     }
   }
 
