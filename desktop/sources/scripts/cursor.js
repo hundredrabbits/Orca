@@ -33,8 +33,8 @@ export default function Cursor (terminal) {
 
   this.scaleTo = function (w, h) {
     if (isNaN(w) || isNaN(h)) { return }
-    this.w = clamp(parseInt(w), 0, terminal.orca.w - 1)
-    this.h = clamp(parseInt(h), 0, terminal.orca.h - 1)
+    this.w = clamp(parseInt(w), 1, terminal.orca.w - 1)
+    this.h = clamp(parseInt(h), 1, terminal.orca.h - 1)
     terminal.update()
   }
 

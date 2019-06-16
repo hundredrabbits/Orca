@@ -118,9 +118,9 @@ All commands have a shorthand equivalent to their first two characters, for exam
 - `color:f00;0f0;00f` Colorizes the interface.
 - `graphic:123` Set the background to the local graphic `123.jpg`.
 - `find:aV` Sends cursor to string `aV`.
-- `select:3;4;5;6` Move cursor to position `3,4`, and select size `5:6`.
-- `inject:pattern` Inject the local file `pattern.orca`.
-- `write:H;12;34` Writes glyph `H`, at `12,34`.
+- `select:3;4;5;6` Move cursor to position `3,4`, and select size `5:6`(optional).
+- `inject:pattern;12;34` Inject the local file `pattern.orca`, at `12,34`(optional).
+- `write:H;12;34` Writes glyph `H`, at `12,34`(optional).
 
 ### Project Mode
 
