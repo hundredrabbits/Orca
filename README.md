@@ -159,7 +159,7 @@ The midi operator interprets any letter above the chromatic scale as a transpose
 - [Estra](https://github.com/kyleaedwards/estra), a companion sampler tool.
 - [Gull](https://github.com/qleonetti/gull), a companion sampler, slicer and synth tool.
 - [Sonic Pi](https://in-thread.sonic-pi.net/t/using-orca-to-control-sonic-pi-with-osc/2381/), a livecoding environment.
-- [Remora](https://github.com/martinberlin/Remora) an ESP32 Led controller firmware triggering animations from Orca UDP commands
+- [Remora](https://github.com/martinberlin/Remora), an ESP32 Led controller firmware.
 
 ## Tutorials
 
