@@ -20,6 +20,7 @@ export default function Commander (terminal) {
     'osc': (p) => { terminal.io.osc.select(p.int) },
     'udp': (p) => { terminal.io.udp.select(p.int) },
     'ip': (p) => { terminal.io.setIp(p.str) },
+    'cc': (p) => { terminal.io.cc.setOffset(p.int) },
     // Cursor
     'copy': (p) => { terminal.cursor.copy() },
     'paste': (p) => { terminal.cursor.paste(true) },

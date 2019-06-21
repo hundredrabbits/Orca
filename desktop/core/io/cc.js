@@ -2,6 +2,7 @@
 
 export default function MidiCC (terminal) {
   this.stack = []
+  this.offset = 64
 
   this.start = function () {
     console.info('MidiCC', 'Starting..')
@@ -21,9 +22,15 @@ export default function MidiCC (terminal) {
     this.stack.push([channel, knob, value])
   }
 
+  this.setOffset = function (offset) {
+    if (isNaN(offset)) { return }
+    this.offset = offset
+    console.log('MidiCC', 'Set offset to ' + this.offset)
+  }
+
   this.play = function (data) {
     const device = terminal.io.midi.outputDevice()
     if (!device) { console.warn('MidiCC', `No Midi device.`); return }
-    device.send([0xb0 + data[0], 64 + data[1], data[2]])
+    device.send([0xb0 + data[0], this.offset + data[1], data[2]])
   }
 }
