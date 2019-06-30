@@ -35,6 +35,7 @@ import _keys from './library/_keys.js'
 import _cc from './library/_cc.js'
 import _udp from './library/_udp.js'
 import _osc from './library/_osc.js'
+import _self from './library/_self.js'
 
 export default {
   '0': _null,
@@ -80,5 +81,6 @@ export default {
   '&': _keys,
   '!': _cc,
   ';': _udp,
-  '=': _osc
+  '=': _osc,
+  '$': _self
 }

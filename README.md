@@ -60,6 +60,7 @@ npm start
 - `&` **keys**(channel): Receive a MIDI note.
 - `;` **udp**: Sends UDP message.
 - `=` **osc**(*path*): Sends OSC message.
+- `$` **self**: Sends a [command](#Commands) to itself.
 
 ## MIDI
 
@@ -116,7 +117,7 @@ All commands have a shorthand equivalent to their first two characters, for exam
 - `skip:2` Adds `2`, to the current frame value.
 - `rewind:2` Removes `2`, to the current frame value.
 - `color:f00;0f0;00f` Colorizes the interface.
-- `graphic:123` Set the background to the local graphic `123.jpg`.
+- `graphic:123;jpg` Set the background to the local graphic `123.jpg`, with extension `jpg`(optional).
 - `find:aV` Sends cursor to string `aV`.
 - `select:3;4;5;6` Move cursor to position `3,4`, and select size `5:6`(optional).
 - `inject:pattern;12;34` Inject the local file `pattern.orca`, at `12,34`(optional).
