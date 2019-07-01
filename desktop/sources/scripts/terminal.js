@@ -7,6 +7,7 @@ import Source from './source.js'
 import History from './history.js'
 import Commander from './commander.js'
 import Clock from './clock.js'
+import Monome from './monome.js'
 import Theme from './lib/theme.js'
 import Controller from './lib/controller.js'
 import library from '../../core/library.js'
@@ -21,6 +22,7 @@ export default function Terminal () {
   this.source = new Source(this)
   this.commander = new Commander(this)
   this.clock = new Clock(this)
+  this.monome = new Monome(this)
   this.history = new History()
   this.controller = new Controller()
 
@@ -48,6 +50,7 @@ export default function Terminal () {
   this.start = function () {
     this.theme.start()
     this.io.start()
+    this.monome.start()
     this.source.start()
     this.history.bind(this.orca, 's')
     this.history.record(this.orca.s)

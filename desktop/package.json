@@ -23,6 +23,7 @@
     "electron-packager": "^13.1.1"
   },
   "dependencies": {
-    "node-osc": "^4.1.0"
+    "node-osc": "^4.1.0",
+    "serialosc": "0.0.8"
   }
 }
