@@ -2,6 +2,7 @@
 
 import Midi from './io/midi.js'
 import MidiCC from './io/cc.js'
+import MidiProgCh from './io/midiprogch.js'
 import Mono from './io/mono.js'
 import Udp from './io/udp.js'
 import Osc from './io/osc.js'
@@ -11,6 +12,7 @@ export default function IO (terminal) {
 
   this.midi = new Midi(terminal)
   this.cc = new MidiCC(terminal)
+  this.midiprogch = new MidiProgCh(terminal)
   this.mono = new Mono(terminal)
   this.udp = new Udp(terminal)
   this.osc = new Osc(terminal)
@@ -18,6 +20,7 @@ export default function IO (terminal) {
   this.start = function () {
     this.midi.start()
     this.cc.start()
+    this.midiprogch.start()
     this.mono.start()
     this.udp.start()
     this.osc.start()
@@ -27,6 +30,7 @@ export default function IO (terminal) {
   this.clear = function () {
     this.midi.clear()
     this.cc.clear()
+    this.midiprogch.clear()
     this.mono.clear()
     this.udp.clear()
     this.osc.clear()
@@ -35,6 +39,7 @@ export default function IO (terminal) {
   this.run = function () {
     this.midi.run()
     this.cc.run()
+    this.midiprogch.run()
     this.mono.run()
     this.udp.run()
     this.osc.run()
