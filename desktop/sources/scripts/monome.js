@@ -51,26 +51,10 @@ export default function Monome (terminal) {
   }
 
   this.viewKey = function (x, y) {
-    if (x == 1 && y == 1) { return 1 }
-    if (x == 2 && y == 1) { return 1 }
-    if (x == 1 && y == 2) { return 1 }
-    if (x == 3 && y == 1) { return 1 }
-
-    if (x == 14 && y == 1) { return 1 }
-    if (x == 13 && y == 1) { return 1 }
-    if (x == 14 && y == 2) { return 1 }
-    if (x == 12 && y == 1) { return 1 }
-
-    if (x == 1 && y == 6) { return 1 }
-    if (x == 2 && y == 6) { return 1 }
-    if (x == 1 && y == 5) { return 1 }
-    if (x == 3 && y == 6) { return 1 }
-
-    if (x == 14 && y == 6) { return 1 }
-    if (x == 13 && y == 6) { return 1 }
-    if (x == 14 && y == 5) { return 1 }
-    if (x == 12 && y == 6) { return 1 }
-
+    const template = { size: {w:10,h:4}, offset: {x:3,y:2}}
+    if(x >= template.offset.x && x < template.offset.x+template.size.w && y >= template.offset.y && y < template.offset.y+template.size.h ){
+      return 1
+    }
     return 0
   }
 
