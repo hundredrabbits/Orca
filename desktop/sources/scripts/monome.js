@@ -81,7 +81,7 @@ export default function Monome (terminal) {
 
   this.viewKey = function (x, y) {
     if (x >= template.offset.x && x < template.offset.x + template.size.w && y >= template.offset.y && y < template.offset.y + template.size.h) {
-      return 1
+      return 15
     }
     return 0
   }
@@ -101,7 +101,23 @@ export default function Monome (terminal) {
     for (let x = 0; x < this.size.w; x++) {
       for (let y = 0; y < this.size.h; y++) {
         const g = terminal.makeGlyph(x, y)
-        m[x][y] = g !== '.' && g !== '+' ? 1 : 0
+        const type = terminal.makeStyle(x, y, g)
+        // Interest
+        if (type === 1 || type === 2 || type === 3 || type === 5) {
+          m[x][y] = 2
+        }
+        // Input
+        if (type === 2) {
+          m[x][y] = 5
+        }
+        // Selection
+        if (type === 4) {
+          m[x][y] = 5
+        }
+        // Any content
+        if (g !== '.' && g !== '+') {
+          m[x][y] = 15
+        }
       }
     }
 
@@ -125,8 +141,8 @@ export default function Monome (terminal) {
         right[y].push(m[x][y])
       }
     }
-    this.device.map(0, 0, left)
-    this.device.map(8, 0, right)
+    this.device.levelMap(0, 0, left)
+    this.device.levelMap(8, 0, right)
   }
 
   // Keyboard
@@ -152,7 +168,7 @@ export default function Monome (terminal) {
     if (!keyboard[y] || !keyboard[y][x]) { console.warn('Monome', `Unknown position at ${x},${y}`); this.hideKeyboard(); return }
     const g = keyboard[y][x]
     if (!g) { console.warn('Monome', `Unknown glyph at ${x},${y}`); this.hideKeyboard(); return }
-    terminal.orca.write(this.selection.x, this.selection.y, g)
+    terminal.orca.write(this.selection.x, this.selection.y, g.toUpperCase())
     this.hideKeyboard()
   }
 
