@@ -77,6 +77,7 @@ export default function Terminal () {
     this.drawProgram()
     this.drawInterface()
     this.drawGuide()
+    this.monome.update()
   }
 
   this.reset = function () {
@@ -248,8 +249,6 @@ export default function Terminal () {
   this.drawInterface = function () {
     const col = this.grid.w
     const variables = Object.keys(this.orca.variables).join('')
-    const col1 = this.orca.h
-    const col2 = this.orca.h + 1
 
     if (this.commander.isActive === true) {
       this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 0, this.orca.h + 1, this.grid.w * 2)
