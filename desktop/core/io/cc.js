@@ -31,18 +31,16 @@ export default function MidiCC (terminal) {
   this.play = function (data) {
     const device = terminal.io.midi.outputDevice()
     if (!device) { console.warn('MidiCC', `No Midi device.`); return }
-	switch (data[3]) {
-		case 0: // CC
+    switch (data[3]) {
+      case 0: // CC
     		device.send([0xb0 + data[0], this.offset + data[1], data[2]])
-			break
-		case 1: // progchange
-			device.send([0xc0 + data[0], data[1]])
-			break
-		case 2: // pitchbend
-			device.send([0xe0 + data[0], data[1], data[2]])
-			break
-	}	
-    
-
+        break
+      case 1: // progchange
+        device.send([0xc0 + data[0], data[1]])
+        break
+      case 2: // pitchbend
+        device.send([0xe0 + data[0], data[1], data[2]])
+        break
+    }
   }
 }
