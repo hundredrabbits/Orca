@@ -16,6 +16,7 @@ export default function OperatorCC (orca, x, y) {
     if (this.listen(this.ports.channel) === '.') { return }
     if (this.listen(this.ports.knob) === '.') { return }
 
+    const channel = this.listen(this.ports.channel, true)
     const knob = this.listen(this.ports.knob, true)
     const rawValue = this.listen(this.ports.value, true)
     const value = Math.ceil((127 * rawValue) / 35)
