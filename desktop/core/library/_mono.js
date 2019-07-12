@@ -7,27 +7,22 @@ export default function OperatorMono (orca, x, y, passive) {
 
   this.name = 'mono'
   this.info = 'Sends MIDI monophonic note'
-
   this.ports.channel = { x: 1, y: 0, clamp: { min: 0, max: 16 } }
-  this.ports.octave = { x: 2, y: 0, clamp: { min: 0, max: 8 } }
-  this.ports.note = { x: 3, y: 0 }
+  this.ports.octave = { x: 2, y: 0, default: '3', clamp: { min: 0, max: 8 } }
+  this.ports.note = { x: 3, y: 0, default: 'C' }
   this.ports.velocity = { x: 4, y: 0, default: 'f', clamp: { min: 0, max: 16 } }
   this.ports.length = { x: 5, y: 0, default: '1', clamp: { min: 0, max: 16 } }
 
   this.operation = function (force = false) {
     if (!this.hasNeighbor('*') && force === false) { return }
+    if (this.listen(this.ports.channel) === '.') { return }
+    if (!isNaN(this.listen(this.ports.note))) { return }
 
-    const channel = this.listen(this.ports.channel)
-    if (channel === '.') { return }
-    const octave = this.listen(this.ports.octave)
-    if (octave === '.') { return }
-    const note = this.listen(this.ports.note)
-    if (note === '.') { return }
-
-    if (!isNaN(note)) { return }
-
+    const channel = this.listen(this.ports.channel, true)
+    const octave = this.listen(this.ports.channel, true)
     const velocity = this.listen(this.ports.velocity, true)
     const length = this.listen(this.ports.length, true)
+    const note = this.listen(this.ports.note)
 
     terminal.io.mono.send(channel, octave, note, velocity, length)
 

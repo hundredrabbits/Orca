@@ -1,5 +1,5 @@
 export let remote = {
-	app: {
-		injectMenu() {}
-	}
-};
+  app: {
+    injectMenu () {}
+  }
+}

@@ -21,7 +21,7 @@ export default function Commander (terminal) {
     'udp': (p) => { terminal.io.udp.select(p.int) },
     'ip': (p) => { terminal.io.setIp(p.str) },
     'cc': (p) => { terminal.io.cc.setOffset(p.int) },
-    'pg': (p) => { terminal.io.cc.stack.push({ channel: p.ints[0], bank: p.ints[1], sub: p.ints[2], pgm: p.ints[3], type: 'pg' }); terminal.io.cc.run() },
+    'pg': (p) => { terminal.io.cc.stack.push({ channel: clamp(p.ints[0], 0, 15), bank: p.ints[1], sub: p.ints[2], pgm: clamp(p.ints[3], 0, 127), type: 'pg' }); terminal.io.cc.run() },
     // Cursor
     'copy': (p) => { terminal.cursor.copy() },
     'paste': (p) => { terminal.cursor.paste(true) },
@@ -246,4 +246,8 @@ export default function Commander (terminal) {
   this.toString = function () {
     return `${this.query}`
   }
+
+  // Utils
+
+  function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 }
