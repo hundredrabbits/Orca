@@ -13,13 +13,20 @@ export default function MidiCC (terminal) {
   }
 
   this.run = function () {
+    const device = terminal.io.midi.outputDevice()
+    if (!device) { console.warn('MidiCC', `No Midi device.`); return }
     for (const id in this.stack) {
-      this.play(this.stack[id])
+      const msg = this.stack[id]
+      if (msg.type === 'cc') {
+        this.sendCC(device, msg)
+      } else if (msg.type === 'pb') {
+        this.sendPB(device, msg)
+      } else if (msg.type === 'pg') {
+        this.sendPG(device, msg)
+      } else {
+        console.warn('Unknown message type')
+      }
     }
-  }
-
-  this.send = function (channel, knob, value) {
-    this.stack.push([channel, knob, value])
   }
 
   this.setOffset = function (offset) {
@@ -28,9 +35,17 @@ export default function MidiCC (terminal) {
     console.log('MidiCC', 'Set offset to ' + this.offset)
   }
 
-  this.play = function (data) {
-    const device = terminal.io.midi.outputDevice()
-    if (!device) { console.warn('MidiCC', `No Midi device.`); return }
-    device.send([0xb0 + data[0], this.offset + data[1], data[2]])
+  this.sendCC = function (device, msg) {
+    device.send([0xb0 + msg.channel, this.offset + msg.knob, msg.value])
+  }
+
+  this.sendPB = function (device, msg) {
+    console.warn('TODO')
+    // device.send([0xc0 + msg.channel, msg.value])
+  }
+
+  this.sendPG = function (device, msg) {
+    console.warn('TODO')
+    // device.send([0xb0 + channel, this.offset + value, data[2]])
   }
 }
