@@ -21,6 +21,7 @@ export default function Commander (terminal) {
     'udp': (p) => { terminal.io.udp.select(p.int) },
     'ip': (p) => { terminal.io.setIp(p.str) },
     'cc': (p) => { terminal.io.cc.setOffset(p.int) },
+    'pg': (p) => { terminal.io.cc.stack.push({ channel: p.ints[0], bank: p.ints[1], sub: p.ints[2], pgm: p.ints[3], type: 'pg' }); terminal.io.cc.run() },
     // Cursor
     'copy': (p) => { terminal.cursor.copy() },
     'paste': (p) => { terminal.cursor.paste(true) },
@@ -58,6 +59,7 @@ export default function Commander (terminal) {
     this.chars = this.str.split('')
     this.int = !isNaN(val) ? parseInt(val) : null
     this.parts = val.split(';')
+    this.ints = this.parts.map((val) => { return parseInt(val) })
     this.x = parseInt(this.parts[0])
     this.y = parseInt(this.parts[1])
     this.w = parseInt(this.parts[2])

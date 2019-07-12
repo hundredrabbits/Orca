@@ -13,6 +13,7 @@ export default function MidiCC (terminal) {
   }
 
   this.run = function () {
+    if (this.stack.length < 1) { return }
     const device = terminal.io.midi.outputDevice()
     if (!device) { console.warn('MidiCC', `No Midi device.`); return }
     for (const id in this.stack) {
@@ -40,12 +41,11 @@ export default function MidiCC (terminal) {
   }
 
   this.sendPB = function (device, msg) {
-    console.warn('TODO')
     device.send([0xe0 + msg.channel, msg.lsb, msg.msb])
   }
 
   this.sendPG = function (device, msg) {
-    console.warn('TODO')
+    console.warn('TODO', msg)
     // device.send([0xb0 + channel, this.offset + value, data[2]])
   }
 }
