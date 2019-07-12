@@ -41,7 +41,7 @@ export default function MidiCC (terminal) {
 
   this.sendPB = function (device, msg) {
     console.warn('TODO')
-    // device.send([0xc0 + msg.channel, msg.value])
+    device.send([0xe0 + msg.channel, msg.lsb, msg.msb])
   }
 
   this.sendPG = function (device, msg) {
