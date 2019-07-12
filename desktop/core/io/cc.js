@@ -45,8 +45,12 @@ export default function MidiCC (terminal) {
   }
 
   this.sendPG = function (device, msg) {
-    device.send([0xb0 + msg.channel, 0, msg.bank])
-    device.send([0xb0 + msg.channel, 32, msg.sub])
+  	if (!isNaN(msg.bank)) {
+  		device.send([0xb0 + msg.channel, 0, msg.bank])
+  	}
+    if (!isNaN(msg.sub)) {
+    	device.send([0xb0 + msg.channel, 32, msg.sub])
+    }
     device.send([0xc0 + msg.channel, msg.pgm ])
   }
 }
