@@ -13,7 +13,7 @@ export default function Midi (terminal) {
   this.stack = []
 
   this.keys = {}
-
+  
   this.start = function () {
     console.info('Midi Starting..')
     this.setup()
@@ -125,8 +125,10 @@ export default function Midi (terminal) {
 
   // TODO
   this.sendClock = function () {
+  	this.isClock = true
+  	
     if (!this.outputDevice()) { return }
-    if (this.sendClock !== true) { return }
+    if (this.isClock !== true) { return }
 
     const bpm = terminal.clock.speed.value
     const frameTime = (60000 / bpm) / 4
@@ -135,6 +137,8 @@ export default function Midi (terminal) {
     for (let id = 0; id < 6; id++) {
       if (this.ticks[id]) { clearTimeout(this.ticks[id]) }
       this.ticks[id] = setTimeout(() => { this.outputDevice().send([0xF8], 0) }, parseInt(id) * frameFrag)
+      console.log('Midi', 'send ticks:')
+
     }
   }
 
@@ -152,14 +156,19 @@ export default function Midi (terminal) {
     switch (msg.data[0]) {
       // Clock
       case 0xF8:
+      	//console.log('Midi', 'Clock msg.')
         terminal.clock.tap()
         break
       case 0xFA:
-        console.log('Midi', 'Clock start.')
+        console.log('Midi', 'Start msg.')
+        terminal.clock.play()
+        break
+      case 0xFB:
+        console.log('Midi', 'Continue msg.')
         terminal.clock.play()
         break
       case 0xFC:
-        console.log('Midi', 'Clock stop.')
+        console.log('Midi', 'Stop msg.')
         terminal.clock.stop()
         break
     }
