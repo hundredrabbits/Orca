@@ -58,7 +58,7 @@ npm start
 - `%` **mono**(channel octave note velocity length): Sends monophonic MIDI note.
 - `!` **cc**(channel knob value): Sends MIDI control change.
 - `?` **pb**(channel value): Sends MIDI pitch bench.
-- `&` **keys**(channel): Receive a MIDI note.
+- `&` **keys**(channel): Receive a MIDI note (between notes 60-101).
 - `;` **udp**: Sends UDP message.
 - `=` **osc**(*path*): Sends OSC message.
 - `$` **self**: Sends a [command](#Commands) to itself.
