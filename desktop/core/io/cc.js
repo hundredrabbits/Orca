@@ -57,8 +57,6 @@ export default function MidiCC (terminal) {
     if (!isNaN(msg.sub)) {
     	device.send([0xb0 + msg.channel, 32, msg.sub])
     }
-    if (!isNaN(msg.pgm)) {
-    	device.send([0xc0 + msg.channel, msg.pgm ])
-    }
+    device.send([0xc0 + msg.channel, msg.pgm ])
   }
 }
