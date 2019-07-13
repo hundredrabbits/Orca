@@ -19,10 +19,10 @@ export default function OperatorMidi (orca, x, y, passive) {
     if (!isNaN(this.listen(this.ports.note))) { return }
 
     const channel = this.listen(this.ports.channel, true)
-    const octave = this.listen(this.ports.channel, true)
+    const octave = this.listen(this.ports.octave, true)
+    const note = this.listen(this.ports.note)
     const velocity = this.listen(this.ports.velocity, true)
     const length = this.listen(this.ports.length, true)
-    const note = this.listen(this.ports.note)
 
     terminal.io.midi.send(channel, octave, note, velocity, length)
 
