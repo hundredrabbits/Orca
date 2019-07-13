@@ -69,9 +69,11 @@ export default function Clock (terminal) {
     terminal.io.midi.outputDevice().send([0xFC], 0)
     //terminal.io.midi.isClock = false
     console.log('MIDI', 'Clock Stop')
+    terminal.io.midi.allNotesOff()
     this.isPaused = true
     if (this.isPuppet) { return console.warn('External Midi control') }
     this.clearTimer()
+    // needs an all notes off?
   }
 
   // External Clock

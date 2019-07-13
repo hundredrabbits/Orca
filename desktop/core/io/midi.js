@@ -122,6 +122,14 @@ export default function Midi (terminal) {
     this.keys[channel] = null
   }
 
+  this.allNotesOff = function () {
+  	if (!this.outputDevice()) { return }
+  	console.log('Midi', 'All Notes Off')
+  	for (let chan = 0; chan < 16; chan++) {
+      this.outputDevice().send([0xB0 + chan, 123, 0])
+    }
+  }
+
   // Clock
 
   this.ticks = []
