@@ -36,15 +36,18 @@ export default function MidiCC (terminal) {
     console.log('MidiCC', 'Set offset to ' + this.offset)
   }
 
-  this.sendCC = function (device, msg) {
+  this.sendCC = function (device = terminal.io.midi.outputDevice(), msg) {
+    if (!device || !msg.channel) { return }
     device.send([0xb0 + msg.channel, this.offset + msg.knob, msg.value])
   }
 
-  this.sendPB = function (device, msg) {
+  this.sendPB = function (device = terminal.io.midi.outputDevice(), msg) {
+    if (!device || !msg.channel) { return }
     device.send([0xe0 + msg.channel, msg.lsb, msg.msb])
   }
 
-  this.sendPG = function (device, msg) {
+  this.sendPG = function (device = terminal.io.midi.outputDevice(), msg) {
+    if (!device || !msg.channel) { return }
   	if (!isNaN(msg.bank)) {
   		device.send([0xb0 + msg.channel, 0, msg.bank])
   	}
