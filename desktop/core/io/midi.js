@@ -4,7 +4,8 @@ import transpose from '../transpose.js'
 
 export default function Midi (terminal) {
   this.mode = 0
-
+  this.isClock = true
+  
   this.outputIndex = -1
   this.inputIndex = -1
 
@@ -82,6 +83,8 @@ export default function Midi (terminal) {
 
   this.update = function () {
     terminal.controller.clearCat('default', 'Midi')
+    terminal.controller.add('default', 'Midi', `MIDI Send Clock ${this.isClock === true ? ' — On' : ' — Off'}`, () => { this.toggleClock(); this.update() }, '')
+    
     terminal.controller.add('default', 'Midi', `Refresh Device List`, () => { terminal.io.midi.setup(); terminal.io.midi.update() })
     terminal.controller.addSpacer('default', 'Midi', 'spacer1')
 
@@ -123,9 +126,19 @@ export default function Midi (terminal) {
 
   this.ticks = []
 
+  this.toggleClock = function() {
+	switch (this.isClock) { 
+		case true:
+			this.isClock = false
+			break
+		case false:
+			this.isClock = true
+			break
+	}
+	
+  }
   // TODO
   this.sendClock = function () {
-  	this.isClock = true
   	
     if (!this.outputDevice()) { return }
     if (this.isClock !== true) { return }

@@ -59,8 +59,7 @@ export default function Clock (terminal) {
  	if (!terminal.io.midi.outputDevice()) { console.warn('Midi', 'No midi output!'); return }
 	terminal.io.midi.outputDevice().send([0xFA], 0)
 	console.log('MIDI', 'Clock Start')
-	//terminal.io.midi.sendClock()
-
+	//terminal.io.midi.isClock = true
   }
 
   this.stop = function () {
@@ -68,7 +67,7 @@ export default function Clock (terminal) {
     console.log('Clock', 'Stop')
     terminal.io.midi.silence()
     terminal.io.midi.outputDevice().send([0xFC], 0)
-    terminal.io.midi.isClock = false
+    //terminal.io.midi.isClock = false
     console.log('MIDI', 'Clock Stop')
     this.isPaused = true
     if (this.isPuppet) { return console.warn('External Midi control') }
