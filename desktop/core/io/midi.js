@@ -4,7 +4,7 @@ import transpose from '../transpose.js'
 
 export default function Midi (terminal) {
   this.mode = 0
-  this.isClock = true
+  this.isClock = false
   
   this.outputIndex = -1
   this.inputIndex = -1
@@ -166,12 +166,15 @@ export default function Midi (terminal) {
       return
     }
 
+	// listen for clock all the time
+	// check for clock in?
+	if (msg.data[0] === 0xF8){terminal.clock.tap()}
+	
     switch (msg.data[0]) {
       // Clock
-      case 0xF8:
-      	//console.log('Midi', 'Clock msg.')
-        terminal.clock.tap()
-        break
+      //case 0xF8:
+      //  terminal.clock.tap()
+      //  break
       case 0xFA:
         console.log('Midi', 'Start msg.')
         terminal.clock.play()
