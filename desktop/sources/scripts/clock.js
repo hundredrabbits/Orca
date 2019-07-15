@@ -40,7 +40,7 @@ export default function Clock (terminal) {
   }
 
   // Controls
-
+    
   this.togglePlay = function () {
     if (this.isPaused === true) {
       this.play()
@@ -55,15 +55,25 @@ export default function Clock (terminal) {
     this.isPaused = false
     if (this.isPuppet) { return console.warn('External Midi control') }
     this.set(this.speed.target, this.speed.target, true)
+ 	
+ 	if (!terminal.io.midi.outputDevice()) { console.warn('Midi', 'No midi output!'); return }
+	terminal.io.midi.outputDevice().send([0xFA], 0)
+	console.log('MIDI', 'Clock Start')
+	//terminal.io.midi.isClock = true
   }
 
   this.stop = function () {
     if (this.isPaused) { console.warn('Already stopped'); return }
     console.log('Clock', 'Stop')
     terminal.io.midi.silence()
+    terminal.io.midi.outputDevice().send([0xFC], 0)
+    //terminal.io.midi.isClock = false
+    console.log('MIDI', 'Clock Stop')
+    terminal.io.midi.allNotesOff()
     this.isPaused = true
     if (this.isPuppet) { return console.warn('External Midi control') }
     this.clearTimer()
+    // needs an all notes off?
   }
 
   // External Clock
@@ -105,7 +115,7 @@ export default function Clock (terminal) {
     this.clearTimer()
     this.timer = new Worker(`${__dirname}/scripts/timer.js`)
     this.timer.postMessage((60000 / bpm) / 4)
-    this.timer.onmessage = (event) => { terminal.run() }
+    this.timer.onmessage = (event) => { terminal.io.midi.sendClock(); terminal.run() }
   }
 
   this.clearTimer = function () {
