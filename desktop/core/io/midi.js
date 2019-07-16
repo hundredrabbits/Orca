@@ -83,7 +83,7 @@ export default function Midi (terminal) {
 
   this.update = function () {
     terminal.controller.clearCat('default', 'Midi')
-    terminal.controller.add('default', 'Midi', `MIDI Send Clock ${this.isClock === true ? ' — On' : ' — Off'}`, () => { this.toggleClock(); this.update() }, '')
+    // terminal.controller.add('default', 'Midi', `MIDI Send Clock ${this.isClock === true ? ' — On' : ' — Off'}`, () => { this.toggleClock(); this.update() }, '')
 
     terminal.controller.add('default', 'Midi', `Refresh Device List`, () => { terminal.io.midi.setup(); terminal.io.midi.update() })
     terminal.controller.addSpacer('default', 'Midi', 'spacer1')
