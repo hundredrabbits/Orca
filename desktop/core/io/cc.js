@@ -59,6 +59,6 @@ export default function MidiCC (terminal) {
     }
     if (!isNaN(msg.pgm)) {
 	    device.send([0xc0 + msg.channel, msg.pgm ])
-	}
+    }
   }
 }

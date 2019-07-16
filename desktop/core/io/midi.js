@@ -5,7 +5,7 @@ import transpose from '../transpose.js'
 export default function Midi (terminal) {
   this.mode = 0
   this.isClock = false
-  
+
   this.outputIndex = -1
   this.inputIndex = -1
 
@@ -14,7 +14,7 @@ export default function Midi (terminal) {
   this.stack = []
 
   this.keys = {}
-  
+
   this.start = function () {
     console.info('Midi Starting..')
     this.setup()
@@ -84,7 +84,7 @@ export default function Midi (terminal) {
   this.update = function () {
     terminal.controller.clearCat('default', 'Midi')
     terminal.controller.add('default', 'Midi', `MIDI Send Clock ${this.isClock === true ? ' — On' : ' — Off'}`, () => { this.toggleClock(); this.update() }, '')
-    
+
     terminal.controller.add('default', 'Midi', `Refresh Device List`, () => { terminal.io.midi.setup(); terminal.io.midi.update() })
     terminal.controller.addSpacer('default', 'Midi', 'spacer1')
 
@@ -134,20 +134,18 @@ export default function Midi (terminal) {
 
   this.ticks = []
 
-  this.toggleClock = function() {
-	switch (this.isClock) { 
-		case true:
-			this.isClock = false
-			break
-		case false:
-			this.isClock = true
-			break
-	}
-	
+  this.toggleClock = function () {
+    switch (this.isClock) {
+      case true:
+        this.isClock = false
+        break
+      case false:
+        this.isClock = true
+        break
+    }
   }
   // TODO
   this.sendClock = function () {
-  	
     if (!this.outputDevice()) { return }
     if (this.isClock !== true) { return }
 
@@ -159,7 +157,6 @@ export default function Midi (terminal) {
       if (this.ticks[id]) { clearTimeout(this.ticks[id]) }
       this.ticks[id] = setTimeout(() => { this.outputDevice().send([0xF8], 0) }, parseInt(id) * frameFrag)
       console.log('Midi', 'send ticks:')
-
     }
   }
 
@@ -174,13 +171,13 @@ export default function Midi (terminal) {
       return
     }
 
-	// listen for clock all the time
-	// check for clock in?
-	if (msg.data[0] === 0xF8){terminal.clock.tap()}
-	
+    // listen for clock all the time
+    // check for clock in?
+    if (msg.data[0] === 0xF8) { terminal.clock.tap() }
+
     switch (msg.data[0]) {
       // Clock
-      //case 0xF8:
+      // case 0xF8:
       //  terminal.clock.tap()
       //  break
       case 0xFA:

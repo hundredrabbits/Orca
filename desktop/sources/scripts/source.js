@@ -21,7 +21,7 @@ export default function Source (terminal) {
     terminal.resize()
     terminal.history.reset()
     terminal.cursor.reset()
-//    terminal.clock.play()
+    //    terminal.clock.play()
   }
 
   this.open = function () {
