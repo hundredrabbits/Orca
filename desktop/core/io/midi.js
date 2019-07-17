@@ -83,7 +83,7 @@ export default function Midi (terminal) {
 
   this.update = function () {
     terminal.controller.clearCat('default', 'Midi')
-    // terminal.controller.add('default', 'Midi', `MIDI Send Clock ${this.isClock === true ? ' — On' : ' — Off'}`, () => { this.toggleClock(); this.update() }, '')
+    terminal.controller.add('default', 'Midi', `MIDI Send Clock ${this.isClock === true ? ' — On' : ' — Off'}`, () => { this.toggleClock(); this.update() }, '')
 
     terminal.controller.add('default', 'Midi', `Refresh Device List`, () => { terminal.io.midi.setup(); terminal.io.midi.update() })
     terminal.controller.addSpacer('default', 'Midi', 'spacer1')
@@ -136,6 +136,7 @@ export default function Midi (terminal) {
 
   this.toggleClock = function () {
     this.isClock = !this.isClock
+    terminal.clock.stop()
   }
 
   this.sendClock = function () {
@@ -156,13 +157,13 @@ export default function Midi (terminal) {
   this.sendClockStart = function () {
     if (!this.outputDevice()) { return }
     this.outputDevice().send([0xFA], 0)
-    console.log('MIDI', 'Clock Start')
+    console.log('MIDI', 'MIDI Start Sent')
   }
 
   this.sendClockStop = function () {
-    if (this.outputDevice()) { return }
-    this.outputDevice().send([0xFA], 0)
-    console.log('MIDI', 'Clock Start')
+    if (!this.outputDevice()) { return }
+    this.outputDevice().send([0xFC], 0)
+    console.log('MIDI', 'MIDI Stop Sent')
   }
 
   this.receive = function (msg) {
@@ -186,15 +187,15 @@ export default function Midi (terminal) {
       //  terminal.clock.tap()
       //  break
       case 0xFA:
-        console.log('MIDI', 'Start msg.')
+        console.log('MIDI', 'Start Received')
         terminal.clock.play()
         break
       case 0xFB:
-        console.log('MIDI', 'Continue msg.')
+        console.log('MIDI', 'Continue Received')
         terminal.clock.play()
         break
       case 0xFC:
-        console.log('MIDI', 'Stop msg.')
+        console.log('MIDI', 'Stop Received')
         terminal.clock.stop()
         break
     }

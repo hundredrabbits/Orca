@@ -64,6 +64,7 @@ export default function Clock (terminal) {
     if (this.isPuppet) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = true
     terminal.io.midi.sendClockStop()
+    terminal.io.midi.allNotesOff()
     this.clearTimer()
     terminal.io.midi.silence()
   }
