@@ -50,7 +50,7 @@ export default function Clock (terminal) {
   }
 
   this.play = function () {
-    console.log('Orca Clock', 'Play')
+    console.log('Clock', 'Play')
     if (!this.isPaused) { console.warn('Clock', 'Already playing'); return }
     if (this.isPuppet) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = false
@@ -59,7 +59,7 @@ export default function Clock (terminal) {
   }
 
   this.stop = function () {
-    console.log('Orca Clock', 'Stop')
+    console.log('Clock', 'Stop')
     if (this.isPaused) { console.warn('Clock', 'Already stopped'); return }
     if (this.isPuppet) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = true
