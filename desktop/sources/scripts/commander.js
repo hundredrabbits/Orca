@@ -31,8 +31,8 @@ export default function Commander (terminal) {
     'stop': (p) => { terminal.clock.stop() },
     'run': (p) => { terminal.run() },
     // Speed
-    'apm': (p) => { terminal.clock.set(null, p.int) },
-    'bpm': (p) => { terminal.clock.set(p.int, p.int, true) },
+    'apm': (p) => { terminal.clock.setTimer(null, p.int) },
+    'bpm': (p) => { terminal.clock.setTimer(p.int, p.int, true) },
     'time': (p) => { terminal.clock.setFrame(p.int) },
     'rewind': (p) => { terminal.clock.setFrame(terminal.orca.f - p.int) },
     'skip': (p) => { terminal.clock.setFrame(terminal.orca.f + p.int) },

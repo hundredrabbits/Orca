@@ -153,6 +153,18 @@ export default function Midi (terminal) {
     }
   }
 
+  this.sendClockStart = function () {
+    if (!terminal.io.midi.outputDevice()) { return }
+    this.midi.outputDevice().send([0xFA], 0)
+    console.log('Clock', 'Clock Start')
+  }
+
+  this.sendClockStop = function () {
+    if (terminal.io.midi.outputDevice()) { return }
+    this.midi.outputDevice().send([0xFA], 0)
+    console.log('Clock', 'Clock Start')
+  }
+
   this.receive = function (msg) {
     // Keys
     if (msg.data[0] >= 144 && msg.data[0] < 160) {

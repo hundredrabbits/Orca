@@ -80,9 +80,4 @@ export default function Controller () {
     }
     return acc
   }
-
-  this.docs = function () {
-    // TODO
-    console.log(this.menu.default)
-  }
 }
