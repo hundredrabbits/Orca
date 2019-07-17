@@ -83,7 +83,7 @@ export default function Midi (terminal) {
 
   this.update = function () {
     terminal.controller.clearCat('default', 'Midi')
-    // terminal.controller.add('default', 'Midi', `MIDI Send Clock ${this.isClock === true ? ' — On' : ' — Off'}`, () => { this.toggleClock(); this.update() }, '')
+    terminal.controller.add('default', 'Midi', `MIDI Send Clock ${this.isClock === true ? ' — On' : ' — Off'}`, () => { this.toggleClock(); this.update() }, '')
 
     terminal.controller.add('default', 'Midi', `Refresh Device List`, () => { terminal.io.midi.setup(); terminal.io.midi.update() })
     terminal.controller.addSpacer('default', 'Midi', 'spacer1')
@@ -136,6 +136,7 @@ export default function Midi (terminal) {
 
   this.toggleClock = function () {
     this.isClock = !this.isClock
+    terminal.clock.stop()
   }
 
   this.sendClock = function () {
@@ -154,15 +155,15 @@ export default function Midi (terminal) {
   }
 
   this.sendClockStart = function () {
-    if (!this.outputDevice()) { return }
+    if (!this.outputDevice()) { console.log('MIDI', 'No output device'); return }
     this.outputDevice().send([0xFA], 0)
     console.log('MIDI', 'Clock Start')
   }
 
   this.sendClockStop = function () {
-    if (this.outputDevice()) { return }
-    this.outputDevice().send([0xFA], 0)
-    console.log('MIDI', 'Clock Start')
+    if (!this.outputDevice()) { console.log('MIDI', 'No output device'); return }
+    this.outputDevice().send([0xFC], 0)
+    console.log('MIDI', 'Clock Stop')
   }
 
   this.receive = function (msg) {
