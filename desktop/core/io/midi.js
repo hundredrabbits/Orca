@@ -38,7 +38,7 @@ export default function Midi (terminal) {
   }
 
   this.trigger = function (item, down) {
-    if (!this.outputDevice()) { console.warn('Midi', 'No midi output!'); return }
+    if (!this.outputDevice()) { console.warn('MIDI', 'No midi output!'); return }
 
     const transposed = this.transpose(item.note, item.octave)
     const channel = terminal.orca.valueOf(item.channel)
@@ -124,7 +124,7 @@ export default function Midi (terminal) {
 
   this.allNotesOff = function () {
   	if (!this.outputDevice()) { return }
-  	console.log('Midi', 'All Notes Off')
+  	console.log('MIDI', 'All Notes Off')
   	for (let chan = 0; chan < 16; chan++) {
       this.outputDevice().send([0xB0 + chan, 123, 0])
     }
@@ -149,7 +149,7 @@ export default function Midi (terminal) {
     for (let id = 0; id < 6; id++) {
       if (this.ticks[id]) { clearTimeout(this.ticks[id]) }
       this.ticks[id] = setTimeout(() => { this.outputDevice().send([0xF8], 0) }, parseInt(id) * frameFrag)
-      console.log('Midi', 'send ticks:')
+      console.log('MIDI', 'send ticks:')
     }
   }
 
@@ -174,15 +174,15 @@ export default function Midi (terminal) {
       //  terminal.clock.tap()
       //  break
       case 0xFA:
-        console.log('Midi', 'Start msg.')
+        console.log('MIDI', 'Start msg.')
         terminal.clock.play()
         break
       case 0xFB:
-        console.log('Midi', 'Continue msg.')
+        console.log('MIDI', 'Continue msg.')
         terminal.clock.play()
         break
       case 0xFC:
-        console.log('Midi', 'Stop msg.')
+        console.log('MIDI', 'Stop msg.')
         terminal.clock.stop()
         break
     }
@@ -191,22 +191,22 @@ export default function Midi (terminal) {
   // Tools
 
   this.selectOutput = function (id) {
-    if (id === -1) { this.outputIndex = -1; console.log('Midi', `Select Output Device: None`); this.update(); return }
+    if (id === -1) { this.outputIndex = -1; console.log('MIDI', `Select Output Device: None`); this.update(); return }
     if (!this.outputs[id]) { return }
 
     this.outputIndex = parseInt(id)
-    console.log('Midi', `Select Output Device: ${this.outputDevice().name}`)
+    console.log('MIDI', `Select Output Device: ${this.outputDevice().name}`)
     this.update()
   }
 
   this.selectInput = function (id) {
     if (this.inputDevice()) { this.inputDevice().onmidimessage = null }
-    if (id === -1) { this.inputIndex = -1; console.log('Midi', `Select Input Device: None`); this.update(); return }
+    if (id === -1) { this.inputIndex = -1; console.log('MIDI', `Select Input Device: None`); this.update(); return }
     if (!this.inputs[id]) { return }
 
     this.inputIndex = parseInt(id)
     this.inputDevice().onmidimessage = (msg) => { this.receive(msg) }
-    console.log('Midi', `Select Input Device: ${this.inputDevice().name}`)
+    console.log('MIDI', `Select Input Device: ${this.inputDevice().name}`)
     this.update()
   }
 

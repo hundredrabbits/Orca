@@ -8,7 +8,7 @@ export default function Udp (terminal) {
   this.options = { default: 49161, orca: 49160 }
 
   this.start = function () {
-    console.info('UDP Starting..')
+    console.info('UDP', 'Starting..')
     this.select()
   }
 
@@ -27,7 +27,7 @@ export default function Udp (terminal) {
   }
 
   this.play = function (data) {
-    this.server.send(Buffer.from(`${data}`), this.port, terminal.io.ip, (err) => {
+    this.client.send(Buffer.from(`${data}`), this.port, terminal.io.ip, (err) => {
       if (err) { console.warn(err) }
     })
   }
@@ -48,7 +48,7 @@ export default function Udp (terminal) {
     terminal.controller.commit()
   }
 
-  this.server = dgram.createSocket('udp4')
+  this.client = dgram.createSocket('udp4')
   this.listener = dgram.createSocket('udp4')
 
   // Input
@@ -59,11 +59,11 @@ export default function Udp (terminal) {
 
   this.listener.on('listening', () => {
     const address = this.listener.address()
-    console.log(`UDP Listening: ${address.address}:${address.port}`)
+    console.info('UDP', `Started client at ${address.address}:${address.port}`)
   })
 
   this.listener.on('error', (err) => {
-    console.warn(`Server error:\n ${err.stack}`)
+    console.warn('UDP', `Server error:\n ${err.stack}`)
     this.listener.close()
   })
 

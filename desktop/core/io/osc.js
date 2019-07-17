@@ -60,6 +60,6 @@ export default function Osc (terminal) {
     if (!this.port) { return }
     if (this.client) { this.client.close() }
     this.client = new osc.Client(terminal.io.ip, this.port)
-    console.info('OSC', 'Started client at ' + terminal.io.ip + ':' + this.port)
+    console.info('OSC', `Started client at ${terminal.io.ip}:${this.port}`)
   }
 }
