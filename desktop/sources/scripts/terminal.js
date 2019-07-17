@@ -12,7 +12,7 @@ import Controller from './lib/controller.js'
 import library from '../../core/library.js'
 
 export default function Terminal () {
-  this.version = 143
+  this.version = 144
   this.library = library
 
   this.orca = new Orca(this)
@@ -260,7 +260,7 @@ export default function Terminal () {
     this.write(`${this.orca.w}x${this.orca.h}`, col * 0, this.orca.h, this.grid.w)
     this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, col * 1, this.orca.h, this.grid.w)
     this.write(`${this.source}`, col * 2, this.orca.h, this.grid.w, this.source.queue.length > terminal.orca.f ? 3 : 2)
-    this.write(`${this.clock}`, col * 3, this.orca.h, this.grid.w, this.io.midi.inputIndex > -1 ? 3 : 2)
+    this.write(`${this.clock}`, col * 3, this.orca.h, this.grid.w, this.clock.isPuppet === true > -1 ? 3 : 2)
 
     if (this.orca.f < 15) {
       this.write(`${this.io.midi}`, col * 4, this.orca.h, this.grid.w * 2)

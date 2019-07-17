@@ -132,7 +132,7 @@ export default function Clock (terminal) {
   this.toString = function () {
     const diff = this.speed.target - this.speed.value
     const _offset = Math.abs(diff) > 5 ? (diff > 0 ? `+${diff}` : diff) : ''
-    const _message = this.isPuppet ? 'midi' : `${this.speed.value}${_offset}`
+    const _message = this.isPuppet === true ? 'midi' : `${this.speed.value}${_offset}`
     const _beat = diff === 0 && terminal.orca.f % 4 === 0 ? '*' : ''
     return `${_message}${_beat}`
   }
