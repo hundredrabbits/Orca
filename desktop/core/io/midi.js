@@ -154,15 +154,15 @@ export default function Midi (terminal) {
   }
 
   this.sendClockStart = function () {
-    if (!terminal.io.midi.outputDevice()) { return }
-    this.midi.outputDevice().send([0xFA], 0)
-    console.log('Clock', 'Clock Start')
+    if (!this.outputDevice()) { return }
+    this.outputDevice().send([0xFA], 0)
+    console.log('MIDI', 'Clock Start')
   }
 
   this.sendClockStop = function () {
-    if (terminal.io.midi.outputDevice()) { return }
-    this.midi.outputDevice().send([0xFA], 0)
-    console.log('Clock', 'Clock Start')
+    if (this.outputDevice()) { return }
+    this.outputDevice().send([0xFA], 0)
+    console.log('MIDI', 'Clock Start')
   }
 
   this.receive = function (msg) {

@@ -165,8 +165,8 @@ export default function Commander (terminal) {
     if (event.key === '[') { terminal.modGrid(-1, 0); event.preventDefault(); return }
     if (event.key === '}') { terminal.modGrid(0, 1); event.preventDefault(); return }
     if (event.key === '{') { terminal.modGrid(0, -1); event.preventDefault(); return }
-    if (event.key === '>') { terminal.clock.mod(1); event.preventDefault(); return }
-    if (event.key === '<') { terminal.clock.mod(-1); event.preventDefault(); return }
+    if (event.key === '>') { terminal.clock.modTimer(1); event.preventDefault(); return }
+    if (event.key === '<') { terminal.clock.modTimer(-1); event.preventDefault(); return }
 
     // Route key to Operator or Cursor
     terminal[this.isActive === true ? 'commander' : 'cursor'].write(event.key)

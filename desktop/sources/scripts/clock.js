@@ -30,7 +30,7 @@ export default function Clock (terminal) {
     if (setTimer === true) { this.setTimer(this.speed.value) }
   }
 
-  this.mod = function (mod = 0, animate = false) {
+  this.modTimer = function (mod = 0, animate = false) {
     if (animate === true) {
       this.setTimer(null, this.speed.target + mod)
     } else {
@@ -54,7 +54,7 @@ export default function Clock (terminal) {
     if (!this.isPaused) { console.warn('Clock', 'Already playing'); return }
     if (this.isPuppet) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = false
-    termina.io.midi.sendClockStart()
+    terminal.io.midi.sendClockStart()
     this.setTimer(this.speed.target, this.speed.target, true)
   }
 
@@ -63,7 +63,7 @@ export default function Clock (terminal) {
     if (this.isPaused) { console.warn('Clock', 'Already stopped'); return }
     if (this.isPuppet) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = true
-    termina.io.midi.sendClockStop()
+    terminal.io.midi.sendClockStop()
     this.clearTimer()
     terminal.io.midi.silence()
   }
