@@ -161,7 +161,7 @@ export default function Midi (terminal) {
   }
 
   this.sendClockStop = function () {
-    if (!this.outputDevice()) { console.log('MIDI', 'No output device'); return }
+    if (!this.outputDevice()) { return }
     this.outputDevice().send([0xFC], 0)
     console.log('MIDI', 'Clock Stop')
   }
