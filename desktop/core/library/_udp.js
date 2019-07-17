@@ -21,7 +21,7 @@ export default function OperatorUdp (orca, x, y, passive) {
     if (msg === '') { return }
 
     this.draw = false
-    terminal.io.udp.send(msg)
+    terminal.io.udp.push(msg)
 
     if (force === true) {
       terminal.io.udp.run()

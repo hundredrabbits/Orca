@@ -27,7 +27,7 @@ export default function OperatorOsc (orca, x, y, passive) {
     if (!path || path === '.') { return }
 
     this.draw = false
-    terminal.io.osc.send('/' + path, msg)
+    terminal.io.osc.push('/' + path, msg)
 
     if (force === true) {
       terminal.io.osc.run()

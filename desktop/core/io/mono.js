@@ -42,7 +42,7 @@ export default function Mono (terminal) {
     }
   }
 
-  this.send = function (channel, octave, note, velocity, length, isPlayed = false) {
+  this.push = function (channel, octave, note, velocity, length, isPlayed = false) {
     if (this.stack[channel]) {
       this.release(this.stack[channel])
     }

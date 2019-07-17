@@ -72,7 +72,7 @@ export default function Midi (terminal) {
     }
   }
 
-  this.send = function (channel, octave, note, velocity, length, isPlayed = false) {
+  this.push = function (channel, octave, note, velocity, length, isPlayed = false) {
     const item = { channel, octave, note, velocity, length, isPlayed }
     // Retrigger duplicates
     for (const id in this.stack) {
@@ -135,16 +135,9 @@ export default function Midi (terminal) {
   this.ticks = []
 
   this.toggleClock = function () {
-    switch (this.isClock) {
-      case true:
-        this.isClock = false
-        break
-      case false:
-        this.isClock = true
-        break
-    }
+    this.isClock = !this.isClock
   }
-  // TODO
+
   this.sendClock = function () {
     if (!this.outputDevice()) { return }
     if (this.isClock !== true) { return }

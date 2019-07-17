@@ -23,7 +23,7 @@ export default function Osc (terminal) {
     }
   }
 
-  this.send = function (path, msg) {
+  this.push = function (path, msg) {
     this.stack.push({ path, msg })
   }
 

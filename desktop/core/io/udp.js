@@ -22,7 +22,7 @@ export default function Udp (terminal) {
     }
   }
 
-  this.send = function (msg) {
+  this.push = function (msg) {
     this.stack.push(msg)
   }
 

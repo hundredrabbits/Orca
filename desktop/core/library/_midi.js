@@ -26,7 +26,7 @@ export default function OperatorMidi (orca, x, y, passive) {
     const velocity = this.listen(this.ports.velocity, true)
     const length = this.listen(this.ports.length, true)
 
-    terminal.io.midi.send(channel, octave, note, velocity, length)
+    terminal.io.midi.push(channel, octave, note, velocity, length)
 
     if (force === true) {
       terminal.io.midi.run()
