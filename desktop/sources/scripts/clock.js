@@ -10,7 +10,7 @@ export default function Clock (terminal) {
   this.speed = { value: 120, target: 120 }
 
   this.start = function () {
-    this.setSpeed(120)
+    this.setTimer(120)
     this.play()
   }
 
@@ -56,7 +56,7 @@ export default function Clock (terminal) {
     if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = false
     terminal.io.midi.sendClockStart()
-    this.setTimer(this.speed.target, this.speed.target, true)
+    this.setSpeed(this.speed.target, this.speed.target, true)
   }
 
   this.stop = function () {
