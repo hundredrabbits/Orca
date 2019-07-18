@@ -10,7 +10,7 @@ export default function Clock (terminal) {
   this.speed = { value: 120, target: 120 }
 
   this.start = function () {
-    this.setTimer(120)
+    this.setSpeed(120)
     this.play()
   }
 
@@ -21,20 +21,21 @@ export default function Clock (terminal) {
 
   this.run = function () {
     if (this.speed.target === this.speed.value) { return }
-    this.setTimer(this.speed.value + (this.speed.value < this.speed.target ? 1 : -1), null, true)
+    this.setSpeed(this.speed.value + (this.speed.value < this.speed.target ? 1 : -1), null, true)
   }
 
-  this.setTimer = function (value, target = null, setTimer = false) {
+  this.setSpeed = function (value, target = null, setTimer = false) {
+    console.info('set')
     if (value) { this.speed.value = clamp(value, 60, 300) }
     if (target) { this.speed.target = clamp(target, 60, 300) }
     if (setTimer === true) { this.setTimer(this.speed.value) }
   }
 
-  this.modTimer = function (mod = 0, animate = false) {
+  this.modSpeed = function (mod = 0, animate = false) {
     if (animate === true) {
-      this.setTimer(null, this.speed.target + mod)
+      this.setSpeed(null, this.speed.target + mod)
     } else {
-      this.setTimer(this.speed.value + mod, this.speed.value + mod, true)
+      this.setSpeed(this.speed.value + mod, this.speed.value + mod, true)
       terminal.update()
     }
   }
@@ -51,8 +52,8 @@ export default function Clock (terminal) {
 
   this.play = function () {
     console.log('Clock', 'Play')
-    if (!this.isPaused) { console.warn('Clock', 'Already playing'); return }
-    if (this.isPuppet) { console.warn('Clock', 'External Midi control'); return }
+    if (this.isPaused === false) { console.warn('Clock', 'Already playing'); return }
+    if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = false
     terminal.io.midi.sendClockStart()
     this.setTimer(this.speed.target, this.speed.target, true)
@@ -60,8 +61,8 @@ export default function Clock (terminal) {
 
   this.stop = function () {
     console.log('Clock', 'Stop')
-    if (this.isPaused) { console.warn('Clock', 'Already stopped'); return }
-    if (this.isPuppet) { console.warn('Clock', 'External Midi control'); return }
+    if (this.isPaused === true) { console.warn('Clock', 'Already stopped'); return }
+    if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = true
     terminal.io.midi.sendClockStop()
     terminal.io.midi.allNotesOff()
