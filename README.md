@@ -2,11 +2,11 @@
 
 <img src="https://raw.githubusercontent.com/hundredrabbits/100r.co/master/media/content/characters/orca.hello.png" width="300"/>
 
-**Each letter of the alphabet is an operation**, <br />lowercase letters operate on bang, uppercase letters operate each frame. 
+Orca is an <strong>esoteric programming language</strong>, designed to create procedural sequencers in which each letter of the alphabet is an operation, where lowercase letters operate on bang, uppercase letters operate each frame.
 
-**To learn more**, have a look at some projects created with [#ORCΛ](https://twitter.com/hashtag/ORCΛ), watch the [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE), or check out the [examples](https://github.com/hundredrabbits/Orca/tree/master/examples) & [tutorials](TUTORIAL.md). If you need some help, visit the [forum](https://llllllll.co/t/orca-live-coding-tool/17689), or the [chatroom](https://talk.lurk.org/channel/orca). 
+The <a href="http://github.com/hundredrabbits/Orca" target="_blank" rel="noreferrer" class="external ">application</a> <strong>is not a synthesizer, but a flexible livecoding environment</strong> capable of sending MIDI, OSC & UDP to your audio interface, like Ableton, Renoise, VCV Rack or SuperCollider.
 
-If you're looking for a **portable distribution**, visit [Orca-c](http://github.com/hundredrabbits/Orca-c). If you're looking for the library for your [Monome Norns](https://monome.org/norns/), visit [Orca Norns](https://github.com/itsyourbedtime/orca/).
+Learn more by reading the <a href="https://github.com/Hundredrabbits/Orca" target="_blank" rel="noreferrer" class="external ">manual</a>, or have a look at a <a href="https://www.youtube.com/watch?v=RaI_TuISSJE" target="_blank" rel="noreferrer" class="external ">tutorial video</a>. If you need <strong>help</strong>, visit the <a href="https://talk.lurk.org/channel/orca" target="_blank" rel="noreferrer" class="external ">chatroom</a> or the <a href="https://llllllll.co/t/orca-live-coding-tool/17689" target="_blank" rel="noreferrer" class="external ">forum</a>.
 
 ## Install & Run
 
