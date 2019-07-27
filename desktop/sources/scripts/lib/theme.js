@@ -51,7 +51,7 @@ export default function Theme (_default) {
   this.set = function (key, value) {
     if (!this.active[key]) { console.warn('Theme', 'Unknown key ' + key); return }
     if (!isColor(value)) { console.warn('Theme', 'Not a color ' + value); return }
-    this.active[key] = value
+    this.active[key] = '#' + value
   }
 
   function parse (any) {

@@ -249,7 +249,7 @@ export default function Terminal () {
     const col2 = this.orca.h + 1
 
     if (this.commander.isActive === true) {
-      this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 0, this.orca.h + 1, this.grid.w * 2)
+      this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 0, this.orca.h + 1, this.grid.w * 4)
     } else {
       this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.mode === 1 ? '+' : ''}`, col * 0, this.orca.h + 1, this.grid.w, this.cursor.mode === 1 ? 1 : 2)
       this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, this.orca.h + 1, this.grid.w)
