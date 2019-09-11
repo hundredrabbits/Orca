@@ -81,11 +81,11 @@ export default function Midi (terminal) {
     this.stack.push(item)
   }
 
-  this.update = function () {
+  this.update = () => {
     terminal.controller.clearCat('default', 'Midi')
     terminal.controller.add('default', 'Midi', `MIDI Send Clock ${this.isClock === true ? ' — On' : ' — Off'}`, () => { this.toggleClock(); this.update() }, '')
 
-    terminal.controller.add('default', 'Midi', `Refresh Device List`, () => { terminal.io.midi.setup(); terminal.io.midi.update() })
+    terminal.controller.add('default', 'Midi', `Refresh Device List`, () => { this.setup(); this.update() })
     terminal.controller.addSpacer('default', 'Midi', 'spacer1')
 
     // Outputs
@@ -93,9 +93,9 @@ export default function Midi (terminal) {
       terminal.controller.add('default', 'Midi', `No Midi Outputs`)
     } else {
       for (const id in this.outputs) {
-        terminal.controller.add('default', 'Midi', `${this.outputs[id].name} Output ${terminal.io.midi.outputIndex === parseInt(id) ? ' — Active' : ''}`, () => { terminal.io.midi.selectOutput(id) }, '')
+        terminal.controller.add('default', 'Midi', `${this.outputs[id].name} Output ${this.outputIndex === parseInt(id) ? ' — Active' : ''}`, () => { this.selectOutput(id) }, '')
       }
-      terminal.controller.add('default', 'Midi', `No Output ${terminal.io.midi.outputIndex === -1 ? ' — Active' : ''}`, () => { terminal.io.midi.selectOutput(-1) }, '')
+      terminal.controller.add('default', 'Midi', `No Output ${this.outputIndex === -1 ? ' — Active' : ''}`, () => { this.selectOutput(-1) }, '')
       terminal.controller.addSpacer('default', 'Midi', 'spacer2')
     }
 
@@ -104,9 +104,9 @@ export default function Midi (terminal) {
       terminal.controller.add('default', 'Midi', `No Midi Inputs`)
     } else {
       for (const id in this.inputs) {
-        terminal.controller.add('default', 'Midi', `${this.inputs[id].name} Input ${terminal.io.midi.inputIndex === parseInt(id) ? ' — Active' : ''}`, () => { terminal.io.midi.selectInput(id) }, '')
+        terminal.controller.add('default', 'Midi', `${this.inputs[id].name} Input ${this.inputIndex === parseInt(id) ? ' — Active' : ''}`, () => { this.selectInput(id) }, '')
       }
-      terminal.controller.add('default', 'Midi', `No Input ${terminal.io.midi.inputIndex === -1 ? ' — Active' : ''}`, () => { terminal.io.midi.selectInput(-1) }, '')
+      terminal.controller.add('default', 'Midi', `No Input ${this.inputIndex === -1 ? ' — Active' : ''}`, () => { this.selectInput(-1) }, '')
     }
 
     terminal.controller.commit()
@@ -240,20 +240,20 @@ export default function Midi (terminal) {
     })
   }
 
-  this.access = function (midiAccess) {
+  this.access = (midiAccess) => {
     const outputs = midiAccess.outputs.values()
-    terminal.io.midi.outputs = []
+    this.outputs = []
     for (let i = outputs.next(); i && !i.done; i = outputs.next()) {
-      terminal.io.midi.outputs.push(i.value)
+      this.outputs.push(i.value)
     }
-    terminal.io.midi.selectOutput(0)
+    this.selectOutput(0)
 
     const inputs = midiAccess.inputs.values()
-    terminal.io.midi.inputs = []
+    this.inputs = []
     for (let i = inputs.next(); i && !i.done; i = inputs.next()) {
-      terminal.io.midi.inputs.push(i.value)
+      this.inputs.push(i.value)
     }
-    terminal.io.midi.selectInput(-1)
+    this.selectInput(-1)
   }
 
   // UI
