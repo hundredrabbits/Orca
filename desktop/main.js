@@ -20,6 +20,10 @@ let isShown = true
 app.win = null
 
 app.on('ready', () => {
+    setTimeout(app.onReady, 500)
+})
+
+app.onReady = function () {
   require('electron').protocol.registerBufferProtocol('js', protocolHandler)
 
   app.win = new BrowserWindow({
@@ -27,7 +31,7 @@ app.on('ready', () => {
     height: 470,
     minWidth: 310,
     minHeight: 350,
-    backgroundColor: '#000',
+    transparent: true,
     icon: path.join(__dirname, { darwin: 'icon.icns', linux: 'icon.png', win32: 'icon.ico' }[process.platform] || 'icon.ico'),
     resizable: true,
     frame: process.platform !== 'darwin',
@@ -63,7 +67,7 @@ app.on('ready', () => {
       app.win.show()
     }
   })
-})
+}
 
 app.inspect = function () {
   app.win.toggleDevTools()
