@@ -191,7 +191,7 @@ export default function Terminal () {
   this.makeStyle = function (x, y, glyph, selection) {
     const isLocked = this.orca.lockAt(x, y)
     const port = this.ports[this.orca.indexAt(x, y)]
-    if (this.isSelection(x, y)) { return 4 }
+    if (this.cursor.selected(x, y)) { return 4 }
     if (!port && glyph === '.' && isLocked === false && this.hardmode === true) { return this.isLocals(x, y) === true ? 9 : 7 }
     if (selection === glyph && isLocked === false && selection !== '.') { return 6 }
     if (glyph === '*' && isLocked === false) { return 6 }
