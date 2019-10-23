@@ -135,10 +135,6 @@ export default function Terminal () {
     return x === this.cursor.x && y === this.cursor.y
   }
 
-  this.isSelection = function (x, y) {
-    return !!(x >= this.cursor.x && x < this.cursor.x + this.cursor.w && y >= this.cursor.y && y < this.cursor.y + this.cursor.h)
-  }
-
   this.isMarker = function (x, y) {
     return x % this.grid.w === 0 && y % this.grid.h === 0
   }
@@ -191,7 +187,7 @@ export default function Terminal () {
   this.makeStyle = function (x, y, glyph, selection) {
     const isLocked = this.orca.lockAt(x, y)
     const port = this.ports[this.orca.indexAt(x, y)]
-    if (this.isSelection(x, y)) { return 4 }
+    if (this.cursor.selected(x, y)) { return 4 }
     if (!port && glyph === '.' && isLocked === false && this.hardmode === true) { return this.isLocals(x, y) === true ? 9 : 7 }
     if (selection === glyph && isLocked === false && selection !== '.') { return 6 }
     if (glyph === '*' && isLocked === false) { return 6 }

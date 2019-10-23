@@ -5,15 +5,22 @@ const { clipboard } = require('electron')
 export default function Cursor (terminal) {
   this.x = 0
   this.y = 0
-  this.w = 1
-  this.h = 1
+  this.w = 0
+  this.h = 0
+
+  this.minX = 0;
+  this.maxX = 0;
+  this.minY = 0;
+  this.maxY = 0;
+
   this.mode = 0
-  this.block = []
 
   this.move = function (x, y) {
     if (isNaN(x) || isNaN(y)) { return }
     this.x = clamp(this.x + parseInt(x), 0, terminal.orca.w - 1)
     this.y = clamp(this.y - parseInt(y), 0, terminal.orca.h - 1)
+
+    this.calculateBounds();
     terminal.update()
   }
 
@@ -21,27 +28,35 @@ export default function Cursor (terminal) {
     if (isNaN(x) || isNaN(y)) { return }
     this.x = clamp(parseInt(x), 0, terminal.orca.w - 1)
     this.y = clamp(parseInt(y), 0, terminal.orca.h - 1)
+
+    this.calculateBounds();
     terminal.update()
   }
 
   this.scale = function (x, y) {
     if (isNaN(x) || isNaN(y)) { return }
-    this.w = clamp(this.w + parseInt(x), 1, terminal.orca.w - this.x)
-    this.h = clamp(this.h - parseInt(y), 1, terminal.orca.h - this.y)
+    this.w = clamp(this.w + parseInt(x), -this.x, terminal.orca.w - this.x)
+    this.h = clamp(this.h - parseInt(y), -this.y, terminal.orca.h - this.y)
+
+    this.calculateBounds();
     terminal.update()
   }
 
   this.scaleTo = function (w, h) {
     if (isNaN(w) || isNaN(h)) { return }
-    this.w = clamp(parseInt(w), 1, terminal.orca.w - 1)
-    this.h = clamp(parseInt(h), 1, terminal.orca.h - 1)
+    this.w = clamp(parseInt(w), -this.x, terminal.orca.w - 1)
+    this.h = clamp(parseInt(h), -this.y, terminal.orca.h - 1)
+
+    this.calculateBounds();
     terminal.update()
   }
 
   this.resize = function (w, h) {
     if (isNaN(w) || isNaN(h)) { return }
-    this.w = clamp(parseInt(w), 1, terminal.orca.w - this.x)
-    this.h = clamp(parseInt(h), 1, terminal.orca.h - this.y)
+    this.w = clamp(parseInt(w), -this.x, terminal.orca.w - this.x)
+    this.h = clamp(parseInt(h), -this.y, terminal.orca.h - this.y)
+
+    this.calculateBounds();
     terminal.update()
   }
 
@@ -59,12 +74,16 @@ export default function Cursor (terminal) {
     this.w = terminal.orca.w
     this.h = terminal.orca.h
     this.mode = 0
+
+    this.calculateBounds();
     terminal.update()
   }
 
   this.select = function (x = this.x, y = this.y, w = this.w, h = this.h) {
     this.moveTo(x, y)
     this.scaleTo(w, h)
+
+    this.calculateBounds();
     terminal.update()
   }
 
@@ -74,8 +93,9 @@ export default function Cursor (terminal) {
       this.y = 0
     }
     this.move(0, 0)
-    this.w = 1
-    this.h = 1
+    this.w = 0
+    this.h = 0
+    this.calculateBounds()
     this.mode = 0
   }
 
@@ -108,11 +128,15 @@ export default function Cursor (terminal) {
     terminal.history.record(terminal.orca.s)
   }
 
-  this.erase = function () {
-    this.eraseBlock(this.x, this.y, this.w, this.h)
-    if (this.mode === 1) { this.move(-1, 0) }
-    terminal.history.record(terminal.orca.s)
-  }
+  this.erase = function() {
+    for (let y = this.minY; y <= this.maxY; y++) {
+      for (let x = this.minX; x <= this.maxX; x++) {
+        terminal.orca.write(x, y, ".");
+      }
+    }
+
+    terminal.history.record(terminal.orca.s);
+  };
 
   this.rotate = function (rate = 1) {
     if (isNaN(rate)) { return }
@@ -146,8 +170,8 @@ export default function Cursor (terminal) {
   }
 
   this.toggleMode = function (val) {
-    this.w = 1
-    this.h = 1
+    this.w = 0
+    this.h = 0
     this.mode = this.mode === 0 ? val : 0
   }
 
@@ -199,18 +223,30 @@ export default function Cursor (terminal) {
     terminal.history.record(terminal.orca.s)
   }
 
-  this.eraseBlock = function (x, y, w, h) {
-    if (isNaN(x) || isNaN(y) || isNaN(w) || isNaN(h)) { return }
-    for (let _y = y; _y < y + h; _y++) {
-      for (let _x = x; _x < x + w; _x++) {
-        terminal.orca.write(_x, _y, '.')
-      }
-    }
-    terminal.history.record(terminal.orca.s)
+  this.toRect = function() {
+    return {
+      x: this.minX,
+      y: this.minY,
+      w: this.maxX - this.minX + 1,
+      h: this.maxY - this.minY + 1
+    };
+  };
+
+  this.calculateBounds = function()  {
+    this.minX = this.x < this.x + this.w ? this.x : this.x + this.w;
+    this.minY = this.y < this.y + this.h ? this.y : this.y + this.h;
+    this.maxX = this.x > this.x + this.w ? this.x : this.x + this.w;
+    this.maxY = this.y > this.y + this.h ? this.y : this.y + this.h;
+
   }
 
-  this.toRect = function () {
-    return { x: this.x, y: this.y, w: this.w, h: this.h }
+  this.selected = function(x, y) {
+    return (
+      x >= this.minX &&
+      x <= this.maxX &&
+      y >= this.minY &&
+      y <= this.maxY
+    )
   }
 
   function sense (s) { return s === s.toUpperCase() && s.toLowerCase() !== s.toUpperCase() }
