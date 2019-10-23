@@ -170,8 +170,8 @@ export default function Cursor (terminal) {
   }
 
   this.toggleMode = function (val) {
-    this.w = 1
-    this.h = 1
+    this.w = 0
+    this.h = 0
     this.mode = this.mode === 0 ? val : 0
   }
 
