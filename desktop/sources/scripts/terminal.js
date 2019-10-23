@@ -229,7 +229,6 @@ export default function Terminal () {
 
   this.drawProgram = function () {
     const selection = this.cursor.read()
-    console.log(this.cursor.minX, this.cursor.minY, this.cursor.maxX, this.cursor.maxY);
     for (let y = 0; y < this.orca.h; y++) {
       for (let x = 0; x < this.orca.w; x++) {
         const glyph = this.makeGlyph(x, y)
