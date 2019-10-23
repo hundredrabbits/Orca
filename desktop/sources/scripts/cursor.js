@@ -15,10 +15,18 @@ export default function Cursor (terminal) {
 
   this.mode = 0
 
+  this.updateBox = function() {
+    this.minX = this.x < this.x + this.w ? this.x : this.x + this.w;
+    this.minY = this.y < this.y + this.h ? this.y : this.y + this.h;
+    this.maxX = this.x > this.x + this.w ? this.x : this.x + this.w;
+    this.maxY = this.y > this.y + this.h ? this.y : this.y + this.h;
+  };
+
   this.move = function (x, y) {
     if (isNaN(x) || isNaN(y)) { return }
     this.x = clamp(this.x + parseInt(x), 0, terminal.orca.w - 1)
     this.y = clamp(this.y - parseInt(y), 0, terminal.orca.h - 1)
+    this.updateBox();
     terminal.update()
   }
 
@@ -27,6 +35,7 @@ export default function Cursor (terminal) {
     this.x = clamp(parseInt(x), 0, terminal.orca.w - 1)
     this.y = clamp(parseInt(y), 0, terminal.orca.h - 1)
 
+    this.updateBox();
     terminal.update()
   }
 
@@ -34,6 +43,7 @@ export default function Cursor (terminal) {
     if (isNaN(x) || isNaN(y)) { return }
     this.w = clamp(this.w + parseInt(x), -this.x, terminal.orca.w - this.x)
     this.h = clamp(this.h - parseInt(y), -this.y, terminal.orca.h - this.y)
+    this.updateBox();
     terminal.update()
   }
 
@@ -41,6 +51,7 @@ export default function Cursor (terminal) {
     if (isNaN(w) || isNaN(h)) { return }
     this.w = clamp(parseInt(w), -this.x, terminal.orca.w - 1)
     this.h = clamp(parseInt(h), -this.y, terminal.orca.h - 1)
+    this.updateBox();
     terminal.update()
   }
 
@@ -48,6 +59,7 @@ export default function Cursor (terminal) {
     if (isNaN(w) || isNaN(h)) { return }
     this.w = clamp(parseInt(w), -this.x, terminal.orca.w - this.x)
     this.h = clamp(parseInt(h), -this.y, terminal.orca.h - this.y)
+    this.updateBox();
     terminal.update()
   }
 
@@ -65,12 +77,14 @@ export default function Cursor (terminal) {
     this.w = terminal.orca.w
     this.h = terminal.orca.h
     this.mode = 0
+    this.updateBox()
     terminal.update()
   }
 
   this.select = function (x = this.x, y = this.y, w = this.w, h = this.h) {
     this.moveTo(x, y)
     this.scaleTo(w, h)
+    this.updateBox();
     terminal.update()
   }
 
@@ -82,6 +96,7 @@ export default function Cursor (terminal) {
     this.move(0, 0)
     this.w = 0
     this.h = 0
+    this.updateBox()
     this.mode = 0
   }
 
@@ -210,26 +225,20 @@ export default function Cursor (terminal) {
   }
 
   this.toRect = function() {
-    const minX = this.x > this.x + this.w ? this.x : this.x + this.w;
-    const minY = this.y > this.y + this.h ? this.y : this.y + this.h;
-    const maxX = this.x < this.x + this.w ? this.x : this.x + this.w;
-    const maxY = this.y < this.y + this.h ? this.y : this.y + this.h;
     return {
-      x: minX,
-      y: minY,
+      x: this.minX,
+      y: this.minY,
       w: this.maxX - this.minX + 1,
       h: this.maxY - this.minY + 1
     };
   };
 
-
   this.selected = function(x, y) {
-    const bounds = this.toRect()
     return (
-      x >= bounds.x &&
-      x < bounds.x + bounds.w &&
-      y >= bounds.y &&
-      y < bounds.y + bounds.h
+      x >= this.minX &&
+      x <= this.maxX &&
+      y >= this.minY &&
+      y <= this.maxY
     )
   }
 
