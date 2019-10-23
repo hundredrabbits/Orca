@@ -210,10 +210,10 @@ export default function Cursor (terminal) {
   }
 
   this.toRect = function() {
-    const minX = min(this.x, this.x + this.w);
-    const minY = min(this.y, this.y + this.h);
-    const maxX = max(this.x, this.x + this.w);
-    const maxY = max(this.y, this.y + this.h);
+    const minX = this.x > this.x + this.w ? this.x : this.x + this.w;
+    const minY = this.y > this.y + this.h ? this.y : this.y + this.h;
+    const maxX = this.x < this.x + this.w ? this.x : this.x + this.w;
+    const maxY = this.y < this.y + this.h ? this.y : this.y + this.h;
     return {
       x: minX,
       y: minY,
@@ -224,16 +224,15 @@ export default function Cursor (terminal) {
 
 
   this.selected = function(x, y) {
+    const bounds = this.toRect()
     return (
-      x >= this.minX &&
-      x <= this.maxX &&
-      y >= this.minY &&
-      y <= this.maxY
+      x >= bounds.x &&
+      x < bounds.x + bounds.w &&
+      y >= bounds.y &&
+      y < bounds.y + bounds.h
     )
   }
 
   function sense (s) { return s === s.toUpperCase() && s.toLowerCase() !== s.toUpperCase() }
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
-  function max(a, b) { return a > b ? a : b };
-  function min(a, b) { return a < b ? a : b };
 }
