@@ -32,7 +32,7 @@ export default function Source (terminal) {
   }
 
   this.save = function (quitAfter = false) {
-    console.log('Source', 'Save a file..')
+    console.log('Source', 'Saving file..')
     if (this.path) {
       this.write(this.path, this.generate(), quitAfter)
     } else {
@@ -42,12 +42,11 @@ export default function Source (terminal) {
 
   this.saveAs = function (quitAfter = false) {
     console.log('Source', 'Save a file as..')
-    dialog.showSaveDialog((loc) => {
-      if (loc === undefined) { return }
-      if (loc.indexOf('.orca') < 0) { loc += '.orca' }
-      this.write(loc, this.generate(), quitAfter)
-      this.path = loc
-    })
+    const path = dialog.showSaveDialogSync(app.win, { filters: [{ name: 'Orca Machines', extensions: ['orca'] }] })
+    if (!path) { console.log('Nothing to save'); return }
+    this.write(path.indexOf('.orca') < 0 ? path + '.orca' : path, this.generate(), quitAfter)
+    console.log('Source', 'Saved ' + path)
+    this.path = path
   }
 
   this.revert = function () {
@@ -125,7 +124,7 @@ export default function Source (terminal) {
   }
 
   this.verify = function () {
-    const response = dialog.showMessageBox(app.win, {
+    const response = dialog.showMessageBoxSync(app.win, {
       type: 'question',
       buttons: ['Cancel', 'Discard', 'Save'],
       title: 'Confirm',
