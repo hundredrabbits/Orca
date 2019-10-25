@@ -1,12 +1,8 @@
 'use strict'
 
 export default function Controller () {
-  const fs = require('fs')
-  const { dialog, app } = require('electron').remote
-
   this.menu = { default: {} }
   this.mode = 'default'
-
   this.app = require('electron').remote.app
 
   this.start = function () {
@@ -15,11 +11,13 @@ export default function Controller () {
   this.add = function (mode, cat, label, fn, accelerator) {
     if (!this.menu[mode]) { this.menu[mode] = {} }
     if (!this.menu[mode][cat]) { this.menu[mode][cat] = {} }
-    this.menu[mode][cat][label] = { fn: function (_menuItem, browserWindow) {
-      browserWindow.webContents.focus()
-      fn.apply(this, arguments)
-    },
-    accelerator: accelerator }
+    this.menu[mode][cat][label] = {
+      fn: function (_menuItem, browserWindow) {
+        browserWindow.webContents.focus()
+        fn.apply(this, arguments)
+      },
+      accelerator: accelerator
+    }
   }
 
   this.addRole = function (mode, cat, label) {
@@ -70,7 +68,7 @@ export default function Controller () {
 
   this.accelerator = function (key, menu) {
     const acc = { basic: null, ctrl: null }
-    for (cat in menu) {
+    for (const cat in menu) {
       const options = menu[cat]
       for (const id in options.submenu) {
         const option = options.submenu[id]; if (option.role) { continue }

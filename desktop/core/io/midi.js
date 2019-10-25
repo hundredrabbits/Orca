@@ -83,14 +83,14 @@ export default function Midi (terminal) {
 
   this.update = () => {
     terminal.controller.clearCat('default', 'Midi')
+    terminal.controller.add('default', 'Midi', 'Play/Pause Message', () => { this.toggleClock(true); this.update() }, 'shift+space')
     terminal.controller.add('default', 'Midi', `MIDI Send Clock ${this.isClock === true ? ' — On' : ' — Off'}`, () => { this.toggleClock(); this.update() }, '')
-
-    terminal.controller.add('default', 'Midi', `Refresh Device List`, () => { this.setup(); this.update() })
+    terminal.controller.add('default', 'Midi', 'Refresh Device List', () => { this.setup(); this.update() })
     terminal.controller.addSpacer('default', 'Midi', 'spacer1')
 
     // Outputs
     if (this.outputs.length < 1) {
-      terminal.controller.add('default', 'Midi', `No Midi Outputs`)
+      terminal.controller.add('default', 'Midi', 'No Midi Outputs')
     } else {
       for (const id in this.outputs) {
         terminal.controller.add('default', 'Midi', `${this.outputs[id].name} Output ${this.outputIndex === parseInt(id) ? ' — Active' : ''}`, () => { this.selectOutput(id) }, '')
@@ -101,7 +101,7 @@ export default function Midi (terminal) {
 
     // Inputs
     if (this.inputs.length < 1) {
-      terminal.controller.add('default', 'Midi', `No Midi Inputs`)
+      terminal.controller.add('default', 'Midi', 'No Midi Inputs')
     } else {
       for (const id in this.inputs) {
         terminal.controller.add('default', 'Midi', `${this.inputs[id].name} Input ${this.inputIndex === parseInt(id) ? ' — Active' : ''}`, () => { this.selectInput(id) }, '')
@@ -123,9 +123,9 @@ export default function Midi (terminal) {
   }
 
   this.allNotesOff = function () {
-  	if (!this.outputDevice()) { return }
-  	console.log('MIDI', 'All Notes Off')
-  	for (let chan = 0; chan < 16; chan++) {
+    if (!this.outputDevice()) { return }
+    console.log('MIDI', 'All Notes Off')
+    for (let chan = 0; chan < 16; chan++) {
       this.outputDevice().send([0xB0 + chan, 123, 0])
     }
   }
@@ -204,7 +204,7 @@ export default function Midi (terminal) {
   // Tools
 
   this.selectOutput = function (id) {
-    if (id === -1) { this.outputIndex = -1; console.log('MIDI', `Select Output Device: None`); this.update(); return }
+    if (id === -1) { this.outputIndex = -1; console.log('MIDI', 'Select Output Device: None'); this.update(); return }
     if (!this.outputs[id]) { return }
 
     this.outputIndex = parseInt(id)
@@ -214,7 +214,7 @@ export default function Midi (terminal) {
 
   this.selectInput = function (id) {
     if (this.inputDevice()) { this.inputDevice().onmidimessage = null }
-    if (id === -1) { this.inputIndex = -1; console.log('MIDI', `Select Input Device: None`); this.update(); return }
+    if (id === -1) { this.inputIndex = -1; console.log('MIDI', 'Select Input Device: None'); this.update(); return }
     if (!this.inputs[id]) { return }
 
     this.inputIndex = parseInt(id)

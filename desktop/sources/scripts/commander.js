@@ -9,43 +9,43 @@ export default function Commander (terminal) {
   // Library
 
   this.passives = {
-    'find': (p) => { terminal.cursor.find(p.str) },
-    'select': (p) => { terminal.cursor.select(p.x, p.y, p.w, p.h) },
-    'inject': (p) => { terminal.cursor.select(p._x, p._y); terminal.source.inject(p._str, false) },
-    'write': (p) => { terminal.cursor.select(p._x, p._y, p._str.length) }
+    find: (p) => { terminal.cursor.find(p.str) },
+    select: (p) => { terminal.cursor.select(p.x, p.y, p.w, p.h) },
+    inject: (p) => { terminal.cursor.select(p._x, p._y); terminal.source.inject(p._str, false) },
+    write: (p) => { terminal.cursor.select(p._x, p._y, p._str.length) }
   }
 
   this.actives = {
     // Ports
-    'osc': (p) => { terminal.io.osc.select(p.int) },
-    'udp': (p) => { terminal.io.udp.select(p.int) },
-    'ip': (p) => { terminal.io.setIp(p.str) },
-    'cc': (p) => { terminal.io.cc.setOffset(p.int) },
-    'pg': (p) => { terminal.io.cc.stack.push({ channel: clamp(p.ints[0], 0, 15), bank: p.ints[1], sub: p.ints[2], pgm: clamp(p.ints[3], 0, 127), type: 'pg' }); terminal.io.cc.run() },
+    osc: (p) => { terminal.io.osc.select(p.int) },
+    udp: (p) => { terminal.io.udp.select(p.int) },
+    ip: (p) => { terminal.io.setIp(p.str) },
+    cc: (p) => { terminal.io.cc.setOffset(p.int) },
+    pg: (p) => { terminal.io.cc.stack.push({ channel: clamp(p.ints[0], 0, 15), bank: p.ints[1], sub: p.ints[2], pgm: clamp(p.ints[3], 0, 127), type: 'pg' }); terminal.io.cc.run() },
     // Cursor
-    'copy': (p) => { terminal.cursor.copy() },
-    'paste': (p) => { terminal.cursor.paste(true) },
-    'erase': (p) => { terminal.cursor.erase() },
+    copy: (p) => { terminal.cursor.copy() },
+    paste: (p) => { terminal.cursor.paste(true) },
+    erase: (p) => { terminal.cursor.erase() },
     // Controls
-    'play': (p) => { terminal.clock.play() },
-    'stop': (p) => { terminal.clock.stop() },
-    'run': (p) => { terminal.run() },
+    play: (p) => { terminal.clock.play() },
+    stop: (p) => { terminal.clock.stop() },
+    run: (p) => { terminal.run() },
     // Speed
-    'apm': (p) => { terminal.clock.setSpeed(null, p.int) },
-    'bpm': (p) => { terminal.clock.setSpeed(p.int, p.int, true) },
-    'time': (p) => { terminal.clock.setFrame(p.int) },
-    'rewind': (p) => { terminal.clock.setFrame(terminal.orca.f - p.int) },
-    'skip': (p) => { terminal.clock.setFrame(terminal.orca.f + p.int) },
+    apm: (p) => { terminal.clock.setSpeed(null, p.int) },
+    bpm: (p) => { terminal.clock.setSpeed(p.int, p.int, true) },
+    time: (p) => { terminal.clock.setFrame(p.int) },
+    rewind: (p) => { terminal.clock.setFrame(terminal.orca.f - p.int) },
+    skip: (p) => { terminal.clock.setFrame(terminal.orca.f + p.int) },
     // Effects
-    'rot': (p) => { terminal.cursor.rotate(p.int) },
+    rot: (p) => { terminal.cursor.rotate(p.int) },
     // Themeing
-    'color': (p) => { terminal.theme.set('b_med', p.parts[0]); terminal.theme.set('b_inv', p.parts[1]); terminal.theme.set('b_high', p.parts[2]) },
-    'graphic': (p) => { terminal.theme.setImage(terminal.source.locate(p.parts[0] + '.' + (p.parts[1] ? p.parts[1] : 'jpg'))) },
+    color: (p) => { terminal.theme.set('b_med', p.parts[0]); terminal.theme.set('b_inv', p.parts[1]); terminal.theme.set('b_high', p.parts[2]) },
+    graphic: (p) => { terminal.theme.setImage(terminal.source.locate(p.parts[0] + '.' + (p.parts[1] ? p.parts[1] : 'jpg'))) },
     // Edit
-    'find': (p) => { terminal.cursor.find(p.str) },
-    'select': (p) => { terminal.cursor.select(p.x, p.y, p.w, p.h) },
-    'inject': (p) => { terminal.cursor.select(p._x, p._y); terminal.source.inject(p._str, true) },
-    'write': (p) => { terminal.cursor.select(p._x, p._y, p._str.length); terminal.cursor.writeBlock([p._str.split('')]) }
+    find: (p) => { terminal.cursor.find(p.str) },
+    select: (p) => { terminal.cursor.select(p.x, p.y, p.w, p.h) },
+    inject: (p) => { terminal.cursor.select(p._x, p._y); terminal.source.inject(p._str, true) },
+    write: (p) => { terminal.cursor.select(p._x, p._y, p._str.length); terminal.cursor.writeBlock([p._str.split('')]) }
   }
 
   // Make shorthands
@@ -155,7 +155,7 @@ export default function Commander (terminal) {
     if (event.metaKey) { return }
     if (event.ctrlKey) { return }
 
-    if (event.key === ' ' && terminal.cursor.mode === 0) { terminal.clock.togglePlay(); event.preventDefault(); return }
+    if (event.key === ' ' && terminal.cursor.mode === 0) { terminal.clock.togglePlay(event.shiftKey); event.preventDefault(); return }
     if (event.key === ' ' && terminal.cursor.mode === 1) { terminal.cursor.move(1, 0); event.preventDefault(); return }
 
     if (event.key === 'Escape') { terminal.toggleGuide(false); terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; terminal.cursor.reset(); return }

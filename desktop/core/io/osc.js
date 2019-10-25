@@ -53,6 +53,7 @@ export default function Osc (terminal) {
     for (const id in this.options) {
       terminal.controller.add('default', 'OSC', `${id.charAt(0).toUpperCase() + id.substr(1)}(${this.options[id]}) ${this.port === this.options[id] ? ' — Active' : ''}`, () => { this.select(this.options[id]) }, '')
     }
+    terminal.controller.add('default', 'OSC', 'Choose Custom Port', () => { terminal.commander.start('osc:') }, '')
     terminal.controller.commit()
   }
 

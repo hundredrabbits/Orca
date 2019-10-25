@@ -8,10 +8,10 @@ export default function Cursor (terminal) {
   this.w = 0
   this.h = 0
 
-  this.minX = 0;
-  this.maxX = 0;
-  this.minY = 0;
-  this.maxY = 0;
+  this.minX = 0
+  this.maxX = 0
+  this.minY = 0
+  this.maxY = 0
 
   this.mode = 0
 
@@ -20,7 +20,7 @@ export default function Cursor (terminal) {
     this.x = clamp(this.x + parseInt(x), 0, terminal.orca.w - 1)
     this.y = clamp(this.y - parseInt(y), 0, terminal.orca.h - 1)
 
-    this.calculateBounds();
+    this.calculateBounds()
     terminal.update()
   }
 
@@ -29,7 +29,7 @@ export default function Cursor (terminal) {
     this.x = clamp(parseInt(x), 0, terminal.orca.w - 1)
     this.y = clamp(parseInt(y), 0, terminal.orca.h - 1)
 
-    this.calculateBounds();
+    this.calculateBounds()
     terminal.update()
   }
 
@@ -38,7 +38,7 @@ export default function Cursor (terminal) {
     this.w = clamp(this.w + parseInt(x), -this.x, terminal.orca.w - this.x)
     this.h = clamp(this.h - parseInt(y), -this.y, terminal.orca.h - this.y)
 
-    this.calculateBounds();
+    this.calculateBounds()
     terminal.update()
   }
 
@@ -47,7 +47,7 @@ export default function Cursor (terminal) {
     this.w = clamp(parseInt(w), -this.x, terminal.orca.w - 1)
     this.h = clamp(parseInt(h), -this.y, terminal.orca.h - 1)
 
-    this.calculateBounds();
+    this.calculateBounds()
     terminal.update()
   }
 
@@ -56,7 +56,7 @@ export default function Cursor (terminal) {
     this.w = clamp(parseInt(w), -this.x, terminal.orca.w - this.x)
     this.h = clamp(parseInt(h), -this.y, terminal.orca.h - this.y)
 
-    this.calculateBounds();
+    this.calculateBounds()
     terminal.update()
   }
 
@@ -75,7 +75,7 @@ export default function Cursor (terminal) {
     this.h = terminal.orca.h
     this.mode = 0
 
-    this.calculateBounds();
+    this.calculateBounds()
     terminal.update()
   }
 
@@ -83,7 +83,7 @@ export default function Cursor (terminal) {
     this.moveTo(x, y)
     this.scaleTo(w, h)
 
-    this.calculateBounds();
+    this.calculateBounds()
     terminal.update()
   }
 
@@ -128,15 +128,15 @@ export default function Cursor (terminal) {
     terminal.history.record(terminal.orca.s)
   }
 
-  this.erase = function() {
+  this.erase = function () {
     for (let y = this.minY; y <= this.maxY; y++) {
       for (let x = this.minX; x <= this.maxX; x++) {
-        terminal.orca.write(x, y, ".");
+        terminal.orca.write(x, y, '.')
       }
     }
 
-    terminal.history.record(terminal.orca.s);
-  };
+    terminal.history.record(terminal.orca.s)
+  }
 
   this.rotate = function (rate = 1) {
     if (isNaN(rate)) { return }
@@ -152,14 +152,12 @@ export default function Cursor (terminal) {
     terminal.cursor.writeBlock(cols)
   }
 
-  this.find = function (str) {
+  this.find = (str) => {
     const i = terminal.orca.s.indexOf(str)
     if (i < 0) { return }
     const pos = terminal.orca.posAt(i)
-    this.w = str.length
-    this.h = 1
-    this.x = pos.x
-    this.y = pos.y
+    this.select(pos.x, pos.y, str.length - 1, 0)
+    terminal.update()
   }
 
   this.trigger = function () {
@@ -223,24 +221,23 @@ export default function Cursor (terminal) {
     terminal.history.record(terminal.orca.s)
   }
 
-  this.toRect = function() {
+  this.toRect = function () {
     return {
       x: this.minX,
       y: this.minY,
       w: this.maxX - this.minX + 1,
       h: this.maxY - this.minY + 1
-    };
-  };
-
-  this.calculateBounds = function()  {
-    this.minX = this.x < this.x + this.w ? this.x : this.x + this.w;
-    this.minY = this.y < this.y + this.h ? this.y : this.y + this.h;
-    this.maxX = this.x > this.x + this.w ? this.x : this.x + this.w;
-    this.maxY = this.y > this.y + this.h ? this.y : this.y + this.h;
-
+    }
   }
 
-  this.selected = function(x, y) {
+  this.calculateBounds = function () {
+    this.minX = this.x < this.x + this.w ? this.x : this.x + this.w
+    this.minY = this.y < this.y + this.h ? this.y : this.y + this.h
+    this.maxX = this.x > this.x + this.w ? this.x : this.x + this.w
+    this.maxY = this.y > this.y + this.h ? this.y : this.y + this.h
+  }
+
+  this.selected = function (x, y) {
     return (
       x >= this.minX &&
       x <= this.maxX &&

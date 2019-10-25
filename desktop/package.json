@@ -15,14 +15,29 @@
     "push_osx": "~/Applications/butler push ~/Documents/Orca-darwin-x64/ hundredrabbits/orca:osx-64",
     "push_linux": "~/Applications/butler push ~/Documents/Orca-linux-x64/ hundredrabbits/orca:linux-64",
     "push_win": "~/Applications/butler push ~/Documents/Orca-win32-x64/ hundredrabbits/orca:windows-64",
-    "push_status": "~/Applications/butler status hundredrabbits/orca",
-    "push": "npm run build ; npm run push_osx ; npm run push_linux ; npm run push_win ; npm run clean ; npm run push_status"
+    "status": "~/Applications/butler status hundredrabbits/orca",
+    "push": "npm run build ; npm run push_osx ; npm run push_linux ; npm run push_win ; npm run clean ; npm run status"
   },
   "devDependencies": {
-    "electron": "^5.0.10",
-    "electron-packager": "^13.1.1"
+    "electron": "^7.0.0",
+    "electron-packager": "^14.0.6"
   },
   "dependencies": {
     "node-osc": "^4.1.1"
+  },
+  "standard": {
+    "globals": [
+      "terminal",
+      "localStorage",
+      "DOMParser",
+      "onMessage",
+      "postMessage",
+      "FileReader",
+      "performance",
+      "Worker"
+    ],
+    "ignore": [
+      "/node_modules/*"
+    ]
   }
 }

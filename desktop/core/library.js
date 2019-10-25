@@ -31,7 +31,6 @@ import _bang from './library/_bang.js'
 import _comment from './library/_comment.js'
 import _midi from './library/_midi.js'
 import _mono from './library/_mono.js'
-import _keys from './library/_keys.js'
 import _cc from './library/_cc.js'
 import _pb from './library/_pb.js'
 import _udp from './library/_udp.js'
@@ -39,16 +38,16 @@ import _osc from './library/_osc.js'
 import _self from './library/_self.js'
 
 export default {
-  '0': _null,
-  '1': _null,
-  '2': _null,
-  '3': _null,
-  '4': _null,
-  '5': _null,
-  '6': _null,
-  '7': _null,
-  '8': _null,
-  '9': _null,
+  0: _null,
+  1: _null,
+  2: _null,
+  3: _null,
+  4: _null,
+  5: _null,
+  6: _null,
+  7: _null,
+  8: _null,
+  9: _null,
   a,
   b,
   c,
@@ -79,10 +78,9 @@ export default {
   '#': _comment,
   ':': _midi,
   '%': _mono,
-  '&': _keys,
   '!': _cc,
   '?': _pb,
   ';': _udp,
   '=': _osc,
-  '$': _self
+  $: _self
 }

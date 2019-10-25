@@ -7,8 +7,8 @@ require('electron').protocol.registerSchemesAsPrivileged([
 
 function protocolHandler (request, respond) {
   try {
-    let pathname = request.url.replace(/^js:\/*/, '')
-    let filename = path.resolve(app.getAppPath(), pathname)
+    const pathname = request.url.replace(/^js:\/*/, '')
+    const filename = path.resolve(app.getAppPath(), pathname)
     respond({ mimeType: 'text/javascript', data: require('fs').readFileSync(filename) })
   } catch (e) {
     console.error(e, request)

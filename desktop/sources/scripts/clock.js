@@ -1,8 +1,6 @@
 'use strict'
 
 export default function Clock (terminal) {
-  const path = require('path')
-
   this.isPaused = true
   this.timer = null
   this.isPuppet = false
@@ -25,7 +23,7 @@ export default function Clock (terminal) {
   }
 
   this.setSpeed = function (value, target = null, setTimer = false) {
-    console.info('set')
+    console.info('Clock', 'set', value)
     if (value) { this.speed.value = clamp(value, 60, 300) }
     if (target) { this.speed.target = clamp(target, 60, 300) }
     if (setTimer === true) { this.setTimer(this.speed.value) }
@@ -42,29 +40,29 @@ export default function Clock (terminal) {
 
   // Controls
 
-  this.togglePlay = function () {
+  this.togglePlay = function (msg = false) {
     if (this.isPaused === true) {
-      this.play()
+      this.play(msg)
     } else {
-      this.stop()
+      this.stop(msg)
     }
   }
 
-  this.play = function () {
+  this.play = function (msg = false) {
     console.log('Clock', 'Play')
     if (this.isPaused === false) { console.warn('Clock', 'Already playing'); return }
     if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = false
-    terminal.io.midi.sendClockStart()
+    if (msg === true) { terminal.io.midi.sendClockStart() }
     this.setSpeed(this.speed.target, this.speed.target, true)
   }
 
-  this.stop = function () {
+  this.stop = function (msg = false) {
     console.log('Clock', 'Stop')
     if (this.isPaused === true) { console.warn('Clock', 'Already stopped'); return }
     if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = true
-    terminal.io.midi.sendClockStop()
+    if (msg === true) { terminal.io.midi.sendClockStop() }
     terminal.io.midi.allNotesOff()
     this.clearTimer()
     terminal.io.midi.silence()

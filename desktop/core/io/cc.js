@@ -25,7 +25,7 @@ export default function MidiCC (terminal) {
       } else if (msg.type === 'pg' && !isNaN(msg.channel)) {
         if (!isNaN(msg.bank)) { device.send([0xb0 + msg.channel, 0, msg.bank]) }
         if (!isNaN(msg.sub)) { device.send([0xb0 + msg.channel, 32, msg.sub]) }
-        if (!isNaN(msg.pgm)) { device.send([0xc0 + msg.channel, msg.pgm ]) }
+        if (!isNaN(msg.pgm)) { device.send([0xc0 + msg.channel, msg.pgm]) }
       } else {
         console.warn('CC', 'Unknown message', msg)
       }

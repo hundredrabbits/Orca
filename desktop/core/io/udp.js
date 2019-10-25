@@ -45,6 +45,7 @@ export default function Udp (terminal) {
     for (const id in this.options) {
       terminal.controller.add('default', 'UDP', `${id.charAt(0).toUpperCase() + id.substr(1)}(${this.options[id]}) ${this.port === this.options[id] ? ' — Active' : ''}`, () => { terminal.io.udp.select(this.options[id]) }, '')
     }
+    terminal.controller.add('default', 'UDP', 'Choose Custom Port', () => { terminal.commander.start('udp:') }, '')
     terminal.controller.commit()
   }
 

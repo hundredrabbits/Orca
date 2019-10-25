@@ -7,7 +7,7 @@ export default function History () {
   this.key = null
 
   this.bind = function (host, key) {
-    console.log(`History is recording..`)
+    console.log('History is recording..')
     this.host = host
     this.key = key
     this.reset()

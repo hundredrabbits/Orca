@@ -26,7 +26,7 @@ export default function Source (terminal) {
 
   this.open = function () {
     console.log('Source', 'Open a file..')
-    let paths = dialog.showOpenDialog(app.win, { properties: ['openFile'], filters: [{ name: 'Orca Machines', extensions: ['orca'] }] })
+    const paths = dialog.showOpenDialog(app.win, { properties: ['openFile'], filters: [{ name: 'Orca Machines', extensions: ['orca'] }] })
     if (!paths) { console.log('Nothing to load'); return }
     this.read(paths[0])
   }
@@ -125,7 +125,7 @@ export default function Source (terminal) {
   }
 
   this.verify = function () {
-    let response = dialog.showMessageBox(app.win, {
+    const response = dialog.showMessageBox(app.win, {
       type: 'question',
       buttons: ['Cancel', 'Discard', 'Save'],
       title: 'Confirm',
@@ -144,7 +144,7 @@ export default function Source (terminal) {
     if (!this.path) {
       console.log('Source', 'File is unsaved..')
       if (terminal.orca.length() > 2) {
-        console.log('Source', `File is not empty.`)
+        console.log('Source', 'File is not empty.')
         return true
       }
     } else {
