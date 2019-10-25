@@ -12,10 +12,10 @@ import Controller from './lib/controller.js'
 import library from '../../core/library.js'
 
 export default function Terminal () {
-  this.version = 144
+  this.version = 145
   this.library = library
 
-  this.orca = new Orca(this)
+  this.orca = new Orca()
   this.io = new IO(this)
   this.cursor = new Cursor(this)
   this.source = new Source(this)

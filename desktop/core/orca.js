@@ -2,14 +2,13 @@
 
 import library from './library.js'
 
-export default function Orca (terminal) {
+export default function Orca () {
+  this.keys = Object.keys(library).slice(0, 36)
+
   this.w = 1 // Default Width
   this.h = 1 // Default Height
   this.f = 0 // Frame
   this.s = '' // String
-
-  this.terminal = terminal
-  this.keys = Object.keys(library).slice(0, 36)
 
   this.locks = []
   this.runtime = []

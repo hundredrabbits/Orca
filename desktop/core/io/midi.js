@@ -13,8 +13,6 @@ export default function Midi (terminal) {
   this.inputs = []
   this.stack = []
 
-  this.keys = {}
-
   this.start = function () {
     console.info('Midi Starting..')
     this.setup()
@@ -110,16 +108,6 @@ export default function Midi (terminal) {
     }
 
     terminal.controller.commit()
-  }
-
-  // Keys
-
-  this.keyDown = function (channel, key) {
-    this.keys[channel] = key
-  }
-
-  this.keyUp = function (channel, key) {
-    this.keys[channel] = null
   }
 
   this.allNotesOff = function () {
