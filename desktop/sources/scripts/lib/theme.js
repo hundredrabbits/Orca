@@ -3,7 +3,6 @@
 export default function Theme (_default) {
   const fs = require('fs')
   const url = require('url')
-  const themer = this
 
   this.active = _default
 
@@ -67,28 +66,27 @@ export default function Theme (_default) {
     e.dataTransfer.dropEffect = 'copy'
   }
 
-  this.drop = function (e) {
+  this.drop = (e) => {
     e.preventDefault()
     e.stopPropagation()
     const file = e.dataTransfer.files[0]
     if (!file || !file.name) { console.warn('Theme', 'Unnamed file.'); return }
     if (file.name.indexOf('.thm') < 0 && file.name.indexOf('.svg') < 0) { console.warn('Theme', 'Skipped, not a theme'); return }
     const reader = new FileReader()
-    reader.onload = function (e) {
-      themer.load(e.target.result)
+    reader.onload = (e) => {
+      this.load(e.target.result)
     }
     reader.readAsText(file)
   }
 
-  this.open = function () {
+  this.open = () => {
     const fs = require('fs')
     const { dialog, app } = require('electron').remote
-    const paths = dialog.showOpenDialog(app.win, { properties: ['openFile'], filters: [{ name: 'Themes', extensions: ['svg'] }] })
+    const paths = dialog.showOpenDialogSync(app.win, { properties: ['openFile'], filters: [{ name: 'Themes', extensions: ['svg'] }] })
     if (!paths) { console.log('Nothing to load'); return }
-    fs.readFile(paths[0], 'utf8', function (err, data) {
-      if (err) throw err
-      themer.load(data)
-    })
+    const data = fs.readFileSync(paths[0], 'utf8')
+    if (!data) { return }
+    this.load(data)
   }
 
   window.addEventListener('dragover', this.drag)

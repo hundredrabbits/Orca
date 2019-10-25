@@ -56,7 +56,7 @@ export default function Operator (orca, x, y, glyph = '.', passive = false) {
   }
 
   this.operation = function () {
-
+    // Used in individual operators
   }
 
   // Helpers

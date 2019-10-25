@@ -21,12 +21,12 @@ export default function Source (terminal) {
     terminal.resize()
     terminal.history.reset()
     terminal.cursor.reset()
-    //    terminal.clock.play()
+    terminal.clock.play()
   }
 
   this.open = function () {
     console.log('Source', 'Open a file..')
-    const paths = dialog.showOpenDialog(app.win, { properties: ['openFile'], filters: [{ name: 'Orca Machines', extensions: ['orca'] }] })
+    const paths = dialog.showOpenDialogSync(app.win, { properties: ['openFile'], filters: [{ name: 'Orca Machines', extensions: ['orca'] }] })
     if (!paths) { console.log('Nothing to load'); return }
     this.read(paths[0])
   }
