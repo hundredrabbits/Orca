@@ -5,27 +5,33 @@ struct ContentView: View {
     let webView = WebView()
 
     var body: some View {
-        ZStack {
-            VStack {
-                Button(action: {
-                    self.webView.refresh()
-                }) {
-                    Text("RELOAD")
-                }
-                webView
-            }
+        VStack {
+//                Button(action: {
+//                    self.webView.refresh()
+//                }) {
+//                    Text("RELOAD")
+//                }
+            webView
         }
-
+        .edgesIgnoringSafeArea(.all)
+        .statusBar(hidden: true)
     }
 }
 
 struct WebView : UIViewRepresentable {
 
+    let midiDriver = MIDIDriver()
     let url: URL
     let request: URLRequest
-    let webView = WKWebView()
+    /* https://github.com/mizuhiki/WebMIDIAPIShimForiOS */
+    let webView: MIDIWebView
 
     init() {
+        let config = MIDIWebView.createConfiguration(with: midiDriver) { str in
+            return true
+        }
+
+        webView = MIDIWebView.init(frame: .zero, configuration: config!)
         url = Bundle.main.url(forResource: "index", withExtension: "html", subdirectory: "")!
         request = URLRequest(url: url)
     }
@@ -43,6 +49,8 @@ struct WebView : UIViewRepresentable {
 
         webView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
         webView.load(request)
+
+        webView.becomeFirstResponder()
     }
 }
 

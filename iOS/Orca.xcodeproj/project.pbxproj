@@ -9,7 +9,12 @@
 /* Begin PBXBuildFile section */
 		FFB96BAC2363BCA500ED83B6 /* desktop in Resources */ = {isa = PBXBuildFile; fileRef = FFB96BAA2363BCA500ED83B6 /* desktop */; };
 		FFB96BAD2363BCA500ED83B6 /* browser in Resources */ = {isa = PBXBuildFile; fileRef = FFB96BAB2363BCA500ED83B6 /* browser */; };
-		FFB96BAF2363BCB800ED83B6 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = FFB96BAE2363BCB800ED83B6 /* index.html */; };
+		FFB96BB32363BFBD00ED83B6 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = FFB96BB22363BFBC00ED83B6 /* index.html */; };
+		FFB96BB52363C1DE00ED83B6 /* WebMIDIAPIPolyfill.js in Resources */ = {isa = PBXBuildFile; fileRef = FFB96BB42363C1DE00ED83B6 /* WebMIDIAPIPolyfill.js */; };
+		FFB96BBA2363F5F700ED83B6 /* MIDIWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB96BB92363F5F700ED83B6 /* MIDIWebView.m */; };
+		FFB96BBD2363F61300ED83B6 /* WebViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB96BBB2363F61300ED83B6 /* WebViewDelegate.m */; };
+		FFB96BC22363F62600ED83B6 /* MIDIDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB96BC02363F62500ED83B6 /* MIDIDriver.m */; };
+		FFB96BC32363F62600ED83B6 /* MIDIParser.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB96BC12363F62600ED83B6 /* MIDIParser.m */; };
 		FFE1DFB72363BBF0001F9609 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DFB62363BBF0001F9609 /* AppDelegate.swift */; };
 		FFE1DFB92363BBF0001F9609 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DFB82363BBF0001F9609 /* SceneDelegate.swift */; };
 		FFE1DFBB2363BBF0001F9609 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1DFBA2363BBF0001F9609 /* ContentView.swift */; };
@@ -21,7 +26,17 @@
 /* Begin PBXFileReference section */
 		FFB96BAA2363BCA500ED83B6 /* desktop */ = {isa = PBXFileReference; lastKnownFileType = folder; name = desktop; path = ../../desktop; sourceTree = "<group>"; };
 		FFB96BAB2363BCA500ED83B6 /* browser */ = {isa = PBXFileReference; lastKnownFileType = folder; name = browser; path = ../../browser; sourceTree = "<group>"; };
-		FFB96BAE2363BCB800ED83B6 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = ../../index.html; sourceTree = "<group>"; };
+		FFB96BB22363BFBC00ED83B6 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		FFB96BB42363C1DE00ED83B6 /* WebMIDIAPIPolyfill.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = WebMIDIAPIPolyfill.js; sourceTree = "<group>"; };
+		FFB96BB72363F5F600ED83B6 /* Orca-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Orca-Bridging-Header.h"; sourceTree = "<group>"; };
+		FFB96BB82363F5F700ED83B6 /* MIDIWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIDIWebView.h; sourceTree = "<group>"; };
+		FFB96BB92363F5F700ED83B6 /* MIDIWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIDIWebView.m; sourceTree = "<group>"; };
+		FFB96BBB2363F61300ED83B6 /* WebViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewDelegate.m; sourceTree = "<group>"; };
+		FFB96BBC2363F61300ED83B6 /* WebViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewDelegate.h; sourceTree = "<group>"; };
+		FFB96BBE2363F62500ED83B6 /* MIDIParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIDIParser.h; sourceTree = "<group>"; };
+		FFB96BBF2363F62500ED83B6 /* MIDIDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIDIDriver.h; sourceTree = "<group>"; };
+		FFB96BC02363F62500ED83B6 /* MIDIDriver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIDIDriver.m; sourceTree = "<group>"; };
+		FFB96BC12363F62600ED83B6 /* MIDIParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIDIParser.m; sourceTree = "<group>"; };
 		FFE1DFB32363BBF0001F9609 /* Orca.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Orca.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFE1DFB62363BBF0001F9609 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FFE1DFB82363BBF0001F9609 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +58,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FFB96BB62363F5E800ED83B6 /* MIDIWebView */ = {
+			isa = PBXGroup;
+			children = (
+				FFB96BBF2363F62500ED83B6 /* MIDIDriver.h */,
+				FFB96BC02363F62500ED83B6 /* MIDIDriver.m */,
+				FFB96BBE2363F62500ED83B6 /* MIDIParser.h */,
+				FFB96BC12363F62600ED83B6 /* MIDIParser.m */,
+				FFB96BBC2363F61300ED83B6 /* WebViewDelegate.h */,
+				FFB96BBB2363F61300ED83B6 /* WebViewDelegate.m */,
+				FFB96BB82363F5F700ED83B6 /* MIDIWebView.h */,
+				FFB96BB92363F5F700ED83B6 /* MIDIWebView.m */,
+				FFB96BB72363F5F600ED83B6 /* Orca-Bridging-Header.h */,
+			);
+			path = MIDIWebView;
+			sourceTree = "<group>";
+		};
 		FFE1DFAA2363BBF0001F9609 = {
 			isa = PBXGroup;
 			children = (
@@ -62,9 +93,11 @@
 		FFE1DFB52363BBF0001F9609 /* Orca */ = {
 			isa = PBXGroup;
 			children = (
+				FFB96BB62363F5E800ED83B6 /* MIDIWebView */,
 				FFB96BAB2363BCA500ED83B6 /* browser */,
 				FFB96BAA2363BCA500ED83B6 /* desktop */,
-				FFB96BAE2363BCB800ED83B6 /* index.html */,
+				FFB96BB22363BFBC00ED83B6 /* index.html */,
+				FFB96BB42363C1DE00ED83B6 /* WebMIDIAPIPolyfill.js */,
 				FFE1DFB62363BBF0001F9609 /* AppDelegate.swift */,
 				FFE1DFB82363BBF0001F9609 /* SceneDelegate.swift */,
 				FFE1DFBA2363BBF0001F9609 /* ContentView.swift */,
@@ -116,6 +149,7 @@
 				TargetAttributes = {
 					FFE1DFB22363BBF0001F9609 = {
 						CreatedOnToolsVersion = 11.1;
+						LastSwiftMigration = 1110;
 					};
 				};
 			};
@@ -143,9 +177,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFE1DFC32363BBF2001F9609 /* LaunchScreen.storyboard in Resources */,
+				FFB96BB52363C1DE00ED83B6 /* WebMIDIAPIPolyfill.js in Resources */,
 				FFB96BAD2363BCA500ED83B6 /* browser in Resources */,
 				FFB96BAC2363BCA500ED83B6 /* desktop in Resources */,
-				FFB96BAF2363BCB800ED83B6 /* index.html in Resources */,
+				FFB96BB32363BFBD00ED83B6 /* index.html in Resources */,
 				FFE1DFC02363BBF2001F9609 /* Preview Assets.xcassets in Resources */,
 				FFE1DFBD2363BBF2001F9609 /* Assets.xcassets in Resources */,
 			);
@@ -158,8 +193,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFB96BBA2363F5F700ED83B6 /* MIDIWebView.m in Sources */,
 				FFE1DFB72363BBF0001F9609 /* AppDelegate.swift in Sources */,
+				FFB96BC22363F62600ED83B6 /* MIDIDriver.m in Sources */,
+				FFB96BC32363F62600ED83B6 /* MIDIParser.m in Sources */,
 				FFE1DFB92363BBF0001F9609 /* SceneDelegate.swift in Sources */,
+				FFB96BBD2363F61300ED83B6 /* WebViewDelegate.m in Sources */,
 				FFE1DFBB2363BBF0001F9609 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -296,6 +335,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Orca/Preview Content\"";
 				DEVELOPMENT_TEAM = TD4WU76RKW;
@@ -307,6 +347,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.kylestewart.Orca;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Orca/MIDIWebView/Orca-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -316,6 +358,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Orca/Preview Content\"";
 				DEVELOPMENT_TEAM = TD4WU76RKW;
@@ -327,6 +370,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.kylestewart.Orca;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Orca/MIDIWebView/Orca-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

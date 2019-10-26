@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <meta charset='utf-8'>    
+    <link rel="stylesheet" type="text/css" href="desktop/sources/links/style.css"/>
+  </head>
+  <body>
+  	<script type="module" src="browser/mock/require.js"></script>
+    <script type="module">
+      console.clear()
+      import Terminal from "./desktop/sources/scripts/terminal.js";
+      const terminal = new Terminal()
+      window.__dirname = "desktop/sources";
+      window.terminal = terminal
+      terminal.install(document.body)
+      terminal.start()
+    </script>
+  </body>
+</html>
