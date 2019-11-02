@@ -138,7 +138,6 @@ export default function Midi (terminal) {
     for (let id = 0; id < 6; id++) {
       if (this.ticks[id]) { clearTimeout(this.ticks[id]) }
       this.ticks[id] = setTimeout(() => { this.outputDevice().send([0xF8], 0) }, parseInt(id) * frameFrag)
-      console.log('MIDI', 'send ticks:')
     }
   }
 
