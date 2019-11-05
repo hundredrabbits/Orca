@@ -1,6 +1,6 @@
 'use strict'
 
-export default function Operator (orca, x, y, glyph = '.', passive = false) {
+function Operator (orca, x, y, glyph = '.', passive = false) {
   this.name = 'unknown'
   this.x = x
   this.y = y

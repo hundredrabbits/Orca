@@ -1,6 +1,6 @@
 'use strict'
 
-export default function Mono (terminal) {
+function Mono (terminal) {
   this.stack = {}
 
   this.start = function () {

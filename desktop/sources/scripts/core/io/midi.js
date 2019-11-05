@@ -1,8 +1,8 @@
 'use strict'
 
-import transpose from '../transpose.js'
+/* global transposeTable */
 
-export default function Midi (terminal) {
+function Midi (terminal) {
   this.mode = 0
   this.isClock = false
 
@@ -15,7 +15,7 @@ export default function Midi (terminal) {
 
   this.start = function () {
     console.info('Midi Starting..')
-    this.setup()
+    this.refresh()
   }
 
   this.clear = function () {
@@ -77,37 +77,6 @@ export default function Midi (terminal) {
       if (this.stack[id].channel === channel && this.stack[id].octave === octave && this.stack[id].note === note) { this.release(item, id) }
     }
     this.stack.push(item)
-  }
-
-  this.update = () => {
-    terminal.controller.clearCat('default', 'Midi')
-    terminal.controller.add('default', 'Midi', 'Play/Pause Message', () => { this.toggleClock(true); this.update() }, 'shift+space')
-    terminal.controller.add('default', 'Midi', `MIDI Send Clock ${this.isClock === true ? ' — On' : ' — Off'}`, () => { this.toggleClock(); this.update() }, '')
-    terminal.controller.add('default', 'Midi', 'Refresh Device List', () => { this.setup(); this.update() })
-    terminal.controller.addSpacer('default', 'Midi', 'spacer1')
-
-    // Outputs
-    if (this.outputs.length < 1) {
-      terminal.controller.add('default', 'Midi', 'No Midi Outputs')
-    } else {
-      for (const id in this.outputs) {
-        terminal.controller.add('default', 'Midi', `${this.outputs[id].name} Output ${this.outputIndex === parseInt(id) ? ' — Active' : ''}`, () => { this.selectOutput(id) }, '')
-      }
-      terminal.controller.add('default', 'Midi', `No Output ${this.outputIndex === -1 ? ' — Active' : ''}`, () => { this.selectOutput(-1) }, '')
-      terminal.controller.addSpacer('default', 'Midi', 'spacer2')
-    }
-
-    // Inputs
-    if (this.inputs.length < 1) {
-      terminal.controller.add('default', 'Midi', 'No Midi Inputs')
-    } else {
-      for (const id in this.inputs) {
-        terminal.controller.add('default', 'Midi', `${this.inputs[id].name} Input ${this.inputIndex === parseInt(id) ? ' — Active' : ''}`, () => { this.selectInput(id) }, '')
-      }
-      terminal.controller.add('default', 'Midi', `No Input ${this.inputIndex === -1 ? ' — Active' : ''}`, () => { this.selectInput(-1) }, '')
-    }
-
-    terminal.controller.commit()
   }
 
   this.allNotesOff = function () {
@@ -191,23 +160,21 @@ export default function Midi (terminal) {
   // Tools
 
   this.selectOutput = function (id) {
-    if (id === -1) { this.outputIndex = -1; console.log('MIDI', 'Select Output Device: None'); this.update(); return }
+    if (id === -1) { this.outputIndex = -1; console.log('MIDI', 'Select Output Device: None'); return }
     if (!this.outputs[id]) { return }
 
     this.outputIndex = parseInt(id)
     console.log('MIDI', `Select Output Device: ${this.outputDevice().name}`)
-    this.update()
   }
 
   this.selectInput = function (id) {
     if (this.inputDevice()) { this.inputDevice().onmidimessage = null }
-    if (id === -1) { this.inputIndex = -1; console.log('MIDI', 'Select Input Device: None'); this.update(); return }
+    if (id === -1) { this.inputIndex = -1; console.log('MIDI', 'Select Input Device: None'); return }
     if (!this.inputs[id]) { return }
 
     this.inputIndex = parseInt(id)
     this.inputDevice().onmidimessage = (msg) => { this.receive(msg) }
     console.log('MIDI', `Select Input Device: ${this.inputDevice().name}`)
-    this.update()
   }
 
   this.outputDevice = function () {
@@ -218,11 +185,21 @@ export default function Midi (terminal) {
     return this.inputs[this.inputIndex]
   }
 
+  this.selectNextOutput = () => {
+    this.outputIndex = this.outputIndex < this.outputs.length ? this.outputIndex + 1 : 0
+    terminal.update()
+  }
+
+  this.selectNextInput = () => {
+    this.inputIndex = this.inputIndex < this.inputs.length ? this.inputIndex + 1 : 0
+    terminal.update()
+  }
+
   // Setup
 
-  this.setup = function () {
+  this.refresh = function () {
     if (!navigator.requestMIDIAccess) { return }
-    navigator.requestMIDIAccess({ sysex: false }).then(this.access, (err) => {
+    navigator.requestMIDIAccess().then(this.access, (err) => {
       console.warn('No Midi', err)
     })
   }
@@ -246,9 +223,9 @@ export default function Midi (terminal) {
   // UI
 
   this.transpose = function (n, o = 3) {
-    if (!transpose[n]) { return null }
-    const octave = clamp(parseInt(o) + parseInt(transpose[n].charAt(1)), 0, 8)
-    const note = transpose[n].charAt(0)
+    if (!transposeTable[n]) { return null }
+    const octave = clamp(parseInt(o) + parseInt(transposeTable[n].charAt(1)), 0, 8)
+    const note = transposeTable[n].charAt(0)
     const value = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'].indexOf(note)
     const id = clamp((octave * 12) + value + 24, 0, 127)
     return { id, value, note, octave }
@@ -258,8 +235,8 @@ export default function Midi (terminal) {
     const note = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B'][id % 12]
     const octave = Math.floor(id / 12) - 5
     const name = `${note}${octave}`
-    const key = Object.values(transpose).indexOf(name)
-    return Object.keys(transpose)[key]
+    const key = Object.values(transposeTable).indexOf(name)
+    return Object.keys(transposeTable)[key]
   }
 
   this.toString = function () {

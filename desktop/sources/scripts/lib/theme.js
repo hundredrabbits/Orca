@@ -1,20 +1,25 @@
 'use strict'
 
-export default function Theme (_default) {
-  const fs = require('fs')
-  const url = require('url')
+/* global localStorage */
+/* global FileReader */
+/* global DOMParser */
 
-  this.active = _default
+function Theme () {
+  const themer = this
+
+  this.default = { background: '#eee', f_high: '#000', f_med: '#999', f_low: '#ccc', f_inv: '#000', b_high: '#000', b_med: '#888', b_low: '#aaa', b_inv: '#ffb545' }
+  this.active = {}
 
   this.el = document.createElement('style')
   this.el.type = 'text/css'
 
-  this.install = function (host = document.body, callback) {
+  this.install = (host = document.body, callback) => {
     host.appendChild(this.el)
     this.callback = callback
   }
 
-  this.start = function () {
+  this.start = () => {
+    this.active = this.default
     console.log('Theme', 'Starting..')
     if (isJson(localStorage.theme)) {
       const storage = JSON.parse(localStorage.theme)
@@ -24,12 +29,12 @@ export default function Theme (_default) {
         return
       }
     }
-    this.load(_default)
+    this.load(this.active)
   }
 
-  this.load = function (data) {
+  this.load = (data) => {
     const theme = parse(data)
-    if (!validate(theme)) { console.warn('Theme', 'Not a theme', theme); return }
+    if (!validate(theme)) { return }
     console.log('Theme', 'Loaded theme!')
     this.el.innerHTML = `:root { --background: ${theme.background}; --f_high: ${theme.f_high}; --f_med: ${theme.f_med}; --f_low: ${theme.f_low}; --f_inv: ${theme.f_inv}; --b_high: ${theme.b_high}; --b_med: ${theme.b_med}; --b_low: ${theme.b_low}; --b_inv: ${theme.b_inv}; }`
     localStorage.setItem('theme', JSON.stringify(theme))
@@ -39,18 +44,12 @@ export default function Theme (_default) {
     }
   }
 
-  this.reset = function () {
-    this.load(_default)
+  this.reset = () => {
+    this.load(this.default)
   }
 
-  this.setImage = function (path) {
-    document.body.style.backgroundImage = path && fs.existsSync(path) && document.body.style.backgroundImage !== `url(${url.pathToFileURL(path)})` ? `url(${url.pathToFileURL(path)})` : ''
-  }
-
-  this.set = function (key, value) {
-    if (!this.active[key]) { console.warn('Theme', 'Unknown key ' + key); return }
-    if (!isColor(value)) { console.warn('Theme', 'Not a color ' + value); return }
-    this.active[key] = '#' + value
+  this.get = (key) => {
+    return this.active[key]
   }
 
   function parse (any) {
@@ -60,7 +59,7 @@ export default function Theme (_default) {
 
   // Drag
 
-  this.drag = function (e) {
+  this.drag = (e) => {
     e.stopPropagation()
     e.preventDefault()
     e.dataTransfer.dropEffect = 'copy'
@@ -71,10 +70,10 @@ export default function Theme (_default) {
     e.stopPropagation()
     const file = e.dataTransfer.files[0]
     if (!file || !file.name) { console.warn('Theme', 'Unnamed file.'); return }
-    if (file.name.indexOf('.thm') < 0 && file.name.indexOf('.svg') < 0) { console.warn('Theme', 'Skipped, not a theme'); return }
+    if (file.name.indexOf('.thm') < 0 && file.name.indexOf('.svg') < 0) { return }
     const reader = new FileReader()
-    reader.onload = (e) => {
-      this.load(e.target.result)
+    reader.onload = function (e) {
+      themer.load(e.target.result)
     }
     reader.readAsText(file)
   }
@@ -82,11 +81,12 @@ export default function Theme (_default) {
   this.open = () => {
     const fs = require('fs')
     const { dialog, app } = require('electron').remote
-    const paths = dialog.showOpenDialogSync(app.win, { properties: ['openFile'], filters: [{ name: 'Themes', extensions: ['svg'] }] })
+    const paths = dialog.showOpenDialog(app.win, { properties: ['openFile'], filters: [{ name: 'Themes', extensions: ['svg'] }] })
     if (!paths) { console.log('Nothing to load'); return }
-    const data = fs.readFileSync(paths[0], 'utf8')
-    if (!data) { return }
-    this.load(data)
+    fs.readFile(paths[0], 'utf8', function (err, data) {
+      if (err) throw err
+      themer.load(data)
+    })
   }
 
   window.addEventListener('dragover', this.drag)
@@ -129,10 +129,6 @@ export default function Theme (_default) {
 
   function isJson (text) {
     try { JSON.parse(text); return true } catch (error) { return false }
-  }
-
-  function isColor (str) {
-    return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test('#' + str)
   }
 
   function isHtml (text) {

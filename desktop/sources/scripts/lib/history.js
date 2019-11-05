@@ -1,6 +1,6 @@
 'use strict'
 
-export default function History () {
+function History () {
   this.index = 0
   this.frames = []
   this.host = null

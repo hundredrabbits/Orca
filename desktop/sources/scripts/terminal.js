@@ -1,31 +1,23 @@
 'use strict'
 
-import Orca from '../../core/orca.js'
-import IO from '../../core/io.js'
-import Cursor from './cursor.js'
-import Source from './source.js'
-import History from './history.js'
-import Commander from './commander.js'
-import Clock from './clock.js'
-import Theme from './lib/theme.js'
-import Controller from './lib/controller.js'
-import library from '../../core/library.js'
+/* global library */
 
-export default function Terminal () {
-  this.version = 145
+function Terminal () {
+  this.version = 146
   this.library = library
 
-  this.orca = new Orca()
+  this.acels = new Acels()
+  this.orca = new Orca(this.library)
   this.io = new IO(this)
   this.cursor = new Cursor(this)
   this.source = new Source(this)
   this.commander = new Commander(this)
   this.clock = new Clock(this)
   this.history = new History()
-  this.controller = new Controller()
 
   // Themes
-  this.theme = new Theme({ background: '#000000', f_high: '#ffffff', f_med: '#777777', f_low: '#444444', f_inv: '#000000', b_high: '#eeeeee', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffb545' })
+  this.theme = new Theme()
+  this.theme.default = { background: '#000000', f_high: '#ffffff', f_med: '#777777', f_low: '#444444', f_inv: '#000000', b_high: '#eeeeee', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffb545' }
 
   this.el = document.createElement('canvas')
   this.context = this.el.getContext('2d')
@@ -44,82 +36,105 @@ export default function Terminal () {
     host.appendChild(this.el)
     this.theme.install(host)
 
-    this.controller.add('default', '*', 'About', () => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Orca') }, 'CmdOrCtrl+,')
-    this.controller.add('default', '*', 'Fullscreen', () => { require('electron').remote.app.toggleFullscreen() }, 'CmdOrCtrl+Enter')
-    this.controller.add('default', '*', 'Hide', () => { require('electron').remote.app.toggleVisible() }, 'CmdOrCtrl+H')
-    this.controller.add('default', '*', 'Toggle Menubar', () => { require('electron').remote.app.toggleMenubar() }, 'Alt+H')
-    this.controller.add('default', '*', 'Inspect', () => { require('electron').remote.app.inspect() }, 'CmdOrCtrl+.')
-    this.controller.add('default', '*', 'Reset', () => { this.reset() }, 'CmdOrCtrl+Backspace')
-    this.controller.add('default', '*', 'Quit', () => { this.io.silence(); this.source.quit() }, 'CmdOrCtrl+Q')
+    this.acels.set('File', 'New', 'CmdOrCtrl+N', () => { this.source.new() })
+    this.acels.set('File', 'Save', 'CmdOrCtrl+S', () => { this.source.save() })
+    this.acels.set('File', 'Save', 'CmdOrCtrl+Shift+S', () => { this.source.saveAs() })
+    this.acels.set('File', 'Open', 'CmdOrCtrl+O', () => { this.source.open() })
+    this.acels.set('File', 'Revert', 'CmdOrCtrl+W', () => { this.source.revert() })
 
-    this.controller.add('default', 'File', 'New', () => { this.source.new() }, 'CmdOrCtrl+N')
-    this.controller.add('default', 'File', 'Save', () => { this.source.save() }, 'CmdOrCtrl+S')
-    this.controller.add('default', 'File', 'Save As', () => { this.source.saveAs() }, 'CmdOrCtrl+Shift+S')
-    this.controller.add('default', 'File', 'Open', () => { this.source.open() }, 'CmdOrCtrl+O')
-    this.controller.add('default', 'File', 'Resume', () => { this.source.resume() })
-    this.controller.add('default', 'File', 'Revert', () => { this.source.revert() }, 'CmdOrCtrl+W')
+    this.acels.set('Edit', 'Select All', 'CmdOrCtrl+A', () => { this.cursor.selectAll() })
+    this.acels.set('Edit', 'Erase Selection', 'Backspace', () => { this.cursor.erase() })
+    // this.acels.set('Edit', 'Copy Selection', 'CmdOrCtrl+C', () => { this.cursor.copy() })
+    // this.acels.set('Edit', 'Cut Selection', 'CmdOrCtrl+X', () => { this.cursor.cut() })
+    // this.acels.set('Edit', 'Paste Selection', 'CmdOrCtrl+V', () => { this.cursor.paste(false) })
+    // this.acels.set('Edit', 'Paste Over', 'CmdOrCtrl+Shift+V', () => { this.cursor.paste(true) })
+    this.acels.set('Edit', 'Undo', 'CmdOrCtrl+Z', () => { this.history.undo() })
+    this.acels.set('Edit', 'Redo', 'CmdOrCtrl+Shift+Z', () => { this.history.redo() })
 
-    this.controller.add('default', 'Edit', 'Toggle Insert Mode', () => { this.cursor.toggleMode(1) }, 'CmdOrCtrl+I')
-    this.controller.add('default', 'Edit', 'Block Comment', () => { this.cursor.comment() }, 'CmdOrCtrl+/')
-    this.controller.add('default', 'Edit', 'Find', () => { this.commander.start('find:') }, 'CmdOrCtrl+P')
-    this.controller.add('default', 'Edit', 'Inject', () => { this.commander.start('inject:') }, 'CmdOrCtrl+J')
-    this.controller.add('default', 'Edit', 'Trigger Operator', () => { this.cursor.trigger() }, 'CmdOrCtrl+B')
-    this.controller.addSpacer('default', 'Edit', 'selection')
-    this.controller.add('default', 'Edit', 'Select All', () => { this.cursor.selectAll() }, 'CmdOrCtrl+A')
-    this.controller.add('default', 'Edit', 'Erase Selection', () => { this.cursor.erase() }, 'Backspace')
-    this.controller.add('default', 'Edit', 'Copy Selection', () => { this.cursor.copy() }, 'CmdOrCtrl+C')
-    this.controller.add('default', 'Edit', 'Cut Selection', () => { this.cursor.cut() }, 'CmdOrCtrl+X')
-    this.controller.add('default', 'Edit', 'Paste Selection', () => { this.cursor.paste(false) }, 'CmdOrCtrl+V')
-    this.controller.add('default', 'Edit', 'Paste Over', () => { this.cursor.paste(true) }, 'CmdOrCtrl+Shift+V')
-    this.controller.add('default', 'Edit', 'Undo', () => { this.history.undo() }, 'CmdOrCtrl+Z')
-    this.controller.add('default', 'Edit', 'Redo', () => { this.history.redo() }, 'CmdOrCtrl+Shift+Z')
+    this.acels.set('Project', 'Find', 'CmdOrCtrl+J', () => { this.commander.start('find:') })
+    this.acels.set('Project', 'Inject', 'CmdOrCtrl+B', () => { this.commander.start('inject:') })
+    this.acels.set('Project', 'Toggle Commander', 'CmdOrCtrl+K', () => { this.commander.start() })
+    this.acels.set('Project', 'Run Commander', 'Enter', () => { this.commander.run() })
 
-    this.controller.add('default', 'Clock', 'Play/Pause', () => { this.clock.togglePlay(false) }, 'Space')
-    this.controller.add('default', 'Clock', 'Frame By Frame', () => { this.clock.touch() }, 'CmdOrCtrl+F')
-    this.controller.add('default', 'Clock', 'Reset Frame', () => { this.clock.resetFrame() }, 'CmdOrCtrl+R')
-    this.controller.add('default', 'Clock', 'Incr. Speed', () => { this.clock.modSpeed(1) }, '>')
-    this.controller.add('default', 'Clock', 'Decr. Speed', () => { this.clock.modSpeed(-1) }, '<')
-    this.controller.add('default', 'Clock', 'Incr. Speed(10x)', () => { this.clock.modSpeed(10, true) }, 'CmdOrCtrl+>')
-    this.controller.add('default', 'Clock', 'Decr. Speed(10x)', () => { this.clock.modSpeed(-10, true) }, 'CmdOrCtrl+<')
+    this.acels.set('Cursor', 'Toggle Insert Mode', 'CmdOrCtrl+I', () => { this.cursor.toggleMode(1) })
+    this.acels.set('Cursor', 'Toggle Block Comment', 'CmdOrCtrl+/', () => { this.cursor.comment() })
+    this.acels.set('Cursor', 'Trigger Operator', 'CmdOrCtrl+P', () => { this.cursor.trigger() })
+    this.acels.set('Cursor', 'Reset', 'Escape', () => { terminal.toggleGuide(false); terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; terminal.cursor.reset() })
 
-    this.controller.add('default', 'View', 'Zoom In', () => { this.modZoom(0.0625) }, 'CmdOrCtrl+=')
-    this.controller.add('default', 'View', 'Zoom Out', () => { this.modZoom(-0.0625) }, 'CmdOrCtrl+-')
-    this.controller.add('default', 'View', 'Zoom Reset', () => { this.modZoom(1, true) }, 'CmdOrCtrl+0')
-    this.controller.add('default', 'View', 'Toggle Retina', () => { this.toggleRetina() }, '`')
-    this.controller.add('default', 'View', 'Toggle Hardmode', () => { this.toggleHardmode() }, 'Tab')
-    this.controller.add('default', 'View', 'Toggle Guide', () => { this.toggleGuide() }, 'CmdOrCtrl+G')
-    this.controller.addSpacer('default', 'View', 'commander')
-    this.controller.add('default', 'View', 'Toggle Commander', () => { this.commander.start() }, 'CmdOrCtrl+K')
-    this.controller.add('default', 'View', 'Run Commander', () => { this.commander.run() }, 'Enter')
-    this.controller.addSpacer('default', 'View', 'sizes')
-    this.controller.add('default', 'View', 'Incr. Col', () => { this.modGrid(1, 0) }, ']')
-    this.controller.add('default', 'View', 'Decr. Col', () => { this.modGrid(-1, 0) }, '[')
-    this.controller.add('default', 'View', 'Incr. Row', () => { this.modGrid(0, 1) }, '}')
-    this.controller.add('default', 'View', 'Decr. Row', () => { this.modGrid(0, -1) }, '{')
+    this.acels.set('Move', 'Move North', 'ArrowUp', () => { terminal.cursor.move(0, 1) })
+    this.acels.set('Move', 'Move East', 'ArrowRight', () => { terminal.cursor.move(1, 0) })
+    this.acels.set('Move', 'Move South', 'ArrowDown', () => { terminal.cursor.move(0, -1) })
+    this.acels.set('Move', 'Move West', 'ArrowLeft', () => { terminal.cursor.move(-1, 0) })
+    this.acels.set('Move', 'Scale North', 'Shift+ArrowUp', () => { terminal.cursor.scale(0, 1) })
+    this.acels.set('Move', 'Scale East', 'Shift+ArrowRight', () => { terminal.cursor.scale(1, 0) })
+    this.acels.set('Move', 'Scale South', 'Shift+ArrowDown', () => { terminal.cursor.scale(0, -1) })
+    this.acels.set('Move', 'Scale West', 'Shift+ArrowLeft', () => { terminal.cursor.scale(-1, 0) })
+    this.acels.set('Move', 'Drag North', 'Alt+ArrowUp', () => { terminal.cursor.drag(0, 1) })
+    this.acels.set('Move', 'Drag East', 'Alt+ArrowRight', () => { terminal.cursor.drag(1, 0) })
+    this.acels.set('Move', 'Drag South', 'Alt+ArrowDown', () => { terminal.cursor.drag(0, -1) })
+    this.acels.set('Move', 'Drag West', 'Alt+ArrowLeft', () => { terminal.cursor.drag(-1, 0) })
+    this.acels.set('Move', 'Move North(Leap)', 'CmdOrCtrl+ArrowUp', () => { terminal.cursor.move(0, this.grid.h) })
+    this.acels.set('Move', 'Move East(Leap)', 'CmdOrCtrl+ArrowRight', () => { terminal.cursor.move(this.grid.w, 0) })
+    this.acels.set('Move', 'Move South(Leap)', 'CmdOrCtrl+ArrowDown', () => { terminal.cursor.move(0, -this.grid.h) })
+    this.acels.set('Move', 'Move West(Leap)', 'CmdOrCtrl+ArrowLeft', () => { terminal.cursor.move(-this.grid.w, 0) })
+    this.acels.set('Move', 'Scale North(Leap)', 'CmdOrCtrl+Shift+ArrowUp', () => { terminal.cursor.scale(0, this.grid.h) })
+    this.acels.set('Move', 'Scale East(Leap)', 'CmdOrCtrl+Shift+ArrowRight', () => { terminal.cursor.scale(this.grid.w, 0) })
+    this.acels.set('Move', 'Scale South(Leap)', 'CmdOrCtrl+Shift+ArrowDown', () => { terminal.cursor.scale(0, -this.grid.h) })
+    this.acels.set('Move', 'Scale West(Leap)', 'CmdOrCtrl+Shift+ArrowLeft', () => { terminal.cursor.scale(-this.grid.w, 0) })
+    this.acels.set('Move', 'Drag North(Leap)', 'CmdOrCtrl+Alt+ArrowUp', () => { terminal.cursor.drag(0, this.grid.h) })
+    this.acels.set('Move', 'Drag East(Leap)', 'CmdOrCtrl+Alt+ArrowRight', () => { terminal.cursor.drag(this.grid.w, 0) })
+    this.acels.set('Move', 'Drag South(Leap)', 'CmdOrCtrl+Alt+ArrowDown', () => { terminal.cursor.drag(0, -this.grid.h) })
+    this.acels.set('Move', 'Drag West(Leap)', 'CmdOrCtrl+Alt+ArrowLeft', () => { terminal.cursor.drag(-this.grid.w, 0) })
 
-    this.controller.add('default', 'Midi', 'Default')
-    this.controller.add('default', 'UDP', 'Default')
-    this.controller.add('default', 'OSC', 'Default')
+    this.acels.set('Clock', 'Play/Pause', 'Space', () => { this.clock.togglePlay() })
+    this.acels.set('Clock', 'Frame By Frame', 'CmdOrCtrl+F', () => { this.clock.touch() })
+    this.acels.set('Clock', 'Reset Frame', 'CmdOrCtrl+Shift+R', () => { this.clock.resetFrame() })
+    this.acels.set('Clock', 'Incr. Speed', 'Shift+>', () => { this.clock.modSpeed(1) })
+    this.acels.set('Clock', 'Decr. Speed', 'Shift+<', () => { this.clock.modSpeed(-1) })
+    this.acels.set('Clock', 'Incr. Speed(10x)', 'CmdOrCtrl+>', () => { this.clock.modSpeed(10, true) })
+    this.acels.set('Clock', 'Decr. Speed(10x)', 'CmdOrCtrl+<', () => { this.clock.modSpeed(-10, true) })
 
-    this.controller.add('default', 'Theme', 'Open Theme', () => { this.theme.open() }, 'CmdOrCtrl+Shift+O')
-    this.controller.add('default', 'Theme', 'Reset Theme', () => { this.theme.reset() }, 'CmdOrCtrl+Shift+Backspace')
-    this.controller.addSpacer('default', 'Theme', 'Download')
-    this.controller.add('default', 'Theme', 'Download Themes..', () => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes') })
+    this.acels.set('View', 'Toggle Retina', '`', () => { this.toggleRetina() })
+    this.acels.set('View', 'Toggle Hardmode', 'Tab', () => { this.toggleHardmode() })
+    this.acels.set('View', 'Toggle Guide', 'CmdOrCtrl+G', () => { this.toggleGuide() })
+    this.acels.set('View', 'Incr. Col', ']', () => { this.modGrid(1, 0) })
+    this.acels.set('View', 'Decr. Col', '[', () => { this.modGrid(-1, 0) })
+    this.acels.set('View', 'Incr. Row', '}', () => { this.modGrid(0, 1) })
+    this.acels.set('View', 'Decr. Row', '{', () => { this.modGrid(0, -1) })
+    this.acels.set('View', 'Zoom In', 'CmdOrCtrl+=', () => { this.modZoom(0.0625) })
+    this.acels.set('View', 'Zoom Out', 'CmdOrCtrl+-', () => { this.modZoom(-0.0625) })
+    this.acels.set('View', 'Zoom Reset', 'CmdOrCtrl+0', () => { this.modZoom(1, true) })
 
-    this.controller.commit()
+    this.acels.set('Midi', 'Play/Pause Midi', 'Shift+Space', () => { this.clock.togglePlay(true) })
+    this.acels.set('Midi', 'Next Input Device', 'CmdOrCtrl+}', () => { this.io.midi.selectNextInput() })
+    this.acels.set('Midi', 'Next Output Device', 'CmdOrCtrl+]', () => { this.io.midi.selectNextOutput() })
+    this.acels.set('Midi', 'Refresh Devices', 'CmdOrCtrl+Shift+M', () => { this.io.midi.refresh() })
+
+    this.acels.set('Communication', 'Choose OSC Port', 'CmdOrCtrl+Shift+O', () => { this.commander.start('osc:') })
+    this.acels.set('Communication', 'Choose UDP Port', 'CmdOrCtrl+Shift+U', () => { this.commander.start('udp:') })
+
+    this.acels.install(window)
+    this.acels.pipe(this.commander)
   }
 
   this.start = () => {
+    console.info('Terminal', 'Starting..')
+    console.info(`${this.acels}`)
     this.theme.start()
     this.io.start()
     this.source.start()
     this.history.bind(this.orca, 's')
     this.history.record(this.orca.s)
     this.clock.start()
+    this.cursor.start()
     this.update()
     this.el.className = 'ready'
 
-    this.toggleGuide(this.reqGuide() === true)
+    this.toggleGuide()
+  }
+
+  this.whenOpen = (file) => {
+
   }
 
   this.run = () => {
@@ -306,26 +321,24 @@ export default function Terminal () {
     const col = this.grid.w
     const variables = Object.keys(this.orca.variables).join('')
 
+    // Top Row(cursor)
+
+    this.write(this.orca.f < 15 ? `ver${this.version}` : `${this.cursor.inspect()}`, col * 0, this.orca.h, this.grid.w)
+    this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.mode === 1 ? '+' : ''}`, col * 1, this.orca.h, this.grid.w, this.cursor.mode === 1 ? 1 : 2)
+    this.write(`${this.cursor.w}:${this.cursor.h}`, col * 2, this.orca.h, this.grid.w)
+    this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, col * 3, this.orca.h, this.grid.w)
+    this.write(`${this.io.inspect(this.grid.w)}`, col * 4, this.orca.h, this.grid.w)
+
+    // Low Row(project)
+
     if (this.commander.isActive === true) {
       this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 0, this.orca.h + 1, this.grid.w * 4)
     } else {
-      this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.mode === 1 ? '+' : ''}`, col * 0, this.orca.h + 1, this.grid.w, this.cursor.mode === 1 ? 1 : 2)
-      this.write(`${this.cursor.w}:${this.cursor.h}`, col * 1, this.orca.h + 1, this.grid.w)
-      this.write(`${this.cursor.inspect()}`, col * 2, this.orca.h + 1, this.grid.w)
-      this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, col * 3, this.orca.h + 1, this.grid.w)
-    }
-
-    this.write(`${this.orca.w}x${this.orca.h}`, col * 0, this.orca.h, this.grid.w)
-    this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, col * 1, this.orca.h, this.grid.w)
-    this.write(`${this.source}`, col * 2, this.orca.h, this.grid.w, this.source.queue.length > this.orca.f ? 3 : 2)
-    this.write(`${this.clock}`, col * 3, this.orca.h, this.grid.w, this.clock.isPuppet === true ? 3 : 2)
-
-    if (this.orca.f < 15) {
-      this.write(`${this.io.midi}`, col * 4, this.orca.h, this.grid.w * 2)
-      this.write(`Version ${this.version}`, col * 4, this.orca.h + 1, this.grid.w * 2)
-    } else {
-      this.write(`${this.io.inspect(this.grid.w)}`, col * 4, this.orca.h, this.grid.w)
-      this.write(`${display(variables, this.orca.f, this.grid.w)}`, col * 4, this.orca.h + 1, this.grid.w)
+      this.write(`${this.source}`, col * 0, this.orca.h + 1, this.grid.w, this.source.queue.length > this.orca.f ? 3 : 2)
+      this.write(`${this.orca.w}x${this.orca.h}`, col * 1, this.orca.h + 1, this.grid.w)
+      this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, col * 2, this.orca.h + 1, this.grid.w)
+      this.write(`${this.clock}`, col * 3, this.orca.h + 1, this.grid.w, this.clock.isPuppet === true ? 3 : 2)
+      this.write(`${this.io.midi}`, col * 4, this.orca.h + 1, this.grid.w * 4)
     }
   }
 
@@ -369,6 +382,7 @@ export default function Terminal () {
   // Resize tools
 
   this.fit = () => {
+    if (!require('electron')) { return }
     const size = { w: (this.orca.w * this.tile.w) + 60, h: (this.orca.h * this.tile.h) + 60 + (2 * this.tile.h) }
     const win = require('electron').remote.getCurrentWindow()
     const winSize = win.getSize()
@@ -457,7 +471,11 @@ export default function Terminal () {
 
     if (!path || path.indexOf('.orca') < 0) { console.log('Orca', 'Not a orca file'); return }
 
-    this.source.read(path)
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      this.source.read(path, event.target.result)
+    }
+    reader.readAsText(file, 'UTF-8')
   })
 
   window.onresize = (event) => {

@@ -2,12 +2,13 @@
 
 const osc = require('node-osc')
 
-export default function Osc (terminal) {
+function Osc (terminal) {
   this.stack = []
   this.port = null
   this.options = { default: 49162, tidalCycles: 6010, sonicPi: 4559, superCollider: 57120, norns: 10111 }
 
   this.start = function () {
+    if (!osc) { console.warn('OSC', 'Could not start.'); return }
     console.info('OSC', 'Starting..')
     this.setup()
     this.select()
@@ -45,16 +46,6 @@ export default function Osc (terminal) {
     console.info('OSC', `Selected port: ${port}`)
     this.port = parseInt(port)
     this.setup()
-    this.update()
-  }
-
-  this.update = () => {
-    terminal.controller.clearCat('default', 'OSC')
-    for (const id in this.options) {
-      terminal.controller.add('default', 'OSC', `${id.charAt(0).toUpperCase() + id.substr(1)}(${this.options[id]}) ${this.port === this.options[id] ? ' — Active' : ''}`, () => { this.select(this.options[id]) }, '')
-    }
-    terminal.controller.add('default', 'OSC', 'Choose Custom Port', () => { terminal.commander.start('osc:') }, '')
-    terminal.controller.commit()
   }
 
   this.setup = function () {

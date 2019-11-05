@@ -1,40 +1,49 @@
 <html>
   <head>
-    <meta charset='utf-8'>    
-    <!-- Basic -->
-    <meta name='author' content='Devine Lu Linvega'>
-    <meta name='description' content='Orca: Esoteric Programming Language'/>
-    <meta name='keywords' content='Orca, livecoding, programming language, lisp, udp, midi, ide' />
-    <meta name='license' content='name=BY-NC-SA(4.0), url=https://creativecommons.org/licenses/by-nc-sa/4.0/'/>
-    <meta name='thumbnail' content='https://wiki.xxiivv.com/media/services/thumbnail.jpg' />
-    <!-- Twitter -->
-    <meta name='twitter:card' content='summary'>
-    <meta name='twitter:site' content='@neauoire'>
-    <meta name='twitter:title' content='Orca'>
-    <meta name='twitter:description' content='An Esoteric Programming Language'>
-    <meta name='twitter:creator' content='@neauoire'>
-    <meta name='twitter:image' content='https://wiki.xxiivv.com/media/services/rss.jpg'>
-    <!-- Facebook -->
-    <meta property='og:title' content='Orca' />
-    <meta property='og:type' content='article' />
-    <meta property='og:url' content='http://wiki.xxiivv.com/' />
-    <meta property='og:image' content='https://wiki.xxiivv.com/media/services/rss.jpg' />
-    <meta property='og:description' content='An Esoteric Programming Language' /> 
-    <meta property='og:site_name' content='XXIIVV' />
-    <!-- Defaults -->
+    <meta charset='utf-8'>
     <link rel="stylesheet" type="text/css" href="desktop/sources/links/style.css"/>
+
+    <script type="text/javascript">
+      function require(name){
+        console.warn('Failed to require '+name)
+      }
+    </script>
+
+    <script type="text/javascript" src="desktop/sources/scripts/lib/acels.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/lib/theme.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/lib/history.js"></script>
+
+    <script type="text/javascript" src="desktop/sources/scripts/core/library.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/core/io.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/core/operator.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/core/orca.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/core/transpose.js"></script>
+
+    <script type="text/javascript" src="desktop/sources/scripts/core/io/cc.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/core/io/midi.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/core/io/mono.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/core/io/osc.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/core/io/udp.js"></script>
+
+    <script type="text/javascript" src="desktop/sources/scripts/clock.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/commander.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/cursor.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/source.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/terminal.js"></script>
+
     <title>Orca — Web</title>
   </head>
   <body>
-  	<script type="module" src="browser/mock/require.js"></script>
-    <script type="module">
-      console.clear()
-      import Terminal from "./desktop/sources/scripts/terminal.js";
+    <script>
+      'use strict'
+
       const terminal = new Terminal()
-      window.__dirname = "desktop/sources";
-      window.terminal = terminal
+
       terminal.install(document.body)
-      terminal.start()
+
+      window.addEventListener('load', () => { 
+        terminal.start()
+      })
     </script>
   </body>
 </html>

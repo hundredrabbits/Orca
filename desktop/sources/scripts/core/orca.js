@@ -1,8 +1,6 @@
 'use strict'
 
-import library from './library.js'
-
-export default function Orca () {
+function Orca (library) {
   this.keys = Object.keys(library).slice(0, 36)
 
   this.w = 1 // Default Width

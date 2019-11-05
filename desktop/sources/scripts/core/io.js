@@ -1,12 +1,6 @@
 'use strict'
 
-import Midi from './io/midi.js'
-import MidiCC from './io/cc.js'
-import Mono from './io/mono.js'
-import Udp from './io/udp.js'
-import Osc from './io/osc.js'
-
-export default function IO (terminal) {
+function IO (terminal) {
   this.ip = '127.0.0.1'
 
   this.midi = new Midi(terminal)

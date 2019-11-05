@@ -1,6 +1,6 @@
 'use strict'
 
-export default function MidiCC (terminal) {
+function MidiCC (terminal) {
   this.stack = []
   this.offset = 64
 

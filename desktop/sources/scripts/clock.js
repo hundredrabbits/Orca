@@ -1,6 +1,10 @@
 'use strict'
 
-export default function Clock (terminal) {
+/* global Blob */
+
+function Clock (terminal) {
+  const worker = 'onmessage = (e) => { setInterval(() => { postMessage(true) }, e.data)}'
+
   this.isPaused = true
   this.timer = null
   this.isPuppet = false
@@ -50,7 +54,7 @@ export default function Clock (terminal) {
 
   this.play = function (msg = false) {
     console.log('Clock', 'Play')
-    if (this.isPaused === false) { console.warn('Clock', 'Already playing'); return }
+    if (this.isPaused === false) { return }
     if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = false
     if (msg === true) { terminal.io.midi.sendClockStart() }
@@ -105,9 +109,12 @@ export default function Clock (terminal) {
   this.setTimer = function (bpm) {
     console.log('Clock', 'New Timer ' + bpm + 'bpm')
     this.clearTimer()
-    this.timer = new Worker(`${__dirname}/scripts/timer.js`)
+    this.timer = new Worker(window.URL.createObjectURL(new Blob([worker], { type: 'text/javascript' })))
     this.timer.postMessage((60000 / bpm) / 4)
-    this.timer.onmessage = (event) => { terminal.io.midi.sendClock(); terminal.run() }
+    this.timer.onmessage = (event) => {
+      terminal.io.midi.sendClock()
+      terminal.run()
+    }
   }
 
   this.clearTimer = function () {

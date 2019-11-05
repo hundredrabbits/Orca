@@ -1,8 +1,6 @@
 'use strict'
 
-const { clipboard } = require('electron')
-
-export default function Cursor (terminal) {
+function Cursor (terminal) {
   this.x = 0
   this.y = 0
   this.w = 0
@@ -15,12 +13,22 @@ export default function Cursor (terminal) {
 
   this.mode = 0
 
+  this.start = () => {
+    document.onmousedown = (e) => { this.onMouseDown(e) }
+    document.onmouseup = (e) => { this.onMouseUp(e) }
+    document.onmousemove = (e) => { this.onMouseMove(e) }
+    document.oncopy = (e) => { this.onCopy(e) }
+    document.oncut = (e) => { this.onCut(e) }
+    document.onpaste = (e) => { this.onPaste(e) }
+  }
+
   this.move = function (x, y) {
     if (isNaN(x) || isNaN(y)) { return }
     this.x = clamp(this.x + parseInt(x), 0, terminal.orca.w - 1)
     this.y = clamp(this.y - parseInt(y), 0, terminal.orca.h - 1)
 
     this.calculateBounds()
+    terminal.toggleGuide(false)
     terminal.update()
   }
 
@@ -30,6 +38,7 @@ export default function Cursor (terminal) {
     this.y = clamp(parseInt(y), 0, terminal.orca.h - 1)
 
     this.calculateBounds()
+    terminal.toggleGuide(false)
     terminal.update()
   }
 
@@ -63,9 +72,10 @@ export default function Cursor (terminal) {
   this.drag = function (x, y) {
     if (isNaN(x) || isNaN(y)) { return }
     this.mode = 0
-    this.cut()
+    const block = this.getBlock()
+    this.erase()
     this.move(x, y)
-    this.paste()
+    this.writeBlock(block)
   }
 
   this.selectAll = function () {
@@ -100,21 +110,15 @@ export default function Cursor (terminal) {
   }
 
   this.copy = function () {
-    const block = this.getBlock()
-    var rows = []
-    for (var i = 0; i < block.length; i++) {
-      rows.push(block[i].join(''))
-    }
-    clipboard.writeText(rows.join('\n'))
+    document.execCommand('copy')
   }
 
   this.cut = function () {
-    this.copy()
-    this.erase()
+    document.execCommand('cut')
   }
 
   this.paste = function (overlap = false) {
-    this.writeBlock(clipboard.readText().split(/\r?\n/), overlap)
+    document.execCommand('paste')
   }
 
   this.read = function () {
@@ -122,6 +126,7 @@ export default function Cursor (terminal) {
   }
 
   this.write = function (g) {
+    if (!terminal.orca.isAllowed(g)) { return }
     if (terminal.orca.write(this.x, this.y, g) && this.mode === 1) {
       this.move(1, 0)
     }
@@ -244,6 +249,57 @@ export default function Cursor (terminal) {
       y >= this.minY &&
       y <= this.maxY
     )
+  }
+
+  this.mouseFrom = null
+
+  this.onMouseDown = (e) => {
+    const pos = this.tilePos(e.clientX, e.clientY)
+    this.select(pos.x, pos.y, 0, 0)
+    this.mouseFrom = pos
+  }
+
+  this.onMouseUp = (e) => {
+    if (this.mouseFrom) {
+      const pos = this.tilePos(e.clientX, e.clientY)
+      this.select(this.mouseFrom.x, this.mouseFrom.y, pos.x - this.mouseFrom.x, pos.y - this.mouseFrom.y)
+    }
+    this.mouseFrom = null
+  }
+
+  this.onMouseMove = (e) => {
+    if (!this.mouseFrom) { return }
+    const pos = this.tilePos(e.clientX, e.clientY)
+    this.select(this.mouseFrom.x, this.mouseFrom.y, pos.x - this.mouseFrom.x, pos.y - this.mouseFrom.y)
+  }
+
+  this.onCopy = (e) => {
+    const block = this.getBlock()
+    var rows = []
+    for (var i = 0; i < block.length; i++) {
+      rows.push(block[i].join(''))
+    }
+    const content = rows.join('\n')
+    const clipboard = e.clipboardData
+    e.clipboardData.setData('text/plain', content)
+    e.clipboardData.setData('text/source', content)
+    e.preventDefault()
+  }
+
+  this.onCut = (e) => {
+    this.onCopy(e)
+    this.erase()
+  }
+
+  this.onPaste = (e) => {
+    const data = e.clipboardData.getData('text/source')
+    this.writeBlock(data.split(/\r?\n/), false)
+    this.scaleTo(data.split('\n')[0].length, data.split('\n').length)
+    e.preventDefault()
+  }
+
+  this.tilePos = (x, y, w = terminal.tile.w, h = terminal.tile.h) => {
+    return { x: parseInt((x - 30) / w), y: parseInt((y - 30) / h) }
   }
 
   function sense (s) { return s === s.toUpperCase() && s.toLowerCase() !== s.toUpperCase() }

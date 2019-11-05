@@ -1,26 +1,38 @@
-<!DOCTYPE html>
-<html lang='en'>
+<html>
   <head>
     <meta charset='utf-8'>
     <link rel="stylesheet" type="text/css" href="links/style.css"/>
+    <script type="text/javascript" src="scripts/lib/acels.js"></script>
+    <script type="text/javascript" src="scripts/lib/theme.js"></script>
+    <script type="text/javascript" src="scripts/lib/history.js"></script>
+    <script type="text/javascript" src="scripts/core/library.js"></script>
+    <script type="text/javascript" src="scripts/core/io.js"></script>
+    <script type="text/javascript" src="scripts/core/operator.js"></script>
+    <script type="text/javascript" src="scripts/core/orca.js"></script>
+    <script type="text/javascript" src="scripts/core/transpose.js"></script>
+    <script type="text/javascript" src="scripts/core/io/cc.js"></script>
+    <script type="text/javascript" src="scripts/core/io/midi.js"></script>
+    <script type="text/javascript" src="scripts/core/io/mono.js"></script>
+    <script type="text/javascript" src="scripts/core/io/osc.js"></script>
+    <script type="text/javascript" src="scripts/core/io/udp.js"></script>
+    <script type="text/javascript" src="scripts/clock.js"></script>
+    <script type="text/javascript" src="scripts/commander.js"></script>
+    <script type="text/javascript" src="scripts/cursor.js"></script>
+    <script type="text/javascript" src="scripts/source.js"></script>
+    <script type="text/javascript" src="scripts/terminal.js"></script>
     <title>Orca</title>
   </head>
   <body>
-    <script type="module">
+    <script>
       'use strict'
-      
-      console.clear()
-
-      import Terminal from "js:./sources/scripts/terminal.js";
 
       const terminal = new Terminal()
-
-      window.terminal = terminal // global availability for e.g. udp
 
       terminal.install(document.body)
 
       window.addEventListener('load', () => { 
-        terminal.start(); 
+        terminal.start()
+        terminal.acels.inject('Orca')
       })
     </script>
   </body>
