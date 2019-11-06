@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/hundredrabbits/100r.co/master/media/content/characters/orca.hello.png" width="300"/>
 
-Orca uses an <strong>esoteric programming language</strong> designed to quickly create procedural sequencers, in which every letter of the alphabet is an operation, where lowercase letters operate on bang, uppercase letters operate each frame.
+Orca is an <strong>esoteric programming language</strong> designed to quickly create procedural sequencers, in which every letter of the alphabet is an operation, where lowercase letters operate on bang, uppercase letters operate each frame.
 
 The <a href="http://github.com/hundredrabbits/Orca" target="_blank" rel="noreferrer" class="external ">application</a> <strong>is not a synthesizer, but a flexible livecoding environment</strong> capable of sending MIDI, OSC & UDP to your audio interface, like Ableton, Renoise, VCV Rack or SuperCollider.
 
