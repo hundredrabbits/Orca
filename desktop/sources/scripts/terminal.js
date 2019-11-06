@@ -158,7 +158,7 @@ function Terminal () {
     this.drawGuide()
   }
 
-  this.whenOpen = (text) => {
+  this.whenOpen = (file, text) => {
     const lines = text.trim().split('\n')
     const w = lines[0].length
     const h = lines.length
@@ -338,7 +338,7 @@ function Terminal () {
     if (this.commander.isActive === true) {
       this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 0, this.orca.h + 1, this.grid.w * 4)
     } else {
-      this.write(`${this.source}`, col * 0, this.orca.h + 1, this.grid.w)
+      this.write(`${Object.keys(this.source.cache).length} mods`, col * 0, this.orca.h + 1, this.grid.w)
       this.write(`${this.orca.w}x${this.orca.h}`, col * 1, this.orca.h + 1, this.grid.w)
       this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, col * 2, this.orca.h + 1, this.grid.w)
       this.write(`${this.clock}`, col * 3, this.orca.h + 1, this.grid.w, this.clock.isPuppet === true ? 3 : 2)
