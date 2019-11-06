@@ -11,7 +11,13 @@ function Commander (terminal) {
   this.passives = {
     find: (p) => { terminal.cursor.find(p.str) },
     select: (p) => { terminal.cursor.select(p.x, p.y, p.w, p.h) },
-    inject: (p) => { terminal.cursor.select(p._x, p._y); terminal.source.inject(p._str, false) },
+    inject: (p) => {
+      terminal.cursor.select(p._x, p._y)
+      if (terminal.source.cache[p._str + '.orca']) {
+        const lines = terminal.source.cache[p._str + '.orca'].trim().split('\n')
+        terminal.cursor.resize(lines[0].length, lines.length)
+      }
+    },
     write: (p) => { terminal.cursor.select(p._x, p._y, p._str.length) }
   }
 
@@ -44,7 +50,14 @@ function Commander (terminal) {
     // Edit
     find: (p) => { terminal.cursor.find(p.str) },
     select: (p) => { terminal.cursor.select(p.x, p.y, p.w, p.h) },
-    inject: (p) => { terminal.cursor.select(p._x, p._y); terminal.source.inject(p._str, true) },
+    inject: (p) => {
+      terminal.cursor.select(p._x, p._y)
+      if (terminal.source.cache[p._str + '.orca']) {
+        const lines = terminal.source.cache[p._str + '.orca'].trim().split('\n')
+        terminal.cursor.writeBlock(lines)
+        terminal.cursor.reset()
+      }
+    },
     write: (p) => { terminal.cursor.select(p._x, p._y, p._str.length); terminal.cursor.writeBlock([p._str.split('')]) }
   }
 
@@ -73,9 +86,6 @@ function Commander (terminal) {
   // Begin
 
   this.start = (q = '') => {
-    document.onkeydown = (event) => { this.onKeyDown(event) }
-    document.onkeyup = (event) => { this.onKeyUp(event) }
-
     this.isActive = true
     this.query = q
     terminal.update()

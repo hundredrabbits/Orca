@@ -6,20 +6,16 @@ function Terminal () {
   this.version = 146
   this.library = library
 
+  this.theme = new Theme()
   this.acels = new Acels()
+  this.source = new Source()
+  this.history = new History()
+
   this.orca = new Orca(this.library)
   this.io = new IO(this)
   this.cursor = new Cursor(this)
-  this.source = new Source(this)
   this.commander = new Commander(this)
   this.clock = new Clock(this)
-  this.history = new History()
-
-  // Themes
-  this.theme = new Theme()
-
-  this.el = document.createElement('canvas')
-  this.context = this.el.getContext('2d')
 
   // Settings
   this.grid = { w: 8, h: 8 }
@@ -31,24 +27,24 @@ function Terminal () {
   this.hardmode = true
   this.guide = false
 
+  this.el = document.createElement('canvas')
+  this.context = this.el.getContext('2d')
+
   this.install = (host) => {
     host.appendChild(this.el)
     this.theme.install(host)
 
     this.theme.default = { background: '#000000', f_high: '#ffffff', f_med: '#777777', f_low: '#444444', f_inv: '#000000', b_high: '#eeeeee', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffb545' }
 
-    this.acels.set('File', 'New', 'CmdOrCtrl+N', () => { this.source.new() })
-    this.acels.set('File', 'Save', 'CmdOrCtrl+S', () => { this.source.save() })
-    this.acels.set('File', 'Save', 'CmdOrCtrl+Shift+S', () => { this.source.saveAs() })
-    this.acels.set('File', 'Open', 'CmdOrCtrl+O', () => { this.source.open() })
+    this.acels.set('File', 'New', 'CmdOrCtrl+N', () => { this.reset() })
+    this.acels.set('File', 'Save', 'CmdOrCtrl+S', () => { this.source.write('orca', 'orca', `${this.orca}`, 'text/plain') })
+    this.acels.set('File', 'Open', 'CmdOrCtrl+O', () => { this.source.open('orca', this.whenOpen) })
+    this.acels.set('File', 'Load Modules', 'CmdOrCtrl+L', () => { this.source.load('orca') })
+    this.acels.set('File', 'Load Images', 'CmdOrCtrl+Shift+L', () => { this.source.load('jpg') })
     this.acels.set('File', 'Revert', 'CmdOrCtrl+W', () => { this.source.revert() })
 
     this.acels.set('Edit', 'Select All', 'CmdOrCtrl+A', () => { this.cursor.selectAll() })
     this.acels.set('Edit', 'Erase Selection', 'Backspace', () => { this.cursor.erase() })
-    this.acels.set('Edit', 'Copy Selection', 'CmdOrCtrl+C', () => { this.cursor.copy() })
-    this.acels.set('Edit', 'Cut Selection', 'CmdOrCtrl+X', () => { this.cursor.cut() })
-    this.acels.set('Edit', 'Paste Selection', 'CmdOrCtrl+V', () => { this.cursor.paste(false) })
-    this.acels.set('Edit', 'Paste Over', 'CmdOrCtrl+Shift+V', () => { this.cursor.paste(true) })
     this.acels.set('Edit', 'Undo', 'CmdOrCtrl+Z', () => { this.history.undo() })
     this.acels.set('Edit', 'Redo', 'CmdOrCtrl+Shift+Z', () => { this.history.redo() })
 
@@ -60,36 +56,36 @@ function Terminal () {
     this.acels.set('Cursor', 'Toggle Insert Mode', 'CmdOrCtrl+I', () => { this.cursor.toggleMode(1) })
     this.acels.set('Cursor', 'Toggle Block Comment', 'CmdOrCtrl+/', () => { this.cursor.comment() })
     this.acels.set('Cursor', 'Trigger Operator', 'CmdOrCtrl+P', () => { this.cursor.trigger() })
-    this.acels.set('Cursor', 'Reset', 'Escape', () => { terminal.toggleGuide(false); terminal.commander.stop(); terminal.clear(); terminal.isPaused = false; terminal.cursor.reset() })
+    this.acels.set('Cursor', 'Reset', 'Escape', () => { this.toggleGuide(false); this.commander.stop(); this.clear(); this.isPaused = false; this.cursor.reset() })
 
-    this.acels.set('Move', 'Move North', 'ArrowUp', () => { terminal.cursor.move(0, 1) })
-    this.acels.set('Move', 'Move East', 'ArrowRight', () => { terminal.cursor.move(1, 0) })
-    this.acels.set('Move', 'Move South', 'ArrowDown', () => { terminal.cursor.move(0, -1) })
-    this.acels.set('Move', 'Move West', 'ArrowLeft', () => { terminal.cursor.move(-1, 0) })
-    this.acels.set('Move', 'Scale North', 'Shift+ArrowUp', () => { terminal.cursor.scale(0, 1) })
-    this.acels.set('Move', 'Scale East', 'Shift+ArrowRight', () => { terminal.cursor.scale(1, 0) })
-    this.acels.set('Move', 'Scale South', 'Shift+ArrowDown', () => { terminal.cursor.scale(0, -1) })
-    this.acels.set('Move', 'Scale West', 'Shift+ArrowLeft', () => { terminal.cursor.scale(-1, 0) })
-    this.acels.set('Move', 'Drag North', 'Alt+ArrowUp', () => { terminal.cursor.drag(0, 1) })
-    this.acels.set('Move', 'Drag East', 'Alt+ArrowRight', () => { terminal.cursor.drag(1, 0) })
-    this.acels.set('Move', 'Drag South', 'Alt+ArrowDown', () => { terminal.cursor.drag(0, -1) })
-    this.acels.set('Move', 'Drag West', 'Alt+ArrowLeft', () => { terminal.cursor.drag(-1, 0) })
-    this.acels.set('Move', 'Move North(Leap)', 'CmdOrCtrl+ArrowUp', () => { terminal.cursor.move(0, this.grid.h) })
-    this.acels.set('Move', 'Move East(Leap)', 'CmdOrCtrl+ArrowRight', () => { terminal.cursor.move(this.grid.w, 0) })
-    this.acels.set('Move', 'Move South(Leap)', 'CmdOrCtrl+ArrowDown', () => { terminal.cursor.move(0, -this.grid.h) })
-    this.acels.set('Move', 'Move West(Leap)', 'CmdOrCtrl+ArrowLeft', () => { terminal.cursor.move(-this.grid.w, 0) })
-    this.acels.set('Move', 'Scale North(Leap)', 'CmdOrCtrl+Shift+ArrowUp', () => { terminal.cursor.scale(0, this.grid.h) })
-    this.acels.set('Move', 'Scale East(Leap)', 'CmdOrCtrl+Shift+ArrowRight', () => { terminal.cursor.scale(this.grid.w, 0) })
-    this.acels.set('Move', 'Scale South(Leap)', 'CmdOrCtrl+Shift+ArrowDown', () => { terminal.cursor.scale(0, -this.grid.h) })
-    this.acels.set('Move', 'Scale West(Leap)', 'CmdOrCtrl+Shift+ArrowLeft', () => { terminal.cursor.scale(-this.grid.w, 0) })
-    this.acels.set('Move', 'Drag North(Leap)', 'CmdOrCtrl+Alt+ArrowUp', () => { terminal.cursor.drag(0, this.grid.h) })
-    this.acels.set('Move', 'Drag East(Leap)', 'CmdOrCtrl+Alt+ArrowRight', () => { terminal.cursor.drag(this.grid.w, 0) })
-    this.acels.set('Move', 'Drag South(Leap)', 'CmdOrCtrl+Alt+ArrowDown', () => { terminal.cursor.drag(0, -this.grid.h) })
-    this.acels.set('Move', 'Drag West(Leap)', 'CmdOrCtrl+Alt+ArrowLeft', () => { terminal.cursor.drag(-this.grid.w, 0) })
+    this.acels.set('Move', 'Move North', 'ArrowUp', () => { this.cursor.move(0, 1) })
+    this.acels.set('Move', 'Move East', 'ArrowRight', () => { this.cursor.move(1, 0) })
+    this.acels.set('Move', 'Move South', 'ArrowDown', () => { this.cursor.move(0, -1) })
+    this.acels.set('Move', 'Move West', 'ArrowLeft', () => { this.cursor.move(-1, 0) })
+    this.acels.set('Move', 'Scale North', 'Shift+ArrowUp', () => { this.cursor.scale(0, 1) })
+    this.acels.set('Move', 'Scale East', 'Shift+ArrowRight', () => { this.cursor.scale(1, 0) })
+    this.acels.set('Move', 'Scale South', 'Shift+ArrowDown', () => { this.cursor.scale(0, -1) })
+    this.acels.set('Move', 'Scale West', 'Shift+ArrowLeft', () => { this.cursor.scale(-1, 0) })
+    this.acels.set('Move', 'Drag North', 'Alt+ArrowUp', () => { this.cursor.drag(0, 1) })
+    this.acels.set('Move', 'Drag East', 'Alt+ArrowRight', () => { this.cursor.drag(1, 0) })
+    this.acels.set('Move', 'Drag South', 'Alt+ArrowDown', () => { this.cursor.drag(0, -1) })
+    this.acels.set('Move', 'Drag West', 'Alt+ArrowLeft', () => { this.cursor.drag(-1, 0) })
+    this.acels.set('Move', 'Move North(Leap)', 'CmdOrCtrl+ArrowUp', () => { this.cursor.move(0, this.grid.h) })
+    this.acels.set('Move', 'Move East(Leap)', 'CmdOrCtrl+ArrowRight', () => { this.cursor.move(this.grid.w, 0) })
+    this.acels.set('Move', 'Move South(Leap)', 'CmdOrCtrl+ArrowDown', () => { this.cursor.move(0, -this.grid.h) })
+    this.acels.set('Move', 'Move West(Leap)', 'CmdOrCtrl+ArrowLeft', () => { this.cursor.move(-this.grid.w, 0) })
+    this.acels.set('Move', 'Scale North(Leap)', 'CmdOrCtrl+Shift+ArrowUp', () => { this.cursor.scale(0, this.grid.h) })
+    this.acels.set('Move', 'Scale East(Leap)', 'CmdOrCtrl+Shift+ArrowRight', () => { this.cursor.scale(this.grid.w, 0) })
+    this.acels.set('Move', 'Scale South(Leap)', 'CmdOrCtrl+Shift+ArrowDown', () => { this.cursor.scale(0, -this.grid.h) })
+    this.acels.set('Move', 'Scale West(Leap)', 'CmdOrCtrl+Shift+ArrowLeft', () => { this.cursor.scale(-this.grid.w, 0) })
+    this.acels.set('Move', 'Drag North(Leap)', 'CmdOrCtrl+Alt+ArrowUp', () => { this.cursor.drag(0, this.grid.h) })
+    this.acels.set('Move', 'Drag East(Leap)', 'CmdOrCtrl+Alt+ArrowRight', () => { this.cursor.drag(this.grid.w, 0) })
+    this.acels.set('Move', 'Drag South(Leap)', 'CmdOrCtrl+Alt+ArrowDown', () => { this.cursor.drag(0, -this.grid.h) })
+    this.acels.set('Move', 'Drag West(Leap)', 'CmdOrCtrl+Alt+ArrowLeft', () => { this.cursor.drag(-this.grid.w, 0) })
 
     this.acels.set('Clock', 'Play/Pause', 'Space', () => { this.clock.togglePlay() })
     this.acels.set('Clock', 'Frame By Frame', 'CmdOrCtrl+F', () => { this.clock.touch() })
-    this.acels.set('Clock', 'Reset Frame', 'CmdOrCtrl+Shift+R', () => { this.clock.resetFrame() })
+    this.acels.set('Clock', 'Reset Frame', 'CmdOrCtrl+Shift+R', () => { this.clock.setFrame(0) })
     this.acels.set('Clock', 'Incr. Speed', 'Shift+>', () => { this.clock.modSpeed(1) })
     this.acels.set('Clock', 'Decr. Speed', 'Shift+<', () => { this.clock.modSpeed(-1) })
     this.acels.set('Clock', 'Incr. Speed(10x)', 'CmdOrCtrl+>', () => { this.clock.modSpeed(10, true) })
@@ -111,8 +107,8 @@ function Terminal () {
     this.acels.set('Midi', 'Next Output Device', 'CmdOrCtrl+]', () => { this.io.midi.selectNextOutput() })
     this.acels.set('Midi', 'Refresh Devices', 'CmdOrCtrl+Shift+M', () => { this.io.midi.refresh() })
 
-    this.acels.set('Communication', 'Choose OSC Port', 'CmdOrCtrl+Shift+O', () => { this.commander.start('osc:') })
-    this.acels.set('Communication', 'Choose UDP Port', 'CmdOrCtrl+Shift+U', () => { this.commander.start('udp:') })
+    this.acels.set('Communication', 'Choose OSC Port', 'alt+O', () => { this.commander.start('osc:') })
+    this.acels.set('Communication', 'Choose UDP Port', 'alt+U', () => { this.commander.start('udp:') })
 
     this.acels.install(window)
     this.acels.pipe(this.commander)
@@ -123,21 +119,31 @@ function Terminal () {
     console.info(`${this.acels}`)
     this.theme.start()
     this.io.start()
-    this.source.start()
     this.history.bind(this.orca, 's')
     this.history.record(this.orca.s)
     this.clock.start()
     this.cursor.start()
+
+    this.reset()
+
     this.update()
     this.el.className = 'ready'
 
     this.toggleGuide()
   }
 
+  this.reset = () => {
+    this.orca.reset()
+    this.resize()
+    this.source.new()
+    this.history.reset()
+    this.cursor.reset()
+    this.clock.play()
+  }
+
   this.run = () => {
     this.io.clear()
     this.clock.run()
-    this.source.run()
     this.orca.run()
     this.io.run()
     this.update()
@@ -152,8 +158,16 @@ function Terminal () {
     this.drawGuide()
   }
 
-  this.reset = () => {
-    this.theme.reset()
+  this.whenOpen = (text) => {
+    const lines = text.trim().split('\n')
+    const w = lines[0].length
+    const h = lines.length
+    const s = lines.join('\n').trim()
+
+    terminal.orca.load(w, h, s)
+    terminal.history.reset()
+    terminal.history.record(terminal.orca.s)
+    terminal.fit()
   }
 
   this.setGrid = (w, h) => {
@@ -180,13 +194,6 @@ function Terminal () {
     console.log('Terminal', `Toggle Guide: ${display}`)
     this.guide = display
     this.update()
-  }
-
-  this.reqGuide = () => {
-    const session = this.source.recall('session')
-    console.log('Terminal', 'Session #' + session)
-    if (!session || parseInt(session) < 20) { return true }
-    return false
   }
 
   this.modGrid = (x = 0, y = 0) => {
@@ -331,7 +338,7 @@ function Terminal () {
     if (this.commander.isActive === true) {
       this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 0, this.orca.h + 1, this.grid.w * 4)
     } else {
-      this.write(`${this.source}`, col * 0, this.orca.h + 1, this.grid.w, this.source.queue.length > this.orca.f ? 3 : 2)
+      this.write(`${this.source}`, col * 0, this.orca.h + 1, this.grid.w)
       this.write(`${this.orca.w}x${this.orca.h}`, col * 1, this.orca.h + 1, this.grid.w)
       this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, col * 2, this.orca.h + 1, this.grid.w)
       this.write(`${this.clock}`, col * 3, this.orca.h + 1, this.grid.w, this.clock.isPuppet === true ? 3 : 2)

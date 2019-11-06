@@ -1,8 +1,8 @@
 'use strict'
 
-const osc = require('node-osc')
-
 function Osc (terminal) {
+  const osc = require('node-osc')
+
   this.stack = []
   this.port = null
   this.options = { default: 49162, tidalCycles: 6010, sonicPi: 4559, superCollider: 57120, norns: 10111 }

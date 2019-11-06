@@ -111,7 +111,7 @@ function Source (terminal) {
     const queue = path.join(this.folder(), this.name() + '.queue')
     if (fs.existsSync(queue)) {
       this.queue = fs.readFileSync(queue, 'utf8').split('\n')
-      terminal.clock.resetFrame()
+      terminal.clock.setFrame(0)
       console.log('Source', `Found Queue: ${this.queue.length} lines`)
     }
   }

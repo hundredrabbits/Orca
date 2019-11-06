@@ -129,10 +129,6 @@ function Clock (terminal) {
     terminal.orca.f = clamp(f, 0, 9999999)
   }
 
-  this.resetFrame = function () {
-    terminal.orca.f = 0
-  }
-
   // UI
 
   this.toString = function () {

@@ -1,8 +1,8 @@
 'use strict'
 
-const dgram = require('dgram')
-
 function Udp (terminal) {
+  const dgram = require('dgram')
+
   this.stack = []
   this.port = null
   this.options = { default: 49161, orca: 49160 }
