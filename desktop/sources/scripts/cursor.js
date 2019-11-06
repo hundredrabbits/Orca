@@ -279,7 +279,7 @@ function Cursor (terminal) {
     for (var i = 0; i < block.length; i++) {
       rows.push(block[i].join(''))
     }
-    const content = rows.join('\n')
+    const content = rows.join('\n').trim()
     const clipboard = e.clipboardData
     e.clipboardData.setData('text/plain', content)
     e.clipboardData.setData('text/source', content)
@@ -292,9 +292,9 @@ function Cursor (terminal) {
   }
 
   this.onPaste = (e) => {
-    const data = e.clipboardData.getData('text/source')
+    const data = e.clipboardData.getData('text/source').trim()
     this.writeBlock(data.split(/\r?\n/), false)
-    this.scaleTo(data.split('\n')[0].length, data.split('\n').length)
+    this.scaleTo(data.split('\n')[0].length-1, data.split('\n').length - 1)
     e.preventDefault()
   }
 
