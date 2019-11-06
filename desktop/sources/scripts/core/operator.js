@@ -75,7 +75,6 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
 
   this.explode = function () {
     this.replace('*')
-    // this.lock()
   }
 
   this.move = function (x, y) {

@@ -45,10 +45,10 @@ function Terminal () {
 
     this.acels.set('Edit', 'Select All', 'CmdOrCtrl+A', () => { this.cursor.selectAll() })
     this.acels.set('Edit', 'Erase Selection', 'Backspace', () => { this.cursor.erase() })
-    // this.acels.set('Edit', 'Copy Selection', 'CmdOrCtrl+C', () => { this.cursor.copy() })
-    // this.acels.set('Edit', 'Cut Selection', 'CmdOrCtrl+X', () => { this.cursor.cut() })
-    // this.acels.set('Edit', 'Paste Selection', 'CmdOrCtrl+V', () => { this.cursor.paste(false) })
-    // this.acels.set('Edit', 'Paste Over', 'CmdOrCtrl+Shift+V', () => { this.cursor.paste(true) })
+    this.acels.set('Edit', 'Copy Selection', 'CmdOrCtrl+C', () => { this.cursor.copy() })
+    this.acels.set('Edit', 'Cut Selection', 'CmdOrCtrl+X', () => { this.cursor.cut() })
+    this.acels.set('Edit', 'Paste Selection', 'CmdOrCtrl+V', () => { this.cursor.paste(false) })
+    this.acels.set('Edit', 'Paste Over', 'CmdOrCtrl+Shift+V', () => { this.cursor.paste(true) })
     this.acels.set('Edit', 'Undo', 'CmdOrCtrl+Z', () => { this.history.undo() })
     this.acels.set('Edit', 'Redo', 'CmdOrCtrl+Shift+Z', () => { this.history.redo() })
 
@@ -132,10 +132,6 @@ function Terminal () {
     this.el.className = 'ready'
 
     this.toggleGuide()
-  }
-
-  this.whenOpen = (file) => {
-
   }
 
   this.run = () => {

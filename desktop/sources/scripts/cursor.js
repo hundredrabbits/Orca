@@ -20,6 +20,7 @@ function Cursor (terminal) {
     document.oncopy = (e) => { this.onCopy(e) }
     document.oncut = (e) => { this.onCut(e) }
     document.onpaste = (e) => { this.onPaste(e) }
+    document.oncontextmenu = (e) => { this.onContextMenu(e) }
   }
 
   this.move = function (x, y) {
@@ -254,6 +255,7 @@ function Cursor (terminal) {
   this.mouseFrom = null
 
   this.onMouseDown = (e) => {
+    if (e.button !== 0) { this.cut(); return }
     const pos = this.tilePos(e.clientX, e.clientY)
     this.select(pos.x, pos.y, 0, 0)
     this.mouseFrom = pos
@@ -271,6 +273,10 @@ function Cursor (terminal) {
     if (!this.mouseFrom) { return }
     const pos = this.tilePos(e.clientX, e.clientY)
     this.select(this.mouseFrom.x, this.mouseFrom.y, pos.x - this.mouseFrom.x, pos.y - this.mouseFrom.y)
+  }
+
+  this.onContextMenu = (e) => {
+    e.preventDefault()
   }
 
   this.onCopy = (e) => {
@@ -294,7 +300,7 @@ function Cursor (terminal) {
   this.onPaste = (e) => {
     const data = e.clipboardData.getData('text/source').trim()
     this.writeBlock(data.split(/\r?\n/), false)
-    this.scaleTo(data.split('\n')[0].length-1, data.split('\n').length - 1)
+    this.scaleTo(data.split('\n')[0].length - 1, data.split('\n').length - 1)
     e.preventDefault()
   }
 

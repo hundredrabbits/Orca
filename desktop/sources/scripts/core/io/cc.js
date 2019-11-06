@@ -5,7 +5,7 @@ function MidiCC (terminal) {
   this.offset = 64
 
   this.start = function () {
-    console.info('CC', 'Starting..')
+    console.info('MidiCC', 'Starting..')
   }
 
   this.clear = function () {
