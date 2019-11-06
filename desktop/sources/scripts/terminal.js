@@ -35,6 +35,8 @@ function Terminal () {
     host.appendChild(this.el)
     this.theme.install(host)
 
+    this.theme.default = { background: '#000000', f_high: '#ffffff', f_med: '#777777', f_low: '#444444', f_inv: '#000000', b_high: '#eeeeee', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffb545' }
+
     this.acels.set('File', 'New', 'CmdOrCtrl+N', () => { this.source.new() })
     this.acels.set('File', 'Save', 'CmdOrCtrl+S', () => { this.source.save() })
     this.acels.set('File', 'Save', 'CmdOrCtrl+Shift+S', () => { this.source.saveAs() })
@@ -119,7 +121,7 @@ function Terminal () {
   this.start = () => {
     console.info('Terminal', 'Starting..')
     console.info(`${this.acels}`)
-    this.theme.start({ background: '#000000', f_high: '#ffffff', f_med: '#777777', f_low: '#444444', f_inv: '#000000', b_high: '#eeeeee', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffb545' })
+    this.theme.start()
     this.io.start()
     this.source.start()
     this.history.bind(this.orca, 's')
