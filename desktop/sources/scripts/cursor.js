@@ -180,7 +180,7 @@ function Cursor (terminal) {
   }
 
   this.inspect = function (name = true, ports = false) {
-    if (this.w > 1 || this.h > 1) { return 'multi' }
+    if (this.w !== 0 || this.h !== 0) { return 'multi' }
     const port = terminal.portAt(this.x, this.y)
     if (port) { return `${port[3]}` }
     if (terminal.orca.lockAt(this.x, this.y)) { return 'locked' }
