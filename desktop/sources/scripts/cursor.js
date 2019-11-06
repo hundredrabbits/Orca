@@ -286,7 +286,6 @@ function Cursor (terminal) {
       rows.push(block[i].join(''))
     }
     const content = rows.join('\n').trim()
-    const clipboard = e.clipboardData
     e.clipboardData.setData('text/plain', content)
     e.clipboardData.setData('text/source', content)
     e.preventDefault()

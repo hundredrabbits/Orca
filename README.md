@@ -110,7 +110,7 @@ For example, `=1abc` will send `10`, `11` and `12` to `/1`, via the port `49162`
 
 ## Advanced Controls
 
-Some of Orca's features can be **controlled externally** via UDP though port `49160`, or via its own command-line interface. To activate the command-line prompt, press `CmdOrCtrl+K`. The prompt can also be used to inject patterns or graphics, local files are located in the same directory as the active `.orca` file.
+Some of Orca's features can be **controlled externally** via UDP though port `49160`, or via its own command-line interface. To activate the command-line prompt, press `CmdOrCtrl+K`. The prompt can also be used to inject patterns or change settings.
 
 ### Injection Mode
 
@@ -135,7 +135,6 @@ All commands have a shorthand equivalent to their first two characters, for exam
 - `skip:2` Adds `2`, to the current frame value.
 - `rewind:2` Removes `2`, to the current frame value.
 - `color:f00;0f0;00f` Colorizes the interface.
-- `graphic:123;jpg` Set the background to the local graphic `123.jpg`, with extension `jpg`(optional).
 - `find:aV` Sends cursor to string `aV`.
 - `select:3;4;5;6` Move cursor to position `3,4`, and select size `5:6`(optional).
 - `inject:pattern;12;34` Inject the local file `pattern.orca`, at `12,34`(optional).

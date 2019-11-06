@@ -1,9 +1,18 @@
 'use strict'
 
 /* global library */
+/* global Acels */
+/* global Source */
+/* global History */
+/* global Orca */
+/* global IO */
+/* global Cursor */
+/* global Commander */
+/* global Clock */
+/* global Theme */
 
 function Terminal () {
-  this.version = 146
+  this.version = 147
   this.library = library
 
   this.theme = new Theme()
@@ -44,7 +53,7 @@ function Terminal () {
     this.acels.set('File', 'Revert', 'CmdOrCtrl+W', () => { this.source.revert() })
 
     this.acels.set('Edit', 'Select All', 'CmdOrCtrl+A', () => { this.cursor.selectAll() })
-    this.acels.set('Edit', 'Erase Selection', 'Backspace', () => { this.cursor.erase() })
+    this.acels.set('Edit', 'Erase Selection', 'Backspace', () => { this[this.commander.isActive ? 'commander' : 'cursor'].erase() })
     this.acels.set('Edit', 'Undo', 'CmdOrCtrl+Z', () => { this.history.undo() })
     this.acels.set('Edit', 'Redo', 'CmdOrCtrl+Shift+Z', () => { this.history.redo() })
 
@@ -322,27 +331,21 @@ function Terminal () {
   }
 
   this.drawInterface = () => {
-    const col = this.grid.w
-    const variables = Object.keys(this.orca.variables).join('')
-
-    // Top Row(cursor)
-
-    this.write(this.orca.f < 15 ? `ver${this.version}` : `${this.cursor.inspect()}`, col * 0, this.orca.h, this.grid.w)
-    this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.mode === 1 ? '+' : ''}`, col * 1, this.orca.h, this.grid.w, this.cursor.mode === 1 ? 1 : 2)
-    this.write(`${this.cursor.w}:${this.cursor.h}`, col * 2, this.orca.h, this.grid.w)
-    this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, col * 3, this.orca.h, this.grid.w)
-    this.write(`${this.io.inspect(this.grid.w)}`, col * 4, this.orca.h, this.grid.w)
-
-    // Low Row(project)
+    this.write(this.orca.f < 15 ? `ver${this.version}` : `${this.cursor.inspect()}`, this.grid.w * 0, this.orca.h, this.grid.w)
+    this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.mode === 1 ? '+' : ''}`, this.grid.w * 1, this.orca.h, this.grid.w, this.cursor.mode === 1 ? 1 : 2)
+    this.write(`${this.cursor.w}:${this.cursor.h}`, this.grid.w * 2, this.orca.h, this.grid.w)
+    this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, this.grid.w * 3, this.orca.h, this.grid.w)
+    this.write(`${this.io.inspect(this.grid.w)}`, this.grid.w * 4, this.orca.h, this.grid.w)
+    this.write(`${display(Object.keys(this.orca.variables), this.orca.f, this.grid.w)}`, this.grid.w * 5, this.orca.h, this.grid.w)
 
     if (this.commander.isActive === true) {
-      this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, col * 0, this.orca.h + 1, this.grid.w * 4)
+      this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, this.grid.w * 0, this.orca.h + 1, this.grid.w * 4)
     } else {
-      this.write(`${Object.keys(this.source.cache).length} mods`, col * 0, this.orca.h + 1, this.grid.w)
-      this.write(`${this.orca.w}x${this.orca.h}`, col * 1, this.orca.h + 1, this.grid.w)
-      this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, col * 2, this.orca.h + 1, this.grid.w)
-      this.write(`${this.clock}`, col * 3, this.orca.h + 1, this.grid.w, this.clock.isPuppet === true ? 3 : 2)
-      this.write(`${this.io.midi}`, col * 4, this.orca.h + 1, this.grid.w * 4)
+      this.write(`${Object.keys(this.source.cache).length} modules`, this.grid.w * 0, this.orca.h + 1, this.grid.w)
+      this.write(`${this.orca.w}x${this.orca.h}`, this.grid.w * 1, this.orca.h + 1, this.grid.w)
+      this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, this.grid.w * 2, this.orca.h + 1, this.grid.w)
+      this.write(`${this.clock}`, this.grid.w * 3, this.orca.h + 1, this.grid.w, this.clock.isPuppet === true ? 3 : 2)
+      this.write(`${this.io.midi}`, this.grid.w * 4, this.orca.h + 1, this.grid.w * 4)
     }
   }
 
@@ -469,17 +472,8 @@ function Terminal () {
   window.addEventListener('drop', (e) => {
     e.preventDefault()
     e.stopPropagation()
-
-    const file = e.dataTransfer.files[0]
-    const path = file.path ? file.path : file.name
-
-    if (!path || path.indexOf('.orca') < 0) { console.log('Orca', 'Not a orca file'); return }
-
-    const reader = new FileReader()
-    reader.onload = (event) => {
-      this.source.read(path, event.target.result)
-    }
-    reader.readAsText(file, 'UTF-8')
+    this.toggleGuide(false)
+    this.source.read(e.dataTransfer.files[0], this.whenOpen)
   })
 
   window.onresize = (event) => {

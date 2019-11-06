@@ -1,5 +1,11 @@
 'use strict'
 
+/* global Midi */
+/* global MidiCC */
+/* global Mono */
+/* global Udp */
+/* global Osc */
+
 function IO (terminal) {
   this.ip = '127.0.0.1'
 

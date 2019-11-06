@@ -46,7 +46,6 @@ function Commander (terminal) {
     rot: (p) => { terminal.cursor.rotate(p.int) },
     // Themeing
     color: (p) => { terminal.theme.set('b_med', p.parts[0]); terminal.theme.set('b_inv', p.parts[1]); terminal.theme.set('b_high', p.parts[2]) },
-    graphic: (p) => { terminal.theme.setImage(terminal.source.locate(p.parts[0] + '.' + (p.parts[1] ? p.parts[1] : 'jpg'))) },
     // Edit
     find: (p) => { terminal.cursor.find(p.str) },
     select: (p) => { terminal.cursor.select(p.x, p.y, p.w, p.h) },
