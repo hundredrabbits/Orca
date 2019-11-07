@@ -52,6 +52,10 @@ function Terminal () {
     this.acels.set('File', 'Load Images', 'CmdOrCtrl+Shift+L', () => { this.source.load('jpg') })
     this.acels.set('File', 'Revert', 'CmdOrCtrl+W', () => { this.source.revert() })
 
+    this.acels.add('Edit', 'cut')
+    this.acels.add('Edit', 'copy')
+    this.acels.add('Edit', 'paste')
+
     this.acels.set('Edit', 'Select All', 'CmdOrCtrl+A', () => { this.cursor.selectAll() })
     this.acels.set('Edit', 'Erase Selection', 'Backspace', () => { this[this.commander.isActive ? 'commander' : 'cursor'].erase() })
     this.acels.set('Edit', 'Undo', 'CmdOrCtrl+Z', () => { this.history.undo() })

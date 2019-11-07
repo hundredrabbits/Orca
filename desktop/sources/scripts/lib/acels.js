@@ -2,6 +2,7 @@
 
 function Acels () {
   this.all = {}
+  this.roles = {}
   this.pipe = null
 
   this.install = (host = window) => {
@@ -12,6 +13,10 @@ function Acels () {
   this.set = (cat, name, accelerator, downfn, upfn) => {
     if (this.all[accelerator]) { console.warn('Acels', `Trying to overwrite ${this.all[accelerator].name}, with ${name}.`) }
     this.all[accelerator] = { cat, name, downfn, upfn, accelerator }
+  }
+
+  this.add = (cat, role) => {
+    this.all[':' + role] = { cat, name: role, role }
   }
 
   this.get = (accelerator) => {
@@ -68,7 +73,7 @@ function Acels () {
     for (const cat in cats) {
       text += `\n### ${cat}\n\n`
       for (const item of cats[cat]) {
-        text += `- \`${item.accelerator}\`: ${item.info}\n`
+        text += item.accelerator ? `- \`${item.accelerator}\`: ${item.info}\n` : ''
       }
     }
     return text.trim()
@@ -79,7 +84,7 @@ function Acels () {
     let text = ''
     for (const cat in cats) {
       for (const item of cats[cat]) {
-        text += `${cat}: ${item.name} | ${item.accelerator}\n`
+        text += item.accelerator ? `${cat}: ${item.name} | ${item.accelerator}\n` : ''
       }
     }
     return text.trim()
@@ -100,7 +105,7 @@ function Acels () {
         { label: 'Hide', accelerator: 'CmdOrCtrl+H', click: () => { app.toggleVisible() } },
         { label: 'Toggle Menubar', accelerator: 'Alt+H', click: () => { app.toggleMenubar() } },
         { label: 'Inspect', accelerator: 'CmdOrCtrl+.', click: () => { app.inspect() } },
-        { label: 'Quit', accelerator: 'CmdOrCtrl+Q', click: () => { app.exit() } }
+        { role: 'quit' }
       ]
     })
 
