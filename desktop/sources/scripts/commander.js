@@ -15,7 +15,7 @@ function Commander (terminal) {
       terminal.cursor.select(p._x, p._y)
       if (terminal.source.cache[p._str + '.orca']) {
         const lines = terminal.source.cache[p._str + '.orca'].trim().split('\n')
-        terminal.cursor.resize(lines[0].length, lines.length)
+        terminal.cursor.resize(lines[0].length - 1, lines.length - 1)
       }
     },
     write: (p) => { terminal.cursor.select(p._x, p._y, p._str.length) }
