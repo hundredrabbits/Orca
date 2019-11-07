@@ -405,8 +405,15 @@ function Terminal () {
 
     console.log(`Resized to: ${this.orca.w}x${this.orca.h}`)
 
-    this.el.width = this.tile.w * this.orca.w * this.scale
-    this.el.height = (this.tile.h + (this.tile.h / 5)) * this.orca.h * this.scale
+    const w = this.tile.w * this.orca.w * this.scale
+    const h = (this.tile.h + (this.tile.h / 5)) * this.orca.h * this.scale
+
+    if (w === this.el.width && h === this.el.height) { return }
+
+    console.log(this.el.width, this.tile.w * this.orca.w * this.scale)
+
+    this.el.width = w
+    this.el.height = h
     this.el.style.width = `${Math.ceil(this.tile.w * this.orca.w)}px`
     this.el.style.height = `${Math.ceil((this.tile.h + (this.tile.h / 5)) * this.orca.h)}px`
 
