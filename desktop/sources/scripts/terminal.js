@@ -420,6 +420,7 @@ function Terminal () {
     this.context.textBaseline = 'bottom'
     this.context.textAlign = 'center'
     this.context.font = `${this.tile.h * 0.75 * this.scale}px input_mono_medium`
+    this.update()
   }
 
   this.crop = (w, h) => {
