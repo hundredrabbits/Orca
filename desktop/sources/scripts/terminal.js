@@ -46,8 +46,8 @@ function Terminal () {
     this.theme.default = { background: '#000000', f_high: '#ffffff', f_med: '#777777', f_low: '#444444', f_inv: '#000000', b_high: '#eeeeee', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffb545' }
 
     this.acels.set('File', 'New', 'CmdOrCtrl+N', () => { this.reset() })
-    this.acels.set('File', 'Save', 'CmdOrCtrl+S', () => { this.source.write('orca', 'orca', `${this.orca}`, 'text/plain') })
     this.acels.set('File', 'Open', 'CmdOrCtrl+O', () => { this.source.open('orca', this.whenOpen) })
+    this.acels.set('File', 'Save', 'CmdOrCtrl+S', () => { this.source.write('orca', 'orca', `${this.orca}`, 'text/plain') })
     this.acels.set('File', 'Load Modules', 'CmdOrCtrl+L', () => { this.source.load('orca') })
     this.acels.set('File', 'Load Images', 'CmdOrCtrl+Shift+L', () => { this.source.load('jpg') })
     this.acels.set('File', 'Revert', 'CmdOrCtrl+W', () => { this.source.revert() })
@@ -134,7 +134,7 @@ function Terminal () {
     this.cursor.start()
 
     this.reset()
-
+    this.resize()
     this.update()
     this.el.className = 'ready'
 
@@ -176,7 +176,7 @@ function Terminal () {
     terminal.orca.load(w, h, s)
     terminal.history.reset()
     terminal.history.record(terminal.orca.s)
-    terminal.fit()
+    this.resize()
   }
 
   this.setGrid = (w, h) => {
@@ -388,35 +388,18 @@ function Terminal () {
 
   // Resize tools
 
-  this.fit = () => {
-    if (!require('electron')) { return }
-    const size = { w: (this.orca.w * this.tile.w) + 60, h: (this.orca.h * this.tile.h) + 60 + (2 * this.tile.h) }
-    const win = require('electron').remote.getCurrentWindow()
-    const winSize = win.getSize()
-    const current = { w: winSize[0], h: winSize[1] }
-    if (current.w === size.w && current.h === size.h) { console.warn('Terminal', 'No resize required.'); return }
-    console.log('Source', `Fit terminal for ${this.orca.w}x${this.orca.h}(${size.w}x${size.h})`)
-    win.setSize(parseInt(size.w), parseInt(size.h), false)
-    this.resize()
-  }
-
-  this.resize = (force = false) => {
-    const size = { w: window.innerWidth - 60, h: window.innerHeight - (60 + this.tile.h * 2) }
+  this.resize = () => {
+    const pad = 30
+    const size = { w: window.innerWidth - (pad * 2), h: window.innerHeight - ((pad * 2) + this.tile.h * 2) }
     const tiles = { w: Math.ceil(size.w / this.tile.w), h: Math.ceil(size.h / this.tile.h) }
 
-    if (this.orca.w === tiles.w && this.orca.h === tiles.h && force === false) { return }
-
-    // Limit Tiles to Bounds
-    const bounds = this.orca.bounds()
-    if (tiles.w <= bounds.w) { tiles.w = bounds.w + 1 }
-    if (tiles.h <= bounds.h) { tiles.h = bounds.h + 1 }
     this.crop(tiles.w, tiles.h)
 
     // Keep cursor in bounds
     if (this.cursor.x >= tiles.w) { this.cursor.x = tiles.w - 1 }
     if (this.cursor.y >= tiles.h) { this.cursor.y = tiles.h - 1 }
 
-    console.log(`Resized to: ${tiles.w}x${tiles.h}`)
+    console.log(`Resized to: ${this.orca.w}x${this.orca.h}`)
 
     this.el.width = this.tile.w * this.orca.w * this.scale
     this.el.height = (this.tile.h + (this.tile.h / 5)) * this.orca.h * this.scale
@@ -426,8 +409,6 @@ function Terminal () {
     this.context.textBaseline = 'bottom'
     this.context.textAlign = 'center'
     this.context.font = `${this.tile.h * 0.75 * this.scale}px input_mono_medium`
-
-    this.update()
   }
 
   this.crop = (w, h) => {

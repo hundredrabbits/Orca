@@ -45,9 +45,9 @@ function Orca (library) {
     return true
   }
 
-  this.clean = function (str) {
+  this.clean = (str) => {
     return `${str}`.replace(/\n/g, '').trim().substr(0, this.w * this.h).split('').map((g) => {
-      return !terminal.orca.isAllowed(g) ? '.' : g
+      return !this.isAllowed(g) ? '.' : g
     }).join('')
   }
 
