@@ -1,6 +1,7 @@
 'use strict'
 
 /* global Operator */
+/* global client */
 
 const library = {}
 

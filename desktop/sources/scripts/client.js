@@ -12,7 +12,7 @@
 /* global Theme */
 
 function Client () {
-  this.version = 147
+  this.version = 148
   this.library = library
 
   this.theme = new Theme(this)
@@ -176,9 +176,9 @@ function Client () {
     const h = lines.length
     const s = lines.join('\n').trim()
 
-    client.orca.load(w, h, s)
-    client.history.reset()
-    client.history.record(client.orca.s)
+    this.orca.load(w, h, s)
+    this.history.reset()
+    this.history.record(this.orca.s)
     this.resize()
   }
 
@@ -395,12 +395,17 @@ function Client () {
     const pad = 30
     const size = { w: window.innerWidth - (pad * 2), h: window.innerHeight - ((pad * 2) + this.tile.h * 2) }
     const tiles = { w: Math.ceil(size.w / this.tile.w), h: Math.ceil(size.h / this.tile.h) }
+    const bounds = this.orca.bounds()
+
+    // Clamp at limits of orca file
+    if (tiles.w < bounds.w + 1) { tiles.w = bounds.w + 1 }
+    if (tiles.h < bounds.h + 1) { tiles.h = bounds.h + 1 }
 
     this.crop(tiles.w, tiles.h)
 
     // Keep cursor in bounds
-    if (this.cursor.x >= tiles.w) { this.cursor.x = tiles.w - 1 }
-    if (this.cursor.y >= tiles.h) { this.cursor.y = tiles.h - 1 }
+    if (this.cursor.x >= tiles.w) { this.cursor.moveTo(tiles.w - 1, this.cursor.y) }
+    if (this.cursor.y >= tiles.h) { this.cursor.moveTo(this.cursor.x, tiles.h - 1) }
 
     const w = this.tile.w * this.orca.w * this.scale
     const h = (this.tile.h + (this.tile.h / 5)) * this.orca.h * this.scale

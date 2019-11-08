@@ -101,7 +101,7 @@ function Orca (library) {
         }
       }
     }
-    return { w: w, h: h }
+    return { w, h }
   }
 
   // Locks
