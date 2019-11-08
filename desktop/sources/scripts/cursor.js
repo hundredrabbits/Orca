@@ -1,6 +1,6 @@
 'use strict'
 
-function Cursor (terminal) {
+function Cursor (client) {
   this.x = 0
   this.y = 0
   this.w = 0
@@ -25,49 +25,49 @@ function Cursor (terminal) {
 
   this.move = function (x, y) {
     if (isNaN(x) || isNaN(y)) { return }
-    this.x = clamp(this.x + parseInt(x), 0, terminal.orca.w - 1)
-    this.y = clamp(this.y - parseInt(y), 0, terminal.orca.h - 1)
+    this.x = clamp(this.x + parseInt(x), 0, client.orca.w - 1)
+    this.y = clamp(this.y - parseInt(y), 0, client.orca.h - 1)
 
     this.calculateBounds()
-    terminal.toggleGuide(false)
-    terminal.update()
+    client.toggleGuide(false)
+    client.update()
   }
 
   this.moveTo = function (x, y) {
     if (isNaN(x) || isNaN(y)) { return }
-    this.x = clamp(parseInt(x), 0, terminal.orca.w - 1)
-    this.y = clamp(parseInt(y), 0, terminal.orca.h - 1)
+    this.x = clamp(parseInt(x), 0, client.orca.w - 1)
+    this.y = clamp(parseInt(y), 0, client.orca.h - 1)
 
     this.calculateBounds()
-    terminal.toggleGuide(false)
-    terminal.update()
+    client.toggleGuide(false)
+    client.update()
   }
 
   this.scale = function (x, y) {
     if (isNaN(x) || isNaN(y)) { return }
-    this.w = clamp(this.w + parseInt(x), -this.x, terminal.orca.w - this.x)
-    this.h = clamp(this.h - parseInt(y), -this.y, terminal.orca.h - this.y)
+    this.w = clamp(this.w + parseInt(x), -this.x, client.orca.w - this.x)
+    this.h = clamp(this.h - parseInt(y), -this.y, client.orca.h - this.y)
 
     this.calculateBounds()
-    terminal.update()
+    client.update()
   }
 
   this.scaleTo = function (w, h) {
     if (isNaN(w) || isNaN(h)) { return }
-    this.w = clamp(parseInt(w), -this.x, terminal.orca.w - 1)
-    this.h = clamp(parseInt(h), -this.y, terminal.orca.h - 1)
+    this.w = clamp(parseInt(w), -this.x, client.orca.w - 1)
+    this.h = clamp(parseInt(h), -this.y, client.orca.h - 1)
 
     this.calculateBounds()
-    terminal.update()
+    client.update()
   }
 
   this.resize = function (w, h) {
     if (isNaN(w) || isNaN(h)) { return }
-    this.w = clamp(parseInt(w), -this.x, terminal.orca.w - this.x)
-    this.h = clamp(parseInt(h), -this.y, terminal.orca.h - this.y)
+    this.w = clamp(parseInt(w), -this.x, client.orca.w - this.x)
+    this.h = clamp(parseInt(h), -this.y, client.orca.h - this.y)
 
     this.calculateBounds()
-    terminal.update()
+    client.update()
   }
 
   this.drag = function (x, y) {
@@ -82,12 +82,12 @@ function Cursor (terminal) {
   this.selectAll = function () {
     this.x = 0
     this.y = 0
-    this.w = terminal.orca.w
-    this.h = terminal.orca.h
+    this.w = client.orca.w
+    this.h = client.orca.h
     this.mode = 0
 
     this.calculateBounds()
-    terminal.update()
+    client.update()
   }
 
   this.select = function (x = this.x, y = this.y, w = this.w, h = this.h) {
@@ -95,7 +95,7 @@ function Cursor (terminal) {
     this.scaleTo(w, h)
 
     this.calculateBounds()
-    terminal.update()
+    client.update()
   }
 
   this.reset = function (pos = false) {
@@ -123,51 +123,51 @@ function Cursor (terminal) {
   }
 
   this.read = function () {
-    return terminal.orca.glyphAt(this.x, this.y)
+    return client.orca.glyphAt(this.x, this.y)
   }
 
   this.write = function (g) {
-    if (!terminal.orca.isAllowed(g)) { return }
-    if (terminal.orca.write(this.x, this.y, g) && this.mode === 1) {
+    if (!client.orca.isAllowed(g)) { return }
+    if (client.orca.write(this.x, this.y, g) && this.mode === 1) {
       this.move(1, 0)
     }
-    terminal.history.record(terminal.orca.s)
+    client.history.record(client.orca.s)
   }
 
   this.erase = function () {
     for (let y = this.minY; y <= this.maxY; y++) {
       for (let x = this.minX; x <= this.maxX; x++) {
-        terminal.orca.write(x, y, '.')
+        client.orca.write(x, y, '.')
       }
     }
 
-    terminal.history.record(terminal.orca.s)
+    client.history.record(client.orca.s)
   }
 
   this.rotate = function (rate = 1) {
     if (isNaN(rate)) { return }
-    const cols = terminal.cursor.getBlock()
+    const cols = client.cursor.getBlock()
     for (const y in cols) {
       for (const x in cols[y]) {
         const g = cols[y][x]
         if (g === '.') { continue }
-        if (terminal.orca.isSpecial(g)) { continue }
-        cols[y][x] = terminal.orca.keyOf(parseInt(rate) + terminal.orca.valueOf(g), sense(g))
+        if (client.orca.isSpecial(g)) { continue }
+        cols[y][x] = client.orca.keyOf(parseInt(rate) + client.orca.valueOf(g), sense(g))
       }
     }
-    terminal.cursor.writeBlock(cols)
+    client.cursor.writeBlock(cols)
   }
 
   this.find = (str) => {
-    const i = terminal.orca.s.indexOf(str)
+    const i = client.orca.s.indexOf(str)
     if (i < 0) { return }
-    const pos = terminal.orca.posAt(i)
+    const pos = client.orca.posAt(i)
     this.select(pos.x, pos.y, str.length - 1, 0)
-    terminal.update()
+    client.update()
   }
 
   this.trigger = function () {
-    const operator = terminal.orca.operatorAt(this.x, this.y)
+    const operator = client.orca.operatorAt(this.x, this.y)
     if (!operator) { console.warn('Cursor', 'Nothing to trigger.'); return }
     console.log('Cursor', 'Trigger: ' + operator.name)
     operator.run(true)
@@ -181,9 +181,9 @@ function Cursor (terminal) {
 
   this.inspect = function (name = true, ports = false) {
     if (this.w !== 0 || this.h !== 0) { return 'multi' }
-    const port = terminal.portAt(this.x, this.y)
+    const port = client.portAt(this.x, this.y)
     if (port) { return `${port[3]}` }
-    if (terminal.orca.lockAt(this.x, this.y)) { return 'locked' }
+    if (client.orca.lockAt(this.x, this.y)) { return 'locked' }
     return 'empty'
   }
 
@@ -204,7 +204,7 @@ function Cursor (terminal) {
     for (let _y = rect.y; _y < rect.y + rect.h; _y++) {
       const line = []
       for (let _x = rect.x; _x < rect.x + rect.w; _x++) {
-        line.push(terminal.orca.glyphAt(_x, _y))
+        line.push(client.orca.glyphAt(_x, _y))
       }
       block.push(line)
     }
@@ -219,12 +219,12 @@ function Cursor (terminal) {
       let _x = rect.x
       for (const y in block[x]) {
         const glyph = block[x][y]
-        terminal.orca.write(_x, _y, overlap === true && glyph === '.' ? terminal.orca.glyphAt(_x, _y) : glyph)
+        client.orca.write(_x, _y, overlap === true && glyph === '.' ? client.orca.glyphAt(_x, _y) : glyph)
         _x++
       }
       _y++
     }
-    terminal.history.record(terminal.orca.s)
+    client.history.record(client.orca.s)
   }
 
   this.toRect = function () {
@@ -303,7 +303,7 @@ function Cursor (terminal) {
     e.preventDefault()
   }
 
-  this.tilePos = (x, y, w = terminal.tile.w, h = terminal.tile.h) => {
+  this.tilePos = (x, y, w = client.tile.w, h = client.tile.h) => {
     return { x: parseInt((x - 30) / w), y: parseInt((y - 30) / h) }
   }
 

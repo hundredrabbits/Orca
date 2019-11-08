@@ -11,7 +11,7 @@
 /* global Clock */
 /* global Theme */
 
-function Terminal () {
+function Client () {
   this.version = 147
   this.library = library
 
@@ -47,10 +47,9 @@ function Terminal () {
 
     this.acels.set('File', 'New', 'CmdOrCtrl+N', () => { this.reset() })
     this.acels.set('File', 'Open', 'CmdOrCtrl+O', () => { this.source.open('orca', this.whenOpen) })
-    this.acels.set('File', 'Save', 'CmdOrCtrl+S', () => { this.source.write('orca', 'orca', `${this.orca}`, 'text/plain') })
     this.acels.set('File', 'Load Modules', 'CmdOrCtrl+L', () => { this.source.load('orca') })
     this.acels.set('File', 'Load Images', 'CmdOrCtrl+Shift+L', () => { this.source.load('jpg') })
-    this.acels.set('File', 'Revert', 'CmdOrCtrl+W', () => { this.source.revert() })
+    this.acels.set('File', 'Save', 'CmdOrCtrl+S', () => { this.source.write('orca', 'orca', `${this.orca}`, 'text/plain') })
 
     this.acels.add('Edit', 'cut')
     this.acels.add('Edit', 'copy')
@@ -128,7 +127,7 @@ function Terminal () {
   }
 
   this.start = () => {
-    console.info('Terminal', 'Starting..')
+    console.info('Client', 'Starting..')
     console.info(`${this.acels}`)
     this.theme.start()
     this.io.start()
@@ -177,9 +176,9 @@ function Terminal () {
     const h = lines.length
     const s = lines.join('\n').trim()
 
-    terminal.orca.load(w, h, s)
-    terminal.history.reset()
-    terminal.history.record(terminal.orca.s)
+    client.orca.load(w, h, s)
+    client.history.reset()
+    client.history.record(client.orca.s)
     this.resize()
   }
 
@@ -191,20 +190,20 @@ function Terminal () {
 
   this.toggleRetina = () => {
     this.scale = this.scale === 1 ? window.devicePixelRatio : 1
-    console.log('Terminal', `Pixel resolution: ${this.scale}`)
+    console.log('Client', `Pixel resolution: ${this.scale}`)
     this.resize(true)
   }
 
   this.toggleHardmode = () => {
     this.hardmode = this.hardmode !== true
-    console.log('Terminal', `Hardmode: ${this.hardmode}`)
+    console.log('Client', `Hardmode: ${this.hardmode}`)
     this.update()
   }
 
   this.toggleGuide = (force = null) => {
     const display = force !== null ? force : this.guide !== true
     if (display === this.guide) { return }
-    console.log('Terminal', `Toggle Guide: ${display}`)
+    console.log('Client', `Toggle Guide: ${display}`)
     this.guide = display
     this.update()
   }
@@ -403,14 +402,12 @@ function Terminal () {
     if (this.cursor.x >= tiles.w) { this.cursor.x = tiles.w - 1 }
     if (this.cursor.y >= tiles.h) { this.cursor.y = tiles.h - 1 }
 
-    console.log(`Resized to: ${this.orca.w}x${this.orca.h}`)
-
     const w = this.tile.w * this.orca.w * this.scale
     const h = (this.tile.h + (this.tile.h / 5)) * this.orca.h * this.scale
 
     if (w === this.el.width && h === this.el.height) { return }
 
-    console.log(this.el.width, this.tile.w * this.orca.w * this.scale)
+    console.log(`Resized to: ${this.orca.w}x${this.orca.h}`)
 
     this.el.width = w
     this.el.height = h

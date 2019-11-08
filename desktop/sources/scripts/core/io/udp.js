@@ -1,25 +1,25 @@
 'use strict'
 
-function Udp (terminal) {
+function Udp (client) {
   const dgram = require('dgram')
 
   this.stack = []
   this.port = null
   this.options = { default: 49161, orca: 49160 }
-  this.client = dgram ? dgram.createSocket('udp4') : null
+  this.socket = dgram ? dgram.createSocket('udp4') : null
   this.listener = dgram ? dgram.createSocket('udp4') : null
 
   this.start = function () {
-    if (!this.client || !this.listener) { console.warn('UDP', 'Could not start.'); return }
+    if (!this.socket || !this.listener) { console.warn('UDP', 'Could not start.'); return }
     console.info('UDP', 'Starting..')
 
     this.listener.on('message', (msg, rinfo) => {
-      terminal.commander.trigger(`${msg}`, false)
+      client.commander.trigger(`${msg}`, false)
     })
 
     this.listener.on('listening', () => {
       const address = this.listener.address()
-      console.info('UDP', `Started client at ${address.address}:${address.port}`)
+      console.info('UDP', `Started socket at ${address.address}:${address.port}`)
     })
 
     this.listener.on('error', (err) => {
@@ -47,7 +47,7 @@ function Udp (terminal) {
   }
 
   this.play = function (data) {
-    this.client.send(Buffer.from(`${data}`), this.port, terminal.io.ip, (err) => {
+    this.socket.send(Buffer.from(`${data}`), this.port, client.io.ip, (err) => {
       if (err) { console.warn(err) }
     })
   }

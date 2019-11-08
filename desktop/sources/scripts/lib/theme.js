@@ -32,7 +32,7 @@ function Theme (client) {
     if (isJson(localStorage.theme)) {
       const storage = JSON.parse(localStorage.theme)
       if (isValid(storage)) {
-        console.log('Theme', 'Loading localStorage..')
+        console.log('Theme', 'Loading theme in localStorage..')
         this.load(storage)
         return
       }

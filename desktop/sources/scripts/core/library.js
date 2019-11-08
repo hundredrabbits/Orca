@@ -532,7 +532,7 @@ library.$ = function OperatorSelf (orca, x, y, passive) {
     if (msg === '') { return }
 
     this.draw = false
-    terminal.commander.trigger(`${msg}`)
+    client.commander.trigger(`${msg}`)
   }
 }
 
@@ -555,12 +555,12 @@ library['!'] = function OperatorCC (orca, x, y) {
     const rawValue = this.listen(this.ports.value, true)
     const value = Math.ceil((127 * rawValue) / 35)
 
-    terminal.io.cc.stack.push({ channel, knob, value, type: 'cc' })
+    client.io.cc.stack.push({ channel, knob, value, type: 'cc' })
 
     this.draw = false
 
     if (force === true) {
-      terminal.io.cc.run()
+      client.io.cc.run()
     }
   }
 }
@@ -589,10 +589,10 @@ library[':'] = function OperatorMidi (orca, x, y, passive) {
     const velocity = this.listen(this.ports.velocity, true)
     const length = this.listen(this.ports.length, true)
 
-    terminal.io.midi.push(channel, octave, note, velocity, length)
+    client.io.midi.push(channel, octave, note, velocity, length)
 
     if (force === true) {
-      terminal.io.midi.run()
+      client.io.midi.run()
     }
 
     this.draw = false
@@ -623,10 +623,10 @@ library['%'] = function OperatorMono (orca, x, y, passive) {
     const velocity = this.listen(this.ports.velocity, true)
     const length = this.listen(this.ports.length, true)
 
-    terminal.io.mono.push(channel, octave, note, velocity, length)
+    client.io.mono.push(channel, octave, note, velocity, length)
 
     if (force === true) {
-      terminal.io.mono.run()
+      client.io.mono.run()
     }
 
     this.draw = false
@@ -658,10 +658,10 @@ library['='] = function OperatorOsc (orca, x, y, passive) {
     if (!path || path === '.') { return }
 
     this.draw = false
-    terminal.io.osc.push('/' + path, msg)
+    client.io.osc.push('/' + path, msg)
 
     if (force === true) {
-      terminal.io.osc.run()
+      client.io.osc.run()
     }
   }
 }
@@ -686,12 +686,12 @@ library['?'] = function OperatorPB (orca, x, y) {
     const rawmsb = this.listen(this.ports.msb, true)
     const msb = Math.ceil((127 * rawmsb) / 35)
 
-    terminal.io.cc.stack.push({ channel, lsb, msb, type: 'pb' })
+    client.io.cc.stack.push({ channel, lsb, msb, type: 'pb' })
 
     this.draw = false
 
     if (force === true) {
-      terminal.io.cc.run()
+      client.io.cc.run()
     }
   }
 }
@@ -715,10 +715,10 @@ library[';'] = function OperatorUdp (orca, x, y, passive) {
     if (msg === '') { return }
 
     this.draw = false
-    terminal.io.udp.push(msg)
+    client.io.udp.push(msg)
 
     if (force === true) {
-      terminal.io.udp.run()
+      client.io.udp.run()
     }
   }
 }

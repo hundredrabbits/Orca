@@ -6,14 +6,14 @@
 /* global Udp */
 /* global Osc */
 
-function IO (terminal) {
+function IO (client) {
   this.ip = '127.0.0.1'
 
-  this.midi = new Midi(terminal)
-  this.cc = new MidiCC(terminal)
-  this.mono = new Mono(terminal)
-  this.udp = new Udp(terminal)
-  this.osc = new Osc(terminal)
+  this.midi = new Midi(client)
+  this.cc = new MidiCC(client)
+  this.mono = new Mono(client)
+  this.udp = new Udp(client)
+  this.osc = new Osc(client)
 
   this.start = function () {
     this.midi.start()
@@ -56,7 +56,7 @@ function IO (terminal) {
     return this.midi.length() + this.mono.length() + this.cc.stack.length + this.udp.stack.length + this.osc.stack.length
   }
 
-  this.inspect = function (limit = terminal.grid.w) {
+  this.inspect = function (limit = client.grid.w) {
     let text = ''
     for (let i = 0; i < this.length(); i++) {
       text += '|'

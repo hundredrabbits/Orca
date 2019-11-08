@@ -1,6 +1,6 @@
 'use strict'
 
-function Commander (terminal) {
+function Commander (client) {
   this.isActive = false
   this.query = ''
   this.history = []
@@ -9,55 +9,55 @@ function Commander (terminal) {
   // Library
 
   this.passives = {
-    find: (p) => { terminal.cursor.find(p.str) },
-    select: (p) => { terminal.cursor.select(p.x, p.y, p.w, p.h) },
+    find: (p) => { client.cursor.find(p.str) },
+    select: (p) => { client.cursor.select(p.x, p.y, p.w, p.h) },
     inject: (p) => {
-      terminal.cursor.select(p._x, p._y)
-      if (terminal.source.cache[p._str + '.orca']) {
-        const lines = terminal.source.cache[p._str + '.orca'].trim().split('\n')
-        terminal.cursor.resize(lines[0].length - 1, lines.length - 1)
+      client.cursor.select(p._x, p._y)
+      if (client.source.cache[p._str + '.orca']) {
+        const lines = client.source.cache[p._str + '.orca'].trim().split('\n')
+        client.cursor.resize(lines[0].length - 1, lines.length - 1)
       }
     },
-    write: (p) => { terminal.cursor.select(p._x, p._y, p._str.length) }
+    write: (p) => { client.cursor.select(p._x, p._y, p._str.length) }
   }
 
   this.actives = {
     // Ports
-    osc: (p) => { terminal.io.osc.select(p.int) },
-    udp: (p) => { terminal.io.udp.select(p.int) },
-    ip: (p) => { terminal.io.setIp(p.str) },
-    cc: (p) => { terminal.io.cc.setOffset(p.int) },
-    pg: (p) => { terminal.io.cc.stack.push({ channel: clamp(p.ints[0], 0, 15), bank: p.ints[1], sub: p.ints[2], pgm: clamp(p.ints[3], 0, 127), type: 'pg' }); terminal.io.cc.run() },
+    osc: (p) => { client.io.osc.select(p.int) },
+    udp: (p) => { client.io.udp.select(p.int) },
+    ip: (p) => { client.io.setIp(p.str) },
+    cc: (p) => { client.io.cc.setOffset(p.int) },
+    pg: (p) => { client.io.cc.stack.push({ channel: clamp(p.ints[0], 0, 15), bank: p.ints[1], sub: p.ints[2], pgm: clamp(p.ints[3], 0, 127), type: 'pg' }); client.io.cc.run() },
     // Cursor
-    copy: (p) => { terminal.cursor.copy() },
-    paste: (p) => { terminal.cursor.paste(true) },
-    erase: (p) => { terminal.cursor.erase() },
+    copy: (p) => { client.cursor.copy() },
+    paste: (p) => { client.cursor.paste(true) },
+    erase: (p) => { client.cursor.erase() },
     // Controls
-    play: (p) => { terminal.clock.play() },
-    stop: (p) => { terminal.clock.stop() },
-    run: (p) => { terminal.run() },
+    play: (p) => { client.clock.play() },
+    stop: (p) => { client.clock.stop() },
+    run: (p) => { client.run() },
     // Speed
-    apm: (p) => { terminal.clock.setSpeed(null, p.int) },
-    bpm: (p) => { terminal.clock.setSpeed(p.int, p.int, true) },
-    time: (p) => { terminal.clock.setFrame(p.int) },
-    rewind: (p) => { terminal.clock.setFrame(terminal.orca.f - p.int) },
-    skip: (p) => { terminal.clock.setFrame(terminal.orca.f + p.int) },
+    apm: (p) => { client.clock.setSpeed(null, p.int) },
+    bpm: (p) => { client.clock.setSpeed(p.int, p.int, true) },
+    time: (p) => { client.clock.setFrame(p.int) },
+    rewind: (p) => { client.clock.setFrame(client.orca.f - p.int) },
+    skip: (p) => { client.clock.setFrame(client.orca.f + p.int) },
     // Effects
-    rot: (p) => { terminal.cursor.rotate(p.int) },
+    rot: (p) => { client.cursor.rotate(p.int) },
     // Themeing
-    color: (p) => { terminal.theme.set('b_med', p.parts[0]); terminal.theme.set('b_inv', p.parts[1]); terminal.theme.set('b_high', p.parts[2]) },
+    color: (p) => { client.theme.set('b_med', p.parts[0]); client.theme.set('b_inv', p.parts[1]); client.theme.set('b_high', p.parts[2]) },
     // Edit
-    find: (p) => { terminal.cursor.find(p.str) },
-    select: (p) => { terminal.cursor.select(p.x, p.y, p.w, p.h) },
+    find: (p) => { client.cursor.find(p.str) },
+    select: (p) => { client.cursor.select(p.x, p.y, p.w, p.h) },
     inject: (p) => {
-      terminal.cursor.select(p._x, p._y)
-      if (terminal.source.cache[p._str + '.orca']) {
-        const lines = terminal.source.cache[p._str + '.orca'].trim().split('\n')
-        terminal.cursor.writeBlock(lines)
-        terminal.cursor.reset()
+      client.cursor.select(p._x, p._y)
+      if (client.source.cache[p._str + '.orca']) {
+        const lines = client.source.cache[p._str + '.orca'].trim().split('\n')
+        client.cursor.writeBlock(lines)
+        client.cursor.reset()
       }
     },
-    write: (p) => { terminal.cursor.select(p._x, p._y, p._str.length); terminal.cursor.writeBlock([p._str.split('')]) }
+    write: (p) => { client.cursor.select(p._x, p._y, p._str.length); client.cursor.writeBlock([p._str.split('')]) }
   }
 
   // Make shorthands
@@ -87,14 +87,14 @@ function Commander (terminal) {
   this.start = (q = '') => {
     this.isActive = true
     this.query = q
-    terminal.update()
+    client.update()
   }
 
   this.stop = () => {
     this.isActive = false
     this.query = ''
     this.historyIndex = this.history.length
-    terminal.update()
+    client.update()
   }
 
   this.erase = function () {
@@ -112,8 +112,8 @@ function Commander (terminal) {
 
   this.run = function () {
     const tool = this.isActive === true ? 'commander' : 'cursor'
-    terminal[tool].trigger()
-    terminal.update()
+    client[tool].trigger()
+    client.update()
   }
 
   this.trigger = function (msg = this.query, touch = true) {
@@ -140,12 +140,12 @@ function Commander (terminal) {
 
   this.onKeyDown = (e) => {
     if (e.ctrlKey || e.metaKey || e.altKey) { return }
-    terminal[this.isActive === true ? 'commander' : 'cursor'].write(e.key)
+    client[this.isActive === true ? 'commander' : 'cursor'].write(e.key)
     e.stopPropagation()
   }
 
   this.onKeyUp = (e) => {
-    terminal.update()
+    client.update()
   }
 
   // UI

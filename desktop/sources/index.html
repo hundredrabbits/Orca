@@ -20,20 +20,20 @@
     <script type="text/javascript" src="scripts/clock.js"></script>
     <script type="text/javascript" src="scripts/commander.js"></script>
     <script type="text/javascript" src="scripts/cursor.js"></script>
-    <script type="text/javascript" src="scripts/terminal.js"></script>
+    <script type="text/javascript" src="scripts/client.js"></script>
     <title>Orca</title>
   </head>
   <body>
     <script>
       'use strict'
 
-      const terminal = new Terminal()
+      const client = new Client()
 
-      terminal.install(document.body)
+      client.install(document.body)
 
       window.addEventListener('load', () => { 
-        terminal.start()
-        terminal.acels.inject('Orca')
+        client.start()
+        client.acels.inject('Orca')
       })
     </script>
   </body>

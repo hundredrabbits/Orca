@@ -58,10 +58,6 @@ function Source (client) {
     this.write(name, ext, content, type, callback)
   }
 
-  this.revert = () => {
-
-  }
-
   // I/O
 
   this.read = (file, callback) => {

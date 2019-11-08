@@ -1,9 +1,10 @@
 'use strict'
 
-function Osc (terminal) {
+function Osc (client) {
   const osc = require('node-osc')
 
   this.stack = []
+  this.socket = null
   this.port = null
   this.options = { default: 49162, tidalCycles: 6010, sonicPi: 4559, superCollider: 57120, norns: 10111 }
 
@@ -29,13 +30,13 @@ function Osc (terminal) {
   }
 
   this.play = function ({ path, msg }) {
-    if (!this.client) { console.warn('OSC', 'Unavailable client'); return }
+    if (!this.socket) { console.warn('OSC', 'Unavailable socket'); return }
     if (!msg) { console.warn('OSC', 'Empty message'); return }
     const oscMsg = new osc.Message(path)
     for (var i = 0; i < msg.length; i++) {
-      oscMsg.append(terminal.orca.valueOf(msg.charAt(i)))
+      oscMsg.append(client.orca.valueOf(msg.charAt(i)))
     }
-    this.client.send(oscMsg, (err) => {
+    this.socket.send(oscMsg, (err) => {
       if (err) { console.warn(err) }
     })
   }
@@ -50,8 +51,8 @@ function Osc (terminal) {
 
   this.setup = function () {
     if (!this.port) { return }
-    if (this.client) { this.client.close() }
-    this.client = new osc.Client(terminal.io.ip, this.port)
-    console.info('OSC', `Started client at ${terminal.io.ip}:${this.port}`)
+    if (this.socket) { this.socket.close() }
+    this.socket = new osc.Client(client.io.ip, this.port)
+    console.info('OSC', `Started socket at ${client.io.ip}:${this.port}`)
   }
 }

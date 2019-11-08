@@ -2,7 +2,7 @@
 
 /* global Blob */
 
-function Clock (terminal) {
+function Clock (client) {
   const worker = 'onmessage = (e) => { setInterval(() => { postMessage(true) }, e.data)}'
 
   this.isPaused = true
@@ -18,7 +18,7 @@ function Clock (terminal) {
 
   this.touch = function () {
     this.stop()
-    terminal.run()
+    client.run()
   }
 
   this.run = function () {
@@ -27,7 +27,6 @@ function Clock (terminal) {
   }
 
   this.setSpeed = function (value, target = null, setTimer = false) {
-    console.info('Clock', 'set', value)
     if (value) { this.speed.value = clamp(value, 60, 300) }
     if (target) { this.speed.target = clamp(target, 60, 300) }
     if (setTimer === true) { this.setTimer(this.speed.value) }
@@ -38,7 +37,7 @@ function Clock (terminal) {
       this.setSpeed(null, this.speed.target + mod)
     } else {
       this.setSpeed(this.speed.value + mod, this.speed.value + mod, true)
-      terminal.update()
+      client.update()
     }
   }
 
@@ -57,7 +56,7 @@ function Clock (terminal) {
     if (this.isPaused === false) { return }
     if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = false
-    if (msg === true) { terminal.io.midi.sendClockStart() }
+    if (msg === true) { client.io.midi.sendClockStart() }
     this.setSpeed(this.speed.target, this.speed.target, true)
   }
 
@@ -66,10 +65,10 @@ function Clock (terminal) {
     if (this.isPaused === true) { console.warn('Clock', 'Already stopped'); return }
     if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = true
-    if (msg === true) { terminal.io.midi.sendClockStop() }
-    terminal.io.midi.allNotesOff()
+    if (msg === true) { client.io.midi.sendClockStop() }
+    client.io.midi.allNotesOff()
     this.clearTimer()
-    terminal.io.midi.silence()
+    client.io.midi.silence()
   }
 
   // External Clock
@@ -90,7 +89,7 @@ function Clock (terminal) {
     if (this.isPaused) { return }
     pulse.count = pulse.count + 1
     if (pulse.count % 6 === 0) {
-      terminal.run()
+      client.run()
       pulse.count = 0
     }
   }
@@ -112,8 +111,8 @@ function Clock (terminal) {
     this.timer = new Worker(window.URL.createObjectURL(new Blob([worker], { type: 'text/javascript' })))
     this.timer.postMessage((60000 / bpm) / 4)
     this.timer.onmessage = (event) => {
-      terminal.io.midi.sendClock()
-      terminal.run()
+      client.io.midi.sendClock()
+      client.run()
     }
   }
 
@@ -126,7 +125,7 @@ function Clock (terminal) {
 
   this.setFrame = function (f) {
     if (isNaN(f)) { return }
-    terminal.orca.f = clamp(f, 0, 9999999)
+    client.orca.f = clamp(f, 0, 9999999)
   }
 
   // UI
@@ -135,7 +134,7 @@ function Clock (terminal) {
     const diff = this.speed.target - this.speed.value
     const _offset = Math.abs(diff) > 5 ? (diff > 0 ? `+${diff}` : diff) : ''
     const _message = this.isPuppet === true ? 'midi' : `${this.speed.value}${_offset}`
-    const _beat = diff === 0 && terminal.orca.f % 4 === 0 ? '*' : ''
+    const _beat = diff === 0 && client.orca.f % 4 === 0 ? '*' : ''
     return `${_message}${_beat}`
   }
 

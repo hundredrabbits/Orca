@@ -25,7 +25,7 @@
     <script type="text/javascript" src="desktop/sources/scripts/clock.js"></script>
     <script type="text/javascript" src="desktop/sources/scripts/commander.js"></script>
     <script type="text/javascript" src="desktop/sources/scripts/cursor.js"></script>
-    <script type="text/javascript" src="desktop/sources/scripts/terminal.js"></script>
+    <script type="text/javascript" src="desktop/sources/scripts/client.js"></script>
 
     <title>Orca</title>
   </head>
@@ -33,12 +33,12 @@
     <script>
       'use strict'
 
-      const terminal = new Terminal()
+      const client = new Client()
 
-      terminal.install(document.body)
+      client.install(document.body)
 
       window.addEventListener('load', () => { 
-        terminal.start()
+        client.start()
       })
     </script>
   </body>
