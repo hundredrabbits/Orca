@@ -15,10 +15,10 @@ function Terminal () {
   this.version = 147
   this.library = library
 
-  this.theme = new Theme()
-  this.acels = new Acels()
-  this.source = new Source()
-  this.history = new History()
+  this.theme = new Theme(this)
+  this.acels = new Acels(this)
+  this.source = new Source(this)
+  this.history = new History(this)
 
   this.orca = new Orca(this.library)
   this.io = new IO(this)
@@ -465,8 +465,11 @@ function Terminal () {
   window.addEventListener('drop', (e) => {
     e.preventDefault()
     e.stopPropagation()
-    this.toggleGuide(false)
-    this.source.read(e.dataTransfer.files[0], this.whenOpen)
+    const file = e.dataTransfer.files[0]
+    if (file.name.indexOf('.orca') > -1) {
+      this.toggleGuide(false)
+      this.source.read(file, this.whenOpen)
+    }
   })
 
   window.onresize = (event) => {

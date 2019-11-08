@@ -145,7 +145,7 @@ function Commander (terminal) {
   }
 
   this.onKeyUp = (e) => {
-    // terminal.update()
+    terminal.update()
   }
 
   // UI

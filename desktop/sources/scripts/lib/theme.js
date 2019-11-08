@@ -4,7 +4,7 @@
 /* global FileReader */
 /* global DOMParser */
 
-function Theme () {
+function Theme (client) {
   this.el = document.createElement('style')
   this.el.type = 'text/css'
 
@@ -38,6 +38,16 @@ function Theme () {
       }
     }
     this.load(this.default)
+  }
+
+  this.open = () => {
+    console.log('Theme', 'Open theme..')
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.onchange = (e) => {
+      this.read(e.target.files[0], this.load)
+    }
+    input.click()
   }
 
   this.load = (data) => {
@@ -84,14 +94,18 @@ function Theme () {
   this.drop = (e) => {
     e.preventDefault()
     const file = e.dataTransfer.files[0]
-    if (!file || !file.name) { console.warn('Theme', 'Could not read file.'); return }
-    if (file.name.indexOf('.svg') < 0) { console.warn('Theme', 'Not a SVG file.'); return }
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      this.load(e.target.result)
+    if (file.name.indexOf('.svg') > -1) {
+      this.read(file, this.load)
     }
-    reader.readAsText(file)
     e.stopPropagation()
+  }
+
+  this.read = (file, callback) => {
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      callback(event.target.result)
+    }
+    reader.readAsText(file, 'UTF-8')
   }
 
   // Helpers

@@ -3,7 +3,7 @@
 /* global FileReader */
 /* global MouseEvent */
 
-function Source () {
+function Source (client) {
   this.cache = {}
 
   this.install = () => {

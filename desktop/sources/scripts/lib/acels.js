@@ -1,6 +1,6 @@
 'use strict'
 
-function Acels () {
+function Acels (client) {
   this.all = {}
   this.roles = {}
   this.pipe = null
@@ -100,7 +100,14 @@ function Acels () {
       label: name,
       submenu: [
         { label: 'About', click: () => { require('electron').shell.openExternal('https://github.com/hundredrabbits/' + name) } },
-        { label: 'Download Themes', click: () => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes') } },
+        {
+          label: 'Theme',
+          submenu: [
+            { label: 'Download Themes', click: () => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes') } },
+            { label: 'Open Theme', click: () => { client.theme.open() } },
+            { label: 'Reset Theme', click: () => { client.theme.reset() } }
+          ]
+        },
         { label: 'Fullscreen', accelerator: 'CmdOrCtrl+Enter', click: () => { app.toggleFullscreen() } },
         { label: 'Hide', accelerator: 'CmdOrCtrl+H', click: () => { app.toggleVisible() } },
         { label: 'Toggle Menubar', accelerator: 'Alt+H', click: () => { app.toggleMenubar() } },
