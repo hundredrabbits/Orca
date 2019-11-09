@@ -287,7 +287,6 @@ function Cursor (client) {
     }
     const content = rows.join('\n').trim()
     e.clipboardData.setData('text/plain', content)
-    e.clipboardData.setData('text/source', content)
     e.preventDefault()
   }
 
@@ -297,7 +296,7 @@ function Cursor (client) {
   }
 
   this.onPaste = (e) => {
-    const data = e.clipboardData.getData('text/source').trim()
+    const data = e.clipboardData.getData('text/plain').trim()
     this.writeBlock(data.split(/\r?\n/), false)
     this.scaleTo(data.split('\n')[0].length - 1, data.split('\n').length - 1)
     e.preventDefault()
