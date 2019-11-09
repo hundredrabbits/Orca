@@ -73,6 +73,13 @@ function Theme (client) {
     this.load(this.default)
   }
 
+  this.set = (key, val) => {
+    if (!val) { return }
+    const hex = (`${val}`.substr(0, 1) !== '#' ? '#' : '') + `${val}`
+    if (!isColor(hex)) { console.warn('Theme', `${hex} is not a valid color.`); return }
+    this.active[key] = hex
+  }
+
   this.read = (key) => {
     return this.active[key]
   }
@@ -143,6 +150,10 @@ function Theme (client) {
     return true
   }
 
+  function isColor (hex) {
+    return /^#([0-9A-F]{3}){1,2}$/i.test(hex)
+  }
+
   function isJson (text) {
     try { JSON.parse(text); return true } catch (error) { return false }
   }
@@ -150,4 +161,6 @@ function Theme (client) {
   function isHtml (text) {
     try { new DOMParser().parseFromString(text, 'text/xml'); return true } catch (error) { return false }
   }
+
+  console.log(isColor('#72dec2'))
 }

@@ -45,7 +45,11 @@ function Commander (client) {
     // Effects
     rot: (p) => { client.cursor.rotate(p.int) },
     // Themeing
-    color: (p) => { client.theme.set('b_med', p.parts[0]); client.theme.set('b_inv', p.parts[1]); client.theme.set('b_high', p.parts[2]) },
+    color: (p) => {
+      client.theme.set('b_med', p.parts[0])
+      client.theme.set('b_inv', p.parts[1])
+      client.theme.set('b_high', p.parts[2])
+    },
     // Edit
     find: (p) => { client.cursor.find(p.str) },
     select: (p) => { client.cursor.select(p.x, p.y, p.w, p.h) },
