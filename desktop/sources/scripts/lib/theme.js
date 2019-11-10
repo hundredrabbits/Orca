@@ -15,9 +15,9 @@ function Theme (client) {
     f_med: '#666666',
     f_low: '#888888',
     f_inv: '#000000',
-    b_high: '#ffffff',
-    b_med: '#cccccc',
-    b_low: '#dddddd',
+    b_high: '#cccccc',
+    b_med: '#dddddd',
+    b_low: '#ffffff',
     b_inv: '#ffb545'
   }
 
