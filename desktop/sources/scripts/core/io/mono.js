@@ -37,8 +37,8 @@ function Mono (client) {
   }
 
   this.silence = function () {
-    for (const id in this.stack) {
-      this.release(this.stack[id])
+    for (const item of this.stack) {
+      this.release(item)
     }
   }
 

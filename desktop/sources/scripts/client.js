@@ -256,12 +256,10 @@ function Client () {
 
   this.findPorts = () => {
     const a = new Array((this.orca.w * this.orca.h) - 1)
-    for (const id in this.orca.runtime) {
-      const operator = this.orca.runtime[id]
+    for (const operator of this.orca.runtime) {
       if (this.orca.lockAt(operator.x, operator.y)) { continue }
       const ports = operator.getPorts()
-      for (const i in ports) {
-        const port = ports[i]
+      for (const port of ports) {
         const index = this.orca.indexAt(port[0], port[1])
         a[index] = port
       }

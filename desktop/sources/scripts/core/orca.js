@@ -80,8 +80,7 @@ function Orca (library) {
 
   this.operate = function (operators) {
     this.release()
-    for (const id in operators) {
-      const operator = operators[id]
+    for (const operator of operators) {
       if (this.lockAt(operator.x, operator.y)) { continue }
       if (operator.passive || operator.hasNeighbor('*')) {
         operator.run()

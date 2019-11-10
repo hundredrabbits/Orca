@@ -37,8 +37,8 @@ function Udp (client) {
   }
 
   this.run = function () {
-    for (const id in this.stack) {
-      this.play(this.stack[id])
+    for (const item of this.stack) {
+      this.play(item)
     }
   }
 

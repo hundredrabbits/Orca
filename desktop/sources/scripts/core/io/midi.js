@@ -24,8 +24,9 @@ function Midi (client) {
 
   this.run = function () {
     for (const id in this.stack) {
-      if (this.stack[id].length < 1) {
-        this.release(this.stack[id], id)
+      const item = this.stack[id]
+      if (item.length < 1) {
+        this.release(item, id)
       }
       if (!this.stack[id]) { continue }
       if (this.stack[id].isPlayed === false) {
@@ -65,8 +66,8 @@ function Midi (client) {
   }
 
   this.silence = function () {
-    for (const id in this.stack) {
-      this.release(this.stack[id])
+    for (const item of this.stack) {
+      this.release(item)
     }
   }
 
@@ -74,7 +75,8 @@ function Midi (client) {
     const item = { channel, octave, note, velocity, length, isPlayed }
     // Retrigger duplicates
     for (const id in this.stack) {
-      if (this.stack[id].channel === channel && this.stack[id].octave === octave && this.stack[id].note === note) { this.release(item, id) }
+      const dup = this.stack[id]
+      if (dup.channel === channel && dup.octave === octave && dup.note === note) { this.release(item, id) }
     }
     this.stack.push(item)
   }

@@ -189,9 +189,9 @@ function Cursor (client) {
 
   this.comment = function () {
     const block = this.getBlock()
-    for (const id in block) {
-      block[id][0] = block[id][0] === '#' ? '.' : '#'
-      block[id][block[id].length - 1] = block[id][block[id].length - 1] === '#' ? '.' : '#'
+    for (const val of block) {
+      val[0] = val[0] === '#' ? '.' : '#'
+      val[val.length - 1] = val[val.length - 1] === '#' ? '.' : '#'
     }
     this.writeBlock(block)
   }
@@ -215,10 +215,10 @@ function Cursor (client) {
     if (!block || block.length === 0) { return }
     const rect = this.toRect()
     let _y = rect.y
-    for (const x in block) {
+    for (const line of block) {
       let _x = rect.x
-      for (const y in block[x]) {
-        const glyph = block[x][y]
+      for (const y in line) {
+        const glyph = line[y]
         client.orca.write(_x, _y, overlap === true && glyph === '.' ? client.orca.glyphAt(_x, _y) : glyph)
         _x++
       }

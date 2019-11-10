@@ -8,7 +8,7 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
   this.draw = passive
   this.glyph = passive ? glyph.toUpperCase() : glyph
   this.info = '--'
-  this.ports = { bang: !passive }
+  this.ports = {}
 
   // Actions
 
@@ -41,10 +41,9 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     // Operate
     const payload = this.operation(force)
     // Permissions
-    for (const id in this.ports) {
-      orca.lock(this.x + this.ports[id].x, this.y + this.ports[id].y)
+    for (const port of Object.values(this.ports)) {
+      orca.lock(this.x + port.x, this.y + port.y)
     }
-    this.draw = true
 
     if (this.ports.output) {
       if (this.ports.output.bang === true) {
