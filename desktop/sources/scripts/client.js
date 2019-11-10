@@ -339,7 +339,7 @@ function Client () {
     this.write(`${this.cursor.w}:${this.cursor.h}`, this.grid.w * 2, this.orca.h, this.grid.w)
     this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, this.grid.w * 3, this.orca.h, this.grid.w)
     this.write(`${this.io.inspect(this.grid.w)}`, this.grid.w * 4, this.orca.h, this.grid.w)
-    this.write(`${display(Object.keys(this.orca.variables), this.orca.f, this.grid.w)}`, this.grid.w * 5, this.orca.h, this.grid.w)
+    this.write(`${display(Object.keys(this.orca.variables).join(''), this.orca.f, this.grid.w)}`, this.grid.w * 5, this.orca.h, this.grid.w)
 
     if (this.commander.isActive === true) {
       this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, this.grid.w * 0, this.orca.h + 1, this.grid.w * 4)
