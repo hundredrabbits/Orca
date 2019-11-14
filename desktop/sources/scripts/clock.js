@@ -12,7 +12,9 @@ function Clock (client) {
   this.speed = { value: 120, target: 120 }
 
   this.start = function () {
-    this.setTimer(120)
+    const memory = parseInt(window.localStorage.getItem('bpm'))
+    const target = memory >= 60 ? memory : 120
+    this.setSpeed(target, target, true)
     this.play()
   }
 
@@ -106,10 +108,12 @@ function Clock (client) {
   // Timer
 
   this.setTimer = function (bpm) {
+    if (bpm < 60) { console.warn('Clock', 'Error ' + bpm); return }
     console.log('Clock', 'New Timer ' + bpm + 'bpm')
     this.clearTimer()
+    window.localStorage.setItem('bpm', bpm)
     this.timer = new Worker(window.URL.createObjectURL(new Blob([worker], { type: 'text/javascript' })))
-    this.timer.postMessage((60000 / bpm) / 4)
+    this.timer.postMessage((60000 / parseInt(bpm)) / 4)
     this.timer.onmessage = (event) => {
       client.io.midi.sendClock()
       client.run()
