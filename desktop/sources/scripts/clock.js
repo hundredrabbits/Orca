@@ -109,7 +109,6 @@ function Clock (client) {
 
   this.setTimer = function (bpm) {
     if (bpm < 60) { console.warn('Clock', 'Error ' + bpm); return }
-    console.log('Clock', 'New Timer ' + bpm + 'bpm')
     this.clearTimer()
     window.localStorage.setItem('bpm', bpm)
     this.timer = new Worker(window.URL.createObjectURL(new Blob([worker], { type: 'text/javascript' })))

@@ -110,6 +110,7 @@ function Commander (client) {
     if (key === 'Backspace') { this.erase(); return }
     if (key === 'Enter') { this.run(); return }
     if (key === 'Escape') { this.stop(); return }
+    if (key.length > 1) { return }
     this.query += key
     this.preview()
   }

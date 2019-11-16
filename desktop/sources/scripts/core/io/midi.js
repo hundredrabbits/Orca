@@ -125,16 +125,6 @@ function Midi (client) {
   }
 
   this.receive = function (msg) {
-    // Keys
-    if (msg.data[0] >= 144 && msg.data[0] < 160) {
-      this.keyDown(msg.data[0] - 144, msg.data[1])
-      return
-    }
-    if (msg.data[0] >= 128 && msg.data[0] < 144) {
-      this.keyUp(msg.data[0] - 128, msg.data[1])
-      return
-    }
-
     // listen for clock all the time
     // check for clock in?
     if (msg.data[0] === 0xF8) { client.clock.tap() }
