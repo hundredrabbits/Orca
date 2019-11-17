@@ -12,7 +12,7 @@
 /* global Theme */
 
 function Client () {
-  this.version = 150
+  this.version = 151
   this.library = library
 
   this.theme = new Theme(this)
@@ -332,7 +332,7 @@ function Client () {
   }
 
   this.drawInterface = () => {
-    this.write(this.orca.f < 15 ? `ver${this.version}` : `${this.cursor.inspect()}`, this.grid.w * 0, this.orca.h, this.grid.w)
+    this.write(`${this.cursor.inspect()}`, this.grid.w * 0, this.orca.h, this.grid.w)
     this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.mode === 1 ? '+' : ''}`, this.grid.w * 1, this.orca.h, this.grid.w, this.cursor.mode === 1 ? 1 : 2)
     this.write(`${this.cursor.w}:${this.cursor.h}`, this.grid.w * 2, this.orca.h, this.grid.w)
     this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, this.grid.w * 3, this.orca.h, this.grid.w)
@@ -342,7 +342,7 @@ function Client () {
     if (this.commander.isActive === true) {
       this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, this.grid.w * 0, this.orca.h + 1, this.grid.w * 4)
     } else {
-      this.write(`${Object.keys(this.source.cache).length} modules`, this.grid.w * 0, this.orca.h + 1, this.grid.w)
+      this.write(this.orca.f < 15 ? `ver${this.version}` : `${Object.keys(this.source.cache).length} mods`, this.grid.w * 0, this.orca.h + 1, this.grid.w)
       this.write(`${this.orca.w}x${this.orca.h}`, this.grid.w * 1, this.orca.h + 1, this.grid.w)
       this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, this.grid.w * 2, this.orca.h + 1, this.grid.w)
       this.write(`${this.clock}`, this.grid.w * 3, this.orca.h + 1, this.grid.w, this.clock.isPuppet === true ? 3 : 2)
