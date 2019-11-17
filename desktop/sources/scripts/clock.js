@@ -28,7 +28,8 @@ function Clock (client) {
     this.setSpeed(this.speed.value + (this.speed.value < this.speed.target ? 1 : -1), null, true)
   }
 
-  this.setSpeed = function (value, target = null, setTimer = false) {
+  this.setSpeed = (value, target = null, setTimer = false) => {
+    if (this.speed.value === value && this.speed.target === target && this.timer) { console.warn('already at that speed'); return }
     if (value) { this.speed.value = clamp(value, 60, 300) }
     if (target) { this.speed.target = clamp(target, 60, 300) }
     if (setTimer === true) { this.setTimer(this.speed.value) }
