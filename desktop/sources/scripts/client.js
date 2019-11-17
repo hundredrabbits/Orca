@@ -12,7 +12,7 @@
 /* global Theme */
 
 function Client () {
-  this.version = 149
+  this.version = 150
   this.library = library
 
   this.theme = new Theme(this)
@@ -98,8 +98,8 @@ function Client () {
     this.acels.set('Clock', 'Play/Pause', 'Space', () => { this.clock.togglePlay() })
     this.acels.set('Clock', 'Frame By Frame', 'CmdOrCtrl+F', () => { this.clock.touch() })
     this.acels.set('Clock', 'Reset Frame', 'CmdOrCtrl+Shift+R', () => { this.clock.setFrame(0) })
-    this.acels.set('Clock', 'Incr. Speed', 'Shift+>', () => { this.clock.modSpeed(1) })
-    this.acels.set('Clock', 'Decr. Speed', 'Shift+<', () => { this.clock.modSpeed(-1) })
+    this.acels.set('Clock', 'Incr. Speed', '>', () => { this.clock.modSpeed(1) })
+    this.acels.set('Clock', 'Decr. Speed', '<', () => { this.clock.modSpeed(-1) })
     this.acels.set('Clock', 'Incr. Speed(10x)', 'CmdOrCtrl+>', () => { this.clock.modSpeed(10, true) })
     this.acels.set('Clock', 'Decr. Speed(10x)', 'CmdOrCtrl+<', () => { this.clock.modSpeed(-10, true) })
 

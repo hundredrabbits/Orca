@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "electron . --disable-gpu",
     "time": "node time.js",
     "docs": "node ../docs.js",
     "fix": "standard --fix",
