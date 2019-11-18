@@ -40,11 +40,11 @@ self.addEventListener( 'install', async function () {
 
   assets.forEach( function ( asset ) {
 
-  cache.add( asset ).catch( function () {
+    cache.add( asset ).catch( function () {
 
-  console.error( '[SW] Cound\'t cache:', asset );
+      console.error( '[SW] Cound\'t cache:', asset );
 
-  } );
+    } );
 
   } );
 
@@ -63,8 +63,8 @@ async function cacheFirst( request ) {
 
   if ( cachedResponse === undefined ) {
 
-  console.error( '[SW] Not cached:', request.url );
-  return fetch( request );
+    console.error( '[SW] Not cached:', request.url );
+    return fetch( request );
 
   }
 
