@@ -1,18 +1,14 @@
 // 220
 
 const assets = [
-
   './',
-
   './manifest.json',
   './desktop/icon.png',
-
   './desktop/sources/links/style.css',
   './desktop/sources/links/reset.css',
   './desktop/sources/links/fonts.css',
   './desktop/sources/links/main.css',
   './desktop/sources/links/theme.css',
-
   './desktop/sources/scripts/lib/acels.js',
   './desktop/sources/scripts/lib/theme.js',
   './desktop/sources/scripts/lib/history.js',
@@ -31,43 +27,27 @@ const assets = [
   './desktop/sources/scripts/commander.js',
   './desktop/sources/scripts/cursor.js',
   './desktop/sources/scripts/client.js'
+]
 
-];
+self.addEventListener('install', async function () {
+  const cache = await caches.open('Orca')
+  assets.forEach(function (asset) {
+    cache.add(asset).catch(function () {
+      console.error('[SW] Cound\'t cache:', asset)
+    })
+  })
+})
 
-self.addEventListener( 'install', async function () {
+self.addEventListener('fetch', async function (event) {
+  const request = event.request
+  event.respondWith(cacheFirst(request))
+})
 
-  const cache = await caches.open( 'Orca' );
-
-  assets.forEach( function ( asset ) {
-
-    cache.add( asset ).catch( function () {
-
-      console.error( '[SW] Cound\'t cache:', asset );
-
-    } );
-
-  } );
-
-} );
-
-self.addEventListener( 'fetch', async function ( event ) {
-
-  const request = event.request;
-  event.respondWith( cacheFirst( request ) );
-
-} );
-
-async function cacheFirst( request ) {
-
-  const cachedResponse = await caches.match( request );
-
-  if ( cachedResponse === undefined ) {
-
-    console.error( '[SW] Not cached:', request.url );
-    return fetch( request );
-
+async function cacheFirst (request) {
+  const cachedResponse = await caches.match(request)
+  if (cachedResponse === undefined) {
+    console.error('[SW] Not cached:', request.url)
+    return fetch(request)
   }
-
-  return cachedResponse;
-
+  return cachedResponse
 }
