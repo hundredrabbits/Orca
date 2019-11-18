@@ -42,11 +42,9 @@
         client.start()
       })
 
-      if ('serviceWorker' in navigator) {
-        try {
-          navigator.serviceWorker.register('sw.js');
-        } catch ( error ) {
-        }
+      // Register PWA Service Worker
+      if (location.protocol.substr(0,4) !== ('file') && 'serviceWorker' in navigator) {
+        try { navigator.serviceWorker.register('sw.js') } catch (err) { console.warn(err) }
       }
     </script>
   </body>
