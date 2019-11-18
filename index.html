@@ -38,9 +38,16 @@
 
       client.install(document.body)
 
-      window.addEventListener('load', () => { 
+      window.addEventListener('load', () => {
         client.start()
       })
+
+      if ('serviceWorker' in navigator) {
+        try {
+          navigator.serviceWorker.register('sw.js');
+        } catch ( error ) {
+        }
+      }
     </script>
   </body>
 </html>

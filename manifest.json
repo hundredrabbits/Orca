@@ -1,0 +1,14 @@
+{
+  "name": "Orca",
+  "short_name": "Orca",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "./desktop/icon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
