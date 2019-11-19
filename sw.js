@@ -1,7 +1,8 @@
-// 220
+// 152
 
 const assets = [
   './',
+  './favicon.ico',
   './manifest.json',
   './desktop/icon.png',
   './desktop/sources/links/style.css',
