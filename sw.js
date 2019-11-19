@@ -33,7 +33,7 @@ self.addEventListener('install', async function () {
   const cache = await caches.open('Orca')
   assets.forEach(function (asset) {
     cache.add(asset).catch(function () {
-      console.error('[SW] Cound\'t cache:', asset)
+      console.error('serviceWorker','Cound not cache:', asset)
     })
   })
 })
@@ -46,7 +46,7 @@ self.addEventListener('fetch', async function (event) {
 async function cacheFirst (request) {
   const cachedResponse = await caches.match(request)
   if (cachedResponse === undefined) {
-    console.error('[SW] Not cached:', request.url)
+    console.error('serviceWorker','Not cached:', request.url)
     return fetch(request)
   }
   return cachedResponse

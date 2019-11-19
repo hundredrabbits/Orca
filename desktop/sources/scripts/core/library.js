@@ -518,7 +518,7 @@ library.$ = function OperatorSelf (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '*', true)
 
   this.name = 'self'
-  this.info = 'Send command to itself'
+  this.info = 'Sends ORCA command'
 
   this.run = function (force = false) {
     let msg = ''
@@ -534,35 +534,6 @@ library.$ = function OperatorSelf (orca, x, y, passive) {
 
     this.draw = false
     client.commander.trigger(`${msg}`)
-  }
-}
-
-library['!'] = function OperatorCC (orca, x, y) {
-  Operator.call(this, orca, x, y, '!', true)
-
-  this.name = 'cc'
-  this.info = 'Sends MIDI control change'
-  this.ports.channel = { x: 1, y: 0, clamp: { min: 0, max: 15 } }
-  this.ports.knob = { x: 2, y: 0, clamp: { min: 0 } }
-  this.ports.value = { x: 3, y: 0, clamp: { min: 0 } }
-
-  this.operation = function (force = false) {
-    if (!this.hasNeighbor('*') && force === false) { return }
-    if (this.listen(this.ports.channel) === '.') { return }
-    if (this.listen(this.ports.knob) === '.') { return }
-
-    const channel = this.listen(this.ports.channel, true)
-    const knob = this.listen(this.ports.knob, true)
-    const rawValue = this.listen(this.ports.value, true)
-    const value = Math.ceil((127 * rawValue) / 35)
-
-    client.io.cc.stack.push({ channel, knob, value, type: 'cc' })
-
-    this.draw = false
-
-    if (force === true) {
-      client.io.cc.run()
-    }
   }
 }
 
@@ -598,6 +569,66 @@ library[':'] = function OperatorMidi (orca, x, y, passive) {
     }
 
     this.draw = false
+  }
+}
+
+library['!'] = function OperatorCC (orca, x, y) {
+  Operator.call(this, orca, x, y, '!', true)
+
+  this.name = 'cc'
+  this.info = 'Sends MIDI control change'
+  this.ports.channel = { x: 1, y: 0 }
+  this.ports.knob = { x: 2, y: 0, clamp: { min: 0 } }
+  this.ports.value = { x: 3, y: 0, clamp: { min: 0 } }
+
+  this.operation = function (force = false) {
+    if (!this.hasNeighbor('*') && force === false) { return }
+    if (this.listen(this.ports.channel) === '.') { return }
+    if (this.listen(this.ports.knob) === '.') { return }
+
+    const channel = this.listen(this.ports.channel, true)
+    if (channel > 15) { return }
+    const knob = this.listen(this.ports.knob, true)
+    const rawValue = this.listen(this.ports.value, true)
+    const value = Math.ceil((127 * rawValue) / 35)
+
+    client.io.cc.stack.push({ channel, knob, value, type: 'cc' })
+
+    this.draw = false
+
+    if (force === true) {
+      client.io.cc.run()
+    }
+  }
+}
+
+library['?'] = function OperatorPB (orca, x, y) {
+  Operator.call(this, orca, x, y, '?', true)
+
+  this.name = 'pb'
+  this.info = 'Sends MIDI pitch bend'
+  this.ports.channel = { x: 1, y: 0, clamp: { min: 0, max: 15 } }
+  this.ports.lsb = { x: 2, y: 0, clamp: { min: 0 } }
+  this.ports.msb = { x: 3, y: 0, clamp: { min: 0 } }
+
+  this.operation = function (force = false) {
+    if (!this.hasNeighbor('*') && force === false) { return }
+    if (this.listen(this.ports.channel) === '.') { return }
+    if (this.listen(this.ports.lsb) === '.') { return }
+
+    const channel = this.listen(this.ports.channel, true)
+    const rawlsb = this.listen(this.ports.lsb, true)
+    const lsb = Math.ceil((127 * rawlsb) / 35)
+    const rawmsb = this.listen(this.ports.msb, true)
+    const msb = Math.ceil((127 * rawmsb) / 35)
+
+    client.io.cc.stack.push({ channel, lsb, msb, type: 'pb' })
+
+    this.draw = false
+
+    if (force === true) {
+      client.io.cc.run()
+    }
   }
 }
 
@@ -665,36 +696,6 @@ library['='] = function OperatorOsc (orca, x, y, passive) {
 
     if (force === true) {
       client.io.osc.run()
-    }
-  }
-}
-
-library['?'] = function OperatorPB (orca, x, y) {
-  Operator.call(this, orca, x, y, '?', true)
-
-  this.name = 'cc'
-  this.info = 'Sends MIDI pitch bend'
-  this.ports.channel = { x: 1, y: 0, clamp: { min: 0, max: 15 } }
-  this.ports.lsb = { x: 2, y: 0, clamp: { min: 0 } }
-  this.ports.msb = { x: 3, y: 0, clamp: { min: 0 } }
-
-  this.operation = function (force = false) {
-    if (!this.hasNeighbor('*') && force === false) { return }
-    if (this.listen(this.ports.channel) === '.') { return }
-    if (this.listen(this.ports.lsb) === '.') { return }
-
-    const channel = this.listen(this.ports.channel, true)
-    const rawlsb = this.listen(this.ports.lsb, true)
-    const lsb = Math.ceil((127 * rawlsb) / 35)
-    const rawmsb = this.listen(this.ports.msb, true)
-    const msb = Math.ceil((127 * rawmsb) / 35)
-
-    client.io.cc.stack.push({ channel, lsb, msb, type: 'pb' })
-
-    this.draw = false
-
-    if (force === true) {
-      client.io.cc.run()
     }
   }
 }

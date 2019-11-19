@@ -60,7 +60,7 @@ npm start
 - `?` **pb**(channel value): Sends MIDI pitch bench.
 - `;` **udp**: Sends UDP message.
 - `=` **osc**(*path*): Sends OSC message.
-- `$` **self**: Sends a [command](#Commands) to itself.
+- `$` **self**: Sends [ORCA command](#Commands).
 
 ## MIDI
 
