@@ -16,8 +16,7 @@ function MidiCC (client) {
     if (this.stack.length < 1) { return }
     const device = client.io.midi.outputDevice()
     if (!device) { console.warn('CC', 'No Midi device.'); return }
-    for (const id in this.stack) {
-      const msg = this.stack[id]
+    for (const msg of this.stack) {
       if (msg.type === 'cc' && !isNaN(msg.channel) && !isNaN(msg.knob) && !isNaN(msg.value)) {
         device.send([0xb0 + msg.channel, this.offset + msg.knob, msg.value])
       } else if (msg.type === 'pb' && !isNaN(msg.channel) && !isNaN(msg.lsb) && !isNaN(msg.msb)) {

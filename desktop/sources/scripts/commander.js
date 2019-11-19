@@ -46,8 +46,8 @@ function Commander (client) {
     rot: (p) => { client.cursor.rotate(p.int) },
     // Themeing
     color: (p) => {
-      if (p.parts[0]) { client.theme.set('b_inv', p.parts[0]) }
-      if (p.parts[1]) { client.theme.set('b_inv', p.parts[1]) }
+      if (p.parts[0]) { client.theme.set('b_low', p.parts[0]) }
+      if (p.parts[1]) { client.theme.set('b_med', p.parts[1]) }
       if (p.parts[2]) { client.theme.set('b_high', p.parts[2]) }
     },
     // Edit
