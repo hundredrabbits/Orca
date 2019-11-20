@@ -144,7 +144,7 @@ function Commander (client) {
   // Events
 
   this.onKeyDown = (e) => {
-    if (e.ctrlKey || e.metaKey || e.altKey) { return }
+    if (e.ctrlKey || e.metaKey) { return }
     client[this.isActive === true ? 'commander' : 'cursor'].write(e.key)
     e.stopPropagation()
   }
