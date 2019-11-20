@@ -40,7 +40,7 @@ function Acels (client) {
     if (event.shiftKey && event.key.toUpperCase() !== event.key) {
       return `Shift+${accelerator}`
     }
-    if (event.altKey) {
+    if (event.altKey && event.key.length !== 1) {
       return `Alt+${accelerator}`
     }
     if (event.ctrlKey || event.metaKey) {
