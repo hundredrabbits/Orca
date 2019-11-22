@@ -1,6 +1,6 @@
 /* Reset */
 
-* { margin:0;padding:0;border:0;outline:0;text-decoration:none;font-weight:inherit;font-style:inherit;color:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;list-style:none;border-collapse:collapse;border-spacing:0; -webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}
+* { margin:0;padding:0;border:0;outline:0;text-decoration:none;font-weight:inherit;font-style:inherit;color:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;list-style:none;border-collapse:collapse;border-spacing:0; -webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale; }
 
 /* Font */
 
@@ -8,10 +8,10 @@
 
 /* Main */
 
-body { font-family: 'input_mono_medium'; padding:30px; overflow: hidden; -webkit-app-region: drag; transition: background-color 500ms; background-size: cover; background-position: center center; max-height: calc(100% - 60px);}
-canvas { display: block;white-space: pre;font-size: 11px;line-height: 10px; text-transform: uppercase; width:300px; opacity: 0;-webkit-app-region: no-drag; transition: opacity 1000ms}
-canvas.ready { opacity: 1 }
+body { font-family: 'input_mono_medium'; padding:30px; overflow: hidden; -webkit-app-region: drag; transition: background-color 500ms; background-size: cover; background-position: center center; max-height: calc(100% - 60px); }
+canvas { display: block;white-space: pre;font-size: 11px;line-height: 10px; text-transform: uppercase; width:300px; opacity: 0;-webkit-app-region: no-drag; transition: opacity 1000ms; }
+canvas.ready { opacity: 1; }
 
 /* Theme */
 
-body { background-color:var(--background) !important }
+body { background-color:var(--background) !important; }

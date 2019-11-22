@@ -1,15 +1,11 @@
-// 155
+// 156
 
 const assets = [
   './',
   './favicon.ico',
   './manifest.json',
   './desktop/icon.png',
-  './desktop/sources/links/style.css',
-  './desktop/sources/links/reset.css',
-  './desktop/sources/links/fonts.css',
   './desktop/sources/links/main.css',
-  './desktop/sources/links/theme.css',
   './desktop/sources/scripts/lib/acels.js',
   './desktop/sources/scripts/lib/theme.js',
   './desktop/sources/scripts/lib/history.js',

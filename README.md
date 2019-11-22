@@ -2,15 +2,19 @@
 
 <img src="https://raw.githubusercontent.com/hundredrabbits/100r.co/master/media/content/characters/orca.hello.png" width="300"/>
 
-Orca is an <strong>esoteric programming language</strong> designed to quickly create procedural sequencers, in which every letter of the alphabet is an operation, where lowercase letters operate on bang, uppercase letters operate each frame.
+Orca is an [esoteric programming language](https://en.wikipedia.org/wiki/Esoteric_programming_language) designed to quickly create procedural sequencers, in which every letter of the alphabet is an operation, where lowercase letters operate on bang, uppercase letters operate each frame.
 
-The <a href="http://github.com/hundredrabbits/Orca" target="_blank" rel="noreferrer" class="external ">application</a> <strong>is not a synthesizer, but a flexible livecoding environment</strong> capable of sending MIDI, OSC & UDP to your audio interface, like Ableton, Renoise, VCV Rack or SuperCollider.
+This application **is not a synthesizer, but a flexible livecoding environment** capable of sending MIDI, OSC & UDP to your audio/visual interfaces, like Ableton, Renoise, VCV Rack or SuperCollider.
 
-Learn more by reading the <a href="https://github.com/Hundredrabbits/Orca" target="_blank" rel="noreferrer" class="external ">manual</a>, or have a look at a <a href="https://www.youtube.com/watch?v=RaI_TuISSJE" target="_blank" rel="noreferrer" class="external ">tutorial video</a>. If you need <strong>help</strong>, visit the <a href="https://talk.lurk.org/channel/orca" target="_blank" rel="noreferrer" class="external ">chatroom</a> or the <a href="https://llllllll.co/t/orca-live-coding-tool/17689" target="_blank" rel="noreferrer" class="external ">forum</a>.
+If you need <strong>help</strong>, visit the <a href="https://talk.lurk.org/channel/orca" target="_blank" rel="noreferrer" class="external ">chatroom</a> or the <a href="https://llllllll.co/t/orca-live-coding-tool/17689" target="_blank" rel="noreferrer" class="external ">forum</a>.
+
+- Download [builds](https://hundredrabbits.itch.io/orca) for **OSX, Windows and Linux**.
+- Use directly [in your browser](https://hundredrabbits.github.io/Orca/), **requires webMidi**.
+- Use on a [raspberry pi](https://github.com/hundredrabbits/orca-c#raspberry-pi).
 
 ## Install & Run
 
-You can download [builds](https://hundredrabbits.itch.io/orca) for **OSX, Windows and Linux**, use it [in your browser](https://hundredrabbits.github.io/Orca/)(requires webMidi), or if you wish to build it yourself, follow these steps:
+If you are looking for a lightweight version of Orca for embedded computers, see [Orca-c](https://github.com/hundredrabbits/Orca-c/). If you wish to build it yourself, follow these steps:
 
 ```
 git clone https://github.com/hundredrabbits/Orca.git
@@ -22,6 +26,8 @@ npm start
 <img src='https://raw.githubusercontent.com/hundredrabbits/Orca/master/resources/preview.jpg' width="600"/>
 
 ## Operators
+
+To display the list of operators inside of Orca, use `CmdOrCtrl+G`.
 
 - `A` **add**(*a* b): Outputs sum of inputs.
 - `B` **bounce**(*rate* mod): Outputs values between inputs.
@@ -174,6 +180,8 @@ The midi operator interprets any letter above the chromatic scale as a transpose
 - [Remora](https://github.com/martinberlin/Remora), a ESP32 Led controller firmware.
 
 ## Tutorials
+
+- [Overview](https://www.youtube.com/watch?v=RaI_TuISSJE)
 
 ### IO
 
