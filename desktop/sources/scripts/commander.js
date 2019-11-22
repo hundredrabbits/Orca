@@ -15,7 +15,7 @@ function Commander (client) {
       client.cursor.select(p._x, p._y)
       if (client.source.cache[p._str + '.orca']) {
         const lines = client.source.cache[p._str + '.orca'].trim().split('\n')
-        client.cursor.resize(lines[0].length - 1, lines.length - 1)
+        client.cursor.scaleTo(lines[0].length - 1, lines.length - 1)
       }
     },
     write: (p) => { client.cursor.select(p._x, p._y, p._str.length) }
@@ -42,8 +42,6 @@ function Commander (client) {
     time: (p) => { client.clock.setFrame(p.int) },
     rewind: (p) => { client.clock.setFrame(client.orca.f - p.int) },
     skip: (p) => { client.clock.setFrame(client.orca.f + p.int) },
-    // Effects
-    rot: (p) => { client.cursor.rotate(p.int) },
     // Themeing
     color: (p) => {
       if (p.parts[0]) { client.theme.set('b_low', p.parts[0]) }

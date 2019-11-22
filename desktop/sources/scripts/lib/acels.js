@@ -73,7 +73,7 @@ function Acels (client) {
     for (const cat in cats) {
       text += `\n### ${cat}\n\n`
       for (const item of cats[cat]) {
-        text += item.accelerator ? `- \`${item.accelerator}\`: ${item.info}\n` : ''
+        text += item.accelerator ? `- \`${item.accelerator}\`: ${item.name}\n` : ''
       }
     }
     return text.trim()

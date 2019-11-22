@@ -10,7 +10,7 @@ Learn more by reading the <a href="https://github.com/Hundredrabbits/Orca" targe
 
 ## Install & Run
 
-You can download [builds](https://hundredrabbits.itch.io/orca) for **OSX, Windows and Linux**, or if you wish to build it yourself, follow these steps:
+You can download [builds](https://hundredrabbits.itch.io/orca) for **OSX, Windows and Linux**, use it [in your browser](https://hundredrabbits.github.io/Orca/)(requires webMidi), or if you wish to build it yourself, follow these steps:
 
 ```
 git clone https://github.com/hundredrabbits/Orca.git
@@ -112,7 +112,7 @@ For example, `=1abc` will send `10`, `11` and `12` to `/1`, via the port `49162`
 
 Some of Orca's features can be **controlled externally** via UDP though port `49160`, or via its own command-line interface. To activate the command-line prompt, press `CmdOrCtrl+K`. The prompt can also be used to inject patterns or change settings.
 
-### Injection Mode
+### Project Mode
 
 You can **quickly inject orca files** into the currently active file, by using the command-line prompt — Allowing you to navigate across multiple files like you would a project. Press `CmdOrCtrl+L` to load multiple orca files, then press `CmdOrCtrl+B` and type the name of a loaded `.orca` file to inject it.
 

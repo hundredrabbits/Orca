@@ -12,7 +12,7 @@
 /* global Theme */
 
 function Client () {
-  this.version = 154
+  this.version = 155
   this.library = library
 
   this.theme = new Theme(this)
@@ -65,7 +65,7 @@ function Client () {
     this.acels.set('Project', 'Toggle Commander', 'CmdOrCtrl+K', () => { this.commander.start() })
     this.acels.set('Project', 'Run Commander', 'Enter', () => { this.commander.run() })
 
-    this.acels.set('Cursor', 'Toggle Insert Mode', 'CmdOrCtrl+I', () => { this.cursor.toggleMode(1) })
+    this.acels.set('Cursor', 'Toggle Insert Mode', 'CmdOrCtrl+I', () => { this.cursor.ins = !this.cursor.ins })
     this.acels.set('Cursor', 'Toggle Block Comment', 'CmdOrCtrl+/', () => { this.cursor.comment() })
     this.acels.set('Cursor', 'Trigger Operator', 'CmdOrCtrl+P', () => { this.cursor.trigger() })
     this.acels.set('Cursor', 'Reset', 'Escape', () => { this.toggleGuide(false); this.commander.stop(); this.clear(); this.isPaused = false; this.cursor.reset() })
@@ -95,7 +95,7 @@ function Client () {
     this.acels.set('Move', 'Drag South(Leap)', 'CmdOrCtrl+Alt+ArrowDown', () => { this.cursor.drag(0, -this.grid.h) })
     this.acels.set('Move', 'Drag West(Leap)', 'CmdOrCtrl+Alt+ArrowLeft', () => { this.cursor.drag(-this.grid.w, 0) })
 
-    this.acels.set('Clock', 'Play/Pause', 'Space', () => { this.clock.togglePlay() })
+    this.acels.set('Clock', 'Play/Pause', 'Space', () => { if (this.cursor.ins) { this.cursor.move(1, 0) } else { this.clock.togglePlay() } })
     this.acels.set('Clock', 'Frame By Frame', 'CmdOrCtrl+F', () => { this.clock.touch() })
     this.acels.set('Clock', 'Reset Frame', 'CmdOrCtrl+Shift+R', () => { this.clock.setFrame(0) })
     this.acels.set('Clock', 'Incr. Speed', '>', () => { this.clock.modSpeed(1) })
@@ -333,7 +333,7 @@ function Client () {
 
   this.drawInterface = () => {
     this.write(`${this.cursor.inspect()}`, this.grid.w * 0, this.orca.h, this.grid.w)
-    this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.mode === 1 ? '+' : ''}`, this.grid.w * 1, this.orca.h, this.grid.w, this.cursor.mode === 1 ? 1 : 2)
+    this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.ins ? '+' : ''}`, this.grid.w * 1, this.orca.h, this.grid.w, this.cursor.ins ? 1 : 2)
     this.write(`${this.cursor.w}:${this.cursor.h}`, this.grid.w * 2, this.orca.h, this.grid.w)
     this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, this.grid.w * 3, this.orca.h, this.grid.w)
     this.write(`${this.io.inspect(this.grid.w)}`, this.grid.w * 4, this.orca.h, this.grid.w)
