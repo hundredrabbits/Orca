@@ -546,7 +546,7 @@ library[':'] = function OperatorMidi (orca, x, y, passive) {
   this.ports.octave = { x: 2, y: 0, clamp: { min: 0, max: 8 } }
   this.ports.note = { x: 3, y: 0 }
   this.ports.velocity = { x: 4, y: 0, default: 'f', clamp: { min: 0, max: 16 } }
-  this.ports.length = { x: 5, y: 0, default: '1', clamp: { min: 0, max: 16 } }
+  this.ports.length = { x: 5, y: 0, default: '1', clamp: { min: 0, max: 32 } }
 
   this.operation = function (force = false) {
     if (!this.hasNeighbor('*') && force === false) { return }
@@ -641,7 +641,7 @@ library['%'] = function OperatorMono (orca, x, y, passive) {
   this.ports.octave = { x: 2, y: 0, clamp: { min: 0, max: 8 } }
   this.ports.note = { x: 3, y: 0 }
   this.ports.velocity = { x: 4, y: 0, default: 'f', clamp: { min: 0, max: 16 } }
-  this.ports.length = { x: 5, y: 0, default: '1', clamp: { min: 0, max: 16 } }
+  this.ports.length = { x: 5, y: 0, default: '1', clamp: { min: 0, max: 32 } }
 
   this.operation = function (force = false) {
     if (!this.hasNeighbor('*') && force === false) { return }

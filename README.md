@@ -8,13 +8,13 @@ This application **is not a synthesizer, but a flexible livecoding environment**
 
 If you need <strong>help</strong>, visit the <a href="https://talk.lurk.org/channel/orca" target="_blank" rel="noreferrer" class="external ">chatroom</a> or the <a href="https://llllllll.co/t/orca-live-coding-tool/17689" target="_blank" rel="noreferrer" class="external ">forum</a>.
 
-- Download [builds](https://hundredrabbits.itch.io/orca) for **OSX, Windows and Linux**.
+- [Download builds](https://hundredrabbits.itch.io/orca), available for **Linux, Windows and OSX**.
 - Use directly [in your browser](https://hundredrabbits.github.io/Orca/), **requires webMidi**.
 - Use on a [raspberry pi](https://github.com/hundredrabbits/orca-c#raspberry-pi).
 
 ## Install & Run
 
-If you are looking for a lightweight version of Orca for embedded computers, see [Orca-c](https://github.com/hundredrabbits/Orca-c/). If you wish to build it yourself, follow these steps:
+If you wish to use Orca inside of [Electron](https://electronjs.org/), follow these steps:
 
 ```
 git clone https://github.com/hundredrabbits/Orca.git

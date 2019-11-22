@@ -472,7 +472,7 @@ function Client () {
     }
   })
 
-  window.onresize = (event) => {
+  window.onresize = (e) => {
     this.resize()
   }
 
