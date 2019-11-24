@@ -47,6 +47,7 @@ function Udp (client) {
   }
 
   this.play = function (data) {
+    if (!this.socket) { return }
     this.socket.send(Buffer.from(`${data}`), this.port, client.io.ip, (err) => {
       if (err) { console.warn(err) }
     })
