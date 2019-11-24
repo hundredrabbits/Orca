@@ -12,7 +12,7 @@
 /* global Theme */
 
 function Client () {
-  this.version = 157
+  this.version = 158
   this.library = library
 
   this.theme = new Theme(this)
@@ -56,7 +56,7 @@ function Client () {
     this.acels.add('Edit', 'paste')
 
     this.acels.set('Edit', 'Select All', 'CmdOrCtrl+A', () => { this.cursor.selectAll() })
-    this.acels.set('Edit', 'Erase Selection', 'Backspace', () => { this[this.commander.isActive ? 'commander' : 'cursor'].erase() })
+    this.acels.set('Edit', 'Erase Selection', 'Backspace', () => { if (this.cursor.ins) { this.cursor.erase(); this.cursor.move(-1, 0) } else { this[this.commander.isActive ? 'commander' : 'cursor'].erase() } })
     this.acels.set('Edit', 'Undo', 'CmdOrCtrl+Z', () => { this.history.undo() })
     this.acels.set('Edit', 'Redo', 'CmdOrCtrl+Shift+Z', () => { this.history.redo() })
 
@@ -68,7 +68,7 @@ function Client () {
     this.acels.set('Cursor', 'Toggle Insert Mode', 'CmdOrCtrl+I', () => { this.cursor.ins = !this.cursor.ins })
     this.acels.set('Cursor', 'Toggle Block Comment', 'CmdOrCtrl+/', () => { this.cursor.comment() })
     this.acels.set('Cursor', 'Trigger Operator', 'CmdOrCtrl+P', () => { this.cursor.trigger() })
-    this.acels.set('Cursor', 'Reset', 'Escape', () => { this.toggleGuide(false); this.commander.stop(); this.clear(); this.isPaused = false; this.cursor.reset() })
+    this.acels.set('Cursor', 'Reset', 'Escape', () => { this.toggleGuide(false); this.commander.stop(); this.clear(); this.clock.isPaused = false; this.cursor.reset() })
 
     this.acels.set('Move', 'Move North', 'ArrowUp', () => { this.cursor.move(0, 1) })
     this.acels.set('Move', 'Move East', 'ArrowRight', () => { this.cursor.move(1, 0) })
@@ -238,20 +238,8 @@ function Client () {
     return x > (parseInt(this.cursor.x / this.grid.w) * this.grid.w) - 1 && x <= ((1 + parseInt(this.cursor.x / this.grid.w)) * this.grid.w) && y > (parseInt(this.cursor.y / this.grid.h) * this.grid.h) - 1 && y <= ((1 + parseInt(this.cursor.y / this.grid.h)) * this.grid.h)
   }
 
-  this.isAligned = (x, y) => {
-    return x === this.cursor.x || y === this.cursor.y
-  }
-
-  this.isEdge = (x, y) => {
-    return x === 0 || y === 0 || x === this.orca.w - 1 || y === this.orca.h - 1
-  }
-
   this.isLocals = (x, y) => {
     return this.isNear(x, y) === true && (x % (this.grid.w / 4) === 0 && y % (this.grid.h / 4) === 0) === true
-  }
-
-  this.portAt = (x, y) => {
-    return this.ports[this.orca.indexAt(x, y)]
   }
 
   this.findPorts = () => {
@@ -268,26 +256,6 @@ function Client () {
   }
 
   // Interface
-
-  this.makeGlyph = (x, y) => {
-    const g = this.orca.glyphAt(x, y)
-    if (g !== '.') { return g }
-    if (this.isCursor(x, y)) { return this.isPaused ? '~' : '@' }
-    if (this.isMarker(x, y)) { return '+' }
-    return g
-  }
-
-  this.makeStyle = (x, y, glyph, selection) => {
-    const isLocked = this.orca.lockAt(x, y)
-    const port = this.ports[this.orca.indexAt(x, y)]
-    if (this.cursor.selected(x, y)) { return 4 }
-    if (!port && glyph === '.' && isLocked === false && this.hardmode === true) { return this.isLocals(x, y) === true ? 9 : 7 }
-    if (selection === glyph && isLocked === false && selection !== '.') { return 6 }
-    if (glyph === '*' && isLocked === false) { return 6 }
-    if (port) { return port[2] }
-    if (isLocked === true) { return 5 }
-    return 9
-  }
 
   this.makeTheme = (type) => {
     // Operator
@@ -324,18 +292,33 @@ function Client () {
     const selection = this.cursor.read()
     for (let y = 0; y < this.orca.h; y++) {
       for (let x = 0; x < this.orca.w; x++) {
-        const glyph = this.makeGlyph(x, y)
+        // Make Glyph
+        const g = this.orca.glyphAt(x, y)
+        const glyph = g !== '.' ? g : this.isCursor(x, y) ? (this.clock.isPaused ? '~' : '@') : this.isMarker(x, y) ? '+' : g
+        // Make Style
         const style = this.makeStyle(x, y, glyph, selection)
         this.drawSprite(x, y, glyph, style)
       }
     }
   }
 
+  this.makeStyle = (x, y, glyph, selection) => {
+    const isLocked = this.orca.lockAt(x, y)
+    const port = this.ports[this.orca.indexAt(x, y)]
+    if (this.cursor.selected(x, y)) { return 4 }
+    if (!port && glyph === '.' && isLocked === false && this.hardmode === true) { return this.isLocals(x, y) === true ? 9 : 7 }
+    if (selection === glyph && isLocked === false && selection !== '.') { return 6 }
+    if (glyph === '*' && isLocked === false) { return 2 }
+    if (port) { return port[2] }
+    if (isLocked === true) { return 5 }
+    return 9
+  }
+
   this.drawInterface = () => {
     this.write(`${this.cursor.inspect()}`, this.grid.w * 0, this.orca.h, this.grid.w)
     this.write(`${this.cursor.x},${this.cursor.y}${this.cursor.ins ? '+' : ''}`, this.grid.w * 1, this.orca.h, this.grid.w, this.cursor.ins ? 1 : 2)
     this.write(`${this.cursor.w}:${this.cursor.h}`, this.grid.w * 2, this.orca.h, this.grid.w)
-    this.write(`${this.orca.f}f${this.isPaused ? '*' : ''}`, this.grid.w * 3, this.orca.h, this.grid.w)
+    this.write(`${this.orca.f}f${this.clock.isPaused ? '~' : ''}`, this.grid.w * 3, this.orca.h, this.grid.w)
     this.write(`${this.io.inspect(this.grid.w)}`, this.grid.w * 4, this.orca.h, this.grid.w)
     this.write(`${display(Object.keys(this.orca.variables).join(''), this.orca.f, this.grid.w)}`, this.grid.w * 5, this.orca.h, this.grid.w)
 
@@ -368,22 +351,18 @@ function Client () {
   this.drawSprite = (x, y, g, type) => {
     const theme = this.makeTheme(type)
     if (theme.bg) {
-      const bgrect = { x: x * this.tile.w * this.scale, y: (y) * this.tile.h * this.scale, w: this.tile.w * this.scale, h: this.tile.h * this.scale }
       this.context.fillStyle = theme.bg
-      this.context.fillRect(bgrect.x, bgrect.y, bgrect.w, bgrect.h)
+      this.context.fillRect(x * this.tile.w * this.scale, (y) * this.tile.h * this.scale, this.tile.w * this.scale, this.tile.h * this.scale)
     }
     if (theme.fg) {
-      const fgrect = { x: (x + 0.5) * this.tile.w * this.scale, y: (y + 1) * this.tile.h * this.scale, w: this.tile.w * this.scale, h: this.tile.h * this.scale }
       this.context.fillStyle = theme.fg
-      this.context.fillText(g, fgrect.x, fgrect.y)
+      this.context.fillText(g, (x + 0.5) * this.tile.w * this.scale, (y + 1) * this.tile.h * this.scale)
     }
   }
 
   this.write = (text, offsetX, offsetY, limit = 50, type = 2) => {
-    let x = 0
-    while (x < text.length && x < limit - 1) {
+    for (let x = 0; x < text.length && x < limit; x++) {
       this.drawSprite(offsetX + x, offsetY, text.substr(x, 1), type)
-      x += 1
     }
   }
 
@@ -454,6 +433,7 @@ function Client () {
     }
     return html
   }
+
   // Events
 
   window.addEventListener('dragover', (e) => {

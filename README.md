@@ -30,7 +30,7 @@ npm start
 To display the list of operators inside of Orca, use `CmdOrCtrl+G`.
 
 - `A` **add**(*a* b): Outputs sum of inputs.
-- `B` **bounce**(*rate* mod): Outputs values between inputs.
+- `B` **bounce**(*a* b): Outputs difference of inputs.
 - `C` **clock**(*rate* mod): Outputs modulo of frame.
 - `D` **delay**(*rate* mod): Bangs on modulo of frame.
 - `E` **east**: Moves eastward, or bangs.
@@ -40,7 +40,7 @@ To display the list of operators inside of Orca, use `CmdOrCtrl+G`.
 - `I` **increment**(*step* mod): Increments southward operand.
 - `J` **jumper**(*val*): Outputs northward operand.
 - `K` **konkat**(*len*): Reads multiple variables.
-- `L` **loop**(*step* *len* val): Moves eastward operands.
+- `L` **less**(*a* *b*): Outputs smallest of inputs.
 - `M` **multiply**(*a* b): Outputs product of inputs.
 - `N` **north**: Moves Northward, or bangs.
 - `O` **read**(*x* *y* read): Reads operand with offset.

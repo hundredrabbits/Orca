@@ -107,7 +107,8 @@ function Cursor (client) {
 
   this.inspect = () => {
     if (this.w !== 0 || this.h !== 0) { return 'multi' }
-    const port = client.portAt(this.x, this.y)
+    const index = client.orca.indexAt(this.x, this.y)
+    const port = client.ports[index]
     if (port) { return `${port[3]}` }
     if (client.orca.lockAt(this.x, this.y)) { return 'locked' }
     return 'empty'

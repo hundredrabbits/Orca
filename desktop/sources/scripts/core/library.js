@@ -22,21 +22,20 @@ library.a = function OperatorA (orca, x, y, passive) {
   }
 }
 
-library.b = function OperatorB (orca, x, y, passive) {
+library.b = function OperatorL (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'b', passive)
 
   this.name = 'bounce'
-  this.info = 'Outputs values between inputs'
+  this.info = 'Outputs difference between inputs'
 
-  this.ports.rate = { x: -1, y: 0, clamp: { min: 1 } }
-  this.ports.mod = { x: 1, y: 0, default: '8' }
+  this.ports.a = { x: -1, y: 0 }
+  this.ports.b = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1, sensitive: true }
 
   this.operation = function (force = false) {
-    const rate = this.listen(this.ports.rate, true)
-    const mod = this.listen(this.ports.mod, true) - 1
-    const key = Math.floor(orca.f / rate) % (mod * 2)
-    return orca.keyOf(key <= mod ? key : mod - (key - mod))
+    const a = this.listen(this.ports.a, true)
+    const b = this.listen(this.ports.b, true)
+    return orca.keyOf(Math.abs(b - a))
   }
 }
 
@@ -102,7 +101,7 @@ library.f = function OperatorF (orca, x, y, passive) {
   this.operation = function (force = false) {
     const a = this.listen(this.ports.a)
     const b = this.listen(this.ports.b)
-    return a === b && a !== '.'
+    return a === b
   }
 }
 
@@ -205,27 +204,17 @@ library.k = function OperatorK (orca, x, y, passive) {
 library.l = function OperatorL (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'l', passive)
 
-  this.name = 'loop'
-  this.info = 'Moves eastward operands'
+  this.name = 'lesser'
+  this.info = 'Outputs smallest input'
 
-  this.ports.step = { x: -2, y: 0, default: '1' }
-  this.ports.len = { x: -1, y: 0 }
-  this.ports.val = { x: 1, y: 0 }
-  this.ports.output = { x: 0, y: 1 }
+  this.ports.a = { x: -1, y: 0 }
+  this.ports.b = { x: 1, y: 0 }
+  this.ports.output = { x: 0, y: 1, sensitive: true }
 
   this.operation = function (force = false) {
-    const len = this.listen(this.ports.len, true)
-    const step = this.listen(this.ports.step, true)
-    const index = orca.indexAt(this.x + 1, this.y)
-    const seg = orca.s.substr(index, len)
-    const res = seg.substr(len - step, step) + seg.substr(0, len - step)
-    for (let offset = 0; offset <= len; offset++) {
-      if (offset > 0) {
-        orca.lock(this.x + offset, this.y)
-      }
-      orca.write(this.x + offset + 1, this.y, res.charAt(offset))
-    }
-    return this.listen(this.ports.val)
+    const a = this.listen(this.ports.a)
+    const b = this.listen(this.ports.b)
+    return a !== '.' && b !== '.' ? orca.keyOf(Math.min(orca.valueOf(a), orca.valueOf(b))) : '.'
   }
 }
 

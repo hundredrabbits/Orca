@@ -89,6 +89,7 @@ function Commander (client) {
   this.start = (q = '') => {
     this.isActive = true
     this.query = q
+    client.cursor.ins = false
     client.update()
   }
 

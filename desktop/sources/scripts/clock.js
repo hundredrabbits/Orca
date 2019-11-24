@@ -3,7 +3,8 @@
 /* global Blob */
 
 function Clock (client) {
-  const worker = 'onmessage = (e) => { setInterval(() => { postMessage(true) }, e.data)}'
+  const workerScript = 'onmessage = (e) => { setInterval(() => { postMessage(true) }, e.data)}'
+  const worker = window.URL.createObjectURL(new Blob([workerScript], { type: 'text/javascript' }))
 
   this.isPaused = true
   this.timer = null
@@ -52,6 +53,7 @@ function Clock (client) {
     } else {
       this.stop(msg)
     }
+    client.update()
   }
 
   this.play = function (msg = false) {
@@ -65,7 +67,7 @@ function Clock (client) {
 
   this.stop = function (msg = false) {
     console.log('Clock', 'Stop')
-    if (this.isPaused === true) { console.warn('Clock', 'Already stopped'); return }
+    if (this.isPaused === true) { return }
     if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = true
     if (msg === true) { client.io.midi.sendClockStop() }
@@ -112,7 +114,7 @@ function Clock (client) {
     if (bpm < 60) { console.warn('Clock', 'Error ' + bpm); return }
     this.clearTimer()
     window.localStorage.setItem('bpm', bpm)
-    this.timer = new Worker(window.URL.createObjectURL(new Blob([worker], { type: 'text/javascript' })))
+    this.timer = new Worker(worker)
     this.timer.postMessage((60000 / parseInt(bpm)) / 4)
     this.timer.onmessage = (event) => {
       client.io.midi.sendClock()
