@@ -127,30 +127,11 @@ function Cursor (client) {
 
   this.getBlock = () => {
     const rect = this.toRect()
-    const block = []
-    for (let _y = rect.y; _y < rect.y + rect.h; _y++) {
-      const line = []
-      for (let _x = rect.x; _x < rect.x + rect.w; _x++) {
-        line.push(client.orca.glyphAt(_x, _y))
-      }
-      block.push(line)
-    }
-    return block
+    return client.orca.getBlock(rect.x, rect.y, rect.w, rect.h)
   }
 
   this.writeBlock = (block, overlap = false) => {
-    if (!block || block.length === 0) { return }
-    const rect = this.toRect()
-    let _y = rect.y
-    for (const line of block) {
-      let _x = rect.x
-      for (const y in line) {
-        const glyph = line[y]
-        client.orca.write(_x, _y, overlap === true && glyph === '.' ? client.orca.glyphAt(_x, _y) : glyph)
-        _x++
-      }
-      _y++
-    }
+    client.orca.writeBlock(this.x, this.y, block, overlap)
     client.history.record(client.orca.s)
   }
 

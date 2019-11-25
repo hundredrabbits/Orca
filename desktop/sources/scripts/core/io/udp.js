@@ -14,7 +14,7 @@ function Udp (client) {
     console.info('UDP', 'Starting..')
 
     this.listener.on('message', (msg, rinfo) => {
-      client.commander.trigger(`${msg}`, false)
+      client.commander.trigger(`${msg}`)
     })
 
     this.listener.on('listening', () => {

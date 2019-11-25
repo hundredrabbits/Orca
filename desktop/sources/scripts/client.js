@@ -12,7 +12,7 @@
 /* global Theme */
 
 function Client () {
-  this.version = 158
+  this.version = 159
   this.library = library
 
   this.theme = new Theme(this)
@@ -46,7 +46,7 @@ function Client () {
     this.theme.default = { background: '#000000', f_high: '#ffffff', f_med: '#777777', f_low: '#444444', f_inv: '#000000', b_high: '#eeeeee', b_med: '#72dec2', b_low: '#444444', b_inv: '#ffb545' }
 
     this.acels.set('File', 'New', 'CmdOrCtrl+N', () => { this.reset() })
-    this.acels.set('File', 'Open', 'CmdOrCtrl+O', () => { this.source.open('orca', this.whenOpen) })
+    this.acels.set('File', 'Open', 'CmdOrCtrl+O', () => { this.source.open('orca', this.whenOpen, true) })
     this.acels.set('File', 'Load Modules', 'CmdOrCtrl+L', () => { this.source.load('orca') })
     this.acels.set('File', 'Load Images', 'CmdOrCtrl+Shift+L', () => { this.source.load('jpg') })
     this.acels.set('File', 'Save', 'CmdOrCtrl+S', () => { this.source.write('orca', 'orca', `${this.orca}`, 'text/plain') })
@@ -445,10 +445,11 @@ function Client () {
   window.addEventListener('drop', (e) => {
     e.preventDefault()
     e.stopPropagation()
-    const file = e.dataTransfer.files[0]
-    if (file.name.indexOf('.orca') > -1) {
+    for (const file of e.dataTransfer.files) {
+      if (file.name.indexOf('.orca') < 0) { continue }
       this.toggleGuide(false)
-      this.source.read(file, this.whenOpen)
+      this.source.read(file, null, true)
+      this.commander.start('inject:' + file.name.replace('.orca', ''))
     }
   })
 

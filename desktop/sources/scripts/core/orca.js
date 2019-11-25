@@ -103,6 +103,34 @@ function Orca (library) {
     return { w, h }
   }
 
+  // Blocks
+
+  this.getBlock = (x, y, w, h) => {
+    const block = []
+    for (let _y = y; _y < y + h; _y++) {
+      const line = []
+      for (let _x = x; _x < x + w; _x++) {
+        line.push(this.glyphAt(_x, _y))
+      }
+      block.push(line)
+    }
+    return block
+  }
+
+  this.writeBlock = (x, y, block, overlap = false) => {
+    if (!block || block.length === 0) { return }
+    let _y = y
+    for (const line of block) {
+      let _x = x
+      for (const y in line) {
+        const glyph = line[y]
+        client.orca.write(_x, _y, overlap === true && glyph === '.' ? this.glyphAt(_x, _y) : glyph)
+        _x++
+      }
+      _y++
+    }
+  }
+
   // Locks
 
   this.release = function () {

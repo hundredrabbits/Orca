@@ -51,13 +51,10 @@ function Commander (client) {
     // Edit
     find: (p) => { client.cursor.find(p.str) },
     select: (p) => { client.cursor.select(p.x, p.y, p.w, p.h) },
-    inject: (p) => {
-      client.cursor.select(p._x, p._y)
-      if (client.source.cache[p._str + '.orca']) {
-        const lines = client.source.cache[p._str + '.orca'].trim().split('\n')
-        client.cursor.writeBlock(lines)
-        client.cursor.reset()
-      }
+    inject: (p, origin) => {
+      const mod = client.source.cache[p._str + '.orca']
+      if (!mod) { console.warn('Commander', 'Unknown mod: ' + p._str); return }
+      client.orca.writeBlock(origin ? origin.x : client.cursor.x, origin ? origin.y : client.cursor.y, mod.trim().split('\n'))
     },
     write: (p) => { client.cursor.select(p._x, p._y, p._str.length); client.cursor.writeBlock([p._str.split('')]) }
   }
@@ -120,17 +117,15 @@ function Commander (client) {
     client.update()
   }
 
-  this.trigger = function (msg = this.query, touch = true) {
+  this.trigger = function (msg = this.query, origin = null) {
     const cmd = `${msg}`.split(':')[0].toLowerCase()
     const val = `${msg}`.substr(cmd.length + 1)
-    if (!this.actives[cmd]) { console.warn('Commander', `Unknown message: ${msg}`); this.stop(); return }
-    console.info('Commander', msg)
-    this.actives[cmd](new Param(val), true)
-    if (touch === true) {
-      this.history.push(msg)
-      this.historyIndex = this.history.length
-      this.stop()
-    }
+    const fn = this.actives[cmd]
+    if (!fn) { console.warn('Commander', `Unknown message: ${msg}`); this.stop(); return }
+    fn(new Param(val), origin)
+    this.history.push(msg)
+    this.historyIndex = this.history.length
+    this.stop()
   }
 
   this.preview = function (msg = this.query) {
