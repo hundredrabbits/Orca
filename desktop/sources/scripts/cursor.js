@@ -131,7 +131,7 @@ function Cursor (client) {
   }
 
   this.writeBlock = (block, overlap = false) => {
-    client.orca.writeBlock(this.x, this.y, block, overlap)
+    client.orca.writeBlock(this.minX, this.minY, block, overlap)
     client.history.record(client.orca.s)
   }
 

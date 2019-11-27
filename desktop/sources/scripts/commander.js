@@ -36,12 +36,16 @@ function Commander (client) {
     play: (p) => { client.clock.play() },
     stop: (p) => { client.clock.stop() },
     run: (p) => { client.run() },
-    // Speed
+    // Time
     apm: (p) => { client.clock.setSpeed(null, p.int) },
     bpm: (p) => { client.clock.setSpeed(p.int, p.int, true) },
-    time: (p) => { client.clock.setFrame(p.int) },
+    frame: (p) => { client.clock.setFrame(p.int) },
     rewind: (p) => { client.clock.setFrame(client.orca.f - p.int) },
     skip: (p) => { client.clock.setFrame(client.orca.f + p.int) },
+    time: (p, origin) => {
+      const formatted = new Date(250 * (client.orca.f * (60 / client.clock.speed.value))).toISOString().substr(14, 5).replace(/:/g, '')
+      client.orca.writeBlock(origin ? origin.x : client.cursor.x, origin ? origin.y : client.cursor.y, [`${formatted}`])
+    },
     // Themeing
     color: (p) => {
       if (p.parts[0]) { client.theme.set('b_low', p.parts[0]) }
