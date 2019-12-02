@@ -1,7 +1,7 @@
 'use strict'
 
 function Orca (library) {
-  this.keys = Object.keys(library).slice(0, 36)
+  this.keys = '0123456789abcdefghijklmnopqrstuvwxyz'.split('')
 
   this.w = 1 // Default Width
   this.h = 1 // Default Height
@@ -62,20 +62,11 @@ function Orca (library) {
     for (let y = 0; y < this.h; y++) {
       for (let x = 0; x < this.w; x++) {
         const g = this.glyphAt(x, y)
-        const operator = this.cast(g, x, y)
-        if (operator) {
-          a.push(operator)
-        }
+        if (g === '.' || !this.isAllowed(g)) { continue }
+        a.push(new library[g.toLowerCase()](this, x, y, g === g.toUpperCase()))
       }
     }
     return a
-  }
-
-  this.cast = function (g, x, y) {
-    if (g === '.') { return }
-    if (!library[g.toLowerCase()]) { return }
-    const passive = g === g.toUpperCase()
-    return new library[g.toLowerCase()](this, x, y, passive)
   }
 
   this.operate = function (operators) {
@@ -124,7 +115,7 @@ function Orca (library) {
       let _x = x
       for (const y in line) {
         const glyph = line[y]
-        client.orca.write(_x, _y, overlap === true && glyph === '.' ? this.glyphAt(_x, _y) : glyph)
+        this.write(_x, _y, overlap === true && glyph === '.' ? this.glyphAt(_x, _y) : glyph)
         _x++
       }
       _y++
