@@ -12,7 +12,7 @@
 /* global Theme */
 
 function Client () {
-  this.version = 161
+  this.version = 162
   this.library = library
 
   this.theme = new Theme(this)
@@ -47,9 +47,10 @@ function Client () {
 
     this.acels.set('File', 'New', 'CmdOrCtrl+N', () => { this.reset() })
     this.acels.set('File', 'Open', 'CmdOrCtrl+O', () => { this.source.open('orca', this.whenOpen, true) })
-    this.acels.set('File', 'Load Modules', 'CmdOrCtrl+L', () => { this.source.load('orca') })
-    this.acels.set('File', 'Load Images', 'CmdOrCtrl+Shift+L', () => { this.source.load('jpg') })
-    this.acels.set('File', 'Save', 'CmdOrCtrl+S', () => { this.source.write('orca', 'orca', `${this.orca}`, 'text/plain') })
+    this.acels.set('File', 'Import Modules', 'CmdOrCtrl+L', () => { this.source.load('orca') })
+    this.acels.set('File', 'Import Images', 'CmdOrCtrl+Shift+L', () => { this.source.load('jpg') })
+    this.acels.set('File', 'Export', 'CmdOrCtrl+S', () => { this.source.write('orca', 'orca', `${this.orca}`, 'text/plain') })
+    this.acels.set('File', 'Export Selection', 'CmdOrCtrl+Shift+S', () => { this.source.write('orca', 'orca', `${this.cursor.selection()}`, 'text/plain') })
 
     this.acels.add('Edit', 'cut')
     this.acels.add('Edit', 'copy')
@@ -171,7 +172,7 @@ function Client () {
   }
 
   this.whenOpen = (file, text) => {
-    const lines = text.trim().split('\n')
+    const lines = text.trim().split(/\r?\n/)
     const w = lines[0].length
     const h = lines.length
     const s = lines.join('\n').trim()
@@ -408,13 +409,13 @@ function Client () {
     if (h > this.orca.h) {
       block = `${block}${`\n${'.'.repeat(this.orca.w)}`.repeat((h - this.orca.h))}`
     } else if (h < this.orca.h) {
-      block = `${block}`.split('\n').slice(0, (h - this.orca.h)).join('\n').trim()
+      block = `${block}`.split(/\r?\n/).slice(0, (h - this.orca.h)).join('\n').trim()
     }
 
     if (w > this.orca.w) {
-      block = `${block}`.split('\n').map((val) => { return val + ('.').repeat((w - this.orca.w)) }).join('\n').trim()
+      block = `${block}`.split(/\r?\n/).map((val) => { return val + ('.').repeat((w - this.orca.w)) }).join('\n').trim()
     } else if (w < this.orca.w) {
-      block = `${block}`.split('\n').map((val) => { return val.substr(0, val.length + (w - this.orca.w)) }).join('\n').trim()
+      block = `${block}`.split(/\r?\n/).map((val) => { return val.substr(0, val.length + (w - this.orca.w)) }).join('\n').trim()
     }
 
     this.history.reset()

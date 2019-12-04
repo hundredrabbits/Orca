@@ -59,10 +59,11 @@ function Cursor (client) {
   this.drag = (x, y) => {
     if (isNaN(x) || isNaN(y)) { return }
     this.ins = false
-    const block = this.getBlock()
+    const block = this.selection()
     this.erase()
     this.move(x, y)
-    this.writeBlock(block)
+    client.orca.writeBlock(this.minX, this.minY, block)
+    client.history.record(client.orca.s)
   }
 
   this.reset = (pos = false) => {
@@ -70,7 +71,7 @@ function Cursor (client) {
     this.ins = 0
   }
 
-  this.read = function () {
+  this.read = () => {
     return client.orca.glyphAt(this.x, this.y)
   }
 
@@ -115,27 +116,15 @@ function Cursor (client) {
   }
 
   this.comment = () => {
-    const block = this.getBlock()
-    for (const val of block) {
-      val[0] = val[0] === '#' ? '.' : '#'
-      val[val.length - 1] = val[val.length - 1] === '#' ? '.' : '#'
-    }
-    this.writeBlock(block)
-  }
-
-  // Block
-
-  this.getBlock = () => {
-    const rect = this.toRect()
-    return client.orca.getBlock(rect.x, rect.y, rect.w, rect.h)
-  }
-
-  this.writeBlock = (block, overlap = false) => {
-    client.orca.writeBlock(this.minX, this.minY, block, overlap)
+    const block = this.selection()
+    const lines = block.trim().split(/\r?\n/)
+    const char = block.substr(0, 1) === '#' ? '.' : '#'
+    const res = lines.map((line) => { return `${char}${line.substr(1, line.length - 2)}${char}` }).join('\n')
+    client.orca.writeBlock(this.minX, this.minY, res)
     client.history.record(client.orca.s)
   }
 
-  this.toRect = function () {
+  this.toRect = () => {
     return {
       x: this.minX,
       y: this.minY,
@@ -144,20 +133,24 @@ function Cursor (client) {
     }
   }
 
-  this.calculateBounds = function () {
+  this.calculateBounds = () => {
     this.minX = this.x < this.x + this.w ? this.x : this.x + this.w
     this.minY = this.y < this.y + this.h ? this.y : this.y + this.h
     this.maxX = this.x > this.x + this.w ? this.x : this.x + this.w
     this.maxY = this.y > this.y + this.h ? this.y : this.y + this.h
   }
 
-  this.selected = function (x, y) {
+  this.selected = (x, y) => {
     return (
       x >= this.minX &&
       x <= this.maxX &&
       y >= this.minY &&
       y <= this.maxY
     )
+  }
+
+  this.selection = (rect = this.toRect()) => {
+    return client.orca.getBlock(rect.x, rect.y, rect.w, rect.h)
   }
 
   this.mouseFrom = null
@@ -204,13 +197,7 @@ function Cursor (client) {
   }
 
   this.onCopy = (e) => {
-    const block = this.getBlock()
-    var rows = []
-    for (var i = 0; i < block.length; i++) {
-      rows.push(block[i].join(''))
-    }
-    const content = rows.join('\n').trim()
-    e.clipboardData.setData('text/plain', content)
+    e.clipboardData.setData('text/plain', this.selection())
     e.preventDefault()
   }
 
@@ -221,8 +208,9 @@ function Cursor (client) {
 
   this.onPaste = (e) => {
     const data = e.clipboardData.getData('text/plain').trim()
-    this.writeBlock(data.split(/\r?\n/), this.ins)
-    this.scaleTo(data.split('\n')[0].length - 1, data.split('\n').length - 1)
+    client.orca.writeBlock(this.minX, this.minY, data, this.ins)
+    client.history.record(client.orca.s)
+    this.scaleTo(data.split(/\r?\n/)[0].length - 1, data.split(/\r?\n/).length - 1)
     e.preventDefault()
   }
 

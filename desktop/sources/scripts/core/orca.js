@@ -97,21 +97,22 @@ function Orca (library) {
   // Blocks
 
   this.getBlock = (x, y, w, h) => {
-    const block = []
+    let lines = ''
     for (let _y = y; _y < y + h; _y++) {
-      const line = []
+      let line = ''
       for (let _x = x; _x < x + w; _x++) {
-        line.push(this.glyphAt(_x, _y))
+        line += this.glyphAt(_x, _y)
       }
-      block.push(line)
+      lines += line + '\n'
     }
-    return block
+    return lines
   }
 
   this.writeBlock = (x, y, block, overlap = false) => {
-    if (!block || block.length === 0) { return }
+    if (!block) { return }
+    const lines = block.split(/\r?\n/)
     let _y = y
-    for (const line of block) {
+    for (const line of lines) {
       let _x = x
       for (const y in line) {
         const glyph = line[y]
@@ -190,7 +191,7 @@ function Orca (library) {
 
   // Tools
 
-  this.format = function () {
+  this.format = () => {
     const a = []
     for (let y = 0; y < this.h; y++) {
       a.push(this.s.substr(y * this.w, this.w))
@@ -200,16 +201,21 @@ function Orca (library) {
     }, '')
   }
 
-  this.length = function () {
+  this.length = () => {
     return this.strip().length
   }
 
-  this.strip = function () {
+  this.strip = () => {
     return this.s.replace(/[^a-zA-Z0-9+]+/gi, '').trim()
   }
 
-  this.toString = function () {
+  this.toString = () => {
     return this.format().trim()
+  }
+
+  this.toRect = (str = this.s) => {
+    const lines = str.trim().split(/\r?\n/)
+    return { x: lines[0].length, y: lines.length }
   }
 
   this.reset()

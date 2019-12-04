@@ -14,8 +14,9 @@ function Commander (client) {
     inject: (p) => {
       client.cursor.select(p._x, p._y)
       if (client.source.cache[p._str + '.orca']) {
-        const lines = client.source.cache[p._str + '.orca'].trim().split('\n')
-        client.cursor.scaleTo(lines[0].length - 1, lines.length - 1)
+        const block = client.source.cache[p._str + '.orca']
+        const rect = client.orca.toRect(block)
+        client.cursor.scaleTo(rect.x, rect.y)
       }
     },
     write: (p) => { client.cursor.select(p._x, p._y, p._str.length) }
@@ -44,7 +45,7 @@ function Commander (client) {
     skip: (p) => { client.clock.setFrame(client.orca.f + p.int) },
     time: (p, origin) => {
       const formatted = new Date(250 * (client.orca.f * (60 / client.clock.speed.value))).toISOString().substr(14, 5).replace(/:/g, '')
-      client.orca.writeBlock(origin ? origin.x : client.cursor.x, origin ? origin.y : client.cursor.y, [`${formatted}`])
+      client.orca.writeBlock(origin ? origin.x : client.cursor.x, origin ? origin.y : client.cursor.y, `${formatted}`)
     },
     // Themeing
     color: (p) => {
@@ -56,11 +57,12 @@ function Commander (client) {
     find: (p) => { client.cursor.find(p.str) },
     select: (p) => { client.cursor.select(p.x, p.y, p.w, p.h) },
     inject: (p, origin) => {
-      const mod = client.source.cache[p._str + '.orca']
-      if (!mod) { console.warn('Commander', 'Unknown mod: ' + p._str); return }
-      client.orca.writeBlock(origin ? origin.x : client.cursor.x, origin ? origin.y : client.cursor.y, mod.trim().split('\n'))
+      const block = client.source.cache[p._str + '.orca']
+      if (!block) { console.warn('Commander', 'Unknown block: ' + p._str); return }
+      client.orca.writeBlock(origin ? origin.x : client.cursor.x, origin ? origin.y : client.cursor.y, block)
+      client.cursor.scaleTo(0,0)
     },
-    write: (p) => { client.cursor.select(p._x, p._y, p._str.length); client.cursor.writeBlock([p._str.split('')]) }
+    write: (p) => { client.cursor.select(p._x, p._y, p._str.length); client.orca.writeBlock(p._str) }
   }
 
   // Make shorthands
