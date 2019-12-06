@@ -42,6 +42,7 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     const payload = this.operation(force)
     // Permissions
     for (const port of Object.values(this.ports)) {
+      if (port.bang) { continue }
       orca.lock(this.x + port.x, this.y + port.y)
     }
 
