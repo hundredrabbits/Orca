@@ -25,11 +25,16 @@ function Cursor (client) {
 
   this.select = (x = this.x, y = this.y, w = this.w, h = this.h) => {
     if (isNaN(x) || isNaN(y) || isNaN(w) || isNaN(h)) { return }
-    this.x = clamp(parseInt(x), 0, client.orca.w - 1)
-    this.y = clamp(parseInt(y), 0, client.orca.h - 1)
-    this.w = clamp(parseInt(w), -this.x, client.orca.w - 1)
-    this.h = clamp(parseInt(h), -this.y, client.orca.h - 1)
+    const rect = { x: clamp(parseInt(x), 0, client.orca.w - 1), y: clamp(parseInt(y), 0, client.orca.h - 1), w: clamp(parseInt(w), -this.x, client.orca.w - 1), h: clamp(parseInt(h), -this.y, client.orca.h - 1) }
 
+    if (this.x === rect.x && this.y === rect.y && this.w === rect.w && this.h === rect.h) {
+      return // Don't update when unchanged
+    }
+
+    this.x = rect.x
+    this.y = rect.y
+    this.w = rect.w
+    this.h = rect.h
     this.calculateBounds()
     client.toggleGuide(false)
     client.update()
@@ -140,13 +145,8 @@ function Cursor (client) {
     this.maxY = this.y > this.y + this.h ? this.y : this.y + this.h
   }
 
-  this.selected = (x, y) => {
-    return (
-      x >= this.minX &&
-      x <= this.maxX &&
-      y >= this.minY &&
-      y <= this.maxY
-    )
+  this.selected = (x, y, w = 0, h = 0) => {
+    return x >= this.minX && x <= this.maxX && y >= this.minY && y <= this.maxY
   }
 
   this.selection = (rect = this.toRect()) => {
