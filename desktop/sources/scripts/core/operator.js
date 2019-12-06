@@ -32,7 +32,9 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
 
   this.bang = function (b) {
     if (!this.ports.output) { console.warn(this.name, 'Trying to bang, but no port'); return }
-    orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, b === true ? '*' : '.')
+    if (b === false) { return }
+    orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, '*')
+    orca.lock(this.x + this.ports.output.x, this.y + this.ports.output.y)
   }
 
   // Phases
