@@ -11,12 +11,12 @@ function Theme (client) {
   this.active = {}
   this.default = {
     background: '#eeeeee',
-    f_high: '#000000',
-    f_med: '#666666',
-    f_low: '#888888',
-    f_inv: '#000000',
-    b_high: '#cccccc',
-    b_med: '#dddddd',
+    f_high: '#0a0a0a',
+    f_med: '#4a4a4a',
+    f_low: '#6a6a6a',
+    f_inv: '#111111',
+    b_high: '#a1a1a1',
+    b_med: '#c1c1c1',
     b_low: '#ffffff',
     b_inv: '#ffb545'
   }
@@ -144,15 +144,15 @@ function Theme (client) {
 
   function isValid (json) {
     if (!json) { return false }
-    if (!json.background) { return false }
-    if (!json.f_high) { return false }
-    if (!json.f_med) { return false }
-    if (!json.f_low) { return false }
-    if (!json.f_inv) { return false }
-    if (!json.b_high) { return false }
-    if (!json.b_med) { return false }
-    if (!json.b_low) { return false }
-    if (!json.b_inv) { return false }
+    if (!json.background || !isColor(json.background)) { return false }
+    if (!json.f_high || !isColor(json.f_high)) { return false }
+    if (!json.f_med || !isColor(json.f_med)) { return false }
+    if (!json.f_low || !isColor(json.f_low)) { return false }
+    if (!json.f_inv || !isColor(json.f_inv)) { return false }
+    if (!json.b_high || !isColor(json.b_high)) { return false }
+    if (!json.b_med || !isColor(json.b_med)) { return false }
+    if (!json.b_low || !isColor(json.b_low)) { return false }
+    if (!json.b_inv || !isColor(json.b_inv)) { return false }
     return true
   }
 

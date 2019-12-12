@@ -232,7 +232,7 @@ function Midi (client) {
   }
 
   this.toString = function () {
-    return this.outputDevice() ? `${this.outputDevice().name}` : 'No Midi'
+    return !navigator.requestMIDIAccess ? 'No Midi Support' : this.outputDevice() ? `${this.outputDevice().name}` : 'No Midi Device'
   }
 
   this.length = function () {
