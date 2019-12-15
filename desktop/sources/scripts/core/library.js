@@ -674,7 +674,6 @@ library['='] = function OperatorOsc (orca, x, y, passive) {
     }
 
     if (!this.hasNeighbor('*') && force === false) { return }
-    if (msg === '') { return }
 
     const path = this.listen(this.ports.path)
 
