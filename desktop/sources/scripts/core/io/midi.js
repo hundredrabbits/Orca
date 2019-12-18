@@ -125,15 +125,11 @@ function Midi (client) {
   }
 
   this.receive = function (msg) {
-    // listen for clock all the time
-    // check for clock in?
-    if (msg.data[0] === 0xF8) { client.clock.tap() }
-
     switch (msg.data[0]) {
       // Clock
-      // case 0xF8:
-      //  client.clock.tap()
-      //  break
+      case 0xF8:
+        client.clock.tap()
+        break
       case 0xFA:
         console.log('MIDI', 'Start Received')
         client.clock.play()
@@ -233,6 +229,14 @@ function Midi (client) {
 
   this.toString = function () {
     return !navigator.requestMIDIAccess ? 'No Midi Support' : this.outputDevice() ? `${this.outputDevice().name}` : 'No Midi Device'
+  }
+
+  this.toInputString = () => {
+    return !navigator.requestMIDIAccess ? 'No Midi Support' : this.inputDevice() ? `${this.inputDevice().name}` : 'No Input Device'
+  }
+
+  this.toOutputString = () => {
+    return !navigator.requestMIDIAccess ? 'No Midi Support' : this.outputDevice() ? `${this.outputDevice().name}` : 'No Output Device'
   }
 
   this.length = function () {

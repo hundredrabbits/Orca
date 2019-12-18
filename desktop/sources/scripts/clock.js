@@ -57,7 +57,7 @@ function Clock (client) {
   }
 
   this.play = function (msg = false) {
-    console.log('Clock', 'Play')
+    console.log('Clock', 'Play', msg)
     if (this.isPaused === false) { return }
     if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = false
