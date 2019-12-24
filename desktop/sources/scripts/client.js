@@ -12,7 +12,7 @@
 /* global Theme */
 
 function Client () {
-  this.version = 164
+  this.version = 165
   this.library = library
 
   this.theme = new Theme(this)
@@ -27,12 +27,12 @@ function Client () {
   this.clock = new Clock(this)
 
   // Settings
+  this.scale = window.devicePixelRatio
   this.grid = { w: 8, h: 8 }
   this.tile = {
     w: +localStorage.getItem('tilew') || 10,
     h: +localStorage.getItem('tileh') || 15
   }
-  this.scale = window.devicePixelRatio
   this.hardmode = true
   this.guide = false
 
@@ -138,7 +138,7 @@ function Client () {
     this.cursor.start()
 
     this.reset()
-    this.resize()
+    this.modZoom()
     this.update()
     this.el.className = 'ready'
 
@@ -218,7 +218,9 @@ function Client () {
   this.modZoom = (mod = 0, reset = false) => {
     this.tile = {
       w: reset ? 10 : this.tile.w * (mod + 1),
-      h: reset ? 15 : this.tile.h * (mod + 1)
+      h: reset ? 15 : this.tile.h * (mod + 1),
+      ws: Math.floor(this.tile.w * this.scale),
+      hs: Math.floor(this.tile.h * this.scale)
     }
     localStorage.setItem('tilew', this.tile.w)
     localStorage.setItem('tileh', this.tile.h)
@@ -321,7 +323,7 @@ function Client () {
     this.write(`${this.cursor.w}:${this.cursor.h}`, this.grid.w * 2, this.orca.h, this.grid.w)
     this.write(`${this.orca.f}f${this.clock.isPaused ? '~' : ''}`, this.grid.w * 3, this.orca.h, this.grid.w)
     this.write(`${this.io.inspect(this.grid.w)}`, this.grid.w * 4, this.orca.h, this.grid.w - 1)
-    this.write(this.orca.f < 500 ? `< ${this.io.midi.toInputString()}` : '', this.grid.w * 5, this.orca.h, this.grid.w * 4)
+    this.write(this.orca.f < 75 ? `< ${this.io.midi.toInputString()}` : '', this.grid.w * 5, this.orca.h, this.grid.w * 4)
 
     if (this.commander.isActive === true) {
       this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, this.grid.w * 0, this.orca.h + 1, this.grid.w * 4)
@@ -354,11 +356,11 @@ function Client () {
     const theme = this.makeTheme(type)
     if (theme.bg) {
       this.context.fillStyle = theme.bg
-      this.context.fillRect(x * this.tile.w * this.scale, (y) * this.tile.h * this.scale, this.tile.w * this.scale, this.tile.h * this.scale)
+      this.context.fillRect(x * this.tile.ws, (y) * this.tile.hs, this.tile.ws, this.tile.hs)
     }
     if (theme.fg) {
       this.context.fillStyle = theme.fg
-      this.context.fillText(g, (x + 0.5) * this.tile.w * this.scale, (y + 1) * this.tile.h * this.scale)
+      this.context.fillText(g, (x + 0.5) * this.tile.ws, (y + 1) * this.tile.hs)
     }
   }
 
@@ -386,8 +388,8 @@ function Client () {
     if (this.cursor.x >= tiles.w) { this.cursor.moveTo(tiles.w - 1, this.cursor.y) }
     if (this.cursor.y >= tiles.h) { this.cursor.moveTo(this.cursor.x, tiles.h - 1) }
 
-    const w = this.tile.w * this.orca.w * this.scale
-    const h = (this.tile.h + (this.tile.h / 5)) * this.orca.h * this.scale
+    const w = this.tile.ws * this.orca.w
+    const h = (this.tile.hs + (this.tile.hs / 5)) * this.orca.h
 
     if (w === this.el.width && h === this.el.height) { return }
 
@@ -400,7 +402,7 @@ function Client () {
 
     this.context.textBaseline = 'bottom'
     this.context.textAlign = 'center'
-    this.context.font = `${this.tile.h * 0.75 * this.scale}px input_mono_medium`
+    this.context.font = `${this.tile.hs * 0.75}px input_mono_medium`
     this.update()
   }
 
