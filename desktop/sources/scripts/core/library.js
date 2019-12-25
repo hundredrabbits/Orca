@@ -25,8 +25,8 @@ library.a = function OperatorA (orca, x, y, passive) {
 library.b = function OperatorL (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'b', passive)
 
-  this.name = 'bounce'
-  this.info = 'Outputs difference between inputs'
+  this.name = 'between'
+  this.info = 'Outputs the absolute value of the subtraction between the inputs'
 
   this.ports.a = { x: -1, y: 0 }
   this.ports.b = { x: 1, y: 0 }
