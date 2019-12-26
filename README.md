@@ -10,7 +10,7 @@ If you need <strong>help</strong>, visit the <a href="https://talk.lurk.org/chan
 
 - [Download builds](https://hundredrabbits.itch.io/orca), available for **Linux, Windows and OSX**.
 - Use directly [in your browser](https://hundredrabbits.github.io/Orca/), requires **webMidi**.
-- Use on a [raspberry pi](https://github.com/hundredrabbits/orca-c#raspberry-pi).
+- Use on a [raspberry pi](https://github.com/hundredrabbits/orca-c#raspberry-pi), a lightweight **C99 version**.
 
 ## Install & Run
 
