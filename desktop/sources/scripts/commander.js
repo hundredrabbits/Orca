@@ -62,7 +62,10 @@ function Commander (client) {
       client.orca.writeBlock(origin ? origin.x : client.cursor.x, origin ? origin.y : client.cursor.y, block)
       client.cursor.scaleTo(0, 0)
     },
-    write: (p) => { client.cursor.select(p._x, p._y, p._str.length); client.orca.writeBlock(p._str) }
+    write: (p) => {
+      client.cursor.select(p._x, p._y, p._str.length)
+      client.orca.writeBlock(p._x, p._y, p._str)
+    }
   }
 
   // Make shorthands
