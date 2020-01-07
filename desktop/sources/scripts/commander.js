@@ -127,7 +127,7 @@ function Commander (client) {
   }
 
   this.trigger = function (msg = this.query, origin = null) {
-    const cmd = `${msg}`.split(':')[0].toLowerCase()
+    const cmd = `${msg}`.split(':')[0].trim().replace(/\W/g, '').toLowerCase()
     const val = `${msg}`.substr(cmd.length + 1)
     const fn = this.actives[cmd]
     if (!fn) { console.warn('Commander', `Unknown message: ${msg}`); this.stop(); return }
