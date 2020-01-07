@@ -1,3 +1,4 @@
+const IP_ADDR = '127.0.0.1'
 const UDP_PORT = 49161
 const OSC_PORT = 49162
 
@@ -5,7 +6,7 @@ const dgram = require('dgram')
 const udpserver = dgram.createSocket('udp4')
 
 const osc = require('./desktop/node_modules/node-osc')
-const oscserver = new osc.Server(OSC_PORT, '127.0.0.1')
+const oscserver = new osc.Server(OSC_PORT, IP_ADDR)
 
 console.log(`Started Listener\n\nUDP:${UDP_PORT}\nOSC:${OSC_PORT}\n`)
 
@@ -32,3 +33,7 @@ oscserver.on('message', (msg, rinfo) => {
 })
 
 udpserver.bind(UDP_PORT)
+
+// Send a run message to orca
+
+udpserver.send('run', 0, 3, 49160, IP_ADDR)
