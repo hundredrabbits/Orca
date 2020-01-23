@@ -114,12 +114,14 @@ function Midi (client) {
 
   this.sendClockStart = function () {
     if (!this.outputDevice()) { return }
+    this.isClock = true
     this.outputDevice().send([0xFA], 0)
     console.log('MIDI', 'MIDI Start Sent')
   }
 
   this.sendClockStop = function () {
     if (!this.outputDevice()) { return }
+    this.isClock = false
     this.outputDevice().send([0xFC], 0)
     console.log('MIDI', 'MIDI Stop Sent')
   }

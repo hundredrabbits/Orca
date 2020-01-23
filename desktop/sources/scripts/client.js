@@ -12,7 +12,7 @@
 /* global Theme */
 
 function Client () {
-  this.version = 167
+  this.version = 168
   this.library = library
 
   this.theme = new Theme(this)
