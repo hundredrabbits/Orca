@@ -12,7 +12,7 @@
 /* global Theme */
 
 function Client () {
-  this.version = 168
+  this.version = 169
   this.library = library
 
   this.theme = new Theme(this)
@@ -323,17 +323,17 @@ function Client () {
     this.write(`${this.cursor.w}:${this.cursor.h}`, this.grid.w * 2, this.orca.h, this.grid.w)
     this.write(`${this.orca.f}f${this.clock.isPaused ? '~' : ''}`, this.grid.w * 3, this.orca.h, this.grid.w)
     this.write(`${this.io.inspect(this.grid.w)}`, this.grid.w * 4, this.orca.h, this.grid.w - 1)
-    this.write(this.orca.f < 75 ? `< ${this.io.midi.toInputString()}` : '', this.grid.w * 5, this.orca.h, this.grid.w * 4)
+    this.write(this.orca.f < 250 ? `< ${this.io.midi.toInputString()}` : '', this.grid.w * 5, this.orca.h, this.grid.w * 4)
 
     if (this.commander.isActive === true) {
       this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, this.grid.w * 0, this.orca.h + 1, this.grid.w * 4)
     } else {
-      this.write(this.orca.f < 15 ? `ver${this.version}` : `${Object.keys(this.source.cache).length} mods`, this.grid.w * 0, this.orca.h + 1, this.grid.w)
+      this.write(this.orca.f < 25 ? `ver${this.version}` : `${Object.keys(this.source.cache).length} mods`, this.grid.w * 0, this.orca.h + 1, this.grid.w)
       this.write(`${this.orca.w}x${this.orca.h}`, this.grid.w * 1, this.orca.h + 1, this.grid.w)
       this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, this.grid.w * 2, this.orca.h + 1, this.grid.w)
-      this.write(`${this.clock}`, this.grid.w * 3, this.orca.h + 1, this.grid.w, this.clock.isPuppet === true ? 3 : 2)
+      this.write(`${this.clock}`, this.grid.w * 3, this.orca.h + 1, this.grid.w, this.clock.isPuppet ? 3 : this.io.midi.isClock ? 6 : 2)
       this.write(`${display(Object.keys(this.orca.variables).join(''), this.orca.f, this.grid.w - 1)}`, this.grid.w * 4, this.orca.h + 1, this.grid.w - 1)
-      this.write(this.orca.f < 500 ? `> ${this.io.midi.toOutputString()}` : '', this.grid.w * 5, this.orca.h + 1, this.grid.w * 4)
+      this.write(this.orca.f < 250 ? `> ${this.io.midi.toOutputString()}` : '', this.grid.w * 5, this.orca.h + 1, this.grid.w * 4)
     }
   }
 
