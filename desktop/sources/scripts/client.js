@@ -12,7 +12,7 @@
 /* global Theme */
 
 function Client () {
-  this.version = 169
+  this.version = 170
   this.library = library
 
   this.theme = new Theme(this)
@@ -33,7 +33,6 @@ function Client () {
     w: +localStorage.getItem('tilew') || 10,
     h: +localStorage.getItem('tileh') || 15
   }
-  this.hardmode = true
   this.guide = false
 
   this.el = document.createElement('canvas')
@@ -105,7 +104,6 @@ function Client () {
     this.acels.set('Clock', 'Decr. Speed(10x)', 'CmdOrCtrl+<', () => { this.clock.modSpeed(-10, true) })
 
     this.acels.set('View', 'Toggle Retina', '`', () => { this.toggleRetina() })
-    this.acels.set('View', 'Toggle Hardmode', 'Tab', () => { this.toggleHardmode() })
     this.acels.set('View', 'Toggle Guide', 'CmdOrCtrl+G', () => { this.toggleGuide() })
     this.acels.set('View', 'Incr. Col', ']', () => { this.modGrid(1, 0) })
     this.acels.set('View', 'Decr. Col', '[', () => { this.modGrid(-1, 0) })
@@ -195,12 +193,6 @@ function Client () {
     this.resize(true)
   }
 
-  this.toggleHardmode = () => {
-    this.hardmode = this.hardmode !== true
-    console.log('Client', `Hardmode: ${this.hardmode}`)
-    this.update()
-  }
-
   this.toggleGuide = (force = null) => {
     const display = force !== null ? force : this.guide !== true
     if (display === this.guide) { return }
@@ -245,6 +237,10 @@ function Client () {
     return this.isNear(x, y) === true && (x % (this.grid.w / 4) === 0 && y % (this.grid.h / 4) === 0) === true
   }
 
+  this.isInvisible = (x, y) => {
+    return this.orca.glyphAt(x, y) === '.' && !this.isMarker(x, y) && !this.cursor.selected(x, y) && !this.isLocals(x, y) && !this.ports[this.orca.indexAt(x, y)]
+  }
+
   this.findPorts = () => {
     const a = new Array((this.orca.w * this.orca.h) - 1)
     for (const operator of this.orca.runtime) {
@@ -279,6 +275,8 @@ function Client () {
     if (type === 7) { return {} }
     // Reader
     if (type === 8) { return { bg: this.theme.active.b_low, fg: this.theme.active.f_high } }
+    // Output Reader
+    if (type === 9) { return { bg: this.theme.active.b_inv, fg: this.theme.active.f_high } }
     // Reader+Background
     if (type === 10) { return { bg: this.theme.active.background, fg: this.theme.active.f_high } }
     // Default
@@ -295,12 +293,14 @@ function Client () {
     const selection = this.cursor.read()
     for (let y = 0; y < this.orca.h; y++) {
       for (let x = 0; x < this.orca.w; x++) {
+        // Handle blanks
+        if (this.isInvisible(x, y)) { continue }
         // Make Glyph
         const g = this.orca.glyphAt(x, y)
+        // Get glyph
         const glyph = g !== '.' ? g : this.isCursor(x, y) ? (this.clock.isPaused ? '~' : '@') : this.isMarker(x, y) ? '+' : g
         // Make Style
-        const style = this.makeStyle(x, y, glyph, selection)
-        this.drawSprite(x, y, glyph, style)
+        this.drawSprite(x, y, glyph, this.makeStyle(x, y, glyph, selection))
       }
     }
   }
@@ -309,12 +309,12 @@ function Client () {
     const isLocked = this.orca.lockAt(x, y)
     const port = this.ports[this.orca.indexAt(x, y)]
     if (this.cursor.selected(x, y)) { return 4 }
-    if (!port && glyph === '.' && isLocked === false && this.hardmode === true) { return this.isLocals(x, y) === true ? 9 : 7 }
     if (selection === glyph && isLocked === false && selection !== '.') { return 6 }
     if (glyph === '*' && isLocked === false) { return 2 }
+    if (port && port.reader) { return 9 }
     if (port) { return port[2] }
     if (isLocked === true) { return 5 }
-    return 9
+    return 20
   }
 
   this.drawInterface = () => {
@@ -331,7 +331,7 @@ function Client () {
       this.write(this.orca.f < 25 ? `ver${this.version}` : `${Object.keys(this.source.cache).length} mods`, this.grid.w * 0, this.orca.h + 1, this.grid.w)
       this.write(`${this.orca.w}x${this.orca.h}`, this.grid.w * 1, this.orca.h + 1, this.grid.w)
       this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, this.grid.w * 2, this.orca.h + 1, this.grid.w)
-      this.write(`${this.clock}`, this.grid.w * 3, this.orca.h + 1, this.grid.w, this.clock.isPuppet ? 3 : this.io.midi.isClock ? 6 : 2)
+      this.write(`${this.clock}`, this.grid.w * 3, this.orca.h + 1, this.grid.w, this.clock.isPuppet ? 3 : this.io.midi.isClock ? 6 : this.clock.isPaused ? 20 : 2)
       this.write(`${display(Object.keys(this.orca.variables).join(''), this.orca.f, this.grid.w - 1)}`, this.grid.w * 4, this.orca.h + 1, this.grid.w - 1)
       this.write(this.orca.f < 250 ? `> ${this.io.midi.toOutputString()}` : '', this.grid.w * 5, this.orca.h + 1, this.grid.w * 4)
     }
