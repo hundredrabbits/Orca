@@ -93,20 +93,6 @@ function Midi (client) {
 
   this.ticks = []
 
-  this.sendClock = function () {
-    if (!this.outputDevice()) { return }
-    if (this.isClock !== true) { return }
-
-    const bpm = client.clock.speed.value
-    const frameTime = (60000 / bpm) / 4
-    const frameFrag = frameTime / 6
-
-    for (let id = 0; id < 6; id++) {
-      if (this.ticks[id]) { clearTimeout(this.ticks[id]) }
-      this.ticks[id] = setTimeout(() => { this.outputDevice().send([0xF8], 0) }, parseInt(id) * frameFrag)
-    }
-  }
-
   this.sendClockStart = function () {
     if (!this.outputDevice()) { return }
     this.isClock = true
@@ -119,6 +105,20 @@ function Midi (client) {
     this.isClock = false
     this.outputDevice().send([0xFC], 0)
     console.log('MIDI', 'MIDI Stop Sent')
+  }
+
+  this.sendClock = function () {
+    if (!this.outputDevice()) { return }
+    if (this.isClock !== true) { return }
+
+    const bpm = client.clock.speed.value
+    const frameTime = (60000 / bpm) / 4
+    const frameFrag = frameTime / 6
+
+    for (let id = 0; id < 6; id++) {
+      if (this.ticks[id]) { clearTimeout(this.ticks[id]) }
+      this.ticks[id] = setTimeout(() => { this.outputDevice().send([0xF8], 0) }, parseInt(id) * frameFrag)
+    }
   }
 
   this.receive = function (msg) {

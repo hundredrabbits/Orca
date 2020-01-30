@@ -238,7 +238,7 @@ function Client () {
   }
 
   this.isInvisible = (x, y) => {
-    return this.orca.glyphAt(x, y) === '.' && !this.isMarker(x, y) && !this.cursor.selected(x, y) && !this.isLocals(x, y) && !this.ports[this.orca.indexAt(x, y)]
+    return this.orca.glyphAt(x, y) === '.' && !this.isMarker(x, y) && !this.cursor.selected(x, y) && !this.isLocals(x, y) && !this.ports[this.orca.indexAt(x, y)] && !this.orca.lockAt(x, y)
   }
 
   this.findPorts = () => {
@@ -308,12 +308,13 @@ function Client () {
   }
 
   this.makeStyle = (x, y, glyph, selection) => {
-    const isLocked = this.orca.lockAt(x, y)
-    const port = this.ports[this.orca.indexAt(x, y)]
     if (this.cursor.selected(x, y)) { return 4 }
+    const isLocked = this.orca.lockAt(x, y)
     if (selection === glyph && isLocked === false && selection !== '.') { return 6 }
     if (glyph === '*' && isLocked === false) { return 2 }
-    if (port && port.reader) { return 9 }
+
+    const port = this.ports[this.orca.indexAt(x, y)]
+
     if (port) { return port[2] }
     if (isLocked === true) { return 5 }
     return 20
