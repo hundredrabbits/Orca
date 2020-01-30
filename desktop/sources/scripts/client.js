@@ -273,10 +273,10 @@ function Client () {
     if (type === 6) { return { fg: this.theme.active.b_inv } }
     // Invisible
     if (type === 7) { return {} }
-    // Reader
+    // Output Bang
     if (type === 8) { return { bg: this.theme.active.b_low, fg: this.theme.active.f_high } }
     // Output Reader
-    if (type === 9) { return { bg: this.theme.active.b_inv, fg: this.theme.active.f_high } }
+    if (type === 9) { return { bg: this.theme.active.b_inv, fg: this.theme.active.background } }
     // Reader+Background
     if (type === 10) { return { bg: this.theme.active.background, fg: this.theme.active.f_high } }
     // Clock(yellow fg)
@@ -312,9 +312,7 @@ function Client () {
     const isLocked = this.orca.lockAt(x, y)
     if (selection === glyph && isLocked === false && selection !== '.') { return 6 }
     if (glyph === '*' && isLocked === false) { return 2 }
-
     const port = this.ports[this.orca.indexAt(x, y)]
-
     if (port) { return port[2] }
     if (isLocked === true) { return 5 }
     return 20

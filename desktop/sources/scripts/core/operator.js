@@ -32,8 +32,7 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
 
   this.bang = function (b) {
     if (!this.ports.output) { console.warn(this.name, 'Trying to bang, but no port'); return }
-    if (b === false) { return }
-    orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, '*')
+    orca.write(this.x + this.ports.output.x, this.y + this.ports.output.y, b ? '*' : '.')
     orca.lock(this.x + this.ports.output.x, this.y + this.ports.output.y)
   }
 
@@ -113,21 +112,10 @@ function Operator (orca, x, y, glyph = '.', passive = false) {
     if (!this.passive) { return a }
     for (const id in this.ports) {
       const port = this.ports[id]
-      const type = this.getPortType(id)
+      const type = port.output ? 3 : port.x < 0 || port.y < 0 ? 1 : 2
       a.push([this.x + port.x, this.y + port.y, type, `${this.glyph}-${id}`])
     }
     return a
-  }
-
-  this.getPortType = function (id) {
-    const port = this.ports[id]
-    if (port.output || id === 'output') {
-      return port.reader || port.bang ? 8 : 3
-    }
-    if (port.x < 0 || port.y < 0) {
-      return 1
-    }
-    return 2
   }
 
   this.shouldUpperCase = function (ports = this.ports) {
