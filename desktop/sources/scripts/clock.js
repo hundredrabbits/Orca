@@ -70,7 +70,7 @@ function Clock (client) {
     if (this.isPaused === true) { return }
     if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = true
-    if (msg === true) { client.io.midi.sendClockStop() }
+    if (msg === true || client.io.midi.isClock) { client.io.midi.sendClockStop() }
     client.io.midi.allNotesOff()
     this.clearTimer()
     client.io.midi.silence()

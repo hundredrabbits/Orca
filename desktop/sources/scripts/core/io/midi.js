@@ -93,11 +93,6 @@ function Midi (client) {
 
   this.ticks = []
 
-  this.toggleClock = function () {
-    this.isClock = !this.isClock
-    client.clock.stop()
-  }
-
   this.sendClock = function () {
     if (!this.outputDevice()) { return }
     if (this.isClock !== true) { return }
