@@ -56,6 +56,20 @@ The following is taken from this page: https://answers.bitwig.com/questions/1218
 - Choose "Generic MIDI Keyboard"
 - Once it appears as an input choose "Virtual Raw MIDI/1"
 
+## VCV Rack
+
+- Start VCV Rack
+- Add a "VCV MIDI-CV" module to your rack
+- Set the first parameter, MIDI Driver, to your local loopback driver
+  - Windows: Start loopMIDI, be sure to create at least one device, then select "loopMIDI" as the parameter
+  - Linux: Use "ALSA" (the widely supported Linux sound architecture)
+- Set the second parameter to the MIDI interface
+  - Windows: Use the loopMIDI device you created
+  - Linux: Select the default "MIDI Through" device (available by default on most ALSA configurations)
+- Start Orca
+- Use the Hotkey Ctrl+Period to cycle through MIDI output devices until you see your device in the lower-right corner
+- Bang a MIDI command to VCV: `:03c88` to get a note and gate trigger from MIDI-CV
+
 ## Dotgrid
 
 To send [UDP messages](https://github.com/hundredrabbits/Orca#udp) to [Dotgrid](http://github.com/hundredrabbits/Dotgrid), select [port 49160](https://github.com/hundredrabbits/Orca#udp). To draw lines on Dotgrid, you need to bang the UDP node `;` with different [commands](https://github.com/hundredrabbits/Dotgrid/blob/master/desktop/sources/scripts/listener.js). Have a look at [dotgrid.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/software/dotgrid.orca) to see it in action.
