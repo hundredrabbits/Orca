@@ -103,7 +103,7 @@ function Client () {
     this.acels.set('Clock', 'Incr. Speed(10x)', 'CmdOrCtrl+>', () => { this.clock.modSpeed(10, true) })
     this.acels.set('Clock', 'Decr. Speed(10x)', 'CmdOrCtrl+<', () => { this.clock.modSpeed(-10, true) })
 
-    this.acels.set('View', 'Toggle Retina', '`', () => { this.toggleRetina() })
+    this.acels.set('View', 'Toggle Retina', 'Tab', () => { this.toggleRetina() })
     this.acels.set('View', 'Toggle Guide', 'CmdOrCtrl+G', () => { this.toggleGuide() })
     this.acels.set('View', 'Incr. Col', ']', () => { this.modGrid(1, 0) })
     this.acels.set('View', 'Decr. Col', '[', () => { this.modGrid(-1, 0) })

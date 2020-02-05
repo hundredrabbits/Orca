@@ -73,7 +73,7 @@ function Acels (client) {
     for (const cat in cats) {
       text += `\n### ${cat}\n\n`
       for (const item of cats[cat]) {
-        text += item.accelerator ? `- \`${item.accelerator}\`: ${item.name}\n` : ''
+        text += item.accelerator ? `- \`${item.accelerator.replace('`','tilde')}\`: ${item.name}\n` : ''
       }
     }
     return text.trim()
@@ -83,8 +83,9 @@ function Acels (client) {
     const cats = this.sort()
     let text = ''
     for (const cat in cats) {
+      text += `\n${cat}\n\n`
       for (const item of cats[cat]) {
-        text += item.accelerator ? `${cat}: ${item.name} | ${item.accelerator}\n` : ''
+        text += item.accelerator ? `${item.name.padEnd(25, '.')} ${item.accelerator}\n` : ''
       }
     }
     return text.trim()

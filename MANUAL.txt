@@ -1,0 +1,90 @@
+File
+
+New...................... CmdOrCtrl+N
+Open..................... CmdOrCtrl+O
+Import Modules........... CmdOrCtrl+L
+Import Images............ CmdOrCtrl+Shift+L
+Export................... CmdOrCtrl+S
+Export Selection......... CmdOrCtrl+Shift+S
+
+Edit
+
+Select All............... CmdOrCtrl+A
+Erase Selection.......... Backspace
+Undo..................... CmdOrCtrl+Z
+Redo..................... CmdOrCtrl+Shift+Z
+
+Project
+
+Find..................... CmdOrCtrl+J
+Inject................... CmdOrCtrl+B
+Toggle Commander......... CmdOrCtrl+K
+Run Commander............ Enter
+
+Cursor
+
+Toggle Insert Mode....... CmdOrCtrl+I
+Toggle Block Comment..... CmdOrCtrl+/
+Trigger Operator......... CmdOrCtrl+P
+Reset.................... Escape
+
+Move
+
+Move North............... ArrowUp
+Move East................ ArrowRight
+Move South............... ArrowDown
+Move West................ ArrowLeft
+Scale North.............. Shift+ArrowUp
+Scale East............... Shift+ArrowRight
+Scale South.............. Shift+ArrowDown
+Scale West............... Shift+ArrowLeft
+Drag North............... Alt+ArrowUp
+Drag East................ Alt+ArrowRight
+Drag South............... Alt+ArrowDown
+Drag West................ Alt+ArrowLeft
+Move North(Leap)......... CmdOrCtrl+ArrowUp
+Move East(Leap).......... CmdOrCtrl+ArrowRight
+Move South(Leap)......... CmdOrCtrl+ArrowDown
+Move West(Leap).......... CmdOrCtrl+ArrowLeft
+Scale North(Leap)........ CmdOrCtrl+Shift+ArrowUp
+Scale East(Leap)......... CmdOrCtrl+Shift+ArrowRight
+Scale South(Leap)........ CmdOrCtrl+Shift+ArrowDown
+Scale West(Leap)......... CmdOrCtrl+Shift+ArrowLeft
+Drag North(Leap)......... CmdOrCtrl+Alt+ArrowUp
+Drag East(Leap).......... CmdOrCtrl+Alt+ArrowRight
+Drag South(Leap)......... CmdOrCtrl+Alt+ArrowDown
+Drag West(Leap).......... CmdOrCtrl+Alt+ArrowLeft
+
+Clock
+
+Play/Pause............... Space
+Frame By Frame........... CmdOrCtrl+F
+Reset Frame.............. CmdOrCtrl+Shift+R
+Incr. Speed.............. >
+Decr. Speed.............. <
+Incr. Speed(10x)......... CmdOrCtrl+>
+Decr. Speed(10x)......... CmdOrCtrl+<
+
+View
+
+Toggle Retina............ Tab
+Toggle Guide............. CmdOrCtrl+G
+Incr. Col................ ]
+Decr. Col................ [
+Incr. Row................ }
+Decr. Row................ {
+Zoom In.................. CmdOrCtrl+=
+Zoom Out................. CmdOrCtrl+-
+Zoom Reset............... CmdOrCtrl+0
+
+Midi
+
+Play/Pause Midi.......... CmdOrCtrl+Space
+Next Input Device........ CmdOrCtrl+,
+Next Output Device....... CmdOrCtrl+.
+Refresh Devices.......... CmdOrCtrl+Shift+M
+
+Communication
+
+Choose OSC Port.......... alt+O
+Choose UDP Port.......... alt+U
