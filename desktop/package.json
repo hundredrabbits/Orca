@@ -11,7 +11,7 @@
     "build_osx": "electron-packager . Orca --platform=darwin --arch=x64 --out ~/Documents/ --overwrite --icon=icon.icns ; echo 'Built for OSX'",
     "build_linux": "electron-packager . Orca --platform=linux  --arch=x64 --out ~/Documents/ --overwrite --icon=icon.ico ; echo 'Built for LINUX'",
     "build_win": "electron-packager . Orca --platform=win32  --arch=x64 --out ~/Documents/ --overwrite --icon=icon.ico ; echo 'Built for WIN'",
-    "add_manual": "cp ../MANUAL.txt ~/Documents/Orca-darwin-x64/MANUAL.txt ; cp ../MANUAL.txt ~/Documents/Orca-linux-x64/MANUAL.txt ; cp ../MANUAL.txt ~/Documents/Orca-win32-x64/MANUAL.txt",
+    "add_manual": "cp ../resources/MANUAL.txt ~/Documents/Orca-darwin-x64/MANUAL.txt ; cp ../resources/MANUAL.txt ~/Documents/Orca-linux-x64/MANUAL.txt ; cp ../resources/MANUAL.txt ~/Documents/Orca-win32-x64/MANUAL.txt",
     "build": "npm run clean ; npm run build_osx ; npm run build_linux ; npm run build_win ; npm run add_manual",
     "push_osx": "~/Applications/butler push ~/Documents/Orca-darwin-x64/ hundredrabbits/orca:osx-64",
     "push_linux": "~/Applications/butler push ~/Documents/Orca-linux-x64/ hundredrabbits/orca:linux-64",

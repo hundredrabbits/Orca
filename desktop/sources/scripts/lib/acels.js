@@ -73,7 +73,7 @@ function Acels (client) {
     for (const cat in cats) {
       text += `\n### ${cat}\n\n`
       for (const item of cats[cat]) {
-        text += item.accelerator ? `- \`${item.accelerator.replace('`','tilde')}\`: ${item.name}\n` : ''
+        text += item.accelerator ? `- \`${item.accelerator.replace('`', 'tilde')}\`: ${item.name}\n` : ''
       }
     }
     return text.trim()
@@ -106,13 +106,13 @@ function Acels (client) {
           submenu: [
             { label: 'Download Themes', click: () => { require('electron').shell.openExternal('https://github.com/hundredrabbits/Themes') } },
             { label: 'Open Theme', click: () => { client.theme.open() } },
-            { label: 'Reset Theme', click: () => { client.theme.reset() } }
+            { label: 'Reset Theme', accelerator: 'CmdOrCtrl+Escape', click: () => { client.theme.reset() } }
           ]
         },
         { label: 'Fullscreen', accelerator: 'CmdOrCtrl+Enter', click: () => { app.toggleFullscreen() } },
         { label: 'Hide', accelerator: 'CmdOrCtrl+H', click: () => { app.toggleVisible() } },
         { label: 'Toggle Menubar', accelerator: 'Alt+H', click: () => { app.toggleMenubar() } },
-        { label: 'Inspect', accelerator: 'CmdOrCtrl+.', click: () => { app.inspect() } },
+        { label: 'Inspect', accelerator: 'CmdOrCtrl+Tab', click: () => { app.inspect() } },
         { role: 'quit' }
       ]
     })

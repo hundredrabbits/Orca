@@ -1,12 +1,6 @@
-<svg class="vector" width="300px" height="300px" xmlns="http://www.w3.org/2000/svg" baseProfile="full" version="1.1" style="width: 300px; height: 300px; stroke: rgb(0, 0, 0); stroke-width: 0; fill: none; stroke-linecap: round;">
+<svg class="vector" width="300px" height="300px" xmlns="http://www.w3.org/2000/svg" baseProfile="full" version="1.1" style="width: 300px; height: 300px; stroke: rgb(0, 0, 0); stroke-width: 0; fill: none; stroke-linecap: round; background:black">
   <rect width="300" height="300" style="fill:rgb(0,0,0)" />
-  <circle cx="60"  cy="60"  r="7.5" fill="white"/>
-  <circle cx="150" cy="60"  r="7.5" fill="white"/>
-  <circle cx="240" cy="60"  r="7.5" fill="white"/>
-  <circle cx="60"  cy="150" r="7.5" fill="white"/>
-  <circle cx="150" cy="150" r="7.5" fill="white"/>
-  <circle cx="240" cy="150" r="7.5" fill="white"/>
-  <circle cx="60"  cy="240" r="7.5" fill="white"/>
-  <circle cx="150" cy="240" r="7.5" fill="white"/>
-  <circle cx="240" cy="240" r="7.5" fill="white"/>
+  <g transform="translate(8 48) scale(0.675)">
+    <path d="M120,60 L120,60 L270,60 A30,30 0 0,1 300,90 L300,90 L300,240 M300,150 A30,30 0 0,1 270,180 L270,180 L150,180 A30,30 0 0,0 120,210 L120,210 L120,240 " style="stroke-width: 12; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(255, 255, 255); fill: none;"/>
+  </g>
 </svg>
