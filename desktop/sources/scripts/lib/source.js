@@ -37,7 +37,7 @@ function Source (client) {
     input.setAttribute('multiple', 'multiple')
     input.onchange = (e) => {
       for (const file of e.target.files) {
-        if (file.name.indexOf('.' + ext) < 0) { console.warn('Source', `Skipped ${file.name}`); return }
+        if (file.name.indexOf('.' + ext) < 0) { console.warn('Source', `Skipped ${file.name}`); continue }
         this.read(file, this.store)
       }
     }
