@@ -522,7 +522,7 @@ library.$ = function OperatorSelf (orca, x, y, passive) {
     if (msg === '') { return }
 
     this.draw = false
-    client.commander.trigger(`${msg}`, { x, y: y + 1 })
+    client.commander.trigger(`${msg}`, { x, y: y + 1 }, false)
   }
 }
 

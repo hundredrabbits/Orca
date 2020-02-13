@@ -18,8 +18,7 @@ function Commander (client) {
         const rect = client.orca.toRect(block)
         client.cursor.scaleTo(rect.x, rect.y)
       }
-    },
-    write: (p) => { client.cursor.select(p._x, p._y, p._str.length) }
+    }
   }
 
   this.actives = {
@@ -63,8 +62,7 @@ function Commander (client) {
       client.cursor.scaleTo(0, 0)
     },
     write: (p) => {
-      client.cursor.select(p._x, p._y, p._str.length)
-      client.orca.writeBlock(p._x, p._y, p._str)
+      client.orca.writeBlock(p._x || 0, p._y || 0, p._str)
     }
   }
 
@@ -126,7 +124,7 @@ function Commander (client) {
     client.update()
   }
 
-  this.trigger = function (msg = this.query, origin = null) {
+  this.trigger = function (msg = this.query, origin = null, stopping = true) {
     const cmd = `${msg}`.split(':')[0].trim().replace(/\W/g, '').toLowerCase()
     const val = `${msg}`.substr(cmd.length + 1)
     const fn = this.actives[cmd]
@@ -134,7 +132,9 @@ function Commander (client) {
     fn(new Param(val), origin)
     this.history.push(msg)
     this.historyIndex = this.history.length
-    this.stop()
+    if (stopping) {
+      this.stop()
+    }
   }
 
   this.preview = function (msg = this.query) {
