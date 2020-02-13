@@ -104,13 +104,6 @@ function Cursor (client) {
     this.select(pos.x, pos.y, str.length - 1, 0)
   }
 
-  this.trigger = () => {
-    const operator = client.orca.operatorAt(this.x, this.y)
-    if (!operator) { console.warn('Cursor', 'Nothing to trigger.'); return }
-    console.log('Cursor', 'Trigger: ' + operator.name)
-    operator.run(true)
-  }
-
   this.inspect = () => {
     if (this.w !== 0 || this.h !== 0) { return 'multi' }
     const index = client.orca.indexAt(this.x, this.y)
@@ -120,6 +113,13 @@ function Cursor (client) {
     return 'empty'
   }
 
+  this.trigger = () => {
+    const operator = client.orca.operatorAt(this.x, this.y)
+    if (!operator) { console.warn('Cursor', 'Nothing to trigger.'); return }
+    console.log('Cursor', 'Trigger: ' + operator.name)
+    operator.run(true)
+  }
+
   this.comment = () => {
     const block = this.selection()
     const lines = block.trim().split(/\r?\n/)
@@ -127,6 +127,16 @@ function Cursor (client) {
     const res = lines.map((line) => { return `${char}${line.substr(1, line.length - 2)}${char}` }).join('\n')
     client.orca.writeBlock(this.minX, this.minY, res)
     client.history.record(client.orca.s)
+  }
+
+  this.toUpperCase = () => {
+    const block = this.selection().toUpperCase()
+    client.orca.writeBlock(this.minX, this.minY, block)
+  }
+
+  this.toLowerCase = () => {
+    const block = this.selection().toLowerCase()
+    client.orca.writeBlock(this.minX, this.minY, block)
   }
 
   this.toRect = () => {
