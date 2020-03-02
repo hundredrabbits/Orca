@@ -180,16 +180,14 @@ The midi operator interprets any letter above the chromatic scale as a transpose
 - [Sonic Pi](https://in-thread.sonic-pi.net/t/using-orca-to-control-sonic-pi-with-osc/2381/), a livecoding environment.
 - [Remora](https://github.com/martinberlin/Remora), a ESP32 Led controller firmware.
 
-## Tutorials
+## Links
 
-- [Overview](https://www.youtube.com/watch?v=RaI_TuISSJE)
+- [Overview Video](https://www.youtube.com/watch?v=RaI_TuISSJE)
+- [Orca Podcast](https://futureofcoding.org/episodes/045)
 - [Ableton & Unity3D](https://www.elizasj.com/unity_live_orca/)
-
-### Basics
-
-- [Japanese](https://qiita.com/rucochanman/items/98a4ea988ae99e04b333)
-- [German](http://tropone.de/2019/03/13/orca-ein-sequenzer-der-kryptischer-nicht-aussehen-kann-und-ein-versuch-einer-anleitung/)
-- [French](http://makingsound.fr/blog/orca-sequenceur-modulaire/)
+- [Japanese Tutorial](https://qiita.com/rucochanman/items/98a4ea988ae99e04b333)
+- [German Tutorial](http://tropone.de/2019/03/13/orca-ein-sequenzer-der-kryptischer-nicht-aussehen-kann-und-ein-versuch-einer-anleitung/)
+- [French Tutorial](http://makingsound.fr/blog/orca-sequenceur-modulaire/)
 
 ## Extras
 
