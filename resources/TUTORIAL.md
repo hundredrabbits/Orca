@@ -127,22 +127,12 @@ H..
 CM1
 ```
 
-### Substract
-
-Will substract `8 - 3`.
-
-```
-.3Mz
-8Ax.
-```
-
 ### Not Null
 
-Will bang if not null.
+Will bang if `L` free input is not null.
 
 ```
-cYc
-J.J
-cFc
+.L0.
+..F0
 ```
 
