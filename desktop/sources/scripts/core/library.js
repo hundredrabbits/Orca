@@ -704,7 +704,6 @@ library[';'] = function OperatorUdp (orca, x, y, passive) {
     }
 
     if (!this.hasNeighbor('*') && force === false) { return }
-    if (msg === '') { return }
 
     this.draw = false
     client.io.udp.push(msg)
