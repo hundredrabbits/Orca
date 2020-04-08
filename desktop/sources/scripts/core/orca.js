@@ -186,7 +186,7 @@ function Orca (library) {
   }
 
   this.valueIn = function (key) {
-    return this.variables[key]
+    return this.variables[key] || '.'
   }
 
   // Tools
