@@ -30,7 +30,7 @@ npm start
 To display the list of operators inside of Orca, use `CmdOrCtrl+G`.
 
 - `A` **add**(*a* b): Outputs sum of inputs.
-- `B` **bounce**(*a* b): Outputs difference of inputs.
+- `B` **subtract**(*a* b): Outputs difference of inputs.
 - `C` **clock**(*rate* mod): Outputs modulo of frame.
 - `D` **delay**(*rate* mod): Bangs on modulo of frame.
 - `E` **east**: Moves eastward, or bangs.
