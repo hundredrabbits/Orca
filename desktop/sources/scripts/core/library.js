@@ -26,7 +26,7 @@ library.b = function OperatorL (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'b', passive)
 
   this.name = 'subtract'
-  this.info = 'Outputs subtraction of inputs'
+  this.info = 'Outputs difference of inputs'
 
   this.ports.a = { x: -1, y: 0 }
   this.ports.b = { x: 1, y: 0 }
