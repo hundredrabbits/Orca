@@ -10,7 +10,7 @@ function Commander (client) {
 
   this.passives = {
     find: (p) => { client.cursor.find(p.str) },
-    select: (p) => { client.cursor.select(p.x, p.y, p.w, p.h) },
+    select: (p) => { client.cursor.select(p.x, p.y, p.w || 0, p.h || 0) },
     inject: (p) => {
       client.cursor.select(p._x, p._y)
       if (client.source.cache[p._str + '.orca']) {
@@ -54,7 +54,7 @@ function Commander (client) {
     },
     // Edit
     find: (p) => { client.cursor.find(p.str) },
-    select: (p) => { client.cursor.select(p.x, p.y, p.w, p.h) },
+    select: (p) => { client.cursor.select(p.x, p.y, p.w || 0, p.h || 0) },
     inject: (p, origin) => {
       const block = client.source.cache[p._str + '.orca']
       if (!block) { console.warn('Commander', 'Unknown block: ' + p._str); return }
@@ -62,7 +62,7 @@ function Commander (client) {
       client.cursor.scaleTo(0, 0)
     },
     write: (p) => {
-      client.orca.writeBlock(p._x || 0, p._y || 0, p._str)
+      client.orca.writeBlock(p._x || client.cursor.x, p._y || client.cursor.y, p._str)
     }
   }
 
