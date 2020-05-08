@@ -10,7 +10,7 @@ If this is your first time trying out **Orca**, watch this [introduction video](
 
 ## Pilot
 
-[Pilot](https://github.com/hundredrabbits/Pilot) is a minimalist synth software designed to work via UDP, and to quickly get started with Orca. This **requires no setup**, as long as both applications are open, they should be able to communicate with each other. 
+[Pilot](https://github.com/hundredrabbits/Pilot) is a minimalist synth software designed to work via UDP, and to quickly get started with Orca. This **requires no setup**, as long as both applications are open, they should be able to communicate with each other.
 
 - Launch Orca & Pilot.
 - In Orca, make sure that UDP is pointing to port `49161`.
@@ -28,12 +28,12 @@ To send [Midi notes](https://github.com/hundredrabbits/Orca#midi) to [Ableton Li
 
 ## SonicPi
 
-To send [OSC messages](https://github.com/hundredrabbits/Orca#osc) to [SonicPi](http://sonic-pi.net), select [port 4559](https://github.com/hundredrabbits/Orca#osc). SonicPi listens to the address defined in `sync`, to send to the `live_loop`, bang the OSC node `=`, like `=a`. Have a look at [sonicpi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/software/sonicpi.orca) to see it in action. If you need help, visit the [SonicPi x Orca forum](https://in-thread.sonic-pi.net/t/using-orca-to-control-sonic-pi-with-osc/2381/).
+To send [OSC messages](https://github.com/hundredrabbits/Orca#osc) to [SonicPi](http://sonic-pi.net), select [port 4560](https://github.com/samaaron/sonic-pi/blob/master/etc/doc/tutorial/12.1-Receiving-OSC.md). SonicPi listens to the address defined in `sync`, to send to the `live_loop`, bang the OSC node `=`, like `=a`. Have a look at [sonicpi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/software/sonicpi.orca) to see it in action. If you need help, visit the [SonicPi x Orca forum](https://in-thread.sonic-pi.net/t/using-orca-to-control-sonic-pi-with-osc/2381/).
 
 ```
 live_loop :drum do
   use_real_time
-  sync "/osc/a"
+  sync "/osc*/a"
   sample :bd_haus, rate: 1
 end
 ```
@@ -135,4 +135,3 @@ Will bang if `L` free input is not null.
 .L0.
 ..F0
 ```
-
