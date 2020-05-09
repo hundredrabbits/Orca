@@ -146,6 +146,9 @@ All commands have a shorthand equivalent to their first two characters, for exam
 - `inject:pattern;12;34` Inject the local file `pattern.orca`, at `12,34`(optional).
 - `write:H;12;34` Writes glyph `H`, at `12,34`(optional).
 - `time` Prints the time, in minutes seconds, since `0f`.
+- `midi:1;2` Set Midi output device to `#1`, and input device to `#2`.
+- `udp:1234;5678` Set UDP output port to `1234`, and input port to `5678`.
+- `osc:1234` Set OSC output port to `1234`.
 
 ## Base36 Table
 

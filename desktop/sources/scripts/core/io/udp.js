@@ -5,31 +5,15 @@ function Udp (client) {
 
   this.stack = []
   this.port = null
-  this.options = { default: 49161, orca: 49160 }
   this.socket = dgram ? dgram.createSocket('udp4') : null
   this.listener = dgram ? dgram.createSocket('udp4') : null
 
   this.start = function () {
-    if (!this.socket || !this.listener) { console.warn('UDP', 'Could not start.'); return }
+    if (!dgram || !this.socket || !this.listener) { console.warn('UDP', 'Could not start.'); return }
     console.info('UDP', 'Starting..')
 
-    this.listener.on('message', (msg, rinfo) => {
-      client.commander.trigger(`${msg}`)
-    })
-
-    this.listener.on('listening', () => {
-      const address = this.listener.address()
-      console.info('UDP', `Started socket at ${address.address}:${address.port}`)
-    })
-
-    this.listener.on('error', (err) => {
-      console.warn('UDP', `Server error:\n ${err.stack}`)
-      this.listener.close()
-    })
-
-    this.listener.bind(49160)
-
-    this.select()
+    this.selectInput()
+    this.selectOutput()
   }
 
   this.clear = function () {
@@ -53,10 +37,36 @@ function Udp (client) {
     })
   }
 
-  this.select = function (port = this.options.default) {
+  this.selectOutput = function (port = 49161) {
+    if (!dgram) { console.warn('UDP', 'Unavailable.'); return }
     if (parseInt(port) === this.port) { console.warn('UDP', 'Already selected'); return }
     if (isNaN(port) || port < 1000) { console.warn('UDP', 'Unavailable port'); return }
-    console.info('UDP', `Selected port: ${port}`)
+
+    console.log('UDP', `Output: ${port}`)
     this.port = parseInt(port)
+  }
+
+  this.selectInput = (port = 49160) => {
+    if (!dgram) { console.warn('UDP', 'Unavailable.'); return }
+    if (this.listener) { this.listener.close() }
+
+    console.log('UDP', `Input: ${port}`)
+    this.listener = dgram.createSocket('udp4')
+
+    this.listener.on('message', (msg, rinfo) => {
+      client.commander.trigger(`${msg}`)
+    })
+
+    this.listener.on('listening', () => {
+      const address = this.listener.address()
+      console.info('UDP', `Started socket at ${address.address}:${address.port}`)
+    })
+
+    this.listener.on('error', (err) => {
+      console.warn('UDP', `Server error:\n ${err.stack}`)
+      this.listener.close()
+    })
+
+    this.listener.bind(port)
   }
 }

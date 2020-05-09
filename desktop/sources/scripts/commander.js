@@ -24,7 +24,14 @@ function Commander (client) {
   this.actives = {
     // Ports
     osc: (p) => { client.io.osc.select(p.int) },
-    udp: (p) => { client.io.udp.select(p.int) },
+    udp: (p) => {
+      client.io.udp.selectOutput(p.x)
+      if (p.y !== null) { client.io.udp.selectInput(p.y) }
+    },
+    midi: (p) => {
+      client.io.midi.selectOutput(p.x)
+      if (p.y !== null) { client.io.midi.selectInput(p.y) }
+    },
     ip: (p) => { client.io.setIp(p.str) },
     cc: (p) => { client.io.cc.setOffset(p.int) },
     pg: (p) => { client.io.cc.stack.push({ channel: clamp(p.ints[0], 0, 15), bank: p.ints[1], sub: p.ints[2], pgm: clamp(p.ints[3], 0, 127), type: 'pg' }); client.io.cc.run() },
