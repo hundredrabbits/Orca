@@ -25,14 +25,14 @@ function Midi (client) {
   this.run = function () {
     for (const id in this.stack) {
       const item = this.stack[id]
+      if (item.isPlayed === false) {
+        this.press(item)
+      }
       if (item.length < 1) {
         this.release(item, id)
+      } else {
+        item.length--
       }
-      if (!this.stack[id]) { continue }
-      if (this.stack[id].isPlayed === false) {
-        this.press(this.stack[id])
-      }
-      this.stack[id].length--
     }
   }
 
