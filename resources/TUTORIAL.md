@@ -1,6 +1,6 @@
 # Tutorial
 
-If this is your first time trying out **Orca**, watch this [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). If you want to learn how to use a handful of basic operators, have a look at the [workshop](WORKSHOP.md).
+If this is your first time trying out **Orca**, watch this [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). If you want to learn how to use a handful of basic operators, have a look at the [workshop](WORKSHOP.md). If you're looking for additional examples, visit [this repository](https://git.sr.ht/~rabbits/orca-examples/tree/master/).
 
 ## General
 
@@ -19,7 +19,7 @@ If this is your first time trying out **Orca**, watch this [introduction video](
 
 ## Ableton Live
 
-To send [Midi notes](https://github.com/hundredrabbits/Orca#midi) to [Ableton Live](https://www.ableton.com/en/) instruments, bang the Midi operator `:`, like `:03C` to send to _Channel 1, Octave 3, Note C_. Have a look at [midi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/_midi.orca) to see it in action.
+To send [Midi notes](https://github.com/hundredrabbits/Orca#midi) to [Ableton Live](https://www.ableton.com/en/) instruments, bang the Midi operator `:`, like `:03C` to send to _Channel 1, Octave 3, Note C_. Have a look at [midi.orca](hhttps://git.sr.ht/~rabbits/orca-examples/tree/master/basics/_midi.orca) to see it in action.
 
 - Launch Ableton Live.
 - Create a new **midi instrument** track.
@@ -28,7 +28,7 @@ To send [Midi notes](https://github.com/hundredrabbits/Orca#midi) to [Ableton Li
 
 ## SonicPi
 
-To send [OSC messages](https://github.com/hundredrabbits/Orca#osc) to [SonicPi](http://sonic-pi.net), select [port 4560](https://github.com/samaaron/sonic-pi/blob/master/etc/doc/tutorial/12.1-Receiving-OSC.md). SonicPi listens to the address defined in `sync`, to send to the `live_loop`, bang the OSC node `=`, like `=a`. Have a look at [sonicpi.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/software/sonicpi.orca) to see it in action. If you need help, visit the [SonicPi x Orca forum](https://in-thread.sonic-pi.net/t/using-orca-to-control-sonic-pi-with-osc/2381/).
+To send [OSC messages](https://github.com/hundredrabbits/Orca#osc) to [SonicPi](http://sonic-pi.net), select [port 4560](https://github.com/samaaron/sonic-pi/blob/master/etc/doc/tutorial/12.1-Receiving-OSC.md). SonicPi listens to the address defined in `sync`, to send to the `live_loop`, bang the OSC node `=`, like `=a`. If you need help, visit the [SonicPi x Orca forum](https://in-thread.sonic-pi.net/t/using-orca-to-control-sonic-pi-with-osc/2381/).
 
 ```
 live_loop :drum do
@@ -69,24 +69,6 @@ The following is taken from this page: https://answers.bitwig.com/questions/1218
 - Start Orca
 - Use the Hotkey Ctrl+Period to cycle through MIDI output devices until you see your device in the lower-right corner
 - Bang a MIDI command to VCV: `:03c88` to get a note and gate trigger from MIDI-CV
-
-## Dotgrid
-
-To send [UDP messages](https://github.com/hundredrabbits/Orca#udp) to [Dotgrid](http://github.com/hundredrabbits/Dotgrid), select [port 49160](https://github.com/hundredrabbits/Orca#udp). To draw lines on Dotgrid, you need to bang the UDP node `;` with different [commands](https://github.com/hundredrabbits/Dotgrid/blob/master/desktop/sources/scripts/listener.js). Have a look at [dotgrid.orca](https://github.com/hundredrabbits/Orca/blob/master/examples/software/dotgrid.orca) to see it in action.
-
-- `;0`, clear layer **#1**.
-- `;0l1234`, add a line from `1,2` to `3,4`.
-- `;`, redraw.
-
-Here's a list of supported operations.
-
-```
-;0         // Clear Layer 1
-;0l1234    // Add Line from 1,2 to 3,4
-;0c1234    // Add Clockwise Arc from 1,2 to 3,4
-;0r1234    // Add Reverse Arc from 1,2 to 3,4
-;          // Redraw
-```
 
 ## FAQS
 
