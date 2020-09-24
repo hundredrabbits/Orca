@@ -177,6 +177,7 @@ function Midi (client) {
 
   this.selectNextInput = () => {
     this.inputIndex = this.inputIndex < this.inputs.length ? this.inputIndex + 1 : 0
+    this.selectInput(this.inputIndex)
     client.update()
   }
 
