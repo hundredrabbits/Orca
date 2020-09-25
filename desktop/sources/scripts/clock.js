@@ -59,8 +59,8 @@ function Clock (client) {
   this.play = function (msg = false) {
     console.log('Clock', 'Play', msg)
     if (this.isPaused === false) { return }
-    if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = false
+    if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
     if (msg === true) { client.io.midi.sendClockStart() }
     this.setSpeed(this.speed.target, this.speed.target, true)
   }
@@ -68,8 +68,8 @@ function Clock (client) {
   this.stop = function (msg = false) {
     console.log('Clock', 'Stop')
     if (this.isPaused === true) { return }
-    if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
     this.isPaused = true
+    if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
     if (msg === true || client.io.midi.isClock) { client.io.midi.sendClockStop() }
     client.io.midi.allNotesOff()
     this.clearTimer()
