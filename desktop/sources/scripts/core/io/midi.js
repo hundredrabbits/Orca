@@ -40,7 +40,9 @@ function Midi (client) {
     if (!this.outputDevice()) { console.warn('MIDI', 'No midi output!'); return }
 
     const transposed = this.transpose(item.note, item.octave)
-    const channel = !isNaN(item.channel) ? parseInt(item.channel) : client.orca.valueOf(item.channel)
+    const rawChannel = !isNaN(item.channel) ? parseInt(item.channel) : client.orca.valueOf(item.channel)
+    const deviceOffset = Math.floor(rawChannel / 16)
+    const channel = rawChannel % 16
 
     if (!transposed) { return }
 
@@ -50,7 +52,9 @@ function Midi (client) {
 
     if (!n || c === 127) { return }
 
-    this.outputDevice().send([c, n, v])
+    if (this.outputIndex + deviceOffset < this.outputs.length) {
+      this.outputs[this.outputIndex + deviceOffset].send([c, n, v])
+    }
   }
 
   this.press = function (item) {
