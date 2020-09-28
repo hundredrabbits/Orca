@@ -268,11 +268,11 @@ function Midi (client) {
   }
 
   this.toInputString = () => {
-    return !navigator.requestMIDIAccess ? 'No Midi Support' : this.inputDevice() ? `${this.inputDevice().name}` : 'No Input Device'
+    return !navigator.requestMIDIAccess ? 'No Midi Support' : this.inputDevice() ? `${this.inputIndex}:${this.inputDevice().name}` : 'No Input Device'
   }
 
   this.toOutputString = () => {
-    return !navigator.requestMIDIAccess ? 'No Midi Support' : this.outputDevice() ? `${this.outputDevice().name}` : 'No Output Device'
+    return !navigator.requestMIDIAccess ? 'No Midi Support' : this.outputDevice() ? `${this.outputIndex}:${this.outputDevice().name}` : 'No Output Device'
   }
 
   this.length = function () {
