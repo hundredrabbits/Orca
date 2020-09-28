@@ -166,6 +166,8 @@ function Midi (client) {
     console.log('MIDI', `Select Input Device: ${this.inputDevice().name}`)
   }
 
+  const Fuse = require('fuse.js')
+
   this.setDeviceByName = function(paramStr) {
     // find devices by name and move them to the desired slot
     const parts = paramStr.match(/([io])(\d+)-(.*)/)
@@ -175,9 +177,11 @@ function Midi (client) {
     const nameStr = parts[3]
 
     const findDevice = function(arr, s) {
-      const names = arr.map(x => x.name.toLowerCase().replace(/[^a-z0-9\s]/gi, ''))
-      for (var i in names) {
-        if (names[i].search(nameStr) === 0) { return i }
+      const fuse = new Fuse(arr.map(x => x.name), { includeScore: true })
+      const search = fuse.search(s).filter(x => x.score < 0.8)
+      if (search.length > 0) {
+        console.log('Device matched', search[0])
+        return search[0].refIndex
       }
       return -1
     }
@@ -187,18 +191,19 @@ function Midi (client) {
     }
 
     if (parts[1] === 'i') {
-      console.log('before', this.inputs)
+      console.log('inputs before', this.inputs.map(x => x.name))
       if (index >= this.inputs.length) { return }
       const foundIndex = findDevice(this.inputs, nameStr)
       if (foundIndex >= 0) { move(this.inputs, foundIndex, index) }
-      console.log(this.inputs)
+      console.log('inputs after', this.inputs.map(x => x.name))
     } else {
-      console.log('before', this.outputs)
+      console.log('outputs before', this.outputs.map(x => x.name))
       if (index >= this.outputs.length) { return }
       const foundIndex = findDevice(this.outputs, nameStr)
       if (foundIndex >= 0) { move(this.outputs, foundIndex, index) }
-      console.log('after', this.outputs)
+      console.log('outputs after', this.outputs.map(x => x.name))
     }
+    client.update()
   }
 
   this.outputDevice = function () {

@@ -27,6 +27,7 @@
     "electron-packager": "^14.2.1"
   },
   "dependencies": {
+    "fuse.js": "^6.4.1",
     "node-osc": "^4.1.8"
   },
   "standard": {
