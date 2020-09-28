@@ -60,19 +60,27 @@ function Clock (client) {
     console.log('Clock', 'Play', msg)
     if (this.isPaused === false) { return }
     this.isPaused = false
-    if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
-    if (msg === true) { client.io.midi.sendClockStart() }
-    this.setSpeed(this.speed.target, this.speed.target, true)
+    if (this.isPuppet === true) { 
+      console.warn('Clock', 'External Midi control')
+      pulse.count = 0  // works in conjunction with `tap` advancing on 0
+      this.setFrame(0)  // make sure frame aligns with pulse count for an accurate beat
+    } else {
+      if (msg === true) { client.io.midi.sendClockStart() }
+      this.setSpeed(this.speed.target, this.speed.target, true)
+    }
   }
 
   this.stop = function (msg = false) {
     console.log('Clock', 'Stop')
     if (this.isPaused === true) { return }
     this.isPaused = true
-    if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
-    if (msg === true || client.io.midi.isClock) { client.io.midi.sendClockStop() }
+    if (this.isPuppet === true) { 
+      console.warn('Clock', 'External Midi control')
+    } else {
+      if (msg === true || client.io.midi.isClock) { client.io.midi.sendClockStop() }
+      this.clearTimer()
+    }
     client.io.midi.allNotesOff()
-    this.clearTimer()
     client.io.midi.silence()
   }
 
@@ -92,11 +100,8 @@ function Clock (client) {
       }, 2000)
     }
     if (this.isPaused) { return }
-    pulse.count = pulse.count + 1
-    if (pulse.count % 6 === 0) {
-      client.run()
-      pulse.count = 0
-    }
+    if (pulse.count == 0) { client.run() }
+    pulse.count = (pulse.count + 1) % 6
   }
 
   this.untap = function () {
