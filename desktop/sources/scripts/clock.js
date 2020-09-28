@@ -56,13 +56,13 @@ function Clock (client) {
     client.update()
   }
 
-  this.play = function (msg = false, force = false) {
-    console.log('Clock', 'Play', msg, force)
-    if (this.isPaused === false && !force) { return }
+  this.play = function (msg = false, midiStart = false) {
+    console.log('Clock', 'Play', msg, midiStart)
+    if (this.isPaused === false && !midiStart) { return }
     this.isPaused = false
     if (this.isPuppet === true) {
       console.warn('Clock', 'External Midi control')
-      if (!pulse.frame || force) {  // no frames counted while paused or restard demanded (via MIDI clock START)
+      if (!pulse.frame || midiStart) {  // no frames counted while paused (starting from no clock, unlikely) or triggered by MIDI clock START
         this.setFrame(0)  // make sure frame aligns with pulse count for an accurate beat
         pulse.frame = 0
         pulse.count = 5   // by MIDI standard next pulse is the beat
