@@ -56,14 +56,17 @@ function Clock (client) {
     client.update()
   }
 
-  this.play = function (msg = false) {
-    console.log('Clock', 'Play', msg)
+  this.play = function (msg = false, force = false) {
+    console.log('Clock', 'Play', msg, force)
     if (this.isPaused === false) { return }
     this.isPaused = false
-    if (this.isPuppet === true) { 
+    if (this.isPuppet === true) {
       console.warn('Clock', 'External Midi control')
-      pulse.count = 0  // works in conjunction with `tap` advancing on 0
-      this.setFrame(0)  // make sure frame aligns with pulse count for an accurate beat
+      if (!pulse.frame || force) {  // no frames counted while paused or restard demanded (via MIDI clock PLAY)
+        this.setFrame(0)  // make sure frame aligns with pulse count for an accurate beat
+        pulse.frame = 0
+        pulse.count = 5   // by MIDI standard next pulse is the beat
+      }
     } else {
       if (msg === true) { client.io.midi.sendClockStart() }
       this.setSpeed(this.speed.target, this.speed.target, true)
@@ -74,7 +77,7 @@ function Clock (client) {
     console.log('Clock', 'Stop')
     if (this.isPaused === true) { return }
     this.isPaused = true
-    if (this.isPuppet === true) { 
+    if (this.isPuppet === true) {
       console.warn('Clock', 'External Midi control')
     } else {
       if (msg === true || client.io.midi.isClock) { client.io.midi.sendClockStop() }
@@ -86,9 +89,15 @@ function Clock (client) {
 
   // External Clock
 
-  const pulse = { count: 0, last: null, timer: null }
+  const pulse = {
+    count: 0,
+    last: null,
+    timer: null,
+    frame: 0  // paused frame counter
+  }
 
   this.tap = function () {
+    pulse.count = (pulse.count + 1) % 6
     pulse.last = performance.now()
     if (!this.isPuppet) {
       console.log('Clock', 'Puppeteering starts..')
@@ -98,17 +107,25 @@ function Clock (client) {
         if (performance.now() - pulse.last < 2000) { return }
         this.untap()
       }, 2000)
+    } else {
+      if (pulse.count == 0) {
+        if (this.isPaused) { pulse.frame++ }
+        else {
+          if (pulse.frame > 0) {
+            this.setFrame(client.orca.f + pulse.frame)
+            pulse.frame = 0
+          }
+          client.run()
+        }
+      }
     }
-    if (this.isPaused) { return }
-    if (pulse.count == 0) { client.run() }
-    pulse.count = (pulse.count + 1) % 6
   }
 
   this.untap = function () {
     console.log('Clock', 'Puppeteering stops..')
     clearInterval(pulse.timer)
     this.isPuppet = false
-    pulse.count = 1
+    pulse.frame = 0
     pulse.last = null
     this.setTimer(this.speed.value)
   }
