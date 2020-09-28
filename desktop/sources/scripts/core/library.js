@@ -545,7 +545,6 @@ library[':'] = function OperatorMidi (orca, x, y, passive) {
     if (!isNaN(this.listen(this.ports.note))) { return }
 
     const channel = this.listen(this.ports.channel, true)
-    if (channel > 15) { return }
     const octave = this.listen(this.ports.octave, true)
     const note = this.listen(this.ports.note)
     const velocity = this.listen(this.ports.velocity, true)
@@ -576,7 +575,6 @@ library['!'] = function OperatorCC (orca, x, y) {
     if (this.listen(this.ports.knob) === '.') { return }
 
     const channel = this.listen(this.ports.channel, true)
-    if (channel > 15) { return }
     const knob = this.listen(this.ports.knob, true)
     const rawValue = this.listen(this.ports.value, true)
     const value = Math.ceil((127 * rawValue) / 35)
@@ -640,7 +638,6 @@ library['%'] = function OperatorMono (orca, x, y, passive) {
     if (!isNaN(this.listen(this.ports.note))) { return }
 
     const channel = this.listen(this.ports.channel, true)
-    if (channel > 15) { return }
     const octave = this.listen(this.ports.octave, true)
     const note = this.listen(this.ports.note)
     const velocity = this.listen(this.ports.velocity, true)
