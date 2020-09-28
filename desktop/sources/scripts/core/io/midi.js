@@ -166,23 +166,34 @@ function Midi (client) {
     console.log('MIDI', `Select Input Device: ${this.inputDevice().name}`)
   }
 
-  const Fuzzy = require('fuzzy')
-
   this.setDeviceByName = function(paramStr) {
     // find devices by name and move them to the desired slot
     const parts = paramStr.match(/([io])(\d+)-(.*)/)
     console.log(parts)
-    if (!parts || parts.length !== 4) { return }
+    if (!parts || parts.length !== 4 || parts[3] === "") { return }
     const index = parseInt(parts[2])
     const nameStr = parts[3]
 
+    const fuzzy = function(term, s) {
+      var string = s.toLowerCase();
+      var compare = term.toLowerCase();
+      var matches = 0;
+      if (string.indexOf(compare) > -1) return 1; // covers basic partial matches
+      for (var i = 0; i < compare.length; i++) {
+          string.indexOf(compare[i]) > -1 ? matches += 1 : matches -=1;
+      }
+      return matches/s.length
+  };
+
     const findDevice = function(arr, s) {
-      const search = Fuzzy.filter(s, arr.map(x => x.name))
-      console.log('search', search)
-      if (search.length > 0) {
-        const device = arr[0]
-        console.log('Device found', device.name)
-        return search[0].index
+      const scores = arr.map((x, i) => Object.assign({}, {
+        score: fuzzy(s, x.name), name: x.name, index: i
+      })).filter(x => x.score > 0.1).sort((a,b) => b.score - a.score)
+      console.log('scores', scores)
+
+      if (scores.length > 0) {
+        console.log('Device matched', scores[0])
+        return scores[0].index
       }
       return -1
     }
@@ -192,18 +203,19 @@ function Midi (client) {
     }
 
     if (parts[1] === 'i') {
-      console.log('before', this.inputs)
+      console.log('inputs before', this.inputs.map(x => x.name))
       if (index >= this.inputs.length) { return }
       const foundIndex = findDevice(this.inputs, nameStr)
       if (foundIndex >= 0) { move(this.inputs, foundIndex, index) }
-      console.log(this.inputs)
+      console.log('inputs after', this.inputs.map(x => x.name))
     } else {
-      console.log('before', this.outputs)
+      console.log('outputs before', this.outputs.map(x => x.name))
       if (index >= this.outputs.length) { return }
       const foundIndex = findDevice(this.outputs, nameStr)
       if (foundIndex >= 0) { move(this.outputs, foundIndex, index) }
-      console.log('after', this.outputs)
+      console.log('outputs after', this.outputs.map(x => x.name))
     }
+    client.update()
   }
 
   this.outputDevice = function () {

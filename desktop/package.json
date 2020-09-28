@@ -27,7 +27,6 @@
     "electron-packager": "^14.2.1"
   },
   "dependencies": {
-    "fuzzy": "^0.1.3",
     "node-osc": "^4.1.8"
   },
   "standard": {
