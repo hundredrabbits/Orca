@@ -166,6 +166,41 @@ function Midi (client) {
     console.log('MIDI', `Select Input Device: ${this.inputDevice().name}`)
   }
 
+  this.setDeviceByName = function(paramStr) {
+    // find devices by name and move them to the desired slot
+    const parts = paramStr.match(/([io])(\d+)-(.*)/)
+    console.log(parts)
+    if (!parts || parts.length !== 4) { return }
+    const index = parseInt(parts[2])
+    const nameStr = parts[3]
+
+    const findDevice = function(arr, s) {
+      const names = arr.map(x => x.name.toLowerCase().replace(/[^a-z0-9\s]/gi, ''))
+      for (var i in names) {
+        if (names[i].search(nameStr) === 0) { return i }
+      }
+      return -1
+    }
+
+    const move = function(arr, from, to) {
+      arr.splice(to, 0, arr.splice(from, 1)[0])
+    }
+
+    if (parts[1] === 'i') {
+      console.log('before', this.inputs)
+      if (index >= this.inputs.length) { return }
+      const foundIndex = findDevice(this.inputs, nameStr)
+      if (foundIndex >= 0) { move(this.inputs, foundIndex, index) }
+      console.log(this.inputs)
+    } else {
+      console.log('before', this.outputs)
+      if (index >= this.outputs.length) { return }
+      const foundIndex = findDevice(this.outputs, nameStr)
+      if (foundIndex >= 0) { move(this.outputs, foundIndex, index) }
+      console.log('after', this.outputs)
+    }
+  }
+
   this.outputDevice = function () {
     return this.outputs[this.outputIndex]
   }
