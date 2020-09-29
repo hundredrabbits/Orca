@@ -127,7 +127,9 @@ function Clock (client) {
     this.isPuppet = false
     pulse.frame = 0
     pulse.last = null
-    this.setTimer(this.speed.value)
+    if (!this.isPaused) {
+      this.setTimer(this.speed.value)
+    }
   }
 
   // Timer
