@@ -107,16 +107,15 @@ function Clock (client) {
         if (performance.now() - pulse.last < 2000) { return }
         this.untap()
       }, 2000)
-    } else {
-      if (pulse.count == 0) {
-        if (this.isPaused) { pulse.frame++ }
-        else {
-          if (pulse.frame > 0) {
-            this.setFrame(client.orca.f + pulse.frame)
-            pulse.frame = 0
-          }
-          client.run()
+    }
+    if (pulse.count == 0) {
+      if (this.isPaused) { pulse.frame++ }
+      else {
+        if (pulse.frame > 0) {
+          this.setFrame(client.orca.f + pulse.frame)
+          pulse.frame = 0
         }
+        client.run()
       }
     }
   }
