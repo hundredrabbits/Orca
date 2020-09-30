@@ -129,7 +129,7 @@ function Midi (client) {
         break
       case 0xFA:
         console.log('MIDI', 'Start Received')
-        client.clock.play()
+        client.clock.play(false, true)
         break
       case 0xFB:
         console.log('MIDI', 'Continue Received')

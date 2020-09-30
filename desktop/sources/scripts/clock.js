@@ -56,31 +56,48 @@ function Clock (client) {
     client.update()
   }
 
-  this.play = function (msg = false) {
-    console.log('Clock', 'Play', msg)
-    if (this.isPaused === false) { return }
+  this.play = function (msg = false, midiStart = false) {
+    console.log('Clock', 'Play', msg, midiStart)
+    if (this.isPaused === false && !midiStart) { return }
     this.isPaused = false
-    if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
-    if (msg === true) { client.io.midi.sendClockStart() }
-    this.setSpeed(this.speed.target, this.speed.target, true)
+    if (this.isPuppet === true) {
+      console.warn('Clock', 'External Midi control')
+      if (!pulse.frame || midiStart) {  // no frames counted while paused (starting from no clock, unlikely) or triggered by MIDI clock START
+        this.setFrame(0)  // make sure frame aligns with pulse count for an accurate beat
+        pulse.frame = 0
+        pulse.count = 5   // by MIDI standard next pulse is the beat
+      }
+    } else {
+      if (msg === true) { client.io.midi.sendClockStart() }
+      this.setSpeed(this.speed.target, this.speed.target, true)
+    }
   }
 
   this.stop = function (msg = false) {
     console.log('Clock', 'Stop')
     if (this.isPaused === true) { return }
     this.isPaused = true
-    if (this.isPuppet === true) { console.warn('Clock', 'External Midi control'); return }
-    if (msg === true || client.io.midi.isClock) { client.io.midi.sendClockStop() }
+    if (this.isPuppet === true) {
+      console.warn('Clock', 'External Midi control')
+    } else {
+      if (msg === true || client.io.midi.isClock) { client.io.midi.sendClockStop() }
+      this.clearTimer()
+    }
     client.io.midi.allNotesOff()
-    this.clearTimer()
     client.io.midi.silence()
   }
 
   // External Clock
 
-  const pulse = { count: 0, last: null, timer: null }
+  const pulse = {
+    count: 0,
+    last: null,
+    timer: null,
+    frame: 0  // paused frame counter
+  }
 
   this.tap = function () {
+    pulse.count = (pulse.count + 1) % 6
     pulse.last = performance.now()
     if (!this.isPuppet) {
       console.log('Clock', 'Puppeteering starts..')
@@ -91,11 +108,15 @@ function Clock (client) {
         this.untap()
       }, 2000)
     }
-    if (this.isPaused) { return }
-    pulse.count = pulse.count + 1
-    if (pulse.count % 6 === 0) {
-      client.run()
-      pulse.count = 0
+    if (pulse.count == 0) {
+      if (this.isPaused) { pulse.frame++ }
+      else {
+        if (pulse.frame > 0) {
+          this.setFrame(client.orca.f + pulse.frame)
+          pulse.frame = 0
+        }
+        client.run()
+      }
     }
   }
 
@@ -103,9 +124,11 @@ function Clock (client) {
     console.log('Clock', 'Puppeteering stops..')
     clearInterval(pulse.timer)
     this.isPuppet = false
-    pulse.count = 1
+    pulse.frame = 0
     pulse.last = null
-    this.setTimer(this.speed.value)
+    if (!this.isPaused) {
+      this.setTimer(this.speed.value)
+    }
   }
 
   // Timer
