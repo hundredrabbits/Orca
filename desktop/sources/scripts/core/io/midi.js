@@ -129,7 +129,7 @@ function Midi (client) {
         break
       case 0xFA:
         console.log('MIDI', 'Start Received')
-        client.clock.play()
+        client.clock.play(false, true)
         break
       case 0xFB:
         console.log('MIDI', 'Continue Received')
@@ -176,7 +176,8 @@ function Midi (client) {
   }
 
   this.selectNextInput = () => {
-    this.inputIndex = this.inputIndex < this.inputs.length ? this.inputIndex + 1 : 0
+    const id = this.inputIndex < this.inputs.length - 1 ? this.inputIndex + 1 : -1
+    this.selectInput(id)
     client.update()
   }
 
