@@ -9,6 +9,7 @@ function Clock (client) {
   this.isPaused = true
   this.timer = null
   this.isPuppet = false
+  this.isLinkEnabled = false
 
   this.speed = { value: 120, target: 120 }
 
@@ -34,6 +35,15 @@ function Clock (client) {
     if (value) { this.speed.value = clamp(value, 60, 300) }
     if (target) { this.speed.target = clamp(target, 60, 300) }
     if (setTimer === true) { this.setTimer(this.speed.value) }
+    if (this.isLinkEnabled) { this.setFrame(0) }
+  }
+
+  this.setSpeedLink = (value) => {
+    client.link.setTempo(value)
+    if (!client.link.isPlaying()) {
+      this.setFrame(0)
+      client.update()
+    }
   }
 
   this.modSpeed = function (mod = 0, animate = false) {
@@ -56,8 +66,14 @@ function Clock (client) {
     client.update()
   }
 
-  this.play = function (msg = false, midiStart = false) {
-    console.log('Clock', 'Play', msg, midiStart)
+  this.play = function (msg = false, midiStart = false, linkStart = false) {
+    console.log('Clock', 'Play', msg, midiStart, linkStart)
+    if (this.isLinkEnabled && this.isPaused && !linkStart) {
+      this.isPaused = false
+      this.setSpeed(this.speed.target, this.speed.target, true)
+      client.link.play()
+      return
+    }
     if (this.isPaused === false && !midiStart) { return }
     this.isPaused = false
     if (this.isPuppet === true) {
@@ -73,8 +89,17 @@ function Clock (client) {
     }
   }
 
-  this.stop = function (msg = false) {
+  this.stop = function (msg = false, linkStop = false) {
     console.log('Clock', 'Stop')
+    console.log(this.isLinkEnabled, this.isPaused, linkStop)
+    if (this.isLinkEnabled && !this.isPaused && !linkStop) {
+      this.isPaused = true
+      this.clearTimer()
+      client.link.stop()
+      client.io.midi.allNotesOff()
+      client.io.midi.silence()
+      return
+    }
     if (this.isPaused === true) { return }
     this.isPaused = true
     if (this.isPuppet === true) {
@@ -159,10 +184,18 @@ function Clock (client) {
 
   // UI
 
+  this.getUIMessage = function (offset) {
+    if (this.isLinkEnabled) {
+      return `link${this.speed.value}${offset}`
+    } else {
+      return this.isPuppet === true ? 'midi' : `${this.speed.value}${offset}`
+    }
+  }
+
   this.toString = function () {
     const diff = this.speed.target - this.speed.value
     const _offset = Math.abs(diff) > 5 ? (diff > 0 ? `+${diff}` : diff) : ''
-    const _message = this.isPuppet === true ? 'midi' : `${this.speed.value}${_offset}`
+    const _message = this.getUIMessage(_offset)
     const _beat = diff === 0 && client.orca.f % 4 === 0 ? '*' : ''
     return `${_message}${_beat}`
   }

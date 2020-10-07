@@ -27,6 +27,7 @@
     "electron-packager": "^14.2.1"
   },
   "dependencies": {
+    "abletonlink-addon": "^0.2.9",
     "node-osc": "^4.1.8"
   },
   "standard": {

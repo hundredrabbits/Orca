@@ -122,23 +122,25 @@ function Midi (client) {
   }
 
   this.receive = function (msg) {
-    switch (msg.data[0]) {
-      // Clock
-      case 0xF8:
-        client.clock.tap()
-        break
-      case 0xFA:
-        console.log('MIDI', 'Start Received')
-        client.clock.play(false, true)
-        break
-      case 0xFB:
-        console.log('MIDI', 'Continue Received')
-        client.clock.play()
-        break
-      case 0xFC:
-        console.log('MIDI', 'Stop Received')
-        client.clock.stop()
-        break
+    if (!client.clock.isLinkEnabled) {
+      switch (msg.data[0]) {
+        // Clock
+        case 0xF8:
+          client.clock.tap()
+          break
+        case 0xFA:
+          console.log('MIDI', 'Start Received')
+          client.clock.play(false, true)
+          break
+        case 0xFB:
+          console.log('MIDI', 'Continue Received')
+          client.clock.play()
+          break
+        case 0xFC:
+          console.log('MIDI', 'Stop Received')
+          client.clock.stop()
+          break
+      }
     }
   }
 

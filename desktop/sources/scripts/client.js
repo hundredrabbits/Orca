@@ -11,6 +11,8 @@
 /* global Clock */
 /* global Theme */
 
+const AbletonLink = require("abletonlink-addon")
+
 function Client () {
   this.version = 176
   this.library = library
@@ -25,6 +27,29 @@ function Client () {
   this.cursor = new Cursor(this)
   this.commander = new Commander(this)
   this.clock = new Clock(this)
+
+  // Ableton Link
+  this.link = new AbletonLink();
+
+  this.link.setTempoCallback((newTempo) => {
+    newTempo = this.link.getTempo(true)
+    if (this.clock.isLinkEnabled && this.clock.speed.value != newTempo) {
+      this.clock.setSpeed(newTempo, newTempo, true)
+      this.clock.setFrame(0)
+      this.update()
+    };
+  });
+  
+  this.link.setStartStopCallback((startStopState) => {
+    console.log("startstop: " + startStopState);
+    if (startStopState && this.clock.isPaused) {
+      this.clock.play(false, true, true)
+    } else if (!startStopState && !this.clock.isPaused) {
+      this.clock.stop(false, true, false)
+      this.clock.setFrame(0)
+      this.update()
+    }
+  });
 
   // Settings
   this.scale = window.devicePixelRatio
@@ -117,6 +142,7 @@ function Client () {
     this.acels.set('Midi', 'Next Input Device', 'CmdOrCtrl+,', () => { this.clock.setFrame(0); this.io.midi.selectNextInput() })
     this.acels.set('Midi', 'Next Output Device', 'CmdOrCtrl+.', () => { this.clock.setFrame(0); this.io.midi.selectNextOutput() })
     this.acels.set('Midi', 'Refresh Devices', 'CmdOrCtrl+Shift+M', () => { this.io.midi.refresh() })
+    this.acels.set('Midi', 'Toggle Ableton Link', 'CmdOrCtrl+Shift+L', () => { this.toggleLink() })
 
     this.acels.set('Communication', 'Choose OSC Port', 'alt+O', () => { this.commander.start('osc:') })
     this.acels.set('Communication', 'Choose UDP Port', 'alt+U', () => { this.commander.start('udp:') })
@@ -158,6 +184,21 @@ function Client () {
     this.orca.run()
     this.io.run()
     this.update()
+  }
+
+  this.toggleLink = () => {
+    if (this.clock.isLinkEnabled) {
+      this.link.disable()
+      this.link.disableStartStopSync()
+    } else {
+      this.link.enable()
+      this.link.enableStartStopSync()
+      this.clock.setSpeed(this.link.getTempo(true), this.link.getTempo(true), true)
+      if (!this.link.isPlaying()) {
+        this.clock.stop(false, true)
+      }
+    }
+    this.clock.isLinkEnabled = !this.clock.isLinkEnabled
   }
 
   this.update = () => {

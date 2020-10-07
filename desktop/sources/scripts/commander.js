@@ -43,9 +43,24 @@ function Commander (client) {
     play: (p) => { client.clock.play() },
     stop: (p) => { client.clock.stop() },
     run: (p) => { client.run() },
+    link: (p) => { client.toggleLink() },
     // Time
-    apm: (p) => { client.clock.setSpeed(null, p.int) },
-    bpm: (p) => { client.clock.setSpeed(p.int, p.int, true) },
+    apm: (p) => {
+      if (client.clock.isLinkEnabled) {
+        client.clock.setSpeed(null, p.int)
+        client.clock.setSpeedLink(p.int)
+      } else {
+        client.clock.setSpeed(null, p.int)
+      }
+    },
+    bpm: (p) => {
+      if (client.clock.isLinkEnabled) {
+        client.clock.setSpeed(p.int, p.int, true)
+        client.clock.setSpeedLink(p.int)
+      } else {
+        client.clock.setSpeed(p.int, p.int, true)
+      }
+    },
     frame: (p) => { client.clock.setFrame(p.int) },
     rewind: (p) => { client.clock.setFrame(client.orca.f - p.int) },
     skip: (p) => { client.clock.setFrame(client.orca.f + p.int) },
