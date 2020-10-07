@@ -14,7 +14,7 @@
 const AbletonLink = require("abletonlink-addon")
 
 function Client () {
-  this.version = 176
+  this.version = 177
   this.library = library
 
   this.theme = new Theme(this)
@@ -29,26 +29,31 @@ function Client () {
   this.clock = new Clock(this)
 
   // Ableton Link
-  this.link = new AbletonLink();
+  this.link = new AbletonLink()
+  this.numPeers = 0
 
   this.link.setTempoCallback((newTempo) => {
     newTempo = this.link.getTempo(true)
     if (this.clock.isLinkEnabled && this.clock.speed.value != newTempo) {
-      this.clock.setSpeed(newTempo, newTempo, true)
-      this.clock.setFrame(0)
-      this.update()
+      this.clock.setSpeed(newTempo, newTempo, this.link.isPlaying())
     };
   });
   
   this.link.setStartStopCallback((startStopState) => {
-    console.log("startstop: " + startStopState);
+    console.log('ABLETON LINK', startStopState ? 'Start' : 'Stop')
     if (startStopState && this.clock.isPaused) {
-      this.clock.play(false, true, true)
+      this.clock.play(false, false, true)
     } else if (!startStopState && !this.clock.isPaused) {
-      this.clock.stop(false, true, false)
+      this.clock.stop(false, false, false)
       this.clock.setFrame(0)
       this.update()
     }
+  });
+
+  this.link.setNumPeersCallback((newNumPeers) => {
+    console.log('ABLETON LINK', 'NumPeers: ' + newNumPeers)
+    this.numPeers = newNumPeers
+    this.update()
   });
 
   // Settings
@@ -190,6 +195,7 @@ function Client () {
     if (this.clock.isLinkEnabled) {
       this.link.disable()
       this.link.disableStartStopSync()
+      this.clock.isLinkEnabled = false
     } else {
       this.link.enable()
       this.link.enableStartStopSync()
@@ -197,8 +203,8 @@ function Client () {
       if (!this.link.isPlaying()) {
         this.clock.stop(false, true)
       }
+      this.clock.isLinkEnabled = true
     }
-    this.clock.isLinkEnabled = !this.clock.isLinkEnabled
   }
 
   this.update = () => {
@@ -370,7 +376,11 @@ function Client () {
     if (this.commander.isActive === true) {
       this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, this.grid.w * 0, this.orca.h + 1, this.grid.w * 4)
     } else {
-      this.write(this.orca.f < 25 ? `ver${this.version}` : `${Object.keys(this.source.cache).length} mods`, this.grid.w * 0, this.orca.h + 1, this.grid.w)
+      if (this.clock.isLinkEnabled) {
+        this.write(`${this.numPeers} links`, this.grid.w * 0, this.orca.h + 1, this.grid.w)  
+      } else {
+        this.write(this.orca.f < 25 ? `ver${this.version}` : `${Object.keys(this.source.cache).length} mods`, this.grid.w * 0, this.orca.h + 1, this.grid.w)
+      }
       this.write(`${this.orca.w}x${this.orca.h}`, this.grid.w * 1, this.orca.h + 1, this.grid.w)
       this.write(`${this.grid.w}/${this.grid.h}${this.tile.w !== 10 ? ' ' + (this.tile.w / 10).toFixed(1) : ''}`, this.grid.w * 2, this.orca.h + 1, this.grid.w)
       this.write(`${this.clock}`, this.grid.w * 3, this.orca.h + 1, this.grid.w, this.clock.isPuppet ? 3 : this.io.midi.isClock ? 11 : this.clock.isPaused ? 20 : 2)

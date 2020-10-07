@@ -91,7 +91,6 @@ function Clock (client) {
 
   this.stop = function (msg = false, linkStop = false) {
     console.log('Clock', 'Stop')
-    console.log(this.isLinkEnabled, this.isPaused, linkStop)
     if (this.isLinkEnabled && !this.isPaused && !linkStop) {
       this.isPaused = true
       this.clearTimer()
@@ -186,7 +185,7 @@ function Clock (client) {
 
   this.getUIMessage = function (offset) {
     if (this.isLinkEnabled) {
-      return `link${this.speed.value}${offset}`
+      return `link${this.speed.value}`
     } else {
       return this.isPuppet === true ? 'midi' : `${this.speed.value}${offset}`
     }
