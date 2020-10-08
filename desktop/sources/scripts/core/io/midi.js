@@ -122,7 +122,7 @@ function Midi (client) {
   }
 
   this.receive = function (msg) {
-    if (!client.clock.isLinkEnabled) {
+    if (!client.clock.isLinkEnabled()) {
       switch (msg.data[0]) {
         // Clock
         case 0xF8:

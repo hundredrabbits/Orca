@@ -46,7 +46,7 @@ function Commander (client) {
     link: (p) => { client.toggleLink() },
     // Time
     apm: (p) => {
-      if (client.clock.isLinkEnabled) {
+      if (client.clock.isLinkEnabled()) {
         client.clock.setSpeed(null, p.int)
         client.clock.setSpeedLink(p.int)
       } else {
@@ -54,7 +54,7 @@ function Commander (client) {
       }
     },
     bpm: (p) => {
-      if (client.clock.isLinkEnabled) {
+      if (client.clock.isLinkEnabled()) {
         if (client.link.isPlaying()) {
           client.clock.setSpeed(p.int, p.int, true)  
         } else {

@@ -33,25 +33,27 @@ function Client () {
   this.numPeers = 0
 
   this.link.setTempoCallback((newTempo) => {
+    console.log('Ableton Link', 'New Tempo', newTempo)
     newTempo = this.link.getTempo(true)
-    if (this.clock.isLinkEnabled && this.clock.speed.value != newTempo) {
+    if (this.clock.isLinkEnabled() && this.clock.speed.value != newTempo) {
       this.clock.setSpeed(newTempo, newTempo, this.link.isPlaying())
+      this.update()
     };
   });
   
   this.link.setStartStopCallback((startStopState) => {
-    console.log('ABLETON LINK', startStopState ? 'Start' : 'Stop')
+    console.log('Ableton Link', startStopState ? 'Start' : 'Stop')
     if (startStopState && this.clock.isPaused) {
       this.clock.play(false, false, true)
     } else if (!startStopState && !this.clock.isPaused) {
-      this.clock.stop(false, false, false)
+      this.clock.stop(false)
       this.clock.setFrame(0)
       this.update()
     }
   });
 
   this.link.setNumPeersCallback((newNumPeers) => {
-    console.log('ABLETON LINK', 'NumPeers: ' + newNumPeers)
+    console.log('Ableton Link', 'NumPeers: ' + newNumPeers)
     this.numPeers = newNumPeers
     this.update()
   });
@@ -192,18 +194,23 @@ function Client () {
   }
 
   this.toggleLink = () => {
-    if (this.clock.isLinkEnabled) {
+    if (this.clock.isLinkEnabled()) {
+      console.log('Ableton Link Disabled')
       this.link.disable()
       this.link.disableStartStopSync()
-      this.clock.isLinkEnabled = false
-    } else {
+      this.clock.isPuppet = false
+      this.clock.puppetSource = null
+    } else if (!this.clock.isLinkEnabled() && !this.clock.isExternalClockActive()){
+      console.log('Ableton Link Enabled')
       this.link.enable()
       this.link.enableStartStopSync()
       this.clock.setSpeed(this.link.getTempo(true), this.link.getTempo(true), true)
       if (!this.link.isPlaying()) {
-        this.clock.stop(false, true)
+        this.clock.stop(false)
       }
-      this.clock.isLinkEnabled = true
+      this.clock.isPuppet = true
+      this.clock.puppetSource = sourceLink
+      console.log(this.clock.puppetSource)
     }
   }
 
@@ -376,7 +383,7 @@ function Client () {
     if (this.commander.isActive === true) {
       this.write(`${this.commander.query}${this.orca.f % 2 === 0 ? '_' : ''}`, this.grid.w * 0, this.orca.h + 1, this.grid.w * 4)
     } else {
-      if (this.clock.isLinkEnabled) {
+      if (this.clock.isLinkEnabled()) {
         this.write(`${this.numPeers} links`, this.grid.w * 0, this.orca.h + 1, this.grid.w)  
       } else {
         this.write(this.orca.f < 25 ? `ver${this.version}` : `${Object.keys(this.source.cache).length} mods`, this.grid.w * 0, this.orca.h + 1, this.grid.w)
