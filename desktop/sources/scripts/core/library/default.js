@@ -2,10 +2,12 @@
 
 /* global Operator */
 /* global client */
+/* global library */
 
-const library = {}
+library.default = {}
+var defaultLib = library.default
 
-library.a = function OperatorA (orca, x, y, passive) {
+defaultLib.a = function OperatorA (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'a', passive)
 
   this.name = 'add'
@@ -22,7 +24,7 @@ library.a = function OperatorA (orca, x, y, passive) {
   }
 }
 
-library.b = function OperatorL (orca, x, y, passive) {
+defaultLib.b = function OperatorL (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'b', passive)
 
   this.name = 'subtract'
@@ -39,7 +41,7 @@ library.b = function OperatorL (orca, x, y, passive) {
   }
 }
 
-library.c = function OperatorC (orca, x, y, passive) {
+defaultLib.c = function OperatorC (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'c', passive)
 
   this.name = 'clock'
@@ -57,7 +59,7 @@ library.c = function OperatorC (orca, x, y, passive) {
   }
 }
 
-library.d = function OperatorD (orca, x, y, passive) {
+defaultLib.d = function OperatorD (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'd', passive)
 
   this.name = 'delay'
@@ -75,7 +77,7 @@ library.d = function OperatorD (orca, x, y, passive) {
   }
 }
 
-library.e = function OperatorE (orca, x, y, passive) {
+defaultLib.e = function OperatorE (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'e', passive)
 
   this.name = 'east'
@@ -88,7 +90,7 @@ library.e = function OperatorE (orca, x, y, passive) {
   }
 }
 
-library.f = function OperatorF (orca, x, y, passive) {
+defaultLib.f = function OperatorF (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'f', passive)
 
   this.name = 'if'
@@ -105,7 +107,7 @@ library.f = function OperatorF (orca, x, y, passive) {
   }
 }
 
-library.g = function OperatorG (orca, x, y, passive) {
+defaultLib.g = function OperatorG (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'g', passive)
 
   this.name = 'generator'
@@ -130,7 +132,7 @@ library.g = function OperatorG (orca, x, y, passive) {
   }
 }
 
-library.h = function OperatorH (orca, x, y, passive) {
+defaultLib.h = function OperatorH (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'h', passive)
 
   this.name = 'halt'
@@ -144,7 +146,7 @@ library.h = function OperatorH (orca, x, y, passive) {
   }
 }
 
-library.i = function OperatorI (orca, x, y, passive) {
+defaultLib.i = function OperatorI (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'i', passive)
 
   this.name = 'increment'
@@ -162,7 +164,7 @@ library.i = function OperatorI (orca, x, y, passive) {
   }
 }
 
-library.j = function OperatorJ (orca, x, y, passive) {
+defaultLib.j = function OperatorJ (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'j', passive)
 
   this.name = 'jumper'
@@ -177,7 +179,7 @@ library.j = function OperatorJ (orca, x, y, passive) {
   }
 }
 
-library.k = function OperatorK (orca, x, y, passive) {
+defaultLib.k = function OperatorK (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'k', passive)
 
   this.name = 'konkat'
@@ -201,7 +203,7 @@ library.k = function OperatorK (orca, x, y, passive) {
   }
 }
 
-library.l = function OperatorL (orca, x, y, passive) {
+defaultLib.l = function OperatorL (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'l', passive)
 
   this.name = 'lesser'
@@ -218,7 +220,7 @@ library.l = function OperatorL (orca, x, y, passive) {
   }
 }
 
-library.m = function OperatorM (orca, x, y, passive) {
+defaultLib.m = function OperatorM (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'm', passive)
 
   this.name = 'multiply'
@@ -235,7 +237,7 @@ library.m = function OperatorM (orca, x, y, passive) {
   }
 }
 
-library.n = function OperatorN (orca, x, y, passive) {
+defaultLib.n = function OperatorN (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'n', passive)
 
   this.name = 'north'
@@ -248,7 +250,7 @@ library.n = function OperatorN (orca, x, y, passive) {
   }
 }
 
-library.o = function OperatorO (orca, x, y, passive) {
+defaultLib.o = function OperatorO (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'o', passive)
 
   this.name = 'read'
@@ -266,7 +268,7 @@ library.o = function OperatorO (orca, x, y, passive) {
   }
 }
 
-library.p = function OperatorP (orca, x, y, passive) {
+defaultLib.p = function OperatorP (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'p', passive)
 
   this.name = 'push'
@@ -287,7 +289,7 @@ library.p = function OperatorP (orca, x, y, passive) {
   }
 }
 
-library.q = function OperatorQ (orca, x, y, passive) {
+defaultLib.q = function OperatorQ (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'q', passive)
 
   this.name = 'query'
@@ -312,7 +314,7 @@ library.q = function OperatorQ (orca, x, y, passive) {
   }
 }
 
-library.r = function OperatorR (orca, x, y, passive) {
+defaultLib.r = function OperatorR (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'r', passive)
 
   this.name = 'random'
@@ -330,7 +332,7 @@ library.r = function OperatorR (orca, x, y, passive) {
   }
 }
 
-library.s = function OperatorS (orca, x, y, passive) {
+defaultLib.s = function OperatorS (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 's', passive)
 
   this.name = 'south'
@@ -343,7 +345,7 @@ library.s = function OperatorS (orca, x, y, passive) {
   }
 }
 
-library.t = function OperatorT (orca, x, y, passive) {
+defaultLib.t = function OperatorT (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 't', passive)
 
   this.name = 'track'
@@ -364,7 +366,7 @@ library.t = function OperatorT (orca, x, y, passive) {
   }
 }
 
-library.u = function OperatorU (orca, x, y, passive) {
+defaultLib.u = function OperatorU (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'u', passive)
 
   this.name = 'uclid'
@@ -382,7 +384,7 @@ library.u = function OperatorU (orca, x, y, passive) {
   }
 }
 
-library.v = function OperatorV (orca, x, y, passive) {
+defaultLib.v = function OperatorV (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'v', passive)
 
   this.name = 'variable'
@@ -405,7 +407,7 @@ library.v = function OperatorV (orca, x, y, passive) {
   }
 }
 
-library.w = function OperatorW (orca, x, y, passive) {
+defaultLib.w = function OperatorW (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'w', passive)
 
   this.name = 'west'
@@ -418,7 +420,7 @@ library.w = function OperatorW (orca, x, y, passive) {
   }
 }
 
-library.x = function OperatorX (orca, x, y, passive) {
+defaultLib.x = function OperatorX (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'x', passive)
 
   this.name = 'write'
@@ -436,7 +438,7 @@ library.x = function OperatorX (orca, x, y, passive) {
   }
 }
 
-library.y = function OperatorY (orca, x, y, passive) {
+defaultLib.y = function OperatorY (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'y', passive)
 
   this.name = 'jymper'
@@ -451,7 +453,7 @@ library.y = function OperatorY (orca, x, y, passive) {
   }
 }
 
-library.z = function OperatorZ (orca, x, y, passive) {
+defaultLib.z = function OperatorZ (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'z', passive)
 
   this.name = 'lerp'
@@ -472,7 +474,7 @@ library.z = function OperatorZ (orca, x, y, passive) {
 
 // Specials
 
-library['*'] = function OperatorBang (orca, x, y, passive) {
+defaultLib['*'] = function OperatorBang (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '*', true)
 
   this.name = 'bang'
@@ -485,7 +487,7 @@ library['*'] = function OperatorBang (orca, x, y, passive) {
   }
 }
 
-library['#'] = function OperatorComment (orca, x, y, passive) {
+defaultLib['#'] = function OperatorComment (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '#', true)
 
   this.name = 'comment'
@@ -503,7 +505,7 @@ library['#'] = function OperatorComment (orca, x, y, passive) {
 
 // IO
 
-library.$ = function OperatorSelf (orca, x, y, passive) {
+defaultLib.$ = function OperatorSelf (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '*', true)
 
   this.name = 'self'
@@ -526,7 +528,7 @@ library.$ = function OperatorSelf (orca, x, y, passive) {
   }
 }
 
-library[':'] = function OperatorMidi (orca, x, y, passive) {
+defaultLib[':'] = function OperatorMidi (orca, x, y, passive) {
   Operator.call(this, orca, x, y, ':', true)
 
   this.name = 'midi'
@@ -561,7 +563,7 @@ library[':'] = function OperatorMidi (orca, x, y, passive) {
   }
 }
 
-library['!'] = function OperatorCC (orca, x, y) {
+defaultLib['!'] = function OperatorCC (orca, x, y) {
   Operator.call(this, orca, x, y, '!', true)
 
   this.name = 'cc'
@@ -591,7 +593,7 @@ library['!'] = function OperatorCC (orca, x, y) {
   }
 }
 
-library['?'] = function OperatorPB (orca, x, y) {
+defaultLib['?'] = function OperatorPB (orca, x, y) {
   Operator.call(this, orca, x, y, '?', true)
 
   this.name = 'pb'
@@ -621,7 +623,7 @@ library['?'] = function OperatorPB (orca, x, y) {
   }
 }
 
-library['%'] = function OperatorMono (orca, x, y, passive) {
+defaultLib['%'] = function OperatorMono (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '%', true)
 
   this.name = 'mono'
@@ -656,7 +658,7 @@ library['%'] = function OperatorMono (orca, x, y, passive) {
   }
 }
 
-library['='] = function OperatorOsc (orca, x, y, passive) {
+defaultLib['='] = function OperatorOsc (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '=', true)
 
   this.name = 'osc'
@@ -688,7 +690,7 @@ library['='] = function OperatorOsc (orca, x, y, passive) {
   }
 }
 
-library[';'] = function OperatorUdp (orca, x, y, passive) {
+defaultLib[';'] = function OperatorUdp (orca, x, y, passive) {
   Operator.call(this, orca, x, y, ';', true)
 
   this.name = 'udp'
@@ -717,7 +719,7 @@ library[';'] = function OperatorUdp (orca, x, y, passive) {
 // Add numbers
 
 for (let i = 0; i <= 9; i++) {
-  library[`${i}`] = function OperatorNull (orca, x, y, passive) {
+  defaultLib[`${i}`] = function OperatorNull (orca, x, y, passive) {
     Operator.call(this, orca, x, y, '.', false)
 
     this.name = 'null'

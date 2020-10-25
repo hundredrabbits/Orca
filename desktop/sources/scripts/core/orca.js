@@ -1,6 +1,7 @@
 'use strict'
 
 function Orca (library) {
+  this.library = library
   this.keys = '0123456789abcdefghijklmnopqrstuvwxyz'.split('')
 
   this.w = 1 // Default Width
@@ -63,7 +64,7 @@ function Orca (library) {
       for (let x = 0; x < this.w; x++) {
         const g = this.glyphAt(x, y)
         if (g === '.' || !this.isAllowed(g)) { continue }
-        a.push(new library[g.toLowerCase()](this, x, y, g === g.toUpperCase()))
+        a.push(new this.library[g.toLowerCase()](this, x, y, g === g.toUpperCase()))
       }
     }
     return a
@@ -146,7 +147,7 @@ function Orca (library) {
   }
 
   this.isAllowed = function (g) {
-    return g === '.' || !!library[`${g}`.toLowerCase()]
+    return g === '.' || !!this.library[`${g}`.toLowerCase()]
   }
 
   this.isSpecial = function (g) {
