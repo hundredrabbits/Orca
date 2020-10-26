@@ -8,7 +8,7 @@ Orca starts with a `default` library, additional libraries can be loaded and com
 
 * `clr`: a special library that unloads all definitions
 * `default`: mainline Orca language, loaded at startup (complete)
-* `orca157`: Orca before the BFL breaking change (complete) (TODO)
+* `orca157`: Orca [before the BFL breaking change](https://github.com/hundredrabbits/Orca/commit/4fd9ad72aafbb3f0c71139fd36ae421f1d8f352a) (complete)
 * `base`: not a very useful library by itself, defines the basics such as comments and numbers
 * `sb*`: Sborca collection of alternative operators (see `sborca.md`)
 
