@@ -27,6 +27,8 @@ npm start
 
 ## Operators
 
+See `Language` section for alternative language definitions.
+
 To display the list of operators inside of Orca, use `CmdOrCtrl+G`.
 
 - `A` **add**(*a* b): Outputs sum of inputs.
@@ -149,7 +151,15 @@ All commands have a shorthand equivalent to their first two characters, for exam
 - `midi:1;2` Set Midi output device to `#1`, and input device to `#2`.
 - `udp:1234;5678` Set UDP output port to `1234`, and input port to `5678`.
 - `osc:1234` Set OSC output port to `1234`.
-- `lang:clr;default` Incrementally load language interpreters (`clr` clears the language library entirely). Multiple languages can be combined.
+- `lang:clr;default;etc` Incrementally load language libraries (`clr` clears the language library entirely). Multiple languages can be combined.
+
+### Language
+
+Orca language is a "library" of operators (everything that is not a command) that together define its behavior. Orca has the ability to dynamically load and combine multiple operator libraries at runtime, effectively allowing you to reconfigure the language. For example, you may want this for playing older compositions that are no longer compatible with the current Orca, or to experiment with alternative operators without affecting mainline Orca. Language reconfiguration lets you tailor the language to your individual composition.
+
+Orca starts with a `default` library, additional libraries can be loaded and combined via the `lang` command. Library loading is incremental, that is, operators defined in the new library are added to runtime, replacing existing operators. A given library may define all operators or only some. To completely clear the runtime library and start with the blank slate use the `clr` library.
+
+You can see available libraries and their documentation [here](https://github.com/hundredrabbits/Orca/blob/master/desktop/sources/scripts/library).
 
 ## Base36 Table
 
