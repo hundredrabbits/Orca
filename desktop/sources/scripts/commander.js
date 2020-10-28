@@ -1,5 +1,7 @@
 'use strict'
 
+/* global library */
+
 function Commander (client) {
   this.isActive = false
   this.query = ''
@@ -70,7 +72,28 @@ function Commander (client) {
     },
     write: (p) => {
       client.orca.writeBlock(p._x || client.cursor.x, p._y || client.cursor.y, p._str)
-    }
+    },
+    // Language
+    lang: (p) => {
+      p.parts.forEach(l => {
+        if (l === 'clr') {
+          console.log('Clearing lang'),
+          client.library = {}
+          client.libraryName = '---'
+        } else {
+          if (l in library) {
+            console.log(`Incrementally loading lang: ${l}`)
+            client.library = Object.assign({}, client.library, library[l])
+            client.libraryName = l
+          } else {
+            console.error(`Lang ${l} is not defined`)
+            return
+          }
+        }
+        client.orca.library = client.library
+        client.clock.setFrame(0)
+    })
+    },
   }
 
   // Make shorthands

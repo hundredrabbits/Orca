@@ -6,7 +6,11 @@
     <script type="text/javascript" src="scripts/lib/theme.js"></script>
     <script type="text/javascript" src="scripts/lib/history.js"></script>
     <script type="text/javascript" src="scripts/lib/source.js"></script>
-    <script type="text/javascript" src="scripts/core/library.js"></script>
+    <script type="text/javascript" src="scripts/core/library/library.js"></script>
+    <script type="text/javascript" src="scripts/core/library/base.js"></script>
+    <script type="text/javascript" src="scripts/core/library/default.js"></script>
+    <script type="text/javascript" src="scripts/core/library/orca157.js"></script>
+    <script type="text/javascript" src="scripts/core/library/sborca.js"></script>
     <script type="text/javascript" src="scripts/core/io.js"></script>
     <script type="text/javascript" src="scripts/core/operator.js"></script>
     <script type="text/javascript" src="scripts/core/orca.js"></script>
@@ -30,7 +34,7 @@
 
       client.install(document.body)
 
-      window.addEventListener('load', () => { 
+      window.addEventListener('load', () => {
         client.start()
         client.acels.inject('Orca')
       })

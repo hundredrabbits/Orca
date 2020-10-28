@@ -2,10 +2,11 @@
 
 /* global Operator */
 /* global client */
+/* global library */
 
-const library = {}
+library.orca157 = {}
 
-library.a = function OperatorA (orca, x, y, passive) {
+library.orca157.a = function OperatorA (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'a', passive)
 
   this.name = 'add'
@@ -13,7 +14,7 @@ library.a = function OperatorA (orca, x, y, passive) {
 
   this.ports.a = { x: -1, y: 0 }
   this.ports.b = { x: 1, y: 0 }
-  this.ports.output = { x: 0, y: 1, sensitive: true, output: true }
+  this.ports.output = { x: 0, y: 1, sensitive: true }
 
   this.operation = function (force = false) {
     const a = this.listen(this.ports.a, true)
@@ -22,24 +23,25 @@ library.a = function OperatorA (orca, x, y, passive) {
   }
 }
 
-library.b = function OperatorL (orca, x, y, passive) {
+library.orca157.b = function OperatorB (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'b', passive)
 
-  this.name = 'subtract'
-  this.info = 'Outputs difference of inputs'
+  this.name = 'bounce'
+  this.info = 'Outputs values between inputs'
 
-  this.ports.a = { x: -1, y: 0 }
-  this.ports.b = { x: 1, y: 0 }
-  this.ports.output = { x: 0, y: 1, sensitive: true, output: true }
+  this.ports.rate = { x: -1, y: 0, clamp: { min: 1 } }
+  this.ports.mod = { x: 1, y: 0, default: '8' }
+  this.ports.output = { x: 0, y: 1, sensitive: true }
 
   this.operation = function (force = false) {
-    const a = this.listen(this.ports.a, true)
-    const b = this.listen(this.ports.b, true)
-    return orca.keyOf(Math.abs(b - a))
+    const rate = this.listen(this.ports.rate, true)
+    const mod = this.listen(this.ports.mod, true) - 1
+    const key = Math.floor(orca.f / rate) % (mod * 2)
+    return orca.keyOf(key <= mod ? key : mod - (key - mod))
   }
 }
 
-library.c = function OperatorC (orca, x, y, passive) {
+library.orca157.c = function OperatorC (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'c', passive)
 
   this.name = 'clock'
@@ -47,7 +49,7 @@ library.c = function OperatorC (orca, x, y, passive) {
 
   this.ports.rate = { x: -1, y: 0, clamp: { min: 1 } }
   this.ports.mod = { x: 1, y: 0, default: '8' }
-  this.ports.output = { x: 0, y: 1, sensitive: true, output: true }
+  this.ports.output = { x: 0, y: 1, sensitive: true }
 
   this.operation = function (force = false) {
     const rate = this.listen(this.ports.rate, true)
@@ -57,7 +59,7 @@ library.c = function OperatorC (orca, x, y, passive) {
   }
 }
 
-library.d = function OperatorD (orca, x, y, passive) {
+library.orca157.d = function OperatorD (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'd', passive)
 
   this.name = 'delay'
@@ -65,7 +67,7 @@ library.d = function OperatorD (orca, x, y, passive) {
 
   this.ports.rate = { x: -1, y: 0, clamp: { min: 1 } }
   this.ports.mod = { x: 1, y: 0, default: '8' }
-  this.ports.output = { x: 0, y: 1, bang: true, output: true }
+  this.ports.output = { x: 0, y: 1, bang: true }
 
   this.operation = function (force = false) {
     const rate = this.listen(this.ports.rate, true)
@@ -75,7 +77,7 @@ library.d = function OperatorD (orca, x, y, passive) {
   }
 }
 
-library.e = function OperatorE (orca, x, y, passive) {
+library.orca157.e = function OperatorE (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'e', passive)
 
   this.name = 'east'
@@ -88,7 +90,7 @@ library.e = function OperatorE (orca, x, y, passive) {
   }
 }
 
-library.f = function OperatorF (orca, x, y, passive) {
+library.orca157.f = function OperatorF (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'f', passive)
 
   this.name = 'if'
@@ -96,16 +98,16 @@ library.f = function OperatorF (orca, x, y, passive) {
 
   this.ports.a = { x: -1, y: 0 }
   this.ports.b = { x: 1, y: 0 }
-  this.ports.output = { x: 0, y: 1, bang: true, output: true }
+  this.ports.output = { x: 0, y: 1, bang: true }
 
   this.operation = function (force = false) {
     const a = this.listen(this.ports.a)
     const b = this.listen(this.ports.b)
-    return a === b
+    return a === b && a !== '.'
   }
 }
 
-library.g = function OperatorG (orca, x, y, passive) {
+library.orca157.g = function OperatorG (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'g', passive)
 
   this.name = 'generator'
@@ -130,13 +132,13 @@ library.g = function OperatorG (orca, x, y, passive) {
   }
 }
 
-library.h = function OperatorH (orca, x, y, passive) {
+library.orca157.h = function OperatorH (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'h', passive)
 
   this.name = 'halt'
   this.info = 'Halts southward operand'
 
-  this.ports.output = { x: 0, y: 1, reader: true, output: true }
+  this.ports.output = { x: 0, y: 1, reader: true }
 
   this.operation = function (force = false) {
     orca.lock(this.x + this.ports.output.x, this.y + this.ports.output.y)
@@ -144,7 +146,7 @@ library.h = function OperatorH (orca, x, y, passive) {
   }
 }
 
-library.i = function OperatorI (orca, x, y, passive) {
+library.orca157.i = function OperatorI (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'i', passive)
 
   this.name = 'increment'
@@ -152,7 +154,7 @@ library.i = function OperatorI (orca, x, y, passive) {
 
   this.ports.step = { x: -1, y: 0, default: '1' }
   this.ports.mod = { x: 1, y: 0 }
-  this.ports.output = { x: 0, y: 1, sensitive: true, reader: true, output: true }
+  this.ports.output = { x: 0, y: 1, sensitive: true, reader: true }
 
   this.operation = function (force = false) {
     const step = this.listen(this.ports.step, true)
@@ -162,14 +164,14 @@ library.i = function OperatorI (orca, x, y, passive) {
   }
 }
 
-library.j = function OperatorJ (orca, x, y, passive) {
+library.orca157.j = function OperatorJ (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'j', passive)
 
   this.name = 'jumper'
   this.info = 'Outputs northward operand'
 
   this.ports.val = { x: 0, y: -1 }
-  this.ports.output = { x: 0, y: 1, output: true }
+  this.ports.output = { x: 0, y: 1 }
 
   this.operation = function (force = false) {
     orca.lock(this.x, this.y + 1)
@@ -177,7 +179,7 @@ library.j = function OperatorJ (orca, x, y, passive) {
   }
 }
 
-library.k = function OperatorK (orca, x, y, passive) {
+library.orca157.k = function OperatorK (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'k', passive)
 
   this.name = 'konkat'
@@ -201,24 +203,34 @@ library.k = function OperatorK (orca, x, y, passive) {
   }
 }
 
-library.l = function OperatorL (orca, x, y, passive) {
+library.orca157.l = function OperatorL (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'l', passive)
 
-  this.name = 'lesser'
-  this.info = 'Outputs smallest input'
+  this.name = 'loop'
+  this.info = 'Moves eastward operands'
 
-  this.ports.a = { x: -1, y: 0 }
-  this.ports.b = { x: 1, y: 0 }
-  this.ports.output = { x: 0, y: 1, sensitive: true, output: true }
+  this.ports.step = { x: -2, y: 0, default: '1' }
+  this.ports.len = { x: -1, y: 0 }
+  this.ports.val = { x: 1, y: 0 }
+  this.ports.output = { x: 0, y: 1 }
 
   this.operation = function (force = false) {
-    const a = this.listen(this.ports.a)
-    const b = this.listen(this.ports.b)
-    return a !== '.' && b !== '.' ? orca.keyOf(Math.min(orca.valueOf(a), orca.valueOf(b))) : '.'
+    const len = this.listen(this.ports.len, true)
+    const step = this.listen(this.ports.step, true)
+    const index = orca.indexAt(this.x + 1, this.y)
+    const seg = orca.s.substr(index, len)
+    const res = seg.substr(len - step, step) + seg.substr(0, len - step)
+    for (let offset = 0; offset <= len; offset++) {
+      if (offset > 0) {
+        orca.lock(this.x + offset, this.y)
+      }
+      orca.write(this.x + offset + 1, this.y, res.charAt(offset))
+    }
+    return this.listen(this.ports.val)
   }
 }
 
-library.m = function OperatorM (orca, x, y, passive) {
+library.orca157.m = function OperatorM (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'm', passive)
 
   this.name = 'multiply'
@@ -226,7 +238,7 @@ library.m = function OperatorM (orca, x, y, passive) {
 
   this.ports.a = { x: -1, y: 0 }
   this.ports.b = { x: 1, y: 0 }
-  this.ports.output = { x: 0, y: 1, sensitive: true, output: true }
+  this.ports.output = { x: 0, y: 1, sensitive: true }
 
   this.operation = function (force = false) {
     const a = this.listen(this.ports.a, true)
@@ -235,7 +247,7 @@ library.m = function OperatorM (orca, x, y, passive) {
   }
 }
 
-library.n = function OperatorN (orca, x, y, passive) {
+library.orca157.n = function OperatorN (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'n', passive)
 
   this.name = 'north'
@@ -248,7 +260,7 @@ library.n = function OperatorN (orca, x, y, passive) {
   }
 }
 
-library.o = function OperatorO (orca, x, y, passive) {
+library.orca157.o = function OperatorO (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'o', passive)
 
   this.name = 'read'
@@ -256,7 +268,7 @@ library.o = function OperatorO (orca, x, y, passive) {
 
   this.ports.x = { x: -2, y: 0 }
   this.ports.y = { x: -1, y: 0 }
-  this.ports.output = { x: 0, y: 1, output: true }
+  this.ports.output = { x: 0, y: 1 }
 
   this.operation = function (force = false) {
     const x = this.listen(this.ports.x, true)
@@ -266,7 +278,7 @@ library.o = function OperatorO (orca, x, y, passive) {
   }
 }
 
-library.p = function OperatorP (orca, x, y, passive) {
+library.orca157.p = function OperatorP (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'p', passive)
 
   this.name = 'push'
@@ -282,12 +294,12 @@ library.p = function OperatorP (orca, x, y, passive) {
     for (let offset = 0; offset < len; offset++) {
       orca.lock(this.x + offset, this.y + 1)
     }
-    this.ports.output = { x: (key % len), y: 1, output: true }
+    this.ports.output = { x: (key % len), y: 1 }
     return this.listen(this.ports.val)
   }
 }
 
-library.q = function OperatorQ (orca, x, y, passive) {
+library.orca157.q = function OperatorQ (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'q', passive)
 
   this.name = 'query'
@@ -312,7 +324,7 @@ library.q = function OperatorQ (orca, x, y, passive) {
   }
 }
 
-library.r = function OperatorR (orca, x, y, passive) {
+library.orca157.r = function OperatorR (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'r', passive)
 
   this.name = 'random'
@@ -320,7 +332,7 @@ library.r = function OperatorR (orca, x, y, passive) {
 
   this.ports.min = { x: -1, y: 0 }
   this.ports.max = { x: 1, y: 0 }
-  this.ports.output = { x: 0, y: 1, sensitive: true, output: true }
+  this.ports.output = { x: 0, y: 1, sensitive: true }
 
   this.operation = function (force = false) {
     const min = this.listen(this.ports.min, true)
@@ -330,7 +342,7 @@ library.r = function OperatorR (orca, x, y, passive) {
   }
 }
 
-library.s = function OperatorS (orca, x, y, passive) {
+library.orca157.s = function OperatorS (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 's', passive)
 
   this.name = 'south'
@@ -343,7 +355,7 @@ library.s = function OperatorS (orca, x, y, passive) {
   }
 }
 
-library.t = function OperatorT (orca, x, y, passive) {
+library.orca157.t = function OperatorT (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 't', passive)
 
   this.name = 'track'
@@ -351,7 +363,7 @@ library.t = function OperatorT (orca, x, y, passive) {
 
   this.ports.key = { x: -2, y: 0 }
   this.ports.len = { x: -1, y: 0, clamp: { min: 1 } }
-  this.ports.output = { x: 0, y: 1, output: true }
+  this.ports.output = { x: 0, y: 1 }
 
   this.operation = function (force = false) {
     const len = this.listen(this.ports.len, true)
@@ -364,7 +376,7 @@ library.t = function OperatorT (orca, x, y, passive) {
   }
 }
 
-library.u = function OperatorU (orca, x, y, passive) {
+library.orca157.u = function OperatorU (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'u', passive)
 
   this.name = 'uclid'
@@ -372,7 +384,7 @@ library.u = function OperatorU (orca, x, y, passive) {
 
   this.ports.step = { x: -1, y: 0, clamp: { min: 0 }, default: '1' }
   this.ports.max = { x: 1, y: 0, clamp: { min: 1 }, default: '8' }
-  this.ports.output = { x: 0, y: 1, bang: true, output: true }
+  this.ports.output = { x: 0, y: 1, bang: true }
 
   this.operation = function (force = false) {
     const step = this.listen(this.ports.step, true)
@@ -382,7 +394,7 @@ library.u = function OperatorU (orca, x, y, passive) {
   }
 }
 
-library.v = function OperatorV (orca, x, y, passive) {
+library.orca157.v = function OperatorV (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'v', passive)
 
   this.name = 'variable'
@@ -405,7 +417,7 @@ library.v = function OperatorV (orca, x, y, passive) {
   }
 }
 
-library.w = function OperatorW (orca, x, y, passive) {
+library.orca157.w = function OperatorW (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'w', passive)
 
   this.name = 'west'
@@ -418,7 +430,7 @@ library.w = function OperatorW (orca, x, y, passive) {
   }
 }
 
-library.x = function OperatorX (orca, x, y, passive) {
+library.orca157.x = function OperatorX (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'x', passive)
 
   this.name = 'write'
@@ -431,19 +443,19 @@ library.x = function OperatorX (orca, x, y, passive) {
   this.operation = function (force = false) {
     const x = this.listen(this.ports.x, true)
     const y = this.listen(this.ports.y, true) + 1
-    this.addPort('output', { x: x, y: y, output: true })
+    this.addPort('output', { x: x, y: y })
     return this.listen(this.ports.val)
   }
 }
 
-library.y = function OperatorY (orca, x, y, passive) {
+library.orca157.y = function OperatorY (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'y', passive)
 
   this.name = 'jymper'
   this.info = 'Outputs westward operand'
 
   this.ports.val = { x: -1, y: 0 }
-  this.ports.output = { x: 1, y: 0, output: true }
+  this.ports.output = { x: 1, y: 0 }
 
   this.operation = function (force = false) {
     orca.lock(this.x + 1, this.y)
@@ -451,7 +463,7 @@ library.y = function OperatorY (orca, x, y, passive) {
   }
 }
 
-library.z = function OperatorZ (orca, x, y, passive) {
+library.orca157.z = function OperatorZ (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'z', passive)
 
   this.name = 'lerp'
@@ -459,7 +471,7 @@ library.z = function OperatorZ (orca, x, y, passive) {
 
   this.ports.rate = { x: -1, y: 0, default: '1' }
   this.ports.target = { x: 1, y: 0 }
-  this.ports.output = { x: 0, y: 1, sensitive: true, reader: true, output: true }
+  this.ports.output = { x: 0, y: 1, sensitive: true, reader: true }
 
   this.operation = function (force = false) {
     const rate = this.listen(this.ports.rate, true)
@@ -472,7 +484,7 @@ library.z = function OperatorZ (orca, x, y, passive) {
 
 // Specials
 
-library['*'] = function OperatorBang (orca, x, y, passive) {
+library.orca157['*'] = function OperatorBang (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '*', true)
 
   this.name = 'bang'
@@ -485,7 +497,7 @@ library['*'] = function OperatorBang (orca, x, y, passive) {
   }
 }
 
-library['#'] = function OperatorComment (orca, x, y, passive) {
+library.orca157['#'] = function OperatorComment (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '#', true)
 
   this.name = 'comment'
@@ -503,7 +515,7 @@ library['#'] = function OperatorComment (orca, x, y, passive) {
 
 // IO
 
-library.$ = function OperatorSelf (orca, x, y, passive) {
+library.orca157.$ = function OperatorSelf (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '*', true)
 
   this.name = 'self'
@@ -522,11 +534,11 @@ library.$ = function OperatorSelf (orca, x, y, passive) {
     if (msg === '') { return }
 
     this.draw = false
-    client.commander.trigger(`${msg}`, { x, y: y + 1 }, false)
+    client.commander.trigger(`${msg}`)
   }
 }
 
-library[':'] = function OperatorMidi (orca, x, y, passive) {
+library.orca157[':'] = function OperatorMidi (orca, x, y, passive) {
   Operator.call(this, orca, x, y, ':', true)
 
   this.name = 'midi'
@@ -561,7 +573,7 @@ library[':'] = function OperatorMidi (orca, x, y, passive) {
   }
 }
 
-library['!'] = function OperatorCC (orca, x, y) {
+library.orca157['!'] = function OperatorCC (orca, x, y) {
   Operator.call(this, orca, x, y, '!', true)
 
   this.name = 'cc'
@@ -591,7 +603,7 @@ library['!'] = function OperatorCC (orca, x, y) {
   }
 }
 
-library['?'] = function OperatorPB (orca, x, y) {
+library.orca157['?'] = function OperatorPB (orca, x, y) {
   Operator.call(this, orca, x, y, '?', true)
 
   this.name = 'pb'
@@ -621,7 +633,7 @@ library['?'] = function OperatorPB (orca, x, y) {
   }
 }
 
-library['%'] = function OperatorMono (orca, x, y, passive) {
+library.orca157['%'] = function OperatorMono (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '%', true)
 
   this.name = 'mono'
@@ -656,7 +668,7 @@ library['%'] = function OperatorMono (orca, x, y, passive) {
   }
 }
 
-library['='] = function OperatorOsc (orca, x, y, passive) {
+library.orca157['='] = function OperatorOsc (orca, x, y, passive) {
   Operator.call(this, orca, x, y, '=', true)
 
   this.name = 'osc'
@@ -674,6 +686,7 @@ library['='] = function OperatorOsc (orca, x, y, passive) {
     }
 
     if (!this.hasNeighbor('*') && force === false) { return }
+    if (msg === '') { return }
 
     const path = this.listen(this.ports.path)
 
@@ -688,7 +701,7 @@ library['='] = function OperatorOsc (orca, x, y, passive) {
   }
 }
 
-library[';'] = function OperatorUdp (orca, x, y, passive) {
+library.orca157[';'] = function OperatorUdp (orca, x, y, passive) {
   Operator.call(this, orca, x, y, ';', true)
 
   this.name = 'udp'
@@ -704,6 +717,7 @@ library[';'] = function OperatorUdp (orca, x, y, passive) {
     }
 
     if (!this.hasNeighbor('*') && force === false) { return }
+    if (msg === '') { return }
 
     this.draw = false
     client.io.udp.push(msg)
@@ -717,7 +731,7 @@ library[';'] = function OperatorUdp (orca, x, y, passive) {
 // Add numbers
 
 for (let i = 0; i <= 9; i++) {
-  library[`${i}`] = function OperatorNull (orca, x, y, passive) {
+  library.orca157[`${i}`] = function OperatorNull (orca, x, y, passive) {
     Operator.call(this, orca, x, y, '.', false)
 
     this.name = 'null'
