@@ -10,6 +10,7 @@
     "time": "node time.js",
     "docs": "node ../docs.js",
     "fix": "standard --fix",
+    "update": "npm update --save",
     "clean": "rm -r ~/Documents/Orca-darwin-x64/ ; rm -r ~/Documents/Orca-linux-x64/ ; rm -r ~/Documents/Orca-win32-x64/ ; echo 'cleaned build location'",
     "build_osx": "electron-packager . Orca --platform=darwin --arch=x64 --out ~/Documents/ --overwrite --icon=icon.icns ; echo 'Built for OSX'",
     "build_linux": "electron-packager . Orca --platform=linux  --arch=x64 --out ~/Documents/ --overwrite --icon=icon.ico ; echo 'Built for LINUX'",
@@ -23,11 +24,11 @@
     "push": "npm run build ; npm run push_osx ; npm run push_linux ; npm run push_win ; npm run clean ; npm run status"
   },
   "devDependencies": {
-    "electron": "^8.2.4",
-    "electron-packager": "^14.2.1"
+    "electron": "^8.5.3",
+    "electron-packager": "^15.1.0"
   },
   "dependencies": {
-    "node-osc": "^4.1.8"
+    "node-osc": "^4.1.9"
   },
   "standard": {
     "globals": [
