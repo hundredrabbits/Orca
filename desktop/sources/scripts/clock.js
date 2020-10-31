@@ -2,6 +2,9 @@
 
 /* global Blob */
 
+const sourceClock = 1
+const sourceLink = 2
+
 function Clock (client) {
   const workerScript = 'onmessage = (e) => { setInterval(() => { postMessage(true) }, e.data)}'
   const worker = window.URL.createObjectURL(new Blob([workerScript], { type: 'text/javascript' }))
@@ -9,6 +12,7 @@ function Clock (client) {
   this.isPaused = true
   this.timer = null
   this.isPuppet = false
+  this.puppetSource = null
 
   this.speed = { value: 120, target: 120 }
 
@@ -29,11 +33,36 @@ function Clock (client) {
     this.setSpeed(this.speed.value + (this.speed.value < this.speed.target ? 1 : -1), null, true)
   }
 
+  this.isLinkEnabled = function () {
+    if (this.isPuppet && this.puppetSource == 2) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  this.isExternalClockActive = function () {
+    if (this.isPuppet && this.puppetSource == 1) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   this.setSpeed = (value, target = null, setTimer = false) => {
     if (this.speed.value === value && this.speed.target === target && this.timer) { return }
     if (value) { this.speed.value = clamp(value, 60, 300) }
     if (target) { this.speed.target = clamp(target, 60, 300) }
     if (setTimer === true) { this.setTimer(this.speed.value) }
+    if (this.isLinkEnabled()) { this.setFrame(0) }
+  }
+
+  this.setSpeedLink = (value) => {
+    client.link.setTempo(value)
+    if (!client.link.isPlaying()) {
+      this.setFrame(0)
+      client.update()
+    }
   }
 
   this.modSpeed = function (mod = 0, animate = false) {
@@ -56,17 +85,21 @@ function Clock (client) {
     client.update()
   }
 
-  this.play = function (msg = false, midiStart = false) {
-    console.log('Clock', 'Play', msg, midiStart)
+  this.play = function (msg = false, midiStart = false, linkStart = false) {
+    console.log('Clock', 'Play', msg, midiStart, linkStart)
     if (this.isPaused === false && !midiStart) { return }
     this.isPaused = false
-    if (this.isPuppet === true) {
+    if (this.isExternalClockActive()) {
       console.warn('Clock', 'External Midi control')
       if (!pulse.frame || midiStart) {  // no frames counted while paused (starting from no clock, unlikely) or triggered by MIDI clock START
         this.setFrame(0)  // make sure frame aligns with pulse count for an accurate beat
         pulse.frame = 0
         pulse.count = 5   // by MIDI standard next pulse is the beat
       }
+    } else if (this.isLinkEnabled() && !linkStart) {
+      console.warn('Clock', 'Ableton Link')
+      this.setSpeed(this.speed.target, this.speed.target, true)
+      client.link.play()
     } else {
       if (msg === true) { client.io.midi.sendClockStart() }
       this.setSpeed(this.speed.target, this.speed.target, true)
@@ -77,8 +110,12 @@ function Clock (client) {
     console.log('Clock', 'Stop')
     if (this.isPaused === true) { return }
     this.isPaused = true
-    if (this.isPuppet === true) {
+    if (this.isExternalClockActive()) {
       console.warn('Clock', 'External Midi control')
+    } else if (this.isLinkEnabled()) {
+      console.warn('Clock', 'Ableton Link')
+      this.clearTimer()
+      client.link.stop()
     } else {
       if (msg === true || client.io.midi.isClock) { client.io.midi.sendClockStop() }
       this.clearTimer()
@@ -99,9 +136,10 @@ function Clock (client) {
   this.tap = function () {
     pulse.count = (pulse.count + 1) % 6
     pulse.last = performance.now()
-    if (!this.isPuppet) {
+    if (!this.isPuppet && !this.isLinkEnabled()) {
       console.log('Clock', 'Puppeteering starts..')
       this.isPuppet = true
+      this.puppetSource = sourceClock
       this.clearTimer()
       pulse.timer = setInterval(() => {
         if (performance.now() - pulse.last < 2000) { return }
@@ -124,6 +162,7 @@ function Clock (client) {
     console.log('Clock', 'Puppeteering stops..')
     clearInterval(pulse.timer)
     this.isPuppet = false
+    this.puppetSource = null
     pulse.frame = 0
     pulse.last = null
     if (!this.isPaused) {
@@ -159,10 +198,18 @@ function Clock (client) {
 
   // UI
 
+  this.getUIMessage = function (offset) {
+    if (this.isLinkEnabled()) {
+      return `link${this.speed.value}`
+    } else {
+      return this.isExternalClockActive() ? 'midi' : `${this.speed.value}${offset}`
+    }
+  }
+
   this.toString = function () {
     const diff = this.speed.target - this.speed.value
     const _offset = Math.abs(diff) > 5 ? (diff > 0 ? `+${diff}` : diff) : ''
-    const _message = this.isPuppet === true ? 'midi' : `${this.speed.value}${_offset}`
+    const _message = this.getUIMessage(_offset)
     const _beat = diff === 0 && client.orca.f % 4 === 0 ? '*' : ''
     return `${_message}${_beat}`
   }
