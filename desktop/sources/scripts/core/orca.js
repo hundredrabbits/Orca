@@ -11,6 +11,7 @@ function Orca (library) {
   this.locks = []
   this.runtime = []
   this.variables = {}
+  this.inputs = {}
 
   this.run = function () {
     this.runtime = this.parse()

@@ -714,6 +714,21 @@ library[';'] = function OperatorUdp (orca, x, y, passive) {
   }
 }
 
+library['\\'] = function OperatorUdpInput (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, '^', passive)
+
+  this.name = 'udp input'
+  this.info = 'Reads UDP input'
+
+  this.ports.variable = { x: 1, y: 0 }
+
+  this.operation = function (force = false) {
+    const variable = this.listen(this.ports.variable)
+    this.addPort('output', { x: 0, y: 1 })
+    return orca.inputs[variable]
+  }
+}
+
 // Add numbers
 
 for (let i = 0; i <= 9; i++) {
