@@ -71,13 +71,12 @@ function Commander (client) {
     write: (p) => {
       client.orca.writeBlock(p._x || client.cursor.x, p._y || client.cursor.y, p._str)
     },
+    // Controller input
     ctrl: (p) => {
-      const value = p.parts[0]
-      const variable = p.parts[1]
-      if (typeof value === 'undefined' || typeof variable === 'undefined') {
-        console.warn('Commander', 'Missing parameter'); return
-      }
-      client.orca.inputs[variable] = value
+      const key = p._str
+      const value = p._x
+      if (typeof key === 'undefined' || typeof value === 'undefined') return
+      client.orca.controls[key] = clamp(value,0,127)
     }
   }
 

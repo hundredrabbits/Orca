@@ -395,7 +395,7 @@ library.v = function OperatorV (orca, x, y, passive) {
     const write = this.listen(this.ports.write)
     const read = this.listen(this.ports.read)
     if (write === '.' && read !== '.') {
-      this.addPort('output', { x: 0, y: 1 })
+      this.addPort('output', { x: 0, y: 1, output: true })
     }
     if (write !== '.') {
       orca.variables[write] = read
@@ -714,18 +714,31 @@ library[';'] = function OperatorUdp (orca, x, y, passive) {
   }
 }
 
-library['\\'] = function OperatorUdpInput (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, '^', passive)
+library['+'] = function OperatorUdpCtrl (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, '+', passive)
 
-  this.name = 'udp input'
-  this.info = 'Reads UDP input'
+  this.name = 'controller'
+  this.info = 'Outputs UDP controller input'
 
-  this.ports.variable = { x: 1, y: 0 }
+  this.ports.key = { x: -1, y: 0 }
+  this.ports.min = { x: 1, y: 0, default: '0' }
+  this.ports.max = { x: 2, y: 0, default: 'z' }
+  this.ports.output = { x: 0, y: 1, sensitive: true, output : true }
+
+  const scale = (val, in_min, in_max, out_min, out_max) => {
+    return Math.round(
+      ((val - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min
+    )
+  }
 
   this.operation = function (force = false) {
-    const variable = this.listen(this.ports.variable)
-    this.addPort('output', { x: 0, y: 1 })
-    return orca.inputs[variable]
+    const key = this.listen(this.ports.key)
+    if (key === '.') { return }
+
+    const value = orca.valueCtrl(key)
+    const min = this.listen(this.ports.min, true)
+    const max = this.listen(this.ports.max, true)
+    return orca.keyOf(scale(value,0,127,min,max))
   }
 }
 
