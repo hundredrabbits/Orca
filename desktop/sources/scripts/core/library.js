@@ -714,8 +714,8 @@ library[';'] = function OperatorUdp (orca, x, y, passive) {
   }
 }
 
-library['+'] = function OperatorUdpCtrl (orca, x, y, passive) {
-  Operator.call(this, orca, x, y, '+', passive)
+library['~'] = function OperatorUdpCtrl (orca, x, y, passive) {
+  Operator.call(this, orca, x, y, '~', passive)
 
   this.name = 'controller'
   this.info = 'Outputs UDP controller input'

@@ -65,35 +65,35 @@ To display the list of operators inside of Orca, use `CmdOrCtrl+G`.
 - `!` **cc**(channel knob value): Sends MIDI control change.
 - `?` **pb**(channel value): Sends MIDI pitch bench.
 - `;` **udp**: Sends UDP message.
-- `+` **ctrl**(**key** min max): Outputs controller input (see [ORCA command](#Commands) `ctrl`).
+- `~` **ctrl**(*key* min max): Outputs controller input for the specific `key`.
 - `=` **osc**(*path*): Sends OSC message.
 - `$` **self**: Sends [ORCA command](#Commands).
 
-### MIDI
+#### MIDI
 
 The [MIDI](https://en.wikipedia.org/wiki/MIDI) operator `:` takes up to 5 inputs('channel, 'octave, 'note, velocity, length).
 
 For example, `:25C`, is a **C note, on the 5th octave, through the 3rd MIDI channel**, `:04c`, is a **C# note, on the 4th octave, through the 1st MIDI channel**. Velocity is an optional value from `0`(0/127) to `g`(127/127). Note length is the number of frames during which a note remains active. See it in action with [midi.orca](https://git.sr.ht/~rabbits/orca-examples/tree/master/basics/_midi.orca).
 
-### MIDI MONO
+#### MIDI MONO
 
 The [MONO](https://en.wikipedia.org/wiki/Monophony) operator `%` takes up to 5 inputs('channel, 'octave, 'note, velocity, length).
 
 This operator is very similar to the default Midi operator, but **each new note will stop the previously playing note**, would its length overlap with the new one. Making certain that only a single note is ever played at once, this is ideal for monophonic analog synthetisers that might struggle to dealing with chords and note overlaps.
 
-### MIDI CC
+#### MIDI CC
 
 The [MIDI CC](https://www.sweetwater.com/insync/continuous-controller/) operator `!` takes 3 inputs('channel, 'knob, 'value).
 
 It sends a value **between 0-127**, where the value is calculated as a ratio of 36, over a maximum of 127. For example, `!008`, is sending **28**, or `(8/36)*127` through the first channel, to the control mapped with `id0`. You can press **enter**, with the `!` operator selected, to assign it to a controller. By default, the operator sends to `CC64` [and up](https://nickfever.com/Music/midi-cc-list), the offset can be changed with the [command](#commands) `cc:0`, to set the offset to 0.
 
-### MIDI PITCHBEND
+#### MIDI PITCHBEND
 
 The [MIDI PB](https://www.sweetwater.com/insync/pitch-bend/) operator `?` takes 3 inputs('channel, 'lsb, 'msb).
 
 It sends two different values **between 0-127**, where the value is calculated as a ratio of 36, over a maximum of 127. For example, `?008`, is sending an MSB of **28**, or `(8/36)*127` and an LSB of 0 through the first midi channel.
 
-### MIDI BANK SELECT / PROGRAM CHANGE
+#### MIDI BANK SELECT / PROGRAM CHANGE
 
 This is a command (see below) rather than an operator and it combines the [MIDI program change and bank select functions](https://www.sweetwater.com/sweetcare/articles/6-what-msb-lsb-refer-for-changing-banks-andprograms/).
 
@@ -101,17 +101,19 @@ The syntax is `pg:channel;msb;lsb;program`. Channel is 0-15, msb/lsb/program are
 
 `msb` and `lsb` can be left blank if you only want to send a simple program change. For example, `pg:0;;;63` will set the synth to patch number 64 (without changing the bank)
 
-### UDP Output
+#### UDP Output
 
 The [UDP Output](https://nodejs.org/api/dgram.html#dgram_socket_send_msg_offset_length_port_address_callback) operator `;` locks each consecutive eastwardly ports. For example, `;hello`, will send the string "hello", on bang, to the port `49160` on `localhost`. In commander, use `udp:7777` to select the **custom UDP port 7777**, and `ip:127.0.0.12` to change the target IP. UDP is not available in the browser version of Orca.
 
 You can use the [listener.js](https://github.com/hundredrabbits/Orca/blob/master/resources/listener.js) to test UDP messages. See it in action with [udp.orca](https://git.sr.ht/~rabbits/orca-examples/tree/master/basics/_udp.orca).
 
-### UDP Controller Input
+#### Controller Input
 
-The [UDP Controller Input](https://nodejs.org/api/dgram.html#dgram_event_message) operator `+` outputs the most recent controller input value received for the specified `key`. For example, `0_` will output the latest input received for key `0`. By default, the received value between `0-127` is scaled to a value between `0-z` based using the [base36 Table](https://github.com/hundredrabbits/Orca#base36-table).
+The [controller Input](https://nodejs.org/api/dgram.html#dgram_event_message) operator `~` outputs the most recent controller input value received by the `ctrl` command for the specified `key`. For example, `0~` will output the latest input received for key `0`. By default, the received value between `0-127` is scaled to a value between `0-z` based using the [base36 table](https://github.com/hundredrabbits/Orca#base36-table).
 
-Optionally, controller input values can be scaled to different ranges by specifying a value for the `min` and/or `max` argument. For example, `0_09` (or `0_.9`) will scale the value of the input received for key `0` between `0-127` to a value between `0-9`.
+Optionally, controller input values can be scaled to different ranges by specifying a value for the `min` and/or `max` argument. For example, `0~09` (or `0~.9`) will scale the value of the input received for key `0` between `0-127` to a value between `0-9` and `0~az` will scale the input to a value between `a-z`.
+
+Controller input can be sent to Orca on its own command-line interface or via UDP with the [command](#commands) `ctrl`. For more info, see [ORCA Advanced Controls](#AdvancedControls).
 
 ### OSC
 
@@ -123,12 +125,18 @@ For example, `=1abc` will send `10`, `11` and `12` to `/1`, via the port `49162`
 
 ## Advanced Controls
 
-Some of Orca's features can be **controlled externally** via UDP though port `49160`, or via its own command-line interface. To activate the command-line prompt, press `CmdOrCtrl+K`. The prompt can also be used to inject patterns or change settings.
+Some of Orca's features can be **controlled externally** via UDP though port `49160`, or via its own command-line interface. To activate the command-line prompt, press `CmdOrCtrl+K`. The prompt can also be used to set controller input values, inject patterns or change settings.
 
 You can use the [command.js](https://github.com/hundredrabbits/Orca/blob/master/resources/command.js) to test controlling Orca externally with UDP messages. For example, run the following command to send the `ctrl:0;64` command:
 
 ```sh
 node command.js 'ctrl:0;64'
+```
+
+or, run the following command to set the BPM to `90`:
+
+```sh
+node command.js 'bpm:90'
 ```
 
 ### Project Mode
@@ -162,7 +170,7 @@ All commands have a shorthand equivalent to their first two characters, for exam
 - `midi:1;2` Set Midi output device to `#1`, and input device to `#2`.
 - `udp:1234;5678` Set UDP output port to `1234`, and input port to `5678`.
 - `osc:1234` Set OSC output port to `1234`.
-- `ctrl:0:64` Stores value `64` as controller input for key `0`. This command expects input values between 0-127.
+- `ctrl:0:64` Stores value `64` as the controller input value for key `0`. This command expects input values between 0-127.
 
 ## Base36 Table
 
