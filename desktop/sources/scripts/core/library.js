@@ -395,7 +395,7 @@ library.v = function OperatorV (orca, x, y, passive) {
     const write = this.listen(this.ports.write)
     const read = this.listen(this.ports.read)
     if (write === '.' && read !== '.') {
-      this.addPort('output', { x: 0, y: 1 })
+      this.addPort('output', { x: 0, y: 1, output: true })
     }
     if (write !== '.') {
       orca.variables[write] = read
