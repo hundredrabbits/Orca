@@ -62,10 +62,10 @@ function Clock (client) {
     this.isPaused = false
     if (this.isPuppet === true) {
       console.warn('Clock', 'External Midi control')
-      if (!pulse.frame || midiStart) {  // no frames counted while paused (starting from no clock, unlikely) or triggered by MIDI clock START
-        this.setFrame(0)  // make sure frame aligns with pulse count for an accurate beat
+      if (!pulse.frame || midiStart) { // no frames counted while paused (starting from no clock, unlikely) or triggered by MIDI clock START
+        this.setFrame(0) // make sure frame aligns with pulse count for an accurate beat
         pulse.frame = 0
-        pulse.count = 5   // by MIDI standard next pulse is the beat
+        pulse.count = 5 // by MIDI standard next pulse is the beat
       }
     } else {
       if (msg === true) { client.io.midi.sendClockStart() }
@@ -93,7 +93,7 @@ function Clock (client) {
     count: 0,
     last: null,
     timer: null,
-    frame: 0  // paused frame counter
+    frame: 0 // paused frame counter
   }
 
   this.tap = function () {
@@ -109,8 +109,7 @@ function Clock (client) {
       }, 2000)
     }
     if (pulse.count == 0) {
-      if (this.isPaused) { pulse.frame++ }
-      else {
+      if (this.isPaused) { pulse.frame++ } else {
         if (pulse.frame > 0) {
           this.setFrame(client.orca.f + pulse.frame)
           pulse.frame = 0

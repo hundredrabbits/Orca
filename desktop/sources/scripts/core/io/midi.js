@@ -146,7 +146,7 @@ function Midi (client) {
 
   this.selectOutput = function (id) {
     if (id === -1) { this.outputIndex = -1; console.log('MIDI', 'Select Output Device: None'); return }
-    if (!this.outputs[id]) { console.warn('MIDI',`Unknown device with id ${id}`); return }
+    if (!this.outputs[id]) { console.warn('MIDI', `Unknown device with id ${id}`); return }
 
     this.outputIndex = parseInt(id)
     console.log('MIDI', `Select Output Device: ${this.outputDevice().name}`)
@@ -155,7 +155,7 @@ function Midi (client) {
   this.selectInput = function (id) {
     if (this.inputDevice()) { this.inputDevice().onmidimessage = null }
     if (id === -1) { this.inputIndex = -1; console.log('MIDI', 'Select Input Device: None'); return }
-    if (!this.inputs[id]) { console.warn('MIDI',`Unknown device with id ${id}`); return }
+    if (!this.inputs[id]) { console.warn('MIDI', `Unknown device with id ${id}`); return }
 
     this.inputIndex = parseInt(id)
     this.inputDevice().onmidimessage = (msg) => { this.receive(msg) }

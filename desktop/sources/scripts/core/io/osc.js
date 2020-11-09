@@ -32,7 +32,7 @@ function Osc (client) {
   this.play = function ({ path, msg }) {
     if (!this.socket) { console.warn('OSC', 'Unavailable socket'); return }
     const oscMsg = new osc.Message(path)
-    for (var i = 0; i < msg.length; i++) {
+    for (let i = 0; i < msg.length; i++) {
       oscMsg.append(client.orca.valueOf(msg.charAt(i)))
     }
     this.socket.send(oscMsg, (err) => {

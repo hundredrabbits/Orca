@@ -168,12 +168,17 @@ library.j = function OperatorJ (orca, x, y, passive) {
   this.name = 'jumper'
   this.info = 'Outputs northward operand'
 
-  this.ports.val = { x: 0, y: -1 }
-  this.ports.output = { x: 0, y: 1, output: true }
-
   this.operation = function (force = false) {
-    orca.lock(this.x, this.y + 1)
-    return this.listen(this.ports.val)
+    const val = this.listen({ x: 0, y: -1, output: true })
+    if (val != this.glyph) {
+      let i = 0
+      while (orca.inBounds(this.x, this.y + i)) {
+        if (this.listen({ x: 0, y: ++i }) != this.glyph) { break }
+      }
+      this.addPort('input', { x: 0, y: -1 })
+      this.addPort('output', { x: 0, y: i, output: true })
+      return val
+    }
   }
 }
 
@@ -442,12 +447,17 @@ library.y = function OperatorY (orca, x, y, passive) {
   this.name = 'jymper'
   this.info = 'Outputs westward operand'
 
-  this.ports.val = { x: -1, y: 0 }
-  this.ports.output = { x: 1, y: 0, output: true }
-
   this.operation = function (force = false) {
-    orca.lock(this.x + 1, this.y)
-    return this.listen(this.ports.val)
+    const val = this.listen({ x: -1, y: 0, output: true })
+    if (val != this.glyph) {
+      let i = 0
+      while (orca.inBounds(this.x + i, this.y)) {
+        if (this.listen({ x: ++i, y: 0 }) != this.glyph) { break }
+      }
+      this.addPort('input', { x: -1, y: 0 })
+      this.addPort('output', { x: i, y: 0, output: true })
+      return val
+    }
   }
 }
 
