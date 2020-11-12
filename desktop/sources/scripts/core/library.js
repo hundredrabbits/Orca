@@ -169,7 +169,7 @@ library.j = function OperatorJ (orca, x, y, passive) {
   this.info = 'Outputs northward operand'
 
   this.operation = function (force = false) {
-    const val = this.listen({ x: 0, y: -1, output: true })
+    const val = this.listen({ x: 0, y: -1 })
     if (val != this.glyph) {
       let i = 0
       while (orca.inBounds(this.x, this.y + i)) {
