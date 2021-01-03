@@ -4,13 +4,15 @@
 
 Orca is an [esoteric programming language](https://en.wikipedia.org/wiki/Esoteric_programming_language) designed to quickly create procedural sequencers, in which every letter of the alphabet is an operation, where lowercase letters operate on bang, uppercase letters operate each frame.
 
-This application **is not a synthesizer, but a flexible livecoding environment** capable of sending MIDI, OSC & UDP to your audio/visual interfaces, like Ableton, Renoise, VCV Rack or SuperCollider.
+This application **is not a synthesizer, but a livecoding environment** capable of sending MIDI, OSC & UDP to your audio/visual interfaces, like Ableton, Renoise, VCV Rack or SuperCollider.
 
-If you need <strong>help</strong>, visit the <a href="https://talk.lurk.org/channel/orca" target="_blank" rel="noreferrer" class="external ">chatroom</a> or the <a href="https://llllllll.co/t/orca-live-coding-tool/17689" target="_blank" rel="noreferrer" class="external ">forum</a>.
+If you need **help**, visit the [chatroom](https://talk.lurk.org/channel/orca), join the [forum](https://llllllll.co/t/orca-live-coding-tool/17689) or watch an [tutorial](https://www.youtube.com/watch?v=ktcWOLeWP-g).
 
 - [Download builds](https://hundredrabbits.itch.io/orca), available for **Linux, Windows and OSX**.
-- Use directly [in your browser](https://hundredrabbits.github.io/Orca/), requires **webMidi**.
-- Use on a [raspberry pi](https://github.com/hundredrabbits/orca-c#raspberry-pi), a lightweight **C99 version**.
+- Use [in your browser](https://hundredrabbits.github.io/Orca/), requires **webMidi**.
+- Use [in a terminal](https://git.sr.ht/~rabbits/orca), written in C.
+- Use [on a raspberry pi](https://git.sr.ht/~rabbits/orca-toy), written in C.
+- Use [on the Norns](https://llllllll.co/t/orca/22492), written in Lua.
 
 ## Install & Run
 
