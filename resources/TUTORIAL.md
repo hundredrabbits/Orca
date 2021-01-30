@@ -1,6 +1,6 @@
 # Tutorial
 
-If this is your first time trying out **Orca**, watch this [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). If you want to learn how to use a handful of basic operators, have a look at the [workshop](WORKSHOP.md). If you're looking for additional examples, visit [this repository](https://git.sr.ht/~rabbits/orca-examples/tree/master/).
+If this is your first time trying out **Orca**, watch this [introduction video](https://www.youtube.com/watch?v=RaI_TuISSJE). If you're looking for additional examples, visit [this repository](https://git.sr.ht/~rabbits/orca-examples/tree/master/).
 
 ## General
 
