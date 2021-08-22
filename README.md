@@ -11,8 +11,8 @@ If you need **help**, visit the [chatroom](https://talk.lurk.org/channel/orca), 
 - [Download builds](https://hundredrabbits.itch.io/orca), available for **Linux, Windows and OSX**.
 - Use [in your browser](https://hundredrabbits.github.io/Orca/), requires **webMidi**.
 - Use [in a terminal](https://git.sr.ht/~rabbits/orca), written in C.
-- Use [on a raspberry pi](https://git.sr.ht/~rabbits/orca-toy), written in C.
-- Use [on the Norns](https://llllllll.co/t/orca/22492), written in Lua.
+- Use [on small computers](https://git.sr.ht/~rabbits/orca-toy), written in assembly.
+- Use [on the Monome Norns](https://llllllll.co/t/orca/22492), written in Lua.
 
 ## Install & Run
 
