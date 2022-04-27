@@ -3,7 +3,6 @@
 /* global Blob */
 
 function Clock (client) {
-  // TODO create a setTimeout loop in the worker that loops over the groove array
   const workerScript = 'const rotateArray = (arr, k) => arr.slice(k).concat(arr.slice(0, k)); function tickFn(grooveAmounts, tickLength) { console.log(grooveAmounts); setTimeout(tickFn, tickLength * grooveAmounts[0], rotateArray(grooveAmounts, 1), tickLength); postMessage(true) } onmessage = (e) => { console.log(e); tickFn(e.data.grooveAmounts, e.data.tickLength) }'
   const worker = window.URL.createObjectURL(new Blob([workerScript], { type: 'text/javascript' }))
 
@@ -146,21 +145,19 @@ function Clock (client) {
     // compute final step to make a full cycle of grooveInts + 1 steps;
     var lastGrooveAmount = (grooveInts.length + 1) - grooveAmountsSum;
     this.grooveAmounts.push(lastGrooveAmount);
-    // TODO restart / shift clock and current frame to use new groove
-    // (may need to shift frame if groove would make current step earlier or more than +1 current step)
+    // TODO handle changing groove while playing (need to rotate new groove to right position and update in worker)
   }
 
   // Timer
 
   this.setTimer = function (bpm) {
-    // TODO rotate the grooveAmounts to use at start of clock based on frame % grooveAmounts.length
     var tickLength = (60000 / parseInt(bpm)) / this.beatDivisions;
     if (bpm < 60) { console.warn('Clock', 'Error ' + bpm); return }
     this.clearTimer()
     window.localStorage.setItem('bpm', bpm)
     this.timer = new Worker(worker)
     this.timer.postMessage({
-      grooveAmounts: this.grooveAmounts,
+      grooveAmounts: rotateArray(this.grooveAmounts, client.orca.f % this.grooveAmounts.length),
       tickLength
     });
     this.timer.onmessage = (event) => {
@@ -193,4 +190,6 @@ function Clock (client) {
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
+
+  function rotateArray(arr, k) { return arr.slice(k).concat(arr.slice(0, k)) };
 }
