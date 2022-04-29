@@ -3,7 +3,7 @@
 /* global Blob */
 
 function Clock (client) {
-  const workerScript = 'const rotateArray = (arr, k) => arr.slice(k).concat(arr.slice(0, k)); function tickFn(grooveAmounts, tickLength) { console.log(grooveAmounts); setTimeout(tickFn, tickLength * grooveAmounts[0], rotateArray(grooveAmounts, 1), tickLength); postMessage(true) } onmessage = (e) => { console.log(e); tickFn(e.data.grooveAmounts, e.data.tickLength) }'
+  const workerScript = 'var state = { grooves: [1], period: 60000 * 120 / 4}; function rotateArray(arr, k) {return arr.slice(k).concat(arr.slice(0, k));} function tickFn() { setTimeout(tickFn, state.period * state.grooves[0]); state.grooves = rotateArray(state.grooves, 1); postMessage(true); } onmessage = (e) => { state.grooves = e.data.grooves || state.grooves; state.period = e.data.period || state.period; if (e.data.startTimer) { tickFn(); }}'
   const worker = window.URL.createObjectURL(new Blob([workerScript], { type: 'text/javascript' }))
 
   this.isPaused = true
@@ -11,14 +11,16 @@ function Clock (client) {
   this.isPuppet = false
 
   this.speed = { value: 120, target: 120 }
-  this.grooveAmounts = [1];
-  // TODO add setBeatDivisions method, will need to update timer.
-  this.beatDivisions = 4;
+  this.grooves = [1]
+  // TODO add setBeatDivisions method, update code where 4 divisions is used
+  this.beatDivisions = 4
 
   this.start = function () {
-    const memory = parseInt(window.localStorage.getItem('bpm'))
-    const target = memory >= 60 ? memory : 120
+    const memoryBPM = parseInt(window.localStorage.getItem('bpm'))
+    const memoryGrooves = JSON.parse(window.localStorage.getItem('grooves')) || [1]
+    const target = memoryBPM >= 60 ? memoryBPM : 120
     this.setSpeed(target, target, true)
+    this.setGroove(memoryGrooves)
     this.play()
   }
 
@@ -36,7 +38,19 @@ function Clock (client) {
     if (this.speed.value === value && this.speed.target === target && this.timer) { return }
     if (value) { this.speed.value = clamp(value, 60, 300) }
     if (target) { this.speed.target = clamp(target, 60, 300) }
-    if (setTimer === true) { this.setTimer(this.speed.value) }
+    if (this.timer) { // Update an existing clock, if running
+      this.sendSpeed(this.speed.value)
+    } else { // Start clock if setTimer true and it's not already running
+      if (setTimer === true) { this.setTimer(this.speed.value) }
+    }
+  }
+
+  this.sendSpeed = function(bpm = null) {
+    bpm = bpm || this.speed.value
+    if (this.timer) {
+      var period = (60000 / parseInt(bpm)) / this.beatDivisions
+      this.timer.postMessage({ period })
+    }
   }
 
   this.modSpeed = function (mod = 0, animate = false) {
@@ -135,30 +149,35 @@ function Clock (client) {
 
   // Groove
 
-  this.setGroove = function(grooveInts) {
-    var grooveAmountsSum = 0;
-    this.grooveAmounts = grooveInts.map((grooveInt) => {
-      var grooveAmount = grooveInt / 50.0; // value of 50 means each tick is 100% of linear value
-      grooveAmountsSum += grooveAmount;
-      return grooveAmount;
-    });
-    // compute final step to make a full cycle of grooveInts + 1 steps;
-    var lastGrooveAmount = (grooveInts.length + 1) - grooveAmountsSum;
-    this.grooveAmounts.push(lastGrooveAmount);
-    // TODO handle changing groove while playing (need to rotate new groove to right position and update in worker)
+  this.setGroove = function(grooves, atFrameNum) {
+    this.grooves = grooves;
+    window.localStorage.setItem('grooves', JSON.stringify(this.grooves))
+    this.sendGroove(grooves, atFrameNum)
+  }
+
+  this.sendGroove = function(grooves, atFrameNum) {
+    grooves = grooves || this.grooves || [1]
+    // default to setting for the next frame (assume running clock unless setTimer specifies)
+    atFrameNum = atFrameNum || client.orca.f
+    if (this.timer) {
+      this.timer.postMessage({
+        grooves: rotateArray(grooves, atFrameNum % grooves.length)
+      })
+    } 
   }
 
   // Timer
 
   this.setTimer = function (bpm) {
-    var tickLength = (60000 / parseInt(bpm)) / this.beatDivisions;
     if (bpm < 60) { console.warn('Clock', 'Error ' + bpm); return }
     this.clearTimer()
     window.localStorage.setItem('bpm', bpm)
+    window.localStorage.setItem('grooves', JSON.stringify(this.grooves))
     this.timer = new Worker(worker)
+    this.sendSpeed(bpm)
+    this.sendGroove(this.grooves, client.orca.f)
     this.timer.postMessage({
-      grooveAmounts: rotateArray(this.grooveAmounts, client.orca.f % this.grooveAmounts.length),
-      tickLength
+      startTimer: true,
     });
     this.timer.onmessage = (event) => {
       // Send this tick
@@ -191,5 +210,5 @@ function Clock (client) {
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
 
-  function rotateArray(arr, k) { return arr.slice(k).concat(arr.slice(0, k)) };
+  function rotateArray(arr, k) { return arr.slice(k).concat(arr.slice(0, k)) }
 }
