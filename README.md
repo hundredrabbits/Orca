@@ -6,7 +6,7 @@ Orca is an [esoteric programming language](https://en.wikipedia.org/wiki/Esoteri
 
 This application **is not a synthesizer, but a livecoding environment** capable of sending MIDI, OSC & UDP to your audio/visual interfaces, like Ableton, Renoise, VCV Rack or SuperCollider.
 
-If you need **help**, visit the [chatroom](https://talk.lurk.org/channel/orca), join the [forum](https://llllllll.co/t/orca-live-coding-tool/17689) or watch an [tutorial](https://www.youtube.com/watch?v=ktcWOLeWP-g).
+If you need **help**, visit the [chatroom](https://talk.lurk.org/channel/orca), join the [forum](https://llllllll.co/t/orca-live-coding-tool/17689) or watch a [tutorial](https://www.youtube.com/watch?v=ktcWOLeWP-g).
 
 - [Download builds](https://hundredrabbits.itch.io/orca), available for **Linux, Windows and OSX**.
 - Use [in your browser](https://hundredrabbits.github.io/Orca/), requires **webMidi**.
