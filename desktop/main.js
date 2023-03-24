@@ -9,6 +9,9 @@ let isShown = true
 
 app.win = null
 
+// Replacement for npm start --disable-gpu if necessary
+// app.disableHardwareAcceleration()
+
 app.on('ready', () => {
   app.win = new BrowserWindow({
     width: 780,
@@ -21,7 +24,12 @@ app.on('ready', () => {
     frame: process.platform !== 'darwin',
     skipTaskbar: process.platform === 'darwin',
     autoHideMenuBar: process.platform === 'darwin',
-    webPreferences: { zoomFactor: 1.0, nodeIntegration: true, backgroundThrottling: false }
+    webPreferences: {
+      zoomFactor: 1.0,
+      nodeIntegration: true,
+      backgroundThrottling: false,
+    },
+    fullscreen: true
   })
 
   app.win.loadURL(`file://${__dirname}/sources/index.html`)

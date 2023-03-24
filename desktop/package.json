@@ -6,7 +6,7 @@
   },
   "main": "main.js",
   "scripts": {
-    "start": "electron . --disable-gpu",
+    "start": "electron . --disable-gpu --no-sandbox",
     "time": "node time.js",
     "docs": "node ../docs.js",
     "fix": "standard --fix",
@@ -14,6 +14,7 @@
     "clean": "rm -r ~/Documents/Orca-darwin-x64/ ; rm -r ~/Documents/Orca-linux-x64/ ; rm -r ~/Documents/Orca-win32-x64/ ; echo 'cleaned build location'",
     "build_osx": "electron-packager . Orca --platform=darwin --arch=x64 --out ~/Documents/ --overwrite --icon=icon.icns ; echo 'Built for OSX'",
     "build_linux": "electron-packager . Orca --platform=linux  --arch=x64 --out ~/Documents/ --overwrite --icon=icon.ico ; echo 'Built for LINUX'",
+    "build_arm64": "electron-packager . Orca --platform=linux  --arch=arm64 --out ~/Documents/ --overwrite --icon=icon.ico ; echo 'Built for LINUX on ARM64'",
     "build_win": "electron-packager . Orca --platform=win32  --arch=x64 --out ~/Documents/ --overwrite --icon=icon.ico ; echo 'Built for WIN'",
     "add_manual": "cp ../resources/MANUAL.txt ~/Documents/Orca-darwin-x64/MANUAL.txt ; cp ../resources/MANUAL.txt ~/Documents/Orca-linux-x64/MANUAL.txt ; cp ../resources/MANUAL.txt ~/Documents/Orca-win32-x64/MANUAL.txt",
     "build": "npm run clean ; npm run build_osx ; npm run build_linux ; npm run build_win ; npm run add_manual",
