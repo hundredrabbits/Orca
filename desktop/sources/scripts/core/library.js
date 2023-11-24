@@ -22,7 +22,7 @@ library.a = function OperatorA (orca, x, y, passive) {
   }
 }
 
-library.b = function OperatorL (orca, x, y, passive) {
+library.b = function OperatorB (orca, x, y, passive) {
   Operator.call(this, orca, x, y, 'b', passive)
 
   this.name = 'subtract'
