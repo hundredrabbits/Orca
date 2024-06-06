@@ -40,7 +40,9 @@ function Midi (client) {
     if (!this.outputDevice()) { console.warn('MIDI', 'No midi output!'); return }
 
     const transposed = this.transpose(item.note, item.octave)
-    const channel = !isNaN(item.channel) ? parseInt(item.channel) : client.orca.valueOf(item.channel)
+    const rawChannel = !isNaN(item.channel) ? parseInt(item.channel) : client.orca.valueOf(item.channel)
+    const deviceOffset = Math.floor(rawChannel / 16)
+    const channel = rawChannel % 16
 
     if (!transposed) { return }
 
@@ -50,7 +52,9 @@ function Midi (client) {
 
     if (!n || c === 127) { return }
 
-    this.outputDevice().send([c, n, v])
+    if (this.outputIndex + deviceOffset < this.outputs.length) {
+      this.outputs[this.outputIndex + deviceOffset].send([c, n, v])
+    }
   }
 
   this.press = function (item) {
@@ -162,6 +166,58 @@ function Midi (client) {
     console.log('MIDI', `Select Input Device: ${this.inputDevice().name}`)
   }
 
+  this.setDeviceByName = function(paramStr) {
+    // find devices by name and move them to the desired slot
+    const parts = paramStr.match(/([io])(\d+)-(.*)/)
+    console.log(parts)
+    if (!parts || parts.length !== 4 || parts[3] === "") { return }
+    const index = parseInt(parts[2])
+    const nameStr = parts[3]
+
+    const fuzzy = function(term, s) {
+      var string = s.toLowerCase();
+      var compare = term.toLowerCase();
+      var matches = 0;
+      if (string.indexOf(compare) > -1) return 1; // covers basic partial matches
+      for (var i = 0; i < compare.length; i++) {
+          string.indexOf(compare[i]) > -1 ? matches += 1 : matches -=1;
+      }
+      return matches/s.length
+  };
+
+    const findDevice = function(arr, s) {
+      const scores = arr.map((x, i) => Object.assign({}, {
+        score: fuzzy(s, x.name), name: x.name, index: i
+      })).filter(x => x.score > 0.1).sort((a,b) => b.score - a.score)
+      console.log('scores', scores)
+
+      if (scores.length > 0) {
+        console.log('Device matched', scores[0])
+        return scores[0].index
+      }
+      return -1
+    }
+
+    const move = function(arr, from, to) {
+      arr.splice(to, 0, arr.splice(from, 1)[0])
+    }
+
+    if (parts[1] === 'i') {
+      console.log('inputs before', this.inputs.map(x => x.name))
+      if (index >= this.inputs.length) { return }
+      const foundIndex = findDevice(this.inputs, nameStr)
+      if (foundIndex >= 0) { move(this.inputs, foundIndex, index) }
+      console.log('inputs after', this.inputs.map(x => x.name))
+    } else {
+      console.log('outputs before', this.outputs.map(x => x.name))
+      if (index >= this.outputs.length) { return }
+      const foundIndex = findDevice(this.outputs, nameStr)
+      if (foundIndex >= 0) { move(this.outputs, foundIndex, index) }
+      console.log('outputs after', this.outputs.map(x => x.name))
+    }
+    client.update()
+  }
+
   this.outputDevice = function () {
     return this.outputs[this.outputIndex]
   }
@@ -230,11 +286,11 @@ function Midi (client) {
   }
 
   this.toInputString = () => {
-    return !navigator.requestMIDIAccess ? 'No Midi Support' : this.inputDevice() ? `${this.inputDevice().name}` : 'No Input Device'
+    return !navigator.requestMIDIAccess ? 'No Midi Support' : this.inputDevice() ? `${this.inputIndex}:${this.inputDevice().name}` : 'No Input Device'
   }
 
   this.toOutputString = () => {
-    return !navigator.requestMIDIAccess ? 'No Midi Support' : this.outputDevice() ? `${this.outputDevice().name}` : 'No Output Device'
+    return !navigator.requestMIDIAccess ? 'No Midi Support' : this.outputDevice() ? `${this.outputIndex}:${this.outputDevice().name}` : 'No Output Device'
   }
 
   this.length = function () {

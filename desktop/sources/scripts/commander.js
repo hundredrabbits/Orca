@@ -32,6 +32,11 @@ function Commander (client) {
       client.io.midi.selectOutput(p.x)
       if (p.y !== null) { client.io.midi.selectInput(p.y) }
     },
+    mmidi: (p) => {
+      // remap device ids by name
+      // example: $midi:i1-iac1;i2-midipipe;o2-midipipe
+      p.parts.forEach(d => client.io.midi.setDeviceByName(d))
+    },
     ip: (p) => { client.io.setIp(p.str) },
     cc: (p) => { client.io.cc.setOffset(p.int) },
     pg: (p) => { client.io.cc.stack.push({ channel: clamp(p.ints[0], 0, 15), bank: p.ints[1], sub: p.ints[2], pgm: clamp(p.ints[3], 0, 127), type: 'pg' }); client.io.cc.run() },
