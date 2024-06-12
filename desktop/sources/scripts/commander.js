@@ -46,6 +46,22 @@ function Commander (client) {
     // Time
     apm: (p) => { client.clock.setSpeed(null, p.int) },
     bpm: (p) => { client.clock.setSpeed(p.int, p.int, true) },
+    groove: (p) => { 
+      // Parse the input into fractions and then pass those to the clock.
+      var groovesSum = 0;
+      var grooves = p.ints.map((grooveInt, idx) => {
+        if (grooveInt == 0) {
+          // 0 is a special case, returns to the next linear beat
+          grooveInt = idx + 1 - groovesSum;
+        }
+        var groove = grooveInt / 50.0; // value of 50 means each tick is 100% of linear value
+        groovesSum += groove;
+        return groove;
+      });
+      // compute final step to make a full cycle of grooveInts + 1 steps;
+      grooves.push((p.ints.length + 1) - groovesSum);
+      client.clock.setGroove(grooves)
+    },
     frame: (p) => { client.clock.setFrame(p.int) },
     rewind: (p) => { client.clock.setFrame(client.orca.f - p.int) },
     skip: (p) => { client.clock.setFrame(client.orca.f + p.int) },
