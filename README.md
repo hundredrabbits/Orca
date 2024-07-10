@@ -8,7 +8,7 @@ This application **is not a synthesizer, but a livecoding environment** capable 
 
 If you need **help**, visit the [chatroom](https://talk.lurk.org/channel/orca), join the [forum](https://llllllll.co/t/orca-live-coding-tool/17689) or watch a [tutorial](https://www.youtube.com/watch?v=ktcWOLeWP-g).
 
-- [Download builds](https://hundredrabbits.itch.io/orca), available for **Linux, Windows and OSX**.
+- [Download builds](https://100r.co/site/orca.html), available for **Linux, Windows and OSX**.
 - Use [in your browser](https://hundredrabbits.github.io/Orca/), requires **webMidi**.
 - Use [in a terminal](https://git.sr.ht/~rabbits/orca), written in C.
 - Use [on small computers](https://git.sr.ht/~rabbits/orca-toy), written in assembly.
