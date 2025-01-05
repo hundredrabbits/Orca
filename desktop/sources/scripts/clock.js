@@ -3,7 +3,7 @@
 /* global Blob */
 
 function Clock (client) {
-  const workerScript = 'onmessage = (e) => { setInterval(() => { postMessage(true) }, e.data)}'
+  const workerScript = 'var state = { grooves: [1], period: 60000 * 120 / 4}; function rotateArray(arr, k) {return arr.slice(k).concat(arr.slice(0, k));} function tickFn() { setTimeout(tickFn, state.period * state.grooves[0]); state.grooves = rotateArray(state.grooves, 1); postMessage(true); } onmessage = (e) => { state.grooves = e.data.grooves || state.grooves; state.period = e.data.period || state.period; if (e.data.startTimer) { tickFn(); }}'
   const worker = window.URL.createObjectURL(new Blob([workerScript], { type: 'text/javascript' }))
 
   this.isPaused = true
@@ -11,11 +11,16 @@ function Clock (client) {
   this.isPuppet = false
 
   this.speed = { value: 120, target: 120 }
+  this.grooves = [1]
+  // TODO add setBeatDivisions method, update code where 4 divisions is used
+  this.beatDivisions = 4
 
   this.start = function () {
-    const memory = parseInt(window.localStorage.getItem('bpm'))
-    const target = memory >= 60 ? memory : 120
+    const memoryBPM = parseInt(window.localStorage.getItem('bpm'))
+    const memoryGrooves = JSON.parse(window.localStorage.getItem('grooves')) || [1]
+    const target = memoryBPM >= 60 ? memoryBPM : 120
     this.setSpeed(target, target, true)
+    this.setGroove(memoryGrooves)
     this.play()
   }
 
@@ -33,7 +38,19 @@ function Clock (client) {
     if (this.speed.value === value && this.speed.target === target && this.timer) { return }
     if (value) { this.speed.value = clamp(value, 60, 300) }
     if (target) { this.speed.target = clamp(target, 60, 300) }
-    if (setTimer === true) { this.setTimer(this.speed.value) }
+    if (this.timer) { // Update an existing clock, if running
+      this.sendSpeed(this.speed.value)
+    } else { // Start clock if setTimer true and it's not already running
+      if (setTimer === true) { this.setTimer(this.speed.value) }
+    }
+  }
+
+  this.sendSpeed = function(bpm = null) {
+    bpm = bpm || this.speed.value
+    if (this.timer) {
+      var period = (60000 / parseInt(bpm)) / this.beatDivisions
+      this.timer.postMessage({ period })
+    }
   }
 
   this.modSpeed = function (mod = 0, animate = false) {
@@ -130,15 +147,40 @@ function Clock (client) {
     }
   }
 
+  // Groove
+
+  this.setGroove = function(grooves, atFrameNum) {
+    this.grooves = grooves;
+    window.localStorage.setItem('grooves', JSON.stringify(this.grooves))
+    this.sendGroove(grooves, atFrameNum)
+  }
+
+  this.sendGroove = function(grooves, atFrameNum) {
+    grooves = grooves || this.grooves || [1]
+    // default to setting for the next frame (assume running clock unless setTimer specifies)
+    atFrameNum = atFrameNum || client.orca.f
+    if (this.timer) {
+      this.timer.postMessage({
+        grooves: rotateArray(grooves, atFrameNum % grooves.length)
+      })
+    } 
+  }
+
   // Timer
 
   this.setTimer = function (bpm) {
     if (bpm < 60) { console.warn('Clock', 'Error ' + bpm); return }
     this.clearTimer()
     window.localStorage.setItem('bpm', bpm)
+    window.localStorage.setItem('grooves', JSON.stringify(this.grooves))
     this.timer = new Worker(worker)
-    this.timer.postMessage((60000 / parseInt(bpm)) / 4)
+    this.sendSpeed(bpm)
+    this.sendGroove(this.grooves, client.orca.f)
+    this.timer.postMessage({
+      startTimer: true,
+    });
     this.timer.onmessage = (event) => {
+      // Send this tick
       client.io.midi.sendClock()
       client.run()
     }
@@ -160,11 +202,13 @@ function Clock (client) {
 
   this.toString = function () {
     const diff = this.speed.target - this.speed.value
-    const _offset = Math.abs(diff) > 5 ? (diff > 0 ? `+${diff}` : diff) : ''
+    const _offset = Math.abs(diff) > 5 ? (diff > 0 ? `+${diff}` : diff) : '' // TODO should 5 be beatDivisions + 1?
     const _message = this.isPuppet === true ? 'midi' : `${this.speed.value}${_offset}`
-    const _beat = diff === 0 && client.orca.f % 4 === 0 ? '*' : ''
+    const _beat = diff === 0 && client.orca.f % this.beatDivisions === 0 ? '*' : ''
     return `${_message}${_beat}`
   }
 
   function clamp (v, min, max) { return v < min ? min : v > max ? max : v }
+
+  function rotateArray(arr, k) { return arr.slice(k).concat(arr.slice(0, k)) }
 }
