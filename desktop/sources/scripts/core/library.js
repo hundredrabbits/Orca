@@ -170,7 +170,7 @@ library.j = function OperatorJ (orca, x, y, passive) {
 
   this.operation = function (force = false) {
     const val = this.listen({ x: 0, y: -1 })
-    if (val != this.glyph) {
+    if (val != "J") {
       let i = 0
       while (orca.inBounds(this.x, this.y + i)) {
         if (this.listen({ x: 0, y: ++i }) != this.glyph) { break }
@@ -449,7 +449,7 @@ library.y = function OperatorY (orca, x, y, passive) {
 
   this.operation = function (force = false) {
     const val = this.listen({ x: -1, y: 0, output: true })
-    if (val != this.glyph) {
+    if (val != "Y") {
       let i = 0
       while (orca.inBounds(this.x + i, this.y)) {
         if (this.listen({ x: ++i, y: 0 }) != this.glyph) { break }
