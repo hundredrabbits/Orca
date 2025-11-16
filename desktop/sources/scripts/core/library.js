@@ -323,15 +323,18 @@ library.r = function OperatorR (orca, x, y, passive) {
   this.name = 'random'
   this.info = 'Outputs random value'
 
-  this.ports.min = { x: -1, y: 0 }
-  this.ports.max = { x: 1, y: 0 }
+  this.ports.a = { x: -1, y: 0 }
+  this.ports.b = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1, sensitive: true, output: true }
 
   this.operation = function (force = false) {
-    const min = this.listen(this.ports.min, true)
-    const max = this.listen(this.ports.max, true)
-    const val = parseInt((Math.random() * ((max > 0 ? max : 36) - min)) + min)
-    return orca.keyOf(val)
+    const a = this.listen(this.ports.a, true)
+    const b = this.listen(this.ports.b, true)
+    if(a == b)
+        return orca.keyOf(a)
+    if(a > b)
+        return orca.keyOf(parseInt(Math.random() * (a - b + 1) + b))
+    return orca.keyOf(parseInt(Math.random() * (b - a + 1) + a))
   }
 }
 
