@@ -46,7 +46,7 @@ library.c = function OperatorC (orca, x, y, passive) {
   this.info = 'Outputs modulo of frame'
 
   this.ports.rate = { x: -1, y: 0, clamp: { min: 1 } }
-  this.ports.mod = { x: 1, y: 0, default: '8' }
+  this.ports.mod = { x: 1, y: 0 }
   this.ports.output = { x: 0, y: 1, sensitive: true, output: true }
 
   this.operation = function (force = false) {
@@ -378,8 +378,8 @@ library.u = function OperatorU (orca, x, y, passive) {
   this.name = 'uclid'
   this.info = 'Bangs on Euclidean rhythm'
 
-  this.ports.step = { x: -1, y: 0, clamp: { min: 0 }, default: '1' }
-  this.ports.max = { x: 1, y: 0, clamp: { min: 1 }, default: '8' }
+  this.ports.step = { x: -1, y: 0, clamp: { min: 0 } }
+  this.ports.max = { x: 1, y: 0, clamp: { min: 1 } }
   this.ports.output = { x: 0, y: 1, bang: true, output: true }
 
   this.operation = function (force = false) {
