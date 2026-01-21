@@ -5,7 +5,7 @@ const OSC_PORT = 49162
 const dgram = require('dgram')
 const udpserver = dgram.createSocket('udp4')
 
-const osc = require('./desktop/node_modules/node-osc')
+const osc = require('../desktop/node_modules/node-osc')
 const oscserver = new osc.Server(OSC_PORT, IP_ADDR)
 
 console.log(`Started Listener\n\nUDP:${UDP_PORT}\nOSC:${OSC_PORT}\n`)
